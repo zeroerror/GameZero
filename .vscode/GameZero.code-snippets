@@ -17,18 +17,30 @@
         private GameVec2 _position;
 		生成类似的属性
 		*/
-	"gs": {
-		"prefix": "gs",
-		"body": [
-			"public $1 $2",
-			"{",
-			"    get { return _$2; }",
-			"    set { _$2 = value; }",
-			"}",
-			"private $1 _$2;"
-		],
-		"description": "生成类似的属性"
-	},
-
+		"gs": {
+			"prefix": "gs",
+			"body": [
+				"public $1 $2",
+				"{",
+				"    get { return _$2; }",
+				"    set { _$2 = value; }",
+				"}",
+				"private $1 _$2;"
+			],
+			"description": "生成类似的属性"
+		},
+		"nsl": {
+			"prefix": "ns",
+			"body": [
+				"namespace GamePlay.Logic"
+				"{"
+					"public class $1"
+					"{"
+				
+					"}"
+				"}"
+			],
+			"description": "生成类似的属性"
+		},
 	
 }
