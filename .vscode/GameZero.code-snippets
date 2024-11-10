@@ -1,0 +1,34 @@
+{
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	/**      public GameVec2 position
+        {
+            get { return _position; }
+            set { _position = value; }
+        }
+        private GameVec2 _position;
+		生成类似的属性
+		*/
+	"gs": {
+		"prefix": "gs",
+		"body": [
+			"public $1 $2",
+			"{",
+			"    get { return _$2; }",
+			"    set { _$2 = value; }",
+			"}",
+			"private $1 _$2;"
+		],
+		"description": "生成类似的属性"
+	},
+
+	
+}
