@@ -1,0 +1,42 @@
+using UnityEngine;
+using GameVec2 = UnityEngine.Vector2;
+namespace GamePlay.Core
+{
+    public class GameCameraFollowCom : GameCameraComBase
+    {
+        public Camera camera { get; private set; }
+        public GameVec2 cameraPos { get; private set; }
+
+        public GameObject follow { get; private set; }
+        public GameVec2 followOffset { get; private set; }
+        public float duration { get; private set; }
+        public EasingType easingType { get; private set; }
+        Easing2DComponent _easing2DComponent = new Easing2DComponent();
+
+        public GameCameraFollowCom(Camera camera)
+        {
+            this.camera = camera;
+        }
+
+        protected override void _Tick(float dt)
+        {
+            if (this.follow == null) return;
+            var targetPos = this.follow.transform.position.GetVec2() + this.followOffset;
+            var currentPos = this.camera.transform.position.GetVec2();
+            var easedPos = this._easing2DComponent.TickEase(currentPos, targetPos, dt);
+            this.cameraPos = easedPos;
+        }
+
+        public override void Apply()
+        {
+            this.camera.transform.position = this.cameraPos;
+        }
+
+        public void Set(GameObject follow, GameVec2 followOffset, float duration = 0.1f, EasingType easingType = EasingType.Linear)
+        {
+            this.follow = follow;
+            this.duration = duration;
+            this.easingType = easingType;
+        }
+    }
+}
