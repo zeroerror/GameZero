@@ -9,8 +9,6 @@ namespace GamePlay.Core
 
         public GameObject follow { get; private set; }
         public GameVec2 followOffset { get; private set; }
-        public float duration { get; private set; }
-        public EasingType easingType { get; private set; }
         Easing2DComponent _easing2DComponent = new Easing2DComponent();
 
         public GameCameraFollowCom(Camera camera)
@@ -22,6 +20,7 @@ namespace GamePlay.Core
         {
             if (this.follow == null) return;
             var targetPos = this.follow.transform.position.GetVec2() + this.followOffset;
+            if (this.cameraPos == targetPos) return;
             var currentPos = this.camera.transform.position.GetVec2();
             var easedPos = this._easing2DComponent.TickEase(currentPos, targetPos, dt);
             this.cameraPos = easedPos;
@@ -35,8 +34,8 @@ namespace GamePlay.Core
         public void Set(GameObject follow, GameVec2 followOffset, float duration = 0.1f, EasingType easingType = EasingType.Linear)
         {
             this.follow = follow;
-            this.duration = duration;
-            this.easingType = easingType;
+            this.followOffset = followOffset;
+            this._easing2DComponent.SetEase(duration, easingType);
         }
     }
 }

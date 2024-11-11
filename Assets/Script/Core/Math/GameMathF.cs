@@ -28,6 +28,8 @@ namespace GamePlay.Core
         }
 
         public static float Abs(float a) => a < 0 ? -a : a;
+        public static float Sin(float a) => (float)System.Math.Sin(a);
+        public static float Cos(float a) => (float)System.Math.Cos(a);
 
     }
 }
