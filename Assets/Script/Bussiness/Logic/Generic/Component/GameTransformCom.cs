@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameTransformComponent
+    public class GameTransformCom
     {
         public int id { get; private set; }
 
@@ -57,7 +57,7 @@ namespace GamePlay.Bussiness.Logic
         private GameVec2 _forward;
         private bool _forwardDirty;
 
-        public GameTransformComponent()
+        public GameTransformCom()
         {
             Reset();
         }
@@ -86,9 +86,9 @@ namespace GamePlay.Bussiness.Logic
             return dirty;
         }
 
-        public GameTransformComponentAPI ToAPI()
+        public GameTransformComAPI ToAPI()
         {
-            return new GameTransformComponentAPI
+            return new GameTransformComAPI
             {
                 position = position,
                 scale = scale,
@@ -97,7 +97,7 @@ namespace GamePlay.Bussiness.Logic
             };
         }
 
-        public void SetByTRS(GameTransformComponentAPI trs)
+        public void SetByTRS(GameTransformComAPI trs)
         {
             SetPosition(trs.position);
             SetScale(trs.scale);

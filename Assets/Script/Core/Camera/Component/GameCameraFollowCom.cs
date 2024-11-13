@@ -9,7 +9,7 @@ namespace GamePlay.Core
 
         public GameObject follow { get; private set; }
         public GameVec2 followOffset { get; private set; }
-        Easing2DComponent _easing2DComponent = new Easing2DComponent();
+        Easing2DCom _easing2DComponent = new Easing2DCom();
 
         public GameCameraFollowCom(Camera camera)
         {

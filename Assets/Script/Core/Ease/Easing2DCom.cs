@@ -1,12 +1,12 @@
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Core
 {
-    public class Easing2DComponent
+    public class Easing2DCom
     {
-        private Easing1DComponent _ease1DComponentX = new Easing1DComponent();
-        private Easing1DComponent _ease1DComponentY = new Easing1DComponent();
+        private Easing1DCom _ease1DComponentX = new Easing1DCom();
+        private Easing1DCom _ease1DComponentY = new Easing1DCom();
 
-        public Easing2DComponent() { }
+        public Easing2DCom() { }
 
         public void SetEase(float durationX, EasingType easingTypeX, float? durationY = null, EasingType? easingTypeY = null)
         {

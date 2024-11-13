@@ -39,11 +39,8 @@ namespace GamePlay.Core
             if (!_stateDict.ContainsKey(fromState) || !_stateDict.ContainsKey(toState))
                 return;
 
-            var existingTransition = FindTransition(fromState, toState, transition.Condition, byList);
-            if (existingTransition != null)
-            {
-                existingTransition.Condition = transition.Condition;
-            }
+            var t = FindTransition(fromState, toState, byList);
+            if (t == null) byList.Add(transition);
         }
 
         public void Tick(float dt)
@@ -87,9 +84,9 @@ namespace GamePlay.Core
             }
         }
 
-        private GameStateTransition FindTransition(string fromState, string toState, Func<bool> condition, List<GameStateTransition> byList)
+        private GameStateTransition FindTransition(string fromState, string toState, List<GameStateTransition> byList)
         {
-            return byList.Find(item => item.fromState == fromState && item.toState == toState && item.Condition == condition);
+            return byList.Find(item => item.fromState == fromState && item.toState == toState);
         }
     }
 }

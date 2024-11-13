@@ -1,8 +1,6 @@
-using System;
-
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameIdentityComponent
+    public class GameIdCom
     {
         public int typeId { get; private set; }
         public GameEntityType entityType { get; private set; }
@@ -10,7 +8,7 @@ namespace GamePlay.Bussiness.Logic
         public GameEntity parent { get; private set; }
         public int campId { get; private set; }
 
-        public GameIdentityComponent()
+        public GameIdCom()
         {
             Reset();
         }
@@ -28,7 +26,7 @@ namespace GamePlay.Bussiness.Logic
         }
 
         // 判断是否相等
-        public bool IsEquals(GameIdentityComponent other)
+        public bool IsEquals(GameIdCom other)
         {
             return entityType == other.entityType && entityId == other.entityId;
         }
@@ -39,7 +37,7 @@ namespace GamePlay.Bussiness.Logic
             this.parent = parent;
             if (parent != null)
             {
-                var parentIdCom = parent.identityComponent;
+                var parentIdCom = parent.idCom;
                 campId = parentIdCom.campId;
             }
         }

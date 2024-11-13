@@ -3,8 +3,8 @@ namespace GamePlay.Core
 {
     public abstract class GameStateTransition
     {
-        public abstract string fromState { get; set; }
-        public abstract string toState { get; set; }
-        public abstract Func<bool> Condition { get; set; }
+        public abstract string fromState { get; }
+        public abstract string toState { get; }
+        public abstract bool Condition();
     }
 }

@@ -1,40 +1,30 @@
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameEntity
+    public abstract class GameEntity
     {
-        public bool IsValid()
-        {
-            return identityComponent.entityId > 0;
-        }
 
-        public GameIdentityComponent identityComponent { get; private set; }
-        public GameTransformComponent transformComponent { get; private set; }
+        public bool isValid() => idCom.entityId > 0;
         public int bodyColliderId { get; private set; }
-        public GameActionTargeterComponent actionTargeterCom { get; private set; }
-
+        public GameIdCom idCom { get; private set; }
+        public GameTransformCom transformCom { get; private set; }
+        public GameActionTargeterCom actionTargeterCom { get; private set; }
 
         public GameEntity()
         {
-            identityComponent = new GameIdentityComponent();
-            transformComponent = new GameTransformComponent();
-            actionTargeterCom = new GameActionTargeterComponent();
+            idCom = new GameIdCom();
+            transformCom = new GameTransformCom();
+            actionTargeterCom = new GameActionTargeterCom();
         }
 
         public void Reset()
         {
-            identityComponent.Reset();
-            transformComponent.Reset();
-        }
-
-
-        public bool IsSelectable()
-        {
-            return true;
+            idCom.Reset();
+            transformCom.Reset();
         }
 
         public bool IsEquals(GameEntity other)
         {
-            return identityComponent.IsEquals(other.identityComponent);
+            return idCom.IsEquals(other.idCom);
         }
 
         public T TryGetLinkEntity<T>() where T : GameEntity
@@ -44,16 +34,19 @@ namespace GamePlay.Bussiness.Logic
                 return this as T;
             }
 
-            var p = identityComponent.parent;
+            var p = idCom.parent;
             while (p != null)
             {
                 if (p is T)
                 {
                     return p as T;
                 }
-                p = p.identityComponent.parent;
+                p = p.idCom.parent;
             }
             return null;
         }
+
+        public virtual void Tick(float dt) { }
+        public abstract void Reset(float dt);
     }
 }

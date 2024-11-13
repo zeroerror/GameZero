@@ -1,4 +1,3 @@
-using System;
 using GameVec2 = UnityEngine.Vector2;
 using GamePlay.Bussiness.Logic;
 
@@ -8,7 +7,7 @@ namespace GamePlay.Core
     {
         public int id;
         public GameEntity binder;
-        public GameTransformComponent transform;
+        public GameTransformCom transform;
         public bool isTrigger = true;
         public GameVec2 worldPos;
         public GameVec2 worldCenterPos;
@@ -40,7 +39,7 @@ namespace GamePlay.Core
 
         protected abstract void _SetByModel(object colliderModel, float scale);
 
-        public void UpdateTRS(GameTransformComponent trans)
+        public void UpdateTRS(GameTransformCom trans)
         {
             if (!trans.position.Equals(worldPos))
                 SetWorldPosition(trans.position);

@@ -1,7 +1,7 @@
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
-    public struct GameTransformComponentAPI
+    public struct GameTransformComAPI
     {
         public GameVec2 position { get; set; }
         public float scale { get; set; }

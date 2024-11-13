@@ -4,7 +4,7 @@ using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameActionTargeterComponent : IGameActionTargeter
+    public class GameActionTargeterCom : IGameActionTargeter
     {
         private List<IGameActionTargeter> _targeterList;
         public GameForeachType foreachType = GameForeachType.None;
@@ -16,7 +16,7 @@ namespace GamePlay.Bussiness.Logic
 
         private int _curTargeterIndex = 0;
 
-        public GameActionTargeterComponent()
+        public GameActionTargeterCom()
         {
             Clear();
         }
@@ -59,7 +59,7 @@ namespace GamePlay.Bussiness.Logic
             var dirList = new List<GameVec2>();
             foreach (var targeter in targeterList)
             {
-                var targetPos = targeter.targetRole?.transformComponent.position ?? targeter.targetPos;
+                var targetPos = targeter.targetRole?.transformCom.position ?? targeter.targetPos;
                 var targetDir = (targetPos - actionPos).normalized;
                 dirList.Add(targetDir);
             }
