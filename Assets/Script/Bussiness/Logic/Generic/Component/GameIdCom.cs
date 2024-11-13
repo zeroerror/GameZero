@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameIdCom
@@ -5,12 +7,21 @@ namespace GamePlay.Bussiness.Logic
         public int typeId { get; private set; }
         public GameEntityType entityType { get; private set; }
         public int entityId { get; private set; }
-        public GameEntity parent { get; private set; }
-        public int campId { get; private set; }
+        static Dictionary<GameEntityType, int> _autoEntityId = new Dictionary<GameEntityType, int>{
+            { GameEntityType.Role, 0 },
+            { GameEntityType.Skill, 0 },
+            { GameEntityType.Bullet, 0 },
+            { GameEntityType.Buff, 0 }
+        };
 
-        public GameIdCom()
+        public GameEntityBase parent { get; private set; }
+        public int campId;
+
+        public GameIdCom(int typeId, GameEntityType entityType)
         {
-            Reset();
+            this.typeId = typeId;
+            this.entityType = entityType;
+            this.entityId = ++GameIdCom._autoEntityId[entityType];
         }
 
         public void Reset()
@@ -32,7 +43,7 @@ namespace GamePlay.Bussiness.Logic
         }
 
         // 设置父实体
-        public void SetParent(GameEntity parent)
+        public void SetParent(GameEntityBase parent)
         {
             this.parent = parent;
             if (parent != null)

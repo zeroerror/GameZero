@@ -13,7 +13,7 @@ namespace GamePlay.Core
         public float worldRadius => _originRadius * Math.Abs(this.scale);
 
         public GameCircleCollider(
-            GameEntity binder,
+            GameEntityBase binder,
             GameColliderCircleModel colliderModel,
             int id,
             float scale = 1

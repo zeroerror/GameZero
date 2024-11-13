@@ -16,7 +16,7 @@ namespace GamePlay.Bussiness.Logic
 
     public static class IGameActionTargeterExtension
     {
-        public static void SetTarget(IGameActionTargeter targeter, GameEntity target)
+        public static void SetTarget(IGameActionTargeter targeter, GameEntityBase target)
         {
             if (target is GameRoleEntity)
             {

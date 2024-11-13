@@ -18,8 +18,6 @@ namespace GamePlay.Core
                 return;
 
             _stateDict[state.stateName] = state;
-            if (_curState == null)
-                TransitTo(state.stateName);
         }
 
         public void SetTransition(GameStateTransition transition)
@@ -45,7 +43,8 @@ namespace GamePlay.Core
 
         public void Tick(float dt)
         {
-            TickAny(dt);
+            this.TickAny(dt);
+            if (_curState == null && _transitions.Count > 0) this.TransitTo(_transitions[0].toState);
             _curState?.Tick(dt);
 
             foreach (var transition in _transitions)

@@ -1,8 +1,18 @@
+
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameRoleContext : GameEntityContextBase
+    public class GameRoleContext
     {
-        public override GameEntityRepoBase repo => this._repo;
-        GameRoleEntityRepo _repo;
+        public GameRoleRepo repo => this._repo;
+        GameRoleRepo _repo;
+        public GameRoleFactory factory => this._factory;
+        GameRoleFactory _factory;
+
+        public GameRoleContext()
+        {
+            this._repo = new GameRoleRepo();
+            this._factory = new GameRoleFactory();
+        }
+
     }
 }

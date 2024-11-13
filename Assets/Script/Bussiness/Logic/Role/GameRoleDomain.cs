@@ -1,21 +1,34 @@
+using Unity.VisualScripting;
+
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameRoleDomain : GameEntityDomainBase<GameRoleEntity>
+    public class GameRoleDomain
     {
-        public override GameEntityContextBase context => this._context;
         GameRoleContext _context;
 
-        public override void Collect()
+        public GameRoleDomain()
+        {
+            this._context = new GameRoleContext();
+        }
+
+        public void Collect()
         {
         }
 
-        public override GameRoleEntity Create()
+        public GameRoleEntity Create()
         {
-            return new GameRoleEntity();
+            var e = this._context.factory.Load();
+            this._context.repo.TryAdd(e);
+            return e;
         }
 
-        public override void Tick(float dt)
+        public void Tick(float dt)
         {
+            var repo = this._context.repo;
+            repo.ForeachEntities((entity) =>
+            {
+                entity.Tick(dt);
+            });
         }
     }
 }

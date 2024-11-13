@@ -56,7 +56,7 @@ namespace GamePlay.Core
         }
 
         public GameBoxCollider(
-            GameEntity binder,
+            GameEntityBase binder,
             GameColliderBoxModel colliderModel,
             int id,
             float scale = 1

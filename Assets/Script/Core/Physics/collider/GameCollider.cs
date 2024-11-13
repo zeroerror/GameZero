@@ -6,7 +6,7 @@ namespace GamePlay.Core
     public abstract class GameCollider
     {
         public int id;
-        public GameEntity binder;
+        public GameEntityBase binder;
         public GameTransformCom transform;
         public bool isTrigger = true;
         public GameVec2 worldPos;
@@ -23,7 +23,7 @@ namespace GamePlay.Core
         public bool lockScale;
 
         // Simplified constructor
-        public GameCollider(GameEntity binder, object param, int id, float scale = 1)
+        public GameCollider(GameEntityBase binder, object param, int id, float scale = 1)
         {
             this.binder = binder;
             this.id = id;

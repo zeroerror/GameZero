@@ -5,7 +5,12 @@ namespace GamePlay.Bussiness.Renderer
     {
         public GameContextR context { get; private set; } = new GameContextR();
 
-        public GameDirectDomainR() { }
+        public GameRoleDomainR roleDomain { get; private set; } = new GameRoleDomainR();
+
+        public GameDirectDomainR()
+        {
+            this.roleDomain.Create();
+        }
 
         public void Update(float dt)
         {
@@ -28,7 +33,6 @@ namespace GamePlay.Bussiness.Renderer
         {
             var director = this.context.director;
             director.Tick(dt);
-            GameLogger.Log($"导演帧[渲染层] {director.timeScaleCom.gameTime}");
         }
 
         protected void _LateTick(float dt)

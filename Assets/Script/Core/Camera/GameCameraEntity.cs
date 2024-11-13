@@ -17,8 +17,6 @@ namespace GamePlay.Core
             this.confinerCom = new GameCameraConfinerCom(camera);
             this.shakeCom = new GameCameraShakeCom(camera);
             this.zoomCom = new GameCameraZoomCom(camera);
-            // test
-            followCom.Set(GameObject.Find("Field/Dynamic/role"), GameVec2.zero);
         }
 
         void _Test()

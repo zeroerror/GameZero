@@ -1,10 +1,10 @@
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameRoleEntity : GameEntity
+    public class GameRoleEntity : GameEntityBase
     {
         public GameRoleFSMCom fsmCom { get; private set; }
 
-        public GameRoleEntity()
+        public GameRoleEntity() : base(0, GameEntityType.Role)
         {
             this.fsmCom = new GameRoleFSMCom(this);
         }

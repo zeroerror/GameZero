@@ -47,11 +47,11 @@ namespace GamePlay.Core
         Queue<GameCameraZoomData> _shakeDataQueue = new Queue<GameCameraZoomData>();
         Queue<GameCameraZoomData> _shakeDataPool = new Queue<GameCameraZoomData>();
         float _zoomValue = 0;
-        GameCameraZoomData _CreateData(float from, float to, float duration, EasingType easingType, bool needReset)
+        GameCameraZoomData _CreateData(float from, float to, float duration, EasingType easingType, bool needReset, Action onComplete)
         {
             if (!this._shakeDataPool.TryDequeue(out var data))
             {
-                data = new GameCameraZoomData(from, to, duration, easingType, needReset);
+                data = new GameCameraZoomData(from, to, duration, easingType, needReset, onComplete);
             }
             else
             {
@@ -101,7 +101,7 @@ namespace GamePlay.Core
 
         public void Zoom(float from, float to, float duration, EasingType easingType, bool needReset = false, Action onComplete = null)
         {
-            this._CreateData(from, to, duration, easingType, needReset);
+            this._CreateData(from, to, duration, easingType, needReset, onComplete);
         }
     }
 }

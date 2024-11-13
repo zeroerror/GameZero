@@ -27,7 +27,7 @@ namespace GamePlay.Core
         public GameVec2 projection1 => GetProjectionOnAxis(this.worldCenterPos, this.normal1);
         public GameVec2 projection2 => GetProjectionOnAxis(this.worldCenterPos, this.normal2);
 
-        public GameFanCollider(GameEntity binder, GameColliderFanModel colliderModel, int id, float scale = 1)
+        public GameFanCollider(GameEntityBase binder, GameColliderFanModel colliderModel, int id, float scale = 1)
             : base(binder, colliderModel, id, scale)
         {
         }

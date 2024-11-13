@@ -8,7 +8,12 @@ namespace GamePlay.Bussiness.Logic
 
         public GameDirector director => this.context.director;
 
-        public GameDirectDomain() { }
+        public GameRoleDomain roleDomain { get; private set; } = new GameRoleDomain();
+
+        public GameDirectDomain()
+        {
+            this.roleDomain.Create();
+        }
 
         public void Update(float dt)
         {
@@ -32,12 +37,16 @@ namespace GamePlay.Bussiness.Logic
 
         protected void _Tick(float dt)
         {
-            var director = this.context.director;
-            GameLogger.Log($"导演帧 {director.timeScaleCom.gameFrame}");
+            this._TickDomain(dt);
         }
 
         protected void _LateTick(float dt)
         {
+        }
+
+        protected virtual void _TickDomain(float dt)
+        {
+            this.roleDomain.Tick(dt);
         }
     }
 }
