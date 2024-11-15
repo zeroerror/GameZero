@@ -5,12 +5,13 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleEntityR : GameEntityBase
     {
-        public GameRoleFSMComR fsmCom { get; private set; }
+        public GameVec2 position { get { return this.go.transform.position; } set { this.go.transform.position = value; } }
         public GameObject go { get; private set; }
         public GameObject foot { get; private set; }
         public GameObject body { get; private set; }
-        public Animation animation { get; private set; }
         public SpriteRenderer spriteRenderer { get; private set; }
+        public GameRoleFSMComR fsmCom { get; private set; }
+        public GameAnimPlayableCom animCom { get; private set; }
 
         public GameRoleEntityR(GameObject go) : base(0, GameEntityType.Role)
         {
@@ -18,9 +19,9 @@ namespace GamePlay.Bussiness.Renderer
             go.name = "role_" + this.idCom.entityId;
             this.foot = go.transform.Find("foot").gameObject;
             this.body = go.transform.Find("body").gameObject;
-            this.animation = this.body.AddComponent<Animation>();
             this.spriteRenderer = this.body.AddComponent<SpriteRenderer>();
             this.fsmCom = new GameRoleFSMComR(this);
+            this.animCom = new GameAnimPlayableCom(this.body.AddComponent<Animator>());
         }
 
         public override void Tick(float dt)
@@ -30,6 +31,5 @@ namespace GamePlay.Bussiness.Renderer
 
         public override void Reset(float dt) { }
 
-        public GameVec2 position { get { return this.go.transform.position; } set { this.go.transform.position = value; } }
     }
 }

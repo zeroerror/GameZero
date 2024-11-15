@@ -19,11 +19,6 @@ namespace GamePlay.Bussiness.Renderer
             var e = new GameRoleEntityR(go);
             e.go.transform.SetParent(this.entityLayer.transform);
             e.go.transform.localPosition = new Vector3(0, 0, 0);
-            e.animation.AddClip(Resources.Load<AnimationClip>($"Role/{roleId}/Anim/die"), "die");
-            e.animation.AddClip(Resources.Load<AnimationClip>($"Role/{roleId}/Anim/attack"), "attack");
-            Debug.Log("Playing animation: attack");
-            e.animation.Play("attack");
-
             GameLogger.Log($"角色工厂[渲染层]: 创建角色实体 {e.idCom.entityId}");
             return e;
         }

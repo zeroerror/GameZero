@@ -1,4 +1,4 @@
-using GamePlay.Bussiness.Logic;
+using UnityEngine;
 namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleDomainR
@@ -29,5 +29,19 @@ namespace GamePlay.Bussiness.Renderer
                 entity.Tick(dt);
             });
         }
+
+        public void PlayAnim(GameRoleEntityR role, string animName)
+        {
+            var typeId = role.idCom.typeId;
+            var url = $"Role/{typeId}/Anim/{animName}";
+            var clip = Resources.Load<AnimationClip>(url);
+            if (!clip)
+            {
+                Debug.LogError($"Clip not found: {url}");
+                return;
+            }
+            role.animation.AddClip(clip, animName);
+        }
     }
+
 }
