@@ -1,12 +1,12 @@
 namespace GamePlay.Core
 {
-    public abstract class GameStateBase
+    public abstract class GameStateBase<T>
     {
-        public string stateName;
+        public abstract string stateName { get; }
 
-        public GameStateBase(string name)
+        public override int GetHashCode()
         {
-            stateName = name;
+            return stateName.GetHashCode();
         }
 
         public override string ToString()
@@ -14,8 +14,9 @@ namespace GamePlay.Core
             return stateName;
         }
 
-        public abstract void Enter();
-        public abstract void Tick(float dt);
-        public abstract void Exit();
+        public abstract void Enter(T obj);
+        public abstract void Tick(float dt, T obj);
+        public abstract void Exit(GameStateBase<T> nextState, T obj);
+        public virtual void Dispose() { }
     }
 }

@@ -4,14 +4,13 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleFSMCom fsmCom { get; private set; }
 
-        public GameRoleEntity() : base(0, GameEntityType.Role)
+        public GameRoleEntity(int typeId) : base(typeId, GameEntityType.Role)
         {
-            this.fsmCom = new GameRoleFSMCom(this);
+            this.fsmCom = new GameRoleFSMCom();
         }
 
         public override void Tick(float dt)
         {
-            this.fsmCom.Tick(dt);
         }
 
         public override void Reset(float dt) { }

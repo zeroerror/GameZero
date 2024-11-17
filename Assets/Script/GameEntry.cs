@@ -9,7 +9,7 @@ public class GameEntry : MonoBehaviour
     void Start()
     {
         this.gameCore = new GameCore();
-        this.gameCoreR = new GameCoreR();
+        this.gameCoreR = new GameCoreR(gameCore.directDomain.context);
     }
 
     void Update()

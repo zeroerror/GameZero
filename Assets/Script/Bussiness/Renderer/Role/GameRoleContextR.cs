@@ -1,4 +1,4 @@
-using GamePlay.Bussiness.Logic;
+
 namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleContextR
@@ -8,10 +8,13 @@ namespace GamePlay.Bussiness.Renderer
         public GameRoleFactoryR factory => this._factory;
         GameRoleFactoryR _factory;
 
-        public GameRoleContextR()
+        public GameContextR context { get; private set; }
+
+        public GameRoleContextR(GameContextR context)
         {
+            this.context = context;
             this._repo = new GameRoleRepoR();
-            this._factory = new GameRoleFactoryR();
+            this._factory = new GameRoleFactoryR(context);
         }
 
     }

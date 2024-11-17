@@ -1,12 +1,13 @@
 using GamePlay.Core;
+using System;
+
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameRoleStateTransition_Move2Idle : GameStateTransition
+    public class GameRoleStateTransition_Move2Idle : GameStateTransition<GameRoleEntity>
     {
-        public override string fromState => "Move";
-        public override string toState => "Idle";
+        public GameRoleStateTransition_Move2Idle(GameRoleStateDomain_Move fromState, GameRoleStateDomain_Idle toState, Action<GameRoleEntity> onStateChange) : base(fromState, toState, onStateChange) { }
 
-        public override bool Condition()
+        public override bool TickCondition(float dt, GameRoleEntity role)
         {
             return false;
         }

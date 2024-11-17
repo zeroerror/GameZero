@@ -1,8 +1,21 @@
+using UnityEngine;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameCore
     {
-        public GameDirectDomain directDomain { get; private set; } = new GameDirectDomain();
+        public GameDirectDomain directDomain { get; private set; }
+
+        public GameCore()
+        {
+            this.directDomain = new GameDirectDomain();
+            Application.quitting += this.Dispose;
+        }
+
+        public void Dispose()
+        {
+            this.directDomain.Dispose();
+        }
 
         public void Update(float dt)
         {
@@ -13,5 +26,7 @@ namespace GamePlay.Bussiness.Logic
         {
             this.directDomain.LateUpdate(dt);
         }
+
+
     }
 }

@@ -53,5 +53,15 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
+        public GameIdComArgs ToArgs()
+        {
+            return new GameIdComArgs
+            {
+                typeId = typeId,
+                entityType = entityType,
+                entityId = entityId,
+            };
+        }
+
     }
 }

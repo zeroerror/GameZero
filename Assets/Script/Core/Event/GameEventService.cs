@@ -4,56 +4,58 @@ namespace GamePlay.Core
     public struct GameEventSubmit
     {
         public string name;
-        public object data;
-    }
-    public struct GameEventListener
-    {
-        public string name;
-        public System.Action<object> callback;
+        public object args;
     }
 
     public class GameEventService
     {
         Dictionary<string, List<System.Action<object>>> _listeners = new();
-        Dictionary<string, Queue<GameEventSubmit>> _submitQueue = new();
+        Dictionary<string, Queue<GameEventSubmit>> _submitQueues = new();
 
-        public void Submit(GameEventSubmit submit)
+        public void Submit(string name, object args)
         {
-            if (!_submitQueue.ContainsKey(submit.name))
-                _submitQueue[submit.name] = new Queue<GameEventSubmit>();
-            _submitQueue[submit.name].Enqueue(submit);
+            Submit(new GameEventSubmit
+            {
+                name = name,
+                args = args
+            });
+        }
+        public void Submit(in GameEventSubmit submit)
+        {
+            if (!_submitQueues.ContainsKey(submit.name)) _submitQueues[submit.name] = new Queue<GameEventSubmit>();
+            _submitQueues[submit.name].Enqueue(submit);
         }
 
-        public void Register(GameEventListener listener)
+        public void Regist(string name, System.Action<object> callback)
         {
-            if (!_listeners.ContainsKey(listener.name))
-                _listeners[listener.name] = new List<System.Action<object>>();
-            _listeners[listener.name].Add(listener.callback);
+            if (!_listeners.ContainsKey(name))
+                _listeners[name] = new List<System.Action<object>>();
+            _listeners[name].Add(callback);
         }
 
-        public void UnRegister(GameEventListener listener)
+        public void Unregist(string name, System.Action<object> callback)
         {
-            if (!_listeners.ContainsKey(listener.name)) return;
-            _listeners[listener.name].Remove(listener.callback);
+            if (!_listeners.ContainsKey(name)) return;
+            _listeners[name].Remove(callback);
         }
 
         public void Tick()
         {
-            foreach (var kv in _submitQueue)
+            foreach (var kv in _submitQueues)
             {
                 var name = kv.Key;
-                var submits = kv.Value;
-                if (!_listeners.ContainsKey(name)) continue;
-                var listeners = _listeners[name];
-                while (submits.Count > 0)
+                var queue = kv.Value;
+                while (queue.Count > 0)
                 {
-                    var submit = submits.Dequeue();
-                    foreach (var listener in listeners)
+                    var submit = queue.Dequeue();
+                    if (!_listeners.ContainsKey(name)) continue;
+                    foreach (var listener in _listeners[name])
                     {
-                        listener(submit.data);
+                        listener(submit.args);
                     }
                 }
             }
+            _submitQueues.Clear();
         }
     }
 

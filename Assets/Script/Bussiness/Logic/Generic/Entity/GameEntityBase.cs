@@ -48,5 +48,7 @@ namespace GamePlay.Bussiness.Logic
 
         public virtual void Tick(float dt) { }
         public abstract void Reset(float dt);
+        public virtual void Dispose() { }
+
     }
 }

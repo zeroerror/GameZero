@@ -1,18 +1,22 @@
-using GamePlay.Core;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameDirectDomain
     {
-
-        public GameContext context { get; private set; } = new GameContext();
+        public GameContext context { get; private set; }
 
         public GameDirector director => this.context.director;
 
-        public GameRoleDomain roleDomain { get; private set; } = new GameRoleDomain();
+        public GameRoleDomain roleDomain { get; private set; }
 
         public GameDirectDomain()
         {
-            this.roleDomain.Create();
+            this.context = new GameContext();
+            this.roleDomain = new GameRoleDomain(this.context);
+        }
+
+        public void Dispose()
+        {
+            this.roleDomain.Dispose();
         }
 
         public void Update(float dt)
@@ -32,6 +36,7 @@ namespace GamePlay.Bussiness.Logic
         protected void _PreTick(float dt)
         {
             this.context.eventService.Tick();
+            this.context.rcEventService.Tick();
         }
 
 

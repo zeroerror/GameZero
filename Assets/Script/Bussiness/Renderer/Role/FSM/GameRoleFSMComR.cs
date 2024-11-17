@@ -1,40 +1,17 @@
-using GamePlay.Core;
-using GamePlay.Bussiness.Logic;
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameRoleFSMComR : GameFSMCom
+    public class GameRoleFSMComR
     {
-        public GameRoleEntityR role { get; private set; }
-
-        public GameRoleFSMComR(GameRoleEntityR role) : base()
+        public GameRoleStateModel_IdleR idleStateModel { get; private set; }
+        public GameRoleStateModel_MoveR moveStateModel { get; private set; }
+        public GameRoleStateModel_CastR castStateModel { get; private set; }
+        public GameRoleStateModel_DeadR deadStateModel { get; private set; }
+        public GameRoleFSMComR()
         {
-            this.role = role;
-            this._init();
-        }
-
-        private void _init()
-        {
-            var idleState = new GameRoleState_Idle();
-            this.CreateState(idleState);
-            this.SetTransition(new GameRoleStateTransition_Idle2Move());
-            this.SetTransition(new GameRoleStateTransition_Idle2Cast());
-            this.SetTransition(new GameRoleStateTransition_Idle2Dead());
-
-
-            var moveState = new GameRoleState_Move();
-            this.CreateState(moveState);
-            this.SetTransition(new GameRoleStateTransition_Move2Idle());
-            this.SetTransition(new GameRoleStateTransition_Move2Cast());
-
-            var castState = new GameRoleState_Cast();
-            this.CreateState(castState);
-            this.SetTransition(new GameRoleStateTransition_Cast2Idle());
-            this.SetTransition(new GameRoleStateTransition_Cast2Move());
-
-            var deadState = new GameRoleState_Dead();
-            this.CreateState(deadState);
-
-            this.SetAnyTransition(new GameRoleStateTransition_Any2Dead());
+            idleStateModel = new GameRoleStateModel_IdleR();
+            moveStateModel = new GameRoleStateModel_MoveR();
+            castStateModel = new GameRoleStateModel_CastR();
+            deadStateModel = new GameRoleStateModel_DeadR();
         }
     }
 }

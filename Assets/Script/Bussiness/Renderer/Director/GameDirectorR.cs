@@ -8,7 +8,6 @@ namespace GamePlay.Bussiness.Renderer
 
         public bool Tick(float dt)
         {
-            this.fsmCom.Tick(dt);
             var canTickNext = this.timeScaleCom.Tick(dt);
             return canTickNext;
         }

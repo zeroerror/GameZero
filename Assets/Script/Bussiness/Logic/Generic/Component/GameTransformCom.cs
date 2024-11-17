@@ -86,9 +86,9 @@ namespace GamePlay.Bussiness.Logic
             return dirty;
         }
 
-        public GameTransformComAPI ToAPI()
+        public GameTransformComArgs ToArgs()
         {
-            return new GameTransformComAPI
+            return new GameTransformComArgs
             {
                 position = position,
                 scale = scale,
@@ -97,7 +97,7 @@ namespace GamePlay.Bussiness.Logic
             };
         }
 
-        public void SetByTRS(GameTransformComAPI trs)
+        public void SetByTRS(in GameTransformComArgs trs)
         {
             SetPosition(trs.position);
             SetScale(trs.scale);

@@ -1,15 +1,26 @@
+using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine;
 namespace GamePlay.Bussiness.Renderer
 {
     public class GameContextR
     {
-        public GameDirectorR director { get; private set; } = new GameDirectorR();
-        public GameEventService eventService { get; private set; } = new GameEventService();
+        public GameContext logicContext { get; private set; }
+
         public GameCameraEntity cameraEntity { get; private set; }
-        public GameContextR()
+        public GameDirectorR director { get; private set; }
+        public GameEventService eventService { get; private set; }
+        public GameEventService delayRCEventService { get; private set; }
+        public GameRoleContextR roleContext { get; private set; }
+
+        public GameContextR(GameContext logicContext)
         {
+            this.logicContext = logicContext;
             this.cameraEntity = new GameCameraEntity(GameObject.Find("Main Camera")?.GetComponent<Camera>());
+            this.director = new GameDirectorR();
+            this.eventService = new GameEventService();
+            this.delayRCEventService = new GameEventService();
+            this.roleContext = new GameRoleContextR(this);
         }
     }
 }

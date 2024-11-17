@@ -3,10 +3,17 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameContext
     {
-        public GameDirector director { get; private set; } = new GameDirector();
-        public GameEventService eventService { get; private set; } = new GameEventService();
+        public GameDirector director { get; private set; }
+        public GameEventService eventService { get; private set; }
+        public GameEventService rcEventService { get; private set; }
+        public GameRoleContext roleContext { get; private set; }
+
         public GameContext()
         {
+            this.director = new GameDirector();
+            this.eventService = new GameEventService();
+            this.rcEventService = new GameEventService();
+            this.roleContext = new GameRoleContext();
         }
     }
 }

@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Core;
 using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Renderer
@@ -9,27 +10,32 @@ namespace GamePlay.Bussiness.Renderer
         public GameObject go { get; private set; }
         public GameObject foot { get; private set; }
         public GameObject body { get; private set; }
-        public SpriteRenderer spriteRenderer { get; private set; }
+
         public GameRoleFSMComR fsmCom { get; private set; }
         public GameAnimPlayableCom animCom { get; private set; }
 
-        public GameRoleEntityR(GameObject go) : base(0, GameEntityType.Role)
+        public GameRoleEntityR(int typeId, GameObject go) : base(typeId, GameEntityType.Role)
         {
             this.go = go;
             go.name = "role_" + this.idCom.entityId;
             this.foot = go.transform.Find("foot").gameObject;
             this.body = go.transform.Find("body").gameObject;
-            this.spriteRenderer = this.body.AddComponent<SpriteRenderer>();
-            this.fsmCom = new GameRoleFSMComR(this);
-            this.animCom = new GameAnimPlayableCom(this.body.AddComponent<Animator>());
+            this.fsmCom = new GameRoleFSMComR();
+            var animator = this.body.GetComponent<Animator>();
+            this.animCom = new GameAnimPlayableCom(animator);
         }
 
         public override void Tick(float dt)
         {
-            this.fsmCom.Tick(dt);
+            this.animCom.Tick(dt);
         }
 
         public override void Reset(float dt) { }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+            this.animCom.Dispose();
+        }
     }
 }
