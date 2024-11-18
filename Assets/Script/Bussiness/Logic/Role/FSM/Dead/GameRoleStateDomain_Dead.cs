@@ -1,24 +1,28 @@
 using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleStateDomain_Dead : GameRoleStateDomainBase
     {
-        public override string stateName => "Dead";
+        public GameRoleStateDomain_Dead() : base() { }
 
-        public GameRoleStateDomain_Dead(GameContext context) : base(context) { }
-
-        public override void Enter(GameRoleEntity role)
+        public override bool CheckEnter(GameRoleEntity entity, params object[] args)
         {
-            GameLogger.Log($"GameRoleStateDomain_Dead Enter ");
+            return true;
         }
 
-        public override void Tick(float dt, GameRoleEntity role)
+        public override void Enter(GameRoleEntity entity, params object[] args)
         {
+            GameLogger.Log($"Dead enter");
         }
 
-        public override void Exit(GameRoleStateDomainBase nextState, GameRoleEntity role)
+        protected override GameRoleStateType _CheckExit(GameRoleEntity entity)
         {
-            GameLogger.Log($"GameRoleStateDomain_Dead Exit ");
+            return GameRoleStateType.None;
+        }
+
+        protected override void _Tick(GameRoleEntity entity, float frameTime)
+        {
         }
     }
 }

@@ -1,40 +1,39 @@
 using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameRoleStateDomain_DeadR : GameRoleStateDomainR
+    public class GameRoleStateDomain_DeadR : GameRoleStateDomainBaseR
     {
+        public GameRoleStateDomain_DeadR() : base() { }
 
-        public override string stateName => "Dead";
-
-        GameRoleContextR _roleContext => this._context.roleContext;
-
-        public GameRoleStateDomain_DeadR(GameContextR context) : base(context)
+        public override bool CheckEnter(GameRoleEntityR entity, params object[] args)
         {
+            return true;
         }
 
-        public override void Enter(GameRoleEntityR role)
+        public override void Enter(GameRoleEntityR entity, params object[] args)
         {
-            GameLogger.Log($"GameRoleStateDomain_DeadR Enter ");
+            GameLogger.Log($"DeadR enter");
             var factory = this._roleContext.factory;
-            var animCom = role.animCom;
+            var animCom = entity.animCom;
             if (animCom.hasClip("dead"))
             {
                 animCom.Play("dead");
             }
             else
             {
-                var clip = factory.LoadAnimationClip(role.idCom.typeId, "dead");
+                var clip = factory.LoadAnimationClip(entity.idCom.typeId, "dead");
                 animCom.Play(clip);
             }
         }
 
-        public override void Tick(float dt, GameRoleEntityR role)
+        protected override GameRoleStateType _CheckExit(GameRoleEntityR entity)
         {
+            return GameRoleStateType.None;
         }
 
-        public override void Exit(GameRoleStateDomainR nextState, GameRoleEntityR role)
+        protected override void _Tick(GameRoleEntityR entity, float frameTime)
         {
-            GameLogger.Log($"GameRoleStateDomain_DeadR Exit ");
         }
     }
 }

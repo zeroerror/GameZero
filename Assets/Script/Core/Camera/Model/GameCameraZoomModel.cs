@@ -4,13 +4,13 @@ public class GameCameraZoomModel
 {
     public readonly float ZoomDuration;
     public readonly float ZoomAmplitude;
-    public readonly EasingType ZoomEase;
+    public readonly GameEasingType ZoomEase;
     public readonly bool ResetOnEnd;
 
     public GameCameraZoomModel(
         float zoomDuration,
         float zoomAmplitude,
-        EasingType zoomEase = EasingType.Parabola,
+        GameEasingType zoomEase = GameEasingType.Parabola,
         bool resetOnEnd = true)
     {
         this.ZoomDuration = zoomDuration;
@@ -27,7 +27,7 @@ public class GameCameraZoomModel
         return new GameCameraZoomModel(
             float.Parse(elements[0]),
             float.Parse(elements[1]),
-            (EasingType)Enum.Parse(typeof(EasingType), elements[2])
+            (GameEasingType)Enum.Parse(typeof(GameEasingType), elements[2])
         );
     }
 

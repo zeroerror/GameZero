@@ -5,13 +5,29 @@ namespace GamePlay.Bussiness.Renderer
     public class GameDirectDomainR
     {
         public GameContextR context { get; private set; }
-
         public GameRoleDomainR roleDomain { get; private set; }
 
         public GameDirectDomainR(GameContext logicContext)
         {
+            this._InitDomain();
+            this._InitContext(logicContext);
+            this._InjectContext();
+        }
+
+        private void _InitDomain()
+        {
+            this.roleDomain = new GameRoleDomainR();
+        }
+
+        private void _InitContext(GameContext logicContext)
+        {
             this.context = new GameContextR(logicContext);
-            this.roleDomain = new GameRoleDomainR(this.context);
+            this.context.domainApi.SetRoleApi(this.roleDomain);
+        }
+
+        private void _InjectContext()
+        {
+            this.roleDomain.Inject(this.context);
         }
 
         public void Dispose()
@@ -35,6 +51,7 @@ namespace GamePlay.Bussiness.Renderer
         protected void _PreTick(float dt)
         {
             this.context.delayRCEventService.Tick();
+            this.context.logicContext.rcEventService.Tick();
             this.context.eventService.Tick();
         }
 

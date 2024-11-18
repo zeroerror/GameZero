@@ -1,24 +1,39 @@
 using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameRoleStateDomain_CastR : GameRoleStateDomainR
+    public class GameRoleStateDomain_CastR : GameRoleStateDomainBaseR
     {
-        public override string stateName => "Cast";
+        public GameRoleStateDomain_CastR() : base() { }
 
-        public GameRoleStateDomain_CastR(GameContextR context) : base(context) { }
-
-        public override void Enter(GameRoleEntityR role)
+        public override bool CheckEnter(GameRoleEntityR entity, params object[] args)
         {
-            GameLogger.Log($"GameRoleStateDomain_Cast Enter ");
+            return true;
         }
 
-        public override void Tick(float dt, GameRoleEntityR role)
+        public override void Enter(GameRoleEntityR entity, params object[] args)
         {
+            GameLogger.Log($"CastR enter");
+            var factory = this._roleContext.factory;
+            var animCom = entity.animCom;
+            if (animCom.hasClip("cast"))
+            {
+                animCom.Play("cast");
+            }
+            else
+            {
+                var clip = factory.LoadAnimationClip(entity.idCom.typeId, "cast");
+                animCom.Play(clip);
+            }
         }
 
-        public override void Exit(GameRoleStateDomainR nextState, GameRoleEntityR role)
+        protected override GameRoleStateType _CheckExit(GameRoleEntityR entity)
         {
-            GameLogger.Log($"GameRoleStateDomain_Cast Exit ");
+            return GameRoleStateType.None;
+        }
+
+        protected override void _Tick(GameRoleEntityR entity, float frameTime)
+        {
         }
     }
 }

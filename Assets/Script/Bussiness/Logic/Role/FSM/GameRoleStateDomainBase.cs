@@ -1,22 +1,46 @@
-using GamePlay.Core;
 namespace GamePlay.Bussiness.Logic
 {
-    public abstract class GameRoleStateDomainBase : GameStateBase<GameRoleEntity>
+
+    public abstract class GameRoleStateDomainBase
     {
         protected GameContext _context;
+        protected GameRoleContext _roleContext => this._context.roleContext;
 
-        public GameRoleStateDomainBase(GameContext context)
+        public GameRoleStateDomainBase() { }
+
+        public void Inject(GameContext context)
         {
             this._context = context;
         }
 
-        public override abstract void Tick(float dt, GameRoleEntity role);
-        public override abstract void Enter(GameRoleEntity role);
-        public override void Exit(GameStateBase<GameRoleEntity> nextState, GameRoleEntity obj)
+        /** 尝试进入状态 */
+        public bool TryEnter(GameRoleEntity entity, params object[] args)
         {
-            Exit(nextState as GameRoleStateDomainBase, obj);
+            if (!this.CheckEnter(entity, args)) return false;
+            this.Enter(entity, args);
+            return true;
         }
-        public abstract void Exit(GameRoleStateDomainBase nextState, GameRoleEntity obj);
+
+        /** 状态更新 */
+        public void Tick(GameRoleEntity entity, float frameTime)
+        {
+            this._Tick(entity, frameTime);
+            var toState = this._CheckExit(entity);
+            // if (toState != GameRoleStateType.None) this._fsmDomain.Enter(entity, toState);
+        }
+
+        /** 判定进入条件 */
+        public abstract bool CheckEnter(GameRoleEntity entity, params object[] args);
+        /** 进入. ps: 直接调用则会跳过了条件判定 */
+        public abstract void Enter(GameRoleEntity entity, params object[] args);
+        /** 状态更新 */
+        protected abstract void _Tick(GameRoleEntity entity, float frameTime);
+        /** 判定退出条件 */
+        protected abstract GameRoleStateType _CheckExit(GameRoleEntity entity);
+        /** 退出状态 */
+        public virtual void ExitTo(GameRoleEntity entity, GameRoleStateType toState) { }
     }
 
 }
+
+

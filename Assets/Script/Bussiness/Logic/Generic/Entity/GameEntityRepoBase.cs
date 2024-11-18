@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public abstract class GameEntityRepoBase<T> where T : GameEntityBase
@@ -16,6 +18,7 @@ namespace GamePlay.Bussiness.Logic
 
         public virtual bool TryAdd(T entity)
         {
+            GameLogger.Log($"实体仓库添加: {entity.idCom}");
             return this._entityDict.TryAdd(entity.idCom.entityId, entity);
         }
 

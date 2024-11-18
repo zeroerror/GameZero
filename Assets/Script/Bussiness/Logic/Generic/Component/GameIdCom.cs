@@ -6,13 +6,7 @@ namespace GamePlay.Bussiness.Logic
     {
         public int typeId { get; private set; }
         public GameEntityType entityType { get; private set; }
-        public int entityId { get; private set; }
-        static Dictionary<GameEntityType, int> _autoEntityId = new Dictionary<GameEntityType, int>{
-            { GameEntityType.Role, 0 },
-            { GameEntityType.Skill, 0 },
-            { GameEntityType.Bullet, 0 },
-            { GameEntityType.Buff, 0 }
-        };
+        public int entityId { get; set; }
 
         public GameEntityBase parent { get; private set; }
         public int campId;
@@ -21,7 +15,6 @@ namespace GamePlay.Bussiness.Logic
         {
             this.typeId = typeId;
             this.entityType = entityType;
-            this.entityId = ++GameIdCom._autoEntityId[entityType];
         }
 
         public void Reset()
@@ -53,9 +46,9 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
-        public GameIdComArgs ToArgs()
+        public GameIdArgs ToArgs()
         {
-            return new GameIdComArgs
+            return new GameIdArgs
             {
                 typeId = typeId,
                 entityType = entityType,
@@ -63,5 +56,11 @@ namespace GamePlay.Bussiness.Logic
             };
         }
 
+        public void SetByArgs(in GameIdArgs args)
+        {
+            typeId = args.typeId;
+            entityType = args.entityType;
+            entityId = args.entityId;
+        }
     }
 }

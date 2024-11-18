@@ -1,38 +1,39 @@
 using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameRoleStateDomain_MoveR : GameRoleStateDomainR
+    public class GameRoleStateDomain_MoveR : GameRoleStateDomainBaseR
     {
-        public override string stateName => "Move";
-        private GameRoleContextR _roleContext => this._context.roleContext;
+        public GameRoleStateDomain_MoveR() : base() { }
 
-        public GameRoleStateDomain_MoveR(GameContextR context) : base(context)
+        public override bool CheckEnter(GameRoleEntityR entity, params object[] args)
         {
+            return true;
         }
 
-        public override void Enter(GameRoleEntityR role)
+        public override void Enter(GameRoleEntityR entity, params object[] args)
         {
-            GameLogger.Log($"GameRoleStateDomain_MoveR Enter ");
+            GameLogger.Log($"MoveR enter");
             var factory = this._roleContext.factory;
-            var animCom = role.animCom;
-            if (animCom.hasClip("Move"))
+            var animCom = entity.animCom;
+            if (animCom.hasClip("move"))
             {
-                animCom.Play("Move");
+                animCom.Play("move");
             }
             else
             {
-                var clip = factory.LoadAnimationClip(role.idCom.typeId, "Move");
+                var clip = factory.LoadAnimationClip(entity.idCom.typeId, "move");
                 animCom.Play(clip);
             }
         }
 
-        public override void Tick(float dt, GameRoleEntityR role)
+        protected override GameRoleStateType _CheckExit(GameRoleEntityR entity)
         {
+            return GameRoleStateType.None;
         }
 
-        public override void Exit(GameRoleStateDomainR nextState, GameRoleEntityR role)
+        protected override void _Tick(GameRoleEntityR entity, float frameTime)
         {
-            GameLogger.Log($"GameRoleStateDomain_MoveR Exit ");
         }
     }
 }

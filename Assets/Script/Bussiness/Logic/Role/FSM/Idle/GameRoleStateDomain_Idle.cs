@@ -1,23 +1,39 @@
 using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleStateDomain_Idle : GameRoleStateDomainBase
     {
-        public override string stateName => "Idle";
+        public GameRoleStateDomain_Idle() : base() { }
 
-        public GameRoleStateDomain_Idle(GameContext context) : base(context) { }
-
-        public override void Enter(GameRoleEntity role)
+        public override bool CheckEnter(GameRoleEntity entity, params object[] args)
         {
+            return true;
         }
 
-        public override void Tick(float dt, GameRoleEntity role)
+        public override void Enter(GameRoleEntity entity, params object[] args)
         {
+            GameLogger.Log($"Idle enter");
+            // 提交RC
+            this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_IDLE, new GameRoleRCCollection.GameRoleRCArgs_StateEnterIdle
+            {
+                fromState = entity.fsmCom.state,
+                idComArgs = entity.idCom.ToArgs(),
+            });
         }
 
-        public override void Exit(GameRoleStateDomainBase nextState, GameRoleEntity role)
+        protected override GameRoleStateType _CheckExit(GameRoleEntity entity)
         {
-            GameLogger.Log($"GameRoleStateDomain_Idle Exit ");
+            return GameRoleStateType.None;
+        }
+
+        protected override void _Tick(GameRoleEntity entity, float frameTime)
+        {
+            var inputCom = entity.inputCom;
+            if (inputCom.HasInput())
+            {
+                GameLogger.Log($"Has input, change to move =》 {inputCom.moveDir}");
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ namespace GamePlay.Core
         public float from;
         public float to;
         public float duration;
-        public EasingType easingType;
+        public GameEasingType easingType;
         public bool needReset;
         public Action onComplete;
 
@@ -19,7 +19,7 @@ namespace GamePlay.Core
         public float value;
 
 
-        public GameCameraZoomData(float from, float to, float duration, EasingType easingType, bool needReset, Action onComplete = null)
+        public GameCameraZoomData(float from, float to, float duration, GameEasingType easingType, bool needReset, Action onComplete = null)
         {
             this.from = from;
             this.to = to;
@@ -47,7 +47,7 @@ namespace GamePlay.Core
         Queue<GameCameraZoomData> _shakeDataQueue = new Queue<GameCameraZoomData>();
         Queue<GameCameraZoomData> _shakeDataPool = new Queue<GameCameraZoomData>();
         float _zoomValue = 0;
-        GameCameraZoomData _CreateData(float from, float to, float duration, EasingType easingType, bool needReset, Action onComplete)
+        GameCameraZoomData _CreateData(float from, float to, float duration, GameEasingType easingType, bool needReset, Action onComplete)
         {
             if (!this._shakeDataPool.TryDequeue(out var data))
             {
@@ -80,7 +80,7 @@ namespace GamePlay.Core
         {
             data.time += dt;
             var t = data.time / data.duration;
-            t = EasingFunctionUtil.EaseByType(data.easingType, t);
+            t = GameEasingFuncUtil.EaseByType(data.easingType, t);
             data.value = data.from + (data.to - data.from) * t;
             this._zoomValue = data.value;
             var needRemove = t >= 1;
@@ -99,7 +99,7 @@ namespace GamePlay.Core
             this.camera.orthographicSize = this._zoomValue;
         }
 
-        public void Zoom(float from, float to, float duration, EasingType easingType, bool needReset = false, Action onComplete = null)
+        public void Zoom(float from, float to, float duration, GameEasingType easingType, bool needReset = false, Action onComplete = null)
         {
             this._CreateData(from, to, duration, easingType, needReset, onComplete);
         }

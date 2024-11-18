@@ -27,9 +27,9 @@ namespace GamePlay.Core
                 // var randomAmplitude = Random.Range(0.5f, 2.5f);
                 // this.shakeCom.Shake(randomAngle, randomAmplitude, 10, 0.5f);
 
-                this.zoomCom.Zoom(5, 4, 1, EasingType.Linear, false, () =>
+                this.zoomCom.Zoom(5, 4, 1, GameEasingType.Linear, false, () =>
                 {
-                    this.zoomCom.Zoom(4, 5, 0.5f, EasingType.Linear, false);
+                    this.zoomCom.Zoom(4, 5, 0.5f, GameEasingType.Linear, false);
                 });
             }
         }

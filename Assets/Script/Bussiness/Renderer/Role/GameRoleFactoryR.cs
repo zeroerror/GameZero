@@ -11,7 +11,6 @@ namespace GamePlay.Bussiness.Renderer
         {
             this._context = context;
             this.entityLayer = GameObject.Find("Field/Dynamic");
-            GameLogger.Log("角色工厂[渲染层]: 创建角色根节点");
         }
 
         public GameRoleEntityR Load(int typeId)
@@ -24,10 +23,8 @@ namespace GamePlay.Bussiness.Renderer
             go.transform.SetParent(this.entityLayer.transform);
             go.transform.localPosition = new Vector3(0, 0, 0);
             var e = new GameRoleEntityR(typeId, go);
-            GameLogger.Log($"角色工厂[渲染层]: 创建角色实体 {e.idCom.entityId}");
             return e;
         }
-
 
         public AnimationClip LoadAnimationClip(int typeId, string clipName)
         {

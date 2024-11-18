@@ -1,37 +1,39 @@
 using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameRoleStateDomain_IdleR : GameRoleStateDomainR
+    public class GameRoleStateDomain_IdleR : GameRoleStateDomainBaseR
     {
-        public override string stateName => "idle";
+        public GameRoleStateDomain_IdleR() : base() { }
 
-        public GameRoleStateDomain_IdleR(GameContextR context) : base(context)
+        public override bool CheckEnter(GameRoleEntityR entity, params object[] args)
         {
+            return true;
         }
 
-        public override void Enter(GameRoleEntityR role)
+        public override void Enter(GameRoleEntityR entity, params object[] args)
         {
-            GameLogger.Log($"GameRoleStateDomain_IdleR Enter ");
-            var factory = this._context.roleContext.factory;
-            var animCom = role.animCom;
+            GameLogger.Log($"IdleR enter");
+            var factory = this._roleContext.factory;
+            var animCom = entity.animCom;
             if (animCom.hasClip("idle"))
             {
                 animCom.Play("idle");
             }
             else
             {
-                var clip = factory.LoadAnimationClip(role.idCom.typeId, "idle");
+                var clip = factory.LoadAnimationClip(entity.idCom.typeId, "idle");
                 animCom.Play(clip);
             }
         }
 
-        public override void Tick(float dt, GameRoleEntityR role)
+        protected override GameRoleStateType _CheckExit(GameRoleEntityR entity)
         {
+            return GameRoleStateType.None;
         }
 
-        public override void Exit(GameRoleStateDomainR nextState, GameRoleEntityR role)
+        protected override void _Tick(GameRoleEntityR entity, float frameTime)
         {
-            GameLogger.Log($"GameRoleStateDomain_IdleR Exit ");
         }
     }
 }
