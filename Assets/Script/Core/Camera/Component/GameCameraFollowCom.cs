@@ -1,14 +1,15 @@
 using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
+using GameVec3 = UnityEngine.Vector3;
 namespace GamePlay.Core
 {
     public class GameCameraFollowCom : GameCameraComBase
     {
         public Camera camera { get; private set; }
-        public GameVec2 cameraPos { get; private set; }
+        public GameVec3 cameraPos { get; private set; }
 
         public GameObject follow { get; private set; }
-        public GameVec2 followOffset { get; private set; }
+        public GameVec3 followOffset { get; private set; }
         GameEasing2DCom _easing2DComponent = new GameEasing2DCom();
 
         public GameCameraFollowCom(Camera camera)
@@ -19,15 +20,16 @@ namespace GamePlay.Core
         protected override void _Tick(float dt)
         {
             if (this.follow == null) return;
-            var targetPos = this.follow.transform.position.GetVec2() + this.followOffset;
+            var targetPos = this.follow.transform.position + this.followOffset;
             if (this.cameraPos == targetPos) return;
-            var currentPos = this.camera.transform.position.GetVec2();
+            var currentPos = this.camera.transform.position;
             var easedPos = this._easing2DComponent.Tick(currentPos, targetPos, dt);
             this.cameraPos = easedPos;
         }
 
-        public override void Apply()
+        protected override void _Apply()
         {
+            if (this.follow == null) return;
             this.camera.transform.position = this.cameraPos;
         }
 

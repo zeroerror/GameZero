@@ -4,7 +4,7 @@ using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Core
 {
-    public class GameCircleCollider : GameCollider
+    public class GameCircleCollider : GameColliderBase
     {
 
         public float originRadius => _originRadius;
@@ -14,16 +14,23 @@ namespace GamePlay.Core
 
         public GameCircleCollider(
             GameEntityBase binder,
-            GameColliderCircleModel colliderModel,
+            GameCircleColliderModel colliderModel,
             int id,
             float scale = 1
         ) : base(binder, colliderModel, id, scale)
         {
         }
 
-        protected override void _SetByModel(object model, float scale)
+        public override string ToString()
         {
-            var colliderModel = model as GameColliderCircleModel;
+            var posInfo = $"Center: {this.worldCenterPos}";
+            var info = $"Position: {this.worldPos}, Angle: {this.angle}, Scale: {this.scale}, Radius: {this.worldRadius}";
+            return $"{posInfo}\n{info}";
+        }
+
+        protected override void _SetByModel(GameColliderModelBase model, float scale)
+        {
+            var colliderModel = model as GameCircleColliderModel;
             this.colliderOffset = colliderModel.offset;
             this._originRadius = colliderModel.radius;
             this.worldPos = GameVec2.zero;
@@ -56,7 +63,7 @@ namespace GamePlay.Core
             this.worldCenterPos = this.originCenterPos_rotated * scale + pos;
         }
 
-        public override GameVec2 GetProjectionOnAxis(GameVec2 origin, GameVec2 axis)
+        public override GameVec2 GetProjectionOnAxis(in GameVec2 origin, in GameVec2 axis)
         {
             var originToCenter = this.worldCenterPos - origin;
             var projection = GameVec2.Dot(originToCenter, axis);
@@ -66,44 +73,38 @@ namespace GamePlay.Core
             );
         }
 
-        public override GameVec2 GetRestoreMTV(GameCollider colliderB, bool onlyIntersect = true)
+        public override GameVec2 GetResolvingMTV(GameColliderBase colliderB, bool onlyDetectPenetration = true)
         {
             var collider = colliderB as GameCircleCollider;
             var line = this.worldCenterPos - collider.worldCenterPos;
             var dis = line.magnitude;
             var radiusSum = this.worldRadius + collider.worldRadius;
-            if (onlyIntersect && dis >= radiusSum) return GameVec2.zero;
+            if (onlyDetectPenetration)
+            {
+                if (dis >= radiusSum) return GameVec2.zero;
+            }
             var dir = line.normalized;
             var mtv = dir * (radiusSum - dis);
             return mtv;
         }
 
-        public override bool IsIntersectWithPoint(GameVec2 point)
-        {
-            var distance = (point - this.worldCenterPos).sqrMagnitude;
-            return distance <= this.worldRadius * this.worldRadius;
-        }
-
-        public override GameVec2 GetContactMTV(GameCollider collider)
-        {
-            return GetRestoreMTV(collider, false);
-        }
-
-        public override GameVec2 GetContactMTV_ByPoint(GameVec2 point)
+        public override GameVec2 GetResolvingMTV(in GameVec2 point, bool onlyDetectPenetration = true)
         {
             var offset = point - this.worldCenterPos;
             var dis = offset.magnitude;
-            if (dis <= this.worldRadius) return GameVec2.zero;
+            if (onlyDetectPenetration)
+            {
+                if (dis >= this.worldRadius) return GameVec2.zero;
+            }
             var dir = offset.normalized;
             var mtv = dir * (this.worldRadius - dis);
             return mtv;
         }
 
-        public override string ToString()
+        public override bool CheckOverlap(in GameVec2 point)
         {
-            var posInfo = $"Center: {this.worldCenterPos}";
-            var info = $"Position: {this.worldPos}, Angle: {this.angle}, Scale: {this.scale}, Radius: {this.worldRadius}";
-            return $"{posInfo}\n{info}";
+            var distance = (point - this.worldCenterPos).sqrMagnitude;
+            return distance <= this.worldRadius * this.worldRadius;
         }
     }
 }

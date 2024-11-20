@@ -23,7 +23,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Tick()
         {
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKey(KeyCode.W))
             {
                 var userRole = this._roleContext.userRole;
                 var entityId = userRole.idCom.entityId;

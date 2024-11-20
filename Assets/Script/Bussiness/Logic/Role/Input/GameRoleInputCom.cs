@@ -8,6 +8,7 @@ namespace GamePlay.Bussiness.Logic
         public GameVec2 moveDir { get; set; }
         public GameVec2 faceDir { get; set; }
         public GameVec2 dstPos { get; set; }
+        public int skillId { get; set; }
         public List<IGameActionTargeter> targeterList { get; private set; }
 
         public GameRoleInputCom()
@@ -34,9 +35,28 @@ namespace GamePlay.Bussiness.Logic
             if (targeterList != null && targeterList.Count > 0) targeterList.AddRange(targeterList);
         }
 
-        public bool HasInput()
+        public bool TryGetInputArgs(out GameRoleInputArgs inputArgs)
         {
-            return this.moveDir != GameVec2.zero || this.faceDir != GameVec2.zero || this.dstPos != GameVec2.zero || this.targeterList.Count > 0;
+            var hasInput =
+            this.moveDir != GameVec2.zero ||
+             this.faceDir != GameVec2.zero ||
+             this.dstPos != GameVec2.zero ||
+             this.skillId != 0 ||
+             this.targeterList.Count > 0;
+            if (!hasInput)
+            {
+                inputArgs = default;
+                return false;
+            }
+            inputArgs = new GameRoleInputArgs
+            {
+                moveDir = this.moveDir,
+                faceDir = this.faceDir,
+                dstPos = this.dstPos,
+                skillId = this.skillId,
+                targeterList = this.targeterList,
+            };
+            return true;
         }
     }
 }

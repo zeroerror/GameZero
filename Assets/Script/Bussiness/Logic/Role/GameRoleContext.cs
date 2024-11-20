@@ -24,14 +24,10 @@ namespace GamePlay.Bussiness.Logic
             this._playerInputArgs.Clear();
         }
 
-        public void ForeachPlayerInputArgs(System.Action<int, GameRoleInputArgs> action)
+        public bool TryGetPlayerInputArgs(int entityId, out GameRoleInputArgs inputArgs)
         {
-            foreach (var item in this._playerInputArgs)
-            {
-                action(item.Key, item.Value);
-            }
+            return this._playerInputArgs.TryGetValue(entityId, out inputArgs);
         }
-
         public void SetPlayerInputArgs(int entityId, in GameRoleInputArgs inputArgs)
         {
             this._playerInputArgs[entityId] = inputArgs;

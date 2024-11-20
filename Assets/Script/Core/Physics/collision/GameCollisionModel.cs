@@ -5,18 +5,18 @@ namespace GamePlay.Core
 {
     public class GameCollisionModel
     {
-        private GameCollider _colliderA;
-        private GameCollider _colliderB;
+        private GameColliderBase _colliderA;
+        private GameColliderBase _colliderB;
 
-        public GameCollider colliderA => _colliderA;
+        public GameColliderBase colliderA => _colliderA;
 
-        public GameCollider colliderB => _colliderB;
+        public GameColliderBase colliderB => _colliderB;
 
         public GameCollisionType collisionType;
 
         public GameVec2 mtv;
 
-        public GameCollisionModel(GameCollider colliderA, GameCollider colliderB, GameCollisionType collisionType, in GameVec2 mtv)
+        public GameCollisionModel(GameColliderBase colliderA, GameColliderBase colliderB, GameCollisionType collisionType, in GameVec2 mtv)
         {
             _colliderA = colliderA;
             _colliderB = colliderB;

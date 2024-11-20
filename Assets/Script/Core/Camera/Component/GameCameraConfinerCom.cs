@@ -2,7 +2,7 @@ using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Core
 {
-    public class GameCameraConfinerCom
+    public class GameCameraConfinerCom : GameCameraComBase
     {
         public Camera camera { get; private set; }
         public GameVec2 cameraPos { get; private set; }
@@ -14,7 +14,7 @@ namespace GamePlay.Core
             this.camera = camera;
         }
 
-        public void Tick(float dt)
+        protected override void _Tick(float dt)
         {
         }
 
@@ -24,7 +24,7 @@ namespace GamePlay.Core
             this.max = max;
         }
 
-        public void Apply()
+        protected override void _Apply()
         {
         }
     }

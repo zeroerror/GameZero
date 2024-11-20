@@ -3,61 +3,56 @@ using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Core
 {
-    public class GamePhysicsRestoreUtil
+    public class GameResolvingUtil
     {
-        /**
-         * 获取碰撞器碰撞的MTV
-         * @param colliderA 碰撞器A
-         * @param colliderB 碰撞器B
-         */
-        public static GameVec2 GetRestoreMTV(GameCollider colliderA, GameCollider colliderB)
+        public static GameVec2 GetResolvingMTV(GameColliderBase colliderA, GameColliderBase colliderB)
         {
             GameVec2 mtv = GameVec2.zero;
             if (colliderA is GameBoxCollider boxCollider)
-                mtv = GetRestoreMTV_Box_Collider(boxCollider, colliderB);
+                mtv = GetResolvingMTV_Box_Collider(boxCollider, colliderB);
             else if (colliderA is GameCircleCollider circleCollider)
-                mtv = GetRestoreMTV_Circle_Collider(circleCollider, colliderB);
+                mtv = GetResolvingMTV_Circle_Collider(circleCollider, colliderB);
             else if (colliderA is GameFanCollider fanCollider)
-                mtv = GetRestoreMTV_Fan_Collider(fanCollider, colliderB);
+                mtv = GetResolvingMTV_Fan_Collider(fanCollider, colliderB);
             else
-                GameLogger.Error("GamePhysicsRestoreUtil.GetRestoreMTV: colliderA is not a valid collider");
+                GameLogger.Error("GamePhysicsRestoreUtil.GetResolvingMTV: colliderA is not a valid collider");
 
             return mtv;
         }
 
-        private static GameVec2 GetRestoreMTV_Box_Collider(GameBoxCollider boxCollider, GameCollider colliderB)
+        private static GameVec2 GetResolvingMTV_Box_Collider(GameBoxCollider boxCollider, GameColliderBase colliderB)
         {
             GameVec2 mtv = GameVec2.zero;
             if (colliderB is GameBoxCollider box)
-                mtv = boxCollider.GetRestoreMTV(box);
+                mtv = boxCollider.GetResolvingMTV(box);
             else if (colliderB is GameCircleCollider circle)
-                mtv = GetRestoreMTV_Box_Circle(boxCollider, circle);
+                mtv = GetResolvingMTV_Box_Circle(boxCollider, circle);
             else if (colliderB is GameFanCollider fan)
-                mtv = GetRestoreMTV_Box_Fan(boxCollider, fan);
+                mtv = GetResolvingMTV_Box_Fan(boxCollider, fan);
             return mtv;
         }
 
-        private static GameVec2 GetRestoreMTV_Circle_Collider(GameCircleCollider circleCollider, GameCollider colliderB)
+        private static GameVec2 GetResolvingMTV_Circle_Collider(GameCircleCollider circleCollider, GameColliderBase colliderB)
         {
             GameVec2 mtv = GameVec2.zero;
             if (colliderB is GameCircleCollider circle)
-                mtv = circleCollider.GetRestoreMTV(circle);
+                mtv = circleCollider.GetResolvingMTV(circle);
             else if (colliderB is GameBoxCollider box)
-                mtv = GetRestoreMTV_Box_Circle(box, circleCollider).Neg();
+                mtv = GetResolvingMTV_Box_Circle(box, circleCollider).Neg();
             else if (colliderB is GameFanCollider fan)
-                mtv = GetRestoreMTV_Circle_Fan(circleCollider, fan).Neg();
+                mtv = GetResolvingMTV_Circle_Fan(circleCollider, fan).Neg();
             return mtv;
         }
 
-        private static GameVec2 GetRestoreMTV_Fan_Collider(GameFanCollider fanCollider, GameCollider colliderB)
+        private static GameVec2 GetResolvingMTV_Fan_Collider(GameFanCollider fanCollider, GameColliderBase colliderB)
         {
             GameVec2 mtv = GameVec2.zero;
             if (colliderB is GameFanCollider fan)
-                mtv = fanCollider.GetRestoreMTV(fan);
+                mtv = fanCollider.GetResolvingMTV(fan);
             else if (colliderB is GameBoxCollider box)
-                mtv = GetRestoreMTV_Box_Fan(box, fanCollider).Neg();
+                mtv = GetResolvingMTV_Box_Fan(box, fanCollider).Neg();
             else if (colliderB is GameCircleCollider circle)
-                mtv = GetRestoreMTV_Circle_Fan(circle, fanCollider).Neg();
+                mtv = GetResolvingMTV_Circle_Fan(circle, fanCollider).Neg();
             return mtv;
         }
 
@@ -82,7 +77,7 @@ namespace GamePlay.Core
             return max - min;
         }
 
-        public static GameVec2 GetRestoreMTV_Box_Circle(GameBoxCollider boxCollider, GameCircleCollider circleCollider, int judgeMode = 0)
+        public static GameVec2 GetResolvingMTV_Box_Circle(GameBoxCollider boxCollider, GameCircleCollider circleCollider, int judgeMode = 0)
         {
             var records = new List<IGamePhysicsSATParams>();
 
@@ -135,7 +130,7 @@ namespace GamePlay.Core
             return minMtv;
         }
 
-        public static GameVec2 GetRestoreMTV_Box_Fan(
+        public static GameVec2 GetResolvingMTV_Box_Fan(
         GameBoxCollider boxCollider,
         GameFanCollider fanCollider,
         int judgeMode = 0)
@@ -272,15 +267,15 @@ namespace GamePlay.Core
             GameBoxCollider boxCollider,
             GameFanCollider fanCollider)
         {
-            return GetRestoreMTV_Box_Fan(boxCollider, fanCollider, 1);
+            return GetResolvingMTV_Box_Fan(boxCollider, fanCollider, 1);
         }
 
-        public static GameVec2 GetRestoreMTV_Circle_Fan(
+        public static GameVec2 GetResolvingMTV_Circle_Fan(
             GameCircleCollider circleCollider,
             GameFanCollider fanCollider,
             int judgeMode = 0)
         {
-            GameLogger.Error("GamePhysicsUtil.GetRestoreMTV_Circle_Fan not implemented");
+            GameLogger.Error("GamePhysicsUtil.GetResolvingMTV_Circle_Fan not implemented");
             return GameVec2.zero;
         }
 

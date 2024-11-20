@@ -2,7 +2,7 @@ namespace GamePlay.Core
 {
     public abstract class GameCameraComBase
     {
-        public bool enable { get; private set; } = true;
+        public virtual bool enable { get; set; } = true;
 
         public void Tick(float dt)
         {
@@ -10,6 +10,11 @@ namespace GamePlay.Core
             this._Tick(dt);
         }
         protected abstract void _Tick(float dt);
-        public abstract void Apply();
+        public void Apply()
+        {
+            if (!this.enable) return;
+            this._Apply();
+        }
+        protected abstract void _Apply();
     }
 }

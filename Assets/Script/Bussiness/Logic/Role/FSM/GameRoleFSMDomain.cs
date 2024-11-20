@@ -2,7 +2,7 @@ using System.Collections.Generic;
 namespace GamePlay.Bussiness.Logic
 {
 
-    public class GameRoleFSMDomain
+    public class GameRoleFSMDomain : GameRoleFSMDomainApi
     {
         private GameContext _context;
         // private GameRoleAnyStateDomain _anyDomain;

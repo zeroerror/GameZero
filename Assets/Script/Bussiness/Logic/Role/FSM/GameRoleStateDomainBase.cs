@@ -26,7 +26,7 @@ namespace GamePlay.Bussiness.Logic
         {
             this._Tick(entity, frameTime);
             var toState = this._CheckExit(entity);
-            // if (toState != GameRoleStateType.None) this._fsmDomain.Enter(entity, toState);
+            if (toState != GameRoleStateType.None) this._context.domainApi.roleApi.fsmApi.Enter(entity, toState);
         }
 
         /** 判定进入条件 */

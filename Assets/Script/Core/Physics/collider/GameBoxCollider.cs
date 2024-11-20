@@ -3,7 +3,7 @@ using GamePlay.Bussiness.Logic;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Core
 {
-    public class GameBoxCollider : GameCollider
+    public class GameBoxCollider : GameColliderBase
     {
         public GameVec2 originP1;
         public GameVec2 originP2;
@@ -57,7 +57,7 @@ namespace GamePlay.Core
 
         public GameBoxCollider(
             GameEntityBase binder,
-            GameColliderBoxModel colliderModel,
+            GameBoxColliderModel colliderModel,
             int id,
             float scale = 1
         ) : base(binder, colliderModel, id, scale)
@@ -65,9 +65,9 @@ namespace GamePlay.Core
             this.scale = scale;
         }
 
-        protected override void _SetByModel(object model, float scale)
+        protected override void _SetByModel(GameColliderModelBase model, float scale)
         {
-            var colliderModel = model as GameColliderBoxModel;
+            var colliderModel = model as GameBoxColliderModel;
             // 坐标设置 T
             worldPos = GameVec2.zero;
             float boxWidth = colliderModel.width;
@@ -149,7 +149,7 @@ namespace GamePlay.Core
             worldCenterPos = originCenterPos_rotated * scale + pos;
         }
 
-        public override GameVec2 GetProjectionOnAxis(GameVec2 origin, GameVec2 axis)
+        public override GameVec2 GetProjectionOnAxis(in GameVec2 origin, in GameVec2 axis)
         {
             GameVec2 p1 = worldP1;
             GameVec2 p2 = worldP2;
@@ -165,7 +165,7 @@ namespace GamePlay.Core
             return new GameVec2(min, max);
         }
 
-        public override GameVec2 GetRestoreMTV(GameCollider collider, bool onlyIntersect = true)
+        public override GameVec2 GetResolvingMTV(GameColliderBase collider, bool onlyDetectPenetration = true)
         {
             var boxCollider = collider as GameBoxCollider;
             if (boxCollider == null) return GameVec2.zero;
@@ -174,12 +174,12 @@ namespace GamePlay.Core
             float angleZ2 = boxCollider.angle;
 
             if (angleZ1 == 0 && angleZ2 == 0)
-                return GetRestoreMTV_AABB(boxCollider);
+                return GetResolvingMTV_AABB(boxCollider);
 
-            GameVec2 obbIntersect1 = GetRestoreMTV_OBB(boxCollider);
+            GameVec2 obbIntersect1 = GetResolvingMTV_OBB(boxCollider);
             if (obbIntersect1.Equals(GameVec2.zero)) return GameVec2.zero;
 
-            GameVec2 obbIntersect2 = boxCollider.GetRestoreMTV_OBB(this);
+            GameVec2 obbIntersect2 = boxCollider.GetResolvingMTV_OBB(this);
             if (obbIntersect2.Equals(GameVec2.zero)) return GameVec2.zero;
 
             GameVec2 mtv = obbIntersect1.sqrMagnitude < obbIntersect2.sqrMagnitude
@@ -188,7 +188,7 @@ namespace GamePlay.Core
             return mtv;
         }
 
-        private GameVec2 GetRestoreMTV_AABB(GameBoxCollider box2, int judgeMode = 0)
+        private GameVec2 GetResolvingMTV_AABB(GameBoxCollider box2, int judgeMode = 0)
         {
             GameBoxCollider box1 = this;
             GameVec2 minPos1 = box1._worldMinPos;
@@ -198,11 +198,11 @@ namespace GamePlay.Core
 
             if (judgeMode == 0)
             {
-                float mtvLenX = GamePhysicsRestoreUtil.GetRestoreLength(
+                float mtvLenX = GameResolvingUtil.GetRestoreLength(
                     minPos1.x, maxPos1.x, minPos2.x, maxPos2.x, judgeMode);
                 if (mtvLenX == 0) return GameVec2.zero;
 
-                float mtvLenY = GamePhysicsRestoreUtil.GetRestoreLength(
+                float mtvLenY = GameResolvingUtil.GetRestoreLength(
                     minPos1.y, maxPos1.y, minPos2.y, maxPos2.y, judgeMode);
                 if (mtvLenY == 0) return GameVec2.zero;
 
@@ -223,12 +223,12 @@ namespace GamePlay.Core
                     pj2 = new GameVec2(minPos2.y, maxPos2.y)
                 };
                 records.Add(r2);
-                return GamePhysicsRestoreUtil.GetMinMTV(records);
+                return GameResolvingUtil.GetMinMTV(records);
             }
             else
             {
-                float mtvLenX = GamePhysicsRestoreUtil.GetRestoreLength(minPos1.x, maxPos1.x, minPos2.x, maxPos2.x, judgeMode);
-                float mtvLenY = GamePhysicsRestoreUtil.GetRestoreLength(
+                float mtvLenX = GameResolvingUtil.GetRestoreLength(minPos1.x, maxPos1.x, minPos2.x, maxPos2.x, judgeMode);
+                float mtvLenY = GameResolvingUtil.GetRestoreLength(
                     minPos1.y, maxPos1.y, minPos2.y, maxPos2.y, judgeMode);
 
                 var records = new List<IGamePhysicsSATParams>()
@@ -250,11 +250,11 @@ namespace GamePlay.Core
 
                 };
 
-                return GamePhysicsRestoreUtil.AddUpMTV(records);
+                return GameResolvingUtil.AddUpMTV(records);
             }
         }
 
-        private GameVec2 GetRestoreMTV_OBB(GameBoxCollider box2)
+        private GameVec2 GetResolvingMTV_OBB(GameBoxCollider box2)
         {
             GameBoxCollider pb1 = this;
             float halfWidth1 = pb1.worldWidth / 2;
@@ -263,7 +263,7 @@ namespace GamePlay.Core
             GameVec2 axisX1 = pb1.localAxisX;
             GameVec2 pjX2_2 = box2.GetProjectionOnAxis(centerPos1, axisX1);
 
-            float mtvLenX = GamePhysicsRestoreUtil.GetRestoreLength(pjX1_1.x, pjX1_1.y, pjX2_2.x, pjX2_2.y);
+            float mtvLenX = GameResolvingUtil.GetRestoreLength(pjX1_1.x, pjX1_1.y, pjX2_2.x, pjX2_2.y);
             if (mtvLenX == 0) return GameVec2.zero;
 
             float halfLength1 = pb1.worldHeight / 2;
@@ -271,7 +271,7 @@ namespace GamePlay.Core
             GameVec2 axisY1 = pb1.localAxisY;
             GameVec2 pjY1_2 = box2.GetProjectionOnAxis(centerPos1, axisY1);
 
-            float mtvLenY = GamePhysicsRestoreUtil.GetRestoreLength(pjY1_1.x, pjY1_1.y, pjY1_2.x, pjY1_2.y);
+            float mtvLenY = GameResolvingUtil.GetRestoreLength(pjY1_1.x, pjY1_1.y, pjY1_2.x, pjY1_2.y);
             if (mtvLenY == 0) return GameVec2.zero;
 
             GameVec2 mtv = GameMathF.Abs(mtvLenX) < GameMathF.Abs(mtvLenY)
@@ -282,7 +282,7 @@ namespace GamePlay.Core
             return mtv;
         }
 
-        public override bool IsIntersectWithPoint(GameVec2 point)
+        public override bool CheckOverlap(in GameVec2 point)
         {
             float angleZ = angle;
             if (angleZ == 0)
@@ -300,14 +300,52 @@ namespace GamePlay.Core
                    localPos.y >= minPos.y && localPos.y <= maxPos.y;
         }
 
-        public override GameVec2 GetContactMTV_ByPoint(GameVec2 point)
+        public override GameVec2 GetResolvingMTV(in GameVec2 point, bool onlyDetectPenetration = true)
         {
-            throw new System.NotImplementedException();
+            if (this.angle == 0) return _GetResolvingMTV_AABB(point, onlyDetectPenetration);
+            return _GetResolvingMTV_OBB(point, onlyDetectPenetration);
         }
 
-        public override GameVec2 GetContactMTV(GameCollider collider)
+        private GameVec2 _GetResolvingMTV_AABB(in GameVec2 point, bool onlyDetectPenetration = true)
         {
-            throw new System.NotImplementedException();
+            GameVec2 minPos = _worldMinPos;
+            GameVec2 maxPos = _worldMaxPos;
+            if (onlyDetectPenetration)
+            {
+                if (point.x < minPos.x || point.x > maxPos.x) return GameVec2.zero;
+                if (point.y < minPos.y || point.y > maxPos.y) return GameVec2.zero;
+            }
+            float mtvx = 0;
+            float mtvy = 0;
+            float offsetx1 = minPos.x - point.x;
+            float offsetx2 = maxPos.x - point.x;
+            mtvy = GameMathF.Abs(offsetx1) < GameMathF.Abs(offsetx2) ? offsetx1 : offsetx2;
+            float offsety1 = minPos.y - point.y;
+            float offsety2 = maxPos.y - point.y;
+            mtvx = GameMathF.Abs(offsety1) < GameMathF.Abs(offsety2) ? offsety1 : offsety2;
+            var mtv = new GameVec2(mtvx, mtvy);
+            return mtv;
+        }
+
+        private GameVec2 _GetResolvingMTV_OBB(in GameVec2 point, bool onlyDetectPenetration = true)
+        {
+            var pjx = point.Dot(localAxisX);
+            var pjy = point.Dot(localAxisY);
+            var halfW = worldWidth / 2;
+            var halfH = worldHeight / 2;
+            if (onlyDetectPenetration)
+            {
+                if (pjx < -halfW || pjx > halfW) return GameVec2.zero;
+                if (pjy < -halfH || pjy > halfH) return GameVec2.zero;
+            }
+            var offsetx1 = -halfW - pjx;
+            var offsetx2 = halfW - pjx;
+            var mtvx = GameMathF.Abs(offsetx1) < GameMathF.Abs(offsetx2) ? offsetx1 : offsetx2;
+            var offsety1 = -halfH - pjy;
+            var offsety2 = halfH - pjy;
+            var mtvy = GameMathF.Abs(offsety1) < GameMathF.Abs(offsety2) ? offsety1 : offsety2;
+            var mtv = localAxisX * mtvx + localAxisY * mtvy;
+            return mtv;
         }
     }
 }

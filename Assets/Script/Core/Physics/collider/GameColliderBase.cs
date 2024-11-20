@@ -3,11 +3,10 @@ using GamePlay.Bussiness.Logic;
 
 namespace GamePlay.Core
 {
-    public abstract class GameCollider
+    public abstract class GameColliderBase
     {
         public int id;
         public GameEntityBase binder;
-        public GameTransformCom transform;
         public bool isTrigger = true;
         public GameVec2 worldPos;
         public GameVec2 worldCenterPos;
@@ -22,25 +21,35 @@ namespace GamePlay.Core
         public bool lockRotation;
         public bool lockScale;
 
-        // Simplified constructor
-        public GameCollider(GameEntityBase binder, object param, int id, float scale = 1)
+        public GameColliderBase(GameEntityBase binder, GameColliderModelBase param, int id, float scale = 1)
         {
             this.binder = binder;
             this.id = id;
             SetByModel(param, scale);
         }
 
-        public void SetByModel(object colliderModel, float scale = 1)
+        public void SetByModel(GameColliderModelBase colliderModel, float scale = 1)
         {
             _SetByModel(colliderModel, scale);
             _SetWorldAngle(colliderModel?.GetType().GetProperty("angle")?.GetValue(colliderModel) as float? ?? 0);
             _SetWorldScale(scale);
         }
 
-        protected abstract void _SetByModel(object colliderModel, float scale);
+        protected abstract void _SetByModel(GameColliderModelBase colliderModel, float scale);
 
         public void UpdateTRS(GameTransformCom trans)
         {
+            if (!trans.position.Equals(worldPos))
+                SetWorldPosition(trans.position);
+            if (trans.angle != angle)
+                SetWorldAngle(trans.angle);
+            if (trans.scale != scale)
+                SetWorldScale(trans.scale);
+        }
+
+        public void UpdateTRS()
+        {
+            var trans = this.binder.transformCom;
             if (!trans.position.Equals(worldPos))
                 SetWorldPosition(trans.position);
             if (trans.angle != angle)
@@ -78,15 +87,9 @@ namespace GamePlay.Core
         }
 
         protected abstract void _SetWorldScale(float scale);
-
-        public abstract GameVec2 GetRestoreMTV(GameCollider colliderB, bool onlyIntersect = true);
-
-        public abstract GameVec2 GetContactMTV_ByPoint(GameVec2 point);
-
-        public abstract GameVec2 GetContactMTV(GameCollider collider);
-
-        public abstract bool IsIntersectWithPoint(GameVec2 point);
-
-        public abstract GameVec2 GetProjectionOnAxis(GameVec2 origin, GameVec2 axis);
+        public abstract GameVec2 GetResolvingMTV(GameColliderBase colliderB, bool onlyDetectPenetration = true);
+        public abstract GameVec2 GetResolvingMTV(in GameVec2 point, bool onlyDetectPenetration = true);
+        public abstract GameVec2 GetProjectionOnAxis(in GameVec2 origin, in GameVec2 axis);
+        public abstract bool CheckOverlap(in GameVec2 point);
     }
 }

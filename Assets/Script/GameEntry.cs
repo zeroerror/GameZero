@@ -10,6 +10,8 @@ public class GameEntry : MonoBehaviour
     {
         this.gameCore = new GameCore();
         this.gameCoreR = new GameCoreR(gameCore.directDomain.context);
+        var go = new GameObject("GamePhysicsTest");
+        go.AddComponent<GamePhysicsTest>();
     }
 
     void Update()

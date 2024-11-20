@@ -8,6 +8,7 @@ namespace GamePlay.Bussiness.Logic
 
         public GameRoleInputDomain inputDomain { get; private set; }
         public GameRoleFSMDomain fsmDomain { get; private set; }
+        public GameRoleFSMDomainApi fsmApi => this.fsmDomain;
 
         public GameRoleDomain()
         {

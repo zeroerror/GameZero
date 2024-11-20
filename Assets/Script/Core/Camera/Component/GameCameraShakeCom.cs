@@ -1,42 +1,11 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
+using GameVec3 = UnityEngine.Vector3;
 namespace GamePlay.Core
 {
 
-    public class GameCameraShakeData
-    {
-        public float angle;
-        public float amplitude;
-        public float frequency;
-        public float duration;
-
-        public GameVec2 direction;
-        public GameVec2 value;
-        public float time;
-
-        public GameCameraShakeData(float angle, float amplitude, float frequency, float duration)
-        {
-            this.angle = angle;
-            this.amplitude = amplitude;
-            this.frequency = frequency;
-            this.duration = duration;
-
-            this.direction = GameVectorUtil.RotateOnAxisZ(GameVec2.up, angle);
-            this.value = GameVec2.zero;
-            this.time = 0;
-        }
-
-        public void Clear()
-        {
-            this.value = GameVec2.zero;
-            this.time = 0;
-        }
-    }
-
-
-    public class GameCameraShakeCom
+    public class GameCameraShakeCom : GameCameraComBase
     {
         public Camera camera { get; private set; }
 
@@ -62,7 +31,7 @@ namespace GamePlay.Core
             this.camera = camera;
         }
 
-        public void Tick(float dt)
+        protected override void _Tick(float dt)
         {
             for (var i = 0; i < this._shakeDataList.Count; i++)
             {
@@ -86,9 +55,9 @@ namespace GamePlay.Core
             return t >= 1;
         }
 
-        public void Apply()
+        protected override void _Apply()
         {
-            var pos = this.camera.transform.position.GetVec2();
+            var pos = this.camera.transform.position;
             for (var i = 0; i < this._shakeDataList.Count; i++)
             {
                 pos += this._shakeDataList[i].value;
@@ -101,4 +70,36 @@ namespace GamePlay.Core
             this._CreateData(angle, amplitude, frequency, duration);
         }
     }
+
+    public class GameCameraShakeData
+    {
+        public float angle;
+        public float amplitude;
+        public float frequency;
+        public float duration;
+
+        public GameVec3 direction;
+        public GameVec3 value;
+        public float time;
+
+        public GameCameraShakeData(float angle, float amplitude, float frequency, float duration)
+        {
+            this.angle = angle;
+            this.amplitude = amplitude;
+            this.frequency = frequency;
+            this.duration = duration;
+
+            this.direction = GameVectorUtil.RotateOnAxisZ(GameVec2.up, angle);
+            this.value = GameVec2.zero;
+            this.time = 0;
+        }
+
+        public void Clear()
+        {
+            this.value = GameVec2.zero;
+            this.time = 0;
+        }
+    }
+
+
 }

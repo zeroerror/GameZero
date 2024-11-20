@@ -13,7 +13,6 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Enter(GameRoleEntity entity, params object[] args)
         {
-            GameLogger.Log($"Dead enter");
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity entity)

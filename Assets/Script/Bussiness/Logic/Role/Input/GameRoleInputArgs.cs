@@ -8,6 +8,7 @@ namespace GamePlay.Bussiness.Logic
         public GameVec2 moveDir;
         public GameVec2 faceDir;
         public GameVec2 dstPos;
+        public int skillId;
         public List<IGameActionTargeter> targeterList;
     }
 }

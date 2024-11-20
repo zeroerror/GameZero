@@ -4,7 +4,7 @@ using GamePlay.Bussiness.Logic;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Core
 {
-    public class GameFanCollider : GameCollider
+    public class GameFanCollider : GameColliderBase
     {
         GameVec2 _originP1;
         GameVec2 _originP2;
@@ -27,14 +27,21 @@ namespace GamePlay.Core
         public GameVec2 projection1 => GetProjectionOnAxis(this.worldCenterPos, this.normal1);
         public GameVec2 projection2 => GetProjectionOnAxis(this.worldCenterPos, this.normal2);
 
-        public GameFanCollider(GameEntityBase binder, GameColliderFanModel colliderModel, int id, float scale = 1)
+        public GameFanCollider(GameEntityBase binder, GameFanColliderModel colliderModel, int id, float scale = 1)
             : base(binder, colliderModel, id, scale)
         {
         }
 
-        protected override void _SetByModel(object model, float scale)
+
+        public override string ToString()
         {
-            var colliderModel = model as GameColliderFanModel;
+            return $"Center: {this.worldCenterPos}, Origin1: {this.worldP1}, Origin2: {this.worldP2}\n" +
+                   $"Position: {this.worldPos}, Angle: {this.angle}, Scale: {this.scale}, Radius: {worldRadius}, Fan Angle: {this.fanAngle}";
+        }
+
+        protected override void _SetByModel(GameColliderModelBase model, float scale)
+        {
+            var colliderModel = model as GameFanColliderModel;
             var fanOffset = colliderModel.offset;
             var radius = colliderModel.radius;
             var fanAngle = colliderModel.fanAngle;
@@ -102,7 +109,7 @@ namespace GamePlay.Core
             this.worldCenterPos = this.originCenterPos_rotated * (scale) + (pos);
         }
 
-        public override GameVec2 GetProjectionOnAxis(GameVec2 origin, GameVec2 axis)
+        public override GameVec2 GetProjectionOnAxis(in GameVec2 origin, in GameVec2 axis)
         {
             axis.Normalize();
             var cross1 = axis.Cross(this.axis1);
@@ -135,18 +142,13 @@ namespace GamePlay.Core
             return new GameVec2(dotList.Min(), dotList.Max());
         }
 
-        public override GameVec2 GetRestoreMTV(GameCollider colliderB, bool onlyIntersect = true)
+        public override GameVec2 GetResolvingMTV(GameColliderBase colliderB, bool onlyDetectPenetration = true)
         {
-            GameLogger.Error("GameFanCollider.GetRestoreMTV not implemented");
+            GameLogger.Error("GameFanCollider.GetResolvingMTV not implemented");
             return GameVec2.zero;
         }
 
-        public override GameVec2 GetContactMTV(GameCollider collider)
-        {
-            return GetRestoreMTV(collider, false);
-        }
-
-        public override bool IsIntersectWithPoint(GameVec2 point)
+        public override bool CheckOverlap(in GameVec2 point)
         {
             var l = point.Sub(this.worldCenterPos);
             if (l.magnitude > worldRadius) return false;
@@ -155,22 +157,35 @@ namespace GamePlay.Core
             return !isSameSide;
         }
 
-        public override GameVec2 GetContactMTV_ByPoint(GameVec2 point)
+        public override GameVec2 GetResolvingMTV(in GameVec2 point, bool onlyDetectPenetration = true)
         {
-            var n_point = (point - (this.worldCenterPos)).normalized;
-            var n1 = (this.worldP1 - (this.worldCenterPos)).normalized;
-            var n2 = (this.worldP2 - (this.worldCenterPos)).normalized;
-
-            if (n_point.Cross(n1) < 0) return this.projection1.Sub(n_point.Project(n1));
-            if (n_point.Cross(n2) > 0) return this.projection2.Sub(n_point.Project(n2));
-
-            return n_point.Mul(point.Sub(this.worldCenterPos).magnitude - this.worldRadius);
-        }
-
-        public override string ToString()
-        {
-            return $"Center: {this.worldCenterPos}, Origin1: {this.worldP1}, Origin2: {this.worldP2}\n" +
-                   $"Position: {this.worldPos}, Angle: {this.angle}, Scale: {this.scale}, Radius: {worldRadius}, Fan Angle: {this.fanAngle}";
+            /**
+点移动到扇形表面所需MTV求解
+分为以下情况：
+1. 在扇形左边界左侧 或 在扇形右边界右侧
+MTV = 点在边界法向量上的投影向量 + 点在边界上的投影向量
+2. 在扇形角度内 且 距离大于半径
+MTV = 点到扇形原点向量 - 半径模长向量
+3. 在扇形角度内 且 距离小于半径
+MTV = min( 点到圆弧向量, 点到左边界向量, 点到右边界向量)
+            */
+            // if (onlyDetectPenetration)
+            // {
+            //     var offset = point - this.worldCenterPos;
+            //     var dis = offset.magnitude;
+            //     if (dis >= this.worldRadius) return GameVec2.zero;
+            //     var isleft = offset.Cross(this.axis1) > 0;
+            //     if (isleft) return GameVec2.zero;
+            //     var isright = offset.Cross(this.axis2) > 0;
+            //     if (isright) return GameVec2.zero;
+            // }
+            // var isleft = this.axis1.Cross(point.Sub(this.worldCenterPos)) > 0;
+            // if (isleft)
+            // {
+            //     var v1 = this.GetProjectionOnAxis(this.worldCenterPos, this.normal1);
+            //     var v2 = this.GetProjectionOnAxis(point, this.normal1);
+            // }
+            return GameVec2.zero;
         }
     }
 }

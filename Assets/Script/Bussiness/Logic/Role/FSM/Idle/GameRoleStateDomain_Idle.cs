@@ -1,5 +1,5 @@
 using GamePlay.Core;
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleStateDomain_Idle : GameRoleStateDomainBase
@@ -13,7 +13,6 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Enter(GameRoleEntity entity, params object[] args)
         {
-            GameLogger.Log($"Idle enter");
             // 提交RC
             this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_IDLE, new GameRoleRCCollection.GameRoleRCArgs_StateEnterIdle
             {
@@ -22,18 +21,21 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
+        protected override void _Tick(GameRoleEntity entity, float frameTime)
+        {
+        }
+
         protected override GameRoleStateType _CheckExit(GameRoleEntity entity)
         {
+            var inputCom = entity.inputCom;
+            if (inputCom.TryGetInputArgs(out var inputArgs))
+            {
+                if (inputArgs.skillId != 0) return GameRoleStateType.Cast;
+                if (inputArgs.moveDir != GameVec2.zero) return GameRoleStateType.Move;
+                if (inputArgs.dstPos != GameVec2.zero) return GameRoleStateType.Move;
+            }
             return GameRoleStateType.None;
         }
 
-        protected override void _Tick(GameRoleEntity entity, float frameTime)
-        {
-            var inputCom = entity.inputCom;
-            if (inputCom.HasInput())
-            {
-                GameLogger.Log($"Has input, change to move =》 {inputCom.moveDir}");
-            }
-        }
     }
 }
