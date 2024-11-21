@@ -111,49 +111,36 @@ namespace GamePlay.Core
 
         public override GameVec2 GetProjectionOnAxis(in GameVec2 origin, in GameVec2 axis)
         {
+            // 参数初始化
             axis.Normalize();
-            bool isInsideAngle = false;
-            bool isNegP = false;
-            {
-                var cross1 = axis.Cross(this.axis1);
-                var cross2 = axis.Cross(this.axis2);
-                isInsideAngle = !Math.Abs(cross1).NearlyEqual(1) && !Math.Abs(cross2).NearlyEqual(1) && cross1 * cross2 < 0;
-            }
-            {
-                if (!isInsideAngle)
-                {
-                    var negAxis = axis.Neg();
-                    var cross1 = negAxis.Cross(this.axis1);
-                    var cross2 = negAxis.Cross(this.axis2);
-                    isInsideAngle = !Math.Abs(cross1).NearlyEqual(1) && !Math.Abs(cross2).NearlyEqual(1) && cross1 * cross2 < 0;
-                    isNegP = isInsideAngle;
-                }
-            }
-
-            if (isInsideAngle && this.fanAngle < 90)
-            {
-                var center = this.worldCenterPos;
-                float centerDot = axis.Dot(center - origin);
-                var offset = axis.Mul(worldRadius);
-                if (axis.Dot(this.localAxisX) < 0) offset.NegSelf();
-
-                var p = center.Add(offset);
-                float pDot = axis.Dot(p.Sub(origin));
-                return new GameVec2(Math.Min(centerDot, pDot), Math.Max(centerDot, pDot));
-            }
-
-            var dotList = new List<float>();
-            dotList.Add(axis.Dot(this.worldCenterPos.Sub(origin)));
-            dotList.Add(axis.Dot(this.worldP1.Sub(origin)));
-            dotList.Add(axis.Dot(this.worldP2.Sub(origin)));
-
+            var cross1 = axis.Cross(this.axis1);
+            var cross2 = axis.Cross(this.axis2);
+            var isInsideAngle = cross1 * cross2 < 0;
+            var isNegSituation = cross1 < 0;
+            var p1 = this.worldP1;
+            var p2 = this.worldP2;
+            var p3 = this.worldCenterPos;
+            var p4 = p3 + axis * this.worldRadius * (isNegSituation ? -1 : 1);
+            // 情况1 - axis所在直线会经过扇形范围
+            //- 1.1 正向/反向射线经过
+            //- 1.2 投影4点：扇形3点+直线圆弧交点
             if (isInsideAngle)
             {
-                var p3 = this.worldCenterPos.Add(axis.Mul(worldRadius) * (isNegP ? -1 : 1));
-                dotList.Add(axis.Dot(p3.Sub(origin)));
+                Span<GameVec2> points = stackalloc GameVec2[] { p1, p2, p3, p4 };
+                Span<float> dots = stackalloc float[4];
+                for (int i = 0; i < 4; i++)
+                {
+                    dots[i] = axis.Dot(points[i] - origin);
+                }
+                var pj1 = new GameVec2(dots.Min(), dots.Max());
+                return pj1;
             }
-            var pj = new GameVec2(dotList.Min(), dotList.Max());
-            return pj;
+            // 情况2 - axis所在直线不经过扇形范围
+            //- 2.1 投影2点：扇形2端点
+            var dot1 = axis.Dot(p1 - origin);
+            var dot2 = axis.Dot(p2 - origin);
+            var pj2 = new GameVec2(Math.Min(dot1, dot2), Math.Max(dot1, dot2));
+            return pj2;
         }
 
         public override GameVec2 GetResolvingMTV(GameColliderBase colliderB, bool onlyDetectPenetration = true)

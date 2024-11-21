@@ -236,7 +236,6 @@ namespace GamePlay.Core
             );
             if (judgeMode == 0 && restoreLen4 == 0)
             {
-                GameLogger.Log("zzzzzzzz");
                 return GameVec2.zero;
             }
             records.Add(new IGamePhysicsSATParams
@@ -248,13 +247,13 @@ namespace GamePlay.Core
             });
 
             // Use projections of box vertices from the fan's center
-            var origin = fanCollider.worldCenterPos;
+            var fo = fanCollider.worldCenterPos;
             fanPj = new GameVec2(-fanCollider.worldRadius, fanCollider.worldRadius);
-            var boxPoints = boxCollider.GetWorldPoints();
-            foreach (var point in boxPoints)
+            var bps = boxCollider.GetWorldPoints();
+            foreach (var bp in bps)
             {
-                var axis = point.Sub(origin).normalized;
-                boxPj = boxCollider.GetProjectionOnAxis(origin, axis);
+                var axis = bp.Sub(fo).normalized;
+                boxPj = boxCollider.GetProjectionOnAxis(fo, axis);
                 var len = GetRestoreLength(
                     boxPj.x,
                     boxPj.y,
@@ -264,15 +263,14 @@ namespace GamePlay.Core
                 );
                 if (judgeMode == 0 && len == 0)
                 {
-                    GameLogger.Log("zzzzzzzz");
                     return GameVec2.zero;
                 }
                 records.Add(new IGamePhysicsSATParams
                 {
                     mtvLength = len,
                     axis = axis,
-                    pj1 = fanPj,
-                    pj2 = boxPj
+                    pj1 = boxPj,
+                    pj2 = fanPj
                 });
             }
             var minMTV = GetMinMTV(records);
