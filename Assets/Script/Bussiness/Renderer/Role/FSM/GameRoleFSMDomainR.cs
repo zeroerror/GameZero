@@ -28,6 +28,24 @@ namespace GamePlay.Bussiness.Renderer
             }
         }
 
+        public void BindEvents()
+        {
+            // this._anyDomain.BindEvents();
+            foreach (var stateDomain in this._stateDomainDict.Values)
+            {
+                stateDomain.BindEvents();
+            }
+        }
+
+        public void UnbindEvents()
+        {
+            // this._anyDomain.UnbindEvents();
+            foreach (var stateDomain in this._stateDomainDict.Values)
+            {
+                stateDomain.UnbindEvents();
+            }
+        }
+
         public void Dispose() { }
 
         public void Tick(GameRoleEntityR role, float dt)

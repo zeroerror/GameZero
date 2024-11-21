@@ -24,5 +24,17 @@ namespace GamePlay.Bussiness.Renderer
             this.delayRCEventService = new GameEventService();
             this.roleContext = new GameRoleContextR(this);
         }
+
+        public void RegistRC(string rcName, System.Action<object> callback)
+        {
+            this.logicContext.rcEventService.Regist(rcName, callback);
+            this.delayRCEventService.Regist(rcName, callback);
+        }
+
+        public void UnregistRC(string rcName, System.Action<object> callback)
+        {
+            this.logicContext.rcEventService.Unregist(rcName, callback);
+            this.delayRCEventService.Unregist(rcName, callback);
+        }
     }
 }

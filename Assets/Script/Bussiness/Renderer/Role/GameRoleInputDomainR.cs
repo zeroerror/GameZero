@@ -23,14 +23,23 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Tick()
         {
-            if (Input.GetKey(KeyCode.W))
+            // 移动
+            var moveDir = new GameVec2(0, 0);
+            var hasMoveDir = false;
+            if (Input.GetKey(KeyCode.W)) { moveDir.y += 1; hasMoveDir = true; }
+            if (Input.GetKey(KeyCode.S)) { moveDir.y -= 1; hasMoveDir = true; }
+            if (Input.GetKey(KeyCode.A)) { moveDir.x -= 1; hasMoveDir = true; }
+            if (Input.GetKey(KeyCode.D)) { moveDir.x += 1; hasMoveDir = true; }
+            // ...
+            if (hasMoveDir)
             {
                 var userRole = this._roleContext.userRole;
                 var entityId = userRole.idCom.entityId;
+                moveDir.Normalize();
                 var inputArgs = new GameRoleInputArgs()
                 {
-                    moveDir = new GameVec2(0, 1),
-                    faceDir = new GameVec2(0, 1),
+                    moveDir = moveDir,
+                    faceDir = moveDir,
                 };
                 this._roleContext.context.logicContext.roleContext.SetPlayerInputArgs(entityId, inputArgs);
             }

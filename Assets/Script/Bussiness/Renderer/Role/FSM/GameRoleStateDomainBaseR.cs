@@ -13,6 +13,10 @@ namespace GamePlay.Bussiness.Renderer
             this._context = context;
         }
 
+        public virtual void BindEvents() { }
+
+        public virtual void UnbindEvents() { }
+
         /** 尝试进入状态 */
         public bool TryEnter(GameRoleEntityR entity, params object[] args)
         {

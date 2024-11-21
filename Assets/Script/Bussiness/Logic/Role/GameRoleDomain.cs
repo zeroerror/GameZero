@@ -52,7 +52,7 @@ namespace GamePlay.Bussiness.Logic
             // 提交RC事件
             this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_CREATE, new GameRoleRCCollection.GameRoleRCArgs_Create
             {
-                idComArgs = e.idCom.ToArgs(),
+                idArgs = e.idCom.ToArgs(),
                 transComArgs = e.transformCom.ToArgs(),
                 isUser = isUser
             });

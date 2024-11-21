@@ -6,7 +6,7 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_ROLE_CREATE = "RC_GAME_ROLE_CREATE";
         public struct GameRoleRCArgs_Create
         {
-            public GameIdArgs idComArgs;
+            public GameIdArgs idArgs;
             public GameTransformArgs transComArgs;
             public bool isUser;
         }
@@ -16,7 +16,7 @@ namespace GamePlay.Bussiness.Logic
         public struct GameRoleRCArgs_StateEnterIdle
         {
             public GameRoleStateType fromState;
-            public GameIdArgs idComArgs;
+            public GameIdArgs idArgs;
         }
 
         /* 角色状态 - 进入 移动 */
@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Logic
         public struct GameRoleRCArgs_StateEnterMove
         {
             public GameRoleStateType fromState;
-            public GameIdArgs idComArgs;
+            public GameIdArgs idArgs;
         }
 
         /* 角色状态 - 进入 施法 */
@@ -32,7 +32,7 @@ namespace GamePlay.Bussiness.Logic
         public struct GameRoleRCArgs_StateEnterCast
         {
             public GameRoleStateType fromState;
-            public GameIdArgs idComArgs;
+            public GameIdArgs idArgs;
         }
 
         /* 角色状态 - 进入 死亡 */
@@ -40,7 +40,7 @@ namespace GamePlay.Bussiness.Logic
         public struct GameRoleRCArgs_StateEnterDead
         {
             public GameRoleStateType fromState;
-            public GameIdArgs idComArgs;
+            public GameIdArgs idArgs;
         }
     }
 }

@@ -18,12 +18,19 @@ namespace GamePlay.Bussiness.Renderer
         private void _BindEvents()
         {
             this._context.logicContext.rcEventService.Regist(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
+            this.fsmDomain.BindEvents();
+        }
+
+        private void _UnbindEvents()
+        {
+            this._context.logicContext.rcEventService.Unregist(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
+            this.fsmDomain.UnbindEvents();
         }
 
         private void _OnRoleCreate(object args)
         {
             var evArgs = (GameRoleRCCollection.GameRoleRCArgs_Create)args;
-            this.Create(evArgs.idComArgs, evArgs.transComArgs, evArgs.isUser);
+            this.Create(evArgs.idArgs, evArgs.transComArgs, evArgs.isUser);
         }
 
         public void Inject(GameContextR context)
@@ -36,6 +43,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Dispose()
         {
+            this._UnbindEvents();
             this.fsmDomain.Dispose();
             this._roleContext.repo.ForeachEntities((entity) =>
             {
