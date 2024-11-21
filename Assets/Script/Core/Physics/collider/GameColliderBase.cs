@@ -14,28 +14,28 @@ namespace GamePlay.Core
         public GameVec2 originCenterPos_rotated;
         public GameVec2 colliderOffset;
         public float angle;
-        public float scale { get; protected set; }
+        public float scale { get; protected set; } = 1;
         public GameVec2 localAxisX = GameVec2.right;
         public GameVec2 localAxisY = GameVec2.up;
         public bool lockPosition;
         public bool lockRotation;
         public bool lockScale;
 
-        public GameColliderBase(GameEntityBase binder, GameColliderModelBase param, int id, float scale = 1)
+        public GameColliderBase(GameEntityBase binder, GameColliderModelBase param, int id)
         {
             this.binder = binder;
             this.id = id;
-            SetByModel(param, scale);
+            SetByModel(param);
         }
 
-        public void SetByModel(GameColliderModelBase colliderModel, float scale = 1)
+        public void SetByModel(GameColliderModelBase colliderModel)
         {
-            _SetByModel(colliderModel, scale);
-            _SetWorldAngle(colliderModel?.GetType().GetProperty("angle")?.GetValue(colliderModel) as float? ?? 0);
-            _SetWorldScale(scale);
+            _SetByModel(colliderModel);
+            _SetWorldAngle(colliderModel.angle);
+            _SetWorldScale(this.scale);
         }
 
-        protected abstract void _SetByModel(GameColliderModelBase colliderModel, float scale);
+        protected abstract void _SetByModel(GameColliderModelBase colliderModel);
 
         public void UpdateTRS(GameTransformCom trans)
         {

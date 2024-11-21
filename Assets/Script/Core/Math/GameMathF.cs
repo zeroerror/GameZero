@@ -31,5 +31,9 @@ namespace GamePlay.Core
         public static float Sin(float a) => (float)System.Math.Sin(a);
         public static float Cos(float a) => (float)System.Math.Cos(a);
 
+        public static bool NearlyEqual(this float a, float b, float epsilon = 0.0001f)
+        {
+            return GameMathF.Abs(a - b) < epsilon;
+        }
     }
 }

@@ -15,9 +15,8 @@ namespace GamePlay.Core
         public GameCircleCollider(
             GameEntityBase binder,
             GameCircleColliderModel colliderModel,
-            int id,
-            float scale = 1
-        ) : base(binder, colliderModel, id, scale)
+            int id
+        ) : base(binder, colliderModel, id)
         {
         }
 
@@ -28,7 +27,7 @@ namespace GamePlay.Core
             return $"{posInfo}\n{info}";
         }
 
-        protected override void _SetByModel(GameColliderModelBase model, float scale)
+        protected override void _SetByModel(GameColliderModelBase model)
         {
             var colliderModel = model as GameCircleColliderModel;
             this.colliderOffset = colliderModel.offset;

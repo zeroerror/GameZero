@@ -13,20 +13,60 @@ public class GamePhysicsTest : MonoBehaviour
     public void Start()
     {
         // TEST 1 box和box
-        // this.CreateBox(new Vector2(0, 0), 1, Color.white);
-        // this.CreateBox(new Vector2(0.8f, 0), 1, Color.blue);
+        // this.CreateBox(new GameTransformArgs()
+        // {
+        //     position = new Vector2(0, 0),
+        //     angle = 0,
+        //     scale = 1
+        // }, Color.white);
+        // this.CreateBox(new GameTransformArgs()
+        // {
+        //     position = new Vector2(0.8f, 0),
+        //     angle = 0,
+        //     scale = 1
+        // }, Color.blue);
 
         // TEST 2 circle和circle
-        // this.CreateCircle(new Vector2(0, 0), 1, Color.white);
-        // this.CreateCircle(new Vector2(0.8f, 0.8f), 1, Color.blue);
+        // this.CreateFan(new GameTransformArgs()
+        // {
+        //     position = new Vector2(0, 0),
+        //     angle = 0,
+        //     scale = 1
+        // }, 1, 135, Color.white);
+        // this.CreateFan(new GameTransformArgs()
+        // {
+        //     position = new Vector2(0.8f, 0.8f),
+        //     angle = 0,
+        //     scale = 1
+        // }, 1, 135, Color.blue);
 
         // TEST 3 box和circle
-        // this.CreateBox(new Vector2(0, 0), 1, Color.white);
-        // this.CreateCircle(new Vector2(0.7f, 0.9f), 1, Color.blue);
+        // this.CreateBox(new GameTransformArgs()
+        // {
+        //     position = new Vector2(0, 0),
+        //     angle = 0,
+        //     scale = 1
+        // }, Color.white);
+        // this.CreateCircle(new GameTransformArgs()
+        // {
+        //     position = new Vector2(0.7f, 0.9f),
+        //     angle = 0,
+        //     scale = 1
+        // }, 1, Color.blue);
 
         // TEST 4 box和fan WIP
-        this.CreateBox(new Vector2(0, 0), 1, Color.white);
-        this.CreateFan(new Vector2(-0.8f, -0.8f), 1, 135, 1, Color.blue);
+        this.CreateBox(new GameTransformArgs()
+        {
+            position = new Vector2(0, 0),
+            angle = 0,
+            scale = 1
+        }, Color.white);
+        this.CreateFan(new GameTransformArgs()
+        {
+            position = new Vector2(0, 0),
+            angle = 0,
+            scale = 2
+        }, 1, 135, Color.blue);
     }
 
     public void Update()
@@ -41,7 +81,6 @@ public class GamePhysicsTest : MonoBehaviour
                 var c1 = this.colliderList[i];
                 var c2 = this.colliderList[i - 1];
                 var mtv = GameResolvingUtil.GetResolvingMTV(c1, c2);
-                Debug.Log(mtv);
                 // 绘制mtv
                 var s = c1.worldCenterPos;
                 var e = s + mtv;
@@ -86,16 +125,15 @@ public class GamePhysicsTest : MonoBehaviour
     }
 
     #region Fan
-    private void CreateFan(Vector2 pos, float radius, float fanAngle, float scale, Color color)
+    private void CreateFan(in GameTransformArgs args, float radius, float fanAngle, Color color)
     {
         var role = new GameRoleEntity(1);
-        role.transformCom.position = pos;
-        role.transformCom.scale = scale;
+        role.transformCom.SetByArgs(args);
         var model = new GameFanColliderModel(
             Vector2.zero, 0, radius, fanAngle
         );
         var id = 1;
-        var fan = new GameFanCollider(role, model, id, scale);
+        var fan = new GameFanCollider(role, model, id);
         this.colliderList.Add(fan);
         this.colorList.Add(color);
     }
@@ -121,16 +159,15 @@ public class GamePhysicsTest : MonoBehaviour
     #endregion
 
     #region Circle
-    private void CreateCircle(Vector2 pos, float radius, Color color)
+    private void CreateCircle(in GameTransformArgs args, float radius, Color color)
     {
         var role = new GameRoleEntity(1);
-        role.transformCom.position = pos;
-        role.transformCom.scale = radius;
+        role.transformCom.SetByArgs(args);
         var model = new GameCircleColliderModel(
             Vector2.zero, 0, radius
         );
         var id = 1;
-        var circle = new GameCircleCollider(role, model, id, radius);
+        var circle = new GameCircleCollider(role, model, id);
         this.colliderList.Add(circle);
         this.colorList.Add(color);
     }
@@ -153,16 +190,15 @@ public class GamePhysicsTest : MonoBehaviour
     #endregion
 
     #region Box
-    private void CreateBox(Vector2 pos, float scale, Color color)
+    private void CreateBox(in GameTransformArgs args, Color color)
     {
         var role = new GameRoleEntity(1);
-        role.transformCom.position = pos;
-        role.transformCom.scale = scale;
+        role.transformCom.SetByArgs(args);
         var model = new GameBoxColliderModel(
-            Vector2.zero, 0, scale, scale
+            Vector2.zero, 0, args.scale, args.scale
         );
         var id = 1;
-        var box = new GameBoxCollider(role, model, id, scale);
+        var box = new GameBoxCollider(role, model, id);
         this.colliderList.Add(box);
         this.colorList.Add(color);
     }

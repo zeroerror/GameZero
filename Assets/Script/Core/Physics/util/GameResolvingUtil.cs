@@ -154,7 +154,10 @@ namespace GamePlay.Core
                 fanPj.y,
                 judgeMode
             );
-            if (judgeMode == 0 && restoreLen1 == 0) return GameVec2.zero;
+            if (judgeMode == 0 && restoreLen1 == 0)
+            {
+                return GameVec2.zero;
+            }
             records.Add(new IGamePhysicsSATParams
             {
                 mtvLength = restoreLen1,
@@ -180,7 +183,10 @@ namespace GamePlay.Core
                 fanPj.y,
                 judgeMode
             );
-            if (judgeMode == 0 && restoreLen2 == 0) return GameVec2.zero;
+            if (judgeMode == 0 && restoreLen2 == 0)
+            {
+                return GameVec2.zero;
+            }
             records.Add(new IGamePhysicsSATParams
             {
                 mtvLength = restoreLen2,
@@ -189,7 +195,7 @@ namespace GamePlay.Core
                 pj2 = fanPj
             });
 
-            // Use fan's two edges as separation axes
+            // Use fan's two edges as separation axis
             var fanAxis1 = fanCollider.normal1;
             boxPj = boxCollider.GetProjectionOnAxis(
                 fanCollider.worldCenterPos,
@@ -203,7 +209,10 @@ namespace GamePlay.Core
                 fanPj.y,
                 judgeMode
             );
-            if (judgeMode == 0 && restoreLen3 == 0) return GameVec2.zero;
+            if (judgeMode == 0 && restoreLen3 == 0)
+            {
+                return GameVec2.zero;
+            }
             records.Add(new IGamePhysicsSATParams
             {
                 mtvLength = restoreLen3,
@@ -225,7 +234,11 @@ namespace GamePlay.Core
                 fanPj.y,
                 judgeMode
             );
-            if (judgeMode == 0 && restoreLen4 == 0) return GameVec2.zero;
+            if (judgeMode == 0 && restoreLen4 == 0)
+            {
+                GameLogger.Log("zzzzzzzz");
+                return GameVec2.zero;
+            }
             records.Add(new IGamePhysicsSATParams
             {
                 mtvLength = restoreLen4,
@@ -249,7 +262,11 @@ namespace GamePlay.Core
                     fanPj.y,
                     judgeMode
                 );
-                if (judgeMode == 0 && len == 0) return GameVec2.zero;
+                if (judgeMode == 0 && len == 0)
+                {
+                    GameLogger.Log("zzzzzzzz");
+                    return GameVec2.zero;
+                }
                 records.Add(new IGamePhysicsSATParams
                 {
                     mtvLength = len,
@@ -258,7 +275,6 @@ namespace GamePlay.Core
                     pj2 = boxPj
                 });
             }
-
             var minMTV = GetMinMTV(records);
             return minMTV;
         }

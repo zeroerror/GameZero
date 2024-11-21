@@ -30,7 +30,7 @@ public static class GameVectorUtil
     }
 
     // 根据Z轴旋转一定角度
-    public static GameVec2 RotateOnAxisZ(GameVec2 tar, float angleZ)
+    public static GameVec2 RotateOnAxisZ(in GameVec2 tar, float angleZ)
     {
         float radian = -(angleZ * GameMath.PI) / 180;
         float cos = GameMath.Cos(radian);

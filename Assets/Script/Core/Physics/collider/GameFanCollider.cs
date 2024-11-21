@@ -27,8 +27,8 @@ namespace GamePlay.Core
         public GameVec2 projection1 => GetProjectionOnAxis(this.worldCenterPos, this.normal1);
         public GameVec2 projection2 => GetProjectionOnAxis(this.worldCenterPos, this.normal2);
 
-        public GameFanCollider(GameEntityBase binder, GameFanColliderModel colliderModel, int id, float scale = 1)
-            : base(binder, colliderModel, id, scale)
+        public GameFanCollider(GameEntityBase binder, GameFanColliderModel colliderModel, int id)
+            : base(binder, colliderModel, id)
         {
         }
 
@@ -39,7 +39,7 @@ namespace GamePlay.Core
                    $"Position: {this.worldPos}, Angle: {this.angle}, Scale: {this.scale}, Radius: {worldRadius}, Fan Angle: {this.fanAngle}";
         }
 
-        protected override void _SetByModel(GameColliderModelBase model, float scale)
+        protected override void _SetByModel(GameColliderModelBase model)
         {
             var colliderModel = model as GameFanColliderModel;
             var fanOffset = colliderModel.offset;
@@ -94,8 +94,8 @@ namespace GamePlay.Core
             this.localAxisX = GameVectorUtil.RotateOnAxisZ(GameVec2.right, angle);
             this.localAxisY = GameVectorUtil.RotateOnAxisZ(GameVec2.up, angle);
 
-            this.axis1 = (this.worldP1 - (this.worldCenterPos)).normalized;
-            this.axis2 = (this.worldP2 - (this.worldCenterPos)).normalized;
+            this.axis1 = (this.worldP1 - this.worldCenterPos).normalized;
+            this.axis2 = (this.worldP2 - this.worldCenterPos).normalized;
             this.normal1 = GameVectorUtil.RotateOnAxisZ(this.axis1, 90);
             this.normal2 = GameVectorUtil.RotateOnAxisZ(this.axis2, -90);
         }
@@ -112,9 +112,23 @@ namespace GamePlay.Core
         public override GameVec2 GetProjectionOnAxis(in GameVec2 origin, in GameVec2 axis)
         {
             axis.Normalize();
-            var cross1 = axis.Cross(this.axis1);
-            var cross2 = axis.Cross(this.axis2);
-            bool isInsideAngle = Math.Abs(cross1) != 1 && Math.Abs(cross2) != 1 && cross1 * cross2 < 0;
+            bool isInsideAngle = false;
+            bool isNegP = false;
+            {
+                var cross1 = axis.Cross(this.axis1);
+                var cross2 = axis.Cross(this.axis2);
+                isInsideAngle = !Math.Abs(cross1).NearlyEqual(1) && !Math.Abs(cross2).NearlyEqual(1) && cross1 * cross2 < 0;
+            }
+            {
+                if (!isInsideAngle)
+                {
+                    var negAxis = axis.Neg();
+                    var cross1 = negAxis.Cross(this.axis1);
+                    var cross2 = negAxis.Cross(this.axis2);
+                    isInsideAngle = !Math.Abs(cross1).NearlyEqual(1) && !Math.Abs(cross2).NearlyEqual(1) && cross1 * cross2 < 0;
+                    isNegP = isInsideAngle;
+                }
+            }
 
             if (isInsideAngle && this.fanAngle < 90)
             {
@@ -135,11 +149,11 @@ namespace GamePlay.Core
 
             if (isInsideAngle)
             {
-                var p3 = this.worldCenterPos.Add(axis.Mul(worldRadius));
+                var p3 = this.worldCenterPos.Add(axis.Mul(worldRadius) * (isNegP ? -1 : 1));
                 dotList.Add(axis.Dot(p3.Sub(origin)));
             }
-
-            return new GameVec2(dotList.Min(), dotList.Max());
+            var pj = new GameVec2(dotList.Min(), dotList.Max());
+            return pj;
         }
 
         public override GameVec2 GetResolvingMTV(GameColliderBase colliderB, bool onlyDetectPenetration = true)

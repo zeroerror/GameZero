@@ -58,14 +58,13 @@ namespace GamePlay.Core
         public GameBoxCollider(
             GameEntityBase binder,
             GameBoxColliderModel colliderModel,
-            int id,
-            float scale = 1
-        ) : base(binder, colliderModel, id, scale)
+            int id
+        ) : base(binder, colliderModel, id)
         {
             this.scale = scale;
         }
 
-        protected override void _SetByModel(GameColliderModelBase model, float scale)
+        protected override void _SetByModel(GameColliderModelBase model)
         {
             var colliderModel = model as GameBoxColliderModel;
             // 坐标设置 T
