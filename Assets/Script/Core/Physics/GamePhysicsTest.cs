@@ -18,6 +18,7 @@ public class GamePhysicsTest : MonoBehaviour
 
     public void Start()
     {
+        this.testNameList.Add("Box vs Box");
         this.testList.Add(() =>
         {
             this.CreateBox(new GameTransformArgs()
@@ -33,7 +34,7 @@ public class GamePhysicsTest : MonoBehaviour
                 scale = 1
             }, Color.blue);
         });
-        this.testNameList.Add("Box vs Box");
+        this.testNameList.Add("Fan vs Fan");
         this.testList.Add(() =>
               {
                   this.CreateFan(new GameTransformArgs()
@@ -49,7 +50,7 @@ public class GamePhysicsTest : MonoBehaviour
                       scale = 1
                   }, 1, 135, Color.blue);
               });
-        this.testNameList.Add("Fan vs Fan");
+        this.testNameList.Add("Box vs Circle");
         this.testList.Add(() =>
               {
                   this.CreateBox(new GameTransformArgs()
@@ -65,7 +66,7 @@ public class GamePhysicsTest : MonoBehaviour
                       scale = 1
                   }, 1, Color.blue);
               });
-        this.testNameList.Add("Box vs Circle");
+        this.testNameList.Add("Box vs Fan");
         this.testList.Add(() =>
         {
             this.CreateBox(new GameTransformArgs()
@@ -81,7 +82,16 @@ public class GamePhysicsTest : MonoBehaviour
                 scale = 2
             }, 1, 135, Color.blue);
         });
-        this.testNameList.Add("Box vs Fan");
+        this.testNameList.Add("Fan vs Point");
+        this.testList.Add(() =>
+        {
+            this.CreateFan(new GameTransformArgs()
+            {
+                position = new Vector2(0, 0),
+                angle = 0,
+                scale = 1
+            }, 1, 135, Color.white);
+        });
 
         this.testList[this._testIndex]();
     }
@@ -109,6 +119,31 @@ public class GamePhysicsTest : MonoBehaviour
                 var arrow2 = e + GameVectorUtil.RotateOnAxisZ(arrow, -135);
                 Debug.DrawLine(e, arrow1, color);
                 Debug.DrawLine(e, arrow2, color);
+                // // ttttttttt
+                // var p = this.colliderList[i - 1].worldCenterPos;
+                // var c1 = this.colliderList[i];
+                // var mtv = c1.GetResolvingMTV(p, false);
+                // // 绘制mtv
+                // var s = p;
+                // var e = s + mtv;
+                // Debug.DrawLine(s, e, color);
+                // // 绘制箭头
+                // var arrow = mtv.normalized * 0.1f;
+                // var arrow1 = e + GameVectorUtil.RotateOnAxisZ(arrow, 135);
+                // var arrow2 = e + GameVectorUtil.RotateOnAxisZ(arrow, -135);
+                // Debug.DrawLine(e, arrow1, color);
+                // Debug.DrawLine(e, arrow2, color);
+                // // 绘制扇形normal
+                // if (c1 is GameFanCollider)
+                // {
+                //     var c = c1 as GameFanCollider;
+                //     var normal1 = c.normal1;
+                //     var normalEnd1 = c.worldCenterPos + normal1 * 5f;
+                //     Debug.DrawLine(c.worldCenterPos, normalEnd1, color);
+                //     var normal2 = c.normal2;
+                //     var normalEnd2 = c.worldCenterPos + normal2 * 5f;
+                //     Debug.DrawLine(c.worldCenterPos, normalEnd2, color);
+                // }
             }
         }
         // ------------------------------- 控制 -------------------------------
@@ -123,13 +158,12 @@ public class GamePhysicsTest : MonoBehaviour
             if (Input.GetKey(KeyCode.A)) this.colliderList[this._ctrlIndex].binder.transformCom.position += new Vector2(-offset, 0);
             if (Input.GetKey(KeyCode.D)) this.colliderList[this._ctrlIndex].binder.transformCom.position += new Vector2(offset, 0);
         }
-        var testIndex = -1;
-        if (Input.GetKey(KeyCode.Alpha1)) testIndex = 0;
-        if (Input.GetKey(KeyCode.Alpha2)) testIndex = 1;
-        if (Input.GetKey(KeyCode.Alpha3)) testIndex = 2;
-        if (Input.GetKey(KeyCode.Alpha4)) testIndex = 3;
-        if (testIndex >= 0 && testIndex != this._testIndex)
+        var testIndex = -99;
+        if (Input.GetKeyDown(KeyCode.Q)) testIndex = this._testIndex - 1;
+        if (Input.GetKeyDown(KeyCode.E)) testIndex = this._testIndex + 1;
+        if (testIndex != -99)
         {
+            testIndex = Mathf.Clamp(testIndex, 0, this.testList.Count - 1);
             this._testIndex = testIndex;
             this.colliderList.Clear();
             this.colorList.Clear();

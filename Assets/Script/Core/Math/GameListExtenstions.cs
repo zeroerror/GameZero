@@ -33,14 +33,16 @@ namespace GamePlay.Core
         }
 
 
-        public static GameVec2 Min(this Span<GameVec2> list)
+        public static GameVec2 Min(this Span<GameVec2> list, out int index)
         {
             GameVec2 min = list[0];
+            index = 0;
             for (int i = 1; i < list.Length; i++)
             {
                 if (list[i].sqrMagnitude < min.sqrMagnitude)
                 {
                     min = list[i];
+                    index = i;
                 }
             }
             return min;
