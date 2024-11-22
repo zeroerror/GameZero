@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
 using GameVec2 = UnityEngine.Vector2;
+using GamePlay.Core;
 namespace GamePlay.Core
 {
     public class GameFanCollider : GameColliderBase
@@ -145,6 +145,11 @@ namespace GamePlay.Core
 
         public override GameVec2 GetResolvingMTV(GameColliderBase colliderB, bool onlyDetectPenetration = true)
         {
+            // 扇形间交叉检测
+            // 1 距离大于半径和, 必不相交
+            // 2 SAT投影轴
+            //-AB扇形各自的两边
+            //-A扇形分别到B扇形3点三线, B扇形分别到A扇形3点三线
             GameLogger.Error("GameFanCollider.GetResolvingMTV not implemented");
             return GameVec2.zero;
         }
@@ -160,33 +165,49 @@ namespace GamePlay.Core
 
         public override GameVec2 GetResolvingMTV(in GameVec2 point, bool onlyDetectPenetration = true)
         {
-            /**
-点移动到扇形表面所需MTV求解
-分为以下情况：
-1. 在扇形左边界左侧 或 在扇形右边界右侧
-MTV = 点在边界法向量上的投影向量 + 点在边界上的投影向量
-2. 在扇形角度内 且 距离大于半径
-MTV = 点到扇形原点向量 - 半径模长向量
-3. 在扇形角度内 且 距离小于半径
-MTV = min( 点到圆弧向量, 点到左边界向量, 点到右边界向量)
-            */
-            // if (onlyDetectPenetration)
-            // {
-            //     var offset = point - this.worldCenterPos;
-            //     var dis = offset.magnitude;
-            //     if (dis >= this.worldRadius) return GameVec2.zero;
-            //     var isleft = offset.Cross(this.axis1) > 0;
-            //     if (isleft) return GameVec2.zero;
-            //     var isright = offset.Cross(this.axis2) > 0;
-            //     if (isright) return GameVec2.zero;
-            // }
-            // var isleft = this.axis1.Cross(point.Sub(this.worldCenterPos)) > 0;
-            // if (isleft)
-            // {
-            //     var v1 = this.GetProjectionOnAxis(this.worldCenterPos, this.normal1);
-            //     var v2 = this.GetProjectionOnAxis(point, this.normal1);
-            // }
-            return GameVec2.zero;
+            var cross_1 = point.Sub(this.worldCenterPos).Cross(this.axis1);
+            var cross_2 = point.Sub(this.worldCenterPos).Cross(this.axis2);
+            // 点在扇形正向范围内
+            if (cross_1 > 0 && cross_2 < 0)
+            {
+                var offset = point.Sub(this.worldCenterPos);
+                //-距离大于半径 MTV = 点到扇形原点向量 - 半径模长
+                var d1 = this.worldCenterPos.Sub(point).sqrMagnitude;
+                var isOutside = d1 > this.worldRadius * this.worldRadius;
+                if (isOutside)
+                {
+                    if (onlyDetectPenetration) return GameVec2.zero;
+                    var dir = offset.normalized;
+                    var mtv1 = dir * (offset.magnitude - this.worldRadius);
+                    return mtv1;
+                }
+                //-距离小于半径 MTV = min(点到左边界, 点到右边界, 点到圆弧)
+                Span<GameVec2> mtvs = stackalloc GameVec2[3];
+                mtvs[0] = point.Sub(this.worldCenterPos).Project(this.normal1);
+                mtvs[1] = point.Sub(this.worldCenterPos).Project(this.normal2);
+                var dis = offset.magnitude;
+                mtvs[2] = offset.normalized.Mul(this.worldRadius - dis);
+                var mtv2 = mtvs.Min();
+                return mtv2;
+            }
+            if (onlyDetectPenetration) return GameVec2.zero;
+
+            // 点在扇形反向范围内, MTV = 点到扇形原点向量
+            if (cross_1 < 0 && cross_2 > 0)
+            {
+                var mtv3 = point.Sub(this.worldCenterPos);
+                return mtv3;
+            }
+
+            // 点即不在正向范围内, 也不在反向范围内 MTV = 扇形边和法向量的投影差的和
+            var mtv_add = (point - this.worldCenterPos).Project(this.normal1);
+            var dot = (point - this.worldCenterPos).Dot(this.axis1);
+            if (dot > 0)
+            {
+                var add = (point - this.worldCenterPos).Project(this.axis1);
+                mtv_add.AddSelf(add);
+            }
+            return mtv_add;
         }
     }
 }

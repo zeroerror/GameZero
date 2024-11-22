@@ -1,57 +1,75 @@
 using System;
 using System.Collections.Generic;
+using GameVec2 = UnityEngine.Vector2;
 
-public static class GameListExtenstions
+namespace GamePlay.Core
 {
-    public static float Min(this List<float> list)
+    public static class GameListExtenstions
     {
-        float min = list[0];
-        for (int i = 1; i < list.Count; i++)
+        public static float Min(this List<float> list)
         {
-            if (list[i] < min)
+            float min = list[0];
+            for (int i = 1; i < list.Count; i++)
             {
-                min = list[i];
+                if (list[i] < min)
+                {
+                    min = list[i];
+                }
             }
+            return min;
         }
-        return min;
-    }
 
-    public static float Min(this Span<float> list)
-    {
-        float min = list[0];
-        for (int i = 1; i < list.Length; i++)
+        public static float Min(this Span<float> list)
         {
-            if (list[i] < min)
+            float min = list[0];
+            for (int i = 1; i < list.Length; i++)
             {
-                min = list[i];
+                if (list[i] < min)
+                {
+                    min = list[i];
+                }
             }
+            return min;
         }
-        return min;
-    }
 
-    public static float Max(this List<float> list)
-    {
-        float max = list[0];
-        for (int i = 1; i < list.Count; i++)
-        {
-            if (list[i] > max)
-            {
-                max = list[i];
-            }
-        }
-        return max;
-    }
 
-    public static float Max(this Span<float> list)
-    {
-        float max = list[0];
-        for (int i = 1; i < list.Length; i++)
+        public static GameVec2 Min(this Span<GameVec2> list)
         {
-            if (list[i] > max)
+            GameVec2 min = list[0];
+            for (int i = 1; i < list.Length; i++)
             {
-                max = list[i];
+                if (list[i].sqrMagnitude < min.sqrMagnitude)
+                {
+                    min = list[i];
+                }
             }
+            return min;
         }
-        return max;
+
+        public static float Max(this List<float> list)
+        {
+            float max = list[0];
+            for (int i = 1; i < list.Count; i++)
+            {
+                if (list[i] > max)
+                {
+                    max = list[i];
+                }
+            }
+            return max;
+        }
+
+        public static float Max(this Span<float> list)
+        {
+            float max = list[0];
+            for (int i = 1; i < list.Length; i++)
+            {
+                if (list[i] > max)
+                {
+                    max = list[i];
+                }
+            }
+            return max;
+        }
     }
 }

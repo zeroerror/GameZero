@@ -50,9 +50,10 @@ public static class GameVectorExtensions
         return Neg(v);
     }
 
-    public static GameVec2 NegSelf(this GameVec2 v)
+    public static void NegSelf(ref this GameVec2 v)
     {
-        return new GameVec2(-v.x, -v.y);
+        v.x = -v.x;
+        v.y = -v.y;
     }
 
     public static GameVec2 Project(this GameVec2 v1, in GameVec2 v2)
