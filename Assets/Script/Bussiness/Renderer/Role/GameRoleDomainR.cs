@@ -15,21 +15,21 @@ namespace GamePlay.Bussiness.Renderer
             this.fsmDomain = new GameRoleFSMDomainR();
         }
 
-        private void _BindEvents()
+        private void _BindEvent()
         {
             this._context.logicContext.rcEventService.Regist(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
-            this.fsmDomain.BindEvents();
+            this.fsmDomain.BindEvent();
         }
 
         private void _UnbindEvents()
         {
-            this._context.logicContext.rcEventService.Unregist(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
+            this._context.logicContext.rcEventService.Unbind(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
             this.fsmDomain.UnbindEvents();
         }
 
         private void _OnRoleCreate(object args)
         {
-            var evArgs = (GameRoleRCCollection.GameRoleRCArgs_Create)args;
+            var evArgs = (GameRoleRCArgs_Create)args;
             this.Create(evArgs.idArgs, evArgs.transComArgs, evArgs.isUser);
         }
 
@@ -38,7 +38,7 @@ namespace GamePlay.Bussiness.Renderer
             this._context = context;
             this.inputDomain.Inject(context);
             this.fsmDomain.Inject(context);
-            this._BindEvents();
+            this._BindEvent();
         }
 
         public void Dispose()
@@ -60,6 +60,7 @@ namespace GamePlay.Bussiness.Renderer
             var role = this._roleContext.factory.Load(idArgs.typeId);
             role.idCom.SetByArgs(idArgs);
             role.transformCom.SetByArgs(transArgs);
+            role.SyncTrans();
             this._roleContext.repo.TryAdd(role);
             if (isUser) this._roleContext.userRole = role;
             return role;
@@ -74,6 +75,21 @@ namespace GamePlay.Bussiness.Renderer
                 entity.Tick(dt);
                 this.fsmDomain.Tick(entity, dt);
             });
+        }
+
+        public void PlayAnim(GameRoleEntityR entity, string animName)
+        {
+            var factory = this._roleContext.factory;
+            var animCom = entity.animCom;
+            if (animCom.hasClip(animName))
+            {
+                animCom.Play(animName);
+            }
+            else
+            {
+                var clip = factory.LoadAnimationClip(entity.idCom.typeId, animName);
+                animCom.Play(clip);
+            }
         }
 
     }

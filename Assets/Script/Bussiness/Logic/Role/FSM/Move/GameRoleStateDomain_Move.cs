@@ -1,3 +1,4 @@
+using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -13,7 +14,7 @@ namespace GamePlay.Bussiness.Logic
         public override void Enter(GameRoleEntity role, params object[] args)
         {
             // 提交RC
-            this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, new GameRoleRCCollection.GameRoleRCArgs_StateEnterMove
+            this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, new GameRoleRCArgs_StateEnterMove
             {
                 fromState = role.fsmCom.state,
                 idArgs = role.idCom.ToArgs(),
@@ -30,7 +31,7 @@ namespace GamePlay.Bussiness.Logic
             }
             inputArgs = stateModel.inputArgs;
             var moveDir = inputArgs.moveDir;
-            var moveSpeed = 80;
+            var moveSpeed = 5;
             var moveVec = new GameVec2(moveDir.x, moveDir.y) * moveSpeed * frameTime;
             role.transformCom.position += moveVec;
             var faceDir = inputArgs.faceDir;
@@ -42,9 +43,14 @@ namespace GamePlay.Bussiness.Logic
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)
         {
             var inputCom = role.inputCom;
-            if (!inputCom.TryGetInputArgs(out var inputArgs))
+            var hasNoInput = !inputCom.TryGetInputArgs(out var inputArgs);
+            if (hasNoInput)
             {
                 return GameRoleStateType.Idle;
+            }
+            if (inputArgs.skillId != 0)
+            {
+                return GameRoleStateType.Cast;
             }
             return GameRoleStateType.None;
         }

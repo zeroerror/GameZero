@@ -33,7 +33,7 @@ namespace GamePlay.Core
             _listeners[name].Add(callback);
         }
 
-        public void Unregist(string name, System.Action<object> callback)
+        public void Unbind(string name, System.Action<object> callback)
         {
             if (!_listeners.ContainsKey(name)) return;
             _listeners[name].Remove(callback);

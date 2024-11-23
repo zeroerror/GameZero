@@ -28,12 +28,12 @@ namespace GamePlay.Bussiness.Renderer
             }
         }
 
-        public void BindEvents()
+        public void BindEvent()
         {
-            // this._anyDomain.BindEvents();
+            // this._anyDomain.BindEvent();
             foreach (var stateDomain in this._stateDomainDict.Values)
             {
-                stateDomain.BindEvents();
+                stateDomain.BindEvent();
             }
         }
 

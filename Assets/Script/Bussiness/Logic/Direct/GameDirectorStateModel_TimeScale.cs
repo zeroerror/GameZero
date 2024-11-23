@@ -8,11 +8,11 @@ namespace GamePlay.Bussiness.Logic
             set
             {
                 this._frameRate = value;
-                this._frameTime = 1.0f / value;
+                this.frameTime = 1.0f / value;
             }
         }
         private int _frameRate;
-        float _frameTime;
+        public float frameTime { get; private set; }
 
         public float timeScale { get; private set; } = 1.0f;
         public float gameTime { get; private set; } = 0.0f;
@@ -28,8 +28,8 @@ namespace GamePlay.Bussiness.Logic
         {
             this.gameTime += dt * this.timeScale;
             this.cacheDt += dt * this.timeScale;
-            if (this.cacheDt < this._frameTime) return false;
-            this.cacheDt -= this._frameTime;
+            if (this.cacheDt < this.frameTime) return false;
+            this.cacheDt -= this.frameTime;
             this.gameFrame++;
             return true;
         }

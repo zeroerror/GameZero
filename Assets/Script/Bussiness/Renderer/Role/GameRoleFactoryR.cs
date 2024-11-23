@@ -10,7 +10,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameRoleFactoryR(GameContextR context)
         {
             this._context = context;
-            this.entityLayer = GameObject.Find("Field/Dynamic");
+            this.entityLayer = GameObject.Find("Field/DynamicLayer");
         }
 
         public GameRoleEntityR Load(int typeId)

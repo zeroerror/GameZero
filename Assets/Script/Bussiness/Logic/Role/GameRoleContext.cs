@@ -30,7 +30,13 @@ namespace GamePlay.Bussiness.Logic
         }
         public void SetPlayerInputArgs(int entityId, in GameRoleInputArgs inputArgs)
         {
-            this._playerInputArgs[entityId] = inputArgs;
+            if (!this._playerInputArgs.TryGetValue(entityId, out var oldInputArgs))
+            {
+                this._playerInputArgs[entityId] = inputArgs;
+                return;
+            }
+            oldInputArgs.Update(inputArgs);
+            this._playerInputArgs[entityId] = oldInputArgs;
         }
     }
 }

@@ -31,10 +31,10 @@ namespace GamePlay.Bussiness.Renderer
             this.delayRCEventService.Regist(rcName, callback);
         }
 
-        public void UnregistRC(string rcName, System.Action<object> callback)
+        public void UnbindRC(string rcName, System.Action<object> callback)
         {
-            this.logicContext.rcEventService.Unregist(rcName, callback);
-            this.delayRCEventService.Unregist(rcName, callback);
+            this.logicContext.rcEventService.Unbind(rcName, callback);
+            this.delayRCEventService.Unbind(rcName, callback);
         }
     }
 }

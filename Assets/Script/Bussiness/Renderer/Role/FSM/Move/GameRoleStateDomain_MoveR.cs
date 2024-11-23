@@ -5,28 +5,29 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleStateDomain_MoveR : GameRoleStateDomainBaseR
     {
+        private static readonly string GAME_RC_EV_NAME = GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE;
         public GameRoleStateDomain_MoveR() : base() { }
 
-        public override void BindEvents()
+        public override void BindEvent()
         {
-            base.BindEvents();
-            this._context.RegistRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, this._OnEnter);
+            base.BindEvent();
+            this._context.RegistRC(GAME_RC_EV_NAME, this._OnEnter);
         }
 
         public override void UnbindEvents()
         {
             base.UnbindEvents();
-            this._context.UnregistRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, this._OnEnter);
+            this._context.UnbindRC(GAME_RC_EV_NAME, this._OnEnter);
         }
 
         private void _OnEnter(object args)
         {
-            var evArgs = (GameRoleRCCollection.GameRoleRCArgs_StateEnterMove)args;
+            var evArgs = (GameRoleRCArgs_StateEnterMove)args;
             ref var idArgs = ref evArgs.idArgs;
             var role = this._roleContext.repo.FindByEntityId(idArgs.entityId);
             if (role == null)
             {
-                this._context.delayRCEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, args);
+                this._context.delayRCEventService.Submit(GAME_RC_EV_NAME, args);
                 return;
             }
             this.Enter(role);
@@ -40,17 +41,7 @@ namespace GamePlay.Bussiness.Renderer
         public override void Enter(GameRoleEntityR entity, params object[] args)
         {
             GameLogger.Log($"MoveR enter");
-            var factory = this._roleContext.factory;
-            var animCom = entity.animCom;
-            if (animCom.hasClip("move"))
-            {
-                animCom.Play("move");
-            }
-            else
-            {
-                var clip = factory.LoadAnimationClip(entity.idCom.typeId, "move");
-                animCom.Play(clip);
-            }
+            this._context.domainApi.roleApi.PlayAnim(entity, "move");
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntityR entity)

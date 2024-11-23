@@ -13,6 +13,12 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Enter(GameRoleEntity entity, params object[] args)
         {
+            // 提交RC
+            this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DEAD, new GameRoleRCArgs_StateEnterDead
+            {
+                fromState = entity.fsmCom.state,
+                idArgs = entity.idCom.ToArgs(),
+            });
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity entity)

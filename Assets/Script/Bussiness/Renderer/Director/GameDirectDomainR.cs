@@ -6,6 +6,7 @@ namespace GamePlay.Bussiness.Renderer
     {
         public GameContextR context { get; private set; }
         public GameRoleDomainR roleDomain { get; private set; }
+        public TransformDomainR transformDomain { get; private set; }
 
         public GameDirectDomainR(GameContext logicContext)
         {
@@ -17,22 +18,26 @@ namespace GamePlay.Bussiness.Renderer
         private void _InitDomain()
         {
             this.roleDomain = new GameRoleDomainR();
+            this.transformDomain = new TransformDomainR();
         }
 
         private void _InitContext(GameContext logicContext)
         {
             this.context = new GameContextR(logicContext);
             this.context.domainApi.SetRoleApi(this.roleDomain);
+            this.context.domainApi.SetTransformApi(this.transformDomain);
         }
 
         private void _InjectContext()
         {
             this.roleDomain.Inject(this.context);
+            this.transformDomain.Inject(this.context);
         }
 
         public void Dispose()
         {
             this.roleDomain.Dispose();
+            this.transformDomain.Dispose();
         }
 
         public void Update(float dt)

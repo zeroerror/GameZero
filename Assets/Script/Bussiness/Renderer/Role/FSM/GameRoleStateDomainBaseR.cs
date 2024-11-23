@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Renderer
             this._context = context;
         }
 
-        public virtual void BindEvents() { }
+        public virtual void BindEvent() { }
 
         public virtual void UnbindEvents() { }
 

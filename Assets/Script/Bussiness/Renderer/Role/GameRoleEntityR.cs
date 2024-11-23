@@ -12,10 +12,12 @@ namespace GamePlay.Bussiness.Renderer
         public GameObject foot { get; private set; }
         public GameObject body { get; private set; }
 
-
-        public GameVec2 position { get { return this.go.transform.position; } set { this.go.transform.position = value; } }
-        public float angle { get { return this.go.transform.eulerAngles.z; } set { this.go.transform.eulerAngles = new GameVec3(0, 0, value); } }
-        public float scale { get { return this.go.transform.localScale.x; } set { this.go.transform.localScale = new GameVec3(value, value, value); } }
+        public Transform transform { get { return this.go.transform; } }
+        public GameVec2 position { get { return transform.position; } set { transform.position = value; } }
+        public float angle { get { return transform.eulerAngles.z; } set { transform.eulerAngles = new GameVec3(0, 0, value); } }
+        public float scale { get { return transform.localScale.x; } set { transform.localScale = new GameVec3(value, value, 1); } }
+        public float scaleX { get { return transform.localScale.x; } set { transform.localScale = new GameVec3(value, transform.localScale.y, transform.localScale.z); } }
+        public float scaleY { get { return transform.localScale.y; } set { transform.localScale = new GameVec3(transform.localScale.x, value, transform.localScale.z); } }
 
         public GameRoleFSMComR fsmCom { get; private set; }
         public GameAnimPlayableCom animCom { get; private set; }
@@ -32,7 +34,7 @@ namespace GamePlay.Bussiness.Renderer
             var animator = this.body.GetComponent<Animator>();
             this.animCom = new GameAnimPlayableCom(animator);
             this._posEaseCom = new GameEasing2DCom();
-            this._posEaseCom.SetEase(0.1f, GameEasingType.Linear);
+            this._posEaseCom.SetEase(0.05f, GameEasingType.Linear);
         }
 
         public override void Tick(float dt)
@@ -40,6 +42,8 @@ namespace GamePlay.Bussiness.Renderer
             this.animCom.Tick(dt);
             var pos = this._posEaseCom.Tick(this.position, this.transformCom.position, dt);
             this.position = pos;
+            var forward = this.transformCom.forward;
+            this.scaleX = forward.x > 0 ? 1 : -1;
         }
 
         public override void Reset(float dt) { }

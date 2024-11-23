@@ -44,7 +44,6 @@ namespace GamePlay.Bussiness.Logic
         {
             this.lastStateType = this.state;
             this.state = nextState;
-            UnityEngine.Debug.Log($"SwitchToState: {this.lastStateType} -> {this.state}");
             switch (nextState)
             {
                 case GameRoleStateType.Idle:

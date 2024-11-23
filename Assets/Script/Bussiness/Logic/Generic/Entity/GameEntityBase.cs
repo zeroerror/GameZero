@@ -2,7 +2,6 @@ namespace GamePlay.Bussiness.Logic
 {
     public abstract class GameEntityBase
     {
-
         public bool isValid() => idCom.entityId > 0;
         public int bodyColliderId { get; private set; }
         public GameIdCom idCom { get; private set; }

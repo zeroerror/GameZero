@@ -22,7 +22,11 @@ public class GameAnimPlayableCom
 
     public void Dispose()
     {
-        if (this.currentGraph.IsValid()) this.currentGraph.Destroy();
+        var vs = this._graphDict.Values;
+        foreach (var v in vs)
+        {
+            v.Destroy();
+        }
         this._graphDict.Clear();
     }
 

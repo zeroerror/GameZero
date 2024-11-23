@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -23,6 +24,7 @@ namespace GamePlay.Bussiness.Logic
             this.faceDir = GameVec2.zero;
             this.dstPos = GameVec2.zero;
             this.targeterList.Clear();
+            this.skillId = 0;
         }
 
         public void SetByArgs(in GameRoleInputArgs args)
@@ -33,6 +35,7 @@ namespace GamePlay.Bussiness.Logic
             this.targeterList.Clear();
             var targeterList = args.targeterList;
             if (targeterList != null && targeterList.Count > 0) targeterList.AddRange(targeterList);
+            this.skillId = args.skillId;
         }
 
         public bool TryGetInputArgs(out GameRoleInputArgs inputArgs)
