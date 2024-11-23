@@ -52,6 +52,8 @@ namespace GamePlay.Bussiness.Logic
             var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0.625f), 0, 0.7f, 1.25f);
             this._context.domainApi.physicsApi.CreatePhysics(e, colliderModel);
             this._context.domainApi.skillApi.CreateSkill(e, 1001);
+            this._context.domainApi.skillApi.CreateSkill(e, 1002);
+            this._context.domainApi.skillApi.CreateSkill(e, 1003);
             this._roleContext.entityRepo.TryAdd(e);
 
             // 提交RC事件

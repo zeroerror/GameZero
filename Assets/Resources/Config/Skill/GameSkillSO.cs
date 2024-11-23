@@ -43,8 +43,19 @@ namespace GamePlay.Config
             string directory = System.IO.Path.GetDirectoryName(path);
             string currentName = System.IO.Path.GetFileNameWithoutExtension(path);
 
-            // 如果文件名已经是正确的，则不需要修改
+            // 检查当前文件名是否已经是正确的
             if (currentName == newName) return;
+
+            // 检查是否已经存在同名文件
+            string newPath = $"{directory}/{newName}.asset";
+            if (System.IO.File.Exists(newPath))
+            {
+                // 弹出对话框提示用户是否覆盖
+                if (!EditorUtility.DisplayDialog("重命名失败", $"文件已经存在: {newName}.asset", "覆盖", "取消"))
+                {
+                    return;
+                }
+            }
 
             // 调用 Unity 的 AssetDatabase API 修改文件名
             AssetDatabase.RenameAsset(path, newName);
