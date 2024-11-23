@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameCoreR
+    public class GameAppR
     {
         public GameDirectDomainR directDomain { get; private set; }
 
 
-        public GameCoreR(GameContext logicContext)
+        public GameAppR(GameContext logicContext)
         {
             this.directDomain = new GameDirectDomainR(logicContext);
             Application.quitting += this.Dispose;
@@ -28,7 +28,5 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.directDomain.LateUpdate(dt);
         }
-
-
     }
 }

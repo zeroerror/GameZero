@@ -1,0 +1,58 @@
+using GamePlay.Core;
+
+namespace GamePlay.Bussiness.Logic
+{
+    public class GameSkillDomain : GameSkillDomainApi
+    {
+        GameContext _context;
+        GameSkillContext _skillContext => this._context.skillContext;
+
+        public GameSkillDomain()
+        {
+        }
+
+        public void Inject(GameContext context)
+        {
+            this._context = context;
+        }
+
+        public void Dispose()
+        {
+        }
+
+        public GameSkillEntity CreateSkill(GameRoleEntity role, int typeId)
+        {
+            var factory = this._skillContext.factory;
+            var skill = factory.Load(typeId);
+            if (skill == null)
+            {
+                GameLogger.Error("技能创建失败，技能ID不存在：" + typeId);
+                return null;
+            }
+            var skillCom = role.skillCom;
+            if (skillCom.TryGet(typeId, out var _))
+            {
+                GameLogger.Error("技能创建失败，技能已存在：" + typeId);
+                return null;
+            }
+            skillCom.Add(skill);
+
+            // 提交RC
+            this._context.rcEventService.Submit(GameSkillRCCollection.RC_GAMES_SKILL_CREATE,
+                new GameSkillRCArgs_Create { roleIdArgs = role.idCom.ToArgs(), skillIdArgs = skill.idCom.ToArgs() }
+            );
+            return skill;
+        }
+
+        public GameSkillModel GetSkillModel(int typeId)
+        {
+            var factory = this._skillContext.factory;
+            if (!factory.template.TryGet(typeId, out var model))
+            {
+                GameLogger.Error("技能模板不存在：" + typeId);
+                return null;
+            }
+            return model;
+        }
+    }
+}

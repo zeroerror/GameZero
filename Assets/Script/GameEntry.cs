@@ -4,23 +4,23 @@ using GamePlay.Bussiness.Renderer;
 
 public class GameEntry : MonoBehaviour
 {
-    public GameCore gameCore { get; private set; }
-    public GameCoreR gameCoreR { get; private set; }
+    public GameApp gameApp { get; private set; }
+    public GameAppR gameAppR { get; private set; }
     void Start()
     {
-        this.gameCore = new GameCore();
-        this.gameCoreR = new GameCoreR(gameCore.directDomain.context);
+        this.gameApp = new GameApp();
+        this.gameAppR = new GameAppR(gameApp.directDomain.context);
     }
 
     void Update()
     {
-        this.gameCore.Update(Time.deltaTime);
-        this.gameCoreR.Update(Time.deltaTime);
+        this.gameApp.Update(Time.deltaTime);
+        this.gameAppR.Update(Time.deltaTime);
     }
 
     void LateUpdate()
     {
-        this.gameCore.LateUpdate(Time.deltaTime);
-        this.gameCoreR.LateUpdate(Time.deltaTime);
+        this.gameApp.LateUpdate(Time.deltaTime);
+        this.gameAppR.LateUpdate(Time.deltaTime);
     }
 }

@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.Renderer
         public override void BindEvent()
         {
             base.BindEvent();
-            this._context.RegistRC(GAME_RC_EV_NAME, this._OnEnter);
+            this._context.BindRC(GAME_RC_EV_NAME, this._OnEnter);
         }
 
         public override void UnbindEvents()
@@ -30,7 +30,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.delayRCEventService.Submit(GAME_RC_EV_NAME, args);
                 return;
             }
-            this.Enter(role);
+            this.Enter(role, evArgs.skillId);
         }
 
         public override bool CheckEnter(GameRoleEntityR entity, params object[] args)
@@ -40,8 +40,10 @@ namespace GamePlay.Bussiness.Renderer
 
         public override void Enter(GameRoleEntityR entity, params object[] args)
         {
-            GameLogger.Log($"CastR enter");
-            this._context.domainApi.roleApi.PlayAnim(entity, "attack");
+            var skillId = (int)args[0];
+            entity.skillCom.TryGet(skillId, out var skill);
+            var animName = skill.skillModel.animName;
+            this._context.domainApi.roleApi.PlayAnim(entity, animName);
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntityR entity)

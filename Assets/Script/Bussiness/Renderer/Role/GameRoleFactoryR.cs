@@ -5,11 +5,9 @@ namespace GamePlay.Bussiness.Renderer
     public class GameRoleFactoryR
     {
         public GameObject entityLayer { get; private set; }
-        private GameContextR _context;
 
-        public GameRoleFactoryR(GameContextR context)
+        public GameRoleFactoryR()
         {
-            this._context = context;
             this.entityLayer = GameObject.Find("Field/DynamicLayer");
         }
 

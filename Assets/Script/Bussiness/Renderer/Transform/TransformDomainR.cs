@@ -24,11 +24,11 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _BindEvent()
         {
-            this._context.logicContext.rcEventService.Regist(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, this._OnTransformSync);
+            this._context.BindRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, this._OnTransformSync);
         }
         private void _UnbindEvents()
         {
-            this._context.logicContext.rcEventService.Unbind(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, this._OnTransformSync);
+            this._context.UnbindRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, this._OnTransformSync);
         }
 
         private void _OnTransformSync(object args)

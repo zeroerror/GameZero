@@ -40,25 +40,25 @@ namespace GamePlay.Bussiness.Logic
             // this._anyDomain.Tick(role, dt);
         }
 
-        public bool CheckEnter(GameRoleEntity role, GameRoleStateType state, params object[] args)
+        public bool CheckEnter(GameRoleEntity role, GameRoleStateType state)
         {
             if (!this._stateDomainDict.TryGetValue(state, out var stateDomain)) return false;
-            return stateDomain.CheckEnter(role, args);
+            return stateDomain.CheckEnter(role);
         }
 
-        public bool TryEnter(GameRoleEntity role, GameRoleStateType state, params object[] args)
+        public bool TryEnter(GameRoleEntity role, GameRoleStateType state)
         {
             if (!this._stateDomainDict.TryGetValue(state, out var stateDomain)) return false;
-            var check = stateDomain.CheckEnter(role, args);
-            if (check) this.Enter(role, state, args);
+            var check = stateDomain.CheckEnter(role);
+            if (check) this.Enter(role, state);
             return check;
         }
 
-        public void Enter(GameRoleEntity role, GameRoleStateType state, params object[] args)
+        public void Enter(GameRoleEntity role, GameRoleStateType state)
         {
             if (!this._stateDomainDict.TryGetValue(state, out var stateDomain)) return;
             this._ExitToState(role, state);
-            stateDomain.Enter(role, args);
+            stateDomain.Enter(role);
             switch (state)
             {
                 case GameRoleStateType.Idle:

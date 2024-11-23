@@ -14,10 +14,10 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /** 尝试进入状态 */
-        public bool TryEnter(GameRoleEntity entity, params object[] args)
+        public bool TryEnter(GameRoleEntity entity)
         {
-            if (!this.CheckEnter(entity, args)) return false;
-            this.Enter(entity, args);
+            if (!this.CheckEnter(entity)) return false;
+            this.Enter(entity);
             return true;
         }
 
@@ -26,13 +26,16 @@ namespace GamePlay.Bussiness.Logic
         {
             this._Tick(entity, frameTime);
             var toState = this._CheckExit(entity);
-            if (toState != GameRoleStateType.None) this._context.domainApi.roleApi.fsmApi.Enter(entity, toState);
+            if (toState != GameRoleStateType.None)
+            {
+                this._context.domainApi.roleApi.fsmApi.TryEnter(entity, toState);
+            }
         }
 
         /** 判定进入条件 */
-        public abstract bool CheckEnter(GameRoleEntity entity, params object[] args);
+        public abstract bool CheckEnter(GameRoleEntity entity);
         /** 进入. ps: 直接调用则会跳过了条件判定 */
-        public abstract void Enter(GameRoleEntity entity, params object[] args);
+        public abstract void Enter(GameRoleEntity entity);
         /** 状态更新 */
         protected abstract void _Tick(GameRoleEntity entity, float frameTime);
         /** 判定退出条件 */

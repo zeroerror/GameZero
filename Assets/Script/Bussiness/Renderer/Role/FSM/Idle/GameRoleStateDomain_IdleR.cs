@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.Renderer
         public override void BindEvent()
         {
             base.BindEvent();
-            this._context.RegistRC(GAME_RC_EV_NAME, this._OnEnter);
+            this._context.BindRC(GAME_RC_EV_NAME, this._OnEnter);
         }
 
         public override void UnbindEvents()
@@ -40,7 +40,6 @@ namespace GamePlay.Bussiness.Renderer
 
         public override void Enter(GameRoleEntityR entity, params object[] args)
         {
-            GameLogger.Log($"IdleR enter");
             this._context.domainApi.roleApi.PlayAnim(entity, "idle");
         }
 

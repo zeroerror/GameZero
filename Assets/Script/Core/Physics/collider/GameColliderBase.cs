@@ -5,6 +5,7 @@ namespace GamePlay.Core
 {
     public abstract class GameColliderBase
     {
+        public bool isEnable;
         public int id;
         public GameEntityBase binder;
         public bool isTrigger = true;

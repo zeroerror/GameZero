@@ -8,6 +8,8 @@ namespace GamePlay.Bussiness.Logic
         public GameEventService eventService { get; private set; }
         public GameEventService rcEventService { get; private set; }
         public GameRoleContext roleContext { get; private set; }
+        public GameSkillContext skillContext { get; private set; }
+        public GamePhysicsContext physicsContext { get; private set; }
 
         public GameContext()
         {
@@ -16,6 +18,8 @@ namespace GamePlay.Bussiness.Logic
             this.eventService = new GameEventService();
             this.rcEventService = new GameEventService();
             this.roleContext = new GameRoleContext();
+            this.skillContext = new GameSkillContext();
+            this.physicsContext = new GamePhysicsContext();
         }
     }
 }

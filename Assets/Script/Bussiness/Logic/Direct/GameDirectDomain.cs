@@ -1,3 +1,5 @@
+using GameVec2 = UnityEngine.Vector2;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameDirectDomain
@@ -6,8 +8,10 @@ namespace GamePlay.Bussiness.Logic
 
         public GameDirector director => this.context.director;
 
-        public GameTransformDomain transformDomain { get; private set; }
         public GameRoleDomain roleDomain { get; private set; }
+        public GameSkillDomain skillDomain { get; private set; }
+        public GameTransformDomain transformDomain { get; private set; }
+        public GamePhysicsDomain physicsDomain { get; private set; }
 
         public GameDirectDomain()
         {
@@ -19,33 +23,45 @@ namespace GamePlay.Bussiness.Logic
         private void _InitDomain()
         {
             this.roleDomain = new GameRoleDomain();
+            this.skillDomain = new GameSkillDomain();
             this.transformDomain = new GameTransformDomain();
+            this.physicsDomain = new GamePhysicsDomain();
         }
 
         private void _InitContext()
         {
             this.context = new GameContext();
             this.context.domainApi.SetRoleApi(this.roleDomain);
+            this.context.domainApi.SetSkillApi(this.skillDomain);
             this.context.domainApi.SetTransformApi(this.transformDomain);
+            this.context.domainApi.SetPhysicsApi(this.physicsDomain);
         }
 
         private void _InjectContext()
         {
             this.roleDomain.Inject(this.context);
+            this.skillDomain.Inject(this.context);
             this.transformDomain.Inject(this.context);
+            this.physicsDomain.Inject(this.context);
+
+            this.roleDomain.CreateUserRole(1000, 1, new GameTransformArgs { position = new GameVec2(0, 0), scale = 1 });
+            this.roleDomain.CreateUserRole(1000, 2, new GameTransformArgs { position = new GameVec2(-5, 0), scale = 1.5f });
+            this.roleDomain.CreateUserRole(1000, 3, new GameTransformArgs { position = new GameVec2(5, 0), scale = 1.5f });
         }
 
         public void Dispose()
         {
             this.roleDomain.Dispose();
+            this.skillDomain.Dispose();
             this.transformDomain.Dispose();
+            this.physicsDomain.Dispose();
         }
 
         public void Update(float dt)
         {
             var canTick = this.director.Tick(dt);
             if (!canTick) return;
-            var frameTime = this.director.timeScaleCom.frameTime;
+            var frameTime = GameTimeCollection.frameTime;
             this._PreTick(frameTime);
             this._Tick(frameTime);
         }
@@ -67,6 +83,7 @@ namespace GamePlay.Bussiness.Logic
 
         protected void _LateTick(float dt)
         {
+            this.physicsDomain.Tick(dt);
         }
 
         protected virtual void _TickDomain(float dt)

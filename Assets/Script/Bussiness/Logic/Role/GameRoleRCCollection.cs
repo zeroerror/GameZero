@@ -37,6 +37,7 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateType fromState;
         public GameIdArgs idArgs;
+        public int skillId;
     }
 
     public struct GameRoleRCArgs_StateEnterDead

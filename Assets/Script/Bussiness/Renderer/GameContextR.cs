@@ -13,6 +13,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameEventService eventService { get; private set; }
         public GameEventService delayRCEventService { get; private set; }
         public GameRoleContextR roleContext { get; private set; }
+        public GameSkillContextR skillContext { get; private set; }
 
         public GameContextR(GameContext logicContext)
         {
@@ -22,10 +23,11 @@ namespace GamePlay.Bussiness.Renderer
             this.director = new GameDirectorR();
             this.eventService = new GameEventService();
             this.delayRCEventService = new GameEventService();
-            this.roleContext = new GameRoleContextR(this);
+            this.roleContext = new GameRoleContextR();
+            this.skillContext = new GameSkillContextR();
         }
 
-        public void RegistRC(string rcName, System.Action<object> callback)
+        public void BindRC(string rcName, System.Action<object> callback)
         {
             this.logicContext.rcEventService.Regist(rcName, callback);
             this.delayRCEventService.Regist(rcName, callback);

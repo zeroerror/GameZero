@@ -1,3 +1,5 @@
+using GamePlay.Core;
+using Unity.VisualScripting;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -21,7 +23,6 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
             this.inputDomain.Inject(context);
             this.fsmDomain.Inject(context);
-            this.CreateUserRole(1000, 1, new GameTransformArgs { position = new GameVec2(0, 0), angle = 0, scale = 1 });
         }
 
         public void Dispose()
@@ -30,8 +31,9 @@ namespace GamePlay.Bussiness.Logic
             this.fsmDomain.Dispose();
         }
 
-        public void Collect()
+        public void Collect(GameRoleEntity role)
         {
+            this._context.domainApi.physicsApi.RemovePhysics(role);
         }
 
         public GameRoleEntity CreateUserRole(int typeId, int campId, in GameTransformArgs transArgs)
@@ -45,8 +47,11 @@ namespace GamePlay.Bussiness.Logic
         {
             var e = this._roleContext.factory.Load(typeId);
             e.transformCom.SetByArgs(transArgs);
-            e.idCom.entityId = this._roleContext.entityIdService.FetchEntityId();
+            e.idCom.entityId = this._roleContext.entityIdService.FetchId();
             e.idCom.campId = campId;
+            var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0.625f), 0, 0.7f, 1.25f);
+            this._context.domainApi.physicsApi.CreatePhysics(e, colliderModel);
+            this._context.domainApi.skillApi.CreateSkill(e, 1001);
             this._roleContext.entityRepo.TryAdd(e);
 
             // 提交RC事件
@@ -57,7 +62,7 @@ namespace GamePlay.Bussiness.Logic
                 isUser = isUser
             });
 
-            this.fsmDomain.Enter(e, GameRoleStateType.Idle);
+            this.fsmDomain.TryEnter(e, GameRoleStateType.Idle);
 
             return e;
         }

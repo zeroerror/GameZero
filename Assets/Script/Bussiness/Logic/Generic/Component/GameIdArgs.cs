@@ -7,5 +7,7 @@ namespace GamePlay.Bussiness.Logic
         public int typeId;
         public GameEntityType entityType;
         public int entityId;
+        public int campId;
+
     }
 }

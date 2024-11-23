@@ -7,7 +7,7 @@ namespace GamePlay.Bussiness.Renderer
     public class GameRoleInputDomainR
     {
         GameContextR _context;
-        GameRoleContextR _roleContext => this._context.roleContext;
+        private GameRoleContextR _roleContext => this._context.roleContext;
 
         public GameRoleInputDomainR()
         {
@@ -25,21 +25,35 @@ namespace GamePlay.Bussiness.Renderer
         public void Tick()
         {
             var inputArgs = new GameRoleInputArgs();
-            // 移动
-            var moveDir = new GameVec2(0, 0);
-            if (Input.GetKey(KeyCode.W)) { moveDir.y += 1; }
-            if (Input.GetKey(KeyCode.S)) { moveDir.y -= 1; }
-            if (Input.GetKey(KeyCode.A)) { moveDir.x -= 1; }
-            if (Input.GetKey(KeyCode.D)) { moveDir.x += 1; }
-            inputArgs.moveDir = moveDir.normalized;
-            // 攻击
-            if (Input.GetKeyDown(KeyCode.J)) inputArgs.skillId = 1;
-            // ...
-            if (inputArgs.HasInput())
+            var userRole = this._roleContext.userRole;
+            if (userRole != null)
             {
-                var userRole = this._roleContext.userRole;
-                var entityId = userRole.idCom.entityId;
-                this._roleContext.context.logicContext.roleContext.SetPlayerInputArgs(entityId, inputArgs);
+                // 移动
+                var moveDir = new GameVec2(0, 0);
+                if (Input.GetKey(KeyCode.W)) { moveDir.y += 1; }
+                if (Input.GetKey(KeyCode.S)) { moveDir.y -= 1; }
+                if (Input.GetKey(KeyCode.A)) { moveDir.x -= 1; }
+                if (Input.GetKey(KeyCode.D)) { moveDir.x += 1; }
+                inputArgs.moveDir = moveDir.normalized;
+                // 攻击
+                if (Input.GetKeyDown(KeyCode.J))
+                {
+                    if (userRole.skillCom.TryGetByIndex(0, out var skill)) inputArgs.skillId = skill.skillModel.typeId;
+                }
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    if (userRole.skillCom.TryGetByIndex(1, out var skill)) inputArgs.skillId = skill.skillModel.typeId;
+                }
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    if (userRole.skillCom.TryGetByIndex(2, out var skill)) inputArgs.skillId = skill.skillModel.typeId;
+                }
+                // ...
+                if (inputArgs.HasInput())
+                {
+                    var entityId = userRole.idCom.entityId;
+                    this._context.logicContext.roleContext.SetPlayerInputArgs(entityId, inputArgs);
+                }
             }
         }
     }

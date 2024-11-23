@@ -18,10 +18,10 @@ namespace GamePlay.Bussiness.Logic
 
         public GameActionTargeterCom()
         {
-            Clear();
+            Reset();
         }
 
-        public void Clear()
+        public void Reset()
         {
             _targeterList = null;
             _targetDirectionList = null;
@@ -54,7 +54,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void SetTargeterList(GameVec2 actionPos, List<IGameActionTargeter> targeterList)
         {
-            Clear();
+            Reset();
             _targeterList = targeterList;
             var dirList = new List<GameVec2>();
             foreach (var targeter in targeterList)

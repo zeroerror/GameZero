@@ -20,6 +20,7 @@ namespace GamePlay.Bussiness.Renderer
         public float scaleY { get { return transform.localScale.y; } set { transform.localScale = new GameVec3(transform.localScale.x, value, transform.localScale.z); } }
 
         public GameRoleFSMComR fsmCom { get; private set; }
+        public GameSkillComponentR skillCom { get; private set; }
         public GameAnimPlayableCom animCom { get; private set; }
 
         private GameEasing2DCom _posEaseCom;
@@ -31,6 +32,7 @@ namespace GamePlay.Bussiness.Renderer
             this.foot = go.transform.Find("foot").gameObject;
             this.body = go.transform.Find("body").gameObject;
             this.fsmCom = new GameRoleFSMComR();
+            this.skillCom = new GameSkillComponentR(this);
             var animator = this.body.GetComponent<Animator>();
             this.animCom = new GameAnimPlayableCom(animator);
             this._posEaseCom = new GameEasing2DCom();
@@ -45,8 +47,6 @@ namespace GamePlay.Bussiness.Renderer
             var forward = this.transformCom.forward;
             this.scaleX = forward.x > 0 ? 1 : -1;
         }
-
-        public override void Reset(float dt) { }
 
         public override void Dispose()
         {

@@ -7,18 +7,22 @@ namespace GamePlay.Bussiness.Logic
         public GameIdCom idCom { get; private set; }
         public GameTransformCom transformCom { get; private set; }
         public GameActionTargeterCom actionTargeterCom { get; private set; }
+        public GamePhysicsCom physicsCom { get; private set; }
 
         public GameEntityBase(int typeId, GameEntityType entityType)
         {
             idCom = new GameIdCom(typeId, entityType);
             transformCom = new GameTransformCom();
             actionTargeterCom = new GameActionTargeterCom();
+            physicsCom = new GamePhysicsCom();
         }
 
-        public void Reset()
+        public virtual void Reset()
         {
             idCom.Reset();
             transformCom.Reset();
+            actionTargeterCom.Reset();
+            physicsCom.Reset();
         }
 
         public bool IsEquals(GameEntityBase other)
@@ -46,7 +50,6 @@ namespace GamePlay.Bussiness.Logic
         }
 
         public virtual void Tick(float dt) { }
-        public abstract void Reset(float dt);
         public virtual void Dispose() { }
 
     }

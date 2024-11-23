@@ -183,28 +183,26 @@ public class GamePhysicsTest : MonoBehaviour
             GUI.Label(rect, name);
         }
     }
-
     private void Draw(GameColliderBase c, Color color)
     {
-        if (c is GameCircleCollider)
+        if (c is GameCircleCollider circle)
         {
-            this.DrawCircle(c as GameCircleCollider, color);
+            circle.Draw(color);
             return;
         }
-        if (c is GameBoxCollider)
+        if (c is GameBoxCollider box)
         {
-            this.DrawBox(c as GameBoxCollider, color);
+            box.Draw(color);
             return;
         }
-        if (c is GameFanCollider)
+        if (c is GameFanCollider fan)
         {
-            this.DrawFan(c as GameFanCollider, color);
+            fan.Draw(color);
             return;
         }
     }
     #endregion
 
-    #region Fan
     private void CreateFan(in GameTransformArgs args, float radius, float fanAngle, Color color)
     {
         var role = new GameRoleEntity(1);
@@ -217,28 +215,7 @@ public class GamePhysicsTest : MonoBehaviour
         this.colliderList.Add(fan);
         this.colorList.Add(color);
     }
-    private void DrawFan(GameFanCollider fan, Color color)
-    {
-        var worldCenterPos = fan.worldCenterPos;
-        var worldP1 = fan.worldP1;// 右上角
-        var worldP2 = fan.worldP2;// 右下角
-        Debug.DrawLine(worldCenterPos, worldP1, color);
-        Debug.DrawLine(worldCenterPos, worldP2, color);
-        var stepAngle = 0.1f;
-        var lastPos = worldP2;
-        for (float i = -fan.fanAngle / 2; i <= fan.fanAngle / 2; i += stepAngle)
-        {
-            var radian = i * Mathf.Deg2Rad;
-            var x = worldCenterPos.x + fan.worldRadius * Mathf.Cos(radian);
-            var y = worldCenterPos.y + fan.worldRadius * Mathf.Sin(radian);
-            var pos = new Vector2(x, y);
-            Debug.DrawLine(lastPos, pos, color);
-            lastPos = pos;
-        }
-    }
-    #endregion
 
-    #region Circle
     private void CreateCircle(in GameTransformArgs args, float radius, Color color)
     {
         var role = new GameRoleEntity(1);
@@ -251,25 +228,7 @@ public class GamePhysicsTest : MonoBehaviour
         this.colliderList.Add(circle);
         this.colorList.Add(color);
     }
-    private void DrawCircle(GameCircleCollider circle, Color color)
-    {
-        var worldCenterPos = circle.worldCenterPos;
-        var worldRadius = circle.worldRadius;
-        var stepAngle = 0.1f;
-        var lastPos = worldCenterPos + new Vector2(worldRadius, 0);
-        for (float i = 0; i < 360; i += stepAngle)
-        {
-            var radian = i * Mathf.Deg2Rad;
-            var x = worldCenterPos.x + worldRadius * Mathf.Cos(radian);
-            var y = worldCenterPos.y + worldRadius * Mathf.Sin(radian);
-            var pos = new Vector2(x, y);
-            Debug.DrawLine(lastPos, pos, color);
-            lastPos = pos;
-        }
-    }
-    #endregion
 
-    #region Box
     private void CreateBox(in GameTransformArgs args, Color color)
     {
         var role = new GameRoleEntity(1);
@@ -282,16 +241,4 @@ public class GamePhysicsTest : MonoBehaviour
         this.colliderList.Add(box);
         this.colorList.Add(color);
     }
-    private void DrawBox(GameBoxCollider box, Color color)
-    {
-        var worldP1 = box.worldP1;
-        var worldP2 = box.worldP2;
-        var worldP3 = box.worldP3;
-        var worldP4 = box.worldP4;
-        Debug.DrawLine(worldP1, worldP2, color);
-        Debug.DrawLine(worldP2, worldP4, color);
-        Debug.DrawLine(worldP4, worldP3, color);
-        Debug.DrawLine(worldP3, worldP1, color);
-    }
-    #endregion
 }

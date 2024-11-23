@@ -6,12 +6,12 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateDomain_Move() : base() { }
 
-        public override bool CheckEnter(GameRoleEntity role, params object[] args)
+        public override bool CheckEnter(GameRoleEntity role)
         {
             return true;
         }
 
-        public override void Enter(GameRoleEntity role, params object[] args)
+        public override void Enter(GameRoleEntity role)
         {
             // 提交RC
             this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, new GameRoleRCArgs_StateEnterMove

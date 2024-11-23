@@ -53,6 +53,7 @@ namespace GamePlay.Bussiness.Logic
                 typeId = typeId,
                 entityType = entityType,
                 entityId = entityId,
+                campId = campId
             };
         }
 
@@ -61,6 +62,7 @@ namespace GamePlay.Bussiness.Logic
             typeId = args.typeId;
             entityType = args.entityType;
             entityId = args.entityId;
+            campId = args.campId;
         }
     }
 }

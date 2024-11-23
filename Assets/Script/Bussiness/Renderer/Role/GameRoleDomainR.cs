@@ -15,24 +15,6 @@ namespace GamePlay.Bussiness.Renderer
             this.fsmDomain = new GameRoleFSMDomainR();
         }
 
-        private void _BindEvent()
-        {
-            this._context.logicContext.rcEventService.Regist(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
-            this.fsmDomain.BindEvent();
-        }
-
-        private void _UnbindEvents()
-        {
-            this._context.logicContext.rcEventService.Unbind(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
-            this.fsmDomain.UnbindEvents();
-        }
-
-        private void _OnRoleCreate(object args)
-        {
-            var evArgs = (GameRoleRCArgs_Create)args;
-            this.Create(evArgs.idArgs, evArgs.transComArgs, evArgs.isUser);
-        }
-
         public void Inject(GameContextR context)
         {
             this._context = context;
@@ -50,6 +32,25 @@ namespace GamePlay.Bussiness.Renderer
                 entity.Dispose();
             });
         }
+
+        private void _BindEvent()
+        {
+            this._context.BindRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
+            this.fsmDomain.BindEvent();
+        }
+
+        private void _UnbindEvents()
+        {
+            this._context.UnbindRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
+            this.fsmDomain.UnbindEvents();
+        }
+
+        private void _OnRoleCreate(object args)
+        {
+            var evArgs = (GameRoleRCArgs_Create)args;
+            this.Create(evArgs.idArgs, evArgs.transComArgs, evArgs.isUser);
+        }
+
 
         public void Collect()
         {

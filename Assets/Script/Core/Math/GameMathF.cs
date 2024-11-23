@@ -2,6 +2,9 @@ namespace GamePlay.Core
 {
     public static class GameMathF
     {
+        public static readonly float Deg2Rad = 0.0174532924f;
+        public static readonly float Rad2Deg = 57.29578f;
+
         public static float Min(float a, float b) => a < b ? a : b;
         public static float Min(params float[] args)
         {

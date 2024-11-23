@@ -30,17 +30,27 @@
 			"description": "生成类似的属性"
 		},
 		"nsl": {
-			"prefix": "ns",
+			"prefix": "nsl",
 			"body": [
-				"namespace GamePlay.Logic"
+				"namespace GamePlay.Bussiness.Logic"
 				"{"
-					"public class $1"
-					"{"
+				"	public class $1"
+				"	{"
 				
-					"}"
+				"	}"
 				"}"
 			],
-			"description": "生成类似的属性"
 		},
-	
+		"nsr": {
+			"prefix": "nsr",
+			"body": [
+				"namespace GamePlay.Bussiness.Renderer"
+				"{"
+				"	public class $1"
+				"	{"
+				
+				"	}"
+				"}"
+			],
+		},
 }

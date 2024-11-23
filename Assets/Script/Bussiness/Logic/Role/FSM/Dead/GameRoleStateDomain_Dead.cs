@@ -6,12 +6,12 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateDomain_Dead() : base() { }
 
-        public override bool CheckEnter(GameRoleEntity entity, params object[] args)
+        public override bool CheckEnter(GameRoleEntity entity)
         {
             return true;
         }
 
-        public override void Enter(GameRoleEntity entity, params object[] args)
+        public override void Enter(GameRoleEntity entity)
         {
             // 提交RC
             this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DEAD, new GameRoleRCArgs_StateEnterDead

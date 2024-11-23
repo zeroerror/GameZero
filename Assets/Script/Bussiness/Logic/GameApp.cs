@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameCore
+    public class GameApp
     {
         public GameDirectDomain directDomain { get; private set; }
 
-        public GameCore()
+        public GameApp()
         {
             this.directDomain = new GameDirectDomain();
             Application.quitting += this.Dispose;
