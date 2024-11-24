@@ -44,9 +44,9 @@ namespace GamePlay.Bussiness.Logic
             this.transformDomain.Inject(this.context);
             this.physicsDomain.Inject(this.context);
 
-            this.roleDomain.CreateUserRole(1000, 1, new GameTransformArgs { position = new GameVec2(0, 0), scale = 1 });
-            this.roleDomain.CreateUserRole(1000, 2, new GameTransformArgs { position = new GameVec2(-5, 0), scale = 1.5f });
-            this.roleDomain.CreateUserRole(1000, 3, new GameTransformArgs { position = new GameVec2(5, 0), scale = 1.5f });
+            this.roleDomain.CreateUserRole(1000, 1, new GameTransformArgs { position = new GameVec2(0, -5), scale = 1f });
+            this.roleDomain.CreateUserRole(1000, 2, new GameTransformArgs { position = new GameVec2(-5, -5), scale = 1f });
+            this.roleDomain.CreateUserRole(1000, 3, new GameTransformArgs { position = new GameVec2(5, -5), scale = 1f });
         }
 
         public void Dispose()

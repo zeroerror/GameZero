@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace GamePlay.Config
 {
-    [CreateAssetMenu(fileName = "template_skill_", menuName = "游戏玩法/配置/技能模板")]
-    public class GameSkillSO : GameSOBase
+    [CreateAssetMenu(fileName = "template_bullet_", menuName = "游戏玩法/配置/弹体模板")]
+    public class GameBulletSO : GameSOBase
     {
         [Header("动画文件")]
         public AnimationClip animClip;
@@ -33,8 +33,8 @@ namespace GamePlay.Config
                 {
                     var e = events[i];
                     var actionId = e.intParameter;
-                    // 读取so文件action.asset中的数据，路径为Config/Action
-                    var path = $"{GameConfigCollection.ACTION_CONFIG_DIR_PATH}/template_action_{actionId}";
+                    var prefix = this._getPrefix();
+                    var path = $"{GameConfigCollection.ACTION_CONFIG_DIR_PATH}/{prefix}{actionId}";
                     var actionSO = Resources.Load<GameActionSO>(path);
                     if (actionSO == null)
                     {

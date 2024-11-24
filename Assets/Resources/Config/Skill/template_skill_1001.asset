@@ -16,3 +16,7 @@ MonoBehaviour:
   animClip: {fileID: 7400000, guid: 3c564ddc572e7654f86c0620a211609f, type: 2}
   animName: attack
   animLength: 0.4
+  timelineEvents:
+  - time: 0.2
+    frame: 6
+    action: {fileID: 11400000, guid: 72848d911d917fe4ca3ac696d798e877, type: 2}

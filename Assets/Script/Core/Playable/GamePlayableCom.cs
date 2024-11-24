@@ -50,6 +50,8 @@ public class GameAnimPlayableCom
             this._graphDict.Add(clip.name, cacheGraph);
         }
         cacheGraph.Play();
+        // 将默认动画事件移除
+        clip.events = new AnimationEvent[0];
         this.currentGraph = cacheGraph;
         this.isPause = false;
     }

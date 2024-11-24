@@ -16,3 +16,7 @@ MonoBehaviour:
   animClip: {fileID: 7400000, guid: 598ea8b9b5642554a981bcccce536340, type: 2}
   animName: jumpAttack
   animLength: 0.26666668
+  timelineEvents:
+  - time: 0.15
+    frame: 4
+    action: {fileID: 11400000, guid: 9d2d71fed14c0d241895b27994495277, type: 2}

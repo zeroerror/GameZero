@@ -12,7 +12,7 @@ namespace GamePlay.Bussiness.Logic
         public GameSkillTemplate()
         {
             _dict = new Dictionary<int, GameSkillModel>();
-            var path = "Config/Skill/";
+            var path = GameConfigCollection.SKILL_CONFIG_DIR_PATH;
             var soList = Resources.LoadAll(path, typeof(GameSkillSO));
             _soDict = new Dictionary<int, GameSkillSO>();
             foreach (var so in soList)

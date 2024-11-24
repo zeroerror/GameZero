@@ -73,5 +73,49 @@ namespace GamePlay.Core
             }
             return max;
         }
+
+        public static List<T> Filter<T>(this List<T> list, Predicate<T> match)
+        {
+            List<T> result = new List<T>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (match(list[i]))
+                {
+                    result.Add(list[i]);
+                }
+            }
+            return result;
+        }
+
+        public static T[] Filter<T>(this T[] list, Predicate<T> match)
+        {
+            List<T> result = new List<T>();
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (match(list[i]))
+                {
+                    result.Add(list[i]);
+                }
+            }
+            return result.ToArray();
+        }
+
+        public static T Find<T>(this T[] list, Predicate<T> match)
+        {
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (match(list[i])) return list[i];
+            }
+            return default;
+        }
+
+        public static bool Contains<T>(this T[] list, Predicate<T> match)
+        {
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (match(list[i])) return true;
+            }
+            return false;
+        }
     }
 }

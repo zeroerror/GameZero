@@ -16,3 +16,7 @@ MonoBehaviour:
   animClip: {fileID: 7400000, guid: 50115ab33040bf648ae77de254862491, type: 2}
   animName: cast
   animLength: 0.5833333
+  timelineEvents:
+  - time: 0.35
+    frame: 10
+    action: {fileID: 0}
