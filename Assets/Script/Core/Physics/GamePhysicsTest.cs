@@ -1,9 +1,7 @@
 using UnityEngine;
 using GamePlay.Core;
 using GamePlay.Bussiness.Logic;
-using GamePlay.Bussiness.Renderer;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public class GamePhysicsTest : MonoBehaviour
 {

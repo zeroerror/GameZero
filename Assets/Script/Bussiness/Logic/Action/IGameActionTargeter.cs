@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Logic
             }
             else
             {
-                GameLogger.Error("SetTarget target is not GameRoleEntity");
+                GameLogger.LogError("SetTarget target is not GameRoleEntity");
             }
         }
     }

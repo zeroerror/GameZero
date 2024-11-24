@@ -19,7 +19,7 @@ namespace GamePlay.Core
                     fan.Draw(color);
                     break;
                 default:
-                    GameLogger.Error($"Draw: unknown collider {collider}");
+                    GameLogger.LogError($"Draw: unknown collider {collider}");
                     break;
             }
         }

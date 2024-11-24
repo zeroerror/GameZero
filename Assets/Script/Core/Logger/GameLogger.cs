@@ -8,11 +8,11 @@ namespace GamePlay.Core
         {
             Debug.Log(message);
         }
-        public static void Warning(string message)
+        public static void LogWarning(string message)
         {
             Debug.LogWarning(message);
         }
-        public static void Error(string message)
+        public static void LogError(string message)
         {
             Debug.LogError(message);
         }

@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Logic
         {
             if (!template.TryGet(typeId, out var model))
             {
-                GameLogger.Error("GameSkillFactory.Load: typeId not found: " + typeId);
+                GameLogger.LogError("GameSkillFactory.Load: typeId not found: " + typeId);
                 return null;
             }
             var skill = new GameSkillEntity(model);

@@ -26,13 +26,13 @@ namespace GamePlay.Bussiness.Logic
             var skill = factory.Load(typeId);
             if (skill == null)
             {
-                GameLogger.Error("技能创建失败，技能ID不存在：" + typeId);
+                GameLogger.LogError("技能创建失败，技能ID不存在：" + typeId);
                 return null;
             }
             var skillCom = role.skillCom;
             if (skillCom.TryGet(typeId, out var _))
             {
-                GameLogger.Error("技能创建失败，技能已存在：" + typeId);
+                GameLogger.LogError("技能创建失败，技能已存在：" + typeId);
                 return null;
             }
             skillCom.Add(skill);
@@ -49,7 +49,7 @@ namespace GamePlay.Bussiness.Logic
             var factory = this._skillContext.factory;
             if (!factory.template.TryGet(typeId, out var model))
             {
-                GameLogger.Error("技能模板不存在：" + typeId);
+                GameLogger.LogError("技能模板不存在：" + typeId);
                 return null;
             }
             return model;

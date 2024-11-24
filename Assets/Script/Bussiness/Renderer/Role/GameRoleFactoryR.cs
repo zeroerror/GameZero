@@ -29,7 +29,7 @@ namespace GamePlay.Bussiness.Renderer
             var res = Resources.Load<AnimationClip>($"Role/{typeId}/Anim/{clipName}");
             if (!res)
             {
-                GameLogger.Error($"角色工厂[渲染层]: 加载动画失败 {typeId} {clipName}");
+                GameLogger.LogError($"角色工厂[渲染层]: 加载动画失败 {typeId} {clipName}");
             }
             return res;
         }

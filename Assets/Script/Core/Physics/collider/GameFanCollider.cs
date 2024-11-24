@@ -152,7 +152,7 @@ namespace GamePlay.Core
             // 2 SAT投影轴
             //-AB扇形各自的两边
             //-A扇形分别到B扇形3点三线, B扇形分别到A扇形3点三线
-            GameLogger.Error("GameFanCollider.GetResolvingMTV not implemented");
+            GameLogger.LogError("GameFanCollider.GetResolvingMTV not implemented");
             return GameVec2.zero;
         }
 

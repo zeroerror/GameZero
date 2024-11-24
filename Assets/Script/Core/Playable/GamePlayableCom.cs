@@ -44,7 +44,7 @@ public class GameAnimPlayableCom
             cacheGraph = this._Create(clip);
             if (!cacheGraph.IsValid())
             {
-                GameLogger.Error($"Create PlayableGraph Failed: {clip.name}");
+                GameLogger.LogError($"Create PlayableGraph Failed: {clip.name}");
                 return;
             }
             this._graphDict.Add(clip.name, cacheGraph);
@@ -60,12 +60,12 @@ public class GameAnimPlayableCom
     {
         if (!this._graphDict.TryGetValue(name, out var cacheGraph))
         {
-            GameLogger.Error($"Play PlayableGraph Failed: {name} not found");
+            GameLogger.LogError($"Play PlayableGraph Failed: {name} not found");
             return;
         }
         if (!cacheGraph.IsValid())
         {
-            GameLogger.Error($"Play PlayableGraph Failed: {name} is invalid");
+            GameLogger.LogError($"Play PlayableGraph Failed: {name} is invalid");
             return;
         }
         cacheGraph.Play();

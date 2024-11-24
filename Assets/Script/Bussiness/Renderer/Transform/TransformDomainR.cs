@@ -42,7 +42,7 @@ namespace GamePlay.Bussiness.Renderer
                     entity = this._context.roleContext.repo.FindByEntityId(idArgs.entityId);
                     break;
                 default:
-                    GameLogger.Error("TransformDomainR._OnTransformSync: unknown entityType: " + idArgs.entityType);
+                    GameLogger.LogError("TransformDomainR._OnTransformSync: unknown entityType: " + idArgs.entityType);
                     break;
             }
             if (entity == null)

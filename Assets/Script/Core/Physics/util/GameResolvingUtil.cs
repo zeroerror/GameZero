@@ -15,7 +15,7 @@ namespace GamePlay.Core
             else if (colliderA is GameFanCollider fanCollider)
                 mtv = GetResolvingMTV_Fan_Collider(fanCollider, colliderB);
             else
-                GameLogger.Error("GamePhysicsRestoreUtil.GetResolvingMTV: colliderA is not a valid collider");
+                GameLogger.LogError("GamePhysicsRestoreUtil.GetResolvingMTV: colliderA is not a valid collider");
 
             return mtv;
         }
@@ -289,7 +289,7 @@ namespace GamePlay.Core
             GameFanCollider fanCollider,
             int judgeMode = 0)
         {
-            GameLogger.Error("GamePhysicsUtil.GetResolvingMTV_Circle_Fan not implemented");
+            GameLogger.LogError("GamePhysicsUtil.GetResolvingMTV_Circle_Fan not implemented");
             return GameVec2.zero;
         }
 
@@ -297,7 +297,7 @@ namespace GamePlay.Core
             GameCircleCollider circleCollider,
             GameFanCollider fanCollider)
         {
-            GameLogger.Error("GamePhysicsUtil.GetContactMTV_Circle_Fan not implemented");
+            GameLogger.LogError("GamePhysicsUtil.GetContactMTV_Circle_Fan not implemented");
             return GameVec2.zero;
         }
 

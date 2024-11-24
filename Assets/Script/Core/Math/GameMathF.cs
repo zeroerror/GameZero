@@ -38,5 +38,7 @@ namespace GamePlay.Core
         {
             return GameMathF.Abs(a - b) < epsilon;
         }
+
+        public static int FloorToInt(float a) => (int)System.Math.Floor(a);
     }
 }

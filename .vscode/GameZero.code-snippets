@@ -53,4 +53,26 @@
 				"}"
 			],
 		},
+		"testmono": {
+			"prefix": "testmono",
+			"body": [
+				"[UnityEditor.InitializeOnLoad]"
+				"public class Loader"
+				"{"
+				"	static Loader()"
+				"	{"
+				"		UnityEditor.EditorApplication.playModeStateChanged += OnPlayModeStateChanged;"
+				"	}"
+				""
+				"	private static void OnPlayModeStateChanged(UnityEditor.PlayModeStateChange state)"
+				"	{"
+				"		if (state == UnityEditor.PlayModeStateChange.EnteredPlayMode)"
+				"		{"
+				"			var go = new GameObject(\"$1\");"
+				"			go.AddComponent<$1>();"
+				"		}"
+				"	}"
+				"}"
+			],
+		},
 }

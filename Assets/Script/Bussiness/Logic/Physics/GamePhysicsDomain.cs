@@ -48,7 +48,7 @@ namespace GamePlay.Bussiness.Logic
                     collider = new GameCircleCollider(entity, circleColliderModel, id);
                     break;
                 default:
-                    GameLogger.Error($"CreatePhysics: unknown colliderModel {colliderModel}");
+                    GameLogger.LogError($"CreatePhysics: unknown colliderModel {colliderModel}");
                     break;
             }
             if (collider != null)
