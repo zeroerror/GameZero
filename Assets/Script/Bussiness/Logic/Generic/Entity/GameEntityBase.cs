@@ -6,6 +6,7 @@ namespace GamePlay.Bussiness.Logic
         public int bodyColliderId { get; private set; }
         public GameIdCom idCom { get; private set; }
         public GameTransformCom transformCom { get; private set; }
+        public void BindTransformCom(GameTransformCom transformCom) => this.transformCom = transformCom;
         public GameActionTargeterCom actionTargeterCom { get; private set; }
         public GamePhysicsCom physicsCom { get; private set; }
 

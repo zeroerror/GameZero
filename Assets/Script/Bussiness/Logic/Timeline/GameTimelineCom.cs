@@ -4,10 +4,14 @@ using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameTimelineComponent
+    public class GameTimelineCom
     {
         // 时长(秒)
         public float length { get; private set; }
+        public void SetLength(float length)
+        {
+            this.length = length;
+        }
         // 时长(帧)
         public int frameLength => GameMathF.FloorToInt(length * GameTimeCollection.frameRate);
         // 是否正在播放
@@ -28,8 +32,9 @@ namespace GamePlay.Bussiness.Logic
         // 事件列表
         private Dictionary<int, List<Action>> _events;
 
-        public GameTimelineComponent()
+        public GameTimelineCom(float length)
         {
+            this.length = length;
             this._events = new Dictionary<int, List<Action>>();
         }
 
@@ -44,7 +49,7 @@ namespace GamePlay.Bussiness.Logic
         {
             if (frame < 0 || frame >= this.frameLength)
             {
-                GameLogger.LogError($"时间轴添加事件帧超出范围: {frame}");
+                GameLogger.LogError($"时间轴添加事件帧超出范围: {frame} / {this.frameLength}");
                 return;
             }
             if (!this._events.ContainsKey(frame))
@@ -60,9 +65,9 @@ namespace GamePlay.Bussiness.Logic
             this.AddEventByFrame(this._ConvertToFrame(time), action);
         }
 
-        public void Play(float length, float loopDuration = 0, float startTime = 0, Action complete = null)
+        public void Play(float loopDuration = 0, float startTime = 0, Action complete = null)
         {
-            this.length = length;
+            this.length = length == 0 ? this.length : length;
             this.loopDuration = loopDuration;
             this.time = startTime;
             this._complete = complete;
@@ -76,7 +81,6 @@ namespace GamePlay.Bussiness.Logic
             this.loopDuration = 0;
             this.time = 0;
             this._cacheDt = 0;
-            this._events.Clear();
             this._complete = null;
         }
 

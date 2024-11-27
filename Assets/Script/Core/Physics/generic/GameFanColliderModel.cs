@@ -3,6 +3,8 @@ namespace GamePlay.Core
 {
     public class GameFanColliderModel : GameColliderModelBase
     {
+        public static GameFanColliderModel DEFAULT = new GameFanColliderModel(new GameVec2(0, 0), 0, 1, 1);
+
         public GameVec2 offset { get; set; }
         public float angle { get; set; }
         public float radius;

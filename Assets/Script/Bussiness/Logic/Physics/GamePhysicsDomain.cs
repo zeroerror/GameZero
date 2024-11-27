@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using GamePlay.Core;
 using UnityEngine;
+using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -68,6 +70,22 @@ namespace GamePlay.Bussiness.Logic
                 collider.isEnable = false;
                 _physicsContext.Remove(physicsCom);
             }
+        }
+
+        public List<GameEntityBase> GetOverlapEntities(GameColliderModelBase colliderModel, GameTransformArgs transformArgs)
+        {
+            List<GameEntityBase> overlapEntities = new List<GameEntityBase>();
+            var roleContext = this._context.roleContext;
+            roleContext.entityRepo.ForeachEntities((entity) =>
+            {
+                var physicsCom = entity.physicsCom;
+                var collider = physicsCom.collider;
+                var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(collider, colliderModel, transformArgs);
+                var isOverlap = mtv != GameVec2.zero;
+                if (isOverlap) overlapEntities.Add(entity);
+            });
+            // ...其余实体类型的碰撞检测
+            return overlapEntities;
         }
     }
 }

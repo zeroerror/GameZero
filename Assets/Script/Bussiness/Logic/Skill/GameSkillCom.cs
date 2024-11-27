@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameSkillComponent
+    public class GameSkillComp
     {
         private List<GameSkillEntity> _skillEntities;
 
-        public GameSkillComponent(GameRoleEntity entity)
+        public GameSkillComp(GameRoleEntity entity)
         {
             _skillEntities = new List<GameSkillEntity>();
         }

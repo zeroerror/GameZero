@@ -13,5 +13,8 @@ namespace GamePlay.Bussiness.Logic
 
         public GameSkillDomainApi skillApi { get; private set; }
         public void SetSkillApi(GameSkillDomainApi skillApi) => this.skillApi = skillApi;
+
+        public GameActionDomainApi actionApi { get; private set; }
+        public void SetActionApi(GameActionDomainApi actionApi) => this.actionApi = actionApi;
     }
 }

@@ -117,5 +117,10 @@ namespace GamePlay.Core
             }
             return false;
         }
+
+        public static void Foreach<T>(this T[] list, Action<T, int> action)
+        {
+            for (int i = 0; i < list.Length; i++) action(list[i], i);
+        }
     }
 }

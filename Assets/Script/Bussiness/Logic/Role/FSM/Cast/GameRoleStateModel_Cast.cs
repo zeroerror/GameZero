@@ -4,7 +4,9 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameSkillEntity skill;
 
-        public GameRoleStateModel_Cast() { }
+        public GameRoleStateModel_Cast()
+        {
+        }
 
         public override void Clear()
         {

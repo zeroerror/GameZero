@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Enter(GameRoleEntity entity)
         {
-            // 提交RC
+            entity.fsmCom.EnterIdle();            // 提交RC
             this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_IDLE, new GameRoleRCArgs_StateEnterIdle
             {
                 fromState = entity.fsmCom.state,

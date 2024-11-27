@@ -12,6 +12,7 @@ namespace GamePlay.Bussiness.Logic
         public GameSkillDomain skillDomain { get; private set; }
         public GameTransformDomain transformDomain { get; private set; }
         public GamePhysicsDomain physicsDomain { get; private set; }
+        public GameActionDomain actionDomain { get; private set; }
 
         public GameDirectDomain()
         {
@@ -26,6 +27,7 @@ namespace GamePlay.Bussiness.Logic
             this.skillDomain = new GameSkillDomain();
             this.transformDomain = new GameTransformDomain();
             this.physicsDomain = new GamePhysicsDomain();
+            this.actionDomain = new GameActionDomain();
         }
 
         private void _InitContext()
@@ -35,6 +37,7 @@ namespace GamePlay.Bussiness.Logic
             this.context.domainApi.SetSkillApi(this.skillDomain);
             this.context.domainApi.SetTransformApi(this.transformDomain);
             this.context.domainApi.SetPhysicsApi(this.physicsDomain);
+            this.context.domainApi.SetActionApi(this.actionDomain);
         }
 
         private void _InjectContext()
@@ -43,6 +46,7 @@ namespace GamePlay.Bussiness.Logic
             this.skillDomain.Inject(this.context);
             this.transformDomain.Inject(this.context);
             this.physicsDomain.Inject(this.context);
+            this.actionDomain.Inject(this.context);
 
             this.roleDomain.CreateUserRole(1000, 1, new GameTransformArgs { position = new GameVec2(0, -5), scale = 1f });
             this.roleDomain.CreateUserRole(1000, 2, new GameTransformArgs { position = new GameVec2(-5, -5), scale = 1f });

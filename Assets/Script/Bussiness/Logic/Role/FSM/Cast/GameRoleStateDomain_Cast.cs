@@ -1,7 +1,5 @@
 using GamePlay.Core;
 
-using UnityEngine.Rendering;
-
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleStateDomain_Cast : GameRoleStateDomainBase
@@ -19,9 +17,9 @@ namespace GamePlay.Bussiness.Logic
         {
             var skillId = entity.inputCom.skillId;
             entity.skillCom.TryGet(skillId, out var skill);
-            var stateModel = entity.fsmCom.castStateModel;
-            stateModel.Clear();
-            stateModel.skill = skill;
+            var fsmCom = entity.fsmCom;
+            fsmCom.EnterCast(skill);
+            skill.timelineCom.Play();
             // 提交RC
             this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_CAST, new GameRoleRCArgs_StateEnterCast
             {
@@ -34,16 +32,24 @@ namespace GamePlay.Bussiness.Logic
         protected override void _Tick(GameRoleEntity entity, float frameTime)
         {
             var stateModel = entity.fsmCom.castStateModel;
-            stateModel.stateTime += frameTime;
+            var skill = stateModel.skill;
+            // 时间轴更新
+            var timelineCom = skill.timelineCom;
+            timelineCom.Tick(frameTime);
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity entity)
         {
-            // test exit
             var stateModel = entity.fsmCom.castStateModel;
-            var isCastOver = stateModel.stateTime > 0.3;
-            if (isCastOver) return GameRoleStateType.Idle;
+            var skill = stateModel.skill;
+            var timelineCom = skill.timelineCom;
+            if (!timelineCom.isPlaying) return GameRoleStateType.Idle;
             return GameRoleStateType.None;
+        }
+
+        public override void ExitTo(GameRoleEntity entity, GameRoleStateType toState)
+        {
+            base.ExitTo(entity, toState);
         }
     }
 }

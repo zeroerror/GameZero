@@ -6,11 +6,13 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameActionTargeterCom : IGameActionTargeter
     {
-        private List<IGameActionTargeter> _targeterList;
-        public GameForeachType foreachType = GameForeachType.None;
-        public GameRoleEntity targetRole { get => _getCurTargeter()?.targetRole; set { } }
+        public GameEntityBase targetEntity { get => _getCurTargeter()?.targetEntity; set { } }
         public GameVec2 targetPos { get => _getCurTargeter()?.targetPos ?? GameVec2.zero; set { } }
         public GameVec2 targetDirection { get => _targetDirectionList?[_curTargeterIndex] ?? GameVec2.zero; set { } }
+
+        private List<IGameActionTargeter> _targeterList;
+        public GameForeachType foreachType = GameForeachType.None;
+
         private List<GameVec2> _targetDirectionList;
         public int ExecuteCount => foreachType == GameForeachType.None ? _targeterList?.Count ?? 0 : 1;
 
@@ -33,7 +35,7 @@ namespace GamePlay.Bussiness.Logic
             if (_targeterList?.Count == 0) return;
             _targeterList.RemoveAll(targeter =>
             {
-                var target = targeter.targetRole;
+                var target = targeter.targetEntity;
                 return target == null;// todo 过滤死亡
             });
 
@@ -59,7 +61,7 @@ namespace GamePlay.Bussiness.Logic
             var dirList = new List<GameVec2>();
             foreach (var targeter in targeterList)
             {
-                var targetPos = targeter.targetRole?.transformCom.position ?? targeter.targetPos;
+                var targetPos = targeter.targetEntity?.transformCom.position ?? targeter.targetPos;
                 var targetDir = (targetPos - actionPos).normalized;
                 dirList.Add(targetDir);
             }

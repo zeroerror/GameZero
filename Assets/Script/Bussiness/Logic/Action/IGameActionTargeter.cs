@@ -9,7 +9,7 @@ namespace GamePlay.Bussiness.Logic
      */
     public interface IGameActionTargeter
     {
-        public GameRoleEntity targetRole { get; set; }
+        public GameEntityBase targetEntity { get; set; }
         public GameVec2 targetPos { get; set; }
         public GameVec2 targetDirection { get; set; }
     }
@@ -20,7 +20,7 @@ namespace GamePlay.Bussiness.Logic
         {
             if (target is GameRoleEntity)
             {
-                targeter.targetRole = (GameRoleEntity)target;
+                targeter.targetEntity = (GameRoleEntity)target;
             }
             else
             {

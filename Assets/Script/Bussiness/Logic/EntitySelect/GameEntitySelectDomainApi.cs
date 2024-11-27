@@ -7,6 +7,6 @@ namespace GamePlay.Bussiness.Logic
         /// 选择实体
         /// </summary>
         /// <returns></returns>
-        public List<GameEntityBase> GetSelectdeEntities(in GameEntitySelector selector);
+        public List<GameEntityBase> GetSelectdeEntities(GameEntitySelector selector, GameEntityBase actorEntity);
     }
 }

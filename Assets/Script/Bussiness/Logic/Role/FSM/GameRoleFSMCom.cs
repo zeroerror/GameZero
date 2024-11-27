@@ -30,9 +30,10 @@ namespace GamePlay.Bussiness.Logic
             this.SwitchToState(GameRoleStateType.Move);
         }
 
-        public void EnterCast()
+        public void EnterCast(GameSkillEntity skill)
         {
             this.SwitchToState(GameRoleStateType.Cast);
+            this.castStateModel.skill = skill;
         }
 
         public void EnterDead()

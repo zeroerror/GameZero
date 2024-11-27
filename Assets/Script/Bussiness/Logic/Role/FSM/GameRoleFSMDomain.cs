@@ -59,21 +59,6 @@ namespace GamePlay.Bussiness.Logic
             if (!this._stateDomainDict.TryGetValue(state, out var stateDomain)) return;
             this._ExitToState(role, state);
             stateDomain.Enter(role);
-            switch (state)
-            {
-                case GameRoleStateType.Idle:
-                    role.fsmCom.EnterIdle();
-                    break;
-                case GameRoleStateType.Move:
-                    role.fsmCom.EnterMove();
-                    break;
-                case GameRoleStateType.Cast:
-                    role.fsmCom.EnterCast();
-                    break;
-                case GameRoleStateType.Dead:
-                    role.fsmCom.EnterDead();
-                    break;
-            }
         }
 
         private void _ExitToState(GameRoleEntity role, GameRoleStateType toState)

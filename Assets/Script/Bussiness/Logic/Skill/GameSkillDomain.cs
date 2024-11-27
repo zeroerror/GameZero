@@ -35,6 +35,21 @@ namespace GamePlay.Bussiness.Logic
                 GameLogger.LogError("技能创建失败，技能已存在：" + typeId);
                 return null;
             }
+            // 绑定父子关系
+            skill.idCom.SetParent(role);
+            // 绑定TransformCom为角色TransformCom
+            skill.BindTransformCom(role.transformCom);
+            // 添加时间轴事件
+            var skillModel = skill.skillModel;
+            var timelineEvModels = skillModel.timelineEvModels;
+            var actionApi = this._context.domainApi.actionApi;
+            timelineEvModels?.Foreach((evModel, index) =>
+            {
+                skill.timelineCom.AddEventByFrame(evModel.frame, () =>
+                {
+                    actionApi.DoAction(evModel.actionId, skill);
+                });
+            });
             skillCom.Add(skill);
 
             // 提交RC

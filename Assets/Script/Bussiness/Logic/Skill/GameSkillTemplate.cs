@@ -39,8 +39,8 @@ namespace GamePlay.Bussiness.Logic
                 return false;
             }
             var animName = so.animName;
-            var totalFrame = (int)(so.animLength * GameTimeCollection.frameRate);
-            model = new GameSkillModel(typeId, animName, totalFrame);
+            var timelineEvModels = GameTimelineEventModel.ConvertToModels(so.timelineEvents);
+            model = new GameSkillModel(typeId, animName, so.animLength, timelineEvModels);
             _dict.Add(typeId, model);
             return true;
         }

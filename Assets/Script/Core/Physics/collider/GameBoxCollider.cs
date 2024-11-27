@@ -197,11 +197,11 @@ namespace GamePlay.Core
 
             if (judgeMode == 0)
             {
-                float mtvLenX = GameResolvingUtil.GetRestoreLength(
+                float mtvLenX = GamePhysicsResolvingUtil.GetRestoreLength(
                     minPos1.x, maxPos1.x, minPos2.x, maxPos2.x, judgeMode);
                 if (mtvLenX == 0) return GameVec2.zero;
 
-                float mtvLenY = GameResolvingUtil.GetRestoreLength(
+                float mtvLenY = GamePhysicsResolvingUtil.GetRestoreLength(
                     minPos1.y, maxPos1.y, minPos2.y, maxPos2.y, judgeMode);
                 if (mtvLenY == 0) return GameVec2.zero;
 
@@ -222,12 +222,12 @@ namespace GamePlay.Core
                     pj2 = new GameVec2(minPos2.y, maxPos2.y)
                 };
                 records.Add(r2);
-                return GameResolvingUtil.GetMinMTV(records);
+                return GamePhysicsResolvingUtil.GetMinMTV(records);
             }
             else
             {
-                float mtvLenX = GameResolvingUtil.GetRestoreLength(minPos1.x, maxPos1.x, minPos2.x, maxPos2.x, judgeMode);
-                float mtvLenY = GameResolvingUtil.GetRestoreLength(
+                float mtvLenX = GamePhysicsResolvingUtil.GetRestoreLength(minPos1.x, maxPos1.x, minPos2.x, maxPos2.x, judgeMode);
+                float mtvLenY = GamePhysicsResolvingUtil.GetRestoreLength(
                     minPos1.y, maxPos1.y, minPos2.y, maxPos2.y, judgeMode);
 
                 var records = new List<IGamePhysicsSATParams>()
@@ -249,7 +249,7 @@ namespace GamePlay.Core
 
                 };
 
-                return GameResolvingUtil.AddUpMTV(records);
+                return GamePhysicsResolvingUtil.AddUpMTV(records);
             }
         }
 
@@ -262,7 +262,7 @@ namespace GamePlay.Core
             GameVec2 axisX1 = pb1.localAxisX;
             GameVec2 pjX2_2 = box2.GetProjectionOnAxis(centerPos1, axisX1);
 
-            float mtvLenX = GameResolvingUtil.GetRestoreLength(pjX1_1.x, pjX1_1.y, pjX2_2.x, pjX2_2.y);
+            float mtvLenX = GamePhysicsResolvingUtil.GetRestoreLength(pjX1_1.x, pjX1_1.y, pjX2_2.x, pjX2_2.y);
             if (mtvLenX == 0) return GameVec2.zero;
 
             float halfLength1 = pb1.worldHeight / 2;
@@ -270,7 +270,7 @@ namespace GamePlay.Core
             GameVec2 axisY1 = pb1.localAxisY;
             GameVec2 pjY1_2 = box2.GetProjectionOnAxis(centerPos1, axisY1);
 
-            float mtvLenY = GameResolvingUtil.GetRestoreLength(pjY1_1.x, pjY1_1.y, pjY1_2.x, pjY1_2.y);
+            float mtvLenY = GamePhysicsResolvingUtil.GetRestoreLength(pjY1_1.x, pjY1_1.y, pjY1_2.x, pjY1_2.y);
             if (mtvLenY == 0) return GameVec2.zero;
 
             GameVec2 mtv = GameMathF.Abs(mtvLenX) < GameMathF.Abs(mtvLenY)

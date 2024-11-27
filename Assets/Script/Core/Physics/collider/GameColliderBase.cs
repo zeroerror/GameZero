@@ -22,6 +22,8 @@ namespace GamePlay.Core
         public bool lockRotation;
         public bool lockScale;
 
+        public GameColliderModelBase colliderModel { get; private set; }
+
         public GameColliderBase(GameEntityBase binder, GameColliderModelBase param, int id)
         {
             this.binder = binder;
@@ -34,6 +36,7 @@ namespace GamePlay.Core
             _SetByModel(colliderModel);
             _SetWorldAngle(colliderModel.angle);
             _SetWorldScale(this.scale);
+            this.colliderModel = colliderModel;
         }
 
         protected abstract void _SetByModel(GameColliderModelBase colliderModel);
@@ -46,6 +49,16 @@ namespace GamePlay.Core
                 SetWorldAngle(trans.angle);
             if (trans.scale != scale)
                 SetWorldScale(trans.scale);
+        }
+
+        public void UpdateTRS(in GameTransformArgs transArgs)
+        {
+            if (!transArgs.position.Equals(worldPos))
+                SetWorldPosition(transArgs.position);
+            if (transArgs.angle != angle)
+                SetWorldAngle(transArgs.angle);
+            if (transArgs.scale != scale)
+                SetWorldScale(transArgs.scale);
         }
 
         public void UpdateTRS()

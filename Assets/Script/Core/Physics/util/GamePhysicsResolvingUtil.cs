@@ -1,10 +1,33 @@
 using System.Collections.Generic;
+using GamePlay.Bussiness.Logic;
 using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Core
 {
-    public class GameResolvingUtil
+    public class GamePhysicsResolvingUtil
     {
+        public static GameVec2 GetResolvingMTV(GameColliderBase colliderA, GameColliderModelBase colliderModelB, in GameTransformArgs transformArgs)
+        {
+            switch (colliderModelB)
+            {
+                case GameBoxColliderModel boxModel:
+                    var boxCollider = new GameBoxCollider(null, boxModel, -1);
+                    boxCollider.UpdateTRS(transformArgs);
+                    return GetResolvingMTV(colliderA, boxCollider);
+                case GameCircleColliderModel circleModel:
+                    var circleCollider = new GameCircleCollider(null, circleModel, -1);
+                    circleCollider.UpdateTRS(transformArgs);
+                    return GetResolvingMTV(colliderA, circleCollider);
+                case GameFanColliderModel fanModel:
+                    var fanCollider = new GameFanCollider(null, fanModel, -1);
+                    fanCollider.UpdateTRS(transformArgs);
+                    return GetResolvingMTV(colliderA, fanCollider);
+                default:
+                    GameLogger.LogError("GamePhysicsResolvingUtil.GetResolvingMTV: unknown colliderModelB");
+                    return GameVec2.zero;
+            }
+        }
+
         public static GameVec2 GetResolvingMTV(GameColliderBase colliderA, GameColliderBase colliderB)
         {
             GameVec2 mtv = GameVec2.zero;

@@ -3,12 +3,12 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameTimelineTest : MonoBehaviour
     {
-        private GameTimelineComponent _timeline;
+        private GameTimelineCom _timeline;
 
         private void Start()
         {
-            _timeline = new GameTimelineComponent();
-            _timeline.Play(1, 2, 0, () =>
+            _timeline = new GameTimelineCom(1);
+            _timeline.Play(2, 0, () =>
             {
                 Debug.Log($" Timeline Complete");
             });
