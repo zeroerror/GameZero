@@ -10,7 +10,7 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleContext roleContext { get; private set; }
         public GameSkillContext skillContext { get; private set; }
         public GamePhysicsContext physicsContext { get; private set; }
-
+        public GameActionContext actionContext { get; private set; }
         public GameContext()
         {
             this.domainApi = new GameDomainApi();
@@ -20,6 +20,7 @@ namespace GamePlay.Bussiness.Logic
             this.roleContext = new GameRoleContext();
             this.skillContext = new GameSkillContext();
             this.physicsContext = new GamePhysicsContext();
+            this.actionContext = new GameActionContext();
         }
     }
 }

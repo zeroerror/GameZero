@@ -10,7 +10,7 @@ namespace GamePlay.Bussiness.Logic
         None = 0,
         Role = 1 << 0,   // 1
         Skill = 1 << 1,  // 2
-        Bullet = 1 << 2, // 4
+        Projectile = 1 << 2, // 4
         Buff = 1 << 3    // 8
     }
 
@@ -59,7 +59,7 @@ namespace GamePlay.Bussiness.Logic
                     return "角色";
                 case GameEntityType.Skill:
                     return "技能";
-                case GameEntityType.Bullet:
+                case GameEntityType.Projectile:
                     return "弹体";
                 case GameEntityType.Buff:
                     return "buff";

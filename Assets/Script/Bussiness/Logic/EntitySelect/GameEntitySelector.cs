@@ -1,6 +1,7 @@
 using GamePlay.Core;
 namespace GamePlay.Bussiness.Logic
 {
+    [System.Serializable]
     public struct GameEntitySelector
     {
         // 选择锚点类型

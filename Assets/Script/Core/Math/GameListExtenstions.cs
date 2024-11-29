@@ -122,5 +122,27 @@ namespace GamePlay.Core
         {
             for (int i = 0; i < list.Length; i++) action(list[i], i);
         }
+
+        public static string ToString<T>(this T[] list)
+        {
+            string result = "";
+            for (int i = 0; i < list.Length; i++)
+            {
+                result += list[i].ToString();
+                if (i < list.Length - 1) result += ", ";
+            }
+            return result;
+        }
+
+        public static string ToString<T>(this List<T> list)
+        {
+            string result = "";
+            for (int i = 0; i < list.Count; i++)
+            {
+                result += list[i].ToString();
+                if (i < list.Count - 1) result += ", ";
+            }
+            return result;
+        }
     }
 }

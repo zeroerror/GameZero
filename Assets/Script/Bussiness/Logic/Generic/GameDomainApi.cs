@@ -16,5 +16,8 @@ namespace GamePlay.Bussiness.Logic
 
         public GameActionDomainApi actionApi { get; private set; }
         public void SetActionApi(GameActionDomainApi actionApi) => this.actionApi = actionApi;
+
+        public GameEntitySelectDomainApi entitySelectApi { get; private set; }
+        public void SetEntitySelectApi(GameEntitySelectDomainApi entitySelectApi) => this.entitySelectApi = entitySelectApi;
     }
 }

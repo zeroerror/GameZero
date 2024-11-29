@@ -23,24 +23,37 @@ namespace GamePlay.Bussiness.Logic
         public List<GameEntityBase> GetSelectdeEntities(GameEntitySelector selector, GameEntityBase actorEntity)
         {
             var physicsApi = this._context.domainApi.physicsApi;
-            var transformArgs = actorEntity.transformCom.ToArgs();
             var selColliderModel = selector.colliderModel;
             var isSingleSelect = selColliderModel == null;
             var targetEntity = actorEntity.actionTargeterCom.targetEntity;
+            var list = new List<GameEntityBase>();
             // 单体选择
             if (isSingleSelect)
             {
-                var list = new List<GameEntityBase>();
                 if (targetEntity != null && selector.CheckSelect(actorEntity, targetEntity)) list.Add(targetEntity);
                 return list;
             }
             // 范围选择
-            var overlapEntities = physicsApi.GetOverlapEntities(selColliderModel, transformArgs);
-            overlapEntities = overlapEntities.Filter((entity) =>
+            GameTransformArgs anchorTransformArgs;
+            var selectAnchorType = selector.selectAnchorType;
+            switch (selectAnchorType)
+            {
+                case GameEntitySelectAnchorType.Self:
+                    anchorTransformArgs = actorEntity.transformCom.ToArgs();
+                    break;
+                case GameEntitySelectAnchorType.Target:
+                    anchorTransformArgs = targetEntity.transformCom.ToArgs();
+                    break;
+                default:
+                    GameLogger.LogError($"选择器锚点类型未知: {selectAnchorType}");
+                    return list;
+            }
+            list = physicsApi.GetOverlapEntities(selColliderModel, anchorTransformArgs);
+            list = list.Filter((entity) =>
             {
                 return selector.CheckSelect(actorEntity, entity);
             });
-            return overlapEntities;
+            return list;
         }
     }
 }

@@ -27,9 +27,9 @@ namespace GamePlay.Config
                     this._ShowHealAction(actionSO);
                     break;
 
-                case GameActionType.LaunchBullet:
+                case GameActionType.LaunchProjectile:
                     EditorGUILayout.LabelField(" -------- 发射弹体行为 --------", EditorStyles.boldLabel);
-                    this._ShowLaunchBulletAction(actionSO);
+                    this._ShowLaunchProjectileAction(actionSO);
                     break;
                 default:
                     EditorGUILayout.HelpBox("请选择一个行为类型", MessageType.Warning);
@@ -59,15 +59,15 @@ namespace GamePlay.Config
                     EditorGUILayout.ObjectField(skillSO.typeId.ToString(), skillSO, typeof(GameSkillSO), false);
                 }
             }
-            var bulletSOs = Resources.LoadAll<GameBulletSO>(GameConfigCollection.BULLET_CONFIG_DIR_PATH);
-            bulletSOs = bulletSOs.Filter(so => so.timelineEvents.Contains(e => e.action.typeId == actionSO.typeId));
-            if (bulletSOs.Length > 0)
+            var projectileSOs = Resources.LoadAll<GameProjectileSO>(GameConfigCollection.BULLET_CONFIG_DIR_PATH);
+            projectileSOs = projectileSOs.Filter(so => so.timelineEvents.Contains(e => e.action.typeId == actionSO.typeId));
+            if (projectileSOs.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被依赖弹体 --------", EditorStyles.boldLabel);
-                for (int i = 0; i < bulletSOs.Length; i++)
+                for (int i = 0; i < projectileSOs.Length; i++)
                 {
-                    var bulletSO = bulletSOs[i];
-                    EditorGUILayout.ObjectField(bulletSO.typeId.ToString(), bulletSO, typeof(GameBulletSO), false);
+                    var projectileSO = projectileSOs[i];
+                    EditorGUILayout.ObjectField(projectileSO.typeId.ToString(), projectileSO, typeof(GameProjectileSO), false);
                 }
             }
             GUI.color = color;
@@ -75,10 +75,10 @@ namespace GamePlay.Config
 
         private void _ShowDmgAction(GameActionSO actionSO)
         {
-            GameAction_Dmg dmgAction = actionSO.dmgAction;
+            GameActionModel_Dmg dmgAction = actionSO.dmgAction;
             if (dmgAction == null)
             {
-                dmgAction = new GameAction_Dmg();
+                dmgAction = new GameActionModel_Dmg();
                 actionSO.dmgAction = dmgAction;
             }
             dmgAction.dmg = EditorGUILayout.IntField("伤害值", dmgAction.dmg);
@@ -86,27 +86,27 @@ namespace GamePlay.Config
 
         private void _ShowHealAction(GameActionSO actionSO)
         {
-            GameAction_Heal healAction = actionSO.healAction;
+            GameActionModel_Heal healAction = actionSO.healAction;
             if (healAction == null)
             {
-                healAction = new GameAction_Heal();
+                healAction = new GameActionModel_Heal();
                 actionSO.healAction = healAction;
             }
             healAction.heal = EditorGUILayout.IntField("治疗值", healAction.heal);
         }
 
-        private void _ShowLaunchBulletAction(GameActionSO actionSO)
+        private void _ShowLaunchProjectileAction(GameActionSO actionSO)
         {
-            GameAction_LaunchBullet launchBulletAction = actionSO.launchBulletAction;
-            if (launchBulletAction == null)
+            GameActionModel_LaunchProjectile launchProjectileAction = actionSO.launchProjectileAction;
+            if (launchProjectileAction == null)
             {
-                launchBulletAction = new GameAction_LaunchBullet();
-                actionSO.launchBulletAction = launchBulletAction;
+                launchProjectileAction = new GameActionModel_LaunchProjectile();
+                actionSO.launchProjectileAction = launchProjectileAction;
             }
-            actionSO.launchBulletSO = (GameBulletSO)EditorGUILayout.ObjectField("弹体模板", actionSO.launchBulletSO, typeof(GameBulletSO), false);
-            var launchBulletSO = actionSO.launchBulletSO;
-            launchBulletAction.bulletId = launchBulletSO == null ? 0 : launchBulletSO.typeId;
-            launchBulletAction.speed = EditorGUILayout.FloatField("弹体速度", launchBulletAction.speed);
+            actionSO.launchProjectileSO = (GameProjectileSO)EditorGUILayout.ObjectField("弹体模板", actionSO.launchProjectileSO, typeof(GameProjectileSO), false);
+            var launchProjectileSO = actionSO.launchProjectileSO;
+            launchProjectileAction.projectileId = launchProjectileSO == null ? 0 : launchProjectileSO.typeId;
+            launchProjectileAction.speed = EditorGUILayout.FloatField("弹体速度", launchProjectileAction.speed);
         }
     }
 }

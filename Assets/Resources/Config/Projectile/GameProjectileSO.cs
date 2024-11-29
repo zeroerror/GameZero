@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace GamePlay.Config
 {
-    [CreateAssetMenu(fileName = "template_bullet_", menuName = "游戏玩法/配置/弹体模板")]
-    public class GameBulletSO : GameSOBase
+    [CreateAssetMenu(fileName = "template_projectile_", menuName = "游戏玩法/配置/弹体模板")]
+    public class GameProjectileSO : GameSOBase
     {
         [Header("动画文件")]
         public AnimationClip animClip;

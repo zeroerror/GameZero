@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Config
@@ -7,10 +8,26 @@ namespace GamePlay.Config
     public class GameActionSO : GameSOBase
     {
         public GameActionType actionType;
-        public GameAction_Dmg dmgAction;
-        public GameAction_Heal healAction;
-        public GameAction_LaunchBullet launchBulletAction;
-        public GameBulletSO launchBulletSO;
+        public GameActionModel_Dmg dmgAction;
+        public GameActionModel_Heal healAction;
+        public GameActionModel_LaunchProjectile launchProjectileAction;
+        public GameProjectileSO launchProjectileSO;
         public GameSkillSO[] skillSORefs;
+
+        public GameActionModelBase GetActionModel()
+        {
+            switch (actionType)
+            {
+                case GameActionType.Dmg:
+                    return dmgAction;
+                case GameActionType.Heal:
+                    return healAction;
+                case GameActionType.LaunchProjectile:
+                    return launchProjectileAction;
+                default:
+                    GameLogger.LogError("GameActionSO: GetAction: invalid actionType: " + actionType);
+                    return null;
+            }
+        }
     }
 }

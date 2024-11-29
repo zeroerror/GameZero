@@ -1,22 +1,4 @@
 {
-	// Example:
-	// "Print to console": {
-	// 	"scope": "javascript,typescript",
-	// 	"prefix": "log",
-	// 	"body": [
-	// 		"console.log('$1');",
-	// 		"$2"
-	// 	],
-	// 	"description": "Log output to console"
-	// }
-	/**      public GameVec2 position
-        {
-            get { return _position; }
-            set { _position = value; }
-        }
-        private GameVec2 _position;
-		生成类似的属性
-		*/
 		"gs": {
 			"prefix": "gs",
 			"body": [
@@ -32,47 +14,124 @@
 		"nsl": {
 			"prefix": "nsl",
 			"body": [
-				"namespace GamePlay.Bussiness.Logic"
-				"{"
-				"	public class $1"
-				"	{"
-				
-				"	}"
+				"namespace GamePlay.Bussiness.Logic",
+				"{",
+				"    public class $1",
+				"    {",
+				"    }",
 				"}"
 			],
 		},
 		"nsr": {
 			"prefix": "nsr",
 			"body": [
-				"namespace GamePlay.Bussiness.Renderer"
-				"{"
-				"	public class $1"
-				"	{"
-				
-				"	}"
-				"}"
+				"namespace GamePlay.Bussiness.Renderer",
+				"{",
+				"    public class $1",
+				"    {",
+				"    }",
+				"}",
 			],
 		},
-		"testmono": {
-			"prefix": "testmono",
+		"test_mono": {
+			"prefix": "test_mono",
 			"body": [
-				"[UnityEditor.InitializeOnLoad]"
-				"public class Loader"
-				"{"
-				"	static Loader()"
-				"	{"
-				"		UnityEditor.EditorApplication.playModeStateChanged += OnPlayModeStateChanged;"
-				"	}"
-				""
-				"	private static void OnPlayModeStateChanged(UnityEditor.PlayModeStateChange state)"
-				"	{"
-				"		if (state == UnityEditor.PlayModeStateChange.EnteredPlayMode)"
-				"		{"
-				"			var go = new GameObject(\"$1\");"
-				"			go.AddComponent<$1>();"
-				"		}"
-				"	}"
+				"[UnityEditor.InitializeOnLoad]",
+				"public class Loader",
+				"{",
+				"    static Loader()",
+				"    {",
+				"        UnityEditor.EditorApplication.playModeStateChanged += OnPlayModeStateChanged;",
+				"    }",
+				"",
+				"    private static void OnPlayModeStateChanged(UnityEditor.PlayModeStateChange state)",
+				"    {",
+				"        if (state == UnityEditor.PlayModeStateChange.EnteredPlayMode)",
+				"        {",
+				"            var go = new GameObject(\"$1\");",
+				"            go.AddComponent<$1>();",
+				"        }",
+				"    }",
 				"}"
 			],
 		},
+		"factor_l":{
+			"prefix": "factor_l",
+			"body": [
+				"using GamePlay.Core;",
+				"",
+				"namespace GamePlay.Bussiness.Logic",
+				"{",
+				"    public class Game$1Factory",
+				"    {",
+				"        public Game$1Template template { get; private set; }",
+				"        public Game$1Factory()",
+				"        {",
+				"            template = new Game$1Template();",
+				"        }",
+				"        public Game$1Entity Load(int typeId)",
+				"        {",
+				"            if (!template.TryGet(typeId, out var model))",
+				"            {",
+				"                GameLogger.LogError(\"Game$1Factory.Load: typeId not found: \" + typeId);",
+				"                return null;",
+				"            }",
+				"            var entity = new Game$1Entity(model);",
+				"            return entity;",
+				"        }",
+				"    }",
+				"}"
+			]
+		},
+		"template_l": {
+			"prefix": "template_l",
+			"body": [
+				"using System.Collections.Generic;",
+				"using GamePlay.Config;",
+				"using UnityEngine;",
+				"",
+				"namespace GamePlay.Bussiness.Logic",
+				"{",
+				"    public class Game$1Template",
+				"    {",
+				"        private Dictionary<int, Game$1Model> _dict;",
+				"        private Dictionary<int, Game$1SO> _soDict;",
+				"",
+				"        public Game$1Template()",
+				"        {",
+				"            _dict = new Dictionary<int, Game$1Model>();",
+				"            var path = GameConfigCollection.SKILL_CONFIG_DIR_PATH;",
+				"            var soList = Resources.LoadAll(path, typeof(Game$1SO));",
+				"            _soDict = new Dictionary<int, Game$1SO>();",
+				"            foreach (var so in soList)",
+				"            {",
+				"                var skillSo = so as Game$1SO;",
+				"                if (skillSo == null)",
+				"                {",
+				"                    Debug.LogError(\"Game$1Template: LoadAll: invalid Game$1SO: \" + so);",
+				"                    continue;",
+				"                }",
+				"                _soDict.Add(skillSo.typeId, skillSo);",
+				"            }",
+				"        }",
+				"",
+				"        public bool TryGet(int typeId, out Game$1Model model)",
+				"        {",
+				"            if (_dict.TryGetValue(typeId, out model))",
+				"            {",
+				"                return true;",
+				"            }",
+				"            if (!_soDict.TryGetValue(typeId, out var so))",
+				"            {",
+				"                model = null;",
+				"                return false;",
+				"            }",
+				"            model = new Game$1Model();",
+				"            _dict.Add(typeId, model);",
+				"            return true;",
+				"        }",
+				"    }",
+				"}"
+		]
+		}
 }

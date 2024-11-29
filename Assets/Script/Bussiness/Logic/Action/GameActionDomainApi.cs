@@ -5,30 +5,30 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary>
         /// 执行行为 
-        /// actionId: 行为ID 
-        /// actorEntity: 执行者
+        /// <para>actionId 行为ID</para>
+        /// <para>actorEntity 执行者</para>
         /// </summary>
         public void DoAction(int actionId, GameEntityBase actorEntity);
 
         /// <summary>
-        /// 执行伤害行为
-        /// dmgAction: 伤害行为
-        /// actorEntity: 执行者
+        /// 执行行为 - 伤害
+        /// <para>action 伤害行为</para>
+        /// <para>actorEntity 执行者</para>
         /// </summary>
-        public void DoAction_Dmg(GameAction_Dmg dmgAction, GameActionBase actorEntity);
+        public void DoAction_Dmg(GameActionModel_Dmg action, GameEntityBase actorEntity);
 
         /// <summary>
-        /// 执行治疗行为
-        /// healAction: 治疗行为
-        /// actorEntity: 执行者
+        /// 执行行为 - 治疗
+        /// <para>action 治疗行为</para>
+        /// <para>actorEntity 执行者</para>
         /// </summary>
-        public void DoAction_Heal(GameAction_Heal healAction, GameActionBase actorEntity);
+        public void DoAction_Heal(GameActionModel_Heal action, GameEntityBase actorEntity);
 
         /// <summary>
-        /// 执行发射子弹行为
-        /// launchBulletAction: 发射子弹行为
+        /// 执行行为 - 发射弹体
+        /// action: 发射弹体行为
         /// actorEntity: 执行者
         /// </summary>
-        public void DoAction_LaunchBullet(GameAction_LaunchBullet launchBulletAction, GameActionBase actorEntity);
+        public void DoAction_LaunchProjectile(GameActionModel_LaunchProjectile action, GameEntityBase actorEntity);
     }
 }
