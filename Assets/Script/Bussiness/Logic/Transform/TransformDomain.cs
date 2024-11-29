@@ -26,7 +26,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 if (entity.transformCom.CheckDirty())
                 {
-                    this._context.rcEventService.Submit(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, new GameTransformRCArgs_Sync()
+                    this._context.SubmitRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, new GameTransformRCArgs_Sync()
                     {
                         idArgs = entity.idCom.ToArgs(),
                         transComArgs = entity.transformCom.ToArgs()

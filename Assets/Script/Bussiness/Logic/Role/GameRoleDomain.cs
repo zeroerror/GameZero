@@ -56,7 +56,7 @@ namespace GamePlay.Bussiness.Logic
             this._roleContext.entityRepo.TryAdd(e);
 
             // 提交RC事件
-            this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_CREATE, new GameRoleRCArgs_Create
+            this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, new GameRoleRCArgs_Create
             {
                 idArgs = e.idCom.ToArgs(),
                 transComArgs = e.transformCom.ToArgs(),

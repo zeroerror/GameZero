@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Logic
         {
             entity.fsmCom.EnterDead();
             // 提交RC
-            this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DEAD, new GameRoleRCArgs_StateEnterDead
+            this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DEAD, new GameRoleRCArgs_StateEnterDead
             {
                 fromState = entity.fsmCom.state,
                 idArgs = entity.idCom.ToArgs(),

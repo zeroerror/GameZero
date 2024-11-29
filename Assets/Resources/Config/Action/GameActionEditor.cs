@@ -11,45 +11,60 @@ namespace GamePlay.Config
     {
         public override void OnInspectorGUI()
         {
-            GameActionSO actionSO = (GameActionSO)target;
-            // 显示通用字段
-            actionSO.typeId = EditorGUILayout.IntField("类型Id", actionSO.typeId);
-            actionSO.actionType = (GameActionType)EditorGUILayout.EnumPopup("行为类型", actionSO.actionType);
+            GameActionSO so = (GameActionSO)target;
+            this._ShowBasicInfo(so);
+            this._ShowRendererData(so);
+            this._ShowSkillSORefs(so);
+            // 保存修改
+            if (GUI.changed) EditorUtility.SetDirty(so);
+        }
+
+        // 显示基础信息
+        private void _ShowBasicInfo(GameActionSO so)
+        {
+            so.typeId = EditorGUILayout.IntField("类型Id", so.typeId);
+            so.actionType = (GameActionType)EditorGUILayout.EnumPopup("行为类型", so.actionType);
             // 根据行为类型动态显示字段
-            switch (actionSO.actionType)
+            switch (so.actionType)
             {
                 case GameActionType.Dmg:
                     EditorGUILayout.LabelField(" -------- 伤害行为 --------", EditorStyles.boldLabel);
-                    this._ShowDmgAction(actionSO);
+                    this._ShowDmgAction(so);
                     break;
                 case GameActionType.Heal:
                     EditorGUILayout.LabelField(" -------- 治疗行为 --------", EditorStyles.boldLabel);
-                    this._ShowHealAction(actionSO);
+                    this._ShowHealAction(so);
                     break;
 
                 case GameActionType.LaunchProjectile:
                     EditorGUILayout.LabelField(" -------- 发射弹体行为 --------", EditorStyles.boldLabel);
-                    this._ShowLaunchProjectileAction(actionSO);
+                    this._ShowLaunchProjectileAction(so);
                     break;
                 default:
                     EditorGUILayout.HelpBox("请选择一个行为类型", MessageType.Warning);
                     break;
             }
-            this._ShowSkillSORefs(actionSO);
-
-            // 保存修改
-            if (GUI.changed)
-            {
-                EditorUtility.SetDirty(actionSO);
-            }
         }
 
-        private void _ShowSkillSORefs(GameActionSO actionSO)
+        // 显示表现层数据
+        private void _ShowRendererData(GameActionSO so)
+        {
+            var actionR = so.actionR;
+            actionR.typeId = so.typeId;
+            actionR.vfxClip = (AnimationClip)EditorGUILayout.ObjectField("特效", actionR.vfxClip, typeof(AnimationClip), false);
+            var shakeModel = actionR.shakeModel;
+            shakeModel.angle = EditorGUILayout.FloatField("震屏角度", shakeModel.angle);
+            shakeModel.amplitude = EditorGUILayout.FloatField("震幅", shakeModel.amplitude);
+            shakeModel.frequency = EditorGUILayout.FloatField("震频", shakeModel.frequency);
+            shakeModel.duration = EditorGUILayout.FloatField("震屏时长", shakeModel.duration);
+        }
+
+        private void _ShowSkillSORefs(GameActionSO so)
         {
             var color = GUI.color;
             GUI.color = Color.green;
             var skillSOs = Resources.LoadAll<GameSkillSO>(GameConfigCollection.SKILL_CONFIG_DIR_PATH);
-            skillSOs = skillSOs.Filter(so => so.timelineEvents.Contains(e => e.action.typeId == actionSO.typeId));
+            skillSOs = skillSOs.Filter(skillSO => skillSO.timelineEvents.Contains(e => e.action.typeId == so.typeId));
             if (skillSOs.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被依赖技能 --------", EditorStyles.boldLabel);
@@ -60,7 +75,7 @@ namespace GamePlay.Config
                 }
             }
             var projectileSOs = Resources.LoadAll<GameProjectileSO>(GameConfigCollection.BULLET_CONFIG_DIR_PATH);
-            projectileSOs = projectileSOs.Filter(so => so.timelineEvents.Contains(e => e.action.typeId == actionSO.typeId));
+            projectileSOs = projectileSOs.Filter(so => so.timelineEvents.Contains(e => e.action.typeId == so.typeId));
             if (projectileSOs.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被依赖弹体 --------", EditorStyles.boldLabel);
@@ -73,13 +88,13 @@ namespace GamePlay.Config
             GUI.color = color;
         }
 
-        private void _ShowDmgAction(GameActionSO actionSO)
+        private void _ShowDmgAction(GameActionSO so)
         {
-            GameActionModel_Dmg dmgAction = actionSO.dmgAction;
+            GameActionModel_Dmg dmgAction = so.dmgAction;
             if (dmgAction == null)
             {
                 dmgAction = new GameActionModel_Dmg();
-                actionSO.dmgAction = dmgAction;
+                so.dmgAction = dmgAction;
             }
             dmgAction.dmg = EditorGUILayout.IntField("伤害值", dmgAction.dmg);
         }

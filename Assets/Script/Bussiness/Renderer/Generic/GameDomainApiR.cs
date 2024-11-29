@@ -10,5 +10,8 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameTransformDomainApiR transformApi { get; private set; }
         public void SetTransformApi(TransformDomainR transformApi) => this.transformApi = transformApi;
+
+        public GameVFXDomainApiR vfxApi { get; private set; }
+        public void SetVFXApi(GameVFXDomainApiR vfxApi) => this.vfxApi = vfxApi;
     }
 }

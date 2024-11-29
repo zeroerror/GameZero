@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Bussiness.Renderer;
 using GamePlay.Core;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace GamePlay.Config
         public GameActionModel_LaunchProjectile launchProjectileAction;
         public GameProjectileSO launchProjectileSO;
         public GameSkillSO[] skillSORefs;
+        public GameActionModelR actionR;
 
         public GameActionModelBase GetActionModel()
         {

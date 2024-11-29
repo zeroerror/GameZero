@@ -26,7 +26,7 @@ namespace GamePlay.Core
             _submitQueues[submit.name].Enqueue(submit);
         }
 
-        public void Regist(string name, System.Action<object> callback)
+        public void Bind(string name, System.Action<object> callback)
         {
             if (!_listeners.ContainsKey(name))
                 _listeners[name] = new List<System.Action<object>>();

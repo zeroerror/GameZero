@@ -29,6 +29,12 @@ public static class GameVectorExtensions
         return new GameVec2(v1.x + v2.x, v1.y + v2.y);
     }
 
+    public static GameVec3 Add(this GameVec3 v1, in GameVec2 v2)
+    {
+        return new GameVec3(v1.x + v2.x, v1.y + v2.y, v1.z);
+    }
+
+
     public static void AddSelf(this ref GameVec2 v1, in GameVec2 v2)
     {
         v1.x += v2.x;
@@ -65,4 +71,5 @@ public static class GameVectorExtensions
     {
         return new GameVec2(v.x, v.y);
     }
+
 }

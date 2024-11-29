@@ -22,5 +22,15 @@ namespace GamePlay.Bussiness.Logic
             this.physicsContext = new GamePhysicsContext();
             this.actionContext = new GameActionContext();
         }
+
+        public void SubmitRC(string name, object args)
+        {
+            this.SubmitRC(name, args);
+        }
+
+        public void BindRC(string rcName, System.Action<object> callback)
+        {
+            this.rcEventService.Bind(rcName, callback);
+        }
     }
 }

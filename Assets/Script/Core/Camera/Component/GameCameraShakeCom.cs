@@ -69,6 +69,11 @@ namespace GamePlay.Core
         {
             this._CreateData(angle, amplitude, frequency, duration);
         }
+
+        public void Shake(GameCameraShakeModel model)
+        {
+            this.Shake(model.angle, model.amplitude, model.frequency, model.duration);
+        }
     }
 
     public class GameCameraShakeData

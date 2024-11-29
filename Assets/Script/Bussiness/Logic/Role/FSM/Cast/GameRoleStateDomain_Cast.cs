@@ -21,7 +21,7 @@ namespace GamePlay.Bussiness.Logic
             fsmCom.EnterCast(skill);
             skill.timelineCom.Play();
             // 提交RC
-            this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_CAST, new GameRoleRCArgs_StateEnterCast
+            this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_CAST, new GameRoleRCArgs_StateEnterCast
             {
                 fromState = entity.fsmCom.state,
                 idArgs = entity.idCom.ToArgs(),

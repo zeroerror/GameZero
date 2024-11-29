@@ -132,6 +132,63 @@
 				"        }",
 				"    }",
 				"}"
-		]
+			],
+		},
+		"domain_r": {
+			"prefix": "domain_r",
+			"body": [
+				"namespace GamePlay.Bussiness.Renderer",
+				"{",
+				"    public class Game$1DomainR : Game$1DomainApiR",
+				"    {",
+				"        GameContextR _context;",
+				"",
+				"       public Game$1DomainR()",
+				"        {",
+				"        }",
+				"",
+				"        public void Inject(GameContextR context)",
+				"        {",
+				"            this._context = context;",
+				"            this._BindEvent();",
+				"        }",
+				"",
+				"        public void Dispose()",
+				"        {",
+				"            this._UnbindEvents();",
+				"        }",
+				"",
+				"        private void _BindEvent()",
+				"        {",
+				"        }",
+				"",
+				"        private void _UnbindEvents()",
+				"        {",
+				"        }",
+				"",
+				"    }",
+				"}"
+			]
+		},
+		"context_r": {
+			"prefix": "context_r",
+			"body": [
+				"namespace GamePlay.Bussiness.Renderer",
+				"{",
+				"    public class Game$1ContextR",
+				"    {",
+				"        public Game$1RepoR repo => this._repo;",
+				"        Game$1RepoR _repo;",
+				"        public Game$1FactoryR factory => this._factory;",
+				"        Game$1FactoryR _factory;",
+				"",
+				"        public Game$1ContextR()",
+				"        {",
+				"            this._repo = new Game$1RepoR();",
+				"            this._factory = new Game$1FactoryR();",
+				"        }",
+				"    }",
+				"}"
+			]
 		}
 }

@@ -32,7 +32,7 @@ namespace GamePlay.Bussiness.Logic
         // 事件列表
         private Dictionary<int, List<Action>> _events;
 
-        public GameTimelineCom(float length)
+        public GameTimelineCom(float length = 0)
         {
             this.length = length;
             this._events = new Dictionary<int, List<Action>>();
@@ -67,7 +67,11 @@ namespace GamePlay.Bussiness.Logic
 
         public void Play(float loopDuration = 0, float startTime = 0, Action complete = null)
         {
-            this.length = length == 0 ? this.length : length;
+            if (this.length == 0)
+            {
+                GameLogger.LogError("时间轴播放时长为0");
+                return;
+            }
             this.loopDuration = loopDuration;
             this.time = startTime;
             this._complete = complete;

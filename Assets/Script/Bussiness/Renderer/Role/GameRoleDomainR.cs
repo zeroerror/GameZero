@@ -48,15 +48,14 @@ namespace GamePlay.Bussiness.Renderer
         private void _OnRoleCreate(object args)
         {
             var evArgs = (GameRoleRCArgs_Create)args;
-            this.Create(evArgs.idArgs, evArgs.transComArgs, evArgs.isUser);
+            this._Create(evArgs.idArgs, evArgs.transComArgs, evArgs.isUser);
         }
-
 
         public void Collect()
         {
         }
 
-        public GameRoleEntityR Create(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
+        private GameRoleEntityR _Create(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
         {
             var role = this._roleContext.factory.Load(idArgs.typeId);
             role.idCom.SetByArgs(idArgs);

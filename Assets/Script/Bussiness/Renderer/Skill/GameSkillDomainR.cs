@@ -43,7 +43,7 @@ namespace GamePlay.Bussiness.Renderer
             var role = this._context.roleContext.repo.FindByEntityId(roleIdArgs.entityId);
             if (role == null)
             {
-                this._context.delayRCEventService.Submit(GameSkillRCCollection.RC_GAMES_SKILL_CREATE, args);
+                this._context.DelayRC(GameSkillRCCollection.RC_GAMES_SKILL_CREATE, args);
                 return;
             }
             var skillIdArgs = evArgs.skillIdArgs;

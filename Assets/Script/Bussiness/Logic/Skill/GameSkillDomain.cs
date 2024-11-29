@@ -53,7 +53,7 @@ namespace GamePlay.Bussiness.Logic
             skillCom.Add(skill);
 
             // 提交RC
-            this._context.rcEventService.Submit(GameSkillRCCollection.RC_GAMES_SKILL_CREATE,
+            this._context.SubmitRC(GameSkillRCCollection.RC_GAMES_SKILL_CREATE,
                 new GameSkillRCArgs_Create { roleIdArgs = role.idCom.ToArgs(), skillIdArgs = skill.idCom.ToArgs() }
             );
             return skill;

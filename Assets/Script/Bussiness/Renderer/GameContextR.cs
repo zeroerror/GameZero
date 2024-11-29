@@ -14,6 +14,8 @@ namespace GamePlay.Bussiness.Renderer
         public GameEventService delayRCEventService { get; private set; }
         public GameRoleContextR roleContext { get; private set; }
         public GameSkillContextR skillContext { get; private set; }
+        public GameActionContextR actionContext { get; private set; }
+        public GameVFXContextR vfxContext { get; private set; }
 
         public GameContextR(GameContext logicContext)
         {
@@ -25,18 +27,37 @@ namespace GamePlay.Bussiness.Renderer
             this.delayRCEventService = new GameEventService();
             this.roleContext = new GameRoleContextR();
             this.skillContext = new GameSkillContextR();
+            this.actionContext = new GameActionContextR();
+            this.vfxContext = new GameVFXContextR();
         }
 
         public void BindRC(string rcName, System.Action<object> callback)
         {
-            this.logicContext.rcEventService.Regist(rcName, callback);
-            this.delayRCEventService.Regist(rcName, callback);
+            this.logicContext.BindRC(rcName, callback);
+            this.delayRCEventService.Bind(rcName, callback);
         }
 
         public void UnbindRC(string rcName, System.Action<object> callback)
         {
             this.logicContext.rcEventService.Unbind(rcName, callback);
             this.delayRCEventService.Unbind(rcName, callback);
+        }
+
+        public void DelayRC(string rcName, object args)
+        {
+            this.DelayRC(rcName, args);
+        }
+
+        public GameEntityBase FindEntity(in GameIdArgs idArgs)
+        {
+            switch (idArgs.entityType)
+            {
+                case GameEntityType.Role:
+                    return this.roleContext.repo.FindByEntityId(idArgs.entityId);
+                default:
+                    GameLogger.LogError("GameContextR.FindEntityByEntityId: unknown entityType: " + idArgs.entityType);
+                    return null;
+            }
         }
     }
 }

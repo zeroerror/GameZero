@@ -8,6 +8,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameRoleDomainR roleDomain { get; private set; }
         public GameSkillDomainR skillDomain { get; private set; }
         public TransformDomainR transformDomain { get; private set; }
+        public GameVFXDomainR vfxDomain { get; private set; }
 
         public GameDirectDomainR(GameContext logicContext)
         {
@@ -21,6 +22,7 @@ namespace GamePlay.Bussiness.Renderer
             this.roleDomain = new GameRoleDomainR();
             this.skillDomain = new GameSkillDomainR();
             this.transformDomain = new TransformDomainR();
+            this.vfxDomain = new GameVFXDomainR();
         }
 
         private void _InitContext(GameContext logicContext)
@@ -29,6 +31,8 @@ namespace GamePlay.Bussiness.Renderer
             this.context.domainApi.SetRoleApi(this.roleDomain);
             this.context.domainApi.SetSkillApi(this.skillDomain);
             this.context.domainApi.SetTransformApi(this.transformDomain);
+            this.context.domainApi.SetVFXApi(this.vfxDomain);
+
         }
 
         private void _InjectContext()
@@ -36,6 +40,7 @@ namespace GamePlay.Bussiness.Renderer
             this.roleDomain.Inject(this.context);
             this.skillDomain.Inject(this.context);
             this.transformDomain.Inject(this.context);
+            this.vfxDomain.Inject(this.context);
         }
 
         public void Dispose()
@@ -43,6 +48,7 @@ namespace GamePlay.Bussiness.Renderer
             this.roleDomain.Dispose();
             this.skillDomain.Dispose();
             this.transformDomain.Dispose();
+            this.vfxDomain.Dispose();
         }
 
         public void Update(float dt)
@@ -80,6 +86,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.roleDomain.Tick(dt);
             this.skillDomain.Tick(dt);
+            this.vfxDomain.Tick(dt);
         }
     }
 }

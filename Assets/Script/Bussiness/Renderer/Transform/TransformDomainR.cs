@@ -47,7 +47,7 @@ namespace GamePlay.Bussiness.Renderer
             }
             if (entity == null)
             {
-                this._context.delayRCEventService.Submit(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, args);
+                this._context.DelayRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, args);
                 return;
             }
             entity.transformCom.SetByArgs(evArgs.transComArgs);

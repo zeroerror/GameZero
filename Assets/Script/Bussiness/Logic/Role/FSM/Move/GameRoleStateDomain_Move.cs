@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Logic
         {
             role.fsmCom.EnterMove();
             // 提交RC
-            this._context.rcEventService.Submit(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, new GameRoleRCArgs_StateEnterMove
+            this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, new GameRoleRCArgs_StateEnterMove
             {
                 fromState = role.fsmCom.state,
                 idArgs = role.idCom.ToArgs(),
