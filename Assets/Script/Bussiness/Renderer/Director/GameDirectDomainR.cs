@@ -9,6 +9,8 @@ namespace GamePlay.Bussiness.Renderer
         public GameSkillDomainR skillDomain { get; private set; }
         public TransformDomainR transformDomain { get; private set; }
         public GameVFXDomainR vfxDomain { get; private set; }
+        public GameActionDomainR actionDomain { get; private set; }
+        public GameDrawDomainR drawDomain { get; private set; }
 
         public GameDirectDomainR(GameContext logicContext)
         {
@@ -23,6 +25,8 @@ namespace GamePlay.Bussiness.Renderer
             this.skillDomain = new GameSkillDomainR();
             this.transformDomain = new TransformDomainR();
             this.vfxDomain = new GameVFXDomainR();
+            this.actionDomain = new GameActionDomainR();
+            this.drawDomain = new GameDrawDomainR();
         }
 
         private void _InitContext(GameContext logicContext)
@@ -32,6 +36,8 @@ namespace GamePlay.Bussiness.Renderer
             this.context.domainApi.SetSkillApi(this.skillDomain);
             this.context.domainApi.SetTransformApi(this.transformDomain);
             this.context.domainApi.SetVFXApi(this.vfxDomain);
+            this.context.domainApi.SetActionApi(this.actionDomain);
+            this.context.domainApi.SetDrawApi(this.drawDomain);
 
         }
 
@@ -41,6 +47,8 @@ namespace GamePlay.Bussiness.Renderer
             this.skillDomain.Inject(this.context);
             this.transformDomain.Inject(this.context);
             this.vfxDomain.Inject(this.context);
+            this.actionDomain.Inject(this.context);
+            this.drawDomain.Inject(this.context);
         }
 
         public void Dispose()
@@ -49,6 +57,16 @@ namespace GamePlay.Bussiness.Renderer
             this.skillDomain.Dispose();
             this.transformDomain.Dispose();
             this.vfxDomain.Dispose();
+            this.actionDomain.Dispose();
+            this.drawDomain.Dispose();
+        }
+
+        protected virtual void _TickDomain(float dt)
+        {
+            this.roleDomain.Tick(dt);
+            this.skillDomain.Tick(dt);
+            this.vfxDomain.Tick(dt);
+            this.drawDomain.Tick(dt);
         }
 
         public void Update(float dt)
@@ -78,15 +96,8 @@ namespace GamePlay.Bussiness.Renderer
 
         protected void _LateTick(float dt)
         {
-            var cameraEntity = this.context.cameraEntity;
-            cameraEntity.Tick(dt);
-        }
-
-        protected virtual void _TickDomain(float dt)
-        {
-            this.roleDomain.Tick(dt);
-            this.skillDomain.Tick(dt);
-            this.vfxDomain.Tick(dt);
+            this.context.cmdBufferService.Tick();
+            this.context.cameraEntity.Tick(dt);
         }
     }
 }

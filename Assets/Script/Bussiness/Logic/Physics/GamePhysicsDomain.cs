@@ -74,15 +74,34 @@ namespace GamePlay.Bussiness.Logic
 
         public List<GameEntityBase> GetOverlapEntities(GameColliderModelBase colliderModel, GameTransformArgs transformArgs)
         {
+            this._context.SubmitRC(GameDrawRCCollection.RC_DRAW_COLLIDER_MODEL, new GameRCArgs_DrawColliderModel()
+            {
+                colliderModel = colliderModel,
+                transformArgs = transformArgs,
+                color = Color.red,
+                maintainTime = 0.1f,
+            });
             List<GameEntityBase> overlapEntities = new List<GameEntityBase>();
             var roleContext = this._context.roleContext;
-            roleContext.entityRepo.ForeachEntities((entity) =>
+            roleContext.repo.ForeachEntities((entity) =>
             {
                 var physicsCom = entity.physicsCom;
                 var collider = physicsCom.collider;
                 var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(collider, colliderModel, transformArgs);
                 var isOverlap = mtv != GameVec2.zero;
-                if (isOverlap) overlapEntities.Add(entity);
+                if (isOverlap)
+                {
+                    overlapEntities.Add(entity);
+                    colliderModel.Draw(transformArgs, Color.red);
+                    collider.Draw(Color.red);
+                    this._context.SubmitRC(GameDrawRCCollection.RC_DRAW_COLLIDER_MODEL, new GameRCArgs_DrawColliderModel()
+                    {
+                        colliderModel = colliderModel,
+                        transformArgs = transformArgs,
+                        color = Color.red,
+                        maintainTime = 0.1f,
+                    });
+                }
             });
             // ...其余实体类型的碰撞检测
             return overlapEntities;

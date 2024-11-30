@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.Logic
         public void Tick(float dt)
         {
             var roleContext = this._context.roleContext;
-            roleContext.entityRepo.ForeachEntities((entity) =>
+            roleContext.repo.ForeachEntities((entity) =>
             {
                 if (entity.transformCom.CheckDirty())
                 {

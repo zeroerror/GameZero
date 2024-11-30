@@ -6,6 +6,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameActionContextR()
         {
+            this.template = new GameActionTemplateR();
         }
     }
 }

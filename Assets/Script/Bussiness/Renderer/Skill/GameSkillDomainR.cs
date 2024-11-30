@@ -53,22 +53,25 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameSkillEntityR CreateSkill(GameRoleEntityR role, in GameIdArgs skillIdArgs)
         {
-            var factory = this._skillContext.factory;
-
             var typeId = skillIdArgs.typeId;
-            var skill = factory.Load(typeId);
+            var skillCom = role.skillCom;
+            if (skillCom.TryGet(typeId, out var skill))
+            {
+                GameLogger.LogError("技能创建失败，技能已存在：" + typeId);
+                return null;
+            }
+
+            var repo = this._skillContext.repo;
+            if (!repo.TryFetch(skillIdArgs.entityId, out skill)) skill = this._skillContext.factory.Load(typeId);
             if (skill == null)
             {
                 GameLogger.LogError("技能创建失败，技能ID不存在：" + typeId);
                 return null;
             }
-            var skillCom = role.skillCom;
-            if (skillCom.TryGet(typeId, out var _))
-            {
-                GameLogger.LogError("技能创建失败，技能已存在：" + typeId);
-                return null;
-            }
+
+            skill.idCom.SetByArgs(skillIdArgs);
             skillCom.Add(skill);
+            repo.TryAdd(skill);
             return skill;
         }
     }

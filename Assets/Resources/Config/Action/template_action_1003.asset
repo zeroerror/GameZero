@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: template_action_1003
   m_EditorClassIdentifier: 
   typeId: 1003
-  actionType: 3
-  selector:
+  actionType_edit: 3
+  selector_edit:
     selectAnchorType: 1
     campType: 1
     entityType: 1

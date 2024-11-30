@@ -7,11 +7,12 @@ namespace GamePlay.Core
 {
     public class GameCircleCollider : GameColliderBase
     {
+        public static readonly GameBoxCollider Default = new GameBoxCollider(null, null, -1);
 
         public float originRadius => _originRadius;
         float _originRadius;
 
-        public float worldRadius => _originRadius * Math.Abs(this.scale);
+        public float worldRadius => _originRadius * Math.Abs(this.scale.x);
 
         public GameCircleCollider(
             GameEntityBase binder,
@@ -56,7 +57,7 @@ namespace GamePlay.Core
             this.localAxisY = GameVectorUtil.RotateOnAxisZ(GameVec2.up, angle);
         }
 
-        protected override void _SetWorldScale(float scale)
+        protected override void _SetWorldScale(in GameVec2 scale)
         {
             this.scale = scale;
             var pos = this.worldPos;

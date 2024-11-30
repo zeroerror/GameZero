@@ -9,11 +9,11 @@ namespace GamePlay.Config
     [CreateAssetMenu(fileName = "template_action_", menuName = "游戏玩法/配置/行为模板")]
     public class GameActionSO : GameSOBase
     {
-        public GameActionType actionType;
-        public GameEntitySelector selector;
+        public GameActionType actionType_edit;
+        public GameEntitySelector selector_edit;
+        public GameColliderType colliderType_edit;
 
         public bool isRangeSelect;
-        public GameColliderType colliderType_edit;
         public GameBoxColliderModel boxColliderModel;
         public GameCircleColliderModel circleColliderModel;
         public GameFanColliderModel fanColliderModel;
@@ -27,28 +27,33 @@ namespace GamePlay.Config
 
         public GameActionModelBase GetActionModel()
         {
-            switch (actionType)
+            GameActionModelBase actionModel = null;
+            switch (actionType_edit)
             {
                 case GameActionType.Dmg:
-                    return dmgAction;
+                    actionModel = dmgAction;
+                    break;
                 case GameActionType.Heal:
-                    return healAction;
+                    actionModel = healAction;
+                    break;
                 case GameActionType.LaunchProjectile:
-                    return launchProjectileAction;
+                    actionModel = launchProjectileAction;
+                    break;
                 default:
-                    GameLogger.LogError("GameActionSO: GetAction: invalid actionType: " + actionType);
+                    GameLogger.LogError("GameActionSO: GetAction: invalid actionType: " + actionType_edit);
                     return null;
             }
+            this.SyncToActionModel(actionModel);
+            return actionModel;
         }
 
-        public void SyncEditData()
+        public void SyncToActionModel(GameActionModelBase actionModel)
         {
-            var actionModel = GetActionModel();
             if (actionModel == null) return;
-            if (!this.isRangeSelect) selector.colliderModel = null;
-            else selector.colliderModel = _GetEditColliderModel();
-            actionModel.selector = this.selector;
-            actionModel.actionType = this.actionType;
+            if (!this.isRangeSelect) selector_edit.colliderModel = null;
+            else selector_edit.colliderModel = _GetEditColliderModel();
+            actionModel.selector = this.selector_edit;
+            actionModel.actionType = this.actionType_edit;
             actionModel.typeId = this.typeId;
         }
 

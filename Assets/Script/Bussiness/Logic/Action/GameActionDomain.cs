@@ -53,6 +53,7 @@ namespace GamePlay.Bussiness.Logic
                 {
                     actionId = actionId,
                     actorIdArgs = actorEntity.idCom.ToArgs(),
+                    targetIdArgs = record.targetIdArgs
                 };
                 this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO, evArgs);
             });

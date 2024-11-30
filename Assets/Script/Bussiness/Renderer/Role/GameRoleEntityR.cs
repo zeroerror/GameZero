@@ -1,5 +1,6 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using Unity.VisualScripting;
 using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
 using GameVec3 = UnityEngine.Vector3;
@@ -15,7 +16,7 @@ namespace GamePlay.Bussiness.Renderer
         public Transform transform { get { return this.go.transform; } }
         public GameVec2 position { get { return transform.position; } set { transform.position = value; } }
         public float angle { get { return transform.eulerAngles.z; } set { transform.eulerAngles = new GameVec3(0, 0, value); } }
-        public float scale { get { return transform.localScale.x; } set { transform.localScale = new GameVec3(value, value, 1); } }
+        public GameVec2 scale { get { return transform.localScale; } set { transform.localScale = value; } }
         public float scaleX { get { return transform.localScale.x; } set { transform.localScale = new GameVec3(value, transform.localScale.y, transform.localScale.z); } }
         public float scaleY { get { return transform.localScale.y; } set { transform.localScale = new GameVec3(transform.localScale.x, value, transform.localScale.z); } }
 
@@ -45,7 +46,15 @@ namespace GamePlay.Bussiness.Renderer
             var pos = this._posEaseCom.Tick(this.position, this.transformCom.position, dt);
             this.position = pos;
             var forward = this.transformCom.forward;
-            this.scaleX = forward.x > 0 ? 1 : -1;
+            this.FaceTo(forward);
+        }
+
+        public void FaceTo(in GameVec2 dir)
+        {
+            var scale = this.transform.lossyScale;
+            var absx = Mathf.Abs(scale.x);
+            scale.x = dir.x > 0 ? absx : -absx;
+            this.transform.localScale = scale;
         }
 
         public override void Dispose()
@@ -59,6 +68,7 @@ namespace GamePlay.Bussiness.Renderer
             this.position = this.transformCom.position;
             this.angle = this.transformCom.angle;
             this.scale = this.transformCom.scale;
+            this.FaceTo(this.transformCom.forward);
         }
     }
 }

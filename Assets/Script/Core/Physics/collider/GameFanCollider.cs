@@ -1,13 +1,12 @@
 using System;
 using GamePlay.Bussiness.Logic;
 using GameVec2 = UnityEngine.Vector2;
-using GamePlay.Core;
 
-using System.Threading;
 namespace GamePlay.Core
 {
     public class GameFanCollider : GameColliderBase
     {
+        public static readonly GameFanCollider Default = new GameFanCollider(null, null, -1);
         GameVec2 _originP1;
         GameVec2 _originP2;
         GameVec2 _originP1_rotated;
@@ -16,7 +15,7 @@ namespace GamePlay.Core
         public GameVec2 worldP1 { get; private set; }
         public GameVec2 worldP2 { get; private set; }
 
-        public float worldRadius => originRadius * Math.Abs(this.scale);
+        public float worldRadius => originRadius * Math.Abs(this.scale.x);
         public float originRadius { get; private set; }
 
         public float fanAngle { get; private set; }
@@ -102,7 +101,7 @@ namespace GamePlay.Core
             this.normal2 = GameVectorUtil.RotateOnAxisZ(this.axis2, -90);
         }
 
-        protected override void _SetWorldScale(float scale)
+        protected override void _SetWorldScale(in GameVec2 scale)
         {
             this.scale = scale;
             var pos = this.worldPos;

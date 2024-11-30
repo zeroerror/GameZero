@@ -20,7 +20,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void Tick()
         {
-            this._roleContext.entityRepo.ForeachEntities((entity) =>
+            this._roleContext.repo.ForeachEntities((entity) =>
             {
                 entity.inputCom.Clear();
                 if (this._roleContext.TryGetPlayerInputArgs(entity.idCom.entityId, out var inputArgs))

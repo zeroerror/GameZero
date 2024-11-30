@@ -19,7 +19,7 @@ namespace GamePlay.Bussiness.Logic
         private GameVec2 _position;
         private bool _posDirty;
 
-        public float scale
+        public GameVec2 scale
         {
             get { return _scale; }
             set
@@ -29,7 +29,7 @@ namespace GamePlay.Bussiness.Logic
                 _scaleDirty = true;
             }
         }
-        private float _scale;
+        private GameVec2 _scale;
         private bool _scaleDirty;
 
         public float angle
@@ -65,7 +65,7 @@ namespace GamePlay.Bussiness.Logic
         public void Reset()
         {
             _position = GameVec2.zero;
-            _scale = 1;
+            _scale = GameVec2.one;
             _angle = 0;
             _forward = GameVec2.up;
             ClearDirty();
@@ -111,7 +111,7 @@ namespace GamePlay.Bussiness.Logic
         }
 
         // 设置缩放
-        private void SetScale(float v)
+        private void SetScale(in GameVec2 v)
         {
             _scale = v;
         }

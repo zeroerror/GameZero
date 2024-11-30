@@ -15,7 +15,7 @@ namespace GamePlay.Core
         public GameVec2 originCenterPos_rotated;
         public GameVec2 colliderOffset;
         public float angle;
-        public float scale { get; protected set; } = 1;
+        public GameVec2 scale { get; protected set; } = GameVec2.one;
         public GameVec2 localAxisX = GameVec2.right;
         public GameVec2 localAxisY = GameVec2.up;
         public bool lockPosition;
@@ -33,6 +33,7 @@ namespace GamePlay.Core
 
         public void SetByModel(GameColliderModelBase colliderModel)
         {
+            if (colliderModel == null) return;
             _SetByModel(colliderModel);
             _SetWorldAngle(colliderModel.getangle);
             _SetWorldScale(this.scale);
@@ -92,15 +93,14 @@ namespace GamePlay.Core
 
         protected abstract void _SetWorldAngle(float angle);
 
-        public void SetWorldScale(float scale)
+        public void SetWorldScale(in GameVec2 scale)
         {
             if (lockScale) return;
             if (this.scale == scale) return;
-            scale = scale == 0 ? 0 : scale;
             _SetWorldScale(scale);
         }
 
-        protected abstract void _SetWorldScale(float scale);
+        protected abstract void _SetWorldScale(in GameVec2 scale);
         public abstract GameVec2 GetResolvingMTV(GameColliderBase colliderB, bool onlyDetectPenetration = true);
         public abstract GameVec2 GetResolvingMTV(in GameVec2 point, bool onlyDetectPenetration = true);
         public abstract GameVec2 GetProjectionOnAxis(in GameVec2 origin, in GameVec2 axis);

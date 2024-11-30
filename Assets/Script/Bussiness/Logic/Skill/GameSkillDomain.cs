@@ -22,19 +22,22 @@ namespace GamePlay.Bussiness.Logic
 
         public GameSkillEntity CreateSkill(GameRoleEntity role, int typeId)
         {
-            var factory = this._skillContext.factory;
-            var skill = factory.Load(typeId);
-            if (skill == null)
-            {
-                GameLogger.LogError("技能创建失败，技能ID不存在：" + typeId);
-                return null;
-            }
             var skillCom = role.skillCom;
             if (skillCom.TryGet(typeId, out var _))
             {
                 GameLogger.LogError("技能创建失败，技能已存在：" + typeId);
                 return null;
             }
+
+            var repo = this._skillContext.repo;
+            if (!repo.TryFetch(typeId, out var skill)) skill = this._skillContext.factory.Load(typeId);
+            if (skill == null)
+            {
+                GameLogger.LogError("技能创建失败，技能ID不存在：" + typeId);
+                return null;
+            }
+
+            skill.idCom.entityId = this._skillContext.entityIdService.FetchId();
             // 绑定父子关系
             skill.idCom.SetParent(role);
             // 绑定TransformCom为角色TransformCom
@@ -51,6 +54,7 @@ namespace GamePlay.Bussiness.Logic
                 });
             });
             skillCom.Add(skill);
+            repo.TryAdd(skill);
 
             // 提交RC
             this._context.SubmitRC(GameSkillRCCollection.RC_GAMES_SKILL_CREATE,

@@ -19,7 +19,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public bool TryAdd(GameVFXEntityR entity)
         {
-            GameLogger.Log($"VFX实体仓库添加: {entity.entityId}");
+            GameLogger.Log($"VFX实体仓库 添加: {entity.entityId}");
             return this._dict.TryAdd(entity.entityId, entity);
         }
 
@@ -31,6 +31,7 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _Recycle(GameVFXEntityR entity)
         {
+            GameLogger.Log($"VFX实体仓库 回收: {entity.entityId}");
             this._pool.Add(entity);
         }
 

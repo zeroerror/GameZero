@@ -5,30 +5,36 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameContextR
     {
-        public GameContext logicContext { get; private set; }
-        public GameDomainApiR domainApi { get; private set; }
 
+        public GameContext logicContext { get; private set; }
         public GameCameraEntity cameraEntity { get; private set; }
         public GameDirectorR director { get; private set; }
-        public GameEventService eventService { get; private set; }
-        public GameEventService delayRCEventService { get; private set; }
+        public GameDomainApiR domainApi { get; private set; }
+
         public GameRoleContextR roleContext { get; private set; }
         public GameSkillContextR skillContext { get; private set; }
         public GameActionContextR actionContext { get; private set; }
         public GameVFXContextR vfxContext { get; private set; }
 
+        public GameEventService eventService { get; private set; }
+        public GameEventService delayRCEventService { get; private set; }
+        public GameCmdBufferService cmdBufferService { get; private set; }
+
         public GameContextR(GameContext logicContext)
         {
             this.logicContext = logicContext;
-            this.domainApi = new GameDomainApiR();
             this.cameraEntity = new GameCameraEntity(GameObject.Find("Main Camera")?.GetComponent<Camera>());
             this.director = new GameDirectorR();
-            this.eventService = new GameEventService();
-            this.delayRCEventService = new GameEventService();
+            this.domainApi = new GameDomainApiR();
+
             this.roleContext = new GameRoleContextR();
             this.skillContext = new GameSkillContextR();
             this.actionContext = new GameActionContextR();
             this.vfxContext = new GameVFXContextR();
+
+            this.eventService = new GameEventService();
+            this.delayRCEventService = new GameEventService();
+            this.cmdBufferService = new GameCmdBufferService();
         }
 
         public void BindRC(string rcName, System.Action<object> callback)
@@ -54,6 +60,8 @@ namespace GamePlay.Bussiness.Renderer
             {
                 case GameEntityType.Role:
                     return this.roleContext.repo.FindByEntityId(idArgs.entityId);
+                case GameEntityType.Skill:
+                    return this.skillContext.repo.FindByEntityId(idArgs.entityId);
                 default:
                     GameLogger.LogError("GameContextR.FindEntityByEntityId: unknown entityType: " + idArgs.entityType);
                     return null;

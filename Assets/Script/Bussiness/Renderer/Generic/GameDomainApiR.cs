@@ -13,5 +13,11 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameVFXDomainApiR vfxApi { get; private set; }
         public void SetVFXApi(GameVFXDomainApiR vfxApi) => this.vfxApi = vfxApi;
+
+        public GameActionDomainApiR actionApi { get; private set; }
+        public void SetActionApi(GameActionDomainApiR actionApi) => this.actionApi = actionApi;
+
+        public GameDrawDomainApiR drawApi { get; private set; }
+        public void SetDrawApi(GameDrawDomainApiR drawApi) => this.drawApi = drawApi;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
@@ -26,6 +27,7 @@ namespace GamePlay.Bussiness.Renderer
             repo.ForeachEntities((GameVFXEntityR vfx) =>
             {
                 vfx.Tick(dt);
+                if (!vfx.isPlaying) this._context.cmdBufferService.Add(0, () => repo.TryRemove(vfx));
             });
         }
 

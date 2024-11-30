@@ -1,5 +1,4 @@
 using GamePlay.Bussiness.Logic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
@@ -17,6 +16,8 @@ namespace GamePlay.Bussiness.Renderer
         public GameAnimPlayableCom animCom { get; private set; }
         public GameTimelineCom timelineCom { get; private set; }
 
+        public bool isPlaying => this.timelineCom.isPlaying;
+
         public GameVFXEntityR(GameObject go)
         {
             this.go = go;
@@ -27,19 +28,21 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Play(in GameVFXPlayArgs args)
         {
-            this.animCom.Play(args.clip);
+            var clip = args.clip;
+            this.animCom.Play(clip);
             this.go.transform.position = args.position;
             this.go.transform.eulerAngles = new Vector3(0, 0, args.angle);
             var localScale = this.go.transform.localScale;
             this.go.transform.localScale = new Vector3(localScale.x * args.scale, localScale.y * args.scale, localScale.z);
-            this.timelineCom.SetLength(args.loopDuration);
-            this.timelineCom.Play();
+            this.timelineCom.SetLength(clip.length);
+            this.timelineCom.Play(args.loopDuration);
             this.go.SetActive(true);
             this.attachNode = args.attachNode;
             this.attachOffset = args.attachOffset;
             this.isAttachParent = args.isAttachParent;
             if (args.isAttachParent) this.go.transform.SetParent(args.attachNode.transform);
 
+            this.go.name = $"VFX_{clip.name}_{this.entityId}";
         }
 
         public void Tick(float dt)
@@ -47,7 +50,7 @@ namespace GamePlay.Bussiness.Renderer
             this.animCom.Tick(dt);
             this.timelineCom.Tick(dt);
             this._TickAttach();
-            if (!this.timelineCom.isPlaying)
+            if (!isPlaying)
             {
                 this.Stop();
             }

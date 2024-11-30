@@ -1,3 +1,4 @@
+using GamePlay.Bussiness.Logic;
 using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
 
@@ -5,6 +6,34 @@ namespace GamePlay.Core
 {
     public static class GameColliderExt
     {
+        public static void Draw(this GameColliderModelBase model, in GameTransformArgs trans, Color color)
+        {
+            switch (model)
+            {
+                case GameBoxColliderModel box:
+                    var coll = GameBoxCollider.Default;
+                    coll.SetByModel(box);
+                    coll.UpdateTRS(trans);
+                    coll.Draw(color);
+                    break;
+                case GameCircleColliderModel circle:
+                    var circleColl = GameCircleCollider.Default;
+                    circleColl.SetByModel(circle);
+                    circleColl.UpdateTRS(trans);
+                    circleColl.Draw(color);
+                    break;
+                case GameFanColliderModel fan:
+                    var fanColl = GameFanCollider.Default;
+                    fanColl.SetByModel(fan);
+                    fanColl.UpdateTRS(trans);
+                    fanColl.Draw(color);
+                    break;
+                default:
+                    GameLogger.LogError($"Draw: unknown collider model {model}");
+                    break;
+            }
+        }
+
         public static void Draw(this GameColliderBase collider, Color color)
         {
             switch (collider)

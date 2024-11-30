@@ -5,6 +5,7 @@ namespace GamePlay.Core
 {
     public class GameBoxCollider : GameColliderBase
     {
+        public static readonly GameBoxCollider Default = new GameBoxCollider(null, null, -1);
         public GameVec2 originP1;
         public GameVec2 originP2;
         public GameVec2 originP3;
@@ -29,7 +30,7 @@ namespace GamePlay.Core
         /** 世界宽度 */
         public float worldWidth
         {
-            get { return originWidth * GameMathF.Abs(scale); }
+            get { return originWidth * GameMathF.Abs(scale.x); }
         }
 
         /** 原始高度 */
@@ -41,18 +42,30 @@ namespace GamePlay.Core
         /** 世界高度 */
         public float worldHeight
         {
-            get { return originHeight * GameMathF.Abs(scale); }
+            get { return originHeight * GameMathF.Abs(scale.y); }
         }
 
 
         private GameVec2 _worldMinPos
         {
-            get { return scale > 0 ? worldP3 : worldP2; }
+            get
+            {
+                if (scale.x > 0 && scale.y > 0) return worldP3;
+                if (scale.x < 0 && scale.y > 0) return worldP4;
+                if (scale.x > 0 && scale.y < 0) return worldP1;
+                return worldP2;
+            }
         }
 
         private GameVec2 _worldMaxPos
         {
-            get { return scale > 0 ? worldP2 : worldP3; }
+            get
+            {
+                if (scale.x > 0 && scale.y > 0) return worldP2;
+                if (scale.x < 0 && scale.y > 0) return worldP1;
+                if (scale.x > 0 && scale.y < 0) return worldP4;
+                return worldP3;
+            }
         }
 
         public GameBoxCollider(
@@ -67,7 +80,7 @@ namespace GamePlay.Core
         protected override void _SetByModel(GameColliderModelBase model)
         {
             var colliderModel = model as GameBoxColliderModel;
-            // 坐标设置 T
+            // 坐标设置 T 
             worldPos = GameVec2.zero;
             float boxWidth = colliderModel.width;
             float boxLength = colliderModel.height;
@@ -119,7 +132,7 @@ namespace GamePlay.Core
             this.angle = angleZ;
 
             GameVec2 pos = worldPos;
-            float scale = this.scale;
+            var scale = this.scale;
 
             originP1_rotated = GameVectorUtil.RotateOnAxisZ(originP1, angleZ);
             originP2_rotated = GameVectorUtil.RotateOnAxisZ(originP2, angleZ);
@@ -127,17 +140,17 @@ namespace GamePlay.Core
             originP4_rotated = GameVectorUtil.RotateOnAxisZ(originP4, angleZ);
             originCenterPos_rotated = GameVectorUtil.RotateOnAxisZ(originCenterPos, angleZ);
 
-            worldP1 = originP1_rotated * (scale) + (pos);
-            worldP2 = originP2_rotated * (scale) + (pos);
-            worldP3 = originP3_rotated * (scale) + (pos);
-            worldP4 = originP4_rotated * (scale) + (pos);
-            worldCenterPos = originCenterPos_rotated * (scale) + (pos);
+            worldP1 = originP1_rotated * scale + pos;
+            worldP2 = originP2_rotated * scale + pos;
+            worldP3 = originP3_rotated * scale + pos;
+            worldP4 = originP4_rotated * scale + pos;
+            worldCenterPos = originCenterPos_rotated * scale + pos;
 
             localAxisX = GameVectorUtil.RotateOnAxisZ(GameVec2.right, angleZ);
             localAxisY = GameVectorUtil.RotateOnAxisZ(GameVec2.up, angleZ);
         }
 
-        protected override void _SetWorldScale(float scale)
+        protected override void _SetWorldScale(in GameVec2 scale)
         {
             this.scale = scale;
             GameVec2 pos = worldPos;

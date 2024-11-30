@@ -1,6 +1,7 @@
 
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Renderer
 {
@@ -61,7 +62,7 @@ namespace GamePlay.Bussiness.Renderer
                 var args = new GameVFXPlayArgs()
                 {
                     clip = vfxClip,
-                    position = targetEntity.transformCom.position,
+                    position = targetEntity.transformCom.position + new GameVec2(0, targetEntity.transformCom.scale.y * 0.5f),
                     angle = targetEntity.transformCom.angle,
                     scale = 1,
                     loopDuration = 0,

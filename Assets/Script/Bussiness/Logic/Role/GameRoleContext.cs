@@ -5,17 +5,17 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleContext
     {
-        public GameRoleEntityRepo entityRepo { get; private set; }
+        public GameRoleRepo repo { get; private set; }
         public GameRoleFactory factory { get; private set; }
-        public GameIdService entityIdService { get; private set; }
+        public GameIdService idService { get; private set; }
         private Dictionary<int, GameRoleInputArgs> _playerInputArgs;
         public GameRoleEntity userRole;
 
         public GameRoleContext()
         {
-            this.entityRepo = new GameRoleEntityRepo();
+            this.repo = new GameRoleRepo();
             this.factory = new GameRoleFactory();
-            this.entityIdService = new GameIdService();
+            this.idService = new GameIdService();
             this._playerInputArgs = new Dictionary<int, GameRoleInputArgs>();
         }
 

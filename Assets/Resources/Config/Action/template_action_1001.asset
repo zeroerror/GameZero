@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: template_action_1001
   m_EditorClassIdentifier: 
   typeId: 1001
-  actionType: 1
-  selector:
+  actionType_edit: 1
+  selector_edit:
     selectAnchorType: 1
     campType: 1
     entityType: 1
@@ -26,13 +26,13 @@ MonoBehaviour:
     width: 1.6957
     height: 1
   dmgAction:
-    typeId: 0
-    actionType: 0
+    typeId: 1001
+    actionType: 1
     selector:
       selectAnchorType: 1
       campType: 1
       entityType: 1
-    dmg: 0
+    dmg: 111
   healAction:
     typeId: 0
     actionType: 0

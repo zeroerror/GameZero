@@ -10,7 +10,7 @@ namespace GamePlay.Core
     public class GameEventService
     {
         Dictionary<string, List<System.Action<object>>> _listeners = new();
-        Dictionary<string, Queue<GameEventSubmit>> _submitQueues = new();
+        Dictionary<string, List<GameEventSubmit>> _submitLists = new();
 
         public void Submit(string name, object args)
         {
@@ -22,8 +22,8 @@ namespace GamePlay.Core
         }
         public void Submit(in GameEventSubmit submit)
         {
-            if (!_submitQueues.ContainsKey(submit.name)) _submitQueues[submit.name] = new Queue<GameEventSubmit>();
-            _submitQueues[submit.name].Enqueue(submit);
+            if (!_submitLists.ContainsKey(submit.name)) _submitLists[submit.name] = new List<GameEventSubmit>();
+            _submitLists[submit.name].Add(submit);
         }
 
         public void Bind(string name, System.Action<object> callback)
@@ -41,13 +41,14 @@ namespace GamePlay.Core
 
         public void Tick()
         {
-            foreach (var kv in _submitQueues)
+            foreach (var kv in _submitLists)
             {
                 var name = kv.Key;
-                var queue = kv.Value;
-                while (queue.Count > 0)
+                var list = kv.Value;
+                var count = list.Count;
+                for (int i = 0; i < count; i++)
                 {
-                    var submit = queue.Dequeue();
+                    var submit = list[i];
                     if (!_listeners.ContainsKey(name)) continue;
                     foreach (var listener in _listeners[name])
                     {
@@ -55,7 +56,7 @@ namespace GamePlay.Core
                     }
                 }
             }
-            _submitQueues.Clear();
+            _submitLists.Clear();
         }
     }
 

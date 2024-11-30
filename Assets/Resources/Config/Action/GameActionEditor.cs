@@ -17,19 +17,23 @@ namespace GamePlay.Config
             this._ShowRendererData(so);
             this._ShowSkillSORefs(so);
             // 保存修改
-            if (GUI.changed) EditorUtility.SetDirty(so);
+            if (GUI.changed)
+            {
+                EditorUtility.SetDirty(so);
+                AssetDatabase.SaveAssets();
+            }
         }
 
         // 显示逻辑层数据
         private void _ShowLogicData(GameActionSO so)
         {
             so.typeId = EditorGUILayout.IntField("类型Id", so.typeId);
-            so.actionType = (GameActionType)EditorGUILayout.EnumPopup("行为类型", so.actionType);
-            if (so.actionType == GameActionType.None) EditorGUILayout.HelpBox("请选择一个行为类型", MessageType.Warning);
+            so.actionType_edit = (GameActionType)EditorGUILayout.EnumPopup("行为类型", so.actionType_edit);
+            if (so.actionType_edit == GameActionType.None) EditorGUILayout.HelpBox("请选择一个行为类型", MessageType.Warning);
 
             // 选择器
             EditorGUILayout.LabelField(" -------- 选择器 --------", EditorStyles.boldLabel);
-            var selector = so.selector;
+            var selector = so.selector_edit;
             selector.selectAnchorType = (GameEntitySelectAnchorType)EditorGUILayout.EnumPopup("选择锚点类型", selector.selectAnchorType);
             if (selector.selectAnchorType == GameEntitySelectAnchorType.None) EditorGUILayout.HelpBox("请选择一个选择锚点类型", MessageType.Warning);
             selector.campType = (GameCampType)EditorGUILayout.EnumPopup("阵营类型", selector.campType);
@@ -113,11 +117,10 @@ namespace GamePlay.Config
                     }
                 }
             }
-            so.selector = selector;
-            so.SyncEditData();
+            so.selector_edit = selector;
 
             // 根据行为类型动态显示字段
-            switch (so.actionType)
+            switch (so.actionType_edit)
             {
                 case GameActionType.Dmg:
                     EditorGUILayout.LabelField(" -------- 伤害行为 --------", EditorStyles.boldLabel);

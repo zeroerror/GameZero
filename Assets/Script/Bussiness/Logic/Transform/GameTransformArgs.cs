@@ -4,7 +4,7 @@ namespace GamePlay.Bussiness.Logic
     public struct GameTransformArgs
     {
         public GameVec2 position;
-        public float scale;
+        public GameVec2 scale;
         public float angle;
         public GameVec2 forward;
     }

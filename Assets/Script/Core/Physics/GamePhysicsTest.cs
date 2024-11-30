@@ -23,7 +23,7 @@ public class GamePhysicsTest : MonoBehaviour
             {
                 position = new Vector2(0, 0),
                 angle = 0,
-                scale = 1
+                scale = Vector2.one
             }, Color.white);
         });
 
@@ -34,13 +34,13 @@ public class GamePhysicsTest : MonoBehaviour
             {
                 position = new Vector2(0, 0),
                 angle = 0,
-                scale = 1
+                scale = Vector2.one
             }, Color.white);
             this.CreateBox(new GameTransformArgs()
             {
                 position = new Vector2(0.8f, 0),
                 angle = 0,
-                scale = 1
+                scale = Vector2.one
             }, Color.blue);
         });
         this.testNameList.Add("Fan vs Fan");
@@ -50,13 +50,13 @@ public class GamePhysicsTest : MonoBehaviour
                   {
                       position = new Vector2(0, 0),
                       angle = 0,
-                      scale = 1
+                      scale = Vector2.one
                   }, 1, 135, Color.white);
                   this.CreateFan(new GameTransformArgs()
                   {
                       position = new Vector2(0.8f, 0.8f),
                       angle = 0,
-                      scale = 1
+                      scale = Vector2.one
                   }, 1, 135, Color.blue);
               });
         this.testNameList.Add("Box vs Circle");
@@ -66,13 +66,13 @@ public class GamePhysicsTest : MonoBehaviour
                   {
                       position = new Vector2(0, 0),
                       angle = 0,
-                      scale = 1
+                      scale = Vector2.one
                   }, Color.white);
                   this.CreateCircle(new GameTransformArgs()
                   {
                       position = new Vector2(0.7f, 0.9f),
                       angle = 0,
-                      scale = 1
+                      scale = Vector2.one
                   }, 1, Color.blue);
               });
         this.testNameList.Add("Box vs Fan");
@@ -82,13 +82,13 @@ public class GamePhysicsTest : MonoBehaviour
             {
                 position = new Vector2(0, 0),
                 angle = 0,
-                scale = 1
+                scale = Vector2.one
             }, Color.white);
             this.CreateFan(new GameTransformArgs()
             {
                 position = new Vector2(0, 0),
                 angle = 0,
-                scale = 2
+                scale = Vector2.one
             }, 1, 135, Color.blue);
         });
         this.testNameList.Add("Fan vs Point");
@@ -98,7 +98,7 @@ public class GamePhysicsTest : MonoBehaviour
             {
                 position = new Vector2(0, 0),
                 angle = 0,
-                scale = 1
+                scale = Vector2.one
             }, 1, 135, Color.white);
         });
 
@@ -268,7 +268,7 @@ public class GamePhysicsTest : MonoBehaviour
         var role = new GameRoleEntity(1);
         role.transformCom.SetByArgs(args);
         var model = new GameBoxColliderModel(
-            Vector2.zero, 0, args.scale, args.scale
+            Vector2.zero, 0, args.scale.x, args.scale.y
         );
         var id = 1;
         var box = new GameBoxCollider(role, model, id);

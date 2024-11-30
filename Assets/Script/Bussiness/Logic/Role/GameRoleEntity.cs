@@ -1,4 +1,7 @@
+using System;
+using GamePlay.Core;
 using Unity.VisualScripting;
+using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -24,7 +27,10 @@ namespace GamePlay.Bussiness.Logic
             this.transformCom.forward = dir;
             if (dir.x != 0)
             {
-                this.transformCom.scale = dir.x > 0 ? 1 : -1;
+                var scale = this.transformCom.scale;
+                var absx = GameMathF.Abs(scale.x);
+                scale.x = dir.x > 0 ? absx : -absx;
+                this.transformCom.scale = scale;
             }
         }
     }

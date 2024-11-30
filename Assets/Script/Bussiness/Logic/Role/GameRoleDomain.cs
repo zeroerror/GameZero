@@ -44,16 +44,22 @@ namespace GamePlay.Bussiness.Logic
 
         public GameRoleEntity Create(int typeId, int campId, in GameTransformArgs transArgs, bool isUser = false)
         {
-            var e = this._roleContext.factory.Load(typeId);
+            var repo = this._roleContext.repo;
+            if (!repo.TryFetch(typeId, out var e)) e = this._roleContext.factory.Load(typeId);
+            if (e == null)
+            {
+                GameLogger.LogError("角色创建失败，角色ID不存在：" + typeId);
+                return null;
+            }
             e.transformCom.SetByArgs(transArgs);
-            e.idCom.entityId = this._roleContext.entityIdService.FetchId();
+            e.idCom.entityId = this._roleContext.idService.FetchId();
             e.idCom.campId = campId;
             var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0.625f), 0, 0.7f, 1.25f);
             this._context.domainApi.physicsApi.CreatePhysics(e, colliderModel);
             this._context.domainApi.skillApi.CreateSkill(e, 1001);
             this._context.domainApi.skillApi.CreateSkill(e, 1002);
             this._context.domainApi.skillApi.CreateSkill(e, 1003);
-            this._roleContext.entityRepo.TryAdd(e);
+            repo.TryAdd(e);
 
             // 提交RC事件
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, new GameRoleRCArgs_Create
@@ -71,7 +77,7 @@ namespace GamePlay.Bussiness.Logic
         public void Tick(float dt)
         {
             this.inputDomain.Tick();
-            var repo = this._roleContext.entityRepo;
+            var repo = this._roleContext.repo;
             repo.ForeachEntities((entity) =>
             {
                 entity.Tick(dt);
