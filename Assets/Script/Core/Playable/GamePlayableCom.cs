@@ -37,39 +37,37 @@ public class GameAnimPlayableCom
         this.currentGraph.Evaluate(dt * this.timeScale);
     }
 
-    public void Play(AnimationClip clip)
+    public void Play(AnimationClip clip, float starTime = 0)
     {
+        if (!clip)
+        {
+            GameLogger.LogError("播放Clip动画失败! clip为空");
+            return;
+        }
         if (!this._graphDict.TryGetValue(clip.name, out var cacheGraph))
         {
             cacheGraph = this._Create(clip);
-            if (!cacheGraph.IsValid())
-            {
-                GameLogger.LogError($"Create PlayableGraph Failed: {clip.name}");
-                return;
-            }
             this._graphDict.Add(clip.name, cacheGraph);
         }
-        cacheGraph.Play();
-        // 将默认动画事件移除
-        clip.events = new AnimationEvent[0];
-        this.currentGraph = cacheGraph;
-        this.isPause = false;
+        clip.events = null;
+        this.Play(clip.name, starTime);
     }
 
-    public void Play(string name)
+    public void Play(string name, float starTime = 0)
     {
-        if (!this._graphDict.TryGetValue(name, out var cacheGraph))
+        if (!this._graphDict.TryGetValue(name, out var graph))
         {
-            GameLogger.LogError($"Play PlayableGraph Failed: {name} not found");
+            GameLogger.LogError($"播放名称动画失败! {name} 不存在");
             return;
         }
-        if (!cacheGraph.IsValid())
+        if (!graph.IsValid())
         {
-            GameLogger.LogError($"Play PlayableGraph Failed: {name} is invalid");
+            GameLogger.LogError($"播放名称动画失败! {name} 无效");
             return;
         }
-        cacheGraph.Play();
-        this.currentGraph = cacheGraph;
+        graph.Play();
+        graph.GetRootPlayable(0).SetTime(starTime);
+        this.currentGraph = graph;
         this.isPause = false;
     }
 
