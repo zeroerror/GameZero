@@ -17,6 +17,8 @@ namespace GamePlay.Config
         public float animLength;
         [Header("动画事件")]
         public GameTimelineEventEditModel[] timelineEvents;
+        [Header("碰撞行为")]
+        public GameActionSO collisionAction;
 
         protected override void OnValidate()
         {

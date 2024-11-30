@@ -10,6 +10,8 @@ namespace GamePlay.Bussiness.Logic
 
         public GameActionContext()
         {
+            this.template = new GameActionTemplate();
+            this.recordList = new List<GameActionRecord>();
         }
 
         public void AddRecord(GameActionRecord record)

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63e08219bd61964398ea7781cbcab7c, type: 3}
+  m_Name: template_projectile_10002
+  m_EditorClassIdentifier: 
+  typeId: 10002
+  animClip: {fileID: 7400000, guid: cc3ce71219919ab439e7579e8ca69915, type: 2}
+  animName: p_feibiao
+  animLength: 0.083333336
+  timelineEvents: []
+  collisionAction: {fileID: 11400000, guid: 2e1755793e0a10d4eb465a321067db26, type: 2}

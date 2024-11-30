@@ -12,7 +12,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameActionTemplateR()
         {
             _dict = new Dictionary<int, GameActionModelR>();
-            var path = GameConfigCollection.SKILL_CONFIG_DIR_PATH;
+            var path = GameConfigCollection.ACTION_CONFIG_DIR_PATH;
             var soList = Resources.LoadAll(path, typeof(GameActionSO));
             _soDict = new Dictionary<int, GameActionSO>();
             foreach (var so in soList)

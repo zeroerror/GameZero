@@ -9,6 +9,14 @@ namespace GamePlay.Config
     public class GameActionSO : GameSOBase
     {
         public GameActionType actionType;
+        public GameEntitySelector selector;
+
+        public bool isRangeSelect;
+        public GameColliderType colliderType_edit;
+        public GameBoxColliderModel boxColliderModel;
+        public GameCircleColliderModel circleColliderModel;
+        public GameFanColliderModel fanColliderModel;
+
         public GameActionModel_Dmg dmgAction;
         public GameActionModel_Heal healAction;
         public GameActionModel_LaunchProjectile launchProjectileAction;

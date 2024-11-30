@@ -45,7 +45,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void DelayRC(string rcName, object args)
         {
-            this.DelayRC(rcName, args);
+            this.delayRCEventService.Submit(rcName, args);
         }
 
         public GameEntityBase FindEntity(in GameIdArgs idArgs)

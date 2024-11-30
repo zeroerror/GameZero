@@ -25,7 +25,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void SubmitRC(string name, object args)
         {
-            this.SubmitRC(name, args);
+            this.rcEventService.Submit(name, args);
         }
 
         public void BindRC(string rcName, System.Action<object> callback)

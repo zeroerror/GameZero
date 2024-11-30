@@ -14,19 +14,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 1003
   actionType: 3
+  selector:
+    selectAnchorType: 1
+    campType: 1
+    entityType: 1
+  isRangeSelect: 0
+  colliderType_edit: 0
   dmgAction:
     typeId: 0
     actionType: 0
+    selector:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
     dmg: 0
   healAction:
     typeId: 0
     actionType: 0
+    selector:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
     heal: 0
-  launchBulletAction:
+  launchProjectileAction:
     typeId: 0
     actionType: 0
-    bulletId: 1001
+    selector:
+      selectAnchorType: 1
+      campType: 1
+      entityType: 1
+    projectileId: 1001
     speed: 10
-  launchBulletSO: {fileID: 11400000, guid: 244c253d64a261c439248f0b12c9259c, type: 2}
+  launchProjectileSO: {fileID: 11400000, guid: 244c253d64a261c439248f0b12c9259c, type: 2}
   skillSORefs:
   - {fileID: 0}
+  actionR:
+    typeId: 1003
+    vfxClip: {fileID: 0}
+    shakeModel:
+      angle: 0
+      amplitude: 0
+      frequency: 0
+      duration: 0

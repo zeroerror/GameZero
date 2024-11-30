@@ -5,6 +5,7 @@ namespace GamePlay.Core
     {
         public static GameBoxColliderModel DEFAULT = new GameBoxColliderModel(new GameVec2(0, 0), 0, 1, 1);
 
+        public GameColliderType colliderType => GameColliderType.Box;
         public GameVec2 offset { get; set; }
         public float angle { get; set; }
         public float width;

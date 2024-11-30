@@ -24,6 +24,32 @@ public static class GameVectorExtensions
         return Mul(v, f);
     }
 
+    public static GameVec3 Mul(this GameVec3 v, float f)
+    {
+        return new GameVec3(v.x * f, v.y * f);
+    }
+
+    public static GameVec3 Multiply(this GameVec3 v, float f)
+    {
+        return Mul(v, f);
+    }
+
+    public static void MulSelf(this ref GameVec3 v, in GameVec3 v2)
+    {
+        v.x *= v2.x;
+        v.y *= v2.y;
+        v.z *= v2.z;
+    }
+
+
+    public static GameVec3 Mul(this GameVec3 v, in GameVec3 v2)
+    {
+        v.x *= v2.x;
+        v.y *= v2.y;
+        v.z *= v2.z;
+        return v;
+    }
+
     public static GameVec2 Add(this GameVec2 v1, in GameVec2 v2)
     {
         return new GameVec2(v1.x + v2.x, v1.y + v2.y);
@@ -33,7 +59,6 @@ public static class GameVectorExtensions
     {
         return new GameVec3(v1.x + v2.x, v1.y + v2.y, v1.z);
     }
-
 
     public static void AddSelf(this ref GameVec2 v1, in GameVec2 v2)
     {

@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
+  m_Name: template_action_10004
+  m_EditorClassIdentifier: 
+  typeId: 10004
+  actionType: 1
+  selector:
+    selectAnchorType: 1
+    campType: 1
+    entityType: 1
+  isRangeSelect: 1
+  colliderType_edit: 1
+  dmgAction:
+    typeId: 0
+    actionType: 0
+    selector:
+      selectAnchorType: 1
+      campType: 1
+      entityType: 1
+    dmg: 11
+  healAction:
+    typeId: 0
+    actionType: 0
+    selector:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+    heal: 0
+  launchProjectileAction:
+    typeId: 0
+    actionType: 0
+    selector:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+    projectileId: 0
+    speed: 0
+  launchProjectileSO: {fileID: 0}
+  skillSORefs:
+  - {fileID: 0}
+  actionR:
+    typeId: 10004
+    vfxClip: {fileID: 7400000, guid: 58f583904127f254090ebb06200a036b, type: 2}
+    shakeModel:
+      angle: 0
+      amplitude: 0
+      frequency: 0
+      duration: 0
