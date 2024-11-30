@@ -44,7 +44,7 @@ namespace GamePlay.Core
         protected override void _SetByModel(GameColliderModelBase model)
         {
             var colliderModel = model as GameFanColliderModel;
-            var fanOffset = colliderModel.offset;
+            var fanOffset = colliderModel.getoffset;
             var radius = colliderModel.radius;
             var fanAngle = colliderModel.fanAngle;
             // 扇形角度限制 (0, 180]

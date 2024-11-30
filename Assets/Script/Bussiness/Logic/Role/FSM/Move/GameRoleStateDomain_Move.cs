@@ -37,7 +37,7 @@ namespace GamePlay.Bussiness.Logic
             role.transformCom.position += moveVec;
             var faceDir = inputArgs.faceDir;
             faceDir = faceDir != GameVec2.zero ? faceDir : moveDir;
-            role.transformCom.forward = faceDir;
+            role.FaceTo(faceDir);
         }
 
 

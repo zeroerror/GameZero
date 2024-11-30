@@ -31,11 +31,11 @@ namespace GamePlay.Core
         protected override void _SetByModel(GameColliderModelBase model)
         {
             var colliderModel = model as GameCircleColliderModel;
-            this.colliderOffset = colliderModel.offset;
+            this.colliderOffset = colliderModel.getoffset;
             this._originRadius = colliderModel.radius;
             this.worldPos = GameVec2.zero;
-            this.originCenterPos = colliderModel.offset;
-            this.originCenterPos_rotated = colliderModel.offset;
+            this.originCenterPos = colliderModel.getoffset;
+            this.originCenterPos_rotated = colliderModel.getoffset;
         }
 
         protected override void _SetWorldPosition(GameVec2 pos)

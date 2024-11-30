@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleEntity : GameEntityBase
@@ -15,6 +17,15 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Tick(float dt)
         {
+        }
+
+        public void FaceTo(in GameVec2 dir)
+        {
+            this.transformCom.forward = dir;
+            if (dir.x != 0)
+            {
+                this.transformCom.scale = dir.x > 0 ? 1 : -1;
+            }
         }
     }
 }

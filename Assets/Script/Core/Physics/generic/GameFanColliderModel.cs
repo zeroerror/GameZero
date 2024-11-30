@@ -6,8 +6,11 @@ namespace GamePlay.Core
         public static GameFanColliderModel DEFAULT = new GameFanColliderModel(new GameVec2(0, 0), 0, 1, 1);
 
         public GameColliderType colliderType => GameColliderType.Fan;
-        public GameVec2 offset { get; set; }
-        public float angle { get; set; }
+        public GameVec2 getoffset => this.offset;
+        public float getangle => this.angle;
+
+        public GameVec2 offset;
+        public float angle;
         public float radius;
         public float fanAngle;
 
@@ -21,7 +24,7 @@ namespace GamePlay.Core
 
         public override string ToString()
         {
-            return $"GameFanColliderModel: offset={this.offset}, angle={this.angle}, radius={this.radius}, fanAngle={this.fanAngle}";
+            return $"GameFanColliderModel: offset={this.getoffset}, angle={this.getangle}, radius={this.radius}, fanAngle={this.fanAngle}";
         }
     }
 }

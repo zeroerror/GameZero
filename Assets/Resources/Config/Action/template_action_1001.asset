@@ -20,6 +20,11 @@ MonoBehaviour:
     entityType: 1
   isRangeSelect: 1
   colliderType_edit: 1
+  boxColliderModel:
+    offset: {x: 0.8679, y: 0.496}
+    angle: 0
+    width: 1.6957
+    height: 1
   dmgAction:
     typeId: 0
     actionType: 0
@@ -27,7 +32,7 @@ MonoBehaviour:
       selectAnchorType: 1
       campType: 1
       entityType: 1
-    dmg: 11
+    dmg: 0
   healAction:
     typeId: 0
     actionType: 0
@@ -46,8 +51,7 @@ MonoBehaviour:
     projectileId: 0
     speed: 0
   launchProjectileSO: {fileID: 0}
-  skillSORefs:
-  - {fileID: 0}
+  skillSORefs: []
   actionR:
     typeId: 1001
     vfxClip: {fileID: 7400000, guid: 58f583904127f254090ebb06200a036b, type: 2}

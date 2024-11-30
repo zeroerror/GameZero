@@ -114,6 +114,7 @@ namespace GamePlay.Config
                 }
             }
             so.selector = selector;
+            so.SyncEditData();
 
             // 根据行为类型动态显示字段
             switch (so.actionType)
@@ -143,8 +144,8 @@ namespace GamePlay.Config
         private void _ShowBoxModel(GameBoxColliderModel model)
         {
             if (model == null) return;
-            EditorGUILayout.Vector2Field("偏移", model.offset);
-            EditorGUILayout.FloatField("角度", model.angle);
+            EditorGUILayout.Vector2Field("偏移", model.getoffset);
+            EditorGUILayout.FloatField("角度", model.getangle);
             EditorGUILayout.FloatField("宽度", model.width);
             EditorGUILayout.FloatField("高度", model.height);
         }
@@ -152,16 +153,16 @@ namespace GamePlay.Config
         private void _ShowCircleModel(GameCircleColliderModel model)
         {
             if (model == null) return;
-            EditorGUILayout.Vector2Field("偏移", model.offset);
-            EditorGUILayout.FloatField("角度", model.angle);
+            EditorGUILayout.Vector2Field("偏移", model.getoffset);
+            EditorGUILayout.FloatField("角度", model.getangle);
             EditorGUILayout.FloatField("半径", model.radius);
         }
 
         private void _ShowFanModel(GameFanColliderModel model)
         {
             if (model == null) return;
-            EditorGUILayout.Vector2Field("偏移", model.offset);
-            EditorGUILayout.FloatField("角度", model.angle);
+            EditorGUILayout.Vector2Field("偏移", model.getoffset);
+            EditorGUILayout.FloatField("角度", model.getangle);
             EditorGUILayout.FloatField("扇形角度", model.fanAngle);
             EditorGUILayout.FloatField("半径", model.radius);
         }
@@ -184,7 +185,7 @@ namespace GamePlay.Config
             var color = GUI.color;
             GUI.color = Color.green;
             var skillSOs = Resources.LoadAll<GameSkillSO>(GameConfigCollection.SKILL_CONFIG_DIR_PATH);
-            skillSOs = skillSOs.Filter(skillSO => skillSO.timelineEvents.Contains(e => e.action.typeId == so.typeId));
+            skillSOs = skillSOs.Filter(skillSO => skillSO.timelineEvents.Contains(e => e.action?.typeId == so.typeId));
             if (skillSOs.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被依赖技能 --------", EditorStyles.boldLabel);
@@ -195,7 +196,7 @@ namespace GamePlay.Config
                 }
             }
             var projectileSOs = Resources.LoadAll<GameProjectileSO>(GameConfigCollection.BULLET_CONFIG_DIR_PATH);
-            projectileSOs = projectileSOs.Filter(so => so.timelineEvents.Contains(e => e.action.typeId == so.typeId));
+            projectileSOs = projectileSOs.Filter(so => so.timelineEvents.Contains(e => e.action?.typeId == so.typeId));
             if (projectileSOs.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被依赖弹体 --------", EditorStyles.boldLabel);

@@ -66,12 +66,13 @@ namespace GamePlay.Bussiness.Logic
             var recordList = new List<GameActionRecord>();
             selectedEntities.ForEach((entity) =>
             {
-                GameLogger.Log($"执行行为[伤害]: {action}");
                 var record = new GameActionRecord();
+                record.actionId = action.typeId;
                 record.actorIdArgs = actorEntity.idCom.ToArgs();
                 record.targetIdArgs = entity.idCom.ToArgs();
                 //todo 其余行为记录数据
                 recordList.Add(record);
+                GameLogger.Log($"执行行为[伤害]: {record}");
             });
             return recordList;
         }
@@ -85,6 +86,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 GameLogger.Log($"执行行为[治疗]: {action}");
                 var record = new GameActionRecord();
+                record.actionId = action.typeId;
                 record.actorIdArgs = actorEntity.idCom.ToArgs();
                 record.targetIdArgs = entity.idCom.ToArgs();
                 //todo 其余行为记录数据
@@ -102,6 +104,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 GameLogger.Log($"执行行为[发射弹体]: {action}");
                 var record = new GameActionRecord();
+                record.actionId = action.typeId;
                 record.actorIdArgs = actorEntity.idCom.ToArgs();
                 record.targetIdArgs = entity.idCom.ToArgs();
                 //todo 其余行为记录数据

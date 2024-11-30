@@ -1,6 +1,7 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
 using GamePlay.Core;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GamePlay.Config
@@ -36,6 +37,33 @@ namespace GamePlay.Config
                     return launchProjectileAction;
                 default:
                     GameLogger.LogError("GameActionSO: GetAction: invalid actionType: " + actionType);
+                    return null;
+            }
+        }
+
+        public void SyncEditData()
+        {
+            var actionModel = GetActionModel();
+            if (actionModel == null) return;
+            if (!this.isRangeSelect) selector.colliderModel = null;
+            else selector.colliderModel = _GetEditColliderModel();
+            actionModel.selector = this.selector;
+            actionModel.actionType = this.actionType;
+            actionModel.typeId = this.typeId;
+        }
+
+        private GameColliderModelBase _GetEditColliderModel()
+        {
+            switch (colliderType_edit)
+            {
+                case GameColliderType.Box:
+                    return boxColliderModel;
+                case GameColliderType.Circle:
+                    return circleColliderModel;
+                case GameColliderType.Fan:
+                    return fanColliderModel;
+                default:
+                    GameLogger.LogError("GameActionSO: GetColliderModel: invalid colliderType: " + colliderType_edit);
                     return null;
             }
         }

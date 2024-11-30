@@ -12,5 +12,10 @@ namespace GamePlay.Bussiness.Logic
         public GameActionRecord()
         {
         }
+
+        public override string ToString()
+        {
+            return $"行为Id:{actionId}\n执行者:{actorIdArgs}\n目标:{targetIdArgs}";
+        }
     }
 }

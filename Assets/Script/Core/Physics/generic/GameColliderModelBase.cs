@@ -4,7 +4,7 @@ namespace GamePlay.Core
     public interface GameColliderModelBase
     {
         public GameColliderType colliderType { get; }
-        public float angle { get; }
-        public GameVec2 offset { get; }
+        public float getangle { get; }
+        public GameVec2 getoffset { get; }
     }
 }

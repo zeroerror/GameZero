@@ -13,17 +13,12 @@ namespace GamePlay.Bussiness.Logic
         {
             _dict = new Dictionary<int, GameActionModelBase>();
             var path = GameConfigCollection.ACTION_CONFIG_DIR_PATH;
-            var soList = Resources.LoadAll(path, typeof(GameActionSO));
+            var resList = Resources.LoadAll(path, typeof(GameActionSO));
             _soDict = new Dictionary<int, GameActionSO>();
-            foreach (var so in soList)
+            foreach (var res in resList)
             {
-                var skillSo = so as GameActionSO;
-                if (skillSo == null)
-                {
-                    Debug.LogError("GameActionTemplate: LoadAll: invalid GameActionSO: " + so);
-                    continue;
-                }
-                _soDict.Add(skillSo.typeId, skillSo);
+                var so = res as GameActionSO;
+                _soDict.Add(so.typeId, so);
             }
         }
 

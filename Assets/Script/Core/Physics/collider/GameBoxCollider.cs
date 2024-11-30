@@ -73,7 +73,7 @@ namespace GamePlay.Core
             float boxLength = colliderModel.height;
             float halfWidth = boxWidth / 2;
             float halfLength = boxLength / 2;
-            GameVec2 boxOffset = colliderModel.offset;
+            GameVec2 boxOffset = colliderModel.getoffset;
             colliderOffset = boxOffset;
 
             originP1 = new GameVec2(-halfWidth, halfLength) + boxOffset;

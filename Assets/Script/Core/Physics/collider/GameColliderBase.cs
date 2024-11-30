@@ -34,7 +34,7 @@ namespace GamePlay.Core
         public void SetByModel(GameColliderModelBase colliderModel)
         {
             _SetByModel(colliderModel);
-            _SetWorldAngle(colliderModel.angle);
+            _SetWorldAngle(colliderModel.getangle);
             _SetWorldScale(this.scale);
             this.colliderModel = colliderModel;
         }
