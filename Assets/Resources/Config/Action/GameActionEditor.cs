@@ -198,7 +198,7 @@ namespace GamePlay.Config
                     EditorGUILayout.ObjectField(skillSO.typeId.ToString(), skillSO, typeof(GameSkillSO), false);
                 }
             }
-            var projectileSOs = Resources.LoadAll<GameProjectileSO>(GameConfigCollection.BULLET_CONFIG_DIR_PATH);
+            var projectileSOs = Resources.LoadAll<GameProjectileSO>(GameConfigCollection.PROJECTILE_CONFIG_DIR_PATH);
             projectileSOs = projectileSOs.Filter(so => so.timelineEvents.Contains(e => e.action?.typeId == so.typeId));
             if (projectileSOs.Length > 0)
             {

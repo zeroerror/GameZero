@@ -4,16 +4,16 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameDirectDomain
     {
-        public GameContext context { get; private set; }
-
         public GameDirector director => this.context.director;
 
+        public GameContext context { get; private set; }
         public GameRoleDomain roleDomain { get; private set; }
         public GameSkillDomain skillDomain { get; private set; }
         public GameTransformDomain transformDomain { get; private set; }
         public GamePhysicsDomain physicsDomain { get; private set; }
         public GameActionDomain actionDomain { get; private set; }
         public GameEntitySelectDomain entitySelectDomain { get; private set; }
+        public GameProjectileDomain projectileDomain { get; private set; }
 
         public GameDirectDomain()
         {
@@ -30,6 +30,7 @@ namespace GamePlay.Bussiness.Logic
             this.physicsDomain = new GamePhysicsDomain();
             this.actionDomain = new GameActionDomain();
             this.entitySelectDomain = new GameEntitySelectDomain();
+            this.projectileDomain = new GameProjectileDomain();
         }
 
         private void _InitContext()
@@ -41,6 +42,7 @@ namespace GamePlay.Bussiness.Logic
             this.context.domainApi.SetPhysicsApi(this.physicsDomain);
             this.context.domainApi.SetActionApi(this.actionDomain);
             this.context.domainApi.SetEntitySelectApi(this.entitySelectDomain);
+            this.context.domainApi.SetProjectileApi(this.projectileDomain);
         }
 
         private void _InjectContext()
@@ -51,6 +53,7 @@ namespace GamePlay.Bussiness.Logic
             this.physicsDomain.Inject(this.context);
             this.actionDomain.Inject(this.context);
             this.entitySelectDomain.Inject(this.context);
+            this.projectileDomain.Inject(this.context);
 
             this.roleDomain.CreateUserRole(1001, 1, new GameTransformArgs { position = new GameVec2(-5, -5), scale = GameVec2.one, forward = GameVec2.right });
             this.roleDomain.CreateUserRole(1001, 2, new GameTransformArgs { position = new GameVec2(0, -5), scale = GameVec2.one, forward = GameVec2.right });
@@ -63,6 +66,21 @@ namespace GamePlay.Bussiness.Logic
             this.skillDomain.Dispose();
             this.transformDomain.Dispose();
             this.physicsDomain.Dispose();
+            this.actionDomain.Dispose();
+            this.entitySelectDomain.Dispose();
+            this.projectileDomain.Dispose();
+        }
+
+
+        protected virtual void _TickDomain(float dt)
+        {
+            this.roleDomain.Tick(dt);
+            this.skillDomain.Tick(dt);
+            this.transformDomain.Tick(dt);
+            this.physicsDomain.Tick(dt);
+            this.actionDomain.Tick(dt);
+            this.entitySelectDomain.Tick(dt);
+            this.projectileDomain.Tick(dt);
         }
 
         public void Update(float dt)
@@ -92,12 +110,6 @@ namespace GamePlay.Bussiness.Logic
         protected void _LateTick(float dt)
         {
             this.physicsDomain.Tick(dt);
-        }
-
-        protected virtual void _TickDomain(float dt)
-        {
-            this.roleDomain.Tick(dt);
-            this.transformDomain.Tick(dt);
         }
     }
 }

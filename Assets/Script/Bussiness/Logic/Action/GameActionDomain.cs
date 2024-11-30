@@ -19,6 +19,14 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
         }
 
+        public void Dispose()
+        {
+        }
+
+        public void Tick(float dt)
+        {
+        }
+
         public List<GameActionRecord> DoAction(int actionId, GameEntityBase actorEntity)
         {
             var template = this._actionContext.template;

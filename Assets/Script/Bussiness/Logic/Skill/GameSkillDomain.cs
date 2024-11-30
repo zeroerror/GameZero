@@ -20,6 +20,10 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
+        public void Tick(float dt)
+        {
+        }
+
         public GameSkillEntity CreateSkill(GameRoleEntity role, int typeId)
         {
             var skillCom = role.skillCom;

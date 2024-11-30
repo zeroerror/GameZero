@@ -20,6 +20,10 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
+        public void Tick(float dt)
+        {
+        }
+
         public List<GameEntityBase> GetSelectdeEntities(GameEntitySelector selector, GameEntityBase actorEntity)
         {
             var physicsApi = this._context.domainApi.physicsApi;
