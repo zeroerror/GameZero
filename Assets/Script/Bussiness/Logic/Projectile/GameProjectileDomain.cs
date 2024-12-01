@@ -49,8 +49,6 @@ namespace GamePlay.Bussiness.Logic
             projectile.transformCom.SetByArgs(transArgs);
             projectile.idCom.entityId = this._projectileContext.idService.FetchId();
             projectile.idCom.SetParent(creator);
-            var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0), 0, 0.5f, 0.5f);
-            this._context.domainApi.physicsApi.CreatePhysics(projectile, colliderModel);
             repo.TryAdd(projectile);
 
             // 提交RC

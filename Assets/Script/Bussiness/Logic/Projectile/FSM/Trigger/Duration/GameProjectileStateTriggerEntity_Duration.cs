@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.Logic
             this.model = model;
         }
 
-        public void Clear()
+        public void Reset()
         {
             this.elapsedTime = 0;
         }

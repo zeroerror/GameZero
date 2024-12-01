@@ -13,5 +13,11 @@ namespace GamePlay.Bussiness.Logic
             this.durationTriggerEntity = durationTriggerEntity;
             this.volumeCollisionTriggerEntity = volumeCollisionTriggerEntity;
         }
+
+        public void Reset()
+        {
+            this.durationTriggerEntity.Reset();
+            this.volumeCollisionTriggerEntity.Reset();
+        }
     }
 }

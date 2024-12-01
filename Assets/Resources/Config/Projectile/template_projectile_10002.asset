@@ -14,7 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 10002
   animClip: {fileID: 7400000, guid: cc3ce71219919ab439e7579e8ca69915, type: 2}
-  animName: p_feibiao
   animLength: 0.083333336
   timelineEvents: []
-  collisionAction: {fileID: 11400000, guid: 2e1755793e0a10d4eb465a321067db26, type: 2}
+  animName_edit: p_feibiao
+  stateTriggers:
+  - stateType: 1
+    emSet:
+      durationTriggerModel:
+        actionSO: {fileID: 11400000, guid: 80e9d52327a84434185d9da8a89b7317, type: 2}
+        nextStateType: 2
+        duration: 1
+      volumeCollisionTriggerModel:
+        actionSO: {fileID: 0}
+        nextStateType: 0
+  - stateType: 2
+    emSet:
+      durationTriggerModel:
+        actionSO: {fileID: 11400000, guid: 80e9d52327a84434185d9da8a89b7317, type: 2}
+        nextStateType: 1
+        duration: 0.1
+      volumeCollisionTriggerModel:
+        actionSO: {fileID: 0}
+        nextStateType: 0
