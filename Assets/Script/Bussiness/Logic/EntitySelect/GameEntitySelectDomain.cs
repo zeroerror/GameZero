@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public List<GameEntityBase> GetSelectdeEntities(GameEntitySelector selector, GameEntityBase actorEntity)
+        public List<GameEntityBase> SelectEntities(GameEntitySelector selector, GameEntityBase actorEntity, bool ignoreRepeatCollision = true)
         {
             var physicsApi = this._context.domainApi.physicsApi;
             var selColliderModel = selector.colliderModel;
@@ -57,7 +57,11 @@ namespace GamePlay.Bussiness.Logic
             var list = physicsApi.GetOverlapEntities(selColliderModel, anchorTransformArgs);
             list = list?.Filter((entity) =>
             {
-                return selector.CheckSelect(actorEntity, entity);
+                var checkCollided = actorEntity.physicsCom.CheckCollided(entity.idCom.ToArgs());
+                if (checkCollided) return false;
+                var checkSelect = selector.CheckSelect(actorEntity, entity);
+                if (ignoreRepeatCollision && checkSelect) actorEntity.physicsCom.AddCollided(entity.idCom.ToArgs());
+                return checkSelect;
             });
             return list;
         }

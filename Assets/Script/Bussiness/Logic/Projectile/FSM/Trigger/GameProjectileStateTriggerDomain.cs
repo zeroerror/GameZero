@@ -42,7 +42,6 @@ namespace GamePlay.Bussiness.Logic
                         if (triggerModel.actionId != 0) actionApi.DoAction(triggerModel.actionId, entity);
                         if (triggerModel.nextStateType != GameProjectileStateType.None) nextStateType = triggerModel.nextStateType;
                     }
-
                 }
             }
             {

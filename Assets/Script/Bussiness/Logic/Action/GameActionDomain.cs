@@ -71,7 +71,7 @@ namespace GamePlay.Bussiness.Logic
         public List<GameActionRecord> DoAction_Dmg(GameActionModel_Dmg action, GameEntityBase actorEntity)
         {
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            var selectedEntities = entitySelectApi.GetSelectdeEntities(action.selector, actorEntity);
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
             var recordList = new List<GameActionRecord>();
             selectedEntities?.ForEach((selEntity) =>
             {
@@ -89,7 +89,7 @@ namespace GamePlay.Bussiness.Logic
         public List<GameActionRecord> DoAction_Heal(GameActionModel_Heal action, GameEntityBase actorEntity)
         {
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            var selectedEntities = entitySelectApi.GetSelectdeEntities(action.selector, actorEntity);
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
             var recordList = new List<GameActionRecord>();
             selectedEntities?.ForEach((selEntity) =>
             {
@@ -109,7 +109,7 @@ namespace GamePlay.Bussiness.Logic
             var projectileId = action.projectileId;
             var projectileApi = this._context.domainApi.projectileApi;
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            var selectedEntities = entitySelectApi.GetSelectdeEntities(action.selector, actorEntity);
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
             var recordList = new List<GameActionRecord>();
             selectedEntities?.ForEach((selEntity) =>
             {

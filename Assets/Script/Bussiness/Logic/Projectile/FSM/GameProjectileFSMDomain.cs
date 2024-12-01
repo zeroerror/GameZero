@@ -80,10 +80,8 @@ namespace GamePlay.Bussiness.Logic
             this._ExitToState(entity, state);
             if (!this._stateDomainDict.TryGetValue(state, out var stateDomain)) return;
             stateDomain.Enter(entity);
-            if (entity.fsmCom.triggerSetEntityDict.TryGetValue(state, out var triggerSetEntity))
-            {
-                triggerSetEntity.Reset();
-            }
+            if (entity.fsmCom.triggerSetEntityDict.TryGetValue(state, out var triggerSetEntity)) triggerSetEntity.Reset();
+            entity.physicsCom.ClearCollided();
         }
 
         private void _ExitToState(GameProjectileEntity entity, GameProjectileStateType toState)

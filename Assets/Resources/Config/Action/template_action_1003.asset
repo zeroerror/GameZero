@@ -48,9 +48,9 @@ MonoBehaviour:
       selectAnchorType: 1
       campType: 2
       entityType: 1
-    projectileId: 10002
+    projectileId: 10001
     speed: 10
-  launchProjectileSO: {fileID: 11400000, guid: 0fa5f6c7e6908084b9f253b527d1ed68, type: 2}
+  launchProjectileSO: {fileID: 11400000, guid: 244c253d64a261c439248f0b12c9259c, type: 2}
   skillSORefs: []
   actionR:
     typeId: 1003

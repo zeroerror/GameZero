@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             var selector = actionModel.selector;
-            var selectedEntities = entitySelectApi.GetSelectdeEntities(selector, projectile);
+            var selectedEntities = entitySelectApi.SelectEntities(selector, projectile, false);
             if (selectedEntities == null || selectedEntities.Count == 0) return false;
             var atc = projectile.actionTargeterCom;
             var targeterList = new List<GameActionTargeterArgs>(selectedEntities.Count);

@@ -79,7 +79,7 @@ namespace GamePlay.Bussiness.Logic
                 colliderModel = colliderModel,
                 transformArgs = transformArgs,
                 color = Color.red,
-                maintainTime = 0.1f,
+                maintainTime = GameTimeCollection.frameTime,
             });
             List<GameEntityBase> overlapEntities = null;
             var roleContext = this._context.roleContext;
