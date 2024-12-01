@@ -1,4 +1,11 @@
 {
+	"gv2": {
+		"prefix": "gv2",
+		"body": [
+			"using GameVec2 = UnityEngine.Vector2;",
+		],
+		"description": "定义Vec2别名"
+	},
 	"gs": {
 		"prefix": "gs",
 		"body": [

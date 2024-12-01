@@ -8,7 +8,7 @@ namespace GamePlay.Bussiness.Logic
         Dmg = 1,
         // 治疗
         Heal = 2,
-        // 发射弹体
+        // 发射投射物
         LaunchProjectile = 3,
     }
 }

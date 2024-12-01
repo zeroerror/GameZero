@@ -111,7 +111,7 @@ namespace GamePlay.Bussiness.Logic
             var recordList = new List<GameActionRecord>();
             selectedEntities.ForEach((entity) =>
             {
-                GameLogger.Log($"执行行为[发射弹体]: {action}");
+                GameLogger.Log($"执行行为[发射投射物]: {action}");
                 var record = new GameActionRecord();
                 record.actionId = action.typeId;
                 record.actorIdArgs = actorEntity.idCom.ToArgs();

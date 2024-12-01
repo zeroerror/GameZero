@@ -50,7 +50,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, args);
                 return;
             }
-            entity.transformCom.SetByArgs(evArgs.transComArgs);
+            entity.transformCom.SetByArgs(evArgs.transArgs);
         }
     }
 }

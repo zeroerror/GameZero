@@ -7,7 +7,7 @@ using UnityEngine.Playables;
 /// <summary>
 /// 游戏动画Playable组件
 /// </summary>
-public class GameAnimPlayableCom
+public class GamePlayableCom
 {
     private Dictionary<string, PlayableGraph> _graphDict = new Dictionary<string, PlayableGraph>();
     public Animator animator { get; private set; }
@@ -15,9 +15,13 @@ public class GameAnimPlayableCom
     public float timeScale { get; set; } = 1.0f;
     public PlayableGraph currentGraph { get; private set; }
 
-    public GameAnimPlayableCom(Animator animator)
+    public GamePlayableCom(Animator animator)
     {
         this.animator = animator;
+    }
+
+    public GamePlayableCom()
+    {
     }
 
     public void Dispose()

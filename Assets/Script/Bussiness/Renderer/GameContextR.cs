@@ -15,6 +15,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameSkillContextR skillContext { get; private set; }
         public GameActionContextR actionContext { get; private set; }
         public GameVFXContextR vfxContext { get; private set; }
+        public GameProjectileContextR projectileContext { get; private set; }
 
         public GameEventService eventService { get; private set; }
         public GameEventService delayRCEventService { get; private set; }
@@ -31,6 +32,7 @@ namespace GamePlay.Bussiness.Renderer
             this.skillContext = new GameSkillContextR();
             this.actionContext = new GameActionContextR();
             this.vfxContext = new GameVFXContextR();
+            this.projectileContext = new GameProjectileContextR();
 
             this.eventService = new GameEventService();
             this.delayRCEventService = new GameEventService();

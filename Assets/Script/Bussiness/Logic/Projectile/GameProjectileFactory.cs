@@ -2,18 +2,18 @@ using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileFactory
+    public class GameProjectileFactoryR
     {
-        public GameProjectileTemplate template { get; private set; }
-        public GameProjectileFactory()
+        public GameProjectileTemplateR template { get; private set; }
+        public GameProjectileFactoryR()
         {
-            template = new GameProjectileTemplate();
+            template = new GameProjectileTemplateR();
         }
         public GameProjectileEntity Load(int typeId)
         {
             if (!template.TryGet(typeId, out var model))
             {
-                GameLogger.LogError("GameProjectileFactory.Load: typeId not found: " + typeId);
+                GameLogger.LogError("投射物创建失败，投射物ID不存在：" + typeId);
                 return null;
             }
             var entity = new GameProjectileEntity(model);

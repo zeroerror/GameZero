@@ -60,7 +60,7 @@ namespace GamePlay.Bussiness.Logic
                 case GameEntityType.Skill:
                     return "技能";
                 case GameEntityType.Projectile:
-                    return "弹体";
+                    return "投射物";
                 case GameEntityType.Buff:
                     return "buff";
                 default:

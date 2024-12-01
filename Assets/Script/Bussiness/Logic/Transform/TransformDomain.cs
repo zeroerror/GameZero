@@ -29,7 +29,7 @@ namespace GamePlay.Bussiness.Logic
                     this._context.SubmitRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, new GameTransformRCArgs_Sync()
                     {
                         idArgs = entity.idCom.ToArgs(),
-                        transComArgs = entity.transformCom.ToArgs()
+                        transArgs = entity.transformCom.ToArgs()
                     });
                 }
             });

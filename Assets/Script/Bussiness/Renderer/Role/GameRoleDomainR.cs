@@ -48,7 +48,7 @@ namespace GamePlay.Bussiness.Renderer
         private void _OnRoleCreate(object args)
         {
             var evArgs = (GameRoleRCArgs_Create)args;
-            this._Create(evArgs.idArgs, evArgs.transComArgs, evArgs.isUser);
+            this._Create(evArgs.idArgs, evArgs.transArgs, evArgs.isUser);
         }
 
         public void Collect()

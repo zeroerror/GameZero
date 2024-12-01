@@ -19,5 +19,10 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameDrawDomainApiR drawApi { get; private set; }
         public void SetDrawApi(GameDrawDomainApiR drawApi) => this.drawApi = drawApi;
+
+        public GameProjectileDomainApiR projectileApi { get; private set; }
+        public void SetProjectileApi(GameProjectileDomainApiR projectileApi) => this.projectileApi = projectileApi;
+
+
     }
 }

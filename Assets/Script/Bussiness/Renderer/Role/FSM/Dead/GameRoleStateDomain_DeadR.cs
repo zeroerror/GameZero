@@ -33,21 +33,10 @@ namespace GamePlay.Bussiness.Renderer
             this.Enter(role);
         }
 
-
-        public override bool CheckEnter(GameRoleEntityR entity, params object[] args)
-        {
-            return true;
-        }
-
         public override void Enter(GameRoleEntityR entity, params object[] args)
         {
             GameLogger.Log($"DeadR enter");
             this._context.domainApi.roleApi.PlayAnim(entity, "dead");
-        }
-
-        protected override GameRoleStateType _CheckExit(GameRoleEntityR entity)
-        {
-            return GameRoleStateType.None;
         }
 
         protected override void _Tick(GameRoleEntityR entity, float frameTime)

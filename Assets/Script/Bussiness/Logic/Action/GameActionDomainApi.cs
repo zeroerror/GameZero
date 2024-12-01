@@ -27,8 +27,8 @@ namespace GamePlay.Bussiness.Logic
         public List<GameActionRecord> DoAction_Heal(GameActionModel_Heal action, GameEntityBase actorEntity);
 
         /// <summary>
-        /// 执行行为 - 发射弹体
-        /// action: 发射弹体行为
+        /// 执行行为 - 发射投射物
+        /// action: 发射投射物行为
         /// actorEntity: 执行者
         /// </summary>
         public List<GameActionRecord> DoAction_LaunchProjectile(GameActionModel_LaunchProjectile action, GameEntityBase actorEntity);

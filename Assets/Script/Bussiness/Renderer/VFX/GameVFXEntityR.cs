@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Renderer
         public Vector2 attachOffset { get; private set; }
         public bool isAttachParent { get; private set; }
 
-        public GameAnimPlayableCom animCom { get; private set; }
+        public GamePlayableCom animCom { get; private set; }
         public GameTimelineCom timelineCom { get; private set; }
 
         public bool isPlaying => this.timelineCom.isPlaying;
@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.go = go;
             var animator = go.GetComponent<Animator>();
-            this.animCom = new GameAnimPlayableCom(animator);
+            this.animCom = new GamePlayableCom(animator);
             this.timelineCom = new GameTimelineCom();
         }
 

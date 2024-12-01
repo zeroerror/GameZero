@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileTemplate
+    public class GameProjectileTemplateR
     {
         private Dictionary<int, GameProjectileModel> _dict;
         private Dictionary<int, GameProjectileSO> _soDict;
 
-        public GameProjectileTemplate()
+        public GameProjectileTemplateR()
         {
             _dict = new Dictionary<int, GameProjectileModel>();
             var path = GameConfigCollection.PROJECTILE_CONFIG_DIR_PATH;
@@ -33,7 +33,7 @@ namespace GamePlay.Bussiness.Logic
                 model = null;
                 return false;
             }
-            model = new GameProjectileModel(typeId, so.timelineEvents.ToModels());
+            model = new GameProjectileModel(typeId, so.timelineEvents.ToModels(), so.animLength, so.collisionAction.typeId);
             _dict.Add(typeId, model);
             return true;
         }

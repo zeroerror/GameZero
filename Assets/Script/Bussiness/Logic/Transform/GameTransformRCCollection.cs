@@ -9,6 +9,6 @@ namespace GamePlay.Bussiness.Logic
     public struct GameTransformRCArgs_Sync
     {
         public GameIdArgs idArgs;
-        public GameTransformArgs transComArgs;
+        public GameTransformArgs transArgs;
     }
 }

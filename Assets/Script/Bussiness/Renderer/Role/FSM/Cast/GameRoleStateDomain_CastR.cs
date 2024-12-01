@@ -33,22 +33,12 @@ namespace GamePlay.Bussiness.Renderer
             this.Enter(role, evArgs.skillId);
         }
 
-        public override bool CheckEnter(GameRoleEntityR entity, params object[] args)
-        {
-            return true;
-        }
-
         public override void Enter(GameRoleEntityR entity, params object[] args)
         {
             var skillId = (int)args[0];
             entity.skillCom.TryGet(skillId, out var skill);
             var animName = skill.skillModel.animName;
             this._context.domainApi.roleApi.PlayAnim(entity, animName);
-        }
-
-        protected override GameRoleStateType _CheckExit(GameRoleEntityR entity)
-        {
-            return GameRoleStateType.None;
         }
 
         protected override void _Tick(GameRoleEntityR entity, float frameTime)

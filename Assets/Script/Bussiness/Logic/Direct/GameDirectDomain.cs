@@ -55,9 +55,11 @@ namespace GamePlay.Bussiness.Logic
             this.entitySelectDomain.Inject(this.context);
             this.projectileDomain.Inject(this.context);
 
-            this.roleDomain.CreateUserRole(1001, 1, new GameTransformArgs { position = new GameVec2(-5, -5), scale = GameVec2.one, forward = GameVec2.right });
-            this.roleDomain.CreateUserRole(1001, 2, new GameTransformArgs { position = new GameVec2(0, -5), scale = GameVec2.one, forward = GameVec2.right });
-            this.roleDomain.CreateUserRole(1001, 3, new GameTransformArgs { position = new GameVec2(5, -5), scale = GameVec2.one, forward = GameVec2.right });
+            this.roleDomain.CreatePlayerRole(1001, 1, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
+            this.roleDomain.CreatePlayerRole(1001, 1, new GameTransformArgs { position = new GameVec2(-4, -5), scale = GameVec2.one, forward = GameVec2.right }, false);
+            this.roleDomain.CreatePlayerRole(1001, 2, new GameTransformArgs { position = new GameVec2(0, -2), scale = GameVec2.one, forward = GameVec2.right }, false);
+            this.roleDomain.CreatePlayerRole(1001, 3, new GameTransformArgs { position = new GameVec2(4, -5), scale = GameVec2.one, forward = GameVec2.left }, false);
+            this.roleDomain.CreatePlayerRole(1001, 3, new GameTransformArgs { position = new GameVec2(8, -5), scale = GameVec2.one, forward = GameVec2.left }, false);
         }
 
         public void Dispose()

@@ -6,13 +6,14 @@ using UnityEngine;
 
 namespace GamePlay.Config
 {
-    [CreateAssetMenu(fileName = "template_projectile_", menuName = "游戏玩法/配置/弹体模板")]
+    [CreateAssetMenu(fileName = "template_projectile_", menuName = "游戏玩法/配置/投射物模板")]
     public class GameProjectileSO : GameSOBase
     {
+        // --------------- 渲染数据 ---------------
         [Header("动画文件")]
         public AnimationClip animClip;
-        [Header("动画名称")]
-        public string animName;
+
+        // --------------- 逻辑数据 ---------------
         [Header("动画时长(s)")]
         public float animLength;
         [Header("动画事件")]
@@ -20,13 +21,17 @@ namespace GamePlay.Config
         [Header("碰撞行为")]
         public GameActionSO collisionAction;
 
+        // --------------- 编辑器数据 ---------------
+        [Header("动画名称")]
+        public string animName_edit;
+
         protected override void OnValidate()
         {
             base.OnValidate();
             // 更新动画信息
             if (animClip != null)
             {
-                animName = animClip.name;
+                animName_edit = animClip.name;
                 animLength = animClip.length;
                 // 读取clip中的事件
                 var events = AnimationUtility.GetAnimationEvents(animClip);

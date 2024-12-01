@@ -134,7 +134,7 @@ namespace GamePlay.Config
                     break;
 
                 case GameActionType.LaunchProjectile:
-                    EditorGUILayout.LabelField(" -------- 发射弹体行为 --------", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField(" -------- 发射投射物行为 --------", EditorStyles.boldLabel);
                     this._ShowLaunchProjectileAction(so);
                     so.launchProjectileAction.selector = selector;
                     break;
@@ -202,7 +202,7 @@ namespace GamePlay.Config
             projectileSOs = projectileSOs.Filter(so => so.timelineEvents.Contains(e => e.action?.typeId == so.typeId));
             if (projectileSOs.Length > 0)
             {
-                EditorGUILayout.LabelField(" -------- 被依赖弹体 --------", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(" -------- 被依赖投射物 --------", EditorStyles.boldLabel);
                 for (int i = 0; i < projectileSOs.Length; i++)
                 {
                     var projectileSO = projectileSOs[i];
@@ -242,10 +242,10 @@ namespace GamePlay.Config
                 launchProjectileAction = new GameActionModel_LaunchProjectile();
                 actionSO.launchProjectileAction = launchProjectileAction;
             }
-            actionSO.launchProjectileSO = (GameProjectileSO)EditorGUILayout.ObjectField("弹体模板", actionSO.launchProjectileSO, typeof(GameProjectileSO), false);
+            actionSO.launchProjectileSO = (GameProjectileSO)EditorGUILayout.ObjectField("投射物模板", actionSO.launchProjectileSO, typeof(GameProjectileSO), false);
             var launchProjectileSO = actionSO.launchProjectileSO;
             launchProjectileAction.projectileId = launchProjectileSO == null ? 0 : launchProjectileSO.typeId;
-            launchProjectileAction.speed = EditorGUILayout.FloatField("弹体速度", launchProjectileAction.speed);
+            launchProjectileAction.speed = EditorGUILayout.FloatField("投射物速度", launchProjectileAction.speed);
         }
     }
 }

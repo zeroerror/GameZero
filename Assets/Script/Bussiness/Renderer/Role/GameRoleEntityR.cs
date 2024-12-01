@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameRoleFSMComR fsmCom { get; private set; }
         public GameSkillComponentR skillCom { get; private set; }
-        public GameAnimPlayableCom animCom { get; private set; }
+        public GamePlayableCom animCom { get; private set; }
 
         private GameEasing2DCom _posEaseCom;
 
@@ -35,7 +35,7 @@ namespace GamePlay.Bussiness.Renderer
             this.fsmCom = new GameRoleFSMComR();
             this.skillCom = new GameSkillComponentR(this);
             var animator = this.body.GetComponent<Animator>();
-            this.animCom = new GameAnimPlayableCom(animator);
+            this.animCom = new GamePlayableCom(animator);
             this._posEaseCom = new GameEasing2DCom();
             this._posEaseCom.SetEase(0.05f, GameEasingType.Linear);
         }

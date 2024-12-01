@@ -58,20 +58,6 @@ namespace GamePlay.Bussiness.Renderer
             // this._anyDomain.Tick(role, dt);
         }
 
-        public bool CheckEnter(GameRoleEntityR role, GameRoleStateType state, params object[] args)
-        {
-            if (!this._stateDomainDict.TryGetValue(state, out var stateDomain)) return false;
-            return stateDomain.CheckEnter(role, args);
-        }
-
-        public bool TryEnter(GameRoleEntityR role, GameRoleStateType state, params object[] args)
-        {
-            if (!this._stateDomainDict.TryGetValue(state, out var stateDomain)) return false;
-            var check = stateDomain.CheckEnter(role, args);
-            if (check) this.Enter(role, state, args);
-            return check;
-        }
-
         public void Enter(GameRoleEntityR role, GameRoleStateType state, params object[] args)
         {
             if (!this._stateDomainDict.TryGetValue(state, out var stateDomain)) return;

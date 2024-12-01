@@ -33,19 +33,9 @@ namespace GamePlay.Bussiness.Renderer
             this.Enter(role);
         }
 
-        public override bool CheckEnter(GameRoleEntityR entity, params object[] args)
-        {
-            return true;
-        }
-
         public override void Enter(GameRoleEntityR entity, params object[] args)
         {
             this._context.domainApi.roleApi.PlayAnim(entity, "idle");
-        }
-
-        protected override GameRoleStateType _CheckExit(GameRoleEntityR entity)
-        {
-            return GameRoleStateType.None;
         }
 
         protected override void _Tick(GameRoleEntityR entity, float frameTime)

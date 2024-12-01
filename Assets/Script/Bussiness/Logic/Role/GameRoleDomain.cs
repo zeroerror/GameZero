@@ -35,14 +35,14 @@ namespace GamePlay.Bussiness.Logic
             this._context.domainApi.physicsApi.RemovePhysics(role);
         }
 
-        public GameRoleEntity CreateUserRole(int typeId, int campId, in GameTransformArgs transArgs)
+        public GameRoleEntity CreatePlayerRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser)
         {
-            var e = this.Create(typeId, campId, transArgs, true);
-            this._roleContext.userRole = e;
+            var e = this.CreateRole(typeId, campId, transArgs, isUser);
+            if (this._roleContext.userRole == null) this._roleContext.userRole = e;
             return e;
         }
 
-        public GameRoleEntity Create(int typeId, int campId, in GameTransformArgs transArgs, bool isUser = false)
+        public GameRoleEntity CreateRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser)
         {
             var repo = this._roleContext.repo;
             if (!repo.TryFetch(typeId, out var e)) e = this._roleContext.factory.Load(typeId);
@@ -65,7 +65,7 @@ namespace GamePlay.Bussiness.Logic
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, new GameRoleRCArgs_Create
             {
                 idArgs = e.idCom.ToArgs(),
-                transComArgs = e.transformCom.ToArgs(),
+                transArgs = e.transformCom.ToArgs(),
                 isUser = isUser
             });
 
