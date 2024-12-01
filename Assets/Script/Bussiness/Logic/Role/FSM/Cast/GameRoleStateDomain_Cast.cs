@@ -1,5 +1,5 @@
 using GamePlay.Core;
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleStateDomain_Cast : GameRoleStateDomainBase
@@ -10,20 +10,25 @@ namespace GamePlay.Bussiness.Logic
         {
             var skillId = entity.inputCom.skillId;
             if (skillId == 0) return false;
-            return entity.skillCom.TryGet(skillId, out var _);
+            if (!entity.skillCom.TryGet(skillId, out var skill)) return false;
+            var skillApi = this._context.domainApi.skillApi;
+            return skillApi.CheckCastCondition(entity, skill);
         }
 
         public override void Enter(GameRoleEntity entity)
         {
             var skillId = entity.inputCom.skillId;
             entity.skillCom.TryGet(skillId, out var skill);
+            var skillApi = this._context.domainApi.skillApi;
+            skillApi.CastSkill(entity, skill);
+
             var fsmCom = entity.fsmCom;
             fsmCom.EnterCast(skill);
-            skill.timelineCom.Play();
+
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_CAST, new GameRoleRCArgs_StateEnterCast
             {
-                fromState = entity.fsmCom.state,
+                fromState = entity.fsmCom.stateType,
                 idArgs = entity.idCom.ToArgs(),
                 skillId = skillId,
             });

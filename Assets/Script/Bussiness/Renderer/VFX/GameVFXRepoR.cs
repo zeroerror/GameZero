@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Core;
+using JetBrains.Annotations;
 
 namespace GamePlay.Bussiness.Renderer
 {
@@ -52,12 +53,20 @@ namespace GamePlay.Bussiness.Renderer
             return null;
         }
 
-        public void ForeachEntities(System.Action<GameVFXEntityR> action)
+        public void ForeachEntities(System.Action<GameVFXEntityR> action, bool includePool = false)
         {
             foreach (var entity in this._dict.Values)
             {
                 action(entity);
             }
+            if (includePool)
+            {
+                foreach (var entity in this._pool)
+                {
+                    action(entity);
+                }
+            }
         }
+
     }
 }

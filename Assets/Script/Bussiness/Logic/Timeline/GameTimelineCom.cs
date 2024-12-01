@@ -38,6 +38,16 @@ namespace GamePlay.Bussiness.Logic
             this._events = new Dictionary<int, List<Action>>();
         }
 
+        public void Reset()
+        {
+            this.isPlaying = false;
+            this.loopDuration = 0;
+            this.time = 0;
+            this._cacheDt = 0;
+            this._complete = null;
+            this._events.Clear();
+        }
+
         private int _ConvertToFrame(float time)
         {
             var frame = GameMathF.FloorToInt(time * GameTimeCollection.frameRate) - 1;

@@ -69,6 +69,7 @@ namespace GamePlay.Bussiness.Logic
                 isUser = isUser
             });
 
+            // 默认进入待机
             this.fsmDomain.TryEnter(e, GameRoleStateType.Idle);
 
             return e;

@@ -13,9 +13,10 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
         }
 
-        public bool CheckSatisfied(GameProjectileEntity entity, GameProjectileStateTriggerModel_Duration model, float dt)
+        public bool CheckSatisfied(GameProjectileEntity entity, GameProjectileStateTriggerEntity_Duration triggerEntity, float dt)
         {
-            return false;
+            triggerEntity.elapsedTime += dt;
+            return triggerEntity.elapsedTime >= triggerEntity.model.duration;
         }
     }
 }

@@ -6,6 +6,13 @@
 		],
 		"description": "定义Vec2别名"
 	},
+	"gv3": {
+		"prefix": "gv3",
+		"body": [
+			"using GameVec3 = UnityEngine.Vector3;",
+		],
+		"description": "定义Vec3别名"
+	},
 	"gs": {
 		"prefix": "gs",
 		"body": [

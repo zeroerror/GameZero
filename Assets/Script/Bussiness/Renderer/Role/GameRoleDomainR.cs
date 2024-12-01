@@ -30,13 +30,13 @@ namespace GamePlay.Bussiness.Renderer
             this._roleContext.repo.ForeachEntities((entity) =>
             {
                 entity.Dispose();
-            });
+            }, true);
         }
 
         private void _BindEvent()
         {
             this._context.BindRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
-            this.fsmDomain.BindEvent();
+            this.fsmDomain.BindEvents();
         }
 
         private void _UnbindEvents()

@@ -17,7 +17,7 @@ namespace GamePlay.Bussiness.Logic
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, new GameRoleRCArgs_StateEnterMove
             {
-                fromState = role.fsmCom.state,
+                fromState = role.fsmCom.stateType,
                 idArgs = role.idCom.ToArgs(),
             });
         }
@@ -35,7 +35,7 @@ namespace GamePlay.Bussiness.Logic
             var moveSpeed = 5;
             var moveVec = new GameVec2(moveDir.x, moveDir.y) * moveSpeed * frameTime;
             role.transformCom.position += moveVec;
-            var faceDir = inputArgs.faceDir;
+            var faceDir = inputArgs.chooseDirection;
             faceDir = faceDir != GameVec2.zero ? faceDir : moveDir;
             role.FaceTo(faceDir);
         }

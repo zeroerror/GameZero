@@ -1,14 +1,9 @@
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileStateTriggerModel_VolumeCollision
+    public class GameProjectileStateTriggerModel_VolumeCollision : GameProjectileStateTriggerModelBase
     {
-        public readonly int actionId;
-        public readonly GameProjectileStateType nextStateType;
-
-        public GameProjectileStateTriggerModel_VolumeCollision(int actionId, GameProjectileStateType nextStateType)
+        public GameProjectileStateTriggerModel_VolumeCollision(int actionId, GameProjectileStateType nextStateType) : base(actionId, nextStateType)
         {
-            this.actionId = actionId;
-            this.nextStateType = nextStateType;
         }
 
         public void Clear()

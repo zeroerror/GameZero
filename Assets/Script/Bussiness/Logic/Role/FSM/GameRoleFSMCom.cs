@@ -3,7 +3,7 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleFSMCom
     {
-        public GameRoleStateType state { get; private set; }
+        public GameRoleStateType stateType { get; private set; }
         public GameRoleStateType lastStateType { get; private set; }
 
         public GameRoleStateModel_Idle idleStateModel { get; private set; }
@@ -43,8 +43,8 @@ namespace GamePlay.Bussiness.Logic
 
         public void SwitchToState(GameRoleStateType nextState)
         {
-            this.lastStateType = this.state;
-            this.state = nextState;
+            this.lastStateType = this.stateType;
+            this.stateType = nextState;
             switch (nextState)
             {
                 case GameRoleStateType.Idle:

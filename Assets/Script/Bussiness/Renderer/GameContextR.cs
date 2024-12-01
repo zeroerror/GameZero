@@ -64,6 +64,8 @@ namespace GamePlay.Bussiness.Renderer
                     return this.roleContext.repo.FindByEntityId(idArgs.entityId);
                 case GameEntityType.Skill:
                     return this.skillContext.repo.FindByEntityId(idArgs.entityId);
+                case GameEntityType.Projectile:
+                    return this.projectileContext.repo.FindByEntityId(idArgs.entityId);
                 default:
                     GameLogger.LogError("GameContextR.FindEntityByEntityId: unknown entityType: " + idArgs.entityType);
                     return null;

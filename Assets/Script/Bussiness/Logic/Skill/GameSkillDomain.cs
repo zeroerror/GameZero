@@ -1,4 +1,5 @@
 using GamePlay.Core;
+using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -76,6 +77,48 @@ namespace GamePlay.Bussiness.Logic
                 return null;
             }
             return model;
+        }
+
+        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill)
+        {
+            // 输入检测
+            var skillModel = skill.skillModel;
+            var inputCom = role.inputCom;
+            switch (skillModel.conditionModel.targeterType)
+            {
+                case GameSkillTargterType.Enemy:
+                    var index = inputCom.targeterArgsList.FindIndex((args) => args.targetEntity != null && args.targetEntity.idCom.campId != role.idCom.campId);
+                    if (index == -1) return false;
+                    break;
+                case GameSkillTargterType.Direction:
+                    if (inputCom.chooseDirection == GameVec2.zero) return false;
+                    break;
+                case GameSkillTargterType.Position:
+                    if (inputCom.choosePosition == GameVec2.zero) return false;
+                    break;
+                default:
+                    GameLogger.LogError("未知的技能目标类型");
+                    return false;
+            }
+            // 消耗检测
+            // CD
+            // 蓝量
+            // 人物状态，比如眩晕，沉默等
+            return true;
+        }
+
+        public void CastSkill(GameRoleEntity role, GameSkillEntity skill)
+        {
+            this._calcSkillCost(role, skill);
+            skill.timelineCom.Play();
+            skill.actionTargeterCom.SetTargeterList(role.inputCom.targeterArgsList);
+        }
+
+        private void _calcSkillCost(GameRoleEntity role, GameSkillEntity skill)
+        {
+            var conditionModel = skill.skillModel.conditionModel;
+            skill.cdElapsed = conditionModel.cdTime;
+            // todo attr....
         }
     }
 }

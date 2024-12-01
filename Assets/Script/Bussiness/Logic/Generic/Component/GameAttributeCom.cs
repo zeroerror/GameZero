@@ -32,11 +32,16 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public void SetAttribute(GameAttribute attribute)
+        public void SetAttribute(in GameAttribute attribute)
         {
-            var index = this._attributes.FindIndex((a) => a.type == attribute.type);
-            if (index == -1) this._attributes.Add(attribute);
-            else this._attributes[index] = attribute;
+            this.SetAttribute(attribute.type, attribute.value);
+        }
+
+        public void SetAttribute(GameAttributeType type, float value)
+        {
+            var index = this._attributes.FindIndex((a) => a.type == type);
+            if (index == -1) this._attributes.Add(new GameAttribute() { type = type, value = value });
+            else this._attributes[index] = new GameAttribute() { type = type, value = value };
         }
 
         public void GetAttribute(GameAttributeType type, out GameAttribute attribute)

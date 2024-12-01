@@ -16,10 +16,10 @@ MonoBehaviour:
   actionType_edit: 3
   selector_edit:
     selectAnchorType: 1
-    campType: 1
+    campType: 2
     entityType: 1
-  isRangeSelect: 0
   colliderType_edit: 1
+  isRangeSelect: 0
   boxColliderModel:
     offset: {x: 0.8679, y: 0.496}
     angle: 0
@@ -46,15 +46,15 @@ MonoBehaviour:
     actionType: 0
     selector:
       selectAnchorType: 1
-      campType: 1
+      campType: 2
       entityType: 1
     projectileId: 10001
-    speed: 0
+    speed: 10
   launchProjectileSO: {fileID: 11400000, guid: 244c253d64a261c439248f0b12c9259c, type: 2}
   skillSORefs: []
   actionR:
     typeId: 1003
-    vfxClip: {fileID: 7400000, guid: 58f583904127f254090ebb06200a036b, type: 2}
+    vfxClip: {fileID: 0}
     shakeModel:
       angle: 0
       amplitude: 0

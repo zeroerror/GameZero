@@ -8,9 +8,9 @@ namespace GamePlay.Bussiness.Renderer
         private static readonly string GAME_RC_EV_NAME = GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_CAST;
         public GameRoleStateDomain_CastR() : base() { }
 
-        public override void BindEvent()
+        public override void BindEvents()
         {
-            base.BindEvent();
+            base.BindEvents();
             this._context.BindRC(GAME_RC_EV_NAME, this._OnEnter);
         }
 

@@ -7,12 +7,9 @@ namespace GamePlay.Bussiness.Logic
         public float stateTime;
         public int stateFrame => (int)(stateTime * GameTimeCollection.frameRate);
 
-        public GameProjectileStateTriggerModelSet triggerSet;
-
         public GameProjectileStateModelBase()
         {
             stateTime = 0;
-            triggerSet = new GameProjectileStateTriggerModelSet();
         }
 
         public virtual void Clear()

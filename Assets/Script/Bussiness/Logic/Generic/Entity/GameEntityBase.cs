@@ -52,8 +52,8 @@ namespace GamePlay.Bussiness.Logic
             return null;
         }
 
-        public virtual void Tick(float dt) { }
-        public virtual void Dispose() { }
+        public abstract void Tick(float dt);
+        public abstract void Dispose();
 
     }
 }

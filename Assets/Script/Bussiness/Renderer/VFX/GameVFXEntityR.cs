@@ -26,6 +26,22 @@ namespace GamePlay.Bussiness.Renderer
             this.timelineCom = new GameTimelineCom();
         }
 
+        public void Dispose()
+        {
+            this.animCom.Dispose();
+        }
+
+        public void Tick(float dt)
+        {
+            this.animCom.Tick(dt);
+            this.timelineCom.Tick(dt);
+            this._TickAttach();
+            if (!isPlaying)
+            {
+                this.Stop();
+            }
+        }
+
         public void Play(in GameVFXPlayArgs args)
         {
             var clip = args.clip;
@@ -43,17 +59,6 @@ namespace GamePlay.Bussiness.Renderer
             if (args.isAttachParent) this.go.transform.SetParent(args.attachNode.transform);
 
             this.go.name = $"VFX_{clip.name}_{this.entityId}";
-        }
-
-        public void Tick(float dt)
-        {
-            this.animCom.Tick(dt);
-            this.timelineCom.Tick(dt);
-            this._TickAttach();
-            if (!isPlaying)
-            {
-                this.Stop();
-            }
         }
 
         private void _TickAttach()

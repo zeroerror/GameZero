@@ -4,7 +4,7 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameProjectileFSMCom
     {
-        public GameProjectileStateType state { get; private set; }
+        public GameProjectileStateType stateType { get; private set; }
         public GameProjectileStateType lastStateType { get; private set; }
 
         public GameProjectileStateModel_Idle idleStateModel { get; private set; }
@@ -57,8 +57,8 @@ namespace GamePlay.Bussiness.Renderer
 
         public void SwitchToState(GameProjectileStateType nextState)
         {
-            this.lastStateType = this.state;
-            this.state = nextState;
+            this.lastStateType = this.stateType;
+            this.stateType = nextState;
             switch (nextState)
             {
                 case GameProjectileStateType.Idle:

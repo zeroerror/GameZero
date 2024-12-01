@@ -12,8 +12,8 @@ namespace GamePlay.Bussiness.Logic
         public GameProjectileStateModel_LockOnPosition lockOnPositionStateModel { get; private set; }
         public GameProjectileStateModel_Attach attachStateModel { get; private set; }
         public GameProjectileStateModel_Explode explodeStateModel { get; private set; }
+        public Dictionary<GameProjectileStateType, GameProjectileStateTriggerSetEntity> triggerSetEntityDict { get; private set; }
 
-        public Dictionary<GameProjectileStateType, GameProjectileStateModelBase> stateModelDict;
         public GameProjectileFSMCom()
         {
             idleStateModel = new GameProjectileStateModel_Idle();
@@ -22,6 +22,7 @@ namespace GamePlay.Bussiness.Logic
             lockOnPositionStateModel = new GameProjectileStateModel_LockOnPosition();
             attachStateModel = new GameProjectileStateModel_Attach();
             explodeStateModel = new GameProjectileStateModel_Explode();
+            triggerSetEntityDict = new Dictionary<GameProjectileStateType, GameProjectileStateTriggerSetEntity>();
         }
 
         public void EnterIdle()

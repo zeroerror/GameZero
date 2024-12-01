@@ -13,55 +13,60 @@ namespace GamePlay.Bussiness.Logic
 
         public GameProjectileDomain()
         {
+            this.fsmDomain = new GameProjectileFSMDomain();
         }
 
         public void Inject(GameContext context)
         {
             this._context = context;
-            this._BindEvent();
+            this.fsmDomain.Inject(context);
         }
 
         public void Dispose()
         {
-            this._UnbindEvents();
-        }
-
-        private void _BindEvent()
-        {
-        }
-
-        private void _UnbindEvents()
-        {
+            this.fsmDomain.Dispose();
         }
 
         public void Tick(float dt)
         {
+            var repo = this._projectileContext.repo;
+            repo.ForeachEntities((e) =>
+            {
+                e.Tick(dt);
+                this.fsmDomain.Tick(e, dt);
+            });
         }
 
         public GameProjectileEntity CreateProjectile(int typeId, GameEntityBase creator, in GameTransformArgs transArgs)
         {
             var repo = this._projectileContext.repo;
-            if (!repo.TryFetch(typeId, out var e)) e = this._projectileContext.factory.Load(typeId);
-            if (e == null)
+            if (!repo.TryFetch(typeId, out var projectile)) projectile = this._projectileContext.factory.Load(typeId);
+            if (projectile == null)
             {
                 GameLogger.LogError("弹道创建失败，弹道ID不存在：" + typeId);
                 return null;
             }
-            e.transformCom.SetByArgs(transArgs);
-            e.idCom.entityId = this._projectileContext.idService.FetchId();
-            e.idCom.SetParent(creator);
+            projectile.transformCom.SetByArgs(transArgs);
+            projectile.idCom.entityId = this._projectileContext.idService.FetchId();
+            projectile.idCom.SetParent(creator);
             var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0), 0, 0.5f, 0.5f);
-            this._context.domainApi.physicsApi.CreatePhysics(e, colliderModel);
-            repo.TryAdd(e);
+            this._context.domainApi.physicsApi.CreatePhysics(projectile, colliderModel);
+            repo.TryAdd(projectile);
 
             // 提交RC
             var args = new GameProjectileRCArgs_Create()
             {
-                idArgs = e.idCom.ToArgs(),
-                transArgs = e.transformCom.ToArgs(),
+                idArgs = projectile.idCom.ToArgs(),
+                creatorIdArgs = creator.idCom.ToArgs(),
+                transArgs = projectile.transformCom.ToArgs(),
             };
             this._context.SubmitRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_CREATE, args);
-            return e;
+
+            // 默认进入待机
+            this.fsmDomain.InitFSM(projectile);
+            this.fsmDomain.TryEnter(projectile, GameProjectileStateType.Idle);
+
+            return projectile;
         }
     }
 }

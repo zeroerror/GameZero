@@ -2,7 +2,7 @@ using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameProjectileStateDomain_FixedDirection : GameProjectileStateDomainBaseR
+    public class GameProjectileStateDomain_FixedDirectionR : GameProjectileStateDomainBaseR
     {
         public override void BindEvents()
         {

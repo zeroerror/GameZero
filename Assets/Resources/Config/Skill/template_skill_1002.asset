@@ -19,4 +19,7 @@ MonoBehaviour:
   timelineEvents:
   - time: 0.15
     frame: 4
-    action: {fileID: 11400000, guid: 9d2d71fed14c0d241895b27994495277, type: 2}
+    action: {fileID: 11400000, guid: 2e2cce7e8a2dce140b60de3e9a154440, type: 2}
+  conditionEM:
+    targeterType: 2
+    cdTime: 0

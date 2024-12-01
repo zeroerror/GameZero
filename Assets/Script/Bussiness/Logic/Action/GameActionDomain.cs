@@ -73,12 +73,12 @@ namespace GamePlay.Bussiness.Logic
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.GetSelectdeEntities(action.selector, actorEntity);
             var recordList = new List<GameActionRecord>();
-            selectedEntities.ForEach((entity) =>
+            selectedEntities?.ForEach((selEntity) =>
             {
                 var record = new GameActionRecord();
                 record.actionId = action.typeId;
                 record.actorIdArgs = actorEntity.idCom.ToArgs();
-                record.targetIdArgs = entity.idCom.ToArgs();
+                record.targetIdArgs = selEntity.idCom.ToArgs();
                 //todo 其余行为记录数据
                 recordList.Add(record);
                 GameLogger.Log($"执行行为[伤害]: {record}");
@@ -91,13 +91,13 @@ namespace GamePlay.Bussiness.Logic
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.GetSelectdeEntities(action.selector, actorEntity);
             var recordList = new List<GameActionRecord>();
-            selectedEntities.ForEach((entity) =>
+            selectedEntities?.ForEach((selEntity) =>
             {
                 GameLogger.Log($"执行行为[治疗]: {action}");
                 var record = new GameActionRecord();
                 record.actionId = action.typeId;
                 record.actorIdArgs = actorEntity.idCom.ToArgs();
-                record.targetIdArgs = entity.idCom.ToArgs();
+                record.targetIdArgs = selEntity.idCom.ToArgs();
                 //todo 其余行为记录数据
                 recordList.Add(record);
             });
@@ -106,17 +106,21 @@ namespace GamePlay.Bussiness.Logic
 
         public List<GameActionRecord> DoAction_LaunchProjectile(GameActionModel_LaunchProjectile action, GameEntityBase actorEntity)
         {
+            var projectileId = action.projectileId;
+            var projectileApi = this._context.domainApi.projectileApi;
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.GetSelectdeEntities(action.selector, actorEntity);
             var recordList = new List<GameActionRecord>();
-            selectedEntities.ForEach((entity) =>
+            selectedEntities?.ForEach((selEntity) =>
             {
                 GameLogger.Log($"执行行为[发射投射物]: {action}");
+                var projectile = projectileApi.CreateProjectile(projectileId, actorEntity, selEntity.transformCom.ToArgs());
+                projectile.attributeCom.SetAttribute(GameAttributeType.MoveSpeed, action.speed);
+
                 var record = new GameActionRecord();
                 record.actionId = action.typeId;
                 record.actorIdArgs = actorEntity.idCom.ToArgs();
-                record.targetIdArgs = entity.idCom.ToArgs();
-                //todo 其余行为记录数据
+                record.targetIdArgs = selEntity.idCom.ToArgs();
                 recordList.Add(record);
             });
             return recordList;

@@ -1,5 +1,4 @@
 
-using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameTransformDomain : GameTransformDomainApi
@@ -21,17 +20,17 @@ namespace GamePlay.Bussiness.Logic
 
         public void Tick(float dt)
         {
-            var roleContext = this._context.roleContext;
-            roleContext.repo.ForeachEntities((entity) =>
+            this._context.roleContext.repo.ForeachEntities(this._RCTransformDirty);
+            this._context.projectileContext.repo.ForeachEntities(this._RCTransformDirty);
+        }
+
+        private void _RCTransformDirty(GameEntityBase entity)
+        {
+            if (!entity.transformCom.CheckDirty()) return;
+            this._context.SubmitRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, new GameTransformRCArgs_Sync()
             {
-                if (entity.transformCom.CheckDirty())
-                {
-                    this._context.SubmitRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, new GameTransformRCArgs_Sync()
-                    {
-                        idArgs = entity.idCom.ToArgs(),
-                        transArgs = entity.transformCom.ToArgs()
-                    });
-                }
+                idArgs = entity.idCom.ToArgs(),
+                transArgs = entity.transformCom.ToArgs()
             });
         }
     }

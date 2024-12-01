@@ -1,5 +1,4 @@
-using System;
-using UnityEngine;
+using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Renderer
 {
@@ -19,6 +18,10 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Dispose()
         {
+            this._vfxContext.repo.ForeachEntities((vfx) =>
+            {
+                vfx.Dispose();
+            }, true);
         }
 
         public void Tick(float dt)

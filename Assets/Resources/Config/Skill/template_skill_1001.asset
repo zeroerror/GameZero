@@ -20,3 +20,6 @@ MonoBehaviour:
   - time: 0.2
     frame: 6
     action: {fileID: 11400000, guid: 72848d911d917fe4ca3ac696d798e877, type: 2}
+  conditionEM:
+    targeterType: 2
+    cdTime: 0

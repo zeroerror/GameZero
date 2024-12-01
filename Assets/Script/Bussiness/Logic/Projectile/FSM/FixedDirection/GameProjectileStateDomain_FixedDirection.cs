@@ -4,26 +4,28 @@ namespace GamePlay.Bussiness.Logic
     {
         public override bool CheckEnter(GameProjectileEntity entity)
         {
-            throw new System.NotImplementedException();
+            return true;
         }
 
         public override void Enter(GameProjectileEntity entity)
         {
-            throw new System.NotImplementedException();
+            var fsmCom = entity.fsmCom;
+            fsmCom.EnterFixedDirection();
         }
 
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity entity)
         {
-            throw new System.NotImplementedException();
+            return GameProjectileStateType.None;
         }
 
-        protected override void _Tick(GameProjectileEntity entity, float frameTime)
+        protected override void _Tick(GameProjectileEntity projectile, float frameTime)
         {
-            var transformCom = entity.transformCom;
-            var speed = entity.attributeCom.GetValue(GameAttributeType.MoveSpeed);
+            var transformCom = projectile.transformCom;
+            var speed = projectile.attributeCom.GetValue(GameAttributeType.MoveSpeed);
             var direction = transformCom.forward;
             var delta = direction * speed * frameTime;
             transformCom.position += delta;
+            projectile.FaceTo(direction);
         }
     }
 

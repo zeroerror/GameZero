@@ -4,5 +4,9 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameProjectileStateTriggerModel_Duration durationTriggerModel;
         public GameProjectileStateTriggerModel_VolumeCollision volumeCollisionTriggerModel;
+
+        public GameProjectileStateTriggerModelSet()
+        {
+        }
     }
 }

@@ -38,15 +38,27 @@ namespace GamePlay.Bussiness.Renderer
                 // 攻击
                 if (Input.GetKeyDown(KeyCode.J))
                 {
-                    if (userRole.skillCom.TryGetByIndex(0, out var skill)) inputArgs.skillId = skill.skillModel.typeId;
+                    if (userRole.skillCom.TryGetByIndex(0, out var skill))
+                    {
+                        inputArgs.skillId = skill.skillModel.typeId;
+                        inputArgs.chooseDirection = userRole.transformCom.forward;
+                    }
                 }
                 if (Input.GetKeyDown(KeyCode.K))
                 {
-                    if (userRole.skillCom.TryGetByIndex(1, out var skill)) inputArgs.skillId = skill.skillModel.typeId;
+                    if (userRole.skillCom.TryGetByIndex(1, out var skill))
+                    {
+                        inputArgs.skillId = skill.skillModel.typeId;
+                        inputArgs.chooseDirection = userRole.transformCom.forward;
+                    }
                 }
                 if (Input.GetKeyDown(KeyCode.L))
                 {
-                    if (userRole.skillCom.TryGetByIndex(2, out var skill)) inputArgs.skillId = skill.skillModel.typeId;
+                    if (userRole.skillCom.TryGetByIndex(2, out var skill))
+                    {
+                        inputArgs.skillId = skill.skillModel.typeId;
+                        inputArgs.chooseDirection = userRole.transformCom.forward;
+                    }
                 }
                 // ...
                 if (inputArgs.HasInput())

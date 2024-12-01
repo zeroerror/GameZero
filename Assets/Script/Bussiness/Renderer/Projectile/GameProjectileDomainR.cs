@@ -27,10 +27,19 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.fsmDomain.Dispose();
             this._UnbindEvents();
+            this._projectileContext.repo.ForeachEntities((entity) =>
+            {
+                entity.Dispose();
+            });
         }
 
         public void Tick(float dt)
         {
+            this._projectileContext.repo.ForeachEntities((e) =>
+            {
+                e.Tick(dt);
+                this.fsmDomain.Tick(e, dt);
+            }, true);
         }
 
         private void _BindEvent()
@@ -60,17 +69,18 @@ namespace GamePlay.Bussiness.Renderer
         {
             var repo = this._projectileContext.repo;
             var typeId = idArgs.typeId;
-            if (!repo.TryFetch(typeId, out var e)) e = this._projectileContext.factory.Load(typeId);
-            if (e == null)
+            if (!repo.TryFetch(typeId, out var projectile)) projectile = this._projectileContext.factory.Load(typeId);
+            if (projectile == null)
             {
                 GameLogger.LogError("[R]弹道创建失败，弹道ID不存在：" + typeId);
                 return;
             }
-            e.transformCom.SetByArgs(transArgs);
-            e.idCom.entityId = this._projectileContext.idService.FetchId();
-            e.idCom.SetParent(creator);
-            e.PlayAnim();
-            repo.TryAdd(e);
+            projectile.idCom.entityId = this._projectileContext.idService.FetchId();
+            projectile.idCom.SetParent(creator);
+            projectile.transformCom.SetByArgs(transArgs);
+            projectile.SyncTrans();
+            projectile.animCom.Play(projectile.model.animClip);
+            repo.TryAdd(projectile);
         }
 
     }

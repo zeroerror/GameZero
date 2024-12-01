@@ -16,7 +16,6 @@ namespace GamePlay.Config
             this._ShowLogicData(so);
             this._ShowRendererData(so);
             this._ShowSkillSORefs(so);
-            // 保存修改
             if (GUI.changed)
             {
                 EditorUtility.SetDirty(so);
@@ -24,14 +23,44 @@ namespace GamePlay.Config
             }
         }
 
-        // 显示逻辑层数据
         private void _ShowLogicData(GameActionSO so)
         {
             so.typeId = EditorGUILayout.IntField("类型Id", so.typeId);
             so.actionType_edit = (GameActionType)EditorGUILayout.EnumPopup("行为类型", so.actionType_edit);
             if (so.actionType_edit == GameActionType.None) EditorGUILayout.HelpBox("请选择一个行为类型", MessageType.Warning);
+            _ShowAction(so);
+            _ShowSelector(so);
+        }
 
-            // 选择器
+        private void _ShowAction(GameActionSO so)
+        {
+            var selector = so.selector_edit;
+            switch (so.actionType_edit)
+            {
+                case GameActionType.Dmg:
+                    EditorGUILayout.LabelField(" -------- 伤害行为 --------", EditorStyles.boldLabel);
+                    this._ShowDmgAction(so);
+                    so.dmgAction.selector = selector;
+                    break;
+                case GameActionType.Heal:
+                    EditorGUILayout.LabelField(" -------- 治疗行为 --------", EditorStyles.boldLabel);
+                    this._ShowHealAction(so);
+                    so.healAction.selector = selector;
+                    break;
+
+                case GameActionType.LaunchProjectile:
+                    EditorGUILayout.LabelField(" -------- 发射投射物行为 --------", EditorStyles.boldLabel);
+                    this._ShowLaunchProjectileAction(so);
+                    so.launchProjectileAction.selector = selector;
+                    break;
+                default:
+                    EditorGUILayout.HelpBox("未知的行为类型", MessageType.Warning);
+                    break;
+            }
+        }
+
+        private void _ShowSelector(GameActionSO so)
+        {
             EditorGUILayout.LabelField(" -------- 选择器 --------", EditorStyles.boldLabel);
             var selector = so.selector_edit;
             selector.selectAnchorType = (GameEntitySelectAnchorType)EditorGUILayout.EnumPopup("选择锚点类型", selector.selectAnchorType);
@@ -118,30 +147,6 @@ namespace GamePlay.Config
                 }
             }
             so.selector_edit = selector;
-
-            // 根据行为类型动态显示字段
-            switch (so.actionType_edit)
-            {
-                case GameActionType.Dmg:
-                    EditorGUILayout.LabelField(" -------- 伤害行为 --------", EditorStyles.boldLabel);
-                    this._ShowDmgAction(so);
-                    so.dmgAction.selector = selector;
-                    break;
-                case GameActionType.Heal:
-                    EditorGUILayout.LabelField(" -------- 治疗行为 --------", EditorStyles.boldLabel);
-                    this._ShowHealAction(so);
-                    so.healAction.selector = selector;
-                    break;
-
-                case GameActionType.LaunchProjectile:
-                    EditorGUILayout.LabelField(" -------- 发射投射物行为 --------", EditorStyles.boldLabel);
-                    this._ShowLaunchProjectileAction(so);
-                    so.launchProjectileAction.selector = selector;
-                    break;
-                default:
-                    EditorGUILayout.HelpBox("未知的行为类型", MessageType.Warning);
-                    break;
-            }
         }
 
         private void _ShowBoxModel(GameBoxColliderModel model)

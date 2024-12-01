@@ -30,16 +30,18 @@ namespace GamePlay.Bussiness.Logic
             var selColliderModel = selector.colliderModel;
             var isSingleSelect = selColliderModel == null;
             var targetEntity = actorEntity.actionTargeterCom.targetEntity;
-            var list = new List<GameEntityBase>();
+            var selectAnchorType = selector.selectAnchorType;
+
             // 单体选择
             if (isSingleSelect)
             {
-                if (targetEntity != null && selector.CheckSelect(actorEntity, targetEntity)) list.Add(targetEntity);
-                return list;
+                var selectedEntity = this._GetSingleSelectedEntity(selector, actorEntity, targetEntity, selectAnchorType);
+                if (selectedEntity == null) return null;
+                return new List<GameEntityBase> { selectedEntity };
             }
+
             // 范围选择
             GameTransformArgs anchorTransformArgs;
-            var selectAnchorType = selector.selectAnchorType;
             switch (selectAnchorType)
             {
                 case GameEntitySelectAnchorType.Self:
@@ -50,14 +52,26 @@ namespace GamePlay.Bussiness.Logic
                     break;
                 default:
                     GameLogger.LogError($"选择器锚点类型未知: {selectAnchorType}");
-                    return list;
+                    return null;
             }
-            list = physicsApi.GetOverlapEntities(selColliderModel, anchorTransformArgs);
-            list = list.Filter((entity) =>
+            var list = physicsApi.GetOverlapEntities(selColliderModel, anchorTransformArgs);
+            list = list?.Filter((entity) =>
             {
                 return selector.CheckSelect(actorEntity, entity);
             });
             return list;
+        }
+
+        private GameEntityBase _GetSingleSelectedEntity(GameEntitySelector selector, GameEntityBase actorEntity, GameEntityBase targetEntity, GameEntitySelectAnchorType selectAnchorType)
+        {
+            if (selectAnchorType == GameEntitySelectAnchorType.Self) return actorEntity;
+            if (selectAnchorType == GameEntitySelectAnchorType.Target)
+            {
+                if (selector.CheckSelect(actorEntity, targetEntity)) return targetEntity;
+                return null;
+            }
+            GameLogger.LogError($"单体选择 未处理的选择器锚点类型: {selectAnchorType}");
+            return null;
         }
     }
 }

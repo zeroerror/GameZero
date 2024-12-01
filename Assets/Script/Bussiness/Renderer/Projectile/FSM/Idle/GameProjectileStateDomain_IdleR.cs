@@ -3,7 +3,7 @@ using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameProjectileStateDomain_Idle : GameProjectileStateDomainBaseR
+    public class GameProjectileStateDomain_IdleR : GameProjectileStateDomainBaseR
     {
         public override void BindEvents()
         {

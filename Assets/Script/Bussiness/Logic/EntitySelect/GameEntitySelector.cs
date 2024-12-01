@@ -2,7 +2,7 @@ using GamePlay.Core;
 namespace GamePlay.Bussiness.Logic
 {
     [System.Serializable]
-    public struct GameEntitySelector
+    public class GameEntitySelector
     {
         // 选择锚点类型
         public GameEntitySelectAnchorType selectAnchorType;

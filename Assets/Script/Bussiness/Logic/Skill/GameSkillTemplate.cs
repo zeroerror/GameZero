@@ -38,8 +38,7 @@ namespace GamePlay.Bussiness.Logic
                 model = null;
                 return false;
             }
-            var animName = so.animName;
-            model = new GameSkillModel(typeId, animName, so.animLength, so.timelineEvents.ToModels());
+            model = so.ToModel();
             _dict.Add(typeId, model);
             return true;
         }

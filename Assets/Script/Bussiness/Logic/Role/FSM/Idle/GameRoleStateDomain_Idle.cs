@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Logic
             entity.fsmCom.EnterIdle();            // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_IDLE, new GameRoleRCArgs_StateEnterIdle
             {
-                fromState = entity.fsmCom.state,
+                fromState = entity.fsmCom.stateType,
                 idArgs = entity.idCom.ToArgs(),
             });
         }
@@ -31,7 +31,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 if (inputArgs.skillId != 0) return GameRoleStateType.Cast;
                 if (inputArgs.moveDir != GameVec2.zero) return GameRoleStateType.Move;
-                if (inputArgs.dstPos != GameVec2.zero) return GameRoleStateType.Move;
+                if (inputArgs.choosePoint != GameVec2.zero) return GameRoleStateType.Move;
             }
             return GameRoleStateType.None;
         }

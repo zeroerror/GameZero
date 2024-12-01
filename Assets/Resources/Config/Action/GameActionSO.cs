@@ -27,7 +27,7 @@ namespace GamePlay.Config
 
         public GameActionModelBase GetActionModel()
         {
-            GameActionModelBase actionModel = null;
+            GameActionModelBase actionModel;
             switch (actionType_edit)
             {
                 case GameActionType.Dmg:
@@ -55,6 +55,18 @@ namespace GamePlay.Config
             actionModel.selector = this.selector_edit;
             actionModel.actionType = this.actionType_edit;
             actionModel.typeId = this.typeId;
+            this._CorrectModel(actionModel);
+        }
+
+        private void _CorrectModel(GameActionModelBase actionModel)
+        {
+            var selector = actionModel.selector;
+            var selectAnchorType = actionModel.selector.selectAnchorType;
+            if (selectAnchorType == GameEntitySelectAnchorType.Self && !this.isRangeSelect && this.selector_edit.campType != GameCampType.Ally)
+            {
+                GameLogger.LogWarning("选择器锚点类型为自身的单选行为，必须选择友方阵营, 否则永远无法满足选取条件");
+                selector.campType = GameCampType.Ally;
+            }
         }
 
         private GameColliderModelBase _GetEditColliderModel()

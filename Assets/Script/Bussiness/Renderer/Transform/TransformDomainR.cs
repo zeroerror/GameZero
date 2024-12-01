@@ -35,16 +35,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             var evArgs = (GameTransformRCArgs_Sync)args;
             ref var idArgs = ref evArgs.idArgs;
-            GameEntityBase entity = null;
-            switch (idArgs.entityType)
-            {
-                case GameEntityType.Role:
-                    entity = this._context.roleContext.repo.FindByEntityId(idArgs.entityId);
-                    break;
-                default:
-                    GameLogger.LogError("TransformDomainR._OnTransformSync: unknown entityType: " + idArgs.entityType);
-                    break;
-            }
+            GameEntityBase entity = this._context.FindEntity(idArgs);
             if (entity == null)
             {
                 this._context.DelayRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, args);

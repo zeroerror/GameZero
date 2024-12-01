@@ -14,10 +14,11 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
         }
 
-        public bool CheckSatisfied(GameProjectileEntity projectile, GameProjectileStateTriggerModel_VolumeCollision model, float dt)
+        public bool CheckSatisfied(GameProjectileEntity projectile, GameProjectileStateTriggerEntity_VolumeCollision trigger, float dt)
         {
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            if (!this._context.domainApi.actionApi.TryGetModel(model.actionId, out var actionModel))
+            var triggerModel = trigger.model;
+            if (!this._context.domainApi.actionApi.TryGetModel(triggerModel.actionId, out var actionModel))
             {
                 return false;
             }

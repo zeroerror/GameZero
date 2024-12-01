@@ -19,6 +19,10 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
+        public override void Dispose()
+        {
+        }
+
         public void FaceTo(in GameVec2 dir)
         {
             this.transformCom.forward = dir;
@@ -30,5 +34,6 @@ namespace GamePlay.Bussiness.Logic
                 this.transformCom.scale = scale;
             }
         }
+
     }
 }

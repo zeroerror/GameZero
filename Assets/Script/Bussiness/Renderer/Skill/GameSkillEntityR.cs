@@ -9,5 +9,13 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.skillModel = skillModel;
         }
+
+        public override void Tick(float dt)
+        {
+        }
+
+        public override void Dispose()
+        {
+        }
     }
 }

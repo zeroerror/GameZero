@@ -7,32 +7,32 @@ namespace GamePlay.Bussiness.Logic
     {
         public bool enable { get; set; }
         public GameVec2 moveDir { get; set; }
-        public GameVec2 faceDir { get; set; }
-        public GameVec2 dstPos { get; set; }
+        public GameVec2 chooseDirection { get; set; }
+        public GameVec2 choosePosition { get; set; }
         public int skillId { get; set; }
-        public List<GameActionTargeterArgs> targeterList { get; private set; }
+        public List<GameActionTargeterArgs> targeterArgsList { get; private set; }
 
         public GameRoleInputCom()
         {
             this.enable = true;
-            this.targeterList = new List<GameActionTargeterArgs>();
+            this.targeterArgsList = new List<GameActionTargeterArgs>();
         }
 
         public void Clear()
         {
             this.moveDir = GameVec2.zero;
-            this.faceDir = GameVec2.zero;
-            this.dstPos = GameVec2.zero;
-            this.targeterList.Clear();
+            this.chooseDirection = GameVec2.zero;
+            this.choosePosition = GameVec2.zero;
+            this.targeterArgsList.Clear();
             this.skillId = 0;
         }
 
         public void SetByArgs(in GameRoleInputArgs args)
         {
             this.moveDir = args.moveDir;
-            this.faceDir = args.faceDir;
-            this.dstPos = args.dstPos;
-            this.targeterList.Clear();
+            this.chooseDirection = args.chooseDirection;
+            this.choosePosition = args.choosePoint;
+            this.targeterArgsList.Clear();
             var targeterList = args.targeterList;
             if (targeterList != null && targeterList.Count > 0) targeterList.AddRange(targeterList);
             this.skillId = args.skillId;
@@ -42,10 +42,10 @@ namespace GamePlay.Bussiness.Logic
         {
             var hasInput =
             this.moveDir != GameVec2.zero ||
-             this.faceDir != GameVec2.zero ||
-             this.dstPos != GameVec2.zero ||
+             this.chooseDirection != GameVec2.zero ||
+             this.choosePosition != GameVec2.zero ||
              this.skillId != 0 ||
-             this.targeterList.Count > 0;
+             this.targeterArgsList.Count > 0;
             if (!hasInput)
             {
                 inputArgs = default;
@@ -54,10 +54,10 @@ namespace GamePlay.Bussiness.Logic
             inputArgs = new GameRoleInputArgs
             {
                 moveDir = this.moveDir,
-                faceDir = this.faceDir,
-                dstPos = this.dstPos,
+                chooseDirection = this.chooseDirection,
+                choosePoint = this.choosePosition,
                 skillId = this.skillId,
-                targeterList = this.targeterList,
+                targeterList = this.targeterArgsList,
             };
             return true;
         }

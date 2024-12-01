@@ -81,7 +81,7 @@ namespace GamePlay.Bussiness.Logic
                 color = Color.red,
                 maintainTime = 0.1f,
             });
-            List<GameEntityBase> overlapEntities = new List<GameEntityBase>();
+            List<GameEntityBase> overlapEntities = null;
             var roleContext = this._context.roleContext;
             roleContext.repo.ForeachEntities((entity) =>
             {
@@ -91,6 +91,7 @@ namespace GamePlay.Bussiness.Logic
                 var isOverlap = mtv != GameVec2.zero;
                 if (isOverlap)
                 {
+                    if (overlapEntities == null) overlapEntities = new List<GameEntityBase>();
                     overlapEntities.Add(entity);
                     colliderModel.Draw(transformArgs, Color.red);
                     collider.Draw(Color.red);

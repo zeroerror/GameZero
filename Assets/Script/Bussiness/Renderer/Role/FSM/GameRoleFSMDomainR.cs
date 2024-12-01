@@ -1,17 +1,15 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 namespace GamePlay.Bussiness.Renderer
 {
 
     public class GameRoleFSMDomainR
     {
         private GameContextR _context;
-        // private GameRoleAnyStateDomain _anyDomain;
         private Dictionary<GameRoleStateType, GameRoleStateDomainBaseR> _stateDomainDict = new Dictionary<GameRoleStateType, GameRoleStateDomainBaseR>();
 
         public GameRoleFSMDomainR()
         {
-            // this._anyDomain = new GameRoleAnyStateDomain(this);
-            // this._stateDomainDict.Add(GameRoleStateType.None, new GameRoleStateDomain_None());
             this._stateDomainDict.Add(GameRoleStateType.Idle, new GameRoleStateDomain_IdleR());
             this._stateDomainDict.Add(GameRoleStateType.Move, new GameRoleStateDomain_MoveR());
             this._stateDomainDict.Add(GameRoleStateType.Cast, new GameRoleStateDomain_CastR());
@@ -21,32 +19,35 @@ namespace GamePlay.Bussiness.Renderer
         public void Inject(GameContextR context)
         {
             this._context = context;
-            // this._anyDomain.Inject(context);
             foreach (var stateDomain in this._stateDomainDict.Values)
             {
                 stateDomain.Inject(context);
             }
         }
 
-        public void BindEvent()
+
+        public void Dispose()
         {
-            // this._anyDomain.BindEvent();
+            this.UnbindEvents();
+        }
+
+
+        public void BindEvents()
+        {
             foreach (var stateDomain in this._stateDomainDict.Values)
             {
-                stateDomain.BindEvent();
+                stateDomain.BindEvents();
             }
         }
 
         public void UnbindEvents()
         {
-            // this._anyDomain.UnbindEvents();
             foreach (var stateDomain in this._stateDomainDict.Values)
             {
                 stateDomain.UnbindEvents();
             }
         }
 
-        public void Dispose() { }
 
         public void Tick(GameRoleEntityR role, float dt)
         {
@@ -55,7 +56,6 @@ namespace GamePlay.Bussiness.Renderer
             if (stateType == GameRoleStateType.None) return;
             if (!this._stateDomainDict.TryGetValue(stateType, out var stateDomain)) return;
             stateDomain.Tick(role, dt);
-            // this._anyDomain.Tick(role, dt);
         }
 
         public void Enter(GameRoleEntityR role, GameRoleStateType state, params object[] args)

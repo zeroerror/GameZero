@@ -23,7 +23,7 @@ MonoBehaviour:
       durationTriggerModel:
         actionSO: {fileID: 0}
         nextStateType: 2
-        duration: 0
+        duration: 1
       volumeCollisionTriggerModel:
         actionSO: {fileID: 0}
         nextStateType: 0

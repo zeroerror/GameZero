@@ -20,10 +20,6 @@ public class GamePlayableCom
         this.animator = animator;
     }
 
-    public GamePlayableCom()
-    {
-    }
-
     public void Dispose()
     {
         var vs = this._graphDict.Values;

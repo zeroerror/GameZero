@@ -18,43 +18,48 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
             this._durationTriggerDomain.Inject(context);
             this._volumeCollisionTriggerDomain.Inject(context);
-            this._BindEvent();
         }
 
         public void Dispose()
         {
-            this._UnbindEvents();
         }
 
-        private void _BindEvent()
+        public GameProjectileStateType Tick(GameProjectileEntity entity, float dt)
         {
-        }
-
-        private void _UnbindEvents()
-        {
-        }
-
-        public void Tick(GameProjectileEntity entity, float dt)
-        {
-            var triggerCom = entity.triggerCom;
-            var triggerSetDict = triggerCom.triggerSetDict;
-            var triggerSet = triggerSetDict[entity.fsmCom.stateType];
-            if (triggerSet == null) return;
-
+            var nextStateType = GameProjectileStateType.None;
+            var triggerSetEntityDict = entity.fsmCom.triggerSetEntityDict;
+            if (!triggerSetEntityDict.TryGetValue(entity.fsmCom.stateType, out var triggerSetEntity)) return nextStateType;
             var actionApi = this._context.domainApi.actionApi;
-            var durationTriggerModel = triggerSet.durationTriggerModel;
-            if (durationTriggerModel != null)
-            {
-                var isSatisfied = this._durationTriggerDomain.CheckSatisfied(entity, durationTriggerModel, dt);
-                if (isSatisfied) actionApi.DoAction(durationTriggerModel.actionId, entity);
 
-            }
-            var volumeCollisionTriggerModel = triggerSet.volumeCollisionTriggerModel;
-            if (volumeCollisionTriggerModel != null)
             {
-                var isSatisfied = this._volumeCollisionTriggerDomain.CheckSatisfied(entity, volumeCollisionTriggerModel, dt);
-                if (isSatisfied) actionApi.DoAction(volumeCollisionTriggerModel.actionId, entity);
+                var triggerEntity = triggerSetEntity.durationTriggerEntity;
+                if (triggerEntity != null)
+                {
+                    var isSatisfied = this._durationTriggerDomain.CheckSatisfied(entity, triggerEntity, dt);
+                    if (isSatisfied)
+                    {
+                        var triggerModel = triggerEntity.model;
+                        if (triggerModel.actionId != 0) actionApi.DoAction(triggerModel.actionId, entity);
+                        if (triggerModel.nextStateType != GameProjectileStateType.None) nextStateType = triggerModel.nextStateType;
+                    }
+
+                }
             }
+            {
+                var triggerEntity = triggerSetEntity.volumeCollisionTriggerEntity;
+                if (triggerEntity != null)
+                {
+                    var isSatisfied = this._volumeCollisionTriggerDomain.CheckSatisfied(entity, triggerEntity, dt);
+                    if (isSatisfied)
+                    {
+                        var triggerModel = triggerEntity.model;
+                        if (triggerModel.actionId != 0) actionApi.DoAction(triggerModel.actionId, entity);
+                        if (triggerModel.nextStateType != GameProjectileStateType.None) nextStateType = triggerModel.nextStateType;
+                    }
+                }
+            }
+
+            return nextStateType;
         }
     }
 }

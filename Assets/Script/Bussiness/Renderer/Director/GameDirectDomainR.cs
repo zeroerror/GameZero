@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameVFXDomainR vfxDomain { get; private set; }
         public GameActionDomainR actionDomain { get; private set; }
         public GameDrawDomainR drawDomain { get; private set; }
-        public GameProjectileDomainR projectileFSMDomain { get; private set; }
+        public GameProjectileDomainR projectileDomain { get; private set; }
 
         public GameDirectDomainR(GameContext logicContext)
         {
@@ -28,7 +28,7 @@ namespace GamePlay.Bussiness.Renderer
             this.vfxDomain = new GameVFXDomainR();
             this.actionDomain = new GameActionDomainR();
             this.drawDomain = new GameDrawDomainR();
-            this.projectileFSMDomain = new GameProjectileDomainR();
+            this.projectileDomain = new GameProjectileDomainR();
         }
 
         private void _InitContext(GameContext logicContext)
@@ -40,7 +40,7 @@ namespace GamePlay.Bussiness.Renderer
             this.context.domainApi.SetVFXApi(this.vfxDomain);
             this.context.domainApi.SetActionApi(this.actionDomain);
             this.context.domainApi.SetDrawApi(this.drawDomain);
-            this.context.domainApi.SetProjectileApi(this.projectileFSMDomain);
+            this.context.domainApi.SetProjectileApi(this.projectileDomain);
 
         }
 
@@ -52,7 +52,7 @@ namespace GamePlay.Bussiness.Renderer
             this.vfxDomain.Inject(this.context);
             this.actionDomain.Inject(this.context);
             this.drawDomain.Inject(this.context);
-            this.projectileFSMDomain.Inject(this.context);
+            this.projectileDomain.Inject(this.context);
         }
 
         public void Dispose()
@@ -63,7 +63,7 @@ namespace GamePlay.Bussiness.Renderer
             this.vfxDomain.Dispose();
             this.actionDomain.Dispose();
             this.drawDomain.Dispose();
-            this.projectileFSMDomain.Dispose();
+            this.projectileDomain.Dispose();
         }
 
         protected virtual void _TickDomain(float dt)
@@ -72,7 +72,7 @@ namespace GamePlay.Bussiness.Renderer
             this.skillDomain.Tick(dt);
             this.vfxDomain.Tick(dt);
             this.drawDomain.Tick(dt);
-            this.projectileFSMDomain.Tick(dt);
+            this.projectileDomain.Tick(dt);
         }
 
         public void Update(float dt)

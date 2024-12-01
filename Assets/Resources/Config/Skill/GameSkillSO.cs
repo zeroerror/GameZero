@@ -18,6 +18,9 @@ namespace GamePlay.Config
         [Header("动画事件")]
         public GameTimelineEventEditModel[] timelineEvents;
 
+        [Header("技能条件")]
+        public GameSkillConditionEM conditionEM;
+
         protected override void OnValidate()
         {
             base.OnValidate();
@@ -51,6 +54,12 @@ namespace GamePlay.Config
                     };
                 }
             }
+        }
+
+        public GameSkillModel ToModel()
+        {
+            var model = new GameSkillModel(typeId, animName, animLength, timelineEvents.ToModels(), conditionEM.ToModel());
+            return model;
         }
     }
 }

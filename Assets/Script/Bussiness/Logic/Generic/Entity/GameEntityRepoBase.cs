@@ -63,11 +63,21 @@ namespace GamePlay.Bussiness.Logic
             return null;
         }
 
-        public virtual void ForeachEntities(System.Action<T> action)
+        public virtual void ForeachEntities(System.Action<T> action, bool isIncludingPool = false)
         {
             foreach (var entity in this._dict.Values)
             {
                 action(entity);
+            }
+            if (isIncludingPool)
+            {
+                foreach (var entityPool in this._poolDict.Values)
+                {
+                    foreach (var entity in entityPool)
+                    {
+                        action(entity);
+                    }
+                }
             }
         }
     }

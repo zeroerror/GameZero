@@ -4,17 +4,18 @@ namespace GamePlay.Bussiness.Logic
     {
         public override bool CheckEnter(GameProjectileEntity entity)
         {
-            throw new System.NotImplementedException();
+            return true;
         }
 
         public override void Enter(GameProjectileEntity entity)
         {
-            throw new System.NotImplementedException();
+            var fsmCom = entity.fsmCom;
+            fsmCom.EnterLockOnPosition();
         }
 
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity entity)
         {
-            throw new System.NotImplementedException();
+            return GameProjectileStateType.None;
         }
 
         protected override void _Tick(GameProjectileEntity entity, float frameTime)

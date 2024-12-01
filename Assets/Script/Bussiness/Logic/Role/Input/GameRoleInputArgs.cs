@@ -5,16 +5,16 @@ namespace GamePlay.Bussiness.Logic
     public struct GameRoleInputArgs
     {
         public GameVec2 moveDir;
-        public GameVec2 faceDir;
-        public GameVec2 dstPos;
+        public GameVec2 chooseDirection;
+        public GameVec2 choosePoint;
         public int skillId;
         public List<GameActionTargeterArgs> targeterList;
 
         public bool HasInput()
         {
             if (moveDir != GameVec2.zero) return true;
-            if (faceDir != GameVec2.zero) return true;
-            if (dstPos != GameVec2.zero) return true;
+            if (chooseDirection != GameVec2.zero) return true;
+            if (choosePoint != GameVec2.zero) return true;
             if (skillId > 0) return true;
             return false;
         }
@@ -22,8 +22,8 @@ namespace GamePlay.Bussiness.Logic
         public void Update(in GameRoleInputArgs inputArgs)
         {
             this.moveDir = inputArgs.moveDir == GameVec2.zero ? this.moveDir : inputArgs.moveDir;
-            this.faceDir = inputArgs.faceDir == GameVec2.zero ? this.faceDir : inputArgs.faceDir;
-            this.dstPos = inputArgs.dstPos == GameVec2.zero ? this.dstPos : inputArgs.dstPos;
+            this.chooseDirection = inputArgs.chooseDirection == GameVec2.zero ? this.chooseDirection : inputArgs.chooseDirection;
+            this.choosePoint = inputArgs.choosePoint == GameVec2.zero ? this.choosePoint : inputArgs.choosePoint;
             this.skillId = inputArgs.skillId == 0 ? this.skillId : inputArgs.skillId;
         }
     }
