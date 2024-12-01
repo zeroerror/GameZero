@@ -37,7 +37,7 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public GameProjectileEntity CreateProjectile(int typeId, GameEntityBase creator, in GameTransformArgs transArgs)
+        public GameProjectileEntity CreateProjectile(int typeId, GameEntityBase creator, GameTransformArgs transArgs, in GameActionTargeterArgs targeter)
         {
             var repo = this._projectileContext.repo;
             if (!repo.TryFetch(typeId, out var projectile)) projectile = this._projectileContext.factory.Load(typeId);
@@ -46,9 +46,16 @@ namespace GamePlay.Bussiness.Logic
                 GameLogger.LogError("弹道创建失败，弹道ID不存在：" + typeId);
                 return null;
             }
+            // 保持缩放为正
+            var scale = transArgs.scale;
+            scale.x = GameMathF.Abs(scale.x);
+            scale.y = GameMathF.Abs(scale.y);
+            transArgs.scale = scale;
+
             projectile.transformCom.SetByArgs(transArgs);
             projectile.idCom.entityId = this._projectileContext.idService.FetchId();
             projectile.idCom.SetParent(creator);
+            projectile.actionTargeterCom.SetTargeter(targeter);
             repo.TryAdd(projectile);
 
             // 提交RC
@@ -62,7 +69,6 @@ namespace GamePlay.Bussiness.Logic
 
             // 默认进入待机
             this.fsmDomain.InitFSM(projectile);
-            this.fsmDomain.TryEnter(projectile, GameProjectileStateType.Idle);
 
             return projectile;
         }

@@ -91,7 +91,8 @@ namespace GamePlay.Bussiness.Logic
                     if (index == -1) return false;
                     break;
                 case GameSkillTargterType.Direction:
-                    if (inputCom.chooseDirection == GameVec2.zero) return false;
+                    var index_d = inputCom.targeterArgsList.FindIndex((args) => args.targetDirection != GameVec2.zero);
+                    if (index_d == -1) return false;
                     break;
                 case GameSkillTargterType.Position:
                     if (inputCom.choosePosition == GameVec2.zero) return false;
@@ -119,6 +120,11 @@ namespace GamePlay.Bussiness.Logic
             var conditionModel = skill.skillModel.conditionModel;
             skill.cdElapsed = conditionModel.cdTime;
             // todo attr....
+        }
+
+        public bool TryGetModel(int typeId, out GameSkillModel model)
+        {
+            return this._skillContext.factory.template.TryGet(typeId, out model);
         }
     }
 }

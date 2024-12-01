@@ -85,5 +85,23 @@ namespace GamePlay.Bussiness.Logic
                 this.fsmDomain.Tick(entity, dt);
             });
         }
+
+        public GameRoleEntity GetNearestEnemy(GameEntityBase entity)
+        {
+            var nearestEnemy = default(GameRoleEntity);
+            var nearestDistance = float.MaxValue;
+            this._roleContext.repo.ForeachEntities((e) =>
+            {
+                if (e == entity) return;
+                if (e.idCom.campId == entity.idCom.campId) return;
+                var disSqr = (e.transformCom.position - entity.transformCom.position).sqrMagnitude;
+                if (disSqr < nearestDistance)
+                {
+                    nearestDistance = disSqr;
+                    nearestEnemy = e;
+                }
+            });
+            return nearestEnemy;
+        }
     }
 }

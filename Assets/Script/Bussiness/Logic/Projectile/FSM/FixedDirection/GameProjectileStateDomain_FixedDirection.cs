@@ -7,10 +7,12 @@ namespace GamePlay.Bussiness.Logic
             return true;
         }
 
-        public override void Enter(GameProjectileEntity entity)
+        public override void Enter(GameProjectileEntity projectile)
         {
-            var fsmCom = entity.fsmCom;
+            var fsmCom = projectile.fsmCom;
             fsmCom.EnterFixedDirection();
+            var direction = projectile.actionTargeterCom.targetDirection;
+            projectile.FaceTo(direction);
         }
 
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity entity)
@@ -20,11 +22,10 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameProjectileEntity projectile, float frameTime)
         {
-            var transformCom = projectile.transformCom;
             var speed = projectile.attributeCom.GetValue(GameAttributeType.MoveSpeed);
-            var direction = transformCom.forward;
+            var direction = projectile.actionTargeterCom.targetDirection;
             var delta = direction * speed * frameTime;
-            transformCom.position += delta;
+            projectile.transformCom.position += delta;
             projectile.FaceTo(direction);
         }
     }

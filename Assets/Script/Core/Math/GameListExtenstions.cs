@@ -144,5 +144,16 @@ namespace GamePlay.Core
             }
             return result;
         }
+
+        public static List<T> ToList<T>(this List<T> list)
+        {
+            if (list == null) return null;
+            List<T> result = new List<T>(list.Count);
+            for (int i = 0; i < list.Count; i++)
+            {
+                result.Add(list[i]);
+            }
+            return result;
+        }
     }
 }

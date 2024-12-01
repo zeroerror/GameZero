@@ -8,7 +8,7 @@ namespace GamePlay.Bussiness.Logic
         public GameVec2 chooseDirection;
         public GameVec2 choosePoint;
         public int skillId;
-        public List<GameActionTargeterArgs> targeterList;
+        public List<GameActionTargeterArgs> targeterArgsList;
 
         public bool HasInput()
         {

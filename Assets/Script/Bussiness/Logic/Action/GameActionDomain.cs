@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Core;
-using UnityEngine.SocialPlatforms.Impl;
+using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -114,7 +114,9 @@ namespace GamePlay.Bussiness.Logic
             selectedEntities?.ForEach((selEntity) =>
             {
                 GameLogger.Log($"执行行为[发射投射物]: {action}");
-                var projectile = projectileApi.CreateProjectile(projectileId, actorEntity, selEntity.transformCom.ToArgs());
+                var transArgs = selEntity.transformCom.ToArgs();
+                var targeter = actorEntity.actionTargeterCom.getCurTargeter();
+                var projectile = projectileApi.CreateProjectile(projectileId, actorEntity, transArgs, targeter);
                 projectile.attributeCom.SetAttribute(GameAttributeType.MoveSpeed, action.speed);
 
                 var record = new GameActionRecord();

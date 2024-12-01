@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using GamePlay.Core;
+using Unity.VisualScripting;
 using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
@@ -12,15 +14,15 @@ namespace GamePlay.Bussiness.Logic
         /// <summary>
         /// 当前的目标实体。 UpdateTargeter逻辑会更新当前的目标实体
         /// </summary>
-        public GameEntityBase targetEntity => _getCurTargeter().targetEntity;
+        public GameEntityBase targetEntity => getCurTargeter().targetEntity;
         /// <summary>
         /// 当前的目标位置。 UpdateTargeter逻辑会更新当前的目标位置
         /// </summary>
-        public GameVec2 targetPos => _getCurTargeter().targetPos;
+        public GameVec2 targetPos => getCurTargeter().targetPosition;
         /// <summary>
         /// 当前的目标方向。 UpdateTargeter逻辑会更新当前的目标方向
         /// </summary>
-        public GameVec2 targetDirection => _getCurTargeter().targetDirection;
+        public GameVec2 targetDirection => getCurTargeter().targetDirection;
 
         private List<GameActionTargeterArgs> _targeterList;
         private int _curTargeterIndex = 0;
@@ -63,10 +65,16 @@ namespace GamePlay.Bussiness.Logic
         public void SetTargeterList(List<GameActionTargeterArgs> targeterList)
         {
             Clear();
-            _targeterList = targeterList;
+            _targeterList = targeterList.ToList();
         }
 
-        private GameActionTargeterArgs _getCurTargeter()
+        public void SetTargeter(in GameActionTargeterArgs targeter)
+        {
+            Clear();
+            _targeterList = new List<GameActionTargeterArgs> { targeter };
+        }
+
+        public GameActionTargeterArgs getCurTargeter()
         {
             if (_targeterList == null || _targeterList.Count == 0) return default;
             return _targeterList[_curTargeterIndex];

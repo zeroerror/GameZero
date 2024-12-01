@@ -6,12 +6,12 @@ namespace GamePlay.Config
     [System.Serializable]
     public class GameProjectileStateTriggerEM_Duration
     {
+        [Header("持续时间")]
+        public float duration;
         [Header("触发的行为")]
         public GameActionSO actionSO;
         [Header("下一个状态")]
         public GameProjectileStateType nextStateType;
-        [Header("持续时间")]
-        public float duration;
 
         public GameProjectileStateTriggerModel_Duration ToModel()
         {

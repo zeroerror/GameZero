@@ -2,25 +2,40 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileStateDomain_LockOnEntity : GameProjectileStateDomainBase
     {
-        public override bool CheckEnter(GameProjectileEntity entity)
+        public override bool CheckEnter(GameProjectileEntity projectile)
         {
             return true;
         }
 
-        public override void Enter(GameProjectileEntity entity)
+        public override void Enter(GameProjectileEntity projectile)
         {
-            var fsmCom = entity.fsmCom;
+            var fsmCom = projectile.fsmCom;
             fsmCom.EnterLockOnEntity();
         }
 
-        protected override GameProjectileStateType _CheckExit(GameProjectileEntity entity)
+        protected override GameProjectileStateType _CheckExit(GameProjectileEntity projectile)
         {
             return GameProjectileStateType.None;
         }
 
-        protected override void _Tick(GameProjectileEntity entity, float frameTime)
+        protected override void _Tick(GameProjectileEntity projectile, float dt)
         {
-            throw new System.NotImplementedException();
+            var actionTargeterCom = projectile.actionTargeterCom;
+            var targetEntity = actionTargeterCom.targetEntity;
+            if (targetEntity == null)
+            {
+                targetEntity = projectile.idCom.parent?.actionTargeterCom.targetEntity;
+            }
+            if (targetEntity == null) return;
+
+            var speed = projectile.attributeCom.GetValue(GameAttributeType.MoveSpeed);
+            var targetPos = targetEntity.transformCom.position;
+            var pos = projectile.transformCom.position;
+            var offset = targetPos - pos;
+            var dir = offset.normalized;
+            var frameOffset = dir * speed * dt;
+            var framePos = pos + frameOffset;
+            projectile.transformCom.position = framePos;
         }
     }
 

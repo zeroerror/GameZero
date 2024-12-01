@@ -27,16 +27,13 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(selector, projectile, false);
             if (selectedEntities == null || selectedEntities.Count == 0) return false;
             var atc = projectile.actionTargeterCom;
-            var targeterList = new List<GameActionTargeterArgs>(selectedEntities.Count);
             foreach (var entity in selectedEntities)
             {
                 var t = new GameActionTargeterArgs();
                 t.targetEntity = entity;
-                t.targetPos = entity.transformCom.position;
+                t.targetPosition = entity.transformCom.position;
                 t.targetDirection = entity.transformCom.position - projectile.transformCom.position;
-                targeterList.Add(t);
             }
-            atc.SetTargeterList(targeterList);
             return selectedEntities.Count > 0;
         }
     }

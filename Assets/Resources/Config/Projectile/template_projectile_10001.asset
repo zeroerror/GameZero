@@ -18,21 +18,21 @@ MonoBehaviour:
   timelineEvents: []
   animName_edit: p_fireball
   stateTriggers:
-  - stateType: 1
-    emSet:
-      durationTriggerModel:
-        actionSO: {fileID: 0}
-        nextStateType: 2
-        duration: 1
-      volumeCollisionTriggerModel:
-        actionSO: {fileID: 0}
-        nextStateType: 0
   - stateType: 2
     emSet:
       durationTriggerModel:
+        duration: 3
         actionSO: {fileID: 0}
         nextStateType: 0
-        duration: 3
       volumeCollisionTriggerModel:
         actionSO: {fileID: 11400000, guid: 80e9d52327a84434185d9da8a89b7317, type: 2}
         nextStateType: 1
+  - stateType: 1
+    emSet:
+      durationTriggerModel:
+        duration: 0.1
+        actionSO: {fileID: 0}
+        nextStateType: 2
+      volumeCollisionTriggerModel:
+        actionSO: {fileID: 0}
+        nextStateType: 0

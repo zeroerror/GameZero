@@ -50,10 +50,11 @@ namespace GamePlay.Bussiness.Logic
 
         public void InitFSM(GameProjectileEntity projectile)
         {
-            this._Enter(projectile, GameProjectileStateType.Idle);
+
             var triggerSetEntityDict = projectile.fsmCom.triggerSetEntityDict;
             var model = projectile.model;
             var stateTriggerDict = model.stateTriggerSetDict;
+            var firstStateType = GameProjectileStateType.None;
             foreach (var kv in stateTriggerDict)
             {
                 var stateType = kv.Key;
@@ -62,8 +63,11 @@ namespace GamePlay.Bussiness.Logic
                     new GameProjectileStateTriggerEntity_Duration(triggerSet.durationTriggerModel),
                     new GameProjectileStateTriggerEntity_VolumeCollision(triggerSet.volumeCollisionTriggerModel)
                 );
+                if (firstStateType == GameProjectileStateType.None) firstStateType = stateType;
                 triggerSetEntityDict.Add(stateType, triggerSetEntity);
             }
+            firstStateType = firstStateType == GameProjectileStateType.None ? GameProjectileStateType.Idle : firstStateType;
+            this._Enter(projectile, firstStateType);
         }
 
         public bool TryEnter(GameProjectileEntity entity, GameProjectileStateType state)

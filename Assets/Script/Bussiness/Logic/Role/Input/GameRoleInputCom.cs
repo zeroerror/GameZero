@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -33,8 +32,8 @@ namespace GamePlay.Bussiness.Logic
             this.chooseDirection = args.chooseDirection;
             this.choosePosition = args.choosePoint;
             this.targeterArgsList.Clear();
-            var targeterList = args.targeterList;
-            if (targeterList != null && targeterList.Count > 0) targeterList.AddRange(targeterList);
+            var targeterList = args.targeterArgsList;
+            if (targeterList != null && targeterList.Count > 0) this.targeterArgsList.AddRange(targeterList);
             this.skillId = args.skillId;
         }
 
@@ -57,7 +56,7 @@ namespace GamePlay.Bussiness.Logic
                 chooseDirection = this.chooseDirection,
                 choosePoint = this.choosePosition,
                 skillId = this.skillId,
-                targeterList = this.targeterArgsList,
+                targeterArgsList = this.targeterArgsList,
             };
             return true;
         }

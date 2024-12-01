@@ -8,7 +8,7 @@ namespace GamePlay.Bussiness.Logic
     public struct GameActionTargeterArgs
     {
         public GameEntityBase targetEntity;
-        public GameVec2 targetPos;
+        public GameVec2 targetPosition;
         public GameVec2 targetDirection;
     }
 }
