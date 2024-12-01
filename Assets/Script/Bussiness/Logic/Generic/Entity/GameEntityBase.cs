@@ -3,12 +3,12 @@ namespace GamePlay.Bussiness.Logic
     public abstract class GameEntityBase
     {
         public bool isValid() => idCom.entityId > 0;
-        public int bodyColliderId { get; private set; }
         public GameIdCom idCom { get; private set; }
         public GameTransformCom transformCom { get; private set; }
         public void BindTransformCom(GameTransformCom transformCom) => this.transformCom = transformCom;
         public GameActionTargeterCom actionTargeterCom { get; private set; }
         public GamePhysicsCom physicsCom { get; private set; }
+        public GameAttributeCom attributeCom { get; private set; }
 
         public GameEntityBase(int typeId, GameEntityType entityType)
         {
@@ -16,6 +16,7 @@ namespace GamePlay.Bussiness.Logic
             transformCom = new GameTransformCom();
             actionTargeterCom = new GameActionTargeterCom();
             physicsCom = new GamePhysicsCom();
+            attributeCom = new GameAttributeCom();
         }
 
         public virtual void Reset()
@@ -24,6 +25,7 @@ namespace GamePlay.Bussiness.Logic
             transformCom.Reset();
             actionTargeterCom.Reset();
             physicsCom.Reset();
+            attributeCom.Reset();
         }
 
         public bool IsEquals(GameEntityBase other)

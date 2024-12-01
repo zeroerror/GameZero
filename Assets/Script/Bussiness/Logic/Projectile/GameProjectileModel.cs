@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileModel
@@ -5,14 +7,15 @@ namespace GamePlay.Bussiness.Logic
         public readonly int typeId;
         public readonly float animLength;
         public readonly GameTimelineEventModel[] timelineEvModels;
-        public readonly int collisionActionId;
+        public readonly Dictionary<GameProjectileStateType, GameProjectileStateTriggerModelSet> stateTriggerDict;
 
-        public GameProjectileModel(int typeId, GameTimelineEventModel[] timelineEvModels, float animLength, int collisionActionId)
+        public GameProjectileModel(int typeId, float animLength, GameTimelineEventModel[] timelineEvModels, Dictionary<GameProjectileStateType, GameProjectileStateTriggerModelSet> stateTriggerDict)
         {
             this.typeId = typeId;
-            this.timelineEvModels = timelineEvModels;
             this.animLength = animLength;
-            this.collisionActionId = collisionActionId;
+            this.timelineEvModels = timelineEvModels;
+            this.stateTriggerDict = stateTriggerDict;
         }
+
     }
 }

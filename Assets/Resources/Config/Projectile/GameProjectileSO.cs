@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using GamePlay.Bussiness.Logic;
+using GamePlay.Core;
 using UnityEditor;
 #endif
 using UnityEngine;
@@ -18,12 +19,12 @@ namespace GamePlay.Config
         public float animLength;
         [Header("动画事件")]
         public GameTimelineEventEditModel[] timelineEvents;
-        [Header("碰撞行为")]
-        public GameActionSO collisionAction;
 
         // --------------- 编辑器数据 ---------------
         [Header("动画名称")]
         public string animName_edit;
+        [Header("状态触发器列表")]
+        public GameProjectileStateTriggerEM[] stateTriggers;
 
         protected override void OnValidate()
         {

@@ -121,5 +121,10 @@ namespace GamePlay.Bussiness.Logic
             });
             return recordList;
         }
+
+        public bool TryGetModel(int actionId, out GameActionModelBase model)
+        {
+            return this._context.actionContext.template.TryGet(actionId, out model);
+        }
     }
 }

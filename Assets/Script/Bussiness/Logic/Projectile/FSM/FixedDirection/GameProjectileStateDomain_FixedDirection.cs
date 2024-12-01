@@ -19,7 +19,11 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameProjectileEntity entity, float frameTime)
         {
-            throw new System.NotImplementedException();
+            var transformCom = entity.transformCom;
+            var speed = entity.attributeCom.GetValue(GameAttributeType.MoveSpeed);
+            var direction = transformCom.forward;
+            var delta = direction * speed * frameTime;
+            transformCom.position += delta;
         }
     }
 

@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileFSMDomain : GameProjectileFSMDomainApi
@@ -28,9 +30,20 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public bool TryEnter(GameProjectileEntity role, GameProjectileStateType state)
+        public bool TryEnter(GameProjectileEntity entity, GameProjectileStateType state)
         {
             throw new System.NotImplementedException();
+        }
+
+        public void InitCondition(GameProjectileEntity entity)
+        {
+            var model = entity.model;
+            var dict = model.stateTriggerDict;
+            foreach (var pair in dict)
+            {
+                var stateType = pair.Key;
+                var actionList = pair.Value;
+            }
         }
     }
 }

@@ -4,18 +4,25 @@ using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameActionTargeterCom : IGameActionTargeter
+    public class GameActionTargeterCom
     {
-        public GameEntityBase targetEntity { get => _getCurTargeter()?.targetEntity; set { } }
-        public GameVec2 targetPos { get => _getCurTargeter()?.targetPos ?? GameVec2.zero; set { } }
-        public GameVec2 targetDirection { get => _targetDirectionList?[_curTargeterIndex] ?? GameVec2.zero; set { } }
-
-        private List<IGameActionTargeter> _targeterList;
         public GameForeachType foreachType = GameForeachType.None;
-
-        private List<GameVec2> _targetDirectionList;
         public int ExecuteCount => foreachType == GameForeachType.None ? _targeterList?.Count ?? 0 : 1;
 
+        /// <summary>
+        /// 当前的目标实体。 UpdateTargeter逻辑会更新当前的目标实体
+        /// </summary>
+        public GameEntityBase targetEntity => _getCurTargeter().targetEntity;
+        /// <summary>
+        /// 当前的目标位置。 UpdateTargeter逻辑会更新当前的目标位置
+        /// </summary>
+        public GameVec2 targetPos => _getCurTargeter().targetPos;
+        /// <summary>
+        /// 当前的目标方向。 UpdateTargeter逻辑会更新当前的目标方向
+        /// </summary>
+        public GameVec2 targetDirection => _getCurTargeter().targetDirection;
+
+        private List<GameActionTargeterArgs> _targeterList;
         private int _curTargeterIndex = 0;
 
         public GameActionTargeterCom()
@@ -26,7 +33,6 @@ namespace GamePlay.Bussiness.Logic
         public void Reset()
         {
             _targeterList = null;
-            _targetDirectionList = null;
             _curTargeterIndex = 0;
         }
 
@@ -54,23 +60,16 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
-        public void SetTargeterList(GameVec2 actionPos, List<IGameActionTargeter> targeterList)
+        public void SetTargeterList(List<GameActionTargeterArgs> targeterList)
         {
             Reset();
             _targeterList = targeterList;
-            var dirList = new List<GameVec2>();
-            foreach (var targeter in targeterList)
-            {
-                var targetPos = targeter.targetEntity?.transformCom.position ?? targeter.targetPos;
-                var targetDir = (targetPos - actionPos).normalized;
-                dirList.Add(targetDir);
-            }
-            _targetDirectionList = dirList;
         }
 
-        private IGameActionTargeter _getCurTargeter()
+        private GameActionTargeterArgs _getCurTargeter()
         {
-            return _targeterList?[_curTargeterIndex];
+            if (_targeterList == null || _targeterList.Count == 0) return default;
+            return _targeterList[_curTargeterIndex];
         }
     }
 }

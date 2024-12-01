@@ -10,12 +10,12 @@ namespace GamePlay.Bussiness.Logic
         public GameVec2 faceDir { get; set; }
         public GameVec2 dstPos { get; set; }
         public int skillId { get; set; }
-        public List<IGameActionTargeter> targeterList { get; private set; }
+        public List<GameActionTargeterArgs> targeterList { get; private set; }
 
         public GameRoleInputCom()
         {
             this.enable = true;
-            this.targeterList = new List<IGameActionTargeter>();
+            this.targeterList = new List<GameActionTargeterArgs>();
         }
 
         public void Clear()

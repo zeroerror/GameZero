@@ -33,7 +33,12 @@ namespace GamePlay.Bussiness.Logic
                 model = null;
                 return false;
             }
-            model = new GameProjectileModel(typeId, so.timelineEvents.ToModels(), so.animLength, so.collisionAction.typeId);
+            var modelSetDict = new Dictionary<GameProjectileStateType, GameProjectileStateTriggerModelSet>();
+            foreach (var triggerEM in so.stateTriggers)
+            {
+                modelSetDict.Add(triggerEM.stateType, triggerEM.emSet.ToModelSet());
+            }
+            model = new GameProjectileModel(typeId, so.animLength, so.timelineEvents.ToModels(), modelSetDict);
             _dict.Add(typeId, model);
             return true;
         }

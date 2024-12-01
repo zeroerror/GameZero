@@ -32,5 +32,12 @@ namespace GamePlay.Bussiness.Logic
         /// actorEntity: 执行者
         /// </summary>
         public List<GameActionRecord> DoAction_LaunchProjectile(GameActionModel_LaunchProjectile action, GameEntityBase actorEntity);
+
+        /// <summary>
+        /// 尝试获取行为模型
+        /// <para>actionId 行为ID</para>
+        /// <para>model 行为模型</para>
+        /// </summary>
+        public bool TryGetModel(int actionId, out GameActionModelBase model);
     }
 }
