@@ -11,6 +11,13 @@ namespace GamePlay.Bussiness.Logic
         {
             var fsmCom = projectile.fsmCom;
             fsmCom.EnterLockOnEntity();
+
+            var targetEntity = projectile.actionTargeterCom.targetEntity;
+            var targetPos = targetEntity.transformCom.position;
+            var pos = projectile.transformCom.position;
+            var offset = targetPos - pos;
+            var dir = offset.normalized;
+            projectile.FaceTo(dir);
         }
 
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity projectile)
@@ -22,10 +29,6 @@ namespace GamePlay.Bussiness.Logic
         {
             var actionTargeterCom = projectile.actionTargeterCom;
             var targetEntity = actionTargeterCom.targetEntity;
-            if (targetEntity == null)
-            {
-                targetEntity = projectile.idCom.parent?.actionTargeterCom.targetEntity;
-            }
             if (targetEntity == null) return;
 
             var speed = projectile.attributeCom.GetValue(GameAttributeType.MoveSpeed);
@@ -36,6 +39,7 @@ namespace GamePlay.Bussiness.Logic
             var frameOffset = dir * speed * dt;
             var framePos = pos + frameOffset;
             projectile.transformCom.position = framePos;
+            projectile.FaceTo(dir);
         }
     }
 
