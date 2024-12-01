@@ -43,7 +43,7 @@ namespace GamePlay.Bussiness.Logic
             this._poolDict.Add(typeId, entityPool);
             entityPool.Add(entity);
             GameLogger.Log($"实体仓库 回收: {entity.idCom}");
-            entity.Reset();
+            entity.Clear();
         }
 
         public virtual bool TryFetch(int typeId, out T entity)

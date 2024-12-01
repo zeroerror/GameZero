@@ -17,7 +17,7 @@ namespace GamePlay.Bussiness.Logic
             this.entityType = entityType;
         }
 
-        public void Reset()
+        public void Clear()
         {
             entityId = 0;
             parent = null;

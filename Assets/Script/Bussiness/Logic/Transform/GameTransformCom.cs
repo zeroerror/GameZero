@@ -59,10 +59,10 @@ namespace GamePlay.Bussiness.Logic
 
         public GameTransformCom()
         {
-            Reset();
+            Clear();
         }
 
-        public void Reset()
+        public void Clear()
         {
             _position = GameVec2.zero;
             _scale = GameVec2.one;

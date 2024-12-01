@@ -18,7 +18,7 @@ namespace GamePlay.Bussiness.Logic
             _collidedList = new List<GameIdArgs>();
         }
 
-        public void Reset()
+        public void Clear()
         {
             collider = null;
             ClearCollided();

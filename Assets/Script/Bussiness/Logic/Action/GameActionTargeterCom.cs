@@ -27,10 +27,10 @@ namespace GamePlay.Bussiness.Logic
 
         public GameActionTargeterCom()
         {
-            Reset();
+            Clear();
         }
 
-        public void Reset()
+        public void Clear()
         {
             _targeterList = null;
             _curTargeterIndex = 0;
@@ -62,7 +62,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void SetTargeterList(List<GameActionTargeterArgs> targeterList)
         {
-            Reset();
+            Clear();
             _targeterList = targeterList;
         }
 

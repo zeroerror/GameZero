@@ -12,7 +12,7 @@ namespace GamePlay.Bussiness.Logic
             this._attributes = new List<GameAttribute>();
         }
 
-        public void Reset()
+        public void Clear()
         {
         }
 

@@ -19,13 +19,13 @@ namespace GamePlay.Bussiness.Logic
             attributeCom = new GameAttributeCom();
         }
 
-        public virtual void Reset()
+        public virtual void Clear()
         {
-            idCom.Reset();
-            transformCom.Reset();
-            actionTargeterCom.Reset();
-            physicsCom.Reset();
-            attributeCom.Reset();
+            idCom.Clear();
+            transformCom.Clear();
+            actionTargeterCom.Clear();
+            physicsCom.Clear();
+            attributeCom.Clear();
         }
 
         public bool IsEquals(GameEntityBase other)

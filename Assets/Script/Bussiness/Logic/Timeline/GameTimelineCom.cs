@@ -38,7 +38,7 @@ namespace GamePlay.Bussiness.Logic
             this._events = new Dictionary<int, List<Action>>();
         }
 
-        public void Reset()
+        public void Clear()
         {
             this.isPlaying = false;
             this.loopDuration = 0;

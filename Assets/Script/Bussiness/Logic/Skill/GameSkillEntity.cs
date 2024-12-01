@@ -12,11 +12,11 @@ namespace GamePlay.Bussiness.Logic
             this.timelineCom = new GameTimelineCom(skillModel.length);
         }
 
-        public override void Reset()
+        public override void Clear()
         {
-            base.Reset();
+            base.Clear();
             this.cdElapsed = 0;
-            this.timelineCom.Reset();
+            this.timelineCom.Clear();
         }
 
         public override void Tick(float dt)

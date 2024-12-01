@@ -27,7 +27,7 @@ namespace GamePlay.Core
             _ease1DComponentY.SetIsResetTime(isResetTime);
         }
 
-        public void Reset()
+        public void Clear()
         {
             _ease1DComponentX.Clear();
             _ease1DComponentY.Clear();
