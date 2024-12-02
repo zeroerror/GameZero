@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Core;
 namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleDomainR : GameRoleDomainApiR
@@ -47,6 +48,11 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnRoleCreate(object args)
         {
+            if (this._context.fieldContext.curField == null)
+            {
+                this._context.DelayRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, args);
+                return;
+            }
             var evArgs = (GameRoleRCArgs_Create)args;
             this._Create(evArgs.idArgs, evArgs.transArgs, evArgs.isUser);
         }
@@ -61,6 +67,12 @@ namespace GamePlay.Bussiness.Renderer
             if (!repo.TryFetch(idArgs.typeId, out var role))
             {
                 role = this._roleContext.factory.Load(idArgs.typeId);
+                if (role == null)
+                {
+                    GameLogger.LogError("GameRoleDomainR._Create: typeId not found: " + idArgs.typeId);
+                    return null;
+                }
+                this._context.domainApi.fielApi.AddToEntityLayer(role.go);
             }
             role.idCom.SetByArgs(idArgs);
             role.transformCom.SetByArgs(transArgs);

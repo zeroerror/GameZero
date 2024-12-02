@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameEventService delayRCEventService { get; private set; }
         public GameCmdBufferService cmdBufferService { get; private set; }
 
-        public GameContextR(GameContext logicContext)
+        public GameContextR(GameContext logicContext, GameObject sceneRoot)
         {
             this.logicContext = logicContext;
             this.cameraEntity = new GameCameraEntity(GameObject.Find("Main Camera")?.GetComponent<Camera>());
@@ -34,7 +34,7 @@ namespace GamePlay.Bussiness.Renderer
             this.actionContext = new GameActionContextR();
             this.vfxContext = new GameVFXContextR();
             this.projectileContext = new GameProjectileContextR();
-            this.fieldContext = new GameFieldContextR();
+            this.fieldContext = new GameFieldContextR(sceneRoot);
 
             this.eventService = new GameEventService();
             this.delayRCEventService = new GameEventService();

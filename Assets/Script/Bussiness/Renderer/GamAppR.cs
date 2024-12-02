@@ -7,10 +7,9 @@ namespace GamePlay.Bussiness.Renderer
     {
         public GameDirectDomainR directDomain { get; private set; }
 
-
-        public GameAppR(GameContext logicContext)
+        public GameAppR(GameContext logicContext, GameObject sceneRoot)
         {
-            this.directDomain = new GameDirectDomainR(logicContext);
+            this.directDomain = new GameDirectDomainR(logicContext, sceneRoot);
             Application.quitting += this.Dispose;
         }
 

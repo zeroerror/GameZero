@@ -69,12 +69,17 @@ namespace GamePlay.Bussiness.Renderer
         {
             var repo = this._projectileContext.repo;
             var typeId = idArgs.typeId;
-            if (!repo.TryFetch(typeId, out var projectile)) projectile = this._projectileContext.factory.Load(typeId);
-            if (projectile == null)
+            if (!repo.TryFetch(typeId, out var projectile))
             {
-                GameLogger.LogError("[R]弹道创建失败，弹道ID不存在：" + typeId);
-                return;
+                projectile = this._projectileContext.factory.Load(typeId);
+                if (projectile == null)
+                {
+                    GameLogger.LogError("[R]弹道创建失败，弹道ID不存在：" + typeId);
+                    return;
+                }
+                this._context.domainApi.fielApi.AddToEntityLayer(projectile.go);
             }
+
             projectile.idCom.entityId = this._projectileContext.idService.FetchId();
             projectile.idCom.SetParent(creator);
             projectile.transformCom.SetByArgs(transArgs);

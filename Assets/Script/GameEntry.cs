@@ -9,7 +9,7 @@ public class GameEntry : MonoBehaviour
     void Start()
     {
         this.gameApp = new GameApp();
-        this.gameAppR = new GameAppR(gameApp.directDomain.context);
+        this.gameAppR = new GameAppR(gameApp.directDomain.context, this.gameObject);
     }
 
     void Update()

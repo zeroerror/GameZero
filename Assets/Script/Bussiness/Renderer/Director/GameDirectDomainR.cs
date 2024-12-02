@@ -14,10 +14,10 @@ namespace GamePlay.Bussiness.Renderer
         public GameProjectileDomainR projectileDomain { get; private set; }
         public GameFieldDomainR fieldDomain { get; private set; }
 
-        public GameDirectDomainR(GameContext logicContext)
+        public GameDirectDomainR(GameContext logicContext, GameObject sceneRoot)
         {
             this._InitDomain();
-            this._InitContext(logicContext);
+            this._InitContext(logicContext, sceneRoot);
             this._InjectContext();
         }
 
@@ -33,9 +33,9 @@ namespace GamePlay.Bussiness.Renderer
             this.fieldDomain = new GameFieldDomainR();
         }
 
-        private void _InitContext(GameContext logicContext)
+        private void _InitContext(GameContext logicContext, GameObject sceneRoot)
         {
-            this.context = new GameContextR(logicContext);
+            this.context = new GameContextR(logicContext, sceneRoot);
             this.context.domainApi.SetRoleApi(this.roleDomain);
             this.context.domainApi.SetSkillApi(this.skillDomain);
             this.context.domainApi.SetTransformApi(this.transformDomain);
@@ -72,12 +72,13 @@ namespace GamePlay.Bussiness.Renderer
 
         protected virtual void _TickDomain(float dt)
         {
+            if (this.context.fieldContext.curField == null) return;
+            this.fieldDomain.Tick(dt);
             this.roleDomain.Tick(dt);
             this.skillDomain.Tick(dt);
             this.vfxDomain.Tick(dt);
             this.drawDomain.Tick(dt);
             this.projectileDomain.Tick(dt);
-            this.fieldDomain.Tick(dt);
         }
 
         public void Update(float dt)

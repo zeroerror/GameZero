@@ -12,7 +12,7 @@ namespace GamePlay.Bussiness.Renderer
         public readonly GameObject go;
         public readonly GameObject body;
         public Transform transform { get { return this.go.transform; } }
-        public GameVec2 position { get { return transform.position; } set { transform.position = value; } }
+        public GameVec2 position { get { return transform.position; } set { transform.position = new GameVec3(value.x, value.y, transform.position.z); } }
         public float angle { get { return transform.eulerAngles.z; } set { transform.eulerAngles = new GameVec3(0, 0, value); } }
         public GameVec2 scale { get { return transform.localScale; } set { transform.localScale = value; } }
         private GameEasing2DCom _posEaseCom;

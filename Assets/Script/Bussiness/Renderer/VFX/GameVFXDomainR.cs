@@ -41,6 +41,12 @@ namespace GamePlay.Bussiness.Renderer
             {
                 var factory = this._vfxContext.factory;
                 vfx = factory.Load();
+                if (vfx == null)
+                {
+                    GameLogger.LogError("VFX加载失败");
+                    return null;
+                }
+                this._context.domainApi.fielApi.AddToEntityLayer(vfx.go);
             }
             vfx.entityId = this._vfxContext.entityIdService.FetchId();
             repo.TryAdd(vfx);

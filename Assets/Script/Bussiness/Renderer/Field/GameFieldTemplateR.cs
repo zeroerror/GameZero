@@ -34,6 +34,8 @@ namespace GamePlay.Bussiness.Renderer
                 return false;
             }
             model = new GameFieldModelR();
+            model.typeId = so.typeId;
+            model.fieldPrefab = so.fieldPrefab;
             _dict.Add(typeId, model);
             return true;
         }

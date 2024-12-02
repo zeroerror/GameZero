@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace GamePlay.Bussiness.Renderer
 {
     public class GameFieldContextR
@@ -9,10 +11,10 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameFieldEntityR curField { get; set; }
 
-        public GameFieldContextR()
+        public GameFieldContextR(GameObject sceneRoot)
         {
             this._repo = new GameFieldRepoR();
-            this._factory = new GameFieldFactoryR();
+            this._factory = new GameFieldFactoryR(sceneRoot);
         }
     }
 }

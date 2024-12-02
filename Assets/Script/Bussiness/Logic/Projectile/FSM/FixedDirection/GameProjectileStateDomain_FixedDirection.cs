@@ -19,7 +19,6 @@ namespace GamePlay.Bussiness.Logic
         {
             return GameProjectileStateType.None;
         }
-
         protected override void _Tick(GameProjectileEntity projectile, float frameTime)
         {
             var speed = projectile.attributeCom.GetValue(GameAttributeType.MoveSpeed);
