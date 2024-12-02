@@ -12,6 +12,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameActionDomainR actionDomain { get; private set; }
         public GameDrawDomainR drawDomain { get; private set; }
         public GameProjectileDomainR projectileDomain { get; private set; }
+        public GameFieldDomainR fieldDomain { get; private set; }
 
         public GameDirectDomainR(GameContext logicContext)
         {
@@ -29,6 +30,7 @@ namespace GamePlay.Bussiness.Renderer
             this.actionDomain = new GameActionDomainR();
             this.drawDomain = new GameDrawDomainR();
             this.projectileDomain = new GameProjectileDomainR();
+            this.fieldDomain = new GameFieldDomainR();
         }
 
         private void _InitContext(GameContext logicContext)
@@ -41,7 +43,7 @@ namespace GamePlay.Bussiness.Renderer
             this.context.domainApi.SetActionApi(this.actionDomain);
             this.context.domainApi.SetDrawApi(this.drawDomain);
             this.context.domainApi.SetProjectileApi(this.projectileDomain);
-
+            this.context.domainApi.SetFieldApi(this.fieldDomain);
         }
 
         private void _InjectContext()
@@ -53,6 +55,7 @@ namespace GamePlay.Bussiness.Renderer
             this.actionDomain.Inject(this.context);
             this.drawDomain.Inject(this.context);
             this.projectileDomain.Inject(this.context);
+            this.fieldDomain.Inject(this.context);
         }
 
         public void Dispose()
@@ -64,6 +67,7 @@ namespace GamePlay.Bussiness.Renderer
             this.actionDomain.Dispose();
             this.drawDomain.Dispose();
             this.projectileDomain.Dispose();
+            this.fieldDomain.Dispose();
         }
 
         protected virtual void _TickDomain(float dt)
@@ -73,6 +77,7 @@ namespace GamePlay.Bussiness.Renderer
             this.vfxDomain.Tick(dt);
             this.drawDomain.Tick(dt);
             this.projectileDomain.Tick(dt);
+            this.fieldDomain.Tick(dt);
         }
 
         public void Update(float dt)

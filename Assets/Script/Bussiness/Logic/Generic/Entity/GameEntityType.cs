@@ -11,7 +11,8 @@ namespace GamePlay.Bussiness.Logic
         Role = 1 << 0,   // 1
         Skill = 1 << 1,  // 2
         Projectile = 1 << 2, // 4
-        Buff = 1 << 3    // 8
+        Buff = 1 << 3,    // 8
+        Field = 1 << 4   // 16
     }
 
     // GameEntityType 扩展类

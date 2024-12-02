@@ -23,6 +23,8 @@ namespace GamePlay.Bussiness.Renderer
         public GameProjectileDomainApiR projectileApi { get; private set; }
         public void SetProjectileApi(GameProjectileDomainApiR projectileApi) => this.projectileApi = projectileApi;
 
+        public GameFieldDomainApiR fielApi { get; private set; }
+        public void SetFieldApi(GameFieldDomainApiR fielApi) => this.fielApi = fielApi;
 
     }
 }

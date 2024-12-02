@@ -22,5 +22,8 @@ namespace GamePlay.Bussiness.Logic
 
         public GameProjectileDomainApi projectileApi { get; private set; }
         public void SetProjectileApi(GameProjectileDomainApi projectileApi) => this.projectileApi = projectileApi;
+
+        public GameFieldDomainApi fieldApi { get; private set; }
+        public void SetFieldApi(GameFieldDomainApi fieldApi) => this.fieldApi = fieldApi;
     }
 }

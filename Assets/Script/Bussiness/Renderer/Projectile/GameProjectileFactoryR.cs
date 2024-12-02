@@ -6,12 +6,10 @@ namespace GamePlay.Bussiness.Renderer
     public class GameProjectileFactoryR
     {
         public GameProjectileTemplateR template { get; private set; }
-        public GameObject entityLayer { get; private set; }
 
         public GameProjectileFactoryR()
         {
             template = new GameProjectileTemplateR();
-            this.entityLayer = GameObject.Find(GameFieldLayerCollection.DynamicLayer);
         }
 
         public GameProjectileEntityR Load(int typeId)
@@ -28,7 +26,6 @@ namespace GamePlay.Bussiness.Renderer
             body.transform.SetParent(go.transform);
             body.AddComponent<Animator>().runtimeAnimatorController = null;
             body.AddComponent<SpriteRenderer>();
-            go.transform.SetParent(this.entityLayer.transform);
             go.transform.localPosition = new Vector3(0, 0, 0);
 
             var entity = new GameProjectileEntityR(model, go);

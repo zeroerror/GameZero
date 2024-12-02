@@ -4,11 +4,8 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleFactoryR
     {
-        public GameObject entityLayer { get; private set; }
-
         public GameRoleFactoryR()
         {
-            this.entityLayer = GameObject.Find(GameFieldLayerCollection.DynamicLayer);
         }
 
         public GameRoleEntityR Load(int typeId)
@@ -18,7 +15,6 @@ namespace GamePlay.Bussiness.Renderer
             var body = go.transform.Find("body").gameObject;
             body.AddComponent<Animator>().runtimeAnimatorController = null;
             body.AddComponent<SpriteRenderer>();
-            go.transform.SetParent(this.entityLayer.transform);
             go.transform.localPosition = new Vector3(0, 0, 0);
             var e = new GameRoleEntityR(typeId, go);
             return e;

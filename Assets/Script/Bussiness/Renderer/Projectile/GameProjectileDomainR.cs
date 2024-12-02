@@ -80,6 +80,7 @@ namespace GamePlay.Bussiness.Renderer
             projectile.transformCom.SetByArgs(transArgs);
             projectile.SyncTrans();
             projectile.animCom.Play(projectile.model.animClip);
+            this._context.domainApi.fielApi.AddToEntityLayer(projectile.go);
             repo.TryAdd(projectile);
         }
 

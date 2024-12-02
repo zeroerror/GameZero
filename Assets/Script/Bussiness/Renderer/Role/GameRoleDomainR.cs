@@ -57,7 +57,11 @@ namespace GamePlay.Bussiness.Renderer
 
         private GameRoleEntityR _Create(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
         {
-            var role = this._roleContext.factory.Load(idArgs.typeId);
+            var repo = this._roleContext.repo;
+            if (!repo.TryFetch(idArgs.typeId, out var role))
+            {
+                role = this._roleContext.factory.Load(idArgs.typeId);
+            }
             role.idCom.SetByArgs(idArgs);
             role.transformCom.SetByArgs(transArgs);
             role.SyncTrans();

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
@@ -14,6 +15,7 @@ namespace GamePlay.Bussiness.Logic
         public GameActionDomain actionDomain { get; private set; }
         public GameEntitySelectDomain entitySelectDomain { get; private set; }
         public GameProjectileDomain projectileDomain { get; private set; }
+        public GameFieldDomain fieldDomain { get; private set; }
 
         public GameDirectDomain()
         {
@@ -31,6 +33,7 @@ namespace GamePlay.Bussiness.Logic
             this.actionDomain = new GameActionDomain();
             this.entitySelectDomain = new GameEntitySelectDomain();
             this.projectileDomain = new GameProjectileDomain();
+            this.fieldDomain = new GameFieldDomain();
         }
 
         private void _InitContext()
@@ -43,6 +46,7 @@ namespace GamePlay.Bussiness.Logic
             this.context.domainApi.SetActionApi(this.actionDomain);
             this.context.domainApi.SetEntitySelectApi(this.entitySelectDomain);
             this.context.domainApi.SetProjectileApi(this.projectileDomain);
+            this.context.domainApi.SetFieldApi(this.fieldDomain);
         }
 
         private void _InjectContext()
@@ -54,12 +58,15 @@ namespace GamePlay.Bussiness.Logic
             this.actionDomain.Inject(this.context);
             this.entitySelectDomain.Inject(this.context);
             this.projectileDomain.Inject(this.context);
+            this.fieldDomain.Inject(this.context);
 
+            // TEST
             this.roleDomain.CreatePlayerRole(1001, 1, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
             this.roleDomain.CreatePlayerRole(1001, 1, new GameTransformArgs { position = new GameVec2(-4, -5), scale = GameVec2.one, forward = GameVec2.right }, false);
             this.roleDomain.CreatePlayerRole(1001, 2, new GameTransformArgs { position = new GameVec2(0, -2), scale = GameVec2.one, forward = GameVec2.right }, false);
             this.roleDomain.CreatePlayerRole(1001, 3, new GameTransformArgs { position = new GameVec2(4, -5), scale = GameVec2.one, forward = GameVec2.left }, false);
             this.roleDomain.CreatePlayerRole(1001, 3, new GameTransformArgs { position = new GameVec2(8, -5), scale = GameVec2.one, forward = GameVec2.left }, false);
+            this.fieldDomain.LoadField(1);
         }
 
         public void Dispose()
@@ -71,11 +78,13 @@ namespace GamePlay.Bussiness.Logic
             this.actionDomain.Dispose();
             this.entitySelectDomain.Dispose();
             this.projectileDomain.Dispose();
+            this.fieldDomain.Dispose();
         }
-
 
         protected virtual void _TickDomain(float dt)
         {
+            this.fieldDomain.Tick(dt);
+            if (this.context.fieldContext.curField == null) return;
             this.roleDomain.Tick(dt);
             this.skillDomain.Tick(dt);
             this.transformDomain.Tick(dt);
