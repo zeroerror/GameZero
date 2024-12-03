@@ -13,6 +13,8 @@ namespace GamePlay.Bussiness.Logic
         // 碰撞模型
         public GameColliderModelBase colliderModel;
 
+        public bool isRangeSelect => this.colliderModel != null;
+
         /// <summary>
         /// 判定单个实体是否满足选择
         /// entityA: 实体A，主动选择方

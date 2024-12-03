@@ -6,6 +6,11 @@ namespace GamePlay.Core
 {
     public class GamePhysicsResolvingUtil
     {
+        public static GameVec2 GetResolvingMTV(GameColliderModelBase colliderModelA, in GameTransformArgs transformArgs, GameColliderBase colliderB)
+        {
+            var mtv = GetResolvingMTV(colliderB, colliderModelA, transformArgs);
+            return mtv.Neg();
+        }
         public static GameVec2 GetResolvingMTV(GameColliderBase colliderA, GameColliderModelBase colliderModelB, in GameTransformArgs transformArgs)
         {
             switch (colliderModelB)
@@ -356,7 +361,33 @@ namespace GamePlay.Core
 
             return minMtv;
         }
+
+        public static bool CheckOverlap(GameColliderModelBase model, in GameTransformArgs transArgs, in GameVec2 point)
+        {
+            switch (model)
+            {
+                case GameBoxColliderModel boxModel:
+                    var boxCollider = GameBoxCollider.Default;
+                    boxCollider.SetByModel(boxModel);
+                    boxCollider.UpdateTRS(transArgs);
+                    return boxCollider.CheckOverlap(point);
+                case GameCircleColliderModel circleModel:
+                    var circleCollider = GameCircleCollider.Default;
+                    circleCollider.SetByModel(circleModel);
+                    circleCollider.UpdateTRS(transArgs);
+                    return circleCollider.CheckOverlap(point);
+                case GameFanColliderModel fanModel:
+                    var fanCollider = GameFanCollider.Default;
+                    fanCollider.SetByModel(fanModel);
+                    fanCollider.UpdateTRS(transArgs);
+                    return fanCollider.CheckOverlap(point);
+                default:
+                    GameLogger.LogError("GamePhysicsResolvingUtil.CheckOverlap: 未处理的碰撞体模型");
+                    return false;
+            }
+        }
     }
+
 }
 
 

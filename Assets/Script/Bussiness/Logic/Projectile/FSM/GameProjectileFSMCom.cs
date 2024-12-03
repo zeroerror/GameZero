@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileFSMCom
@@ -40,9 +41,10 @@ namespace GamePlay.Bussiness.Logic
             this.SwitchToState(GameProjectileStateType.LockOnEntity);
         }
 
-        public void EnterLockOnPosition()
+        public void EnterLockOnPosition(in GameVec2 lockOnPosition)
         {
             this.SwitchToState(GameProjectileStateType.LockOnPosition);
+            lockOnPositionStateModel.SetLockOnPosition(lockOnPosition);
         }
 
         public void EnterAttach()

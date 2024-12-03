@@ -10,7 +10,8 @@ namespace GamePlay.Bussiness.Logic
         public override void Enter(GameProjectileEntity entity)
         {
             var fsmCom = entity.fsmCom;
-            fsmCom.EnterLockOnPosition();
+            var targetPos = entity.actionTargeterCom.targetPos;
+            fsmCom.EnterLockOnPosition(targetPos);
         }
 
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity entity)

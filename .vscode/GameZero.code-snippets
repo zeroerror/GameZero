@@ -1,4 +1,11 @@
 {
+	"summary":{
+		"prefix": "summary",
+		"body": [
+			"/// <summary> $1 </summary>"
+		],
+		"description": "生成注释"
+	},
 	"gv2": {
 		"prefix": "gv2",
 		"body": [
