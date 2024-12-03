@@ -6,6 +6,7 @@ namespace GamePlay.Bussiness.Renderer
     public abstract class GameProjectileStateDomainBaseR
     {
         protected GameContextR _context;
+        protected GameProjectileContextR _projectileContext => this._context.projectileContext;
 
         public GameProjectileStateDomainBaseR() { }
 

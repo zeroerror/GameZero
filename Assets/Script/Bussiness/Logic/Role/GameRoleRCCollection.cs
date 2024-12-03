@@ -12,6 +12,8 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_ROLE_STATE_ENTER_CAST = "RC_GAME_ROLE_STATE_ENTER_CAST";
         /* 角色状态 - 进入 死亡 */
         public static readonly string RC_GAME_ROLE_STATE_ENTER_DEAD = "RC_GAME_ROLE_STATE_ENTER_DEAD";
+        /* 角色状态 - 进入 死亡 */
+        public static readonly string RC_GAME_ROLE_STATE_ENTER_DESTROYED = "RC_GAME_ROLE_STATE_ENTER_DESTROYED";
     }
 
     public struct GameRoleRCArgs_Create
@@ -23,26 +25,32 @@ namespace GamePlay.Bussiness.Logic
 
     public struct GameRoleRCArgs_StateEnterIdle
     {
-        public GameRoleStateType fromState;
+        public GameRoleStateType fromStateType;
         public GameIdArgs idArgs;
     }
 
     public struct GameRoleRCArgs_StateEnterMove
     {
-        public GameRoleStateType fromState;
+        public GameRoleStateType fromStateType;
         public GameIdArgs idArgs;
     }
 
     public struct GameRoleRCArgs_StateEnterCast
     {
-        public GameRoleStateType fromState;
+        public GameRoleStateType fromStateType;
         public GameIdArgs idArgs;
         public int skillId;
     }
 
     public struct GameRoleRCArgs_StateEnterDead
     {
-        public GameRoleStateType fromState;
+        public GameRoleStateType fromStateType;
+        public GameIdArgs idArgs;
+    }
+
+    public struct GameRoleRCArgs_StateEnterDestroyed
+    {
+        public GameRoleStateType fromStateType;
         public GameIdArgs idArgs;
     }
 }

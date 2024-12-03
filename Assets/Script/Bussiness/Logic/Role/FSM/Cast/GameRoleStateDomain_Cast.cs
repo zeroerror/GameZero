@@ -28,7 +28,7 @@ namespace GamePlay.Bussiness.Logic
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_CAST, new GameRoleRCArgs_StateEnterCast
             {
-                fromState = entity.fsmCom.stateType,
+                fromStateType = entity.fsmCom.stateType,
                 idArgs = entity.idCom.ToArgs(),
                 skillId = skillId,
             });

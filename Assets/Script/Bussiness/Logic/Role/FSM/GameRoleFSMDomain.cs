@@ -13,6 +13,7 @@ namespace GamePlay.Bussiness.Logic
             this._stateDomainDict.Add(GameRoleStateType.Move, new GameRoleStateDomain_Move());
             this._stateDomainDict.Add(GameRoleStateType.Cast, new GameRoleStateDomain_Cast());
             this._stateDomainDict.Add(GameRoleStateType.Dead, new GameRoleStateDomain_Dead());
+            this._stateDomainDict.Add(GameRoleStateType.Destroyed, new GameRoleStateDomain_Destroyed());
         }
 
         public void Inject(GameContext context)

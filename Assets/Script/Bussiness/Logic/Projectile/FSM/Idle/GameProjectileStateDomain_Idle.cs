@@ -11,6 +11,12 @@ namespace GamePlay.Bussiness.Logic
         {
             var fsmCom = entity.fsmCom;
             fsmCom.EnterIdle();
+            // 提交RC
+            this._context.SubmitRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_STATE_ENTER_IDLE, new GameProjectileRCArgs_StateEnterIdle
+            {
+                fromStateType = fsmCom.stateType,
+                idArgs = entity.idCom.ToArgs(),
+            });
         }
 
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity entity)

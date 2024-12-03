@@ -17,7 +17,7 @@ namespace GamePlay.Bussiness.Logic
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, new GameRoleRCArgs_StateEnterMove
             {
-                fromState = role.fsmCom.stateType,
+                fromStateType = role.fsmCom.stateType,
                 idArgs = role.idCom.ToArgs(),
             });
         }

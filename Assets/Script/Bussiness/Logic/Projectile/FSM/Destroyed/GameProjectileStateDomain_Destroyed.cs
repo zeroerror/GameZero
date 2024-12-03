@@ -1,6 +1,6 @@
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileStateDomain_LockOnPosition : GameProjectileStateDomainBase
+    public class GameProjectileStateDomain_Destroyed : GameProjectileStateDomainBase
     {
         public override bool CheckEnter(GameProjectileEntity entity)
         {
@@ -10,16 +10,14 @@ namespace GamePlay.Bussiness.Logic
         public override void Enter(GameProjectileEntity entity)
         {
             var fsmCom = entity.fsmCom;
-            var targetPos = entity.actionTargeterCom.targetPos;
-            fsmCom.EnterLockOnPosition(targetPos);
-
+            fsmCom.EnterDestroyed();
             // 提交RC
-            this._context.SubmitRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_STATE_ENTER_LOCK_ON_POSITION, new GameProjectileRCArgs_StateEnterLockOnPosition
+            this._context.SubmitRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_STATE_ENTER_DESTROYED, new GameProjectileRCArgs_StateEnterDestroyed
             {
                 fromStateType = fsmCom.stateType,
                 idArgs = entity.idCom.ToArgs(),
-                targetPosition = targetPos,
             });
+            entity.idCom.entityId = -1;
         }
 
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity entity)
@@ -29,7 +27,9 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameProjectileEntity entity, float frameTime)
         {
-            throw new System.NotImplementedException();
+            var fsmCom = entity.fsmCom;
+            var stateModel = fsmCom.destroyedStateModel;
+            stateModel.stateTime += frameTime;
         }
     }
 

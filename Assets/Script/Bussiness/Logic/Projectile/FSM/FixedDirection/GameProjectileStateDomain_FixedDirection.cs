@@ -13,6 +13,13 @@ namespace GamePlay.Bussiness.Logic
             fsmCom.EnterFixedDirection();
             var direction = projectile.actionTargeterCom.targetDirection;
             projectile.FaceTo(direction);
+            // 提交RC
+            this._context.SubmitRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_STATE_ENTER_FIXED_DIRECTION, new GameProjectileRCArgs_StateEnterFixedDirection
+            {
+                fromStateType = fsmCom.stateType,
+                idArgs = projectile.idCom.ToArgs(),
+                direction = direction,
+            });
         }
 
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity entity)

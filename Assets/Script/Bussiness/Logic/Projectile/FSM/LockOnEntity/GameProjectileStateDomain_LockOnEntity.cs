@@ -18,6 +18,14 @@ namespace GamePlay.Bussiness.Logic
             var offset = targetPos - pos;
             var dir = offset.normalized;
             projectile.FaceTo(dir);
+
+            // 提交RC
+            this._context.SubmitRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_STATE_ENTER_LOCK_ON_ENTITY, new GameProjectileRCArgs_StateEnterLockOnEntity
+            {
+                fromStateType = fsmCom.stateType,
+                idArgs = projectile.idCom.ToArgs(),
+                targetIdArgs = targetEntity.idCom.ToArgs(),
+            });
         }
 
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity projectile)

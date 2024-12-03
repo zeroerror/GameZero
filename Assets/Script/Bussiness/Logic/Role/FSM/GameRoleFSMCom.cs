@@ -10,6 +10,7 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleStateModel_Move moveStateModel { get; private set; }
         public GameRoleStateModel_Cast castStateModel { get; private set; }
         public GameRoleStateModel_Dead deadStateModel { get; private set; }
+        public GameRoleStateModel_Destroyed destroyedStateModel { get; private set; }
 
         public Dictionary<GameRoleStateType, GameRoleStateModelBase> stateModelDict;
         public GameRoleFSMCom()
@@ -18,6 +19,7 @@ namespace GamePlay.Bussiness.Logic
             moveStateModel = new GameRoleStateModel_Move();
             castStateModel = new GameRoleStateModel_Cast();
             deadStateModel = new GameRoleStateModel_Dead();
+            destroyedStateModel = new GameRoleStateModel_Destroyed();
         }
 
         public void EnterIdle()
@@ -41,6 +43,11 @@ namespace GamePlay.Bussiness.Logic
             this.SwitchToState(GameRoleStateType.Dead);
         }
 
+        public void EnterDestroyed()
+        {
+            this.SwitchToState(GameRoleStateType.Destroyed);
+        }
+
         public void SwitchToState(GameRoleStateType nextState)
         {
             this.lastStateType = this.stateType;
@@ -58,6 +65,9 @@ namespace GamePlay.Bussiness.Logic
                     break;
                 case GameRoleStateType.Dead:
                     deadStateModel.Clear();
+                    break;
+                case GameRoleStateType.Destroyed:
+                    destroyedStateModel.Clear();
                     break;
             }
         }

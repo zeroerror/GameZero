@@ -13,6 +13,7 @@ namespace GamePlay.Bussiness.Logic
         public GameProjectileStateModel_LockOnPosition lockOnPositionStateModel { get; private set; }
         public GameProjectileStateModel_Attach attachStateModel { get; private set; }
         public GameProjectileStateModel_Explode explodeStateModel { get; private set; }
+        public GameProjectileStateModel_Destroyed destroyedStateModel { get; private set; }
         public Dictionary<GameProjectileStateType, GameProjectileStateTriggerSetEntity> triggerSetEntityDict { get; private set; }
 
         public GameProjectileFSMCom()
@@ -23,6 +24,7 @@ namespace GamePlay.Bussiness.Logic
             lockOnPositionStateModel = new GameProjectileStateModel_LockOnPosition();
             attachStateModel = new GameProjectileStateModel_Attach();
             explodeStateModel = new GameProjectileStateModel_Explode();
+            destroyedStateModel = new GameProjectileStateModel_Destroyed();
             triggerSetEntityDict = new Dictionary<GameProjectileStateType, GameProjectileStateTriggerSetEntity>();
         }
 
@@ -55,6 +57,11 @@ namespace GamePlay.Bussiness.Logic
         public void EnterExplode()
         {
             this.SwitchToState(GameProjectileStateType.Explode);
+        }
+
+        public void EnterDestroyed()
+        {
+            this.SwitchToState(GameProjectileStateType.Destroyed);
         }
 
         public void SwitchToState(GameProjectileStateType nextState)

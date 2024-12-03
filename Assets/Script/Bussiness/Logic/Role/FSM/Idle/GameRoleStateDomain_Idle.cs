@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Logic
             entity.fsmCom.EnterIdle();            // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_IDLE, new GameRoleRCArgs_StateEnterIdle
             {
-                fromState = entity.fsmCom.stateType,
+                fromStateType = entity.fsmCom.stateType,
                 idArgs = entity.idCom.ToArgs(),
             });
         }

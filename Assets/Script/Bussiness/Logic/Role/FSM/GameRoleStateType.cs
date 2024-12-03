@@ -4,7 +4,8 @@ public enum GameRoleStateType
     Idle,
     Move,
     Cast,
-    Dead
+    Dead,
+    Destroyed,
 }
 
 // extension

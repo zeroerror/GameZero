@@ -7,6 +7,7 @@ namespace GamePlay.Bussiness.Logic
 
         public GameEventService eventService { get; private set; }
         public GameEventService rcEventService { get; private set; }
+        public GameCmdBufferService cmdBufferService { get; private set; }
 
         public GameDomainApi domainApi { get; private set; }
         public GameRoleContext roleContext { get; private set; }
@@ -16,12 +17,14 @@ namespace GamePlay.Bussiness.Logic
         public GameProjectileContext projectileContext { get; private set; }
         public GameFieldContext fieldContext { get; private set; }
 
+
         public GameContext()
         {
             this.director = new GameDirector();
 
             this.eventService = new GameEventService();
             this.rcEventService = new GameEventService();
+            this.cmdBufferService = new GameCmdBufferService();
 
             this.domainApi = new GameDomainApi();
             this.roleContext = new GameRoleContext();
