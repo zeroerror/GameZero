@@ -55,8 +55,8 @@ namespace GamePlay.Core
                         listener(submit.args);
                     }
                 }
+                list.RemoveRange(0, count);
             }
-            _submitLists.Clear();
         }
     }
 

@@ -34,24 +34,26 @@ namespace GamePlay.Bussiness.Logic
             this._roleContext.ClearPlayerInputArgs();
         }
 
-        private void _DoAutoLockTarget(GameEntityBase entity, ref GameRoleInputArgs inputArgs)
+        private void _DoAutoLockTarget(GameEntityBase actor, ref GameRoleInputArgs inputArgs)
         {
             var skillId = inputArgs.skillId;
             if (skillId == 0) return;
             if (!this._context.domainApi.skillApi.TryGetModel(skillId, out var skillModel)) return;
-            var targeterType = skillModel.conditionModel.targeterType;
+            var targeterList = inputArgs.targeterArgsList;
+            if (targeterList?.Count > 0) return;
+            targeterList = new List<GameActionTargeterArgs>();
             var roleApi = this._context.domainApi.roleApi;
-            var nearestEnemy = roleApi.GetNearestEnemy(entity);
-            var targeterList = new List<GameActionTargeterArgs>();
+            var nearestEnemy = roleApi.GetNearestEnemy(actor);
             inputArgs.targeterArgsList = targeterList;
+            var targeterType = skillModel.conditionModel.targeterType;
             switch (targeterType)
             {
                 case GameSkillTargterType.Enemy:
                     targeterList.Add(new GameActionTargeterArgs { targetEntity = nearestEnemy });
                     break;
                 case GameSkillTargterType.Direction:
-                    var dir = nearestEnemy.transformCom.position - entity.transformCom.position;
-                    dir.Normalize();
+                    var dir = actor.transformCom.forward;
+                    if (nearestEnemy != null) dir = (nearestEnemy.transformCom.position - actor.transformCom.position).normalized;
                     targeterList.Add(new GameActionTargeterArgs { targetDirection = dir });
                     break;
                 case GameSkillTargterType.Position:
