@@ -40,6 +40,9 @@ namespace GamePlay.Bussiness.Logic
             if (isLockOnEntity)
             {
                 var lockOnEntity = projectile.fsmCom.lockOnEntityStateModel.lockOnEntity;
+                // 1. 检测目标实体的坐标是否在碰撞体内
+                if (!triggerModel.checkByTargetCollider) return GamePhysicsResolvingUtil.CheckOverlap(selColliderModel, projectile.transformCom.ToArgs(), lockOnEntity.transformCom.position);
+                // 2. 检测目标实体的碰撞体是否与碰撞体相交
                 var lockOnCollider = lockOnEntity.physicsCom.collider;
                 var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(lockOnCollider, selColliderModel, projectile.transformCom.ToArgs());
                 var isImpact = mtv != GameVec2.zero;

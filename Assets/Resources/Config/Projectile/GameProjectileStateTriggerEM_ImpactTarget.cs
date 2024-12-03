@@ -10,11 +10,13 @@ namespace GamePlay.Config
         public GameActionSO actionSO;
         [Header("下一个状态")]
         public GameProjectileStateType nextStateType;
+        [Header("是否为检测目标碰撞体")]
+        public bool checkByTargetCollider;
 
         public GameProjectileStateTriggerModel_ImpactTarget ToModel()
         {
             var actionId = this.actionSO == null ? 0 : this.actionSO.typeId;
-            var model = new GameProjectileStateTriggerModel_ImpactTarget(actionId, nextStateType);
+            var model = new GameProjectileStateTriggerModel_ImpactTarget(actionId, nextStateType, checkByTargetCollider);
             return model;
         }
     }
