@@ -20,7 +20,7 @@ namespace GamePlay.Bussiness.Logic
                 fromStateType = entity.fsmCom.stateType,
                 idArgs = entity.idCom.ToArgs(),
             });
-            entity.idCom.entityId = -1;
+            entity.SetValid(false);
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity entity)

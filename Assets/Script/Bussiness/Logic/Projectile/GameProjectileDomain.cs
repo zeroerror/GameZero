@@ -53,7 +53,7 @@ namespace GamePlay.Bussiness.Logic
             transArgs.scale = scale;
 
             projectile.transformCom.SetByArgs(transArgs);
-            projectile.idCom.entityId = this._projectileContext.idService.FetchId();
+            projectile.idCom.SetEntityId(this._projectileContext.idService.FetchId());
             projectile.idCom.SetParent(creator);
             projectile.actionTargeterCom.SetTargeter(targeter);
             repo.TryAdd(projectile);

@@ -5,6 +5,6 @@ namespace GamePlay.Bussiness.Renderer
 {
     public interface GameFieldDomainApiR
     {
-        public void AddToEntityLayer(GameObject go);
+        public void AddToLayer(GameObject go, GameFieldLayerType layerType);
     }
 }

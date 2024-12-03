@@ -1,0 +1,21 @@
+using GamePlay.Bussiness.Logic;
+using UnityEngine;
+
+namespace GamePlay.Config
+{
+    [System.Serializable]
+    public class GameProjectileStateTriggerEM_ImpactTarget
+    {
+        [Header("触发的行为")]
+        public GameActionSO actionSO;
+        [Header("下一个状态")]
+        public GameProjectileStateType nextStateType;
+
+        public GameProjectileStateTriggerModel_ImpactTarget ToModel()
+        {
+            var actionId = this.actionSO == null ? 0 : this.actionSO.typeId;
+            var model = new GameProjectileStateTriggerModel_ImpactTarget(actionId, nextStateType);
+            return model;
+        }
+    }
+}

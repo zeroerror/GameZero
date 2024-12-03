@@ -26,5 +26,8 @@ namespace GamePlay.Bussiness.Renderer
         public GameFieldDomainApiR fielApi { get; private set; }
         public void SetFieldApi(GameFieldDomainApiR fielApi) => this.fielApi = fielApi;
 
+        public GameEntityCollectDomainApiR entityCollectApi { get; private set; }
+        public void SetEntityCollectApi(GameEntityCollectDomainApiR entityCollectApi) => this.entityCollectApi = entityCollectApi;
+
     }
 }

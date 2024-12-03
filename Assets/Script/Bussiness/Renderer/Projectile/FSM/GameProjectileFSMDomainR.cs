@@ -17,6 +17,7 @@ namespace GamePlay.Bussiness.Renderer
             this._stateDomainDict.Add(GameProjectileStateType.LockOnPosition, new GameProjectileStateDomain_LockOnPositionR());
             this._stateDomainDict.Add(GameProjectileStateType.Attach, new GameProjectileStateDomain_AttachR());
             this._stateDomainDict.Add(GameProjectileStateType.Explode, new GameProjectileStateDomain_ExplodeR());
+            this._stateDomainDict.Add(GameProjectileStateType.Destroyed, new GameProjectileStateDomain_DestroyedR());
         }
 
         public void Inject(GameContextR context)
@@ -53,6 +54,7 @@ namespace GamePlay.Bussiness.Renderer
             var fsmCom = entity.fsmCom;
             var stateType = fsmCom.stateType;
             if (stateType == GameProjectileStateType.None) return;
+            // 状态逻辑
             if (!this._stateDomainDict.TryGetValue(stateType, out var stateDomain)) return;
             stateDomain.Tick(entity, dt);
         }

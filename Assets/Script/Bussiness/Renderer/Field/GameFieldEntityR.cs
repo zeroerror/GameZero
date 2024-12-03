@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
 using UnityEngine;
 
@@ -8,17 +9,14 @@ namespace GamePlay.Bussiness.Renderer
         public GameFieldModelR model { get; private set; }
 
         public GameObject go { get; private set; }
-        public GameObject entityLayer { get; private set; }
-        public GameObject environmentLayer { get; private set; }
-        public GameObject groundLayer { get; private set; }
+        public Dictionary<GameFieldLayerType, GameObject> layers { get; private set; }
 
-        public GameFieldEntityR(GameFieldModelR model, GameObject rootGO, GameObject entityLayer, GameObject environmentLayer, GameObject groundLayer) : base(model.typeId, GameEntityType.Field)
+        public GameFieldEntityR(GameFieldModelR model, GameObject go, Dictionary<GameFieldLayerType, GameObject> layers)
+        : base(model.typeId, GameEntityType.Field)
         {
             this.model = model;
-            this.go = rootGO;
-            this.entityLayer = entityLayer;
-            this.environmentLayer = environmentLayer;
-            this.groundLayer = groundLayer;
+            this.go = go;
+            this.layers = layers;
         }
 
         public override void Tick(float dt)
@@ -27,7 +25,11 @@ namespace GamePlay.Bussiness.Renderer
 
         public override void Dispose()
         {
-            throw new System.NotImplementedException();
+        }
+
+        public GameObject GetLayer(GameFieldLayerType layerType)
+        {
+            return this.layers[layerType];
         }
     }
 }

@@ -52,7 +52,7 @@ namespace GamePlay.Bussiness.Logic
                 return null;
             }
             e.transformCom.SetByArgs(transArgs);
-            e.idCom.entityId = this._roleContext.idService.FetchId();
+            e.idCom.SetEntityId(this._roleContext.idService.FetchId());
             e.idCom.campId = campId;
             var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0.625f), 0, 0.7f, 1.25f);
             this._context.domainApi.physicsApi.CreatePhysics(e, colliderModel);

@@ -23,7 +23,7 @@ namespace GamePlay.Bussiness.Logic
                 var repo = this._context.roleContext.repo;
                 repo.ForeachEntities((entity) =>
                 {
-                    if (entity.isValid()) return;
+                    if (entity.isValid) return;
                     this._context.cmdBufferService.Add(0, () =>
                     {
                         repo.Recycle(entity);
@@ -34,7 +34,7 @@ namespace GamePlay.Bussiness.Logic
                 var repo = this._context.projectileContext.repo;
                 repo.ForeachEntities((entity) =>
                 {
-                    if (entity.isValid()) return;
+                    if (entity.isValid) return;
                     this._context.cmdBufferService.Add(0, () =>
                     {
                         repo.Recycle(entity);

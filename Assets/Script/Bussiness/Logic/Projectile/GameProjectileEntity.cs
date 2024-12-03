@@ -16,6 +16,12 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
+        public override void Clear()
+        {
+            base.Clear();
+            this.fsmCom.Clear();
+        }
+
         public override void Dispose()
         {
         }

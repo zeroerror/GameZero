@@ -9,10 +9,10 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Enter(GameProjectileEntity projectile)
         {
-            var fsmCom = projectile.fsmCom;
-            fsmCom.EnterLockOnEntity();
-
             var targetEntity = projectile.actionTargeterCom.targetEntity;
+            var fsmCom = projectile.fsmCom;
+            fsmCom.EnterLockOnEntity(targetEntity);
+
             var targetPos = targetEntity.transformCom.position;
             var pos = projectile.transformCom.position;
             var offset = targetPos - pos;

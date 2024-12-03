@@ -6,16 +6,20 @@ namespace GamePlay.Config
     [System.Serializable]
     public class GameProjectileStateTriggerEMSet
     {
-        [Header("持续时间触发器")]
+        [Header("触发器 - 持续时间")]
         public GameProjectileStateTriggerEM_Duration durationTriggerModel;
-        [Header("体积碰撞触发器")]
+        [Header("触发器 - 体积碰撞")]
         public GameProjectileStateTriggerEM_VolumeCollision volumeCollisionTriggerModel;
+        [Header("触发器 - 与目标碰撞")]
+        public GameProjectileStateTriggerEM_ImpactTarget impactTargetTriggerModel;
 
         public GameProjectileStateTriggerModelSet ToModelSet()
         {
-            var modelSet = new GameProjectileStateTriggerModelSet();
-            modelSet.durationTriggerModel = this.durationTriggerModel.ToModel();
-            modelSet.volumeCollisionTriggerModel = this.volumeCollisionTriggerModel.ToModel();
+            var modelSet = new GameProjectileStateTriggerModelSet(
+                this.durationTriggerModel.ToModel(),
+                this.volumeCollisionTriggerModel.ToModel(),
+                this.impactTargetTriggerModel.ToModel()
+            );
             return modelSet;
         }
     }

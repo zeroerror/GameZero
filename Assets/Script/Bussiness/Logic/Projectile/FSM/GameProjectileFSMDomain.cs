@@ -18,6 +18,7 @@ namespace GamePlay.Bussiness.Logic
             this._stateDomainDict.Add(GameProjectileStateType.LockOnPosition, new GameProjectileStateDomain_LockOnPosition());
             this._stateDomainDict.Add(GameProjectileStateType.Attach, new GameProjectileStateDomain_Attach());
             this._stateDomainDict.Add(GameProjectileStateType.Explode, new GameProjectileStateDomain_Explode());
+            this._stateDomainDict.Add(GameProjectileStateType.Destroyed, new GameProjectileStateDomain_Destroyed());
 
             this._triggerDomain = new GameProjectileStateTriggerDomain();
         }
@@ -42,32 +43,19 @@ namespace GamePlay.Bussiness.Logic
             var fsmCom = projectile.fsmCom;
             var stateType = fsmCom.stateType;
             if (stateType == GameProjectileStateType.None) return;
+            // 状态逻辑
             if (!this._stateDomainDict.TryGetValue(stateType, out var stateDomain)) return;
             stateDomain.Tick(projectile, dt);
+            // 触发器逻辑
             var nextStateType = this._triggerDomain.Tick(projectile, dt);
             if (nextStateType != GameProjectileStateType.None) this._Enter(projectile, nextStateType);
         }
 
         public void InitFSM(GameProjectileEntity projectile)
         {
-
-            var triggerSetEntityDict = projectile.fsmCom.triggerSetEntityDict;
-            var model = projectile.model;
-            var stateTriggerDict = model.stateTriggerSetDict;
-            var firstStateType = GameProjectileStateType.None;
-            foreach (var kv in stateTriggerDict)
-            {
-                var stateType = kv.Key;
-                var triggerSet = kv.Value;
-                var triggerSetEntity = new GameProjectileStateTriggerSetEntity(
-                    new GameProjectileStateTriggerEntity_Duration(triggerSet.durationTriggerModel),
-                    new GameProjectileStateTriggerEntity_VolumeCollision(triggerSet.volumeCollisionTriggerModel)
-                );
-                if (firstStateType == GameProjectileStateType.None) firstStateType = stateType;
-                triggerSetEntityDict.Add(stateType, triggerSetEntity);
-            }
-            firstStateType = firstStateType == GameProjectileStateType.None ? GameProjectileStateType.Idle : firstStateType;
-            this._Enter(projectile, firstStateType);
+            this._triggerDomain.InitFSMTrigger(projectile);
+            var fsmCom = projectile.fsmCom;
+            this._Enter(projectile, fsmCom.defaultStateType);
         }
 
         public bool TryEnter(GameProjectileEntity entity, GameProjectileStateType state)

@@ -33,6 +33,7 @@ namespace GamePlay.Bussiness.Logic
             if (this._dict.Remove(entity.idCom.entityId, out entity))
             {
                 entity.Dispose();
+                GameLogger.Log($"实体仓库 移除: {entity.idCom}");
                 return true;
             }
             return false;
@@ -41,10 +42,16 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 回收实体到仓库对象池 </summary>
         public void Recycle(T entity)
         {
-            if (!this.TryRemove(entity)) return;
+            var collider = entity.physicsCom.collider;
+            if (collider != null) collider.isEnable = false;
+            if (!this._dict.Remove(entity.idCom.entityId, out entity)) return;
+
             var typeId = entity.idCom.typeId;
-            if (!this._poolDict.TryGetValue(typeId, out List<T> entityPool)) entityPool = new List<T>();
-            this._poolDict.Add(typeId, entityPool);
+            if (!this._poolDict.TryGetValue(typeId, out List<T> entityPool))
+            {
+                entityPool = new List<T>();
+                this._poolDict.Add(typeId, entityPool);
+            }
             entityPool.Add(entity);
             GameLogger.Log($"实体仓库 回收: {entity.idCom}");
             entity.Clear();
