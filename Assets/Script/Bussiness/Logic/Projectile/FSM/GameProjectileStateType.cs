@@ -33,5 +33,10 @@ namespace GamePlay.Bussiness.Logic
         /// 爆炸，通常表示命中目标或达到预定条件后产生的伤害或其他效果。
         /// </summary>
         Explode = 6,
+
+        /// <summary>
+        /// 被销毁，通常表示投射物已经完成了它的使命，或者因为某种原因被强制销毁。
+        /// </summary>
+        Destroyed = 6,
     }
 }

@@ -14,6 +14,5 @@ namespace GamePlay.Bussiness.Logic
             base.Clear();
             this.lockOnPosition = GameVec2.zero;
         }
-
     }
 }
