@@ -19,9 +19,9 @@ namespace GamePlay.Bussiness.Logic
         public bool CheckSatisfied(GameProjectileEntity projectile, GameProjectileStateTriggerEntity_ImpactTarget trigger, float dt)
         {
             var stateType = projectile.fsmCom.stateType;
-            var isLockOnEntity = stateType == GameProjectileStateType.LockOnEntity;
-            var isLockOnPosition = stateType == GameProjectileStateType.LockOnPosition;
-            if (!isLockOnEntity && !isLockOnPosition)
+            var isLockOnEntityState = stateType == GameProjectileStateType.LockOnEntity;
+            var isLockOnPositionState = stateType == GameProjectileStateType.LockOnPosition;
+            if (!isLockOnEntityState && !isLockOnPositionState)
             {
                 GameLogger.LogError("状态触发器[与目标发生碰撞]: 前提条件当前状态必须是锁定实体或锁定位置");
                 return false;
@@ -37,9 +37,9 @@ namespace GamePlay.Bussiness.Logic
             }
 
             var selColliderModel = selector.colliderModel;
-            if (isLockOnEntity)
+            if (isLockOnEntityState)
             {
-                var lockOnEntity = projectile.fsmCom.lockOnEntityStateModel.lockOnEntity;
+                var lockOnEntity = projectile.fsmCom.lockOnEntityState.lockOnEntity;
                 // 1. 检测目标实体的坐标是否在碰撞体内
                 if (!triggerModel.checkByTargetCollider) return GamePhysicsResolvingUtil.CheckOverlap(selColliderModel, projectile.transformCom.ToArgs(), lockOnEntity.transformCom.position);
                 // 2. 检测目标实体的碰撞体是否与碰撞体相交
@@ -49,7 +49,7 @@ namespace GamePlay.Bussiness.Logic
                 return isImpact;
             }
 
-            var lockOnPosition = projectile.fsmCom.lockOnPositionStateModel.lockOnPosition;
+            var lockOnPosition = projectile.fsmCom.lockOnPositionState.lockOnPosition;
             return GamePhysicsResolvingUtil.CheckOverlap(selColliderModel, projectile.transformCom.ToArgs(), lockOnPosition);
         }
     }

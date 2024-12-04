@@ -36,7 +36,7 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameRoleEntity entity, float frameTime)
         {
-            var stateModel = entity.fsmCom.castStateModel;
+            var stateModel = entity.fsmCom.castState;
             var skill = stateModel.skill;
             // 时间轴更新
             var timelineCom = skill.timelineCom;
@@ -45,7 +45,7 @@ namespace GamePlay.Bussiness.Logic
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity entity)
         {
-            var stateModel = entity.fsmCom.castStateModel;
+            var stateModel = entity.fsmCom.castState;
             var skill = stateModel.skill;
             var timelineCom = skill.timelineCom;
             if (!timelineCom.isPlaying) return GameRoleStateType.Idle;

@@ -7,22 +7,22 @@ namespace GamePlay.Bussiness.Renderer
         public GameProjectileStateType stateType { get; private set; }
         public GameProjectileStateType lastStateType { get; private set; }
 
-        public GameProjectileStateModel_Idle idleStateModel { get; private set; }
-        public GameProjectileStateModel_FixedDirection fixedDirectionStateModel { get; private set; }
-        public GameProjectileStateModel_LockOnEntity lockOnEntityStateModel { get; private set; }
-        public GameProjectileStateModel_LockOnPosition lockOnPositionStateModel { get; private set; }
-        public GameProjectileStateModel_Attach attachStateModel { get; private set; }
-        public GameProjectileStateModel_Explode explodeStateModel { get; private set; }
+        public GameProjectileState_Idle idleState { get; private set; }
+        public GameProjectileState_FixedDirection fixedDirectionState { get; private set; }
+        public GameProjectileState_LockOnEntity lockOnEntityState { get; private set; }
+        public GameProjectileState_LockOnPosition lockOnPositionState { get; private set; }
+        public GameProjectileState_Attach attachState { get; private set; }
+        public GameProjectileState_Explode explodeState { get; private set; }
 
-        public Dictionary<GameProjectileStateType, GameProjectileStateModelBase> stateModelDict;
+        public Dictionary<GameProjectileStateType, GameProjectileStateBase> stateModelDict;
         public GameProjectileFSMCom()
         {
-            idleStateModel = new GameProjectileStateModel_Idle();
-            fixedDirectionStateModel = new GameProjectileStateModel_FixedDirection();
-            lockOnEntityStateModel = new GameProjectileStateModel_LockOnEntity();
-            lockOnPositionStateModel = new GameProjectileStateModel_LockOnPosition();
-            attachStateModel = new GameProjectileStateModel_Attach();
-            explodeStateModel = new GameProjectileStateModel_Explode();
+            idleState = new GameProjectileState_Idle();
+            fixedDirectionState = new GameProjectileState_FixedDirection();
+            lockOnEntityState = new GameProjectileState_LockOnEntity();
+            lockOnPositionState = new GameProjectileState_LockOnPosition();
+            attachState = new GameProjectileState_Attach();
+            explodeState = new GameProjectileState_Explode();
         }
 
         public void EnterIdle()
@@ -62,22 +62,22 @@ namespace GamePlay.Bussiness.Renderer
             switch (nextState)
             {
                 case GameProjectileStateType.Idle:
-                    idleStateModel.Clear();
+                    idleState.Clear();
                     break;
                 case GameProjectileStateType.FixedDirection:
-                    fixedDirectionStateModel.Clear();
+                    fixedDirectionState.Clear();
                     break;
                 case GameProjectileStateType.LockOnEntity:
-                    lockOnEntityStateModel.Clear();
+                    lockOnEntityState.Clear();
                     break;
                 case GameProjectileStateType.LockOnPosition:
-                    lockOnPositionStateModel.Clear();
+                    lockOnPositionState.Clear();
                     break;
                 case GameProjectileStateType.Attach:
-                    attachStateModel.Clear();
+                    attachState.Clear();
                     break;
                 case GameProjectileStateType.Explode:
-                    explodeStateModel.Clear();
+                    explodeState.Clear();
                     break;
             }
         }

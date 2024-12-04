@@ -24,8 +24,8 @@ namespace GamePlay.Config
         // --------------- 编辑器数据 ---------------
         [Header("动画名称")]
         public string animName_edit;
-        [Header("状态触发器列表")]
-        public GameProjectileStateTriggerEM[] stateTriggers;
+        [Header("状态模型列表")]
+        public GameProjectileStateEM[] stateEMs;
 
         protected override void OnValidate()
         {

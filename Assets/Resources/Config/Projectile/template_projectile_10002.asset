@@ -17,7 +17,7 @@ MonoBehaviour:
   animLength: 0.083333336
   timelineEvents: []
   animName_edit: p_feibiao
-  stateTriggers:
+  stateEMs:
   - stateType: 1
     emSet:
       durationTriggerModel:

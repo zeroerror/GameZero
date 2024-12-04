@@ -34,11 +34,13 @@ namespace GamePlay.Bussiness.Logic
                 return false;
             }
             var modelSetDict = new Dictionary<GameProjectileStateType, GameProjectileStateTriggerModelSet>();
-            foreach (var triggerEM in so.stateTriggers)
+            var stateModelDict = new Dictionary<GameProjectileStateType, object>();
+            foreach (var stateEM in so.stateEMs)
             {
-                modelSetDict.Add(triggerEM.stateType, triggerEM.emSet.ToModelSet());
+                modelSetDict.Add(stateEM.stateType, stateEM.emSet.ToModelSet());
+                stateModelDict.Add(stateEM.stateType, stateEM.ToModel());
             }
-            model = new GameProjectileModel(typeId, so.animLength, so.timelineEvents.ToModels(), modelSetDict, so.lifeTime);
+            model = new GameProjectileModel(typeId, so.animLength, so.timelineEvents.ToModels(), modelSetDict, stateModelDict, so.lifeTime);
             _dict.Add(typeId, model);
             return true;
         }

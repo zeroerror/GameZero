@@ -17,7 +17,7 @@ MonoBehaviour:
   animLength: 0.25
   timelineEvents: []
   animName_edit: p_fireball
-  stateTriggers:
+  stateEMs:
   - stateType: 3
     emSet:
       durationTriggerModel:

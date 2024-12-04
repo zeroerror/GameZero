@@ -6,18 +6,18 @@ namespace GamePlay.Bussiness.Renderer
         public GameRoleStateType stateType { get; private set; }
         public GameRoleStateType lastStateType { get; private set; }
 
-        public GameRoleStateModel_IdleR idleStateModel { get; private set; }
-        public GameRoleStateModel_MoveR moveStateModel { get; private set; }
-        public GameRoleStateModel_CastR castStateModel { get; private set; }
-        public GameRoleStateModel_DeadR deadStateModel { get; private set; }
+        public GameRoleState_IdleR idleState { get; private set; }
+        public GameRoleState_MoveR moveState { get; private set; }
+        public GameRoleState_CastR castState { get; private set; }
+        public GameRoleState_DeadR deadState { get; private set; }
 
-        public Dictionary<GameRoleStateType, GameRoleStateModelBaseR> stateModelDict;
+        public Dictionary<GameRoleStateType, GameRoleStateBaseR> stateModelDict;
         public GameRoleFSMComR()
         {
-            idleStateModel = new GameRoleStateModel_IdleR();
-            moveStateModel = new GameRoleStateModel_MoveR();
-            castStateModel = new GameRoleStateModel_CastR();
-            deadStateModel = new GameRoleStateModel_DeadR();
+            idleState = new GameRoleState_IdleR();
+            moveState = new GameRoleState_MoveR();
+            castState = new GameRoleState_CastR();
+            deadState = new GameRoleState_DeadR();
         }
 
         public void EnterIdle()
@@ -47,16 +47,16 @@ namespace GamePlay.Bussiness.Renderer
             switch (nextState)
             {
                 case GameRoleStateType.Idle:
-                    idleStateModel.Clear();
+                    idleState.Clear();
                     break;
                 case GameRoleStateType.Move:
-                    moveStateModel.Clear();
+                    moveState.Clear();
                     break;
                 case GameRoleStateType.Cast:
-                    castStateModel.Clear();
+                    castState.Clear();
                     break;
                 case GameRoleStateType.Dead:
-                    deadStateModel.Clear();
+                    deadState.Clear();
                     break;
             }
         }

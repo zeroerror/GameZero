@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileStateDomain_Attach : GameProjectileStateDomainBase
@@ -24,21 +26,47 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameProjectileEntity projectile, float frameTime)
         {
-            var fsmCom = projectile.fsmCom;
             var targeter = projectile.actionTargeterCom.getCurTargeter();
-            var targetEntity = targeter.targetEntity;
-            var tarPos = targetEntity.transformCom.position;
-            projectile.transformCom.position = tarPos;
+            var attachPos = projectile.transformCom.position;
+            var fsmCom = projectile.fsmCom;
+            var stateModel = fsmCom.attachState.model;
+            switch (stateModel.attachType)
+            {
+                case GameProjectileTargeterType.Actor:
+                    var actor = projectile.idCom.parent;
+                    if (actor.attributeCom.GetValue(GameAttributeType.Hp) <= 0) break;
+                    attachPos = actor.transformCom.position;
+                    break;
+                case GameProjectileTargeterType.Target:
+                    var targetEntity = targeter.targetEntity;
+                    if (targetEntity.attributeCom.GetValue(GameAttributeType.Hp) <= 0) break;
+                    attachPos = targetEntity.transformCom.position;
+                    break;
+                case GameProjectileTargeterType.Position:
+                    attachPos = targeter.targetPosition;
+                    break;
+                default:
+                    GameLogger.LogError($"投射物附着类型未处理：{stateModel.attachType}");
+                    break;
+            }
+            projectile.transformCom.position = attachPos;
         }
 
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity projectile)
         {
-            var targeter = projectile.actionTargeterCom.getCurTargeter();
-            var targetEntity = targeter.targetEntity;
-            var tarAttr = targetEntity.attributeCom;
-            var tarHP = tarAttr.GetValue(GameAttributeType.Hp);
-            if (tarHP <= 0) return GameProjectileStateType.Destroyed;
-            return GameProjectileStateType.None;
+            var fsmCom = projectile.fsmCom;
+            var stateModel = fsmCom.attachState.model;
+            if (stateModel.attachType == GameProjectileTargeterType.Actor)
+            {
+                var actor = projectile.idCom.parent;
+                if (actor.attributeCom.GetValue(GameAttributeType.Hp) <= 0) return GameProjectileStateType.Destroyed;
+            }
+            else if (stateModel.attachType == GameProjectileTargeterType.Target)
+            {
+                var targetEntity = projectile.actionTargeterCom.getCurTargeter().targetEntity;
+                if (targetEntity.attributeCom.GetValue(GameAttributeType.Hp) <= 0) return GameProjectileStateType.Destroyed;
+            }
+            return base._CheckExit(projectile);
         }
     }
 

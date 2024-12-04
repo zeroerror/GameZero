@@ -8,42 +8,42 @@ namespace GamePlay.Bussiness.Logic
         public GameProjectileStateType lastStateType { get; private set; }
         public bool isInvalid => stateType == GameProjectileStateType.None || stateType == GameProjectileStateType.Destroyed;
 
-        public GameProjectileStateModel_Any anyStateModel { get; private set; }
-        public GameProjectileStateModel_Idle idleStateModel { get; private set; }
-        public GameProjectileStateModel_FixedDirection fixedDirectionStateModel { get; private set; }
-        public GameProjectileStateModel_LockOnEntity lockOnEntityStateModel { get; private set; }
-        public GameProjectileStateModel_LockOnPosition lockOnPositionStateModel { get; private set; }
-        public GameProjectileStateModel_Attach attachStateModel { get; private set; }
-        public GameProjectileStateModel_Explode explodeStateModel { get; private set; }
-        public GameProjectileStateModel_Destroyed destroyedStateModel { get; private set; }
+        public GameProjectileState_Any anyState { get; private set; }
+        public GameProjectileState_Idle idleState { get; private set; }
+        public GameProjectileState_FixedDirection fixedDirectionState { get; private set; }
+        public GameProjectileState_LockOnEntity lockOnEntityState { get; private set; }
+        public GameProjectileState_LockOnPosition lockOnPositionState { get; private set; }
+        public GameProjectileState_Attach attachState { get; private set; }
+        public GameProjectileState_Explode explodeState { get; private set; }
+        public GameProjectileState_Destroyed destroyedState { get; private set; }
         public Dictionary<GameProjectileStateType, GameProjectileStateTriggerSetEntity> triggerSetEntityDict { get; private set; }
 
         public GameProjectileStateType defaultStateType;
 
         public GameProjectileFSMCom()
         {
-            anyStateModel = new GameProjectileStateModel_Any();
-            idleStateModel = new GameProjectileStateModel_Idle();
-            fixedDirectionStateModel = new GameProjectileStateModel_FixedDirection();
-            lockOnEntityStateModel = new GameProjectileStateModel_LockOnEntity();
-            lockOnPositionStateModel = new GameProjectileStateModel_LockOnPosition();
-            attachStateModel = new GameProjectileStateModel_Attach();
-            explodeStateModel = new GameProjectileStateModel_Explode();
-            destroyedStateModel = new GameProjectileStateModel_Destroyed();
+            anyState = new GameProjectileState_Any();
+            idleState = new GameProjectileState_Idle();
+            fixedDirectionState = new GameProjectileState_FixedDirection();
+            lockOnEntityState = new GameProjectileState_LockOnEntity();
+            lockOnPositionState = new GameProjectileState_LockOnPosition();
+            attachState = new GameProjectileState_Attach();
+            explodeState = new GameProjectileState_Explode();
+            destroyedState = new GameProjectileState_Destroyed();
             triggerSetEntityDict = new Dictionary<GameProjectileStateType, GameProjectileStateTriggerSetEntity>();
             defaultStateType = GameProjectileStateType.None;
         }
 
         public void Clear()
         {
-            anyStateModel.Clear();
-            idleStateModel.Clear();
-            fixedDirectionStateModel.Clear();
-            lockOnEntityStateModel.Clear();
-            lockOnPositionStateModel.Clear();
-            attachStateModel.Clear();
-            explodeStateModel.Clear();
-            destroyedStateModel.Clear();
+            anyState.Clear();
+            idleState.Clear();
+            fixedDirectionState.Clear();
+            lockOnEntityState.Clear();
+            lockOnPositionState.Clear();
+            attachState.Clear();
+            explodeState.Clear();
+            destroyedState.Clear();
             triggerSetEntityDict.Clear();
             stateType = GameProjectileStateType.None;
             lastStateType = GameProjectileStateType.None;
@@ -63,22 +63,20 @@ namespace GamePlay.Bussiness.Logic
             this.SwitchToState(GameProjectileStateType.FixedDirection);
         }
 
-        public void EnterLockOnEntity(GameEntityBase targetEntity)
+        public void EnterLockOnEntity()
         {
             this.SwitchToState(GameProjectileStateType.LockOnEntity);
-            lockOnEntityStateModel.SetLockOnEntity(targetEntity);
         }
 
-        public void EnterLockOnPosition(in GameVec2 lockOnPosition)
+        public void EnterLockOnPosition()
         {
             this.SwitchToState(GameProjectileStateType.LockOnPosition);
-            lockOnPositionStateModel.SetLockOnPosition(lockOnPosition);
         }
 
         public void EnterAttach(in GameActionTargeterArgs targeter)
         {
             this.SwitchToState(GameProjectileStateType.Attach);
-            attachStateModel.SetTargeter(targeter);
+            attachState.SetTargeter(targeter);
         }
 
         public void EnterExplode()
@@ -98,25 +96,25 @@ namespace GamePlay.Bussiness.Logic
             switch (nextState)
             {
                 case GameProjectileStateType.Idle:
-                    idleStateModel.Clear();
+                    idleState.Clear();
                     break;
                 case GameProjectileStateType.FixedDirection:
-                    fixedDirectionStateModel.Clear();
+                    fixedDirectionState.Clear();
                     break;
                 case GameProjectileStateType.LockOnEntity:
-                    lockOnEntityStateModel.Clear();
+                    lockOnEntityState.Clear();
                     break;
                 case GameProjectileStateType.LockOnPosition:
-                    lockOnPositionStateModel.Clear();
+                    lockOnPositionState.Clear();
                     break;
                 case GameProjectileStateType.Attach:
-                    attachStateModel.Clear();
+                    attachState.Clear();
                     break;
                 case GameProjectileStateType.Explode:
-                    explodeStateModel.Clear();
+                    explodeState.Clear();
                     break;
                 case GameProjectileStateType.Destroyed:
-                    destroyedStateModel.Clear();
+                    destroyedState.Clear();
                     break;
             }
         }

@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameProjectileEntity projectile, float dt)
         {
-            var stateModel = projectile.fsmCom.anyStateModel;
+            var stateModel = projectile.fsmCom.anyState;
             stateModel.stateTime += dt;
             this._TickKeyFrame(projectile, dt);
         }
@@ -23,7 +23,7 @@ namespace GamePlay.Bussiness.Logic
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity projectile)
         {
             var lifeTime = projectile.model.lifeTime;
-            if (lifeTime > 0 && projectile.fsmCom.anyStateModel.stateTime >= lifeTime) return GameProjectileStateType.Destroyed;
+            if (lifeTime > 0 && projectile.fsmCom.anyState.stateTime >= lifeTime) return GameProjectileStateType.Destroyed;
             return base._CheckExit(projectile);
         }
 

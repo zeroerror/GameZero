@@ -61,7 +61,26 @@ namespace GamePlay.Bussiness.Logic
         {
             this._triggerDomain.InitFSMTrigger(projectile);
             var fsmCom = projectile.fsmCom;
-            this._Enter(projectile, fsmCom.defaultStateType);
+            var model = projectile.model;
+            foreach (var stateModel in model.stateModelDict.Values)
+            {
+                switch (stateModel)
+                {
+                    case GameProjectileStateModel_FixedDirection fixedDirectionModel:
+                        fsmCom.fixedDirectionState.SetModel(fixedDirectionModel);
+                        break;
+                    case GameProjectileStateModel_LockOnEntity lockOnEntityModel:
+                        fsmCom.lockOnEntityState.SetModel(lockOnEntityModel);
+                        break;
+                    case GameProjectileStateModel_LockOnPosition lockOnPositionModel:
+                        fsmCom.lockOnPositionState.SetModel(lockOnPositionModel);
+                        break;
+                    case GameProjectileStateModel_Attach attachModel:
+                        fsmCom.attachState.SetModel(attachModel);
+                        break;
+                }
+                this._Enter(projectile, fsmCom.defaultStateType);
+            }
         }
 
         public bool TryEnter(GameProjectileEntity entity, GameProjectileStateType state)

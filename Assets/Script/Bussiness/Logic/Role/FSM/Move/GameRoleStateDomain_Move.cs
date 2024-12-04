@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameRoleEntity role, float frameTime)
         {
-            var stateModel = role.fsmCom.moveStateModel;
+            var stateModel = role.fsmCom.moveState;
             var inputCom = role.inputCom;
             if (inputCom.TryGetInputArgs(out var inputArgs))
             {

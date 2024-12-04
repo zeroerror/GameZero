@@ -10,20 +10,20 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 是否是无效状态 </summary>
         public bool isInvalid => stateType == GameRoleStateType.None || stateType == GameRoleStateType.Destroyed;
 
-        public GameRoleStateModel_Idle idleStateModel { get; private set; }
-        public GameRoleStateModel_Move moveStateModel { get; private set; }
-        public GameRoleStateModel_Cast castStateModel { get; private set; }
-        public GameRoleStateModel_Dead deadStateModel { get; private set; }
-        public GameRoleStateModel_Destroyed destroyedStateModel { get; private set; }
+        public GameRoleState_Idle idleState { get; private set; }
+        public GameRoleState_Move moveState { get; private set; }
+        public GameRoleState_Cast castState { get; private set; }
+        public GameRoleState_Dead deadState { get; private set; }
+        public GameRoleState_Destroyed destroyedState { get; private set; }
 
-        public Dictionary<GameRoleStateType, GameRoleStateModelBase> stateModelDict;
+        public Dictionary<GameRoleStateType, GameRoleStateBase> stateModelDict;
         public GameRoleFSMCom()
         {
-            idleStateModel = new GameRoleStateModel_Idle();
-            moveStateModel = new GameRoleStateModel_Move();
-            castStateModel = new GameRoleStateModel_Cast();
-            deadStateModel = new GameRoleStateModel_Dead();
-            destroyedStateModel = new GameRoleStateModel_Destroyed();
+            idleState = new GameRoleState_Idle();
+            moveState = new GameRoleState_Move();
+            castState = new GameRoleState_Cast();
+            deadState = new GameRoleState_Dead();
+            destroyedState = new GameRoleState_Destroyed();
         }
 
         public void EnterIdle()
@@ -39,7 +39,7 @@ namespace GamePlay.Bussiness.Logic
         public void EnterCast(GameSkillEntity skill)
         {
             this.SwitchToState(GameRoleStateType.Cast);
-            this.castStateModel.skill = skill;
+            this.castState.skill = skill;
         }
 
         public void EnterDead()
@@ -59,19 +59,19 @@ namespace GamePlay.Bussiness.Logic
             switch (nextState)
             {
                 case GameRoleStateType.Idle:
-                    idleStateModel.Clear();
+                    idleState.Clear();
                     break;
                 case GameRoleStateType.Move:
-                    moveStateModel.Clear();
+                    moveState.Clear();
                     break;
                 case GameRoleStateType.Cast:
-                    castStateModel.Clear();
+                    castState.Clear();
                     break;
                 case GameRoleStateType.Dead:
-                    deadStateModel.Clear();
+                    deadState.Clear();
                     break;
                 case GameRoleStateType.Destroyed:
-                    destroyedStateModel.Clear();
+                    destroyedState.Clear();
                     break;
             }
         }

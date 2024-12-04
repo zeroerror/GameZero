@@ -23,7 +23,7 @@ namespace GamePlay.Bussiness.Logic
         protected override void _Tick(GameProjectileEntity entity, float frameTime)
         {
             var fsmCom = entity.fsmCom;
-            var stateModel = fsmCom.destroyedStateModel;
+            var stateModel = fsmCom.destroyedState;
             stateModel.stateTime += frameTime;
         }
     }

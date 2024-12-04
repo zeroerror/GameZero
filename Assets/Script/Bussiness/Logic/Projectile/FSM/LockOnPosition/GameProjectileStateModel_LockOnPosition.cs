@@ -1,18 +1,20 @@
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileStateModel_LockOnPosition : GameProjectileStateModelBase
+    public struct GameProjectileStateModel_LockOnPosition
     {
-        public GameVec2 lockOnPosition { get; private set; }
-        public void SetLockOnPosition(GameVec2 lockOnPosition)
-        {
-            this.lockOnPosition = lockOnPosition;
-        }
+        /// <summary> 目标选取类型 </summary>
+        public GameProjectileTargeterType targeterType;
+        /// <summary> 速度 </summary>
+        public float speed;
+        /// <summary> 抵达目标时间, 设置时速度参数失效 </summary>
+        public float duration;
 
-        public override void Clear()
+        public GameProjectileStateModel_LockOnPosition(GameProjectileTargeterType targeterType, float speed, float duration)
         {
-            base.Clear();
-            this.lockOnPosition = GameVec2.zero;
+            this.targeterType = targeterType;
+            this.speed = speed;
+            this.duration = duration;
         }
     }
 }

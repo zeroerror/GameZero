@@ -1,10 +1,13 @@
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileStateModel_FixedDirection : GameProjectileStateModelBase
+    public struct GameProjectileStateModel_FixedDirection
     {
-        public override void Clear()
+        public float speed;
+
+        public GameProjectileStateModel_FixedDirection(float speed)
         {
-            base.Clear();
+            this.speed = speed;
         }
     }
 }

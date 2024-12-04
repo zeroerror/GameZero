@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var targetEntity = projectile.actionTargeterCom.targetEntity;
             var fsmCom = projectile.fsmCom;
-            fsmCom.EnterLockOnEntity(targetEntity);
+            fsmCom.EnterLockOnEntity();
 
             var targetPos = targetEntity.transformCom.position;
             var pos = projectile.transformCom.position;
@@ -31,11 +31,24 @@ namespace GamePlay.Bussiness.Logic
         protected override void _Tick(GameProjectileEntity projectile, float dt)
         {
             var actionTargeterCom = projectile.actionTargeterCom;
-            var targetEntity = actionTargeterCom.targetEntity;
-            if (targetEntity == null) return;
+            var fsmCom = projectile.fsmCom;
+            GameEntityBase lockOnEntity = null;
+            var stateModel = fsmCom.lockOnEntityState.model;
+            switch (stateModel.targeterType)
+            {
+                case GameProjectileTargeterType.Actor:
+                    lockOnEntity = projectile.idCom.parent;
+                    break;
+                case GameProjectileTargeterType.Target:
+                    lockOnEntity = actionTargeterCom.targetEntity;
+                    break;
+            }
+            fsmCom.lockOnEntityState.lockOnEntity = lockOnEntity;
+
+            if (lockOnEntity == null) return;
 
             var speed = projectile.attributeCom.GetValue(GameAttributeType.MoveSpeed);
-            var targetPos = targetEntity.transformCom.position;
+            var targetPos = lockOnEntity.transformCom.position;
             var pos = projectile.transformCom.position;
             var offset = targetPos - pos;
             var dir = offset.normalized;

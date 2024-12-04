@@ -1,13 +1,17 @@
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileStateModel_Attach : GameProjectileStateModelBase
+    public struct GameProjectileStateModel_Attach
     {
-        public GameActionTargeterArgs targeter { get; private set; }
-        public void SetTargeter(GameActionTargeterArgs targeter) => this.targeter = targeter;
+        /// <summary> 附着类型 </summary>
+        public GameProjectileTargeterType attachType;
+        /// <summary> 附着偏移 </summary>
+        public GameVec2 attachOffset;
 
-        public override void Clear()
+        public GameProjectileStateModel_Attach(GameProjectileTargeterType attachType, GameVec2 attachOffset)
         {
-            base.Clear();
+            this.attachType = attachType;
+            this.attachOffset = attachOffset;
         }
     }
 }

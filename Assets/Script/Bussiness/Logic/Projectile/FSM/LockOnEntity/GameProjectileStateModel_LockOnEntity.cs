@@ -1,18 +1,20 @@
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileStateModel_LockOnEntity : GameProjectileStateModelBase
+    public struct GameProjectileStateModel_LockOnEntity
     {
-        public GameEntityBase lockOnEntity { get; private set; }
+        /// <summary> 目标选取类型 </summary>
+        public GameProjectileTargeterType targeterType;
+        /// <summary> 速度 </summary>
+        public float speed;
+        /// <summary> 一定时间抵达. 生效时速度参数失效 </summary>
+        public float timeToArrive;
 
-        public void SetLockOnEntity(GameEntityBase entity)
+        public GameProjectileStateModel_LockOnEntity(GameProjectileTargeterType targeterType, float speed, float duration)
         {
-            this.lockOnEntity = entity;
-        }
-
-        public override void Clear()
-        {
-            base.Clear();
-            lockOnEntity = null;
+            this.targeterType = targeterType;
+            this.speed = speed;
+            this.timeToArrive = duration;
         }
     }
 }
