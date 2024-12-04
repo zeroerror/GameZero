@@ -22,11 +22,6 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        protected override GameProjectileStateType _CheckExit(GameProjectileEntity entity)
-        {
-            return GameProjectileStateType.None;
-        }
-
         protected override void _Tick(GameProjectileEntity entity, float frameTime)
         {
             throw new System.NotImplementedException();

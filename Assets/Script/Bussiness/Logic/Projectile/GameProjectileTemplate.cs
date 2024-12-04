@@ -38,7 +38,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 modelSetDict.Add(triggerEM.stateType, triggerEM.emSet.ToModelSet());
             }
-            model = new GameProjectileModel(typeId, so.animLength, so.timelineEvents.ToModels(), modelSetDict);
+            model = new GameProjectileModel(typeId, so.animLength, so.timelineEvents.ToModels(), modelSetDict, so.lifeTime);
             _dict.Add(typeId, model);
             return true;
         }

@@ -2,34 +2,43 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileStateDomain_Attach : GameProjectileStateDomainBase
     {
-        public override bool CheckEnter(GameProjectileEntity entity)
+        public override bool CheckEnter(GameProjectileEntity projectile)
         {
             return true;
         }
 
-        public override void Enter(GameProjectileEntity entity)
+        public override void Enter(GameProjectileEntity projectile)
         {
-            var fsmCom = entity.fsmCom;
-            fsmCom.EnterAttach();
+            var fsmCom = projectile.fsmCom;
+            var targeter = projectile.actionTargeterCom.getCurTargeter();
+            fsmCom.EnterAttach(targeter);
             // 提交RC
-            var targeter = entity.actionTargeterCom.getCurTargeter();
             this._context.SubmitRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_STATE_ENTER_ATTACH, new GameProjectileRCArgs_StateEnterAttach
             {
                 fromStateType = fsmCom.stateType,
-                idArgs = entity.idCom.ToArgs(),
+                idArgs = projectile.idCom.ToArgs(),
                 pos = targeter.targetPosition,
                 targetIdArgs = targeter.targetEntity.idCom.ToArgs()
             });
         }
 
-        protected override GameProjectileStateType _CheckExit(GameProjectileEntity entity)
+        protected override void _Tick(GameProjectileEntity projectile, float frameTime)
         {
-            return GameProjectileStateType.None;
+            var fsmCom = projectile.fsmCom;
+            var targeter = projectile.actionTargeterCom.getCurTargeter();
+            var targetEntity = targeter.targetEntity;
+            var tarPos = targetEntity.transformCom.position;
+            projectile.transformCom.position = tarPos;
         }
 
-        protected override void _Tick(GameProjectileEntity entity, float frameTime)
+        protected override GameProjectileStateType _CheckExit(GameProjectileEntity projectile)
         {
-            throw new System.NotImplementedException();
+            var targeter = projectile.actionTargeterCom.getCurTargeter();
+            var targetEntity = targeter.targetEntity;
+            var tarAttr = targetEntity.attributeCom;
+            var tarHP = tarAttr.GetValue(GameAttributeType.Hp);
+            if (tarHP <= 0) return GameProjectileStateType.Destroyed;
+            return GameProjectileStateType.None;
         }
     }
 

@@ -1,5 +1,3 @@
-using GamePlay.Bussiness.Logic;
-
 namespace GamePlay.Bussiness.Logic
 {
     public abstract class GameEntityBase

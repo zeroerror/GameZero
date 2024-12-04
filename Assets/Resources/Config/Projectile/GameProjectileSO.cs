@@ -19,7 +19,8 @@ namespace GamePlay.Config
         public float animLength;
         [Header("动画事件")]
         public GameTimelineEventEditModel[] timelineEvents;
-
+        [Header("生命周期(s)")]
+        public float lifeTime;
         // --------------- 编辑器数据 ---------------
         [Header("动画名称")]
         public string animName_edit;

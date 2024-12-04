@@ -6,12 +6,17 @@ namespace GamePlay.Bussiness.Logic
     {
         GameContext _context;
         GameProjectileContext _projectileContext => _context.projectileContext;
-        private Dictionary<GameProjectileStateType, GameProjectileStateDomainBase> _stateDomainDict = new Dictionary<GameProjectileStateType, GameProjectileStateDomainBase>();
+
+        private GameProjectileStateDomainBase _anyStateDomain;
+        private Dictionary<GameProjectileStateType, GameProjectileStateDomainBase> _stateDomainDict;
 
         private GameProjectileStateTriggerDomain _triggerDomain;
 
         public GameProjectileFSMDomain()
         {
+            this._anyStateDomain = new GameProjectileStateDomain_Any();
+
+            this._stateDomainDict = new Dictionary<GameProjectileStateType, GameProjectileStateDomainBase>();
             this._stateDomainDict.Add(GameProjectileStateType.Idle, new GameProjectileStateDomain_Idle());
             this._stateDomainDict.Add(GameProjectileStateType.FixedDirection, new GameProjectileStateDomain_FixedDirection());
             this._stateDomainDict.Add(GameProjectileStateType.LockOnEntity, new GameProjectileStateDomain_LockOnEntity());
@@ -42,8 +47,9 @@ namespace GamePlay.Bussiness.Logic
         {
             var fsmCom = projectile.fsmCom;
             var stateType = fsmCom.stateType;
-            if (stateType == GameProjectileStateType.None) return;
+            if (fsmCom.isInvalid) return;
             // 状态逻辑
+            this._anyStateDomain.Tick(projectile, dt);
             if (!this._stateDomainDict.TryGetValue(stateType, out var stateDomain)) return;
             stateDomain.Tick(projectile, dt);
             // 触发器逻辑

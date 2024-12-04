@@ -6,7 +6,9 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameProjectileStateType stateType { get; private set; }
         public GameProjectileStateType lastStateType { get; private set; }
+        public bool isInvalid => stateType == GameProjectileStateType.None || stateType == GameProjectileStateType.Destroyed;
 
+        public GameProjectileStateModel_Any anyStateModel { get; private set; }
         public GameProjectileStateModel_Idle idleStateModel { get; private set; }
         public GameProjectileStateModel_FixedDirection fixedDirectionStateModel { get; private set; }
         public GameProjectileStateModel_LockOnEntity lockOnEntityStateModel { get; private set; }
@@ -20,6 +22,7 @@ namespace GamePlay.Bussiness.Logic
 
         public GameProjectileFSMCom()
         {
+            anyStateModel = new GameProjectileStateModel_Any();
             idleStateModel = new GameProjectileStateModel_Idle();
             fixedDirectionStateModel = new GameProjectileStateModel_FixedDirection();
             lockOnEntityStateModel = new GameProjectileStateModel_LockOnEntity();
@@ -33,6 +36,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void Clear()
         {
+            anyStateModel.Clear();
             idleStateModel.Clear();
             fixedDirectionStateModel.Clear();
             lockOnEntityStateModel.Clear();
@@ -71,9 +75,10 @@ namespace GamePlay.Bussiness.Logic
             lockOnPositionStateModel.SetLockOnPosition(lockOnPosition);
         }
 
-        public void EnterAttach()
+        public void EnterAttach(in GameActionTargeterArgs targeter)
         {
             this.SwitchToState(GameProjectileStateType.Attach);
+            attachStateModel.SetTargeter(targeter);
         }
 
         public void EnterExplode()

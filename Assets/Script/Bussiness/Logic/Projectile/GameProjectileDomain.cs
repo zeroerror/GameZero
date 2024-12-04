@@ -51,13 +51,14 @@ namespace GamePlay.Bussiness.Logic
             scale.x = GameMathF.Abs(scale.x);
             scale.y = GameMathF.Abs(scale.y);
             transArgs.scale = scale;
-
+            // 初始化组件
             projectile.transformCom.SetByArgs(transArgs);
             projectile.idCom.SetEntityId(this._projectileContext.idService.FetchId());
             projectile.idCom.SetParent(creator);
             projectile.actionTargeterCom.SetTargeter(targeter);
+            this._InitTimelineCom(projectile);
+            // 添加到仓库
             repo.TryAdd(projectile);
-
             // 提交RC
             var args = new GameProjectileRCArgs_Create()
             {
@@ -71,6 +72,22 @@ namespace GamePlay.Bussiness.Logic
             this.fsmDomain.InitFSM(projectile);
 
             return projectile;
+        }
+
+        private void _InitTimelineCom(GameProjectileEntity projectile)
+        {
+            var timelineCom = projectile.timelineCom;
+            var model = projectile.model;
+            timelineCom.SetLength(model.lifeTime);
+            var timelineEvModels = model.timelineEvModels;
+            timelineEvModels?.Foreach((evModel, index) =>
+            {
+                timelineCom.AddEventByFrame(evModel.frame, () =>
+                {
+                    this._context.domainApi.actionApi.DoAction(evModel.actionId, projectile);
+                });
+            });
+            timelineCom.Play();
         }
     }
 }

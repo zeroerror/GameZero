@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -27,14 +28,19 @@ namespace GamePlay.Bussiness.Logic
                 entity.inputCom.Clear();
                 if (this._roleContext.TryGetPlayerInputArgs(entity.idCom.entityId, out var inputArgs))
                 {
-                    this._DoAutoLockTarget(entity, ref inputArgs);
+                    this._ProcessAutoInput(entity, ref inputArgs);
                     entity.inputCom.SetByArgs(inputArgs);
                 }
             });
             this._roleContext.ClearPlayerInputArgs();
         }
 
-        private void _DoAutoLockTarget(GameEntityBase actor, ref GameRoleInputArgs inputArgs)
+        /// <summary>
+        /// 处理自动输入, 包括自动锁定目标、方向、位置等
+        /// </summary>
+        /// <param name="actor"></param>
+        /// <param name="inputArgs"></param>
+        private void _ProcessAutoInput(GameEntityBase actor, ref GameRoleInputArgs inputArgs)
         {
             var skillId = inputArgs.skillId;
             if (skillId == 0) return;
@@ -58,6 +64,13 @@ namespace GamePlay.Bussiness.Logic
                     break;
                 case GameSkillTargterType.Position:
                     targeterList.Add(new GameActionTargeterArgs { targetPosition = nearestEnemy.transformCom.position });
+                    break;
+                case
+                GameSkillTargterType.Self:
+                    targeterList.Add(new GameActionTargeterArgs { targetEntity = actor });
+                    break;
+                default:
+                    GameLogger.LogError("自动输入尚未支持的目标类型: " + targeterType);
                     break;
             }
         }

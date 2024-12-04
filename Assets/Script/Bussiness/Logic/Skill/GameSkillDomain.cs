@@ -109,6 +109,8 @@ namespace GamePlay.Bussiness.Logic
                         return false;
                     }
                     break;
+                case GameSkillTargterType.Self:
+                    break;
                 default:
                     GameLogger.LogError("未知的技能目标类型");
                     return false;

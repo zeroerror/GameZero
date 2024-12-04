@@ -75,6 +75,7 @@ namespace GamePlay.Bussiness.Logic
             this.AddEventByFrame(this._ConvertToFrame(time), action);
         }
 
+        /// <summary> 播放, 后续逻辑的迭代需使用Tick </summary>
         public void Play(float loopDuration = 0, float startTime = 0, Action complete = null)
         {
             if (this.length == 0)

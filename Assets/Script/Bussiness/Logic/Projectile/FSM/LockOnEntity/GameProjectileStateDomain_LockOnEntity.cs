@@ -28,11 +28,6 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        protected override GameProjectileStateType _CheckExit(GameProjectileEntity projectile)
-        {
-            return GameProjectileStateType.None;
-        }
-
         protected override void _Tick(GameProjectileEntity projectile, float dt)
         {
             var actionTargeterCom = projectile.actionTargeterCom;

@@ -31,7 +31,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var fsmCom = role.fsmCom;
             var stateType = fsmCom.stateType;
-            if (stateType == GameRoleStateType.None) return;
+            if (fsmCom.isInvalid) return;
             if (!this._stateDomainDict.TryGetValue(stateType, out var stateDomain)) return;
             stateDomain.Tick(role, dt);
         }

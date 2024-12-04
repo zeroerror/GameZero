@@ -3,8 +3,12 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleFSMCom
     {
+        /// <summary> 当前状态 </summary>
         public GameRoleStateType stateType { get; private set; }
+        /// <summary> 上一个状态 </summary>
         public GameRoleStateType lastStateType { get; private set; }
+        /// <summary> 是否是无效状态 </summary>
+        public bool isInvalid => stateType == GameRoleStateType.None || stateType == GameRoleStateType.Destroyed;
 
         public GameRoleStateModel_Idle idleStateModel { get; private set; }
         public GameRoleStateModel_Move moveStateModel { get; private set; }
