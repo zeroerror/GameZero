@@ -42,7 +42,7 @@ namespace GamePlay.Bussiness.Logic
                 return null;
             }
 
-            skill.idCom.entityId = this._skillContext.entityIdService.FetchId();
+            skill.idCom.SetEntityId(this._skillContext.idService.FetchId());
             // 绑定父子关系
             skill.idCom.SetParent(role);
             // 绑定TransformCom为角色TransformCom
@@ -88,14 +88,26 @@ namespace GamePlay.Bussiness.Logic
             {
                 case GameSkillTargterType.Enemy:
                     var index = inputCom.targeterArgsList.FindIndex((args) => args.targetEntity != null && args.targetEntity.idCom.campId != role.idCom.campId);
-                    if (index == -1) return false;
+                    if (index == -1)
+                    {
+                        GameLogger.LogWarning($"[{skillModel.typeId}]技能释放条件无法满足！ 需要存在目标敌人");
+                        return false;
+                    }
                     break;
                 case GameSkillTargterType.Direction:
                     var index_d = inputCom.targeterArgsList.FindIndex((args) => args.targetDirection != GameVec2.zero);
-                    if (index_d == -1) return false;
+                    if (index_d == -1)
+                    {
+                        GameLogger.LogWarning($"[{skillModel.typeId}]技能释放条件无法满足！ 需要存在目标方向");
+                        return false;
+                    }
                     break;
                 case GameSkillTargterType.Position:
-                    if (inputCom.choosePosition == GameVec2.zero) return false;
+                    if (inputCom.choosePosition == GameVec2.zero)
+                    {
+                        GameLogger.LogWarning($"[{skillModel.typeId}]技能释放条件无法满足！ 需要存在目标位置");
+                        return false;
+                    }
                     break;
                 default:
                     GameLogger.LogError("未知的技能目标类型");
@@ -113,6 +125,7 @@ namespace GamePlay.Bussiness.Logic
             this._calcSkillCost(role, skill);
             skill.timelineCom.Play();
             skill.actionTargeterCom.SetTargeterList(role.inputCom.targeterArgsList);
+            skill.physicsCom.ClearCollided();
         }
 
         private void _calcSkillCost(GameRoleEntity role, GameSkillEntity skill)

@@ -17,7 +17,7 @@ namespace GamePlay.Bussiness.Logic
                 fromStateType = fsmCom.stateType,
                 idArgs = entity.idCom.ToArgs(),
             });
-            entity.idCom.entityId = -1;
+            entity.SetValid(false);
         }
 
         protected override GameProjectileStateType _CheckExit(GameProjectileEntity entity)

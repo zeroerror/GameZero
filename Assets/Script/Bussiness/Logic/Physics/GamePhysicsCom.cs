@@ -18,6 +18,9 @@ namespace GamePlay.Bussiness.Logic
             _collidedList = new List<GameIdArgs>();
         }
 
+        /// <summary>
+        /// 清空碰撞组件, 会清除绑定的碰撞器, 清空碰撞过的实体Id列表
+        /// </summary>
         public void Clear()
         {
             collider = null;

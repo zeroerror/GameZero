@@ -36,7 +36,7 @@ namespace GamePlay.Bussiness.Renderer
         public override void Enter(GameRoleEntityR entity, params object[] args)
         {
             GameLogger.Log($"角色状态 - 进入销毁状态");
-            entity.idCom.entityId = -1;// 标记无效, 等待自动实体回收
+            entity.SetValid(false);// 标记无效, 等待自动实体回收
         }
 
         protected override void _Tick(GameRoleEntityR entity, float frameTime)

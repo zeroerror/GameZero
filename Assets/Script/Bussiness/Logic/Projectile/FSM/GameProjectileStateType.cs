@@ -37,6 +37,6 @@ namespace GamePlay.Bussiness.Logic
         /// <summary>
         /// 被销毁，通常表示投射物已经完成了它的使命，或者因为某种原因被强制销毁。
         /// </summary>
-        Destroyed = 6,
+        Destroyed = 7,
     }
 }

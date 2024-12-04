@@ -1,3 +1,5 @@
+using GamePlay.Config;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileStateTriggerDomain
@@ -6,11 +8,13 @@ namespace GamePlay.Bussiness.Logic
 
         GameProjectileStateTriggerDomain_Duration _durationTriggerDomain;
         GameProjectileStateTriggerDomain_VolumeCollision _volumeCollisionTriggerDomain;
+        GameProjectileStateTriggerDomain_ImpactTarget _impactTargetTriggerDomain;
 
         public GameProjectileStateTriggerDomain()
         {
             this._durationTriggerDomain = new GameProjectileStateTriggerDomain_Duration();
             this._volumeCollisionTriggerDomain = new GameProjectileStateTriggerDomain_VolumeCollision();
+            this._impactTargetTriggerDomain = new GameProjectileStateTriggerDomain_ImpactTarget();
         }
 
         public void Inject(GameContext context)
@@ -18,10 +22,29 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
             this._durationTriggerDomain.Inject(context);
             this._volumeCollisionTriggerDomain.Inject(context);
+            this._impactTargetTriggerDomain.Inject(context);
         }
 
         public void Dispose()
         {
+        }
+
+        public void InitFSMTrigger(GameProjectileEntity projectile)
+        {
+            var fsmCom = projectile.fsmCom;
+            foreach (var kv in projectile.model.stateTriggerSetDict)
+            {
+                var stateType = kv.Key;
+                var triggerSet = kv.Value;
+                var triggerSetEntity = new GameProjectileStateTriggerSetEntity(
+                    new GameProjectileStateTriggerEntity_Duration(triggerSet.durationTriggerModel),
+                    new GameProjectileStateTriggerEntity_VolumeCollision(triggerSet.volumeCollisionTriggerModel),
+                    new GameProjectileStateTriggerEntity_ImpactTarget(triggerSet.impactTargetTriggerModel)
+                );
+                projectile.fsmCom.triggerSetEntityDict.Add(stateType, triggerSetEntity);
+                if (fsmCom.defaultStateType == GameProjectileStateType.None) fsmCom.defaultStateType = stateType;
+            }
+            if (fsmCom.defaultStateType == GameProjectileStateType.None) fsmCom.defaultStateType = GameProjectileStateType.Idle;
         }
 
         public GameProjectileStateType Tick(GameProjectileEntity entity, float dt)
@@ -49,6 +72,19 @@ namespace GamePlay.Bussiness.Logic
                 if (triggerEntity != null)
                 {
                     var isSatisfied = this._volumeCollisionTriggerDomain.CheckSatisfied(entity, triggerEntity, dt);
+                    if (isSatisfied)
+                    {
+                        var triggerModel = triggerEntity.model;
+                        if (triggerModel.actionId != 0) actionApi.DoAction(triggerModel.actionId, entity);
+                        if (triggerModel.nextStateType != GameProjectileStateType.None) nextStateType = triggerModel.nextStateType;
+                    }
+                }
+            }
+            {
+                var triggerEntity = triggerSetEntity.impactTargetTriggerEntity;
+                if (triggerEntity != null)
+                {
+                    var isSatisfied = this._impactTargetTriggerDomain.CheckSatisfied(entity, triggerEntity, dt);
                     if (isSatisfied)
                     {
                         var triggerModel = triggerEntity.model;

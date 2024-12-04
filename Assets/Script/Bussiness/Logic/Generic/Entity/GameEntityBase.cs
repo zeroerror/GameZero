@@ -1,8 +1,12 @@
+using GamePlay.Bussiness.Logic;
+
 namespace GamePlay.Bussiness.Logic
 {
     public abstract class GameEntityBase
     {
-        public bool isValid() => idCom.entityId > 0;
+        public bool isValid { get; private set; } = true;
+        public void SetValid(bool isValid) => this.isValid = isValid;
+
         public GameIdCom idCom { get; private set; }
         public GameTransformCom transformCom { get; private set; }
         public void BindTransformCom(GameTransformCom transformCom) => this.transformCom = transformCom;
@@ -26,6 +30,7 @@ namespace GamePlay.Bussiness.Logic
             actionTargeterCom.Clear();
             physicsCom.Clear();
             attributeCom.Clear();
+            this.isValid = true;
         }
 
         public bool IsEquals(GameEntityBase other)

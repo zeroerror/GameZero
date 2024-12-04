@@ -30,7 +30,7 @@ namespace GamePlay.Bussiness.Renderer
             repo.ForeachEntities((GameVFXEntityR vfx) =>
             {
                 vfx.Tick(dt);
-                if (!vfx.isPlaying) this._context.cmdBufferService.Add(0, () => repo.TryRemove(vfx));
+                if (!vfx.isPlaying) this._context.cmdBufferService.Add(0, () => repo.Recycle(vfx));
             });
         }
 
@@ -46,7 +46,7 @@ namespace GamePlay.Bussiness.Renderer
                     GameLogger.LogError("VFX加载失败");
                     return null;
                 }
-                this._context.domainApi.fielApi.AddToEntityLayer(vfx.go);
+                this._context.domainApi.fielApi.AddToLayer(vfx.go, GameFieldLayerType.VFX);
             }
             vfx.entityId = this._vfxContext.entityIdService.FetchId();
             repo.TryAdd(vfx);

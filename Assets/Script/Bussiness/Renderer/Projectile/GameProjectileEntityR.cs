@@ -35,6 +35,12 @@ namespace GamePlay.Bussiness.Renderer
             this._posEaseCom.SetEase(0.05f, GameEasingType.Linear);
         }
 
+        public override void Clear()
+        {
+            base.Clear();
+            this.setActive(false);
+        }
+
         public override void Dispose()
         {
             this.animCom.Dispose();
@@ -48,6 +54,11 @@ namespace GamePlay.Bussiness.Renderer
             this.position = pos;
             var forward = this.transformCom.forward;
             this.FaceTo(forward);
+        }
+
+        public void setActive(bool active)
+        {
+            this.go.SetActive(active);
         }
 
         public void FaceTo(in GameVec2 dir)

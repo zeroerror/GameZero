@@ -20,20 +20,20 @@ namespace GamePlay.Bussiness.Renderer
 
         public bool TryAdd(GameVFXEntityR entity)
         {
-            GameLogger.Log($"VFX实体仓库 添加: {entity.entityId}");
+            GameLogger.Log($"视觉特效仓库 添加: {entity.entityId}");
             return this._dict.TryAdd(entity.entityId, entity);
         }
 
         public void TryRemove(GameVFXEntityR entity)
         {
             this._dict.Remove(entity.entityId);
-            this._Recycle(entity);
         }
 
-        private void _Recycle(GameVFXEntityR entity)
+        public void Recycle(GameVFXEntityR entity)
         {
-            GameLogger.Log($"VFX实体仓库 回收: {entity.entityId}");
+            if (!this._dict.Remove(entity.entityId)) return;
             this._pool.Add(entity);
+            GameLogger.Log($"视觉特效仓库 回收: {entity.entityId}");
         }
 
         public virtual bool TryFetch(out GameVFXEntityR entity)

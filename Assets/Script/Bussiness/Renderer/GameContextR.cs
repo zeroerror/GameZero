@@ -26,8 +26,6 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.logicContext = logicContext;
             var cam = GameObject.Find("Main Camera")?.GetComponent<Camera>();
-            cam.transform.position = new Vector3(0, 0, -100);
-            cam.transform.eulerAngles = new Vector3(0, 0, 0);
             this.cameraEntity = new GameCameraEntity(cam);
             this.director = new GameDirectorR();
             this.domainApi = new GameDomainApiR();

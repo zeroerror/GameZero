@@ -49,7 +49,7 @@ MonoBehaviour:
       campType: 2
       entityType: 1
     projectileId: 10001
-    speed: 10
+    speed: 5
   launchProjectileSO: {fileID: 11400000, guid: 244c253d64a261c439248f0b12c9259c, type: 2}
   skillSORefs: []
   actionR:

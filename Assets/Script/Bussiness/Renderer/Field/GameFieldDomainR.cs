@@ -1,6 +1,7 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace GamePlay.Bussiness.Renderer
 {
@@ -35,12 +36,20 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Tick(float dt)
         {
-            var entityLayer = this._fieldContext.curField.entityLayer;
+            var entityLayer = this._fieldContext.curField.GetLayer(GameFieldLayerType.Entity);
             for (var i = 0; i < entityLayer.transform.childCount; i++)
             {
                 var child = entityLayer.transform.GetChild(i);
                 var pos = child.position;
-                pos.z = pos.y;
+                pos.z = GameFieldLayerCollection.EntityLayerZ + pos.y * GameFieldLayerCollection.StepZ;
+                child.position = pos;
+            }
+            var vfxLayer = this._fieldContext.curField.GetLayer(GameFieldLayerType.VFX);
+            for (var i = 0; i < vfxLayer.transform.childCount; i++)
+            {
+                var child = vfxLayer.transform.GetChild(i);
+                var pos = child.position;
+                pos.z = GameFieldLayerCollection.VFXLayerZ + pos.y * GameFieldLayerCollection.StepZ;
                 child.position = pos;
             }
         }
@@ -62,12 +71,15 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
             this._fieldContext.curField = field;
+            var cam = this._context.cameraEntity.camera;
+            cam.transform.position = new Vector3(0, 0, GameFieldLayerCollection.CAMERA_Z);
+            cam.transform.eulerAngles = new Vector3(0, 0, 0);
         }
 
-        public void AddToEntityLayer(GameObject go)
+        public void AddToLayer(GameObject go, GameFieldLayerType layerType)
         {
             var curField = this._fieldContext.curField;
-            var entityLayer = curField.entityLayer;
+            var entityLayer = curField.GetLayer(layerType);
             go.transform.SetParent(entityLayer.transform);
         }
     }
