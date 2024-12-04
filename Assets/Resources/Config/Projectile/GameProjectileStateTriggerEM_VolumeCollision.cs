@@ -14,6 +14,7 @@ namespace GamePlay.Config
 
         public GameProjectileStateTriggerModel_VolumeCollision ToModel()
         {
+            if (nextStateType == GameProjectileStateType.None) return null;
             var actionId = this.actionSO == null ? 0 : this.actionSO.typeId;
             var model = new GameProjectileStateTriggerModel_VolumeCollision(actionId, nextStateType);
             return model;

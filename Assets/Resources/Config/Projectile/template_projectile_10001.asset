@@ -13,12 +13,28 @@ MonoBehaviour:
   m_Name: template_projectile_10001
   m_EditorClassIdentifier: 
   typeId: 10001
-  animClip: {fileID: 7400000, guid: 3c383fa7da3cac14183f9abedb209a42, type: 2}
-  animLength: 0.25
+  projectileName: "\u56DE\u65CB\u9556"
+  desc: "\u5FEB\u901F\u98DE\u5411\u654C\u4EBA\uFF0C\u51FB\u4E2D\u540E\u56DE\u5230\u624B\u4E2D"
+  animClip: {fileID: 7400000, guid: ec5df76121251ff4c9642ff6848b3ef4, type: 2}
+  animLength: 1
   timelineEvents: []
-  animName_edit: p_fireball
+  lifeTime: 0
+  animName_edit: p_huixuanbiao
   stateEMs:
-  - stateType: 3
+  - stateType: 2
+    attachStateEM:
+      attachType: 0
+      attachOffset: {x: 0, y: 0}
+    fixedDirectionStateEM:
+      speed: 20
+    lockOnEntityStateEM:
+      targeterType: 2
+      speed: 0
+      timeToArrive: 0
+    lockOnPositionStateEM:
+      targeterType: 0
+      speed: 0
+      timeToArrive: 0
     emSet:
       durationTriggerModel:
         duration: 0
@@ -26,7 +42,34 @@ MonoBehaviour:
         nextStateType: 0
       volumeCollisionTriggerModel:
         actionSO: {fileID: 11400000, guid: 80e9d52327a84434185d9da8a89b7317, type: 2}
+        nextStateType: 3
+      impactTargetTriggerModel:
+        actionSO: {fileID: 0}
+        nextStateType: 0
+        checkByTargetCollider: 0
+  - stateType: 3
+    attachStateEM:
+      attachType: 0
+      attachOffset: {x: 0, y: 0}
+    fixedDirectionStateEM:
+      speed: 0
+    lockOnEntityStateEM:
+      targeterType: 1
+      speed: 10
+      timeToArrive: 0
+    lockOnPositionStateEM:
+      targeterType: 0
+      speed: 0
+      timeToArrive: 0
+    emSet:
+      durationTriggerModel:
+        duration: 0
+        actionSO: {fileID: 0}
+        nextStateType: 0
+      volumeCollisionTriggerModel:
+        actionSO: {fileID: 0}
         nextStateType: 0
       impactTargetTriggerModel:
         actionSO: {fileID: 11400000, guid: 80e9d52327a84434185d9da8a89b7317, type: 2}
         nextStateType: 7
+        checkByTargetCollider: 0

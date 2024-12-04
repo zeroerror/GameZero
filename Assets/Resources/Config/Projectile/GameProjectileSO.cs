@@ -11,6 +11,10 @@ namespace GamePlay.Config
     public class GameProjectileSO : GameSOBase
     {
         // --------------- 渲染数据 ---------------
+        [Header("名称")]
+        public string projectileName;
+        [Header("描述")]
+        public string desc;
         [Header("动画文件")]
         public AnimationClip animClip;
 

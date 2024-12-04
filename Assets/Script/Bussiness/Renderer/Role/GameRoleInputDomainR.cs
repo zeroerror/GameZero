@@ -41,7 +41,6 @@ namespace GamePlay.Bussiness.Renderer
                     if (userRole.skillCom.TryGetByIndex(0, out var skill))
                     {
                         inputArgs.skillId = skill.skillModel.typeId;
-                        inputArgs.chooseDirection = userRole.transformCom.forward;
                     }
                 }
                 if (Input.GetKeyDown(KeyCode.K))
@@ -49,7 +48,6 @@ namespace GamePlay.Bussiness.Renderer
                     if (userRole.skillCom.TryGetByIndex(1, out var skill))
                     {
                         inputArgs.skillId = skill.skillModel.typeId;
-                        inputArgs.chooseDirection = userRole.transformCom.forward;
                     }
                 }
                 if (Input.GetKeyDown(KeyCode.L))
@@ -57,7 +55,6 @@ namespace GamePlay.Bussiness.Renderer
                     if (userRole.skillCom.TryGetByIndex(2, out var skill))
                     {
                         inputArgs.skillId = skill.skillModel.typeId;
-                        inputArgs.chooseDirection = userRole.transformCom.forward;
                     }
                 }
                 // ...

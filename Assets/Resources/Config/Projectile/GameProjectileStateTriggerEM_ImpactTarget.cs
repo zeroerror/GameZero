@@ -15,6 +15,7 @@ namespace GamePlay.Config
 
         public GameProjectileStateTriggerModel_ImpactTarget ToModel()
         {
+            if (nextStateType == GameProjectileStateType.None) return null;
             var actionId = this.actionSO == null ? 0 : this.actionSO.typeId;
             var model = new GameProjectileStateTriggerModel_ImpactTarget(actionId, nextStateType, checkByTargetCollider);
             return model;

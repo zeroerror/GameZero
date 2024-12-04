@@ -78,11 +78,7 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 播放, 后续逻辑的迭代需使用Tick </summary>
         public void Play(float loopDuration = 0, float startTime = 0, Action complete = null)
         {
-            if (this.length == 0)
-            {
-                GameLogger.LogError("时间轴播放时长为0");
-                return;
-            }
+            if (this.length == 0) return;
             this.loopDuration = loopDuration;
             this.time = startTime;
             this._complete = complete;

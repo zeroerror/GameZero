@@ -36,11 +36,10 @@ namespace GamePlay.Bussiness.Logic
             {
                 var stateType = kv.Key;
                 var triggerSet = kv.Value;
-                var triggerSetEntity = new GameProjectileStateTriggerSetEntity(
-                    new GameProjectileStateTriggerEntity_Duration(triggerSet.durationTriggerModel),
-                    new GameProjectileStateTriggerEntity_VolumeCollision(triggerSet.volumeCollisionTriggerModel),
-                    new GameProjectileStateTriggerEntity_ImpactTarget(triggerSet.impactTargetTriggerModel)
-                );
+                var durationEntity = triggerSet.durationTriggerModel == null ? null : new GameProjectileStateTriggerEntity_Duration(triggerSet.durationTriggerModel);
+                var volumeCollisionEntity = triggerSet.volumeCollisionTriggerModel == null ? null : new GameProjectileStateTriggerEntity_VolumeCollision(triggerSet.volumeCollisionTriggerModel);
+                var impactTargetEntity = triggerSet.impactTargetTriggerModel == null ? null : new GameProjectileStateTriggerEntity_ImpactTarget(triggerSet.impactTargetTriggerModel);
+                var triggerSetEntity = new GameProjectileStateTriggerSetEntity(durationEntity, volumeCollisionEntity, impactTargetEntity);
                 projectile.fsmCom.triggerSetEntityDict.Add(stateType, triggerSetEntity);
                 if (fsmCom.defaultStateType == GameProjectileStateType.None) fsmCom.defaultStateType = stateType;
             }

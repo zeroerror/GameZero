@@ -47,7 +47,7 @@ namespace GamePlay.Bussiness.Logic
 
             if (lockOnEntity == null) return;
 
-            var speed = projectile.attributeCom.GetValue(GameAttributeType.MoveSpeed);
+            var speed = projectile.fsmCom.lockOnEntityState.model.speed;
             var targetPos = lockOnEntity.transformCom.position;
             var pos = projectile.transformCom.position;
             var offset = targetPos - pos;

@@ -45,34 +45,23 @@ namespace GamePlay.Bussiness.Logic
             var skillId = inputArgs.skillId;
             if (skillId == 0) return;
             if (!this._context.domainApi.skillApi.TryGetModel(skillId, out var skillModel)) return;
+            // 玩家主动的目标选取
             var targeterList = inputArgs.targeterArgsList;
             if (targeterList?.Count > 0) return;
+            // 自动目标选取
             targeterList = new List<GameActionTargeterArgs>();
             var roleApi = this._context.domainApi.roleApi;
             var nearestEnemy = roleApi.GetNearestEnemy(actor);
             inputArgs.targeterArgsList = targeterList;
             var targeterType = skillModel.conditionModel.targeterType;
-            switch (targeterType)
-            {
-                case GameSkillTargterType.Enemy:
-                    targeterList.Add(new GameActionTargeterArgs { targetEntity = nearestEnemy });
-                    break;
-                case GameSkillTargterType.Direction:
-                    var dir = actor.transformCom.forward;
-                    if (nearestEnemy != null) dir = (nearestEnemy.transformCom.position - actor.transformCom.position).normalized;
-                    targeterList.Add(new GameActionTargeterArgs { targetDirection = dir });
-                    break;
-                case GameSkillTargterType.Position:
-                    targeterList.Add(new GameActionTargeterArgs { targetPosition = nearestEnemy.transformCom.position });
-                    break;
-                case
-                GameSkillTargterType.Self:
-                    targeterList.Add(new GameActionTargeterArgs { targetEntity = actor });
-                    break;
-                default:
-                    GameLogger.LogError("自动输入尚未支持的目标类型: " + targeterType);
-                    break;
-            }
+            GameActionTargeterArgs targeter = new GameActionTargeterArgs();
+            targeter.targetEntity = targeterType == GameSkillTargterType.Actor ? actor : nearestEnemy;
+            targeter.targetPosition = targeter.targetEntity != null ? targeter.targetEntity.transformCom.position : actor.transformCom.position;
+            targeter.targetDirection =
+            targeterType == GameSkillTargterType.Direction ? actor.transformCom.forward :
+            targeter.targetEntity != null ? (targeter.targetEntity.transformCom.position - actor.transformCom.position).normalized :
+            actor.transformCom.forward;
+            targeterList.Add(targeter);
         }
     }
 }

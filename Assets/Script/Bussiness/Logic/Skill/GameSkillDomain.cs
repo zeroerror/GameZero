@@ -103,13 +103,14 @@ namespace GamePlay.Bussiness.Logic
                     }
                     break;
                 case GameSkillTargterType.Position:
-                    if (inputCom.choosePosition == GameVec2.zero)
+                    var index_p = inputCom.targeterArgsList.FindIndex((args) => args.targetPosition != GameVec2.zero);
+                    if (index_p == -1)
                     {
                         GameLogger.LogWarning($"[{skillModel.typeId}]技能释放条件无法满足！ 需要存在目标位置");
                         return false;
                     }
                     break;
-                case GameSkillTargterType.Self:
+                case GameSkillTargterType.Actor:
                     break;
                 default:
                     GameLogger.LogError("未知的技能目标类型");

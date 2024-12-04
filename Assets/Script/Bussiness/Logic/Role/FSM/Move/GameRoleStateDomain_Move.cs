@@ -35,11 +35,8 @@ namespace GamePlay.Bussiness.Logic
             var moveSpeed = 5;
             var moveVec = new GameVec2(moveDir.x, moveDir.y) * moveSpeed * frameTime;
             role.transformCom.position += moveVec;
-            var faceDir = inputArgs.chooseDirection;
-            faceDir = faceDir != GameVec2.zero ? faceDir : moveDir;
-            role.FaceTo(faceDir);
+            role.FaceTo(moveDir);
         }
-
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)
         {

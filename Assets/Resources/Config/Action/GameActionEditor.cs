@@ -1,7 +1,6 @@
 using System.Linq;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -250,7 +249,6 @@ namespace GamePlay.Config
             actionSO.launchProjectileSO = (GameProjectileSO)EditorGUILayout.ObjectField("投射物模板", actionSO.launchProjectileSO, typeof(GameProjectileSO), false);
             var launchProjectileSO = actionSO.launchProjectileSO;
             launchProjectileAction.projectileId = launchProjectileSO == null ? 0 : launchProjectileSO.typeId;
-            launchProjectileAction.speed = EditorGUILayout.FloatField("投射物速度", launchProjectileAction.speed);
         }
     }
 }

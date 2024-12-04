@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameProjectileEntity projectile, float frameTime)
         {
-            var speed = projectile.attributeCom.GetValue(GameAttributeType.MoveSpeed);
+            var speed = projectile.fsmCom.fixedDirectionState.model.speed;
             var direction = projectile.actionTargeterCom.targetDirection;
             var delta = direction * speed * frameTime;
             projectile.transformCom.position += delta;

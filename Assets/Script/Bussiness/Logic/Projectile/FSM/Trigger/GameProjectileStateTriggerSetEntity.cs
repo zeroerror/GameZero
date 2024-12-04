@@ -19,9 +19,9 @@ namespace GamePlay.Bussiness.Logic
 
         public void Clear()
         {
-            this.durationTriggerEntity.Clear();
-            this.volumeCollisionTriggerEntity.Clear();
-            this.impactTargetTriggerEntity.Clear();
+            this.durationTriggerEntity?.Clear();
+            this.volumeCollisionTriggerEntity?.Clear();
+            this.impactTargetTriggerEntity?.Clear();
         }
     }
 }
