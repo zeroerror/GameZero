@@ -9,7 +9,7 @@ namespace GamePlay.Bussiness.Logic
         private GameProjectileStateDomainBase _anyStateDomain;
         private Dictionary<GameProjectileStateType, GameProjectileStateDomainBase> _stateDomainDict;
 
-        private GameProjectileStateTriggerDomain _triggerDomain;
+        private GameProjectileTriggerDomain _triggerDomain;
 
         public GameProjectileFSMDomain()
         {
@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Logic
             this._stateDomainDict.Add(GameProjectileStateType.Explode, new GameProjectileStateDomain_Explode());
             this._stateDomainDict.Add(GameProjectileStateType.Destroyed, new GameProjectileStateDomain_Destroyed());
 
-            this._triggerDomain = new GameProjectileStateTriggerDomain();
+            this._triggerDomain = new GameProjectileTriggerDomain();
         }
 
         public void Inject(GameContext context)

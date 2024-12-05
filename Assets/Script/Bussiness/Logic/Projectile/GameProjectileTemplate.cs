@@ -33,7 +33,7 @@ namespace GamePlay.Bussiness.Logic
                 model = null;
                 return false;
             }
-            var modelSetDict = new Dictionary<GameProjectileStateType, GameProjectileStateTriggerModelSet>();
+            var modelSetDict = new Dictionary<GameProjectileStateType, GameProjectileTriggerModelSet>();
             var stateModelDict = new Dictionary<GameProjectileStateType, object>();
             foreach (var stateEM in so.stateEMs)
             {

@@ -1,10 +1,10 @@
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileStateTriggerDomain_Duration
+    public class GameProjectileTriggerDomain_Duration
     {
         private GameContext _context;
 
-        public GameProjectileStateTriggerDomain_Duration()
+        public GameProjectileTriggerDomain_Duration()
         {
         }
 
@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
         }
 
-        public bool CheckSatisfied(GameProjectileEntity entity, GameProjectileStateTriggerEntity_Duration triggerEntity, float dt)
+        public bool CheckSatisfied(GameProjectileEntity entity, GameProjectileTriggerEntity_Duration triggerEntity, float dt)
         {
             triggerEntity.elapsedTime += dt;
             return triggerEntity.elapsedTime >= triggerEntity.model.duration;

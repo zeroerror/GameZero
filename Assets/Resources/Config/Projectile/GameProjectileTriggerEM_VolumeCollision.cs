@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [System.Serializable]
-    public class GameProjectileStateTriggerEM_VolumeCollision
+    public class GameProjectileTriggerEM_VolumeCollision
     {
         [Header("触发的行为")]
         public GameActionSO actionSO;
@@ -15,11 +15,11 @@ namespace GamePlay.Config
         [Header("用于检测的选择器")]
         public GameEntitySelectorEM checkSelectorEM;
 
-        public GameProjectileStateTriggerModel_VolumeCollision ToModel()
+        public GameProjectileTriggerModel_VolumeCollision ToModel()
         {
             if (nextStateType == GameProjectileStateType.None) return null;
             var actionId = this.actionSO == null ? 0 : this.actionSO.typeId;
-            var model = new GameProjectileStateTriggerModel_VolumeCollision(
+            var model = new GameProjectileTriggerModel_VolumeCollision(
                 actionId,
                 nextStateType,
                 checkSelectorEM.ToSelector()

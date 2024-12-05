@@ -4,7 +4,7 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [System.Serializable]
-    public class GameProjectileStateTriggerEM_Duration
+    public class GameProjectileTriggerEM_Duration
     {
         [Header("持续时间")]
         public float duration;
@@ -13,11 +13,11 @@ namespace GamePlay.Config
         [Header("下一个状态")]
         public GameProjectileStateType nextStateType;
 
-        public GameProjectileStateTriggerModel_Duration ToModel()
+        public GameProjectileTriggerModel_Duration ToModel()
         {
             if (nextStateType == GameProjectileStateType.None) return null;
             var actionId = this.actionSO == null ? 0 : this.actionSO.typeId;
-            var model = new GameProjectileStateTriggerModel_Duration(actionId, nextStateType, duration);
+            var model = new GameProjectileTriggerModel_Duration(actionId, nextStateType, duration);
             return model;
         }
     }

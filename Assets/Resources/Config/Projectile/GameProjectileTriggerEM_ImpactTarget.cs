@@ -4,7 +4,7 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [System.Serializable]
-    public class GameProjectileStateTriggerEM_ImpactTarget
+    public class GameProjectileTriggerEM_ImpactTarget
     {
         [Header("触发的行为")]
         public GameActionSO actionSO;
@@ -16,11 +16,11 @@ namespace GamePlay.Config
         [Header("是否为检测目标碰撞体")]
         public bool checkByTargetCollider;
 
-        public GameProjectileStateTriggerModel_ImpactTarget ToModel()
+        public GameProjectileTriggerModel_ImpactTarget ToModel()
         {
             if (nextStateType == GameProjectileStateType.None) return null;
             var actionId = this.actionSO == null ? 0 : this.actionSO.typeId;
-            var model = new GameProjectileStateTriggerModel_ImpactTarget(
+            var model = new GameProjectileTriggerModel_ImpactTarget(
                 actionId,
                 nextStateType,
                 checkSelectorEM.ToSelector(),

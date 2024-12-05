@@ -4,18 +4,18 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [System.Serializable]
-    public class GameProjectileStateTriggerEMSet
+    public class GameProjectileTriggerEMSet
     {
         [Header("触发器 - 持续时间")]
-        public GameProjectileStateTriggerEM_Duration durationTriggerModel;
+        public GameProjectileTriggerEM_Duration durationTriggerModel;
         [Header("触发器 - 体积碰撞")]
-        public GameProjectileStateTriggerEM_VolumeCollision volumeCollisionTriggerModel;
+        public GameProjectileTriggerEM_VolumeCollision volumeCollisionTriggerModel;
         [Header("触发器 - 与目标碰撞")]
-        public GameProjectileStateTriggerEM_ImpactTarget impactTargetTriggerModel;
+        public GameProjectileTriggerEM_ImpactTarget impactTargetTriggerModel;
 
-        public GameProjectileStateTriggerModelSet ToModelSet()
+        public GameProjectileTriggerModelSet ToModelSet()
         {
-            var modelSet = new GameProjectileStateTriggerModelSet(
+            var modelSet = new GameProjectileTriggerModelSet(
                 this.durationTriggerModel.ToModel(),
                 this.volumeCollisionTriggerModel.ToModel(),
                 this.impactTargetTriggerModel.ToModel()

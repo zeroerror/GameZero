@@ -1,11 +1,11 @@
 using GamePlay.Core;
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileStateTriggerDomain_VolumeCollision
+    public class GameProjectileTriggerDomain_VolumeCollision
     {
         private GameContext _context;
 
-        public GameProjectileStateTriggerDomain_VolumeCollision()
+        public GameProjectileTriggerDomain_VolumeCollision()
         {
         }
 
@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
         }
 
-        public bool CheckSatisfied(GameProjectileEntity projectile, GameProjectileStateTriggerEntity_VolumeCollision trigger, float dt)
+        public bool CheckSatisfied(GameProjectileEntity projectile, GameProjectileTriggerEntity_VolumeCollision trigger, float dt)
         {
             // var triggerModel = trigger.model;
             // this._context.domainApi.actionApi.TryGetModel(triggerModel.actionId, out var actionModel);

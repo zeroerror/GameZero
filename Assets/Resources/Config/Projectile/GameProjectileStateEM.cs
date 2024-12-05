@@ -19,7 +19,7 @@ namespace GamePlay.Config
         public GameProjectileStateEM_LockOnPosition lockOnPositionStateEM;
 
         [Header("触发器集合")]
-        public GameProjectileStateTriggerEMSet emSet;
+        public GameProjectileTriggerEMSet emSet;
 
         public object ToModel()
         {

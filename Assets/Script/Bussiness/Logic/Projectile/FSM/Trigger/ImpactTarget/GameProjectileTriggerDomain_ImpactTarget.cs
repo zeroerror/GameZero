@@ -3,11 +3,11 @@ using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileStateTriggerDomain_ImpactTarget
+    public class GameProjectileTriggerDomain_ImpactTarget
     {
         private GameContext _context;
 
-        public GameProjectileStateTriggerDomain_ImpactTarget()
+        public GameProjectileTriggerDomain_ImpactTarget()
         {
         }
 
@@ -16,7 +16,7 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
         }
 
-        public bool CheckSatisfied(GameProjectileEntity projectile, GameProjectileStateTriggerEntity_ImpactTarget trigger, float dt)
+        public bool CheckSatisfied(GameProjectileEntity projectile, GameProjectileTriggerEntity_ImpactTarget trigger, float dt)
         {
             var stateType = projectile.fsmCom.stateType;
             var isLockOnEntityState = stateType == GameProjectileStateType.LockOnEntity;

@@ -16,7 +16,7 @@ namespace GamePlay.Bussiness.Logic
         public GameProjectileState_Attach attachState { get; private set; }
         public GameProjectileState_Explode explodeState { get; private set; }
         public GameProjectileState_Destroyed destroyedState { get; private set; }
-        public Dictionary<GameProjectileStateType, GameProjectileStateTriggerSetEntity> triggerSetEntityDict { get; private set; }
+        public Dictionary<GameProjectileStateType, GameProjectileTriggerSetEntity> triggerSetEntityDict { get; private set; }
 
         public GameProjectileStateType defaultStateType;
 
@@ -30,7 +30,7 @@ namespace GamePlay.Bussiness.Logic
             attachState = new GameProjectileState_Attach();
             explodeState = new GameProjectileState_Explode();
             destroyedState = new GameProjectileState_Destroyed();
-            triggerSetEntityDict = new Dictionary<GameProjectileStateType, GameProjectileStateTriggerSetEntity>();
+            triggerSetEntityDict = new Dictionary<GameProjectileStateType, GameProjectileTriggerSetEntity>();
             defaultStateType = GameProjectileStateType.None;
         }
 

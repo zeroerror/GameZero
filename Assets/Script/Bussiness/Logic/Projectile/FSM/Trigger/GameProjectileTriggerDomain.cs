@@ -2,19 +2,19 @@ using GamePlay.Config;
 
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileStateTriggerDomain
+    public class GameProjectileTriggerDomain
     {
         GameContext _context;
 
-        GameProjectileStateTriggerDomain_Duration _durationTriggerDomain;
-        GameProjectileStateTriggerDomain_VolumeCollision _volumeCollisionTriggerDomain;
-        GameProjectileStateTriggerDomain_ImpactTarget _impactTargetTriggerDomain;
+        GameProjectileTriggerDomain_Duration _durationTriggerDomain;
+        GameProjectileTriggerDomain_VolumeCollision _volumeCollisionTriggerDomain;
+        GameProjectileTriggerDomain_ImpactTarget _impactTargetTriggerDomain;
 
-        public GameProjectileStateTriggerDomain()
+        public GameProjectileTriggerDomain()
         {
-            this._durationTriggerDomain = new GameProjectileStateTriggerDomain_Duration();
-            this._volumeCollisionTriggerDomain = new GameProjectileStateTriggerDomain_VolumeCollision();
-            this._impactTargetTriggerDomain = new GameProjectileStateTriggerDomain_ImpactTarget();
+            this._durationTriggerDomain = new GameProjectileTriggerDomain_Duration();
+            this._volumeCollisionTriggerDomain = new GameProjectileTriggerDomain_VolumeCollision();
+            this._impactTargetTriggerDomain = new GameProjectileTriggerDomain_ImpactTarget();
         }
 
         public void Inject(GameContext context)
@@ -36,10 +36,10 @@ namespace GamePlay.Bussiness.Logic
             {
                 var stateType = kv.Key;
                 var triggerSet = kv.Value;
-                var durationEntity = triggerSet.durationTriggerModel == null ? null : new GameProjectileStateTriggerEntity_Duration(triggerSet.durationTriggerModel);
-                var volumeCollisionEntity = triggerSet.volumeCollisionTriggerModel == null ? null : new GameProjectileStateTriggerEntity_VolumeCollision(triggerSet.volumeCollisionTriggerModel);
-                var impactTargetEntity = triggerSet.impactTargetTriggerModel == null ? null : new GameProjectileStateTriggerEntity_ImpactTarget(triggerSet.impactTargetTriggerModel);
-                var triggerSetEntity = new GameProjectileStateTriggerSetEntity(durationEntity, volumeCollisionEntity, impactTargetEntity);
+                var durationEntity = triggerSet.durationTriggerModel == null ? null : new GameProjectileTriggerEntity_Duration(triggerSet.durationTriggerModel);
+                var volumeCollisionEntity = triggerSet.volumeCollisionTriggerModel == null ? null : new GameProjectileTriggerEntity_VolumeCollision(triggerSet.volumeCollisionTriggerModel);
+                var impactTargetEntity = triggerSet.impactTargetTriggerModel == null ? null : new GameProjectileTriggerEntity_ImpactTarget(triggerSet.impactTargetTriggerModel);
+                var triggerSetEntity = new GameProjectileTriggerSetEntity(durationEntity, volumeCollisionEntity, impactTargetEntity);
                 projectile.fsmCom.triggerSetEntityDict.Add(stateType, triggerSetEntity);
                 if (fsmCom.defaultStateType == GameProjectileStateType.None) fsmCom.defaultStateType = stateType;
             }
