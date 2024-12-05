@@ -16,9 +16,9 @@ namespace GamePlay.Config
         public GameProjectileTriggerModelSet ToModelSet()
         {
             var modelSet = new GameProjectileTriggerModelSet(
-                this.durationTriggerModel.ToModel(),
-                this.volumeCollisionTriggerModel.ToModel(),
-                this.impactTargetTriggerModel.ToModel()
+                this.durationTriggerModel?.ToModel(),
+                this.volumeCollisionTriggerModel?.ToModel(),
+                this.impactTargetTriggerModel?.ToModel()
             );
             return modelSet;
         }

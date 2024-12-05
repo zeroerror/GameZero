@@ -6,6 +6,8 @@ namespace GamePlay.Config
     [System.Serializable]
     public class GameProjectileTriggerEM_Duration
     {
+        [Header("是否启用")]
+        public bool enable;
         [Header("持续时间")]
         public float duration;
         [Header("触发的行为")]
@@ -15,7 +17,7 @@ namespace GamePlay.Config
 
         public GameProjectileTriggerModel_Duration ToModel()
         {
-            if (nextStateType == GameProjectileStateType.None) return null;
+            if (!enable) return null;
             var actionId = this.actionSO == null ? 0 : this.actionSO.typeId;
             var model = new GameProjectileTriggerModel_Duration(actionId, nextStateType, duration);
             return model;
