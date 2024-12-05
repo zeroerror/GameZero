@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileStateDomain_FixedDirection : GameProjectileStateDomainBase
@@ -24,11 +26,36 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameProjectileEntity projectile, float frameTime)
         {
-            var speed = projectile.fsmCom.fixedDirectionState.model.speed;
+            var fixedDirectionState = projectile.fsmCom.fixedDirectionState;
+            var model = projectile.fsmCom.fixedDirectionState.model;
+            var speed = model.speed;
             var direction = projectile.actionTargeterCom.targetDirection;
             var delta = direction * speed * frameTime;
             projectile.transformCom.position += delta;
             projectile.FaceTo(direction);
+
+            // 反弹检测
+            if (model.bounceCount > 0 && fixedDirectionState.bounceCount < model.bounceCount)
+            {
+                var entitySelectApi = this._context.domainApi.entitySelectApi;
+                var selectedEntities = entitySelectApi.SelectEntities(model.checkEntitySelector, projectile, false);
+                if (selectedEntities?.Count > 0)
+                {
+                    var selectedEntity = selectedEntities[0];
+                    var normal = GamePhysicsResolvingUtil.GetResolvingMTV(selectedEntity.physicsCom.collider, projectile.physicsCom.collider).normalized;
+                    var reflectDirection = GameVectorUtil.GetReflectDirection(direction, normal);
+
+                    projectile.FaceTo(reflectDirection);
+                    projectile.physicsCom.collider.UpdateTRS();
+                    var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(selectedEntity.physicsCom.collider, projectile.physicsCom.collider);
+                    projectile.transformCom.position += mtv + mtv.normalized * 0.01f;
+
+                    var curTargeter = projectile.actionTargeterCom.getCurTargeter();
+                    curTargeter.targetDirection = reflectDirection;
+                    projectile.actionTargeterCom.SetTargeter(curTargeter);
+                    projectile.physicsCom.ClearCollided();
+                }
+            }
         }
     }
 

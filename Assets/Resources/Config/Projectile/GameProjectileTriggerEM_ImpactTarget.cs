@@ -13,8 +13,8 @@ namespace GamePlay.Config
         [Header("下一个状态")]
         public GameProjectileStateType nextStateType;
 
-        [Header("用于检测的选择器")]
-        public GameEntitySelectorEM checkSelectorEM;
+        [Header("用于检测的实体选择器")]
+        public GameEntitySelectorEM detectEntitySelectorEM;
         [Header("是否为检测目标碰撞体")]
         public bool checkByTargetCollider;
 
@@ -25,7 +25,7 @@ namespace GamePlay.Config
             var model = new GameProjectileTriggerModel_ImpactTarget(
                 actionId,
                 nextStateType,
-                checkSelectorEM.ToSelector(),
+                detectEntitySelectorEM.ToSelector(),
                 checkByTargetCollider
             );
             return model;

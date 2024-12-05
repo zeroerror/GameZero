@@ -2,15 +2,15 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileTriggerModel_VolumeCollision : GameProjectileTriggerModelBase
     {
-        public readonly GameEntitySelector checkSelector;
+        public readonly GameEntitySelector detectEntitySelector;
 
         public GameProjectileTriggerModel_VolumeCollision(
             int actionId,
             GameProjectileStateType nextStateType,
-            GameEntitySelector checkSelector
+            GameEntitySelector detectEntitySelector
         ) : base(actionId, nextStateType)
         {
-            this.checkSelector = checkSelector;
+            this.detectEntitySelector = detectEntitySelector;
         }
 
         public void Clear()

@@ -1,12 +1,9 @@
-using GamePlay.Core;
-using GameVec2 = UnityEngine.Vector2;
-
 namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileTriggerModel_ImpactTarget : GameProjectileTriggerModelBase
     {
-        public readonly GameEntitySelector checkSelector;
-        public readonly bool checkByTargetCollider;
+        public readonly GameEntitySelector detectEntitySelector;
+        public readonly bool detectByTargetCollider;
 
         public GameProjectileTriggerModel_ImpactTarget(
             int actionId,
@@ -15,8 +12,8 @@ namespace GamePlay.Bussiness.Logic
             bool checkByTargetCollider
         ) : base(actionId, nextStateType)
         {
-            this.checkSelector = selector;
-            this.checkByTargetCollider = checkByTargetCollider;
+            this.detectEntitySelector = selector;
+            this.detectByTargetCollider = checkByTargetCollider;
         }
 
         public void Clear()

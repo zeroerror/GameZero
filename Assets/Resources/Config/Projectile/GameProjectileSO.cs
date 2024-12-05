@@ -1,6 +1,5 @@
 #if UNITY_EDITOR
 using GamePlay.Bussiness.Logic;
-using GamePlay.Core;
 using UnityEditor;
 #endif
 using UnityEngine;

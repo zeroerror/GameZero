@@ -27,22 +27,13 @@ namespace GamePlay.Bussiness.Logic
                 return false;
             }
 
-            // var triggerModel = trigger.model;
-            // this._context.domainApi.actionApi.TryGetModel(triggerModel.actionId, out var actionModel);
-            // var selector = actionModel?.selector;
-            // if (selector == null || !selector.isRangeSelect)
-            // {
-            //     GameLogger.LogError("状态触发器[与目标发生碰撞]: 需要包含一个范围选取行为");
-            //     return false;
-            // }
-
             var triggerModel = trigger.model;
-            var selColliderModel = triggerModel.checkSelector.colliderModel;
+            var selColliderModel = triggerModel.detectEntitySelector.colliderModel;
             if (isLockOnEntityState)
             {
                 var lockOnEntity = projectile.fsmCom.lockOnEntityState.lockOnEntity;
                 // 1. 检测目标实体的坐标是否在碰撞体内
-                if (!triggerModel.checkByTargetCollider) return GamePhysicsResolvingUtil.CheckOverlap(selColliderModel, projectile.transformCom.ToArgs(), lockOnEntity.transformCom.position);
+                if (!triggerModel.detectByTargetCollider) return GamePhysicsResolvingUtil.CheckOverlap(selColliderModel, projectile.transformCom.ToArgs(), lockOnEntity.transformCom.position);
                 // 2. 检测目标实体的碰撞体是否与碰撞体相交
                 var lockOnCollider = lockOnEntity.physicsCom.collider;
                 var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(lockOnCollider, selColliderModel, projectile.transformCom.ToArgs());

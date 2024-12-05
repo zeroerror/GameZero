@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameEntitySelectorEM))]
-    public class GameEntitySelectorEditor : PropertyDrawer
+    public class GameEntitySelector_PropertyDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

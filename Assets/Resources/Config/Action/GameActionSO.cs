@@ -8,11 +8,10 @@ namespace GamePlay.Config
     [CreateAssetMenu(fileName = "template_action_", menuName = "游戏玩法/配置/行为模板")]
     public class GameActionSO : GameSOBase
     {
-        public GameActionType actionType_edit;
+        public GameActionType actionType;
         public GameActionModel_Dmg dmgAction;
         public GameActionModel_Heal healAction;
-        public GameActionModel_LaunchProjectile launchProjectileAction;
-        public GameProjectileSO launchProjectileSO;
+        public GameActionEM_LaunchProjectile launchProjectileActionEM;
 
         public GameActionModelR actionR;
         public GameEntitySelectorEM selectorEM;
@@ -22,7 +21,7 @@ namespace GamePlay.Config
         public GameActionModelBase GetActionModel()
         {
             GameActionModelBase actionModel;
-            switch (actionType_edit)
+            switch (actionType)
             {
                 case GameActionType.Dmg:
                     actionModel = dmgAction;
@@ -31,10 +30,10 @@ namespace GamePlay.Config
                     actionModel = healAction;
                     break;
                 case GameActionType.LaunchProjectile:
-                    actionModel = launchProjectileAction;
+                    actionModel = launchProjectileActionEM.ToModel();
                     break;
                 default:
-                    GameLogger.LogError("GameActionSO: GetAction: invalid actionType: " + actionType_edit);
+                    GameLogger.LogError("GameActionSO: GetAction: invalid actionType: " + actionType);
                     return null;
             }
             this._SyncToActionModel(actionModel);
@@ -45,7 +44,7 @@ namespace GamePlay.Config
         {
             if (actionModel == null) return;
             actionModel.selector = this.selectorEM.ToSelector();
-            actionModel.actionType = this.actionType_edit;
+            actionModel.actionType = this.actionType;
             actionModel.typeId = this.typeId;
             this._CorrectModel(actionModel);
         }

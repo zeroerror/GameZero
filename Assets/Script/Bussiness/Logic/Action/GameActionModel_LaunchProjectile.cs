@@ -1,11 +1,14 @@
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
-    [System.Serializable]
     public class GameActionModel_LaunchProjectile : GameActionModelBase
     {
         public int projectileId;
         public GameVec2 launchOffset;
+
+        public GameProjectileBarrageType barrageType;
+        public GameProjectileBarrageModel_CustomLaunchOffset customLaunchOffsetModel;
+        public GameProjectileBarrageModel_Spread spreadModel;
 
         public override string ToString()
         {

@@ -83,4 +83,14 @@ public static class GameVectorUtil
     {
         return (v1 - v2).sqrMagnitude; // 使用 GameVec2 的内置差向量和sqrMagnitude属性
     }
+
+    /// <summary> 
+    /// 获取反射方向
+    /// <para name="direction">入射方向</para>
+    /// <para name="normal">法线方向</para>
+    /// </summary>
+    public static GameVec2 GetReflectDirection(in GameVec2 direction, in GameVec2 normal)
+    {
+        return direction - 2 * GameVec2.Dot(direction, normal) * normal;
+    }
 }

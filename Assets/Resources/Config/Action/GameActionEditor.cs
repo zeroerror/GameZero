@@ -25,8 +25,8 @@ namespace GamePlay.Config
         private void _ShowLogicData(GameActionSO so)
         {
             so.typeId = EditorGUILayout.IntField("类型Id", so.typeId);
-            so.actionType_edit = (GameActionType)EditorGUILayout.EnumPopup("行为类型", so.actionType_edit);
-            if (so.actionType_edit == GameActionType.None) EditorGUILayout.HelpBox("请选择一个行为类型", MessageType.Warning);
+            so.actionType = (GameActionType)EditorGUILayout.EnumPopup("行为类型", so.actionType);
+            if (so.actionType == GameActionType.None) EditorGUILayout.HelpBox("请选择一个行为类型", MessageType.Warning);
             _ShowAction(so);
         }
 
@@ -34,7 +34,7 @@ namespace GamePlay.Config
         {
             var selectorEM = so.selectorEM;
             var selector = selectorEM.ToSelector();
-            switch (so.actionType_edit)
+            switch (so.actionType)
             {
                 case GameActionType.Dmg:
                     EditorGUILayout.LabelField(" -------- 伤害行为 --------", EditorStyles.boldLabel);
@@ -49,8 +49,7 @@ namespace GamePlay.Config
 
                 case GameActionType.LaunchProjectile:
                     EditorGUILayout.LabelField(" -------- 发射投射物行为 --------", EditorStyles.boldLabel);
-                    this._ShowLaunchProjectileAction(so);
-                    so.launchProjectileAction.selector = selector;
+                    // 已经是一个
                     break;
                 default:
                     EditorGUILayout.HelpBox("未知的行为类型", MessageType.Warning);
@@ -120,19 +119,6 @@ namespace GamePlay.Config
                 actionSO.healAction = healAction;
             }
             healAction.heal = EditorGUILayout.IntField("治疗值", healAction.heal);
-        }
-
-        private void _ShowLaunchProjectileAction(GameActionSO actionSO)
-        {
-            GameActionModel_LaunchProjectile launchProjectileAction = actionSO.launchProjectileAction;
-            if (launchProjectileAction == null)
-            {
-                launchProjectileAction = new GameActionModel_LaunchProjectile();
-                actionSO.launchProjectileAction = launchProjectileAction;
-            }
-            actionSO.launchProjectileSO = (GameProjectileSO)EditorGUILayout.ObjectField("投射物模板", actionSO.launchProjectileSO, typeof(GameProjectileSO), false);
-            var launchProjectileSO = actionSO.launchProjectileSO;
-            launchProjectileAction.projectileId = launchProjectileSO == null ? 0 : launchProjectileSO.typeId;
         }
     }
 }

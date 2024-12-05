@@ -1,5 +1,4 @@
 using GamePlay.Bussiness.Logic;
-using GamePlay.Config;
 using UnityEngine;
 
 namespace GamePlay.Config
@@ -14,8 +13,8 @@ namespace GamePlay.Config
         [Header("下一个状态")]
         public GameProjectileStateType nextStateType;
 
-        [Header("用于检测的选择器")]
-        public GameEntitySelectorEM checkSelectorEM;
+        [Header("用于检测的实体选择器")]
+        public GameEntitySelectorEM detectEntitySelectorEM;
 
         public GameProjectileTriggerModel_VolumeCollision ToModel()
         {
@@ -24,7 +23,7 @@ namespace GamePlay.Config
             var model = new GameProjectileTriggerModel_VolumeCollision(
                 actionId,
                 nextStateType,
-                checkSelectorEM.ToSelector()
+                detectEntitySelectorEM.ToSelector()
             );
             return model;
         }
