@@ -1,6 +1,7 @@
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Core
 {
+    [System.Serializable]
     public class GameCircleColliderModel : GameColliderModelBase
     {
         public static GameCircleColliderModel DEFAULT = new GameCircleColliderModel(new GameVec2(0, 0), 0, 1);

@@ -71,5 +71,5 @@ MonoBehaviour:
         nextStateType: 0
       impactTargetTriggerModel:
         actionSO: {fileID: 11400000, guid: 80e9d52327a84434185d9da8a89b7317, type: 2}
-        nextStateType: 7
+        nextStateType: 2
         checkByTargetCollider: 0

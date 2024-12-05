@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using JetBrains.Annotations;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Config
 {
@@ -11,7 +12,7 @@ namespace GamePlay.Config
 
         public GameProjectileBarrageType barrageType;
         public GameProjectileBarrageEM_CustomLaunchOffset customLaunchOffsetEM;
-        public GameProjectileBarrageEM_Spread spreadModelEM;
+        public GameProjectileBarrageEM_Spread spreadEM;
 
         public GameActionModel_LaunchProjectile ToModel()
         {
@@ -25,7 +26,7 @@ namespace GamePlay.Config
                     model.customLaunchOffsetModel = this.customLaunchOffsetEM.ToModel();
                     break;
                 case GameProjectileBarrageType.Spread:
-                    model.spreadModel = this.spreadModelEM.ToModel();
+                    model.spreadModel = this.spreadEM.ToModel();
                     break;
             }
             return model;

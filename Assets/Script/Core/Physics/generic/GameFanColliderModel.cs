@@ -1,6 +1,7 @@
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Core
 {
+    [System.Serializable]
     public class GameFanColliderModel : GameColliderModelBase
     {
         public static GameFanColliderModel DEFAULT = new GameFanColliderModel(new GameVec2(0, 0), 0, 1, 1);

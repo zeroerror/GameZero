@@ -1,7 +1,6 @@
 using GamePlay.Core;
 using GamePlay.Bussiness.Logic;
 using UnityEngine;
-using System;
 namespace GamePlay.Config
 {
     [System.Serializable]
@@ -46,11 +45,6 @@ namespace GamePlay.Config
                     break;
             }
             return selector;
-        }
-
-        public static explicit operator GameEntitySelectorEM(UnityEngine.Object v)
-        {
-            throw new NotImplementedException();
         }
     }
 }

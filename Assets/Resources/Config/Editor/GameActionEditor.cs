@@ -12,9 +12,23 @@ namespace GamePlay.Config
         public override void OnInspectorGUI()
         {
             GameActionSO so = (GameActionSO)target;
+            EditorGUILayout.BeginVertical("box");
             this._ShowLogicData(so);
+            EditorGUILayout.EndVertical();
+
+
+            EditorGUILayout.BeginVertical("box");
             this._ShowRendererData(so);
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.BeginVertical("box");
+            this._ShowSelectorData(so);
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.BeginVertical("box");
             this._ShowSkillSORefs(so);
+            EditorGUILayout.EndVertical();
+
             if (GUI.changed)
             {
                 EditorUtility.SetDirty(so);
@@ -48,8 +62,8 @@ namespace GamePlay.Config
                     break;
 
                 case GameActionType.LaunchProjectile:
-                    EditorGUILayout.LabelField(" -------- 发射投射物行为 --------", EditorStyles.boldLabel);
-                    // 已经是一个
+                    var launchProjectileActionEM_p = serializedObject.FindProperty("launchProjectileActionEM");
+                    launchProjectileActionEM_p.DrawProperty();
                     break;
                 default:
                     EditorGUILayout.HelpBox("未知的行为类型", MessageType.Warning);
@@ -60,14 +74,15 @@ namespace GamePlay.Config
         // 显示表现层数据
         private void _ShowRendererData(GameActionSO so)
         {
-            var actionR = so.actionR;
-            actionR.typeId = so.typeId;
-            actionR.vfxClip = (AnimationClip)EditorGUILayout.ObjectField("特效", actionR.vfxClip, typeof(AnimationClip), false);
-            var shakeModel = actionR.shakeModel;
-            shakeModel.angle = EditorGUILayout.FloatField("震屏角度", shakeModel.angle);
-            shakeModel.amplitude = EditorGUILayout.FloatField("震幅", shakeModel.amplitude);
-            shakeModel.frequency = EditorGUILayout.FloatField("震频", shakeModel.frequency);
-            shakeModel.duration = EditorGUILayout.FloatField("震屏时长", shakeModel.duration);
+            var actionR_p = serializedObject.FindProperty("actionR");
+            actionR_p.DrawProperty("表现效果");
+        }
+
+        // 显示选择器数据
+        private void _ShowSelectorData(GameActionSO so)
+        {
+            var selectorEM_p = serializedObject.FindProperty("selectorEM");
+            selectorEM_p.DrawProperty("选择器");
         }
 
         private void _ShowSkillSORefs(GameActionSO so)
