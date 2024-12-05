@@ -1,13 +1,15 @@
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     [System.Serializable]
     public class GameActionModel_LaunchProjectile : GameActionModelBase
     {
         public int projectileId;
+        public GameVec2 launchOffset;
 
         public override string ToString()
         {
-            return $"发射投射物行为: 投射物Id:{this.projectileId}";
+            return $"发射投射物行为: 投射物Id:{this.projectileId} 发射偏移:{this.launchOffset}";
         }
 
     }

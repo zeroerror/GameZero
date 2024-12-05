@@ -111,17 +111,22 @@ namespace GamePlay.Bussiness.Logic
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
             var recordList = new List<GameActionRecord>();
-            selectedEntities?.ForEach((selEntity) =>
+            selectedEntities?.ForEach((selectedEntity) =>
             {
                 GameLogger.Log($"执行行为[发射投射物]: {action}");
-                var transArgs = selEntity.transformCom.ToArgs();
+                // 发射锚点位置
+                var transArgs = selectedEntity.transformCom.ToArgs();
+                // 发射偏移, 仅在x轴上对称翻转
+                var launchOffet = action.launchOffset;
+                launchOffet.x = transArgs.forward.x > 0 ? launchOffet.x : -launchOffet.x;
+                transArgs.position += launchOffet;
                 var targeter = actorEntity.actionTargeterCom.getCurTargeter();
                 projectileApi.CreateProjectile(projectileId, actorEntity, transArgs, targeter);
 
                 var record = new GameActionRecord();
                 record.actionId = action.typeId;
                 record.actorIdArgs = actorEntity.idCom.ToArgs();
-                record.targetIdArgs = selEntity.idCom.ToArgs();
+                record.targetIdArgs = selectedEntity.idCom.ToArgs();
                 recordList.Add(record);
             });
             return recordList;
