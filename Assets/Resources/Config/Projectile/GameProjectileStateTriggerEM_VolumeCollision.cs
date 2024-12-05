@@ -12,11 +12,18 @@ namespace GamePlay.Config
         [Header("下一个状态")]
         public GameProjectileStateType nextStateType;
 
+        [Header("用于检测的选择器")]
+        public GameEntitySelectorEM checkSelectorEM;
+
         public GameProjectileStateTriggerModel_VolumeCollision ToModel()
         {
             if (nextStateType == GameProjectileStateType.None) return null;
             var actionId = this.actionSO == null ? 0 : this.actionSO.typeId;
-            var model = new GameProjectileStateTriggerModel_VolumeCollision(actionId, nextStateType);
+            var model = new GameProjectileStateTriggerModel_VolumeCollision(
+                actionId,
+                nextStateType,
+                checkSelectorEM.ToSelector()
+            );
             return model;
         }
     }

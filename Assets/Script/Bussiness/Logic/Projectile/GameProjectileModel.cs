@@ -7,7 +7,7 @@ namespace GamePlay.Bussiness.Logic
         public readonly int typeId;
         public readonly float animLength;
         public readonly GameTimelineEventModel[] timelineEvModels;
-        public readonly Dictionary<GameProjectileStateType, GameProjectileStateTriggerModelSet> stateTriggerSetDict;
+        public readonly Dictionary<GameProjectileStateType, GameProjectileStateTriggerModelSet> triggerSetDict;
         public readonly Dictionary<GameProjectileStateType, object> stateModelDict;
         public readonly float lifeTime;
 
@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Logic
             int typeId,
             float animLength,
             GameTimelineEventModel[] timelineEvModels,
-            Dictionary<GameProjectileStateType, GameProjectileStateTriggerModelSet> stateTriggerDict,
+            Dictionary<GameProjectileStateType, GameProjectileStateTriggerModelSet> triggerDict,
             Dictionary<GameProjectileStateType, object> stateModelDict,
             float lifeTime
         )
@@ -23,7 +23,7 @@ namespace GamePlay.Bussiness.Logic
             this.typeId = typeId;
             this.animLength = animLength;
             this.timelineEvModels = timelineEvModels;
-            this.stateTriggerSetDict = stateTriggerDict;
+            this.triggerSetDict = triggerDict;
             this.stateModelDict = stateModelDict;
             this.lifeTime = lifeTime;
         }

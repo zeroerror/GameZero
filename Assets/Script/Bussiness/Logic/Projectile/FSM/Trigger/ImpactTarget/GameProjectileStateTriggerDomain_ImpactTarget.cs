@@ -27,16 +27,17 @@ namespace GamePlay.Bussiness.Logic
                 return false;
             }
 
-            var triggerModel = trigger.model;
-            this._context.domainApi.actionApi.TryGetModel(triggerModel.actionId, out var actionModel);
-            var selector = actionModel?.selector;
-            if (selector == null || !selector.isRangeSelect)
-            {
-                GameLogger.LogError("状态触发器[与目标发生碰撞]: 需要包含一个范围选取行为");
-                return false;
-            }
+            // var triggerModel = trigger.model;
+            // this._context.domainApi.actionApi.TryGetModel(triggerModel.actionId, out var actionModel);
+            // var selector = actionModel?.selector;
+            // if (selector == null || !selector.isRangeSelect)
+            // {
+            //     GameLogger.LogError("状态触发器[与目标发生碰撞]: 需要包含一个范围选取行为");
+            //     return false;
+            // }
 
-            var selColliderModel = selector.colliderModel;
+            var triggerModel = trigger.model;
+            var selColliderModel = triggerModel.checkSelector.colliderModel;
             if (isLockOnEntityState)
             {
                 var lockOnEntity = projectile.fsmCom.lockOnEntityState.lockOnEntity;

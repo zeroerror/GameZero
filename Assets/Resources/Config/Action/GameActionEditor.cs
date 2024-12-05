@@ -28,12 +28,12 @@ namespace GamePlay.Config
             so.actionType_edit = (GameActionType)EditorGUILayout.EnumPopup("行为类型", so.actionType_edit);
             if (so.actionType_edit == GameActionType.None) EditorGUILayout.HelpBox("请选择一个行为类型", MessageType.Warning);
             _ShowAction(so);
-            _ShowSelector(so);
         }
 
         private void _ShowAction(GameActionSO so)
         {
-            var selector = so.selector_edit;
+            var selectorEM = so.selectorEM;
+            var selector = selectorEM.ToSelector();
             switch (so.actionType_edit)
             {
                 case GameActionType.Dmg:
@@ -56,122 +56,6 @@ namespace GamePlay.Config
                     EditorGUILayout.HelpBox("未知的行为类型", MessageType.Warning);
                     break;
             }
-        }
-
-        private void _ShowSelector(GameActionSO so)
-        {
-            EditorGUILayout.LabelField(" -------- 选择器 --------", EditorStyles.boldLabel);
-            var selector = so.selector_edit;
-            selector.selectAnchorType = (GameEntitySelectAnchorType)EditorGUILayout.EnumPopup("选择锚点类型", selector.selectAnchorType);
-            if (selector.selectAnchorType == GameEntitySelectAnchorType.None) EditorGUILayout.HelpBox("请选择一个选择锚点类型", MessageType.Warning);
-            selector.campType = (GameCampType)EditorGUILayout.EnumPopup("阵营类型", selector.campType);
-            if (selector.campType == GameCampType.None) EditorGUILayout.HelpBox("请选择一个阵营类型", MessageType.Warning);
-            selector.entityType = (GameEntityType)EditorGUILayout.EnumPopup("实体类型", selector.entityType);
-            if (selector.entityType == GameEntityType.None) EditorGUILayout.HelpBox("请选择一个实体类型", MessageType.Warning);
-            so.isRangeSelect = EditorGUILayout.Toggle("是否范围选择", so.isRangeSelect);
-            if (so.isRangeSelect)
-            {
-                // 获取选中的GameObject
-                var go = Selection.activeGameObject;
-                EditorGUILayout.HelpBox("可在场景中选择碰撞器来读取参数", MessageType.Info);
-                var collider = go?.GetComponent<Collider>();
-                if (!collider) go = null;
-
-                var color = GUI.color;
-                GUI.color = Color.green;
-                if (go) EditorGUILayout.ObjectField("当前选中", go, typeof(GameObject), true);
-                GUI.color = color;
-
-                if (!go)
-                {
-                    switch (so.colliderType_edit)
-                    {
-                        case GameColliderType.Box:
-                            this._ShowBoxModel(so.boxColliderModel);
-                            break;
-                        case GameColliderType.Circle:
-                            this._ShowCircleModel(so.circleColliderModel);
-                            break;
-                        case GameColliderType.Fan:
-                            this._ShowFanModel(so.fanColliderModel);
-                            break;
-                        default:
-                            EditorGUILayout.HelpBox("未知的碰撞体类型", MessageType.Warning);
-                            break;
-                    }
-                }
-                else
-                {
-                    if (collider) so.colliderType_edit =
-                    collider is BoxCollider ? GameColliderType.Box :
-                    collider is SphereCollider ? GameColliderType.Circle :
-                    GameColliderType.Fan;
-                    var trans = go?.transform;
-                    var lossyScale = trans?.lossyScale != null ? trans.lossyScale : Vector3.one;
-                    var angle = trans?.eulerAngles.z != null ? trans.eulerAngles.z : 0;
-                    switch (so.colliderType_edit)
-                    {
-                        case GameColliderType.Box:
-                            var boxColliderModel = so.boxColliderModel != null ? so.boxColliderModel : new GameBoxColliderModel(Vector2.zero, 0, 0, 0);
-                            so.boxColliderModel = boxColliderModel;
-                            boxColliderModel.offset = trans.position;
-                            boxColliderModel.angle = angle;
-                            boxColliderModel.width = lossyScale.x;
-                            boxColliderModel.height = lossyScale.y;
-                            this._ShowBoxModel(boxColliderModel);
-                            break;
-                        case GameColliderType.Circle:
-                            var circleColliderModel = so.circleColliderModel != null ? so.circleColliderModel : new GameCircleColliderModel(Vector2.zero, 0, 0);
-                            so.circleColliderModel = circleColliderModel;
-                            circleColliderModel.offset = trans.position;
-                            circleColliderModel.angle = angle;
-                            circleColliderModel.radius = lossyScale.x;
-                            this._ShowCircleModel(circleColliderModel);
-                            break;
-                        case GameColliderType.Fan:
-                            var fanColliderModel = so.fanColliderModel != null ? so.fanColliderModel : new GameFanColliderModel(Vector2.zero, 0, 0, 0);
-                            so.fanColliderModel = fanColliderModel;
-                            fanColliderModel.offset = trans.position;
-                            fanColliderModel.angle = angle;
-                            fanColliderModel.radius = lossyScale.x;
-                            EditorGUILayout.Vector2Field("偏移", fanColliderModel.offset);
-                            EditorGUILayout.FloatField("角度", fanColliderModel.angle);
-                            fanColliderModel.fanAngle = EditorGUILayout.FloatField("扇形角度", fanColliderModel.fanAngle);
-                            EditorGUILayout.FloatField("半径", fanColliderModel.radius);
-                            break;
-                        default:
-                            EditorGUILayout.HelpBox("未处理的碰撞体类型", MessageType.Warning);
-                            break;
-                    }
-                }
-            }
-            so.selector_edit = selector;
-        }
-
-        private void _ShowBoxModel(GameBoxColliderModel model)
-        {
-            if (model == null) return;
-            EditorGUILayout.Vector2Field("偏移", model.getoffset);
-            EditorGUILayout.FloatField("角度", model.getangle);
-            EditorGUILayout.FloatField("宽度", model.width);
-            EditorGUILayout.FloatField("高度", model.height);
-        }
-
-        private void _ShowCircleModel(GameCircleColliderModel model)
-        {
-            if (model == null) return;
-            EditorGUILayout.Vector2Field("偏移", model.getoffset);
-            EditorGUILayout.FloatField("角度", model.getangle);
-            EditorGUILayout.FloatField("半径", model.radius);
-        }
-
-        private void _ShowFanModel(GameFanColliderModel model)
-        {
-            if (model == null) return;
-            EditorGUILayout.Vector2Field("偏移", model.getoffset);
-            EditorGUILayout.FloatField("角度", model.getangle);
-            EditorGUILayout.FloatField("扇形角度", model.fanAngle);
-            EditorGUILayout.FloatField("半径", model.radius);
         }
 
         // 显示表现层数据

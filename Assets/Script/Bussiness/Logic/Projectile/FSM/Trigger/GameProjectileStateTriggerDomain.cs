@@ -32,7 +32,7 @@ namespace GamePlay.Bussiness.Logic
         public void InitFSMTrigger(GameProjectileEntity projectile)
         {
             var fsmCom = projectile.fsmCom;
-            foreach (var kv in projectile.model.stateTriggerSetDict)
+            foreach (var kv in projectile.model.triggerSetDict)
             {
                 var stateType = kv.Key;
                 var triggerSet = kv.Value;
