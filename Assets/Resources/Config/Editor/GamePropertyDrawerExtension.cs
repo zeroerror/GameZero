@@ -5,12 +5,34 @@ namespace GamePlay.Config
 {
     public static class GamePropertyDrawerExtension
     {
+        private static void _AdjustLayout(float height)
+        {
+            EditorGUILayout.Space(height);
+        }
+
+        public static T DrawProperty<T>(this SerializedProperty property, string label = "", float height = 6, bool isReadOnly = false) where T : Object
+        {
+            DrawProperty(property, label, height, isReadOnly);
+            return property.objectReferenceValue as T;
+        }
+
+
         public static void DrawProperty(this SerializedProperty property, string label = "", float height = 6, bool isReadOnly = false)
         {
-            if (isReadOnly) EditorGUILayout.PropertyField(property, new GUIContent(label), true);
-            else EditorGUILayout.PropertyField(property, new GUIContent(label));
+            EditorGUI.BeginChangeCheck();
+            if (isReadOnly)
+                EditorGUILayout.PropertyField(property, new GUIContent(label), true);
+            else
+                EditorGUILayout.PropertyField(property, new GUIContent(label));
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                property.serializedObject.ApplyModifiedProperties();
+            }
             _AdjustLayout(height);
         }
+
+
         public static int DrawProperty_Int(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false)
         {
             if (isReadOnly) EditorGUILayout.IntField(label, property.intValue);
@@ -70,9 +92,12 @@ namespace GamePlay.Config
             return currentEnumValue;
         }
 
-        private static void _AdjustLayout(float height)
+        public static bool DrawProperty_Bool(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false)
         {
-            EditorGUILayout.Space(height);
+            if (isReadOnly) EditorGUILayout.Toggle(label, property.boolValue);
+            else property.boolValue = EditorGUILayout.Toggle(label, property.boolValue);
+            _AdjustLayout(height);
+            return property.boolValue;
         }
     }
 }

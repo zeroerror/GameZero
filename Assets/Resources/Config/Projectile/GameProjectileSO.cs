@@ -10,37 +10,26 @@ namespace GamePlay.Config
     public class GameProjectileSO : GameSOBase
     {
         // --------------- 渲染数据 ---------------
-        [Header("名称")]
         public string projectileName;
-        [Header("描述")]
         public string desc;
-        [Header("动画文件")]
         public AnimationClip animClip;
 
         // --------------- 逻辑数据 ---------------
-        [Header("动画时长(s)")]
         public float animLength;
-        [Header("动画事件")]
-        public GameTimelineEventEditModel[] timelineEvents;
-        [Header("生命周期(s)")]
+        public GameTimelineEventEM[] timelineEvents;
         public float lifeTime;
         // --------------- 编辑器数据 ---------------
-        [Header("动画名称")]
-        public string animName_edit;
-        [Header("状态模型列表")]
         public GameProjectileStateEM[] stateEMs;
 
-        protected override void OnValidate()
+        public void UpdateData()
         {
-            base.OnValidate();
             // 更新动画信息
             if (animClip != null)
             {
-                animName_edit = animClip.name;
                 animLength = animClip.length;
                 // 读取clip中的事件
                 var events = AnimationUtility.GetAnimationEvents(animClip);
-                timelineEvents = new GameTimelineEventEditModel[events.Length];
+                timelineEvents = new GameTimelineEventEM[events.Length];
                 for (int i = 0; i < events.Length; i++)
                 {
                     var e = events[i];
@@ -55,7 +44,7 @@ namespace GamePlay.Config
                             continue;
                         }
                     }
-                    timelineEvents[i] = new GameTimelineEventEditModel
+                    timelineEvents[i] = new GameTimelineEventEM
                     {
                         time = e.time,
                         frame = (int)(e.time * GameTimeCollection.frameRate),

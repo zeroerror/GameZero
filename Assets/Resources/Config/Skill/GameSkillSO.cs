@@ -16,7 +16,7 @@ namespace GamePlay.Config
         [Header("动画时长(s)")]
         public float animLength;
         [Header("动画事件")]
-        public GameTimelineEventEditModel[] timelineEvents;
+        public GameTimelineEventEM[] timelineEvents;
 
         [Header("技能条件")]
         public GameSkillConditionEM conditionEM;
@@ -31,7 +31,7 @@ namespace GamePlay.Config
                 animLength = animClip.length;
                 // 读取clip中的事件
                 var events = AnimationUtility.GetAnimationEvents(animClip);
-                timelineEvents = new GameTimelineEventEditModel[events.Length];
+                timelineEvents = new GameTimelineEventEM[events.Length];
                 for (int i = 0; i < events.Length; i++)
                 {
                     var e = events[i];
@@ -46,7 +46,7 @@ namespace GamePlay.Config
                             continue;
                         }
                     }
-                    timelineEvents[i] = new GameTimelineEventEditModel
+                    timelineEvents[i] = new GameTimelineEventEM
                     {
                         time = e.time,
                         frame = (int)(e.time * GameTimeCollection.frameRate),

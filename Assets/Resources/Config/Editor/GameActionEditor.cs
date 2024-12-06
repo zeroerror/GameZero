@@ -62,6 +62,7 @@ namespace GamePlay.Config
                     break;
 
                 case GameActionType.LaunchProjectile:
+                    EditorGUILayout.LabelField(" -------- 发射投射物行为 --------", EditorStyles.boldLabel);
                     var launchProjectileActionEM_p = serializedObject.FindProperty("launchProjectileActionEM");
                     launchProjectileActionEM_p.DrawProperty();
                     break;

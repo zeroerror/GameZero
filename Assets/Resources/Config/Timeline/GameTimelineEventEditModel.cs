@@ -3,7 +3,7 @@ using GamePlay.Bussiness.Logic;
 namespace GamePlay.Config
 {
     [System.Serializable]
-    public struct GameTimelineEventEditModel
+    public struct GameTimelineEventEM
     {
         public float time;
         public int frame;
@@ -11,9 +11,9 @@ namespace GamePlay.Config
     }
 
     /// ext
-    public static class GameTimelineEventEditModelExt
+    public static class GameTimelineEventEMExt
     {
-        public static GameTimelineEventModel ToModel(this GameTimelineEventEditModel em)
+        public static GameTimelineEventModel ToModel(this GameTimelineEventEM em)
         {
             GameTimelineEventModel m;
             m.time = em.time;
@@ -22,7 +22,7 @@ namespace GamePlay.Config
             return m;
         }
 
-        public static GameTimelineEventModel[] ToModels(this GameTimelineEventEditModel[] ems)
+        public static GameTimelineEventModel[] ToModels(this GameTimelineEventEM[] ems)
         {
             if (ems == null) return null;
             GameTimelineEventModel[] ms = new GameTimelineEventModel[ems.Length];

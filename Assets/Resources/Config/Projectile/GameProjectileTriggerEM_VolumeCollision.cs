@@ -6,15 +6,16 @@ namespace GamePlay.Config
     [System.Serializable]
     public class GameProjectileTriggerEM_VolumeCollision
     {
-        [Header("是否启用")]
+        [HideInInspector]
         public bool enable;
+
+        [Header("用于检测的实体选择器")]
+        public GameEntitySelectorEM detectEntitySelectorEM;
+
         [Header("触发的行为")]
         public GameActionSO actionSO;
         [Header("下一个状态")]
         public GameProjectileStateType nextStateType;
-
-        [Header("用于检测的实体选择器")]
-        public GameEntitySelectorEM detectEntitySelectorEM;
 
         public GameProjectileTriggerModel_VolumeCollision ToModel()
         {

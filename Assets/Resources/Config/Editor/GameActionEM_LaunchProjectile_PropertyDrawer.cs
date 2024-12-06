@@ -11,7 +11,11 @@ namespace GamePlay.Config
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            EditorGUI.LabelField(position, "发射投射物");
+            var launchProjectileSO_p = property.FindPropertyRelative("launchProjectileSO");
+            var launchProjectileSO = launchProjectileSO_p.DrawProperty<GameProjectileSO>("投射物模板");
+
+            var projectileId_p = property.FindPropertyRelative("projectileId");
+            projectileId_p.intValue = launchProjectileSO ? launchProjectileSO.typeId : 0;
 
             // 绘制 "发射偏移"
             var launchOffset_p = property.FindPropertyRelative("launchOffset");
@@ -36,7 +40,7 @@ namespace GamePlay.Config
 
             EditorGUI.EndProperty();
 
-            property.serializedObject.ApplyModifiedProperties();
+            if (property.serializedObject.hasModifiedProperties) property.serializedObject.ApplyModifiedProperties();
         }
     }
 }

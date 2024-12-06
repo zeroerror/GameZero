@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: template_action_1001
   m_EditorClassIdentifier: 
   typeId: 1001
-  actionType: 3
+  actionType: 1
   dmgAction:
     typeId: 1001
     actionType: 1
     selector:
-      selectAnchorType: 0
-      campType: 0
-      entityType: 0
+      selectAnchorType: 1
+      campType: 1
+      entityType: 1
     dmg: 111
   healAction:
     typeId: 0
@@ -55,10 +55,10 @@ MonoBehaviour:
     entityType: 1
     selColliderType: 1
     boxColliderModel:
-      offset: {x: -0.189, y: -0.004}
+      offset: {x: 0, y: 0}
       angle: 0
-      width: 1
-      height: 1
+      width: 3
+      height: 3
     circleColliderModel:
       offset: {x: 0, y: 0}
       angle: 0

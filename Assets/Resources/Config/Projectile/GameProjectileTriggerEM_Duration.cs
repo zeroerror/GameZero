@@ -6,10 +6,11 @@ namespace GamePlay.Config
     [System.Serializable]
     public class GameProjectileTriggerEM_Duration
     {
-        [Header("是否启用")]
+        [HideInInspector]
         public bool enable;
         [Header("持续时间")]
         public float duration;
+
         [Header("触发的行为")]
         public GameActionSO actionSO;
         [Header("下一个状态")]

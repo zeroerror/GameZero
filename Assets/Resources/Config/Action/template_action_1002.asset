@@ -13,18 +13,7 @@ MonoBehaviour:
   m_Name: template_action_1002
   m_EditorClassIdentifier: 
   typeId: 1002
-  actionType_edit: 1
-  selector_edit:
-    selectAnchorType: 1
-    campType: 1
-    entityType: 1
-  isRangeSelect: 1
-  colliderType_edit: 1
-  boxColliderModel:
-    offset: {x: 0.8679, y: 0.496}
-    angle: 0
-    width: 1.6957
-    height: 1
+  actionType: 1
   dmgAction:
     typeId: 1002
     actionType: 1
@@ -41,17 +30,17 @@ MonoBehaviour:
       campType: 0
       entityType: 0
     heal: 0
-  launchProjectileAction:
-    typeId: 0
-    actionType: 0
-    selector:
-      selectAnchorType: 0
-      campType: 0
-      entityType: 0
+  launchProjectileActionEM:
     projectileId: 0
-    speed: 0
-  launchProjectileSO: {fileID: 0}
-  skillSORefs: []
+    launchOffset: {x: 0, y: 0}
+    launchProjectileSO: {fileID: 0}
+    barrageType: 0
+    customLaunchOffsetEM:
+      count: 0
+      launchOffsets: []
+    spreadEM:
+      count: 0
+      spreadAngle: 0
   actionR:
     typeId: 1002
     vfxClip: {fileID: 7400000, guid: 58f583904127f254090ebb06200a036b, type: 2}
@@ -60,3 +49,23 @@ MonoBehaviour:
       amplitude: 0
       frequency: 0
       duration: 0
+  selectorEM:
+    selectAnchorType: 1
+    campType: 1
+    entityType: 1
+    selColliderType: 1
+    boxColliderModel:
+      offset: {x: -0.189, y: -0.004}
+      angle: 0
+      width: 1
+      height: 1
+    circleColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+    fanColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+      fanAngle: 0
+  skillSORefs: []

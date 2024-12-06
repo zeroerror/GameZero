@@ -7,7 +7,7 @@ namespace GamePlay.Core
 {
     public class GameCircleCollider : GameColliderBase
     {
-        public static readonly GameBoxCollider Default = new GameBoxCollider(null, null, -1);
+        public static readonly GameCircleCollider Default = new GameCircleCollider(null, null, -1);
 
         public float originRadius => _originRadius;
         float _originRadius;

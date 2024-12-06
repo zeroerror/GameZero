@@ -1,0 +1,58 @@
+using Codice.Client.BaseCommands;
+using GamePlay.Bussiness.Logic;
+using UnityEditor;
+using UnityEngine;
+
+namespace GamePlay.Config
+{
+    [CustomPropertyDrawer(typeof(GameProjectileStateEM))]
+    public class GameProjectileStateEditor : PropertyDrawer
+    {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginProperty(position, label, property);
+
+            // 状态模型
+            var stateType_p = property.FindPropertyRelative("stateType");
+            var stateType = stateType_p.DrawProperty_EnumPopup<GameProjectileStateType>("状态类型");
+            if (stateType == GameProjectileStateType.None) EditorGUILayout.HelpBox("请选择状态类型", MessageType.Warning);
+            switch (stateType)
+            {
+                case GameProjectileStateType.Attach:
+                    property.FindPropertyRelative("attachStateEM").DrawProperty("状态参数");
+                    break;
+                case GameProjectileStateType.FixedDirection:
+                    property.FindPropertyRelative("fixedDirectionStateEM").DrawProperty("状态参数");
+                    break;
+                case GameProjectileStateType.LockOnEntity:
+                    property.FindPropertyRelative("lockOnEntityStateEM").DrawProperty("状态参数");
+                    break;
+                case GameProjectileStateType.LockOnPosition:
+                    property.FindPropertyRelative("lockOnPositionStateEM").DrawProperty("状态参数");
+                    break;
+                default:
+                    break;
+            }
+
+            // 触发器集合
+            this._DrawTriggerModel(property, "durationTriggerModel", "触发器[持续时间]");
+            this._DrawTriggerModel(property, "volumeCollisionTriggerModel", "触发器[体积碰撞]");
+            if (stateType == GameProjectileStateType.LockOnEntity || stateType == GameProjectileStateType.LockOnPosition) this._DrawTriggerModel(property, "impactTargetTriggerModel", "触发器[与目标碰撞]");
+        }
+
+
+        private void _DrawTriggerModel(SerializedProperty property, string triggerName, string label)
+        {
+            var emSet_p = property.FindPropertyRelative("emSet");
+            var trigger_p = emSet_p.FindPropertyRelative(triggerName);
+            if (trigger_p == null) trigger_p = new SerializedObject(emSet_p.objectReferenceValue).FindProperty(triggerName);
+            var triggerEnable_p = trigger_p.FindPropertyRelative("enable");
+            var triggerEnable = triggerEnable_p.boolValue;
+            var color = GUI.color;
+            if (triggerEnable) GUI.color = Color.yellow;
+            triggerEnable_p.DrawProperty_Bool($"{label}");
+            if (triggerEnable) trigger_p.DrawProperty();
+            GUI.color = color;
+        }
+    }
+}

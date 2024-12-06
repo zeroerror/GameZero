@@ -13,45 +13,34 @@ MonoBehaviour:
   m_Name: template_action_1003
   m_EditorClassIdentifier: 
   typeId: 1003
-  actionType_edit: 3
-  selector_edit:
-    selectAnchorType: 1
-    campType: 2
-    entityType: 1
-  colliderType_edit: 1
-  isRangeSelect: 0
-  boxColliderModel:
-    offset: {x: 0.8679, y: 0.496}
-    angle: 0
-    width: 1.6957
-    height: 1
+  actionType: 3
   dmgAction:
     typeId: 0
     actionType: 0
     selector:
-      selectAnchorType: 1
+      selectAnchorType: 0
       campType: 1
-      entityType: 1
+      entityType: 0
     dmg: 0
   healAction:
     typeId: 0
     actionType: 0
     selector:
-      selectAnchorType: 0
-      campType: 0
-      entityType: 0
-    heal: 0
-  launchProjectileAction:
-    typeId: 1003
-    actionType: 3
-    selector:
       selectAnchorType: 1
-      campType: 2
-      entityType: 1
+      campType: 1
+      entityType: 0
+    heal: 5156165
+  launchProjectileActionEM:
     projectileId: 10001
-    speed: 5
-  launchProjectileSO: {fileID: 11400000, guid: 244c253d64a261c439248f0b12c9259c, type: 2}
-  skillSORefs: []
+    launchOffset: {x: 0, y: 0.8}
+    launchProjectileSO: {fileID: 11400000, guid: 244c253d64a261c439248f0b12c9259c, type: 2}
+    barrageType: 0
+    customLaunchOffsetEM:
+      count: 2
+      launchOffsets: []
+    spreadEM:
+      count: 0
+      spreadAngle: 0
   actionR:
     typeId: 1003
     vfxClip: {fileID: 0}
@@ -60,3 +49,23 @@ MonoBehaviour:
       amplitude: 0
       frequency: 0
       duration: 0
+  selectorEM:
+    selectAnchorType: 1
+    campType: 2
+    entityType: 1
+    selColliderType: 0
+    boxColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      width: 0
+      height: 0
+    circleColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+    fanColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+      fanAngle: 0
+  skillSORefs: []

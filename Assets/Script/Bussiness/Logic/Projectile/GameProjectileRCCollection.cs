@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_PROJECTILE_STATE_ENTER_FIXED_DIRECTION = "RC_GAME_PROJECTILE_STATE_ENTER_FIXED_DIRECTION";
         /// <summary> 弹道状态 - 进入 锁定实体飞行  </summary>
         public static readonly string RC_GAME_PROJECTILE_STATE_ENTER_LOCK_ON_ENTITY = "RC_GAME_PROJECTILE_STATE_ENTER_LOCK_ON_ENTITY";
-        /// <summary> 弹道状态 - 进入 锁定位置飞行  </summary>
+        /// <summary> 弹道状态 - 进入 锁定地点飞行  </summary>
         public static readonly string RC_GAME_PROJECTILE_STATE_ENTER_LOCK_ON_POSITION = "RC_GAME_PROJECTILE_STATE_ENTER_LOCK_ON_POSITION";
         /// <summary> 弹道状态 - 进入 附着  </summary>
         public static readonly string RC_GAME_PROJECTILE_STATE_ENTER_ATTACH = "RC_GAME_PROJECTILE_STATE_ENTER_ATTACH";

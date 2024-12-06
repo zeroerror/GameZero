@@ -38,16 +38,16 @@ namespace GamePlay.Bussiness.Logic
             if (model.bounceCount > 0 && fixedDirectionState.bounceCount < model.bounceCount)
             {
                 var entitySelectApi = this._context.domainApi.entitySelectApi;
-                var selectedEntities = entitySelectApi.SelectEntities(model.checkEntitySelector, projectile, false);
+                var checkEntitySelector = model.checkEntitySelector;
+                var selectedEntities = entitySelectApi.SelectEntities(checkEntitySelector, projectile, false);
                 if (selectedEntities?.Count > 0)
                 {
                     var selectedEntity = selectedEntities[0];
-                    var normal = GamePhysicsResolvingUtil.GetResolvingMTV(selectedEntity.physicsCom.collider, projectile.physicsCom.collider).normalized;
+                    var normal = GamePhysicsResolvingUtil.GetResolvingMTV(selectedEntity.physicsCom.collider, checkEntitySelector.colliderModel, projectile.transformCom.ToArgs()).normalized;
                     var reflectDirection = GameVectorUtil.GetReflectDirection(direction, normal);
 
                     projectile.FaceTo(reflectDirection);
-                    projectile.physicsCom.collider.UpdateTRS();
-                    var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(selectedEntity.physicsCom.collider, projectile.physicsCom.collider);
+                    var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(selectedEntity.physicsCom.collider, checkEntitySelector.colliderModel, projectile.transformCom.ToArgs());
                     projectile.transformCom.position += mtv + mtv.normalized * 0.01f;
 
                     var curTargeter = projectile.actionTargeterCom.getCurTargeter();
