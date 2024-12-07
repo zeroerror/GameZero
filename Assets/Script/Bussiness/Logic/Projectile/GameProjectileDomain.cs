@@ -91,13 +91,12 @@ namespace GamePlay.Bussiness.Logic
             timelineCom.Play();
         }
 
-        public GameProjectileEntity[] CreateProjectileBarrage(int typeId, GameEntityBase creator, GameTransformArgs transArgs, GameActionTargeterArgs targeter, in GameProjectileBarrageModel_Spread barrageModel)
+        public GameProjectileEntity[] CreateBarrage(int typeId, GameEntityBase creator, in GameTransformArgs transArgs, GameActionTargeterArgs targeter, in GameProjectileBarrageModel_Spread barrageModel)
         {
             var count = barrageModel.count;
             if (count <= 0) return null;
             var spreadAngle = barrageModel.spreadAngle;
             var stepAngle = spreadAngle / (count - 1);
-            // 对称散射
             var projectiles = new GameProjectileEntity[count];
             var originTarDir = targeter.targetDirection;
             for (var i = 0; i < count; i++)
@@ -111,9 +110,23 @@ namespace GamePlay.Bussiness.Logic
             return projectiles;
         }
 
-        public GameProjectileEntity[] CreateProjectileBarrage(int typeId, GameEntityBase creator, GameTransformArgs transArgs, in GameActionTargeterArgs targeter, in GameProjectileBarrageModel_CustomLaunchOffset barrageModel)
+        public GameProjectileEntity[] CreateBarrage(int typeId, GameEntityBase creator, GameTransformArgs transArgs, in GameActionTargeterArgs targeter, in GameProjectileBarrageModel_CustomLaunchOffset barrageModel)
         {
-            throw new System.NotImplementedException();
+            var count = barrageModel.count;
+            if (count <= 0) return null;
+            var projectiles = new GameProjectileEntity[count];
+            var launchOffsets = barrageModel.launchOffsets;
+            var angle = GameVec2.SignedAngle(GameVec2.right, targeter.targetDirection);
+            var originPos = transArgs.position;
+            for (var i = 0; i < count; i++)
+            {
+                var offset = launchOffsets[i];
+                offset = offset.Rotate(angle);
+                transArgs.position = originPos + offset;
+                var p = this.CreateProjectile(typeId, creator, transArgs, targeter);
+                projectiles[i] = p;
+            }
+            return projectiles;
         }
     }
 }

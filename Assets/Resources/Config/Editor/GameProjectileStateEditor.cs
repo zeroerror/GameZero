@@ -37,7 +37,8 @@ namespace GamePlay.Config
             // 触发器集合
             this._DrawTriggerModel(property, "durationTriggerModel", "触发器[持续时间]");
             this._DrawTriggerModel(property, "volumeCollisionTriggerModel", "触发器[体积碰撞]");
-            if (stateType == GameProjectileStateType.LockOnEntity || stateType == GameProjectileStateType.LockOnPosition) this._DrawTriggerModel(property, "impactTargetTriggerModel", "触发器[与目标碰撞]");
+            if (stateType == GameProjectileStateType.LockOnEntity || stateType == GameProjectileStateType.LockOnPosition) this._DrawTriggerModel(property, "impactTargetTriggerModel", "触发器[抵达目标]");
+            else this._DisableTriggerModel(property, "impactTargetTriggerModel");
         }
 
 
@@ -53,6 +54,14 @@ namespace GamePlay.Config
             triggerEnable_p.DrawProperty_Bool($"{label}");
             if (triggerEnable) trigger_p.DrawProperty();
             GUI.color = color;
+        }
+
+        private void _DisableTriggerModel(SerializedProperty property, string triggerName)
+        {
+            var emSet_p = property.FindPropertyRelative("emSet");
+            var trigger_p = emSet_p.FindPropertyRelative(triggerName);
+            var triggerEnable_p = trigger_p.FindPropertyRelative("enable");
+            triggerEnable_p.boolValue = false;
         }
     }
 }

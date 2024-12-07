@@ -23,7 +23,7 @@ namespace GamePlay.Bussiness.Logic
             var isLockOnPositionState = stateType == GameProjectileStateType.LockOnPosition;
             if (!isLockOnEntityState && !isLockOnPositionState)
             {
-                GameLogger.LogError("状态触发器[与目标发生碰撞]: 前提条件当前状态必须是锁定实体或锁定地点");
+                GameLogger.LogError("状态触发器[抵达目标]: 前提条件当前状态必须是锁定实体或锁定地点");
                 return false;
             }
 

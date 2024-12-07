@@ -31,13 +31,18 @@ MonoBehaviour:
       entityType: 0
     heal: 5156165
   launchProjectileActionEM:
-    projectileId: 10001
+    projectileId: 10002
     launchOffset: {x: 0, y: 0.8}
-    launchProjectileSO: {fileID: 11400000, guid: 244c253d64a261c439248f0b12c9259c, type: 2}
-    barrageType: 1
+    launchProjectileSO: {fileID: 11400000, guid: 9cf0845552672f744927287d2249c9ab, type: 2}
+    barrageType: 2
     customLaunchOffsetEM:
-      count: 2
-      launchOffsets: []
+      count: 5
+      launchOffsets:
+      - {x: 0, y: 1}
+      - {x: -1, y: 0.5}
+      - {x: -2, y: 0}
+      - {x: -1, y: -0.5}
+      - {x: 0, y: -1}
     spreadEM:
       count: 6
       spreadAngle: 60

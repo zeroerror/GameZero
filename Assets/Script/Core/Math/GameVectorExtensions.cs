@@ -99,11 +99,11 @@ public static class GameVectorExtensions
 
     /// <summary> 
     /// 旋转自身向量, 返回旧的向量
-    /// <para name="degree">旋转欧拉角度, 正数为逆时针, 负数为顺时针, 因为Unity的坐标系是左手系</para>
+    /// <para name="angle">角度（以度为单位), 正为逆时针, 负数为顺时针</para>
     /// </summary>
-    public static GameVec2 RotateSelf(this ref GameVec2 v, float degree)
+    public static GameVec2 RotateSelf(this ref GameVec2 v, float angle)
     {
-        float radian = degree * GameMathF.Deg2Rad;
+        float radian = -angle * GameMathF.Deg2Rad;
         float cos = GameMathF.Cos(radian);
         float sin = GameMathF.Sin(radian);
         var x = v.x * cos + v.y * sin;
@@ -115,11 +115,11 @@ public static class GameVectorExtensions
 
     /// <summary> 
     /// 旋转向量, 返回新的向量
-    /// <para name="degree">旋转欧拉角度, 正数为逆时针, 负数为顺时针, 因为Unity的坐标系是左手系</para>
+    /// <para name="angle">角度（以度为单位), 正为逆时针, 负数为顺时针</para>
     /// </summary>
-    public static GameVec2 Rotate(this GameVec2 v, float degree)
+    public static GameVec2 Rotate(this GameVec2 v, float angle)
     {
-        float radian = degree * GameMathF.Deg2Rad;
+        float radian = -angle * GameMathF.Deg2Rad;
         float cos = GameMathF.Cos(radian);
         float sin = GameMathF.Sin(radian);
         return new GameVec2(v.x * cos + v.y * sin, v.y * cos - v.x * sin);

@@ -127,10 +127,10 @@ namespace GamePlay.Bussiness.Logic
                         projectileApi.CreateProjectile(projectileId, actorEntity, transArgs, targeter);
                         break;
                     case GameProjectileBarrageType.CustomLaunchOffset:
-                        projectileApi.CreateProjectileBarrage(projectileId, actorEntity, transArgs, targeter, action.customLaunchOffsetModel);
+                        projectileApi.CreateBarrage(projectileId, actorEntity, transArgs, targeter, action.customLaunchOffsetModel);
                         break;
                     case GameProjectileBarrageType.Spread:
-                        projectileApi.CreateProjectileBarrage(projectileId, actorEntity, transArgs, targeter, action.spreadModel);
+                        projectileApi.CreateBarrage(projectileId, actorEntity, transArgs, targeter, action.spreadModel);
                         break;
                     default:
                         GameLogger.LogError($"行为无法执行, 尚未处理的弹幕类型：{action.barrageType}");

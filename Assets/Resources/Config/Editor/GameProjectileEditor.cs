@@ -21,6 +21,7 @@ namespace GamePlay.Config
         private void _DrawBasicData(GameProjectileSO so)
         {
             EditorGUILayout.LabelField("基础信息-------------------------", EditorStyles.boldLabel);
+            so.typeId = EditorGUILayout.IntField("类型Id", so.typeId);
             so.projectileName = EditorGUILayout.TextField("名称", so.projectileName);
             so.desc = EditorGUILayout.TextField("描述", so.desc);
             EditorGUI.BeginChangeCheck();
@@ -71,6 +72,8 @@ namespace GamePlay.Config
                     GameGUILayout.DrawButton("删除", () =>
                     {
                         stateEMs_p.DeleteArrayElementAtIndex(i);
+                        i--;
+                        stateCount--;
                     }, Color.red, 50);
                     if (GUILayout.Button("重置", GUILayout.Width(50)))
                     {
