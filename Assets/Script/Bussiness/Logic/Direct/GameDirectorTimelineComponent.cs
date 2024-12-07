@@ -11,15 +11,16 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public bool Tick(float dt)
+        public int Tick(float dt)
         {
             this.gameTime += dt * this.timeScale;
             this.cacheDt += dt * this.timeScale;
             var frameTime = GameTimeCollection.frameTime;
-            if (this.cacheDt < frameTime) return false;
-            this.cacheDt -= frameTime;
-            this.gameFrame++;
-            return true;
+            if (this.cacheDt < frameTime) return 0;
+            var tickCount = (int)(this.cacheDt / frameTime);
+            this.gameFrame += tickCount;
+            this.cacheDt -= tickCount * frameTime;
+            return tickCount;
         }
     }
 }

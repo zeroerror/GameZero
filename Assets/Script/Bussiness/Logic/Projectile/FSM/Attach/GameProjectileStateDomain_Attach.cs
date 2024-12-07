@@ -32,15 +32,21 @@ namespace GamePlay.Bussiness.Logic
             var stateModel = fsmCom.attachState.model;
             switch (stateModel.attachType)
             {
-                case GameProjectileTargeterType.Actor:
-                    var actor = projectile.idCom.parent;
-                    if (actor.attributeCom.GetValue(GameAttributeType.Hp) <= 0) break;
-                    attachPos = actor.transformCom.position;
+                case GameProjectileTargeterType.RoleActor:
+                    var roleActor = projectile.TryGetLinkEntity<GameRoleEntity>();
+                    if (roleActor.attributeCom.GetValue(GameAttributeType.HP) <= 0) break;
+                    attachPos = roleActor.transformCom.position;
+                    projectile.transformCom.forward = roleActor.transformCom.forward;
+                    projectile.actionTargeterCom.SetTargeter(new GameActionTargeterArgs
+                    {
+                        targetDirection = roleActor.transformCom.forward,
+                    });
                     break;
                 case GameProjectileTargeterType.Target:
                     var targetEntity = targeter.targetEntity;
-                    if (targetEntity.attributeCom.GetValue(GameAttributeType.Hp) <= 0) break;
+                    if (targetEntity.attributeCom.GetValue(GameAttributeType.HP) <= 0) break;
                     attachPos = targetEntity.transformCom.position;
+                    projectile.transformCom.forward = targetEntity.transformCom.forward;
                     break;
                 case GameProjectileTargeterType.Position:
                     attachPos = targeter.targetPosition;
@@ -56,15 +62,15 @@ namespace GamePlay.Bussiness.Logic
         {
             var fsmCom = projectile.fsmCom;
             var stateModel = fsmCom.attachState.model;
-            if (stateModel.attachType == GameProjectileTargeterType.Actor)
+            if (stateModel.attachType == GameProjectileTargeterType.RoleActor)
             {
-                var actor = projectile.idCom.parent;
-                if (actor.attributeCom.GetValue(GameAttributeType.Hp) <= 0) return GameProjectileStateType.Destroyed;
+                var actor = projectile.TryGetLinkEntity<GameRoleEntity>();
+                if (actor.attributeCom.GetValue(GameAttributeType.HP) <= 0) return GameProjectileStateType.Destroyed;
             }
             else if (stateModel.attachType == GameProjectileTargeterType.Target)
             {
                 var targetEntity = projectile.actionTargeterCom.getCurTargeter().targetEntity;
-                if (targetEntity.attributeCom.GetValue(GameAttributeType.Hp) <= 0) return GameProjectileStateType.Destroyed;
+                if (targetEntity.attributeCom.GetValue(GameAttributeType.HP) <= 0) return GameProjectileStateType.Destroyed;
             }
             return base._CheckExit(projectile);
         }

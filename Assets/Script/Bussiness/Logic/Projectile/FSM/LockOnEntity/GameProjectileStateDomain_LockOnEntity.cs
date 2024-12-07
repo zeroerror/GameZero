@@ -36,7 +36,7 @@ namespace GamePlay.Bussiness.Logic
             var stateModel = fsmCom.lockOnEntityState.model;
             switch (stateModel.targeterType)
             {
-                case GameProjectileTargeterType.Actor:
+                case GameProjectileTargeterType.RoleActor:
                     lockOnEntity = projectile.idCom.parent;
                     break;
                 case GameProjectileTargeterType.Target:

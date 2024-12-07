@@ -19,7 +19,6 @@ namespace GamePlay.Config
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(so);
-                AssetDatabase.SaveAssets();
             }
         }
 
@@ -68,11 +67,11 @@ namespace GamePlay.Config
             // 绘制所有状态并提供删除按钮
             for (var i = 0; i < stateCount; i++)
             {
-                EditorGUILayout.EndHorizontal();
                 GameEditorGUILayout.DrawBoxItem(() =>
                 {
                     var state_p = stateEMs_p.GetArrayElementAtIndex(i);
                     state_p.DrawProperty($"状态 {i}");
+
                     EditorGUILayout.BeginHorizontal();
                     GameGUILayout.DrawButton("删除", () =>
                     {
@@ -80,11 +79,27 @@ namespace GamePlay.Config
                         i--;
                         stateCount--;
                     }, Color.red, 50);
-                    if (GUILayout.Button("重置", GUILayout.Width(50)))
+                    GameGUILayout.DrawButton("重置", () =>
                     {
                         so.stateEMs[i] = new GameProjectileStateEM();
                         serializedObject.Update();
-                    }
+                    }, Color.yellow, 50);
+                    GameGUILayout.DrawButton("↑", () =>
+                    {
+                        if (i > 0)
+                        {
+                            stateEMs_p.MoveArrayElement(i, i - 1);
+                        }
+                    }, Color.white, 20);
+                    GameGUILayout.DrawButton("↓", () =>
+                    {
+                        if (i < stateCount - 1)
+                        {
+                            stateEMs_p.MoveArrayElement(i, i + 1);
+                        }
+                    }, Color.white, 20);
+                    EditorGUILayout.EndHorizontal();
+
                 });
             }
             // 添加新状态按钮

@@ -16,7 +16,12 @@ namespace GamePlay.Bussiness.Logic
         public bool CheckSatisfied(GameProjectileEntity entity, GameProjectileTriggerEntity_Duration triggerEntity, float dt)
         {
             triggerEntity.elapsedTime += dt;
-            return triggerEntity.elapsedTime >= triggerEntity.model.duration;
+            var isSatisfied = triggerEntity.elapsedTime >= triggerEntity.model.duration;
+            if (isSatisfied)
+            {
+                triggerEntity.elapsedTime = 0;
+            }
+            return isSatisfied;
         }
     }
 }

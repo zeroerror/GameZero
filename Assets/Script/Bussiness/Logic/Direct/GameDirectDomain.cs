@@ -103,11 +103,14 @@ namespace GamePlay.Bussiness.Logic
 
         public void Update(float dt)
         {
-            var canTick = this.director.Tick(dt);
-            if (!canTick) return;
+            var tickCount = this.director.Tick(dt);
+            if (tickCount <= 0) return;
             var frameTime = GameTimeCollection.frameTime;
-            this._PreTick(frameTime);
-            this._Tick(frameTime);
+            for (var i = 0; i < tickCount; i++)
+            {
+                this._PreTick(frameTime);
+                this._Tick(frameTime);
+            }
         }
 
         public void LateUpdate(float dt)

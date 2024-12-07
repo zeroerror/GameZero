@@ -33,7 +33,6 @@ namespace GamePlay.Config
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(so);
-                AssetDatabase.SaveAssets();
             }
         }
 

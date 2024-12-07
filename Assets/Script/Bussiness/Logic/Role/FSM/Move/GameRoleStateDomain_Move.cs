@@ -32,7 +32,7 @@ namespace GamePlay.Bussiness.Logic
             }
             inputArgs = stateModel.inputArgs;
             var moveDir = inputArgs.moveDir;
-            var moveSpeed = 5;
+            var moveSpeed = role.attributeCom.GetValue(GameAttributeType.MoveSpeed);
             var moveVec = new GameVec2(moveDir.x, moveDir.y) * moveSpeed * frameTime;
             role.transformCom.position += moveVec;
             role.FaceTo(moveDir);

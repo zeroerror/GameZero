@@ -97,21 +97,26 @@ namespace GamePlay.Bussiness.Logic
             return null;
         }
 
-        public virtual void ForeachEntities(System.Action<T> action, bool isIncludingPool = false)
+        public virtual void ForeachEntities(System.Action<T> action)
         {
             var count = this._list.Count;
             for (var i = 0; i < count; i++)
             {
                 action(this._list[i]);
             }
-            if (isIncludingPool)
+        }
+
+        public virtual void ForeachAllEntities(System.Action<T> action)
+        {
+            for (var i = 0; i < this._list.Count; i++)
             {
-                foreach (var entityPool in this._poolDict.Values)
+                action(this._list[i]);
+            }
+            foreach (var entityPool in this._poolDict.Values)
+            {
+                foreach (var entity in entityPool)
                 {
-                    foreach (var entity in entityPool)
-                    {
-                        action(entity);
-                    }
+                    action(entity);
                 }
             }
         }

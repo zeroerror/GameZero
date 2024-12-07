@@ -27,7 +27,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.fsmDomain.Dispose();
             this._UnbindEvents();
-            this._projectileContext.repo.ForeachEntities((entity) =>
+            this._projectileContext.repo.ForeachAllEntities((entity) =>
             {
                 entity.Destroy();
             });
@@ -39,7 +39,7 @@ namespace GamePlay.Bussiness.Renderer
             {
                 e.Tick(dt);
                 this.fsmDomain.Tick(e, dt);
-            }, true);
+            });
         }
 
         private void _BindEvent()

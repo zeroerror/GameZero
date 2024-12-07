@@ -28,10 +28,10 @@ namespace GamePlay.Bussiness.Renderer
         {
             this._UnbindEvents();
             this.fsmDomain.Dispose();
-            this._roleContext.repo.ForeachEntities((entity) =>
+            this._roleContext.repo.ForeachAllEntities((entity) =>
             {
                 entity.Destroy();
-            }, true);
+            });
         }
 
         private void _BindEvent()

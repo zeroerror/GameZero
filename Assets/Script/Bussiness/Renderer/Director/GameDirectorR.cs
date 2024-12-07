@@ -6,10 +6,9 @@ namespace GamePlay.Bussiness.Renderer
         public GameDirectorFSMCom fsmCom { get; private set; } = new GameDirectorFSMCom();
         public GameDirectorTimelineComponent timeScaleCom { get; private set; } = new GameDirectorTimelineComponent();
 
-        public bool Tick(float dt)
+        public void Tick(float dt)
         {
-            var canTickNext = this.timeScaleCom.Tick(dt);
-            return canTickNext;
+            this.timeScaleCom.Tick(dt);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace GamePlay.Bussiness.Logic
             else this._attributes[index] = new GameAttribute() { type = type, value = value };
         }
 
-        public void GetAttribute(GameAttributeType type, out GameAttribute attribute)
+        public void TryGetAttribute(GameAttributeType type, out GameAttribute attribute)
         {
             attribute = this._attributes.Find((a) => a.type == type);
         }
