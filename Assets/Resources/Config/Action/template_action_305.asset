@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_304
+  m_Name: template_action_305
   m_EditorClassIdentifier: 
-  typeId: 304
+  typeId: 305
   actionType: 3
-  desc: "\u6302\u8F7D\u4E00\u4E2A\u5B9A\u65F6\u5F39\u4F53\u53D1\u5C04\u5668"
+  desc: "\u53D1\u5C04\u5F39\u4F53"
   dmgAction:
     typeId: 0
     actionType: 0
@@ -32,9 +32,9 @@ MonoBehaviour:
       entityType: 0
     heal: 5156165
   launchProjectileActionEM:
-    projectileId: 301
+    projectileId: 200
     launchOffset: {x: 0, y: 0}
-    launchProjectileSO: {fileID: 11400000, guid: fccde5217b07590498f4b769d46da8ba, type: 2}
+    launchProjectileSO: {fileID: 11400000, guid: 9cf0845552672f744927287d2249c9ab, type: 2}
     barrageType: 0
     customLaunchOffsetEM:
       count: 5

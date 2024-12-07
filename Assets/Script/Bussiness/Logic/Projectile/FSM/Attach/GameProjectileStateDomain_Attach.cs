@@ -55,6 +55,7 @@ namespace GamePlay.Bussiness.Logic
                     GameLogger.LogError($"投射物附着类型未处理：{stateModel.attachType}");
                     break;
             }
+            attachPos += stateModel.attachOffset;
             projectile.transformCom.position = attachPos;
         }
 

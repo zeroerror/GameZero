@@ -27,6 +27,8 @@ namespace GamePlay.Bussiness.Logic
         protected override void _Tick(GameProjectileEntity projectile, float frameTime)
         {
             var fixedDirectionState = projectile.fsmCom.fixedDirectionState;
+            fixedDirectionState.stateTime += frameTime;
+
             var model = projectile.fsmCom.fixedDirectionState.model;
             var speed = model.speed;
             var direction = projectile.actionTargeterCom.targetDirection;
@@ -56,6 +58,23 @@ namespace GamePlay.Bussiness.Logic
                     projectile.physicsCom.ClearCollided();
                 }
             }
+        }
+
+        protected override GameProjectileStateType _CheckExit(GameProjectileEntity projectile)
+        {
+            // 不存在持续一定时间后切换状态的情况, 默认一定时间后销毁
+            var triggerSet = projectile.fsmCom.triggerSetEntityDict[GameProjectileStateType.FixedDirection];
+            var durationTriggerEntity = triggerSet.durationTriggerEntity;
+            if (durationTriggerEntity == null || durationTriggerEntity.model.duration <= 0)
+            {
+                var stateTime = projectile.fsmCom.fixedDirectionState.stateTime;
+                if (stateTime >= 3)
+                {
+                    return GameProjectileStateType.Destroyed;
+                }
+            }
+
+            return base._CheckExit(projectile);
         }
     }
 

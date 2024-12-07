@@ -23,7 +23,7 @@ MonoBehaviour:
   - stateType: 5
     attachStateEM:
       attachType: 1
-      attachOffset: {x: 0, y: 0}
+      attachOffset: {x: 0, y: 1.2}
     fixedDirectionStateEM:
       speed: 10
       bounceCount: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
       durationTriggerModel:
         enable: 1
         duration: 0.3
-        actionSO: {fileID: 11400000, guid: 0fe48bb3e653ecd4e9ce1174c39d2c4b, type: 2}
+        actionSO: {fileID: 11400000, guid: 763286e291ddbb241b6ed2240f2340d5, type: 2}
         nextStateType: 0
       volumeCollisionTriggerModel:
         enable: 0

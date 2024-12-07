@@ -69,7 +69,8 @@ namespace GamePlay.Core
         {
             var worldCenterPos = circle.worldCenterPos;
             var worldRadius = circle.worldRadius;
-            var stepAngle = 0.1f;
+            var maxDrawCount = 90;
+            var stepAngle = 360 / maxDrawCount;
             var lastPos = worldCenterPos + new GameVec2(worldRadius, 0);
             for (float i = 0; i < 360; i += stepAngle)
             {
@@ -89,7 +90,8 @@ namespace GamePlay.Core
             var worldP2 = fan.worldP2;// 右下角
             Debug.DrawLine(worldCenterPos, worldP1, color);
             Debug.DrawLine(worldCenterPos, worldP2, color);
-            var stepAngle = 0.1f;
+            var maxDrawCount = 90;
+            var stepAngle = fan.fanAngle / maxDrawCount;
             var lastPos = worldP2;
             for (float i = -fan.fanAngle / 2; i <= fan.fanAngle / 2; i += stepAngle)
             {
