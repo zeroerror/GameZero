@@ -11,48 +11,9 @@ namespace GamePlay.Config
         {
             GameProjectileSO so = (GameProjectileSO)target;
 
-            EditorGUILayout.BeginVertical("box");
-            _DrawBasicData(so);
-            EditorGUILayout.EndVertical();
-
-            EditorGUILayout.BeginVertical("box");
-            _DrawLogicData(so);
-            EditorGUILayout.EndVertical();
-
-            EditorGUILayout.BeginVertical("box");
-            EditorGUILayout.LabelField("状态机-------------------------", EditorStyles.boldLabel);
-            // 状态机数组属性
-            var stateEMs_p = serializedObject.FindProperty("stateEMs");
-            // 显示当前状态的数量
-            var stateCount = stateEMs_p?.arraySize ?? 0;
-            EditorGUILayout.LabelField($"状态数量: {stateCount}");
-            // 绘制所有状态并提供删除按钮
-            for (var i = 0; i < stateCount; i++)
-            {
-                EditorGUILayout.BeginVertical("box");
-                var state_p = stateEMs_p.GetArrayElementAtIndex(i);
-                state_p.DrawProperty($"状态 {i}");
-                EditorGUILayout.BeginHorizontal();
-                GameGUILayout.DrawButton("删除", () =>
-                {
-                    stateEMs_p.DeleteArrayElementAtIndex(i);
-                }, Color.red, 50);
-                if (GUILayout.Button("重置", GUILayout.Width(50)))
-                {
-                    so.stateEMs[i] = new GameProjectileStateEM();
-                    serializedObject.Update();
-                }
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.EndVertical();
-
-            }
-            // 添加新状态按钮
-            GameGUILayout.DrawButton("添加状态", () =>
-            {
-                stateEMs_p.InsertArrayElementAtIndex(stateCount);
-            }, Color.green, 100);
-            EditorGUILayout.EndVertical();
-
+            GameEditorGUILayout.DrawBoxItem(() => this._DrawBasicData(so));
+            GameEditorGUILayout.DrawBoxItem(() => this._DrawLogicData(so));
+            GameEditorGUILayout.DrawBoxItem(() => this._DrawStateData(so));
             // 应用修改
             if (serializedObject.hasModifiedProperties) serializedObject.ApplyModifiedProperties();
         }
@@ -81,13 +42,48 @@ namespace GamePlay.Config
             EditorGUI.indentLevel += 2;
             for (var i = 0; i < evCount; i++)
             {
-                EditorGUILayout.BeginVertical("box");
-                var ev_p = timelineEvents_p.GetArrayElementAtIndex(i);
-                ev_p.DrawProperty($"事件 {i}");
-                EditorGUILayout.EndVertical();
-
+                GameEditorGUILayout.DrawBoxItem(() =>
+                {
+                    var ev_p = timelineEvents_p.GetArrayElementAtIndex(i);
+                    ev_p.DrawProperty($"事件 {i}");
+                });
             }
             EditorGUI.indentLevel -= 2;
+        }
+
+        private void _DrawStateData(GameProjectileSO so)
+        {
+            EditorGUILayout.LabelField("状态机-------------------------", EditorStyles.boldLabel);
+            // 状态机数组属性
+            var stateEMs_p = serializedObject.FindProperty("stateEMs");
+            // 显示当前状态的数量
+            var stateCount = stateEMs_p?.arraySize ?? 0;
+            EditorGUILayout.LabelField($"状态数量: {stateCount}");
+            // 绘制所有状态并提供删除按钮
+            for (var i = 0; i < stateCount; i++)
+            {
+                EditorGUILayout.EndHorizontal();
+                GameEditorGUILayout.DrawBoxItem(() =>
+                {
+                    var state_p = stateEMs_p.GetArrayElementAtIndex(i);
+                    state_p.DrawProperty($"状态 {i}");
+                    EditorGUILayout.BeginHorizontal();
+                    GameGUILayout.DrawButton("删除", () =>
+                    {
+                        stateEMs_p.DeleteArrayElementAtIndex(i);
+                    }, Color.red, 50);
+                    if (GUILayout.Button("重置", GUILayout.Width(50)))
+                    {
+                        so.stateEMs[i] = new GameProjectileStateEM();
+                        serializedObject.Update();
+                    }
+                });
+            }
+            // 添加新状态按钮
+            GameGUILayout.DrawButton("添加状态", () =>
+            {
+                stateEMs_p.InsertArrayElementAtIndex(stateCount);
+            }, Color.green, 100);
         }
     }
 }

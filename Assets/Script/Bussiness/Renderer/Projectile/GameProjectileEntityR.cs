@@ -32,7 +32,7 @@ namespace GamePlay.Bussiness.Renderer
             this.animCom = new GamePlayableCom(this.body.GetComponent<Animator>());
             this.timelineCom = new GameTimelineCom();
             this._posEaseCom = new GameEasing2DCom();
-            this._posEaseCom.SetEase(0.05f, GameEasingType.Linear);
+            this._posEaseCom.SetEase(GameTimeCollection.frameTime, GameEasingType.Linear);
         }
 
         public override void Clear()

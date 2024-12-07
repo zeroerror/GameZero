@@ -15,21 +15,22 @@ namespace GamePlay.Bussiness.Logic
             return skillApi.CheckCastCondition(entity, skill);
         }
 
-        public override void Enter(GameRoleEntity entity)
+        public override void Enter(GameRoleEntity role)
         {
-            var skillId = entity.inputCom.skillId;
-            entity.skillCom.TryGet(skillId, out var skill);
+            var skillId = role.inputCom.skillId;
+            role.skillCom.TryGet(skillId, out var skill);
             var skillApi = this._context.domainApi.skillApi;
-            skillApi.CastSkill(entity, skill);
+            skillApi.CastSkill(role, skill);
+            role.FaceTo(role.inputCom.targeterArgsList[0].targetDirection);
 
-            var fsmCom = entity.fsmCom;
+            var fsmCom = role.fsmCom;
             fsmCom.EnterCast(skill);
 
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_CAST, new GameRoleRCArgs_StateEnterCast
             {
-                fromStateType = entity.fsmCom.stateType,
-                idArgs = entity.idCom.ToArgs(),
+                fromStateType = role.fsmCom.stateType,
+                idArgs = role.idCom.ToArgs(),
                 skillId = skillId,
             });
         }
