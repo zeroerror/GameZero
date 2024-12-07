@@ -1,6 +1,7 @@
 using UnityEngine;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
+using GamePlay.Core;
 
 public class GameEntry : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameEntry : MonoBehaviour
     {
         this.gameApp = new GameApp();
         this.gameAppR = new GameAppR(gameApp.directDomain.context, this.gameObject);
+        GameLogger.logLevel = LogLevel.Error;
     }
 
     void Update()

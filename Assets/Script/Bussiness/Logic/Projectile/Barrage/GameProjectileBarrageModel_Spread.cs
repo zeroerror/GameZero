@@ -1,6 +1,6 @@
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileBarrageModel_Spread
+    public struct GameProjectileBarrageModel_Spread
     {
         public readonly int count;
         public readonly int spreadAngle;

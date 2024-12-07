@@ -34,13 +34,13 @@ MonoBehaviour:
     projectileId: 10001
     launchOffset: {x: 0, y: 0.8}
     launchProjectileSO: {fileID: 11400000, guid: 244c253d64a261c439248f0b12c9259c, type: 2}
-    barrageType: 0
+    barrageType: 1
     customLaunchOffsetEM:
       count: 2
       launchOffsets: []
     spreadEM:
-      count: 0
-      spreadAngle: 0
+      count: 6
+      spreadAngle: 60
   actionR:
     typeId: 1003
     vfxClip: {fileID: 0}

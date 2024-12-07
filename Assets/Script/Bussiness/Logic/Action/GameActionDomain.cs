@@ -49,7 +49,7 @@ namespace GamePlay.Bussiness.Logic
                     recordList = this.DoAction_LaunchProjectile(launchProjectileAction, actorEntity);
                     break;
                 default:
-                    GameLogger.LogError($"未实现的行为类型：{actionModel.GetType().Name}");
+                    GameLogger.LogError($"未处理的行为类型：{actionModel.GetType().Name}");
                     break;
             }
 
@@ -121,8 +121,21 @@ namespace GamePlay.Bussiness.Logic
                 launchOffet.x = transArgs.forward.x > 0 ? launchOffet.x : -launchOffet.x;
                 transArgs.position += launchOffet;
                 var targeter = actorEntity.actionTargeterCom.getCurTargeter();
-                projectileApi.CreateProjectile(projectileId, actorEntity, transArgs, targeter);
-
+                switch (action.barrageType)
+                {
+                    case GameProjectileBarrageType.None:
+                        projectileApi.CreateProjectile(projectileId, actorEntity, transArgs, targeter);
+                        break;
+                    case GameProjectileBarrageType.CustomLaunchOffset:
+                        projectileApi.CreateProjectileBarrage(projectileId, actorEntity, transArgs, targeter, action.customLaunchOffsetModel);
+                        break;
+                    case GameProjectileBarrageType.Spread:
+                        projectileApi.CreateProjectileBarrage(projectileId, actorEntity, transArgs, targeter, action.spreadModel);
+                        break;
+                    default:
+                        GameLogger.LogError($"行为无法执行, 尚未处理的弹幕类型：{action.barrageType}");
+                        break;
+                }
                 var record = new GameActionRecord();
                 record.actionId = action.typeId;
                 record.actorIdArgs = actorEntity.idCom.ToArgs();

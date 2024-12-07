@@ -1,7 +1,7 @@
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameProjectileBarrageModel_CustomLaunchOffset
+    public struct GameProjectileBarrageModel_CustomLaunchOffset
     {
         public readonly int count;
         public readonly GameVec2[] launchOffsets;

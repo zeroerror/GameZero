@@ -1,4 +1,5 @@
 using GamePlay.Core;
+using UnityEngine.Analytics;
 using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
@@ -88,6 +89,31 @@ namespace GamePlay.Bussiness.Logic
                 });
             });
             timelineCom.Play();
+        }
+
+        public GameProjectileEntity[] CreateProjectileBarrage(int typeId, GameEntityBase creator, GameTransformArgs transArgs, GameActionTargeterArgs targeter, in GameProjectileBarrageModel_Spread barrageModel)
+        {
+            var count = barrageModel.count;
+            if (count <= 0) return null;
+            var spreadAngle = barrageModel.spreadAngle;
+            var stepAngle = spreadAngle / (count - 1);
+            // 对称散射
+            var projectiles = new GameProjectileEntity[count];
+            var originTarDir = targeter.targetDirection;
+            for (var i = 0; i < count; i++)
+            {
+                var angle = -spreadAngle * 0.5f + i * stepAngle;
+                var tarDir = originTarDir.Rotate(angle);
+                targeter.targetDirection = tarDir;
+                var p = this.CreateProjectile(typeId, creator, transArgs, targeter);
+                projectiles[i] = p;
+            }
+            return projectiles;
+        }
+
+        public GameProjectileEntity[] CreateProjectileBarrage(int typeId, GameEntityBase creator, GameTransformArgs transArgs, in GameActionTargeterArgs targeter, in GameProjectileBarrageModel_CustomLaunchOffset barrageModel)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
