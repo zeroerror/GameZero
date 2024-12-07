@@ -19,7 +19,7 @@ namespace GamePlay.Bussiness.Renderer
             var foot = go.transform.Find("foot").gameObject;
 
             var typePrefab = Resources.Load<GameObject>($"Role/{typeId}/role_prefab_{typeId}");
-            var roleGO = GameObject.Instantiate(typePrefab);
+            var roleGO = typePrefab ? GameObject.Instantiate(typePrefab) : new GameObject();
             roleGO.AddComponent<Animator>().runtimeAnimatorController = null;
             roleGO.AddComponent<SpriteRenderer>();
             roleGO.transform.SetParent(body.transform);

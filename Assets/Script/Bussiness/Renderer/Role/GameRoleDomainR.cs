@@ -1,5 +1,6 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using UnityEngine;
 namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleDomainR : GameRoleDomainApiR
@@ -109,6 +110,12 @@ namespace GamePlay.Bussiness.Renderer
                 var clip = factory.LoadAnimationClip(entity.idCom.typeId, animName);
                 animCom.Play(clip);
             }
+        }
+
+        public void PlayAnim(GameRoleEntityR entity, AnimationClip clip)
+        {
+            var animCom = entity.animCom;
+            animCom.Play(clip);
         }
 
     }

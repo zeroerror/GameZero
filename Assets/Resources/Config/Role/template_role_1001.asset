@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b85a4e61b67f6634eb2318cf8f4ae03e, type: 3}
+  m_Name: template_role_1001
+  m_EditorClassIdentifier: 
+  typeId: 1001
+  roleName: "\u6218\u58EB"
+  desc: 
+  prefab: {fileID: 117150395161187363, guid: 5abae3fd2e85f5b45bdd5cf1c7ec41a5, type: 3}
+  skills:
+  - {fileID: 11400000, guid: 0aa734545aed5594ea2ffe963a084dd5, type: 2}
+  attributes:
+  - type: 1
+    value: 1000
+  - type: 3
+    value: 5

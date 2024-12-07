@@ -37,8 +37,8 @@ namespace GamePlay.Bussiness.Renderer
         {
             var skillId = (int)args[0];
             entity.skillCom.TryGet(skillId, out var skill);
-            var animName = skill.skillModel.animName;
-            this._context.domainApi.roleApi.PlayAnim(entity, animName);
+            var animClip = skill.skillModel.animClip;
+            this._context.domainApi.roleApi.PlayAnim(entity, animClip);
         }
 
         protected override void _Tick(GameRoleEntityR entity, float frameTime)

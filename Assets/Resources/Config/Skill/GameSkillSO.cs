@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using GamePlay.Bussiness.Logic;
+using GamePlay.Bussiness.Renderer;
 using UnityEditor;
 #endif
 using UnityEngine;
@@ -23,9 +24,8 @@ namespace GamePlay.Config
         [Header("技能条件")]
         public GameSkillConditionEM conditionEM;
 
-        protected override void OnValidate()
+        public void Update()
         {
-            base.OnValidate();
             // 更新动画信息
             if (animClip != null)
             {
@@ -46,6 +46,12 @@ namespace GamePlay.Config
         public GameSkillModel ToModel()
         {
             var model = new GameSkillModel(typeId, animName, animLength, timelineEvents.ToModels(), conditionEM.ToModel());
+            return model;
+        }
+
+        public GameSkillModelR ToModelR()
+        {
+            var model = new GameSkillModelR(typeId, animClip);
             return model;
         }
     }

@@ -64,13 +64,14 @@ namespace GamePlay.Bussiness.Logic
             this.entityCollectDomain.Inject(this.context);
 
             // TEST
-            this.roleDomain.CreatePlayerRole(10001, 1, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
-            this.roleDomain.CreatePlayerRole(10001, 2, new GameTransformArgs { position = new GameVec2(-4, -5), scale = GameVec2.one, forward = GameVec2.right }, false);
-            this.roleDomain.CreatePlayerRole(10001, 2, new GameTransformArgs { position = new GameVec2(-4, -4), scale = GameVec2.one, forward = GameVec2.right }, false);
-            this.roleDomain.CreatePlayerRole(10001, 2, new GameTransformArgs { position = new GameVec2(-4, -6), scale = GameVec2.one, forward = GameVec2.right }, false);
-            this.roleDomain.CreatePlayerRole(10001, 3, new GameTransformArgs { position = new GameVec2(0, -2), scale = GameVec2.one, forward = GameVec2.right }, false);
-            this.roleDomain.CreatePlayerRole(10001, 4, new GameTransformArgs { position = new GameVec2(4, -5), scale = GameVec2.one, forward = GameVec2.left }, false);
-            this.roleDomain.CreatePlayerRole(10001, 5, new GameTransformArgs { position = new GameVec2(8, -5), scale = GameVec2.one, forward = GameVec2.left }, false);
+            var campId = 0;
+            this.roleDomain.CreatePlayerRole(1001, campId++, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
+            this.roleDomain.CreatePlayerRole(10001, campId++, new GameTransformArgs { position = new GameVec2(-4, -5), scale = GameVec2.one, forward = GameVec2.right }, false);
+            this.roleDomain.CreatePlayerRole(10001, campId++, new GameTransformArgs { position = new GameVec2(-4, -4), scale = GameVec2.one, forward = GameVec2.right }, false);
+            this.roleDomain.CreatePlayerRole(10001, campId++, new GameTransformArgs { position = new GameVec2(-4, -6), scale = GameVec2.one, forward = GameVec2.right }, false);
+            this.roleDomain.CreatePlayerRole(10001, campId++, new GameTransformArgs { position = new GameVec2(0, -2), scale = GameVec2.one, forward = GameVec2.right }, false);
+            this.roleDomain.CreatePlayerRole(10001, campId++, new GameTransformArgs { position = new GameVec2(4, -5), scale = GameVec2.one, forward = GameVec2.left }, false);
+            this.roleDomain.CreatePlayerRole(10001, campId++, new GameTransformArgs { position = new GameVec2(8, -5), scale = GameVec2.one, forward = GameVec2.left }, false);
             this.fieldDomain.LoadField(1);
         }
 

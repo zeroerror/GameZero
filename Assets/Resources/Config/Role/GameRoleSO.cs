@@ -31,5 +31,6 @@ namespace GamePlay.Config
             var model = new GameRoleModelR(roleName, desc, prefab, skills);
             return model;
         }
+
     }
 }

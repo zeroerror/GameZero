@@ -38,8 +38,7 @@ namespace GamePlay.Bussiness.Renderer
                 model = null;
                 return false;
             }
-            var animName = so.animName;
-            model = new GameSkillModelR(typeId, animName, so.animLength);
+            model = so.ToModelR();
             _dict.Add(typeId, model);
             return true;
         }

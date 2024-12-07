@@ -1,16 +1,16 @@
+using UnityEngine;
+
 namespace GamePlay.Bussiness.Renderer
 {
     public class GameSkillModelR
     {
         public readonly int typeId;
-        public readonly string animName;
-        public readonly float animLength;
+        public readonly AnimationClip animClip;
 
-        public GameSkillModelR(int typeId, string animName, float animLength)
+        public GameSkillModelR(int typeId, AnimationClip animClip)
         {
             this.typeId = typeId;
-            this.animName = animName;
-            this.animLength = animLength;
+            this.animClip = animClip;
         }
     }
 }

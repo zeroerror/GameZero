@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e2773b92ea25be478bb283b0be92309, type: 3}
-  m_Name: template_skill_1000101
+  m_Name: template_skill_100101
   m_EditorClassIdentifier: 
-  typeId: 1000101
-  desc: "\u68D5\u718A\u653B\u51FB"
-  animClip: {fileID: 7400000, guid: 28801a507187c0d4a89d16674c86cfa4, type: 2}
+  typeId: 100101
+  desc: "\u7334\u5B50\u653B\u51FB"
+  animClip: {fileID: 7400000, guid: c6509afe4aba2cc44bcfd5a410a7ebc5, type: 2}
   animName: attack
   animLength: 0.51666665
   timelineEvents:
   - time: 0.26666668
     frame: 16
-    action: {fileID: 11400000, guid: 72848d911d917fe4ca3ac696d798e877, type: 2}
+    action: {fileID: 11400000, guid: 0fe48bb3e653ecd4e9ce1174c39d2c4b, type: 2}
   conditionEM:
     targeterType: 2
     cdTime: 0

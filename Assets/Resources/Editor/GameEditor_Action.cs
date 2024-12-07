@@ -95,7 +95,7 @@ namespace GamePlay.Config
             skillSOs = skillSOs.Filter(skillSO => skillSO.timelineEvents.Contains(e => e.action?.typeId == so.typeId));
             if (skillSOs.Length > 0)
             {
-                EditorGUILayout.LabelField(" -------- 被依赖技能 --------", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(" -------- 被依赖执行的技能 --------", EditorStyles.boldLabel);
                 for (int i = 0; i < skillSOs.Length; i++)
                 {
                     var skillSO = skillSOs[i];
@@ -106,7 +106,7 @@ namespace GamePlay.Config
             projectileSOs = projectileSOs.Filter(so => so.timelineEvents.Contains(e => e.action?.typeId == so.typeId));
             if (projectileSOs.Length > 0)
             {
-                EditorGUILayout.LabelField(" -------- 被依赖投射物 --------", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(" -------- 被依赖执行的投射物 --------", EditorStyles.boldLabel);
                 for (int i = 0; i < projectileSOs.Length; i++)
                 {
                     var projectileSO = projectileSOs[i];
