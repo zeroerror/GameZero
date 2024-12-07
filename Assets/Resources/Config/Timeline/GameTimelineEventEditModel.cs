@@ -10,7 +10,6 @@ namespace GamePlay.Config
         public GameActionSO action;
     }
 
-    /// ext
     public static class GameTimelineEventEMExt
     {
         public static GameTimelineEventModel ToModel(this GameTimelineEventEM em)

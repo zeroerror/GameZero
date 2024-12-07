@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Renderer
         {
         }
 
-        public override void Dispose()
+        public override void Destroy()
         {
         }
     }

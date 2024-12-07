@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_1002
+  m_Name: template_action_100
   m_EditorClassIdentifier: 
-  typeId: 1002
+  typeId: 100
   actionType: 1
+  desc: 
   dmgAction:
-    typeId: 1002
+    typeId: 1001
     actionType: 1
     selector:
       selectAnchorType: 1
       campType: 1
       entityType: 1
-    dmg: 222
+    dmg: 111
   healAction:
     typeId: 0
     actionType: 0
@@ -32,17 +33,17 @@ MonoBehaviour:
     heal: 0
   launchProjectileActionEM:
     projectileId: 0
-    launchOffset: {x: 0, y: 0}
+    launchOffset: {x: 1230.25, y: 0}
     launchProjectileSO: {fileID: 0}
-    barrageType: 0
+    barrageType: 1
     customLaunchOffsetEM:
       count: 0
       launchOffsets: []
     spreadEM:
-      count: 0
-      spreadAngle: 0
+      count: 73
+      spreadAngle: 68
   actionR:
-    typeId: 1002
+    typeId: 1001
     vfxClip: {fileID: 7400000, guid: 58f583904127f254090ebb06200a036b, type: 2}
     shakeModel:
       angle: 0
@@ -55,10 +56,10 @@ MonoBehaviour:
     entityType: 1
     selColliderType: 1
     boxColliderModel:
-      offset: {x: -0.189, y: -0.004}
+      offset: {x: 0, y: 0}
       angle: 0
-      width: 1
-      height: 1
+      width: 3
+      height: 3
     circleColliderModel:
       offset: {x: 0, y: 0}
       angle: 0
@@ -66,6 +67,6 @@ MonoBehaviour:
     fanColliderModel:
       offset: {x: 0, y: 0}
       angle: 0
-      radius: 0
+      radius: -0.04
       fanAngle: 0
   skillSORefs: []

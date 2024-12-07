@@ -7,10 +7,11 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomEditor(typeof(GameActionSO))]
-    public class GameActionSOEditor : Editor
+    public class GameEditor_Action : Editor
     {
         public override void OnInspectorGUI()
         {
+            EditorGUI.BeginChangeCheck();
             GameActionSO so = (GameActionSO)target;
             EditorGUILayout.BeginVertical("box");
             this._ShowLogicData(so);
@@ -29,7 +30,7 @@ namespace GamePlay.Config
             this._ShowSkillSORefs(so);
             EditorGUILayout.EndVertical();
 
-            if (GUI.changed)
+            if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(so);
                 AssetDatabase.SaveAssets();
@@ -39,6 +40,7 @@ namespace GamePlay.Config
         private void _ShowLogicData(GameActionSO so)
         {
             so.typeId = EditorGUILayout.IntField("类型Id", so.typeId);
+            so.desc = EditorGUILayout.TextField("描述", so.desc);
             so.actionType = (GameActionType)EditorGUILayout.EnumPopup("行为类型", so.actionType);
             if (so.actionType == GameActionType.None) EditorGUILayout.HelpBox("请选择一个行为类型", MessageType.Warning);
             _ShowAction(so);

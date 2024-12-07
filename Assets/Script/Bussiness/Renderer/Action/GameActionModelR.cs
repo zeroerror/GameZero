@@ -6,6 +6,7 @@ namespace GamePlay.Bussiness.Renderer
     [System.Serializable]
     public class GameActionModelR
     {
+        [HideInInspector]
         public int typeId;
         public AnimationClip vfxClip;
         public GameCameraShakeModel shakeModel;

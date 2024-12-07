@@ -9,15 +9,13 @@ namespace GamePlay.Config
         [HideInInspector]
         public bool enable;
 
-        [Header("用于检测的实体选择器")]
-        public GameEntitySelectorEM detectEntitySelectorEM;
         [Header("是否为检测目标碰撞体")]
         public bool checkByTargetCollider;
-
-        [Header("触发的行为")]
+        [Header("触发行为")]
         public GameActionSO actionSO;
         [Header("下一个状态")]
         public GameProjectileStateType nextStateType;
+        public GameEntitySelectorEM detectEntitySelectorEM;
 
         public GameProjectileTriggerModel_ImpactTarget ToModel()
         {

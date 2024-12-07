@@ -25,7 +25,7 @@ namespace GamePlay.Bussiness.Logic
             this.fsmCom.Clear();
         }
 
-        public override void Dispose()
+        public override void Destroy()
         {
         }
 

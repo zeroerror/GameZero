@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e2773b92ea25be478bb283b0be92309, type: 3}
-  m_Name: template_skill_1002
+  m_Name: template_skill_2
   m_EditorClassIdentifier: 
-  typeId: 1002
+  typeId: 2
   animClip: {fileID: 7400000, guid: 598ea8b9b5642554a981bcccce536340, type: 2}
   animName: jumpAttack
   animLength: 0.26666668
   timelineEvents:
   - time: 0.15
-    frame: 4
+    frame: 9
     action: {fileID: 11400000, guid: 2e2cce7e8a2dce140b60de3e9a154440, type: 2}
   conditionEM:
     targeterType: 2

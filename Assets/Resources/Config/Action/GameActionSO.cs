@@ -9,6 +9,7 @@ namespace GamePlay.Config
     public class GameActionSO : GameSOBase
     {
         public GameActionType actionType;
+        public string desc;
         public GameActionModel_Dmg dmgAction;
         public GameActionModel_Heal healAction;
         public GameActionEM_LaunchProjectile launchProjectileActionEM;

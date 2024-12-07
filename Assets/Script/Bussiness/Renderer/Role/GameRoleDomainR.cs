@@ -30,7 +30,7 @@ namespace GamePlay.Bussiness.Renderer
             this.fsmDomain.Dispose();
             this._roleContext.repo.ForeachEntities((entity) =>
             {
-                entity.Dispose();
+                entity.Destroy();
             }, true);
         }
 

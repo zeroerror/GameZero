@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b63e08219bd61964398ea7781cbcab7c, type: 3}
-  m_Name: template_projectile_10001
+  m_Name: template_projectile_100
   m_EditorClassIdentifier: 
-  typeId: 10001
+  typeId: 100
   projectileName: "\u56DE\u65CB\u9556"
   desc: "\u5FEB\u901F\u98DE\u5411\u654C\u4EBA\uFF0C\u51FB\u4E2D\u540E\u56DE\u5230\u624B\u4E2D"
   animClip: {fileID: 7400000, guid: ec5df76121251ff4c9642ff6848b3ef4, type: 2}
@@ -62,6 +62,8 @@ MonoBehaviour:
         nextStateType: 3
       volumeCollisionTriggerModel:
         enable: 1
+        actionSO: {fileID: 11400000, guid: 72848d911d917fe4ca3ac696d798e877, type: 2}
+        nextStateType: 0
         detectEntitySelectorEM:
           selectAnchorType: 1
           campType: 1
@@ -81,10 +83,11 @@ MonoBehaviour:
             angle: 0
             radius: 0
             fanAngle: 0
-        actionSO: {fileID: 11400000, guid: 72848d911d917fe4ca3ac696d798e877, type: 2}
-        nextStateType: 0
       impactTargetTriggerModel:
         enable: 0
+        checkByTargetCollider: 0
+        actionSO: {fileID: 0}
+        nextStateType: 0
         detectEntitySelectorEM:
           selectAnchorType: 0
           campType: 0
@@ -104,9 +107,6 @@ MonoBehaviour:
             angle: 0
             radius: 0
             fanAngle: 0
-        checkByTargetCollider: 0
-        actionSO: {fileID: 0}
-        nextStateType: 0
   - stateType: 3
     attachStateEM:
       attachType: 0
@@ -149,6 +149,8 @@ MonoBehaviour:
         nextStateType: 0
       volumeCollisionTriggerModel:
         enable: 1
+        actionSO: {fileID: 11400000, guid: 72848d911d917fe4ca3ac696d798e877, type: 2}
+        nextStateType: 0
         detectEntitySelectorEM:
           selectAnchorType: 1
           campType: 1
@@ -168,10 +170,11 @@ MonoBehaviour:
             angle: 0
             radius: 0
             fanAngle: 0
-        actionSO: {fileID: 11400000, guid: 72848d911d917fe4ca3ac696d798e877, type: 2}
-        nextStateType: 0
       impactTargetTriggerModel:
         enable: 1
+        checkByTargetCollider: 0
+        actionSO: {fileID: 0}
+        nextStateType: 7
         detectEntitySelectorEM:
           selectAnchorType: 1
           campType: 2
@@ -191,6 +194,3 @@ MonoBehaviour:
             angle: 0
             radius: 0
             fanAngle: 0
-        checkByTargetCollider: 0
-        actionSO: {fileID: 0}
-        nextStateType: 7

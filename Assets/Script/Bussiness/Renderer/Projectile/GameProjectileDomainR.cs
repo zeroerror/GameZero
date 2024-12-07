@@ -29,7 +29,7 @@ namespace GamePlay.Bussiness.Renderer
             this._UnbindEvents();
             this._projectileContext.repo.ForeachEntities((entity) =>
             {
-                entity.Dispose();
+                entity.Destroy();
             });
         }
 

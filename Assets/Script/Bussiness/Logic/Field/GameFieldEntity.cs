@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public override void Dispose()
+        public override void Destroy()
         {
             throw new System.NotImplementedException();
         }

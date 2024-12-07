@@ -43,7 +43,7 @@ namespace GamePlay.Bussiness.Renderer
             this.setActive(false);
         }
 
-        public override void Dispose()
+        public override void Destroy()
         {
             this.animCom.Dispose();
         }

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameProjectileStateEM))]
-    public class GameProjectileStateEditor : PropertyDrawer
+    public class GamePropertyDrawer_ProjectileState : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -22,7 +22,17 @@ namespace GamePlay.Config
                     property.FindPropertyRelative("attachStateEM").DrawProperty("状态参数");
                     break;
                 case GameProjectileStateType.FixedDirection:
-                    property.FindPropertyRelative("fixedDirectionStateEM").DrawProperty("状态参数");
+                    EditorGUILayout.LabelField("状态参数");
+                    var fixedDirectionStateEM_p = property.FindPropertyRelative("fixedDirectionStateEM");
+                    var speed_p = fixedDirectionStateEM_p.FindPropertyRelative("speed");
+                    speed_p.DrawProperty_Float("速度");
+                    var bounceCount_p = fixedDirectionStateEM_p.FindPropertyRelative("bounceCount");
+                    var bounceCount = bounceCount_p.DrawProperty_Int("反弹次数");
+                    if (bounceCount > 0)
+                    {
+                        var detectSelector_p = fixedDirectionStateEM_p.FindPropertyRelative("detectSelector");
+                        detectSelector_p.DrawProperty("用于检测的实体选择器");
+                    }
                     break;
                 case GameProjectileStateType.LockOnEntity:
                     property.FindPropertyRelative("lockOnEntityStateEM").DrawProperty("状态参数");
@@ -44,15 +54,21 @@ namespace GamePlay.Config
 
         private void _DrawTriggerModel(SerializedProperty property, string triggerName, string label)
         {
+            var color = GUI.color;
+
             var emSet_p = property.FindPropertyRelative("emSet");
             var trigger_p = emSet_p.FindPropertyRelative(triggerName);
             if (trigger_p == null) trigger_p = new SerializedObject(emSet_p.objectReferenceValue).FindProperty(triggerName);
             var triggerEnable_p = trigger_p.FindPropertyRelative("enable");
             var triggerEnable = triggerEnable_p.boolValue;
-            var color = GUI.color;
-            if (triggerEnable) GUI.color = Color.yellow;
+            if (triggerEnable)
+            {
+                // 浅蓝色
+                GUI.color = new Color(122 / 255f, 169 / 255f, 238 / 255f);
+            }
             triggerEnable_p.DrawProperty_Bool($"{label}");
             if (triggerEnable) trigger_p.DrawProperty();
+
             GUI.color = color;
         }
 

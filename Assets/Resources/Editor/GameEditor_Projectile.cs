@@ -5,17 +5,22 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomEditor(typeof(GameProjectileSO))]
-    public class GameProjectileEditor : Editor
+    public class GameEditor_Projectile : Editor
     {
         public override void OnInspectorGUI()
         {
-            GameProjectileSO so = (GameProjectileSO)target;
+            EditorGUI.BeginChangeCheck();
 
+            GameProjectileSO so = (GameProjectileSO)target;
             GameEditorGUILayout.DrawBoxItem(() => this._DrawBasicData(so));
             GameEditorGUILayout.DrawBoxItem(() => this._DrawLogicData(so));
             GameEditorGUILayout.DrawBoxItem(() => this._DrawStateData(so));
-            // 应用修改
-            if (serializedObject.hasModifiedProperties) serializedObject.ApplyModifiedProperties();
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(so);
+                AssetDatabase.SaveAssets();
+            }
         }
 
         private void _DrawBasicData(GameProjectileSO so)

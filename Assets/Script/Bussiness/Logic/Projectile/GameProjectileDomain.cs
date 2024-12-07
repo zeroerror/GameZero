@@ -101,7 +101,10 @@ namespace GamePlay.Bussiness.Logic
             var originTarDir = targeter.targetDirection;
             for (var i = 0; i < count; i++)
             {
-                var angle = -spreadAngle * 0.5f + i * stepAngle;
+                float angle;
+                if (count % 2 == 1 && i == 0) angle = 0;// 奇数个时，第一个是0
+                else angle = -spreadAngle * 0.5f + i * stepAngle;
+
                 var tarDir = originTarDir.Rotate(angle);
                 targeter.targetDirection = tarDir;
                 var p = this.CreateProjectile(typeId, creator, transArgs, targeter);

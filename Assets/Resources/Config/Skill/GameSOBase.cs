@@ -10,7 +10,8 @@ namespace GamePlay.Config
 
         protected virtual void OnValidate()
         {
-            EditorApplication.hierarchyChanged += RenameAssetInMainThread;
+            // Obsolete for now
+            // EditorApplication.hierarchyChanged += RenameAssetInMainThread;
         }
 
         private void RenameAssetInMainThread()

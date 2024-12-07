@@ -31,27 +31,12 @@ namespace GamePlay.Config
                 animLength = animClip.length;
                 // 读取clip中的事件
                 var events = AnimationUtility.GetAnimationEvents(animClip);
-                timelineEvents = new GameTimelineEventEM[events.Length];
+                if (timelineEvents == null || timelineEvents.Length != events.Length) timelineEvents = new GameTimelineEventEM[events.Length];
                 for (int i = 0; i < events.Length; i++)
                 {
                     var e = events[i];
-                    var actionId = e.intParameter;
-                    // 读取so文件action.asset中的数据，路径为Config/Action
-                    var path = $"{GameConfigCollection.ACTION_CONFIG_DIR_PATH}/template_action_{actionId}";
-                    var actionSO = Resources.Load<GameActionSO>(path);
-                    if (actionSO == null)
-                    {
-                        if (!EditorUtility.DisplayDialog("行为配置不存在", actionId.ToString(), "了解"))
-                        {
-                            continue;
-                        }
-                    }
-                    timelineEvents[i] = new GameTimelineEventEM
-                    {
-                        time = e.time,
-                        frame = (int)(e.time * GameTimeCollection.frameRate),
-                        action = actionSO
-                    };
+                    timelineEvents[i].time = e.time;
+                    timelineEvents[i].frame = (int)(e.time * GameTimeCollection.frameRate);
                 }
             }
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameActionEM_LaunchProjectile))]
-    public class GameActionEM_LaunchProjectile_PropertyDrawer : PropertyDrawer
+    public class GamePropertyDrawer_LaunchProjectileAction : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

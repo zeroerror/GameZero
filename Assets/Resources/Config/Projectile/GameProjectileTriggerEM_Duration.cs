@@ -10,8 +10,7 @@ namespace GamePlay.Config
         public bool enable;
         [Header("持续时间")]
         public float duration;
-
-        [Header("触发的行为")]
+        [Header("触发行为")]
         public GameActionSO actionSO;
         [Header("下一个状态")]
         public GameProjectileStateType nextStateType;

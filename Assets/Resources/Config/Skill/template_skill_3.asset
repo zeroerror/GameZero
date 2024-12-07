@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e2773b92ea25be478bb283b0be92309, type: 3}
-  m_Name: template_skill_1003
+  m_Name: template_skill_3
   m_EditorClassIdentifier: 
-  typeId: 1003
+  typeId: 3
   animClip: {fileID: 7400000, guid: 50115ab33040bf648ae77de254862491, type: 2}
   animName: cast
   animLength: 0.5833333
   timelineEvents:
   - time: 0.35
-    frame: 10
+    frame: 20
     action: {fileID: 11400000, guid: 0fe48bb3e653ecd4e9ce1174c39d2c4b, type: 2}
   conditionEM:
     targeterType: 1

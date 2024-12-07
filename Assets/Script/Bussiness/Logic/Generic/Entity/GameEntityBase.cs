@@ -56,7 +56,7 @@ namespace GamePlay.Bussiness.Logic
         }
 
         public abstract void Tick(float dt);
-        public abstract void Dispose();
+        public abstract void Destroy();
 
     }
 }
