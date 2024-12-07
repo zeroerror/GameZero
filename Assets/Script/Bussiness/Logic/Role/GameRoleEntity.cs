@@ -4,12 +4,18 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleEntity : GameEntityBase
     {
+        public GameRoleModel model { get; private set; }
         public GameRoleInputCom inputCom { get; private set; }
         public GameRoleFSMCom fsmCom { get; private set; }
         public GameSkillComp skillCom { get; private set; }
 
-        public GameRoleEntity(int typeId) : base(typeId, GameEntityType.Role)
+        public GameRoleEntity(GameRoleModel model) : base(model.typeId, GameEntityType.Role)
         {
+            this.model = model;
+            model?.attributes?.Foreach((value, index) =>
+            {
+                this.attributeCom.SetAttribute(value);
+            });
             this.inputCom = new GameRoleInputCom();
             this.fsmCom = new GameRoleFSMCom();
             this.skillCom = new GameSkillComp(this);

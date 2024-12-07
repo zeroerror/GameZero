@@ -13,25 +13,38 @@ namespace GamePlay.Bussiness.Renderer
         public readonly GameObject body;
 
         public Transform transform { get { return this.go.transform; } }
-        public GameVec2 position { get { return transform.position; } set { transform.position = new GameVec3(value.x, value.y, transform.position.z); } }
+
+        public GameVec2 position
+        {
+            get { return transform.position; }
+            set
+            {
+                transform.position = new GameVec3(value.x, value.y, transform.position.z);
+                var pos = this.foot.transform.position;
+                pos.SetVec2(value);
+                this.foot.transform.position = pos;
+            }
+        }
+
         public float angle { get { return transform.eulerAngles.z; } set { transform.eulerAngles = new GameVec3(0, 0, value); } }
+
         public GameVec2 scale { get { return transform.localScale; } set { transform.localScale = value; } }
+
         private GameEasing2DCom _posEaseCom;
 
         public GameRoleFSMComR fsmCom { get; private set; }
         public GameSkillComponentR skillCom { get; private set; }
         public GamePlayableCom animCom { get; private set; }
 
-        public GameRoleEntityR(int typeId, GameObject go) : base(typeId, GameEntityType.Role)
+        public GameRoleEntityR(int typeId, GameObject go, GameObject foot, GameObject body) : base(typeId, GameEntityType.Role)
         {
             this.go = go;
-            go.name = "role_" + this.idCom.entityId;
-            this.foot = go.transform.Find("foot").gameObject;
-            this.body = go.transform.Find("body").gameObject;
+            this.foot = foot;
+            this.body = body;
 
             this.fsmCom = new GameRoleFSMComR();
             this.skillCom = new GameSkillComponentR(this);
-            var animator = this.body.GetComponent<Animator>();
+            var animator = this.body.GetComponentInChildren<Animator>();
             this.animCom = new GamePlayableCom(animator);
             this._posEaseCom = new GameEasing2DCom();
             this._posEaseCom.SetEase(0.05f, GameEasingType.Linear);

@@ -1,15 +1,24 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleFactory
     {
-        public GameRoleFactory() { }
+        public GameRoleTemplate template { get; private set; }
+
+        public GameRoleFactory()
+        {
+            template = new GameRoleTemplate();
+        }
 
         public GameRoleEntity Load(int typeId)
         {
-            // todo template
-            var e = new GameRoleEntity(typeId);
-            e.attributeCom.SetAttribute(GameAttributeType.HP, 100);
-            e.attributeCom.SetAttribute(GameAttributeType.MoveSpeed, 5);
+            if (!template.TryGet(typeId, out var model))
+            {
+                GameLogger.LogError("角色创建失败，角色ID不存在：" + typeId);
+                return null;
+            }
+            var e = new GameRoleEntity(model);
             return e;
         }
     }

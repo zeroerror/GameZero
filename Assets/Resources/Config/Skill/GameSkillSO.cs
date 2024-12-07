@@ -9,6 +9,8 @@ namespace GamePlay.Config
     [CreateAssetMenu(fileName = "template_skill_", menuName = "游戏玩法/配置/技能模板")]
     public class GameSkillSO : GameSOBase
     {
+        [Header("描述")]
+        public string desc;
         [Header("动画文件")]
         public AnimationClip animClip;
         [Header("动画名称")]

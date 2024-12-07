@@ -124,4 +124,15 @@ public static class GameVectorExtensions
         float sin = GameMathF.Sin(radian);
         return new GameVec2(v.x * cos + v.y * sin, v.y * cos - v.x * sin);
     }
+
+    public static void SetVec2(this ref GameVec3 v, in GameVec3 v2)
+    {
+        v.x = v2.x;
+        v.y = v2.y;
+    }
+    public static void SetVec2(this ref GameVec3 v, in GameVec2 v2)
+    {
+        v.x = v2.x;
+        v.y = v2.y;
+    }
 }

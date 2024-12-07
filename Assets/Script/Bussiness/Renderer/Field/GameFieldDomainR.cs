@@ -81,6 +81,10 @@ namespace GamePlay.Bussiness.Renderer
             var curField = this._fieldContext.curField;
             var entityLayer = curField.GetLayer(layerType);
             go.transform.SetParent(entityLayer.transform);
+            // 刷新层级
+            var pos = go.transform.position;
+            pos.z = GameFieldLayerCollection.EntityLayerZ + pos.y * GameFieldLayerCollection.StepZ;
+            go.transform.position = pos;
         }
     }
 }

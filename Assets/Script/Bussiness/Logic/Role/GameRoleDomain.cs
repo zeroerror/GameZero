@@ -45,34 +45,39 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleEntity CreateRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser)
         {
             var repo = this._roleContext.repo;
-            if (!repo.TryFetch(typeId, out var e)) e = this._roleContext.factory.Load(typeId);
-            if (e == null)
+            if (!repo.TryFetch(typeId, out var role)) role = this._roleContext.factory.Load(typeId);
+            if (role == null)
             {
                 GameLogger.LogError("角色创建失败，角色ID不存在：" + typeId);
                 return null;
             }
-            e.transformCom.SetByArgs(transArgs);
-            e.idCom.SetEntityId(this._roleContext.idService.FetchId());
-            e.idCom.campId = campId;
+            // 变换组件
+            role.transformCom.SetByArgs(transArgs);
+            // ID组件
+            role.idCom.SetEntityId(this._roleContext.idService.FetchId());
+            role.idCom.campId = campId;
+            // 物理组件
             var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0.625f), 0, 0.7f, 1.25f);
-            this._context.domainApi.physicsApi.CreatePhysics(e, colliderModel);
-            this._context.domainApi.skillApi.CreateSkill(e, 1);
-            this._context.domainApi.skillApi.CreateSkill(e, 2);
-            this._context.domainApi.skillApi.CreateSkill(e, 3);
-            repo.TryAdd(e);
+            this._context.domainApi.physicsApi.CreatePhysics(role, colliderModel);
+            // 技能组件
+            role.model.skillIds?.Foreach((skillId, index) =>
+            {
+                this._context.domainApi.skillApi.CreateSkill(role, skillId);
+            });
+            repo.TryAdd(role);
 
             // 提交RC事件
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, new GameRoleRCArgs_Create
             {
-                idArgs = e.idCom.ToArgs(),
-                transArgs = e.transformCom.ToArgs(),
+                idArgs = role.idCom.ToArgs(),
+                transArgs = role.transformCom.ToArgs(),
                 isUser = isUser
             });
 
             // 默认进入待机
-            this.fsmDomain.TryEnter(e, GameRoleStateType.Idle);
+            this.fsmDomain.TryEnter(role, GameRoleStateType.Idle);
 
-            return e;
+            return role;
         }
 
         public void Tick(float dt)

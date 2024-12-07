@@ -4,19 +4,46 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleFactoryR
     {
+
+        public GameRoleTemplateR template { get; private set; }
+
         public GameRoleFactoryR()
         {
         }
 
         public GameRoleEntityR Load(int typeId)
         {
-            var res = Resources.Load<GameObject>("Role/Prefab/role");
-            var go = GameObject.Instantiate(res);
+            var prefab = Resources.Load<GameObject>("Role/Prefab/role");
+            var go = GameObject.Instantiate(prefab);
             var body = go.transform.Find("body").gameObject;
-            body.AddComponent<Animator>().runtimeAnimatorController = null;
-            body.AddComponent<SpriteRenderer>();
+            var foot = go.transform.Find("foot").gameObject;
+
+            var typePrefab = Resources.Load<GameObject>($"Role/{typeId}/role_prefab_{typeId}");
+            var roleGO = GameObject.Instantiate(typePrefab);
+            roleGO.AddComponent<Animator>().runtimeAnimatorController = null;
+            roleGO.AddComponent<SpriteRenderer>();
+            roleGO.transform.SetParent(body.transform);
+            var sr = roleGO.GetComponent<SpriteRenderer>();
+            if (sr) sr.sortingOrder = 0;
+            var innerStepZ = GameFieldLayerCollection.InnerStepZ;
+            roleGO.transform.ForeachTransfrom_BFS((child) =>
+            {
+                sr = child.gameObject.GetComponent<SpriteRenderer>();
+                if (sr)
+                {
+                    var pos = child.localPosition;
+                    pos.z = innerStepZ * -sr.sortingOrder;
+                    child.localPosition = pos;
+                    sr.sortingOrder = 0;
+                }
+            });
+
+            var scale = body.transform.localScale;
+            scale.x = -scale.x;
+            body.transform.localScale = scale;
+
             go.transform.localPosition = new Vector3(0, 0, 0);
-            var e = new GameRoleEntityR(typeId, go);
+            var e = new GameRoleEntityR(typeId, go, foot, body);
             return e;
         }
 

@@ -237,7 +237,7 @@ public class GamePhysicsTest : MonoBehaviour
 
     private GameFanCollider CreateFan(in GameTransformArgs args, float radius, float fanAngle, Color color)
     {
-        var role = new GameRoleEntity(1);
+        var role = new GameRoleEntity(null);
         role.transformCom.SetByArgs(args);
         var model = new GameFanColliderModel(
             Vector2.zero, 0, radius, fanAngle
@@ -251,7 +251,7 @@ public class GamePhysicsTest : MonoBehaviour
 
     private GameCircleCollider CreateCircle(in GameTransformArgs args, float radius, Color color)
     {
-        var role = new GameRoleEntity(1);
+        var role = new GameRoleEntity(null);
         role.transformCom.SetByArgs(args);
         var model = new GameCircleColliderModel(
             Vector2.zero, 0, radius
@@ -265,7 +265,7 @@ public class GamePhysicsTest : MonoBehaviour
 
     private GameBoxCollider CreateBox(in GameTransformArgs args, Color color)
     {
-        var role = new GameRoleEntity(1);
+        var role = new GameRoleEntity(null);
         role.transformCom.SetByArgs(args);
         var model = new GameBoxColliderModel(
             Vector2.zero, 0, args.scale.x, args.scale.y
