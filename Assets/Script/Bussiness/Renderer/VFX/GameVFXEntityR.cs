@@ -6,6 +6,8 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameVFXEntityR
     {
+        public readonly string prefabUrl;
+
         public int entityId;
 
         public GameObject go { get; private set; }
@@ -14,30 +16,38 @@ namespace GamePlay.Bussiness.Renderer
         public Vector2 attachOffset { get; private set; }
         public bool isAttachParent { get; private set; }
 
-        public GamePlayableCom animCom { get; private set; }
+
+        public GameParticlePlayCom particleCom { get; private set; }
         public GameTimelineCom timelineCom { get; private set; }
 
         public bool isPlaying => this.timelineCom.isPlaying;
+        public float length => this.particleCom.length;
 
-        public GameVFXEntityR(GameObject go)
+        private bool _stopDirty = false;
+
+        public GameVFXEntityR(GameObject go, string prefabUrl)
         {
             this.go = go;
-            var animator = go.GetComponent<Animator>();
-            this.animCom = new GamePlayableCom(animator);
+            this.prefabUrl = prefabUrl;
+
+            var ps = go.GetComponent<ParticleSystem>();
+            if (ps) this.particleCom = new GameParticlePlayCom(ps);
             this.timelineCom = new GameTimelineCom();
+            this.timelineCom.SetLength(this.length);
         }
 
         public void Dispose()
         {
-            this.animCom.Dispose();
         }
 
         public void Tick(float dt)
         {
-            this.animCom.Tick(dt);
             this.timelineCom.Tick(dt);
+            this.particleCom.Tick(dt);
+
             this._TickAttach();
-            if (!isPlaying)
+
+            if (!isPlaying && this._stopDirty)
             {
                 this.Stop();
             }
@@ -45,21 +55,19 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Play(in GameVFXPlayArgs args)
         {
-            var clip = args.clip;
-            this.animCom.Play(clip);
+            this.particleCom.Play();
             this.go.transform.position = args.position;
             this.go.transform.eulerAngles = new Vector3(0, 0, args.angle);
-            var localScale = this.go.transform.localScale;
-            this.go.transform.localScale = new Vector3(localScale.x * args.scale, localScale.y * args.scale, localScale.z);
-            this.timelineCom.SetLength(clip.length);
+            var scale = args.scale;
+            this.go.transform.localScale = new Vector3(scale.x, scale.y, 1);
             this.timelineCom.Play(args.loopDuration);
             this.go.SetActive(true);
             this.attachNode = args.attachNode;
             this.attachOffset = args.attachOffset;
             this.isAttachParent = args.isAttachParent;
             if (args.isAttachParent) this.go.transform.SetParent(args.attachNode.transform);
-
-            this.go.name = $"VFX_{clip.name}_{this.entityId}";
+            this.go.name = $"VFX_{this.entityId}";
+            this._stopDirty = true;
         }
 
         private void _TickAttach()
@@ -76,6 +84,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Stop()
         {
+            this._stopDirty = false;
             this.go.SetActive(false);
         }
     }

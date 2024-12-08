@@ -37,10 +37,11 @@ namespace GamePlay.Bussiness.Renderer
         public GameVFXEntityR Play(in GameVFXPlayArgs args)
         {
             var repo = this._vfxContext.repo;
-            if (!repo.TryFetch(out GameVFXEntityR vfx))
+            var factory = this._vfxContext.factory;
+            var prefabUrl = args.prefabUrl;
+            if (!repo.TryFetch(prefabUrl, out GameVFXEntityR vfx))
             {
-                var factory = this._vfxContext.factory;
-                vfx = factory.Load();
+                vfx = factory.Load(prefabUrl);
                 if (vfx == null)
                 {
                     GameLogger.LogError("VFX加载失败");

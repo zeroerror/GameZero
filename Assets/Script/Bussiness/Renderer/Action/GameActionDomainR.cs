@@ -56,19 +56,18 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
             // 特效
-            var vfxClip = action.vfxClip;
-            if (vfxClip)
+            if (action.prefabUrl != null)
             {
 
                 var attachNode = targetEntity is GameRoleEntityR targetEntityR ? targetEntityR.go : null;
                 var args = new GameVFXPlayArgs()
                 {
                     attachNode = attachNode,
-                    attachOffset = new GameVec2(0, 0.8f),
-                    clip = vfxClip,
+                    attachOffset = action.offset,
+                    prefabUrl = action.prefabUrl,
                     position = targetEntity.transformCom.position + new GameVec2(0, targetEntity.transformCom.scale.y * 0.5f),
                     angle = targetEntity.transformCom.angle,
-                    scale = 1,
+                    scale = action.scale,
                     loopDuration = 0,
                 };
                 this._context.domainApi.vfxApi.Play(args);

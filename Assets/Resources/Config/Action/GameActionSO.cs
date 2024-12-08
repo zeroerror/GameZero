@@ -14,7 +14,7 @@ namespace GamePlay.Config
         public GameActionModel_Heal healAction;
         public GameActionEM_LaunchProjectile launchProjectileActionEM;
 
-        public GameActionModelR actionR;
+        public GameActionEMR actionEMR;
         public GameEntitySelectorEM selectorEM;
 
         public GameSkillSO[] skillSORefs;

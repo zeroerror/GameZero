@@ -2,7 +2,6 @@ using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 
 namespace GamePlay.Bussiness.Renderer
 {
@@ -52,15 +51,6 @@ namespace GamePlay.Bussiness.Renderer
                 var newOrder = GameFieldLayerCollection.GetLayerOrder(layerType, trans.position);
                 if (order == newOrder) continue;
                 trans.SetSortingLayer(newOrder, layerName);
-
-                // 子节点的层级根据父节点的层级偏移调整
-                var offset = newOrder - order;
-                trans.ForeachTransfrom_DFS((tf) =>
-                {
-                    if (tf == trans) return;
-                    if (!tf.TryGetSortingLayer(out var order, out var layerName)) return;
-                    tf.SetSortingLayer(order + offset, layerName);
-                });
             }
         }
 
@@ -97,7 +87,7 @@ namespace GamePlay.Bussiness.Renderer
             var sortingLayerName = layerType.ToString();
             var order = GameFieldLayerCollection.GetLayerOrder(layerType, go.transform.position);
 
-            if (go.TryGetComponent<SpriteRenderer>(out var renderer))
+            if (go.TryGetComponent<UnityEngine.Renderer>(out var renderer))
             {
                 renderer.sortingLayerName = sortingLayerName;
                 renderer.sortingOrder = order;

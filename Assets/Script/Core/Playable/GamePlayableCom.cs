@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using GamePlay.Core;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 /// <summary>
-/// 游戏动画Playable组件
+/// 动态播放AnimationClip的组件
 /// </summary>
 public class GamePlayableCom
 {

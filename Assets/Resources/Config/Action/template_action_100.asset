@@ -16,7 +16,7 @@ MonoBehaviour:
   actionType: 1
   desc: 
   dmgAction:
-    typeId: 1001
+    typeId: 100
     actionType: 1
     selector:
       selectAnchorType: 1
@@ -42,10 +42,12 @@ MonoBehaviour:
     spreadEM:
       count: 73
       spreadAngle: 68
-  actionR:
-    typeId: 1001
-    vfxClip: {fileID: 7400000, guid: 58f583904127f254090ebb06200a036b, type: 2}
-    shakeModel:
+  actionEMR:
+    typeId: 0
+    prefab: {fileID: 335701130982456756, guid: a57863e1542e43f41984bee4e2bd2973, type: 3}
+    scale: {x: 0.3, y: 0.3}
+    offset: {x: 0, y: 0}
+    camShakeModel:
       angle: 0
       amplitude: 0
       frequency: 0

@@ -45,7 +45,7 @@ namespace GamePlay.Bussiness.Renderer
             groundLayer.SetSortingLayer(GameFieldLayerCollection.GroundLayerZ, GameFieldLayerCollection.GroundLayer);
             layerDict.Add(GameFieldLayerType.Ground, groundLayer);
             // 地面层级子节点 
-            groundLayer.ForeachGameObject_BFS((child) =>
+            groundLayer.ForeachChild((child) =>
             {
                 child.SetPosZ(0);
                 var order = GameFieldLayerCollection.GetLayerOrder(GameFieldLayerType.Ground, child.transform.position);
@@ -60,7 +60,7 @@ namespace GamePlay.Bussiness.Renderer
             environmentLayer.SetSortingLayer(GameFieldLayerCollection.EnvironmentLayerZ, GameFieldLayerCollection.EnvironmentLayer);
             layerDict.Add(GameFieldLayerType.Environment, environmentLayer);
             // 环境层级子节点
-            environmentLayer.ForeachGameObject_BFS((child) =>
+            environmentLayer.ForeachChild((child) =>
             {
                 child.SetPosZ(0);
                 var order = GameFieldLayerCollection.GetLayerOrder(GameFieldLayerType.Environment, child.transform.position);

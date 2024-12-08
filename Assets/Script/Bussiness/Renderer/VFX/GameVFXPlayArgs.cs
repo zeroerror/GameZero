@@ -4,10 +4,11 @@ namespace GamePlay.Bussiness.Renderer
 {
     public struct GameVFXPlayArgs
     {
-        public AnimationClip clip;
+        public string prefabUrl;
+
         public GameVec2 position;
         public float angle;
-        public float scale;
+        public GameVec2 scale;
         // 0非循环，-1无限循环，>0循环时间
         public float loopDuration;
 

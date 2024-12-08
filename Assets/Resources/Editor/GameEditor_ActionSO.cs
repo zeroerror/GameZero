@@ -7,7 +7,7 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomEditor(typeof(GameActionSO))]
-    public class GameEditor_Action : Editor
+    public class GameEditor_ActionSO : Editor
     {
         public override void OnInspectorGUI()
         {
@@ -76,8 +76,8 @@ namespace GamePlay.Config
         // 显示表现层数据
         private void _ShowRendererData(GameActionSO so)
         {
-            var actionR_p = serializedObject.FindProperty("actionR");
-            actionR_p.DrawProperty("表现效果");
+            var actionEMR_p = serializedObject.FindProperty("actionEMR");
+            actionEMR_p.DrawProperty("表现效果");
         }
 
         // 显示选择器数据

@@ -1,3 +1,4 @@
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
@@ -8,13 +9,16 @@ namespace GamePlay.Bussiness.Renderer
         {
         }
 
-        public GameVFXEntityR Load()
+        public GameVFXEntityR Load(string prefabUrl)
         {
-            var go = new GameObject();
-            go.AddComponent<Animator>().runtimeAnimatorController = null;
-            go.AddComponent<SpriteRenderer>();
-            go.transform.localPosition = new Vector3(0, 0, 0);
-            var entity = new GameVFXEntityR(go);
+            var prefab = Resources.Load<GameObject>(prefabUrl);
+            if (prefab == null)
+            {
+                GameLogger.LogError($"VFX加载失败：{prefabUrl}");
+                return null;
+            }
+            var go = GameObject.Instantiate(prefab);
+            var entity = new GameVFXEntityR(go, prefabUrl);
             return entity;
         }
     }

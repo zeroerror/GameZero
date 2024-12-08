@@ -38,7 +38,7 @@ namespace GamePlay.Bussiness.Renderer
                 model = null;
                 return false;
             }
-            model = so.actionR;
+            model = so.actionEMR.ToModel();
             _dict.Add(typeId, model);
             return true;
         }
