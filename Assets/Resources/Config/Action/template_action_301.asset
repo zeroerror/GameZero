@@ -32,9 +32,9 @@ MonoBehaviour:
       entityType: 0
     heal: 5156165
   launchProjectileActionEM:
-    projectileId: 200
+    projectileId: 300
     launchOffset: {x: 0, y: 0.8}
-    launchProjectileSO: {fileID: 11400000, guid: 9cf0845552672f744927287d2249c9ab, type: 2}
+    launchProjectileSO: {fileID: 11400000, guid: 62995ce7c0e3a464483d9df97548536a, type: 2}
     barrageType: 2
     customLaunchOffsetEM:
       count: 5
@@ -47,10 +47,12 @@ MonoBehaviour:
     spreadEM:
       count: 6
       spreadAngle: 60
-  actionR:
-    typeId: 3
-    vfxClip: {fileID: 0}
-    shakeModel:
+  actionEMR:
+    typeId: 0
+    prefab: {fileID: 0}
+    scale: {x: 1, y: 1}
+    offset: {x: 0, y: 0}
+    camShakeModel:
       angle: 0
       amplitude: 0
       frequency: 0

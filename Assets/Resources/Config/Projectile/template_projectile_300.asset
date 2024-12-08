@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: template_projectile_300
   m_EditorClassIdentifier: 
   typeId: 300
-  projectileName: "\u98DE\u884C\u9644\u7740\u5B9A\u65F6\u70B8\u5F39"
+  projectileName: "\u98DE\u884C\u7C98\u5F39"
   desc: 
-  animClip: {fileID: 7400000, guid: cc3ce71219919ab439e7579e8ca69915, type: 2}
-  animLength: 0.083333336
+  animClip: {fileID: 7400000, guid: 3c383fa7da3cac14183f9abedb209a42, type: 2}
+  animLength: 0.25
   timelineEvents: []
   lifeTime: 0
   stateEMs:

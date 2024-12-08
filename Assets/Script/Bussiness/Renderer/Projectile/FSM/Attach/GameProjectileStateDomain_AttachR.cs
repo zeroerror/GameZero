@@ -20,17 +20,30 @@ namespace GamePlay.Bussiness.Renderer
         private void _OnEnter(object args)
         {
             var evArgs = (GameProjectileRCArgs_StateEnterAttach)args;
+            var projectile = this._context.FindEntity(evArgs.idArgs) as GameProjectileEntityR;
+            if (projectile == null)
+            {
+                this._context.DelayRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_STATE_ENTER_ATTACH, evArgs);
+                return;
+            }
+
+            projectile.fsmCom.EnterAttach();
+            projectile.fsmCom.attachState.attachEntity = this._context.FindEntity(evArgs.targetIdArgs);
             GameLogger.Log("投射物状态进入 - 附着");
         }
 
-        public override void Enter(GameProjectileEntityR entity)
+        public override void Enter(GameProjectileEntityR projectile)
         {
-            throw new System.NotImplementedException();
         }
 
-        protected override void _Tick(GameProjectileEntityR entity, float frameTime)
+        protected override void _Tick(GameProjectileEntityR projectile, float frameTime)
         {
-            throw new System.NotImplementedException();
+            var attachEntity = projectile.fsmCom.attachState.attachEntity;
+            if (attachEntity is GameRoleEntityR role)
+            {
+                role.go.TryGetSortingLayer(out var order, out var layer);
+                projectile.go.SetSortingLayer(order + 1, layer);
+            }
         }
     }
 

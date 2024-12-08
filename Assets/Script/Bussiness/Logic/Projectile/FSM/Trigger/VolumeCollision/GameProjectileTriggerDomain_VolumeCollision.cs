@@ -26,6 +26,16 @@ namespace GamePlay.Bussiness.Logic
                 t.targetPosition = entity.transformCom.position;
                 t.targetDirection = entity.transformCom.position - projectile.transformCom.position;
             }
+            if (projectile.fsmCom.stateType == GameProjectileStateType.FixedDirection)
+            {
+                var targetEntity = selectedEntities[0];
+                projectile.actionTargeterCom.SetTargeter(new GameActionTargeterArgs
+                {
+                    targetEntity = targetEntity,
+                    targetPosition = targetEntity.transformCom.position,
+                    targetDirection = targetEntity.transformCom.position - projectile.transformCom.position
+                });
+            }
             return selectedEntities.Count > 0;
         }
     }

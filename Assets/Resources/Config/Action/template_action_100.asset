@@ -44,7 +44,7 @@ MonoBehaviour:
       spreadAngle: 68
   actionEMR:
     typeId: 0
-    prefab: {fileID: 335701130982456756, guid: a57863e1542e43f41984bee4e2bd2973, type: 3}
+    prefab: {fileID: 5156201333536720014, guid: 1c8256dd0ffbc4c4aae958c6487b10b1, type: 3}
     scale: {x: 0.3, y: 0.3}
     offset: {x: 0, y: 0}
     camShakeModel:
