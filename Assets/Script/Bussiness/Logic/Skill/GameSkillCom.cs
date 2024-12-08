@@ -21,5 +21,15 @@ namespace GamePlay.Bussiness.Logic
             skill = _skillEntities.Find(s => s.skillModel.typeId == typeId);
             return skill != null;
         }
+
+        public void ForeachSkills(System.Action<GameSkillEntity> action)
+        {
+            _skillEntities.ForEach(action);
+        }
+
+        public GameSkillEntity Find(System.Predicate<GameSkillEntity> predicate)
+        {
+            return _skillEntities.Find(predicate);
+        }
     }
 }

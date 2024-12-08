@@ -16,7 +16,7 @@ namespace GamePlay.Bussiness.Logic
         /// </summary>
         Position = 3,
         /// <summary>
-        /// 行为者
+        /// 行为者/自己
         /// </summary>
         Actor = 4,
     }

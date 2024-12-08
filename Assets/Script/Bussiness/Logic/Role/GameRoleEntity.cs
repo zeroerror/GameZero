@@ -9,6 +9,8 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleFSMCom fsmCom { get; private set; }
         public GameSkillComp skillCom { get; private set; }
 
+        public GameRoleAICom aiCom { get; private set; }
+
         public GameRoleEntity(GameRoleModel model) : base(model.typeId, GameEntityType.Role)
         {
             this.model = model;
@@ -19,6 +21,7 @@ namespace GamePlay.Bussiness.Logic
             this.inputCom = new GameRoleInputCom();
             this.fsmCom = new GameRoleFSMCom();
             this.skillCom = new GameSkillComp(this);
+            this.aiCom = new GameRoleAICom();
         }
 
         public override void Tick(float dt)

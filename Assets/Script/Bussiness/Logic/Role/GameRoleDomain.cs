@@ -7,26 +7,31 @@ namespace GamePlay.Bussiness.Logic
         GameContext _context;
         GameRoleContext _roleContext => this._context.roleContext;
 
-        public GameRoleInputDomain inputDomain { get; private set; }
-        public GameRoleFSMDomain fsmDomain { get; private set; }
         public GameRoleFSMDomainApi fsmApi => this.fsmDomain;
+        public GameRoleAIDomainApi apApi => this.roleAIDomain;
 
+        public GameRoleInputDomain roleInputDomain { get; private set; }
+        public GameRoleAIDomain roleAIDomain { get; private set; }
+        public GameRoleFSMDomain fsmDomain { get; private set; }
         public GameRoleDomain()
         {
-            this.inputDomain = new GameRoleInputDomain();
+            this.roleInputDomain = new GameRoleInputDomain();
+            this.roleAIDomain = new GameRoleAIDomain();
             this.fsmDomain = new GameRoleFSMDomain();
         }
 
         public void Inject(GameContext context)
         {
             this._context = context;
-            this.inputDomain.Inject(context);
+            this.roleInputDomain.Inject(context);
+            this.roleAIDomain.Inject(context);
             this.fsmDomain.Inject(context);
         }
 
         public void Dispose()
         {
-            this.inputDomain.Dispose();
+            this.roleInputDomain.Dispose();
+            this.roleAIDomain.Dispose();
             this.fsmDomain.Dispose();
         }
 
@@ -76,13 +81,15 @@ namespace GamePlay.Bussiness.Logic
 
             // 默认进入待机
             this.fsmDomain.TryEnter(role, GameRoleStateType.Idle);
+            this.roleAIDomain.TryEnter(role, GameRoleAIStateType.Idle);
 
             return role;
         }
 
         public void Tick(float dt)
         {
-            this.inputDomain.Tick();
+            this.roleInputDomain.Tick();
+            this.roleAIDomain.Tick(dt);
             var repo = this._roleContext.repo;
             repo.ForeachEntities((entity) =>
             {

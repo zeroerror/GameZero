@@ -24,3 +24,22 @@ MonoBehaviour:
   conditionEM:
     targeterType: 2
     cdTime: 0
+    selectorEM:
+      selectAnchorType: 1
+      campType: 1
+      entityType: 1
+      selColliderType: 2
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 2
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0

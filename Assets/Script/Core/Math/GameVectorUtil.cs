@@ -72,16 +72,10 @@ public static class GameVectorUtil
         return new GameVec2(center.x + randomRadius * GameMath.Cos(radians), center.y + randomRadius * GameMath.Sin(radians));
     }
 
-    // 判断两个向量是否相等
-    public static bool ValueEquals(GameVec2 v1, GameVec2 v2)
+    /// <summary> 获取两点之间的开方距离 </summary>
+    public static float GetDisSqr(this GameVec2 v1, GameVec2 v2)
     {
-        return v1 == v2; // 使用 GameVec2 的内置相等比较
-    }
-
-    // 获取两个向量之间的距离平方值
-    public static float GetDisSqr(GameVec2 v1, GameVec2 v2)
-    {
-        return (v1 - v2).sqrMagnitude; // 使用 GameVec2 的内置差向量和sqrMagnitude属性
+        return (v1 - v2).sqrMagnitude;
     }
 
     /// <summary> 
@@ -93,4 +87,7 @@ public static class GameVectorUtil
     {
         return direction - 2 * GameVec2.Dot(direction, normal) * normal;
     }
+
+
+
 }

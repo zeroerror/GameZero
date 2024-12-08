@@ -49,5 +49,10 @@ namespace GamePlay.Bussiness.Logic
             };
             return true;
         }
+
+        public bool HasInput()
+        {
+            return this.moveDir != GameVec2.zero || this.skillId != 0 || this.targeterArgsList.Count > 0;
+        }
     }
 }

@@ -1,11 +1,34 @@
 using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
+using TMPro.EditorUtilities;
 using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Core
 {
     public class GamePhysicsResolvingUtil
     {
+        public static GameVec2 GetResolvingMTV(GameColliderModelBase colliderModelA, in GameTransformArgs transformArgs, in GameVec2 point)
+        {
+            switch (colliderModelA)
+            {
+                case GameBoxColliderModel boxModel:
+                    var boxCollider = new GameBoxCollider(null, boxModel, -1);
+                    boxCollider.UpdateTRS(transformArgs);
+                    return boxCollider.GetResolvingMTV(point, true);
+                case GameCircleColliderModel circleModel:
+                    var circleCollider = new GameCircleCollider(null, circleModel, -1);
+                    circleCollider.UpdateTRS(transformArgs);
+                    return circleCollider.GetResolvingMTV(point, true);
+                case GameFanColliderModel fanModel:
+                    var fanCollider = new GameFanCollider(null, fanModel, -1);
+                    fanCollider.UpdateTRS(transformArgs);
+                    return fanCollider.GetResolvingMTV(point, true);
+                default:
+                    GameLogger.LogError("GamePhysicsResolvingUtil.GetResolvingMTV: unknown colliderModelA");
+                    return GameVec2.zero;
+            }
+        }
+
         public static GameVec2 GetResolvingMTV(GameColliderModelBase colliderModelA, in GameTransformArgs transformArgs, GameColliderBase colliderB)
         {
             var mtv = GetResolvingMTV(colliderB, colliderModelA, transformArgs);
@@ -305,27 +328,12 @@ namespace GamePlay.Core
             return minMTV;
         }
 
-        public static GameVec2 GetContactMTV_Box_Fan(
-            GameBoxCollider boxCollider,
-            GameFanCollider fanCollider)
-        {
-            return GetResolvingMTV_Box_Fan(boxCollider, fanCollider, 1);
-        }
-
         public static GameVec2 GetResolvingMTV_Circle_Fan(
             GameCircleCollider circleCollider,
             GameFanCollider fanCollider,
             int judgeMode = 0)
         {
             GameLogger.LogError("GamePhysicsUtil.GetResolvingMTV_Circle_Fan not implemented");
-            return GameVec2.zero;
-        }
-
-        public static GameVec2 GetContactMTV_Circle_Fan(
-            GameCircleCollider circleCollider,
-            GameFanCollider fanCollider)
-        {
-            GameLogger.LogError("GamePhysicsUtil.GetContactMTV_Circle_Fan not implemented");
             return GameVec2.zero;
         }
 
@@ -386,6 +394,51 @@ namespace GamePlay.Core
                     return false;
             }
         }
+
+        /// <summary> 
+        /// 获取碰撞体与点坐标发生交叉的最小移动矢量
+        // </summary>
+        public static GameVec2 GetContactMTV(GameColliderBase collider, in GameVec2 point)
+        {
+            switch (collider)
+            {
+                case GameBoxCollider boxCollider:
+                    return boxCollider.GetResolvingMTV(point, false);
+                case GameCircleCollider circleCollider:
+                    return circleCollider.GetResolvingMTV(point, false);
+                case GameFanCollider fanCollider:
+                    return fanCollider.GetResolvingMTV(point, false);
+                default:
+                    GameLogger.LogError("GamePhysicsResolvingUtil.GetContactMTV: 未处理的碰撞体");
+                    return GameVec2.zero;
+            }
+        }
+
+        public static GameVec2 GetContactMTV(GameColliderModelBase model, in GameTransformArgs transArgs, in GameVec2 point)
+        {
+            switch (model)
+            {
+                case GameBoxColliderModel boxModel:
+                    var boxCollider = GameBoxCollider.Default;
+                    boxCollider.SetByModel(boxModel);
+                    boxCollider.UpdateTRS(transArgs);
+                    return boxCollider.GetResolvingMTV(point, false);
+                case GameCircleColliderModel circleModel:
+                    var circleCollider = GameCircleCollider.Default;
+                    circleCollider.SetByModel(circleModel);
+                    circleCollider.UpdateTRS(transArgs);
+                    return circleCollider.GetResolvingMTV(point, false);
+                case GameFanColliderModel fanModel:
+                    var fanCollider = GameFanCollider.Default;
+                    fanCollider.SetByModel(fanModel);
+                    fanCollider.UpdateTRS(transArgs);
+                    return fanCollider.GetResolvingMTV(point, false);
+                default:
+                    GameLogger.LogError("GamePhysicsResolvingUtil.GetContactMTV: 未处理的碰撞体模型");
+                    return GameVec2.zero;
+            }
+        }
+
     }
 
 }

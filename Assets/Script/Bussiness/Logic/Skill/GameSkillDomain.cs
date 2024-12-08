@@ -81,6 +81,10 @@ namespace GamePlay.Bussiness.Logic
 
         public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill)
         {
+            var fsmCom = role.fsmCom;
+            var stateType = fsmCom.stateType;
+            if (stateType == GameRoleStateType.Cast) return false;
+
             // 输入检测
             var skillModel = skill.skillModel;
             var inputCom = role.inputCom;

@@ -1,11 +1,11 @@
 namespace GamePlay.Bussiness.Logic
 {
-    public abstract class GameProjectileStateBase
+    public abstract class GameRoleAIStateBase
     {
         public float stateTime;
         public int stateFrame => (int)(stateTime * GameTimeCollection.frameRate);
 
-        public GameProjectileStateBase()
+        public GameRoleAIStateBase()
         {
             stateTime = 0;
         }

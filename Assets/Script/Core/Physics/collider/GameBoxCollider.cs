@@ -327,8 +327,8 @@ namespace GamePlay.Core
                 if (point.x < minPos.x || point.x > maxPos.x) return GameVec2.zero;
                 if (point.y < minPos.y || point.y > maxPos.y) return GameVec2.zero;
             }
-            float mtvx = 0;
-            float mtvy = 0;
+            float mtvx;
+            float mtvy;
             float offsetx1 = minPos.x - point.x;
             float offsetx2 = maxPos.x - point.x;
             mtvy = GameMathF.Abs(offsetx1) < GameMathF.Abs(offsetx2) ? offsetx1 : offsetx2;
