@@ -55,6 +55,65 @@ namespace GamePlay.Core
             }
             action(tf);
         }
-    }
 
+        public static void SetSortingLayer(this GameObject go, int orderInLayer, string layerName = "Default")
+        {
+            var renderer = go.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.sortingLayerName = layerName;
+                renderer.sortingOrder = orderInLayer;
+            }
+        }
+
+        public static void SetSortingLayer(this Transform tf, float orderInLayer, string layerName = "Default")
+        {
+            SetSortingLayer(tf, (int)orderInLayer, layerName);
+        }
+        public static void SetSortingLayer(this Transform tf, int orderInLayer, string layerName = "Default")
+        {
+            var renderer = tf.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.sortingLayerName = layerName;
+                renderer.sortingOrder = orderInLayer;
+            }
+        }
+
+        public static bool GetSortingLayer(this GameObject go, out int orderInLayer, out string layerName)
+        {
+            orderInLayer = 0;
+            layerName = "Default";
+            var renderer = go.GetComponent<Renderer>();
+            if (renderer == null) return false;
+            orderInLayer = renderer.sortingOrder;
+            layerName = renderer.sortingLayerName;
+            return true;
+        }
+
+        public static bool TryGetSortingLayer(this Transform tf, out int orderInLayer, out string layerName)
+        {
+            orderInLayer = 0;
+            layerName = "Default";
+            var renderer = tf.GetComponent<Renderer>();
+            if (renderer == null) return false;
+            orderInLayer = renderer.sortingOrder;
+            layerName = renderer.sortingLayerName;
+            return true;
+        }
+
+        public static void SetPosZ(this GameObject go, float z)
+        {
+            var pos = go.transform.position;
+            pos.z = z;
+            go.transform.position = pos;
+        }
+
+        public static void SetPosZ(this Transform tf, float z)
+        {
+            var pos = tf.position;
+            pos.z = z;
+            tf.position = pos;
+        }
+    }
 }

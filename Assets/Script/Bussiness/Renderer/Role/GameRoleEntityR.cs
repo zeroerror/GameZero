@@ -10,6 +10,7 @@ namespace GamePlay.Bussiness.Renderer
     {
         public readonly GameObject go;
         public readonly GameObject foot;
+        public readonly GameObject shadow;
         public readonly GameObject body;
 
         public Transform transform { get { return this.go.transform; } }
@@ -20,9 +21,7 @@ namespace GamePlay.Bussiness.Renderer
             set
             {
                 transform.position = new GameVec3(value.x, value.y, transform.position.z);
-                var pos = this.foot.transform.position;
-                pos.SetVec2(value);
-                this.foot.transform.position = pos;
+                if (this.shadow) this.shadow.transform.position = transform.position;
             }
         }
 
@@ -36,10 +35,17 @@ namespace GamePlay.Bussiness.Renderer
         public GameSkillComponentR skillCom { get; private set; }
         public GamePlayableCom animCom { get; private set; }
 
-        public GameRoleEntityR(int typeId, GameObject go, GameObject foot, GameObject body) : base(typeId, GameEntityType.Role)
+        public GameRoleEntityR(
+            int typeId,
+            GameObject go,
+            GameObject foot,
+            GameObject body
+        ) : base(typeId, GameEntityType.Role)
         {
             this.go = go;
             this.foot = foot;
+            this.shadow = foot.transform.Find("shadow")?.gameObject;
+            Debug.Assert(this.shadow != null, "shadow is null");
             this.body = body;
 
             this.fsmCom = new GameRoleFSMComR();

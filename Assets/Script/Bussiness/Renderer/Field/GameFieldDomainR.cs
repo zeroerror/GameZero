@@ -1,6 +1,7 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 namespace GamePlay.Bussiness.Renderer
@@ -37,13 +38,27 @@ namespace GamePlay.Bussiness.Renderer
         public void Tick(float dt)
         {
             var entityLayer = this._fieldContext.curField.GetLayer(GameFieldLayerType.Entity);
-            for (var i = 0; i < entityLayer.transform.childCount; i++)
+            var rootOrder = GameFieldLayerCollection.EntityLayerZ;
+            foreach (Transform entityTf in entityLayer.transform)
             {
-                var child = entityLayer.transform.GetChild(i);
-                var pos = child.position;
-                pos.z = GameFieldLayerCollection.EntityLayerZ + pos.y * GameFieldLayerCollection.StepZ;
-                child.position = pos;
+                var sortingGroup = entityTf.GetComponent<SortingGroup>();
+                var order = sortingGroup.sortingOrder;
+                var layerName = sortingGroup.sortingLayerName;
+                var newOrder = GameFieldLayerCollection.GetLayerOrder(GameFieldLayerType.Entity, entityTf.position);
+                if (order == newOrder) continue;
+
+                sortingGroup.sortingOrder = newOrder;
+                entityTf.SetSortingLayer(newOrder, layerName);
+
+                // 子节点的层级根据父节点的层级偏移调整
+                var offset = newOrder - order;
+                entityTf.ForeachTransfrom_DFS((tf) =>
+                {
+                    if (!tf.TryGetSortingLayer(out var order, out var layerName)) return;
+                    tf.SetSortingLayer(order + offset, layerName);
+                });
             }
+
             var vfxLayer = this._fieldContext.curField.GetLayer(GameFieldLayerType.VFX);
             for (var i = 0; i < vfxLayer.transform.childCount; i++)
             {
@@ -78,13 +93,26 @@ namespace GamePlay.Bussiness.Renderer
 
         public void AddToLayer(GameObject go, GameFieldLayerType layerType)
         {
+            if (!go) return;
             var curField = this._fieldContext.curField;
             var entityLayer = curField.GetLayer(layerType);
             go.transform.SetParent(entityLayer.transform);
-            // 刷新层级
-            var pos = go.transform.position;
-            pos.z = GameFieldLayerCollection.EntityLayerZ + pos.y * GameFieldLayerCollection.StepZ;
-            go.transform.position = pos;
+            go.SetPosZ(0);
+
+            if (layerType == GameFieldLayerType.Entity)
+            {
+                if (!go.TryGetComponent<SortingGroup>(out var sortingGroup))
+                {
+                    sortingGroup = go.AddComponent<SortingGroup>();
+                }
+                var order = GameFieldLayerCollection.GetLayerOrder(layerType, go.transform.position);
+                sortingGroup.sortingOrder = order;
+            }
+            else
+            {
+                var order = GameFieldLayerCollection.GetLayerOrder(layerType, go.transform.position);
+                go.SetSortingLayer(order, layerType.ToString());
+            }
         }
     }
 }

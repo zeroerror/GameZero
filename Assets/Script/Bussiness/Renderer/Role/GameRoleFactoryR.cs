@@ -23,19 +23,6 @@ namespace GamePlay.Bussiness.Renderer
             roleGO.AddComponent<Animator>().runtimeAnimatorController = null;
             roleGO.AddComponent<SpriteRenderer>();
             roleGO.transform.SetParent(body.transform);
-            var innerStepZ = GameFieldLayerCollection.InnerStepZ;
-            roleGO.transform.ForeachTransfrom_BFS((child) =>
-            {
-                var sr = child.gameObject.GetComponent<SpriteRenderer>();
-                if (sr)
-                {
-                    var pos = child.localPosition;
-                    var sortingOrder = GameFieldLayerCollection.EntityLayerZ;
-                    sortingOrder += innerStepZ * -sr.sortingOrder;
-                    pos.z = sortingOrder;
-                    sr.sortingOrder = 0;
-                }
-            });
 
             var scale = body.transform.localScale;
             scale.x = -scale.x;

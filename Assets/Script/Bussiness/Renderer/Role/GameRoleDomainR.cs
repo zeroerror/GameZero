@@ -74,7 +74,7 @@ namespace GamePlay.Bussiness.Renderer
                     return null;
                 }
                 this._context.domainApi.fielApi.AddToLayer(role.go, GameFieldLayerType.Entity);
-                this._context.domainApi.fielApi.AddToLayer(role.foot, GameFieldLayerType.Ground);
+                this._context.domainApi.fielApi.AddToLayer(role.shadow, GameFieldLayerType.Ground);
             }
             role.idCom.SetByArgs(idArgs);
             role.go.name = $"role_{idArgs.typeId}_{role.idCom.entityId}";
