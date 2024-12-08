@@ -6,9 +6,9 @@ namespace GamePlay.Bussiness.Renderer
     public class GameActionModelR
     {
         public int typeId;
-        public string prefabUrl;
-        public GameVec2 scale = GameVec2.one;
-        public GameVec2 offset = GameVec2.zero;
+        public string vfxPrefabUrl;
+        public GameVec2 vfxScale = GameVec2.one;
+        public GameVec2 vfxOffset = GameVec2.zero;
 
         public GameCameraShakeModel shakeModel;
 
@@ -21,9 +21,9 @@ namespace GamePlay.Bussiness.Renderer
         )
         {
             this.typeId = typeId;
-            this.prefabUrl = prefabUrl;
-            this.scale = scale;
-            this.offset = offset;
+            this.vfxPrefabUrl = prefabUrl;
+            this.vfxScale = scale;
+            this.vfxOffset = offset;
             this.shakeModel = shakeModel;
         }
     }

@@ -144,5 +144,16 @@ namespace GamePlay.Core
             pos.z = z;
             tf.position = pos;
         }
+
+        public static string GetPrefabUrl(this GameObject prefab)
+        {
+            var url = prefab ? UnityEditor.AssetDatabase.GetAssetPath(prefab) : null;
+            if (url != null)
+            {
+                url = System.Text.RegularExpressions.Regex.Replace(url, @"Assets/Resources/", "");
+                url = url.Substring(0, url.LastIndexOf('.'));
+            }
+            return url;
+        }
     }
 }

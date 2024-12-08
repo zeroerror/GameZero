@@ -84,7 +84,7 @@ namespace GamePlay.Bussiness.Renderer
             projectile.idCom.SetParent(creator);
             projectile.transformCom.SetByArgs(transArgs);
             projectile.SyncTrans();
-            projectile.animCom.Play(projectile.model.animClip);
+            if (projectile.model.animClip) projectile.animCom.Play(projectile.model.animClip);
             this._context.domainApi.fielApi.AddToLayer(projectile.go, GameFieldLayerType.Entity);
             repo.TryAdd(projectile);
             projectile.setActive(true);

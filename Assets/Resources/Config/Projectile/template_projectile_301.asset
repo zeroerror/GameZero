@@ -15,7 +15,10 @@ MonoBehaviour:
   typeId: 301
   projectileName: "\u95F4\u96941s\u53D1\u5C04\u7C98\u5F39"
   desc: 
-  animClip: {fileID: 7400000, guid: 3c383fa7da3cac14183f9abedb209a42, type: 2}
+  animClip: {fileID: 0}
+  prefab: {fileID: 0}
+  prefabScale: {x: 0.2, y: 0.2}
+  prefabOffset: {x: 0, y: 0}
   animLength: 0.25
   timelineEvents: []
   lifeTime: 0
@@ -23,7 +26,7 @@ MonoBehaviour:
   - stateType: 5
     attachStateEM:
       attachType: 1
-      attachOffset: {x: 0, y: 1.2}
+      attachOffset: {x: 0, y: 0}
     fixedDirectionStateEM:
       speed: 10
       bounceCount: 0

@@ -49,9 +49,9 @@ MonoBehaviour:
       spreadAngle: 60
   actionEMR:
     typeId: 0
-    prefab: {fileID: 0}
-    scale: {x: 1, y: 1}
-    offset: {x: 0, y: 0}
+    vfxPrefab: {fileID: 4763262428129407028, guid: e045502fe65e47041b4e843cee83f6b9, type: 3}
+    vfxScale: {x: 0.3, y: 0.3}
+    vfxOffset: {x: -2, y: 1}
     camShakeModel:
       angle: 0
       amplitude: 0

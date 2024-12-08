@@ -28,12 +28,14 @@ namespace GamePlay.Config
             so.typeId = EditorGUILayout.IntField("类型Id", so.typeId);
             so.projectileName = EditorGUILayout.TextField("名称", so.projectileName);
             so.desc = EditorGUILayout.TextField("描述", so.desc);
+
             EditorGUI.BeginChangeCheck();
             so.animClip = (AnimationClip)EditorGUILayout.ObjectField("动画文件", so.animClip, typeof(AnimationClip), false);
-            if (EditorGUI.EndChangeCheck())
-            {
-                so.UpdateData();
-            }
+            if (EditorGUI.EndChangeCheck()) so.UpdateData();
+
+            so.prefab = (GameObject)EditorGUILayout.ObjectField("预制体", so.prefab, typeof(GameObject), false);
+            so.prefabScale = EditorGUILayout.Vector2Field("预制体缩放", so.prefabScale);
+            so.prefabOffset = EditorGUILayout.Vector2Field("预制体偏移", so.prefabOffset);
         }
 
         private void _DrawLogicData(GameProjectileSO so)

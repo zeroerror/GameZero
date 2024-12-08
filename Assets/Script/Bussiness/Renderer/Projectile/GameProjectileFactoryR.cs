@@ -21,14 +21,31 @@ namespace GamePlay.Bussiness.Renderer
             }
 
             var go = new GameObject();
-            var body = new GameObject();
-            body.name = "Body";
-            body.transform.SetParent(go.transform);
-            body.AddComponent<Animator>().runtimeAnimatorController = null;
-            body.AddComponent<SpriteRenderer>();
             go.transform.localPosition = new Vector3(0, 0, 0);
 
-            var entity = new GameProjectileEntityR(model, go);
+            Animator animator = null;
+            if (model.animClip)
+            {
+                var clipBody = new GameObject();
+                clipBody.name = "Body";
+                clipBody.transform.SetParent(go.transform);
+                animator = clipBody.AddComponent<Animator>();
+                animator.runtimeAnimatorController = null;
+                clipBody.AddComponent<SpriteRenderer>();
+            }
+
+            var prefabUrl = model.prefabUrl;
+            var psGo = prefabUrl != null ? GameObject.Instantiate(Resources.Load<GameObject>(prefabUrl)) : null;
+            psGo?.transform.SetParent(go.transform);
+            var ps = psGo?.GetComponent<ParticleSystem>();
+            if (psGo)
+            {
+                psGo.transform.eulerAngles = new Vector3(0, 0, 0);
+                psGo.transform.localScale = model.prefabScale;
+                psGo.transform.localPosition = new Vector3(model.prefabOffset.x, model.prefabOffset.y, 0);
+            }
+
+            var entity = new GameProjectileEntityR(model, go, animator, ps);
             return entity;
         }
     }

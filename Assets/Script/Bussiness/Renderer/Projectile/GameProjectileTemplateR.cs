@@ -6,12 +6,12 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameProjectileTemplateR
     {
-        private Dictionary<int, GameProjectileModel> _dict;
+        private Dictionary<int, GameProjectileModelR> _dict;
         private Dictionary<int, GameProjectileSO> _soDict;
 
         public GameProjectileTemplateR()
         {
-            _dict = new Dictionary<int, GameProjectileModel>();
+            _dict = new Dictionary<int, GameProjectileModelR>();
             var path = GameConfigCollection.PROJECTILE_CONFIG_DIR_PATH;
             var resList = Resources.LoadAll(path, typeof(GameProjectileSO));
             _soDict = new Dictionary<int, GameProjectileSO>();
@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.Renderer
             }
         }
 
-        public bool TryGet(int typeId, out GameProjectileModel model)
+        public bool TryGet(int typeId, out GameProjectileModelR model)
         {
             if (_dict.TryGetValue(typeId, out model))
             {
@@ -33,7 +33,7 @@ namespace GamePlay.Bussiness.Renderer
                 model = null;
                 return false;
             }
-            model = new GameProjectileModel(typeId, so.animClip);
+            model = so.ToModelR();
             _dict.Add(typeId, model);
             return true;
         }

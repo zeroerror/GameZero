@@ -71,6 +71,8 @@ namespace GamePlay.Bussiness.Renderer
 
             skill.idCom.SetByArgs(skillIdArgs);
             skillCom.Add(skill);
+            // 绑定TransformCom为角色TransformCom
+            skill.BindTransformCom(role.transformCom);
             repo.TryAdd(skill);
             return skill;
         }

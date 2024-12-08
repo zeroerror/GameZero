@@ -8,9 +8,9 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameProjectileEntityR : GameEntityBase
     {
-        public readonly GameProjectileModel model;
+        public readonly GameProjectileModelR model;
         public readonly GameObject go;
-        public readonly GameObject body;
+        public readonly GameParticlePlayCom psPlayCom;
         public Transform transform { get { return this.go.transform; } }
         public GameVec2 position { get { return transform.position; } set { transform.position = new GameVec3(value.x, value.y, transform.position.z); } }
         public float angle { get { return transform.eulerAngles.z; } set { transform.eulerAngles = new GameVec3(0, 0, value); } }
@@ -21,15 +21,20 @@ namespace GamePlay.Bussiness.Renderer
         public GamePlayableCom animCom { get; private set; }
         public GameTimelineCom timelineCom { get; private set; }
 
-        public GameProjectileEntityR(GameProjectileModel model, GameObject go) : base(model.typeId, GameEntityType.Projectile)
+        public GameProjectileEntityR(
+            GameProjectileModelR model,
+            GameObject go,
+            Animator animator,
+            ParticleSystem ps
+        ) : base(model.typeId, GameEntityType.Projectile)
         {
             this.model = model;
             this.go = go;
             this.go.name = $"Projectile_{model.typeId}";
-            this.body = go.transform.Find("Body").gameObject;
+            this.psPlayCom = ps != null ? new GameParticlePlayCom(ps) : null;
 
             this.fsmCom = new GameProjectileFSMCom();
-            this.animCom = new GamePlayableCom(this.body.GetComponent<Animator>());
+            this.animCom = new GamePlayableCom(animator);
             this.timelineCom = new GameTimelineCom();
             this._posEaseCom = new GameEasing2DCom();
             this._posEaseCom.SetEase(GameTimeCollection.frameTime, GameEasingType.Linear);
@@ -50,6 +55,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.animCom.Tick(dt);
             this.timelineCom.Tick(dt);
+            this.psPlayCom?.Tick(dt);
             var pos = this._posEaseCom.Tick(this.position, this.transformCom.position, dt);
             this.position = pos;
             var forward = this.transformCom.forward;
@@ -59,6 +65,10 @@ namespace GamePlay.Bussiness.Renderer
         public void setActive(bool active)
         {
             this.go.SetActive(active);
+            if (active && this.psPlayCom != null)
+            {
+                this.psPlayCom.Play(true);
+            }
         }
 
         public void FaceTo(in GameVec2 dir)

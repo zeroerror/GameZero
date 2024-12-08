@@ -7,6 +7,7 @@ namespace GamePlay.Core
         public ParticleSystem root { get; private set; }
 
         public bool isPlaying { get; private set; }
+        public bool isLoop { get; private set; }
 
         public float length => this.root.main.duration;
 
@@ -23,15 +24,16 @@ namespace GamePlay.Core
             if (!this.isPlaying) return;
             dt *= this.timeScale;
             this.root.Simulate(dt, true, false);
-            if (this.time >= this.length)
+            if (!this.isLoop && this.time >= this.length)
             {
                 this.Stop();
             }
         }
 
-        public void Play()
+        public void Play(bool isLoop)
         {
             this.isPlaying = true;
+            this.isLoop = isLoop;
         }
 
         public void Stop()

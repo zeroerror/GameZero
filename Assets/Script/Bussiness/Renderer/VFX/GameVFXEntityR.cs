@@ -55,7 +55,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Play(in GameVFXPlayArgs args)
         {
-            this.particleCom.Play();
+            this.particleCom.Play(true);
             this.go.transform.position = args.position;
             this.go.transform.eulerAngles = new Vector3(0, 0, args.angle);
             var scale = args.scale;

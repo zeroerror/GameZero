@@ -15,7 +15,10 @@ MonoBehaviour:
   typeId: 300
   projectileName: "\u98DE\u884C\u7C98\u5F39"
   desc: 
-  animClip: {fileID: 7400000, guid: 3c383fa7da3cac14183f9abedb209a42, type: 2}
+  animClip: {fileID: 0}
+  prefab: {fileID: 4305094256947007182, guid: 7dc16c5426d546f4495d189ffd1bd04c, type: 3}
+  prefabScale: {x: 0.1, y: 0.1}
+  prefabOffset: {x: 0, y: 0}
   animLength: 0.25
   timelineEvents: []
   lifeTime: 0

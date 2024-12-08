@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Core;
 
 namespace GamePlay.Config
 {
@@ -24,10 +25,12 @@ namespace GamePlay.Config
         public static GameTimelineEventModel[] ToModels(this GameTimelineEventEM[] ems)
         {
             if (ems == null) return null;
+            ems = ems.Filter(e => e.action != null);
             GameTimelineEventModel[] ms = new GameTimelineEventModel[ems.Length];
             for (int i = 0; i < ems.Length; i++)
             {
-                ms[i] = ems[i].ToModel();
+                var em = ems[i];
+                ms[i] = em.ToModel();
             }
             return ms;
         }
