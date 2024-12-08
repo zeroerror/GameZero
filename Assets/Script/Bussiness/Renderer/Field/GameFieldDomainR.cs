@@ -38,34 +38,29 @@ namespace GamePlay.Bussiness.Renderer
         public void Tick(float dt)
         {
             var entityLayer = this._fieldContext.curField.GetLayer(GameFieldLayerType.Entity);
-            var rootOrder = GameFieldLayerCollection.EntityLayerZ;
-            foreach (Transform entityTf in entityLayer.transform)
-            {
-                var sortingGroup = entityTf.GetComponent<SortingGroup>();
-                var order = sortingGroup.sortingOrder;
-                var layerName = sortingGroup.sortingLayerName;
-                var newOrder = GameFieldLayerCollection.GetLayerOrder(GameFieldLayerType.Entity, entityTf.position);
-                if (order == newOrder) continue;
+            this._UpdateLayerOrder(entityLayer, GameFieldLayerType.Entity);
 
-                sortingGroup.sortingOrder = newOrder;
-                entityTf.SetSortingLayer(newOrder, layerName);
+            var vfxLayer = this._fieldContext.curField.GetLayer(GameFieldLayerType.VFX);
+            this._UpdateLayerOrder(vfxLayer, GameFieldLayerType.VFX);
+        }
+
+        private void _UpdateLayerOrder(GameObject layer, GameFieldLayerType layerType)
+        {
+            foreach (Transform trans in layer.transform)
+            {
+                trans.TryGetSortingLayer(out var order, out var layerName);
+                var newOrder = GameFieldLayerCollection.GetLayerOrder(layerType, trans.position);
+                if (order == newOrder) continue;
+                trans.SetSortingLayer(newOrder, layerName);
 
                 // 子节点的层级根据父节点的层级偏移调整
                 var offset = newOrder - order;
-                entityTf.ForeachTransfrom_DFS((tf) =>
+                trans.ForeachTransfrom_DFS((tf) =>
                 {
+                    if (tf == trans) return;
                     if (!tf.TryGetSortingLayer(out var order, out var layerName)) return;
                     tf.SetSortingLayer(order + offset, layerName);
                 });
-            }
-
-            var vfxLayer = this._fieldContext.curField.GetLayer(GameFieldLayerType.VFX);
-            for (var i = 0; i < vfxLayer.transform.childCount; i++)
-            {
-                var child = vfxLayer.transform.GetChild(i);
-                var pos = child.position;
-                pos.z = GameFieldLayerCollection.VFXLayerZ + pos.y * GameFieldLayerCollection.StepZ;
-                child.position = pos;
             }
         }
 
@@ -99,20 +94,22 @@ namespace GamePlay.Bussiness.Renderer
             go.transform.SetParent(entityLayer.transform);
             go.SetPosZ(0);
 
-            if (layerType == GameFieldLayerType.Entity)
+            var sortingLayerName = layerType.ToString();
+            var order = GameFieldLayerCollection.GetLayerOrder(layerType, go.transform.position);
+
+            if (go.TryGetComponent<SpriteRenderer>(out var renderer))
             {
-                if (!go.TryGetComponent<SortingGroup>(out var sortingGroup))
-                {
-                    sortingGroup = go.AddComponent<SortingGroup>();
-                }
-                var order = GameFieldLayerCollection.GetLayerOrder(layerType, go.transform.position);
-                sortingGroup.sortingOrder = order;
+                renderer.sortingLayerName = sortingLayerName;
+                renderer.sortingOrder = order;
+                return;
             }
-            else
+
+            if (!go.TryGetComponent<SortingGroup>(out var sortingGroup))
             {
-                var order = GameFieldLayerCollection.GetLayerOrder(layerType, go.transform.position);
-                go.SetSortingLayer(order, layerType.ToString());
+                sortingGroup = go.AddComponent<SortingGroup>();
             }
+            sortingGroup.sortingOrder = order;
+            sortingGroup.sortingLayerName = sortingLayerName;
         }
     }
 }

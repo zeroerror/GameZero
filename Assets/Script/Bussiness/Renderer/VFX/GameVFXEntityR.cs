@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
@@ -67,6 +68,10 @@ namespace GamePlay.Bussiness.Renderer
             if (this.attachNode == null) return;
             var pos = this.attachNode.transform.position.Add(this.attachOffset);
             this.go.transform.position = pos;
+            if (this.attachNode.TryGetSortingLayer(out var order, out var layerName))
+            {
+                this.go.SetSortingLayer(order + 1, layerName);
+            }
         }
 
         public void Stop()

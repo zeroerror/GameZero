@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace GamePlay.Core
 {
@@ -59,10 +60,19 @@ namespace GamePlay.Core
         public static void SetSortingLayer(this GameObject go, int orderInLayer, string layerName = "Default")
         {
             var renderer = go.GetComponent<Renderer>();
-            if (renderer != null)
+            if (renderer)
             {
                 renderer.sortingLayerName = layerName;
                 renderer.sortingOrder = orderInLayer;
+                return;
+            }
+
+            var sortingGroup = go.GetComponent<SortingGroup>();
+            if (sortingGroup)
+            {
+                sortingGroup.sortingLayerName = layerName;
+                sortingGroup.sortingOrder = orderInLayer;
+                return;
             }
         }
 
@@ -72,34 +82,35 @@ namespace GamePlay.Core
         }
         public static void SetSortingLayer(this Transform tf, int orderInLayer, string layerName = "Default")
         {
-            var renderer = tf.GetComponent<Renderer>();
-            if (renderer != null)
-            {
-                renderer.sortingLayerName = layerName;
-                renderer.sortingOrder = orderInLayer;
-            }
+            SetSortingLayer(tf.gameObject, orderInLayer, layerName);
         }
 
-        public static bool GetSortingLayer(this GameObject go, out int orderInLayer, out string layerName)
+        public static bool TryGetSortingLayer(this GameObject go, out int orderInLayer, out string layerName)
         {
             orderInLayer = 0;
             layerName = "Default";
             var renderer = go.GetComponent<Renderer>();
-            if (renderer == null) return false;
-            orderInLayer = renderer.sortingOrder;
-            layerName = renderer.sortingLayerName;
-            return true;
+            if (renderer)
+            {
+                orderInLayer = renderer.sortingOrder;
+                layerName = renderer.sortingLayerName;
+                return true;
+            }
+
+            var sortingGroup = go.GetComponent<SortingGroup>();
+            if (sortingGroup)
+            {
+                orderInLayer = sortingGroup.sortingOrder;
+                layerName = sortingGroup.sortingLayerName;
+                return true;
+            }
+
+            return false;
         }
 
         public static bool TryGetSortingLayer(this Transform tf, out int orderInLayer, out string layerName)
         {
-            orderInLayer = 0;
-            layerName = "Default";
-            var renderer = tf.GetComponent<Renderer>();
-            if (renderer == null) return false;
-            orderInLayer = renderer.sortingOrder;
-            layerName = renderer.sortingLayerName;
-            return true;
+            return TryGetSortingLayer(tf.gameObject, out orderInLayer, out layerName);
         }
 
         public static void SetPosZ(this GameObject go, float z)

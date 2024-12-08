@@ -59,8 +59,12 @@ namespace GamePlay.Bussiness.Renderer
             var vfxClip = action.vfxClip;
             if (vfxClip)
             {
+
+                var attachNode = targetEntity is GameRoleEntityR targetEntityR ? targetEntityR.go : null;
                 var args = new GameVFXPlayArgs()
                 {
+                    attachNode = attachNode,
+                    attachOffset = new GameVec2(0, 0.8f),
                     clip = vfxClip,
                     position = targetEntity.transformCom.position + new GameVec2(0, targetEntity.transformCom.scale.y * 0.5f),
                     angle = targetEntity.transformCom.angle,
