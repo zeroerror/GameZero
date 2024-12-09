@@ -11,7 +11,9 @@
 /[Uu]ser[Ss]ettings/
 /ProjectSettings/
 /Packages/
-/Assets/Art
+/Assets/Art/
+/Assets/Art.meta
+
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
