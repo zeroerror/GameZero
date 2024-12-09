@@ -2,27 +2,30 @@ using UnityEngine;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
 using GamePlay.Core;
+using GamePlay.Bussiness.UI;
 
 public class GameEntry : MonoBehaviour
 {
     public GameApp gameApp { get; private set; }
     public GameAppR gameAppR { get; private set; }
+    public GameUIApp gameUIApp { get; private set; }
     void Start()
     {
-        this.gameApp = new GameApp();
-        this.gameAppR = new GameAppR(gameApp.directDomain.context, this.gameObject);
+        gameUIApp = new GameUIApp(GameObject.Find("UIRoot"));
+        gameApp = new GameApp();
+        gameAppR = new GameAppR(gameApp.directDomain.context, gameObject, gameUIApp.directDomain.context);
         GameLogger.logLevel = LogLevel.Error;
     }
 
     void Update()
     {
-        this.gameApp.Update(Time.deltaTime);
-        this.gameAppR.Update(Time.deltaTime);
+        gameApp.Update(Time.deltaTime);
+        gameAppR.Update(Time.deltaTime);
     }
 
     void LateUpdate()
     {
-        this.gameApp.LateUpdate(Time.deltaTime);
-        this.gameAppR.LateUpdate(Time.deltaTime);
+        gameApp.LateUpdate(Time.deltaTime);
+        gameAppR.LateUpdate(Time.deltaTime);
     }
 }

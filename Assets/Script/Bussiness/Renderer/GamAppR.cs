@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Bussiness.UI;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
@@ -7,9 +8,9 @@ namespace GamePlay.Bussiness.Renderer
     {
         public GameDirectDomainR directDomain { get; private set; }
 
-        public GameAppR(GameContext logicContext, GameObject sceneRoot)
+        public GameAppR(GameContext logicContext, GameObject sceneRoot, GameUIContext uiContext)
         {
-            this.directDomain = new GameDirectDomainR(logicContext, sceneRoot);
+            this.directDomain = new GameDirectDomainR(logicContext, sceneRoot, uiContext);
             Application.quitting += this.Dispose;
         }
 

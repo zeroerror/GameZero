@@ -1,5 +1,7 @@
 using GamePlay.Core;
 using UnityEngine;
+using UnityEngine.UI;
+
 namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleFactoryR
@@ -41,6 +43,21 @@ namespace GamePlay.Bussiness.Renderer
                 GameLogger.LogError($"角色工厂[渲染层]: 加载动画失败 {typeId} {clipName}");
             }
             return res;
+        }
+
+        public Slider LoadAttributeBar(bool isEnemy)
+        {
+            var url = isEnemy ? "UI/Battle/attribute_bar_enemy" : "UI/Battle/attribute_bar_self";
+            var prefab = Resources.Load<GameObject>(url);
+            if (!prefab)
+            {
+                GameLogger.LogError($"角色工厂[渲染层]: 加载属性条失败 {url}");
+                return null;
+            }
+            var go = GameObject.Instantiate(prefab);
+            var slider = go.GetComponentInChildren<Slider>();
+            Debug.Assert(slider != null, "角色工厂[渲染层]: 加载属性条失败, 未找到Slider组件");
+            return slider;
         }
     }
 }

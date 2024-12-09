@@ -66,6 +66,12 @@ public static class GameVectorExtensions
         v1.y += v2.y;
     }
 
+    public static void AddSelf(this ref GameVec3 v1, in GameVec3 v2)
+    {
+        v1.x += v2.x;
+        v1.y += v2.y;
+    }
+
     public static GameVec2 Sub(this GameVec2 v1, in GameVec2 v2)
     {
         return new GameVec2(v1.x - v2.x, v1.y - v2.y);

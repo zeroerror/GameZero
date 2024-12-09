@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Bussiness.UI;
 using GamePlay.Core;
 using UnityEngine;
 namespace GamePlay.Bussiness.Renderer
@@ -22,9 +23,12 @@ namespace GamePlay.Bussiness.Renderer
         public GameEventService delayRCEventService { get; private set; }
         public GameCmdBufferService cmdBufferService { get; private set; }
 
-        public GameContextR(GameContext logicContext, GameObject sceneRoot)
+        public GameUIContext uiContext { get; private set; }
+
+        public GameContextR(GameContext logicContext, GameObject sceneRoot, GameUIContext uiContext)
         {
             this.logicContext = logicContext;
+            this.uiContext = uiContext;
             var cam = GameObject.Find("Main Camera")?.GetComponent<Camera>();
             this.cameraEntity = new GameCameraEntity(cam);
             this.director = new GameDirectorR();

@@ -83,8 +83,17 @@ namespace GamePlay.Bussiness.Renderer
             this._roleContext.repo.TryAdd(role);
             role.setActive(true);
             if (isUser) this._roleContext.userRole = role;
+
+            var isEnemy = role.idCom.campId != this._roleContext.userRole.idCom.campId;
+            var slider = this._roleContext.factory.LoadAttributeBar(isEnemy);
+            this._context.uiContext.AddToUIRoot(slider.transform);
+            var attributeBarCom = role.attributeBarCom;
+            attributeBarCom.SetHPSlider(slider, new Vector2(0, 2));
+            attributeBarCom.SetRatio(1);
+            attributeBarCom.WorldToScreenPoint = this._context.uiContext.WorldToScreenPoint;
             return role;
         }
+
 
         public void Tick(float dt)
         {

@@ -34,6 +34,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameRoleFSMComR fsmCom { get; private set; }
         public GameSkillComponentR skillCom { get; private set; }
         public GamePlayableCom animCom { get; private set; }
+        public GameRoleAttributeBarCom attributeBarCom { get; private set; }
 
         public GameRoleEntityR(
             int typeId,
@@ -49,11 +50,16 @@ namespace GamePlay.Bussiness.Renderer
             this.body = body;
 
             this.fsmCom = new GameRoleFSMComR();
+
             this.skillCom = new GameSkillComponentR(this);
+
             var animator = this.body.GetComponentInChildren<Animator>();
             this.animCom = new GamePlayableCom(animator);
+
             this._posEaseCom = new GameEasing2DCom();
             this._posEaseCom.SetEase(0.05f, GameEasingType.Linear);
+
+            this.attributeBarCom = new GameRoleAttributeBarCom(this.transform);
         }
 
         public override void Clear()
@@ -74,6 +80,7 @@ namespace GamePlay.Bussiness.Renderer
             this.position = pos;
             var forward = this.transformCom.forward;
             this.FaceTo(forward);
+            this.attributeBarCom.Tick(dt);
         }
 
         public void setActive(bool active)

@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Bussiness.UI;
 using UnityEngine;
 namespace GamePlay.Bussiness.Renderer
 {
@@ -15,10 +16,10 @@ namespace GamePlay.Bussiness.Renderer
         public GameFieldDomainR fieldDomain { get; private set; }
         public GameEntityCollectDomainR entityCollectDomain { get; private set; }
 
-        public GameDirectDomainR(GameContext logicContext, GameObject sceneRoot)
+        public GameDirectDomainR(GameContext logicContext, GameObject sceneRoot, GameUIContext uiContext)
         {
             this._InitDomain();
-            this._InitContext(logicContext, sceneRoot);
+            this._InitContext(logicContext, sceneRoot, uiContext);
             this._InjectContext();
         }
 
@@ -35,9 +36,9 @@ namespace GamePlay.Bussiness.Renderer
             this.entityCollectDomain = new GameEntityCollectDomainR();
         }
 
-        private void _InitContext(GameContext logicContext, GameObject sceneRoot)
+        private void _InitContext(GameContext logicContext, GameObject sceneRoot, GameUIContext uiContext)
         {
-            this.context = new GameContextR(logicContext, sceneRoot);
+            this.context = new GameContextR(logicContext, sceneRoot, uiContext);
             this.context.domainApi.SetRoleApi(this.roleDomain);
             this.context.domainApi.SetSkillApi(this.skillDomain);
             this.context.domainApi.SetTransformApi(this.transformDomain);
