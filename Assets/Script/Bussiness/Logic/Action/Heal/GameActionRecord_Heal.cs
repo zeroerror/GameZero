@@ -1,0 +1,33 @@
+namespace GamePlay.Bussiness.Logic
+{
+    public struct GameActionRecord_Heal
+    {
+        /// <summary> 行为者角色Id参数, 不一定存在 </summary>
+        public GameIdArgs actorRoleIdArgs;
+        /// <summary> 行为者Id参数, 比如技能, 投射物等 </summary>
+        public GameIdArgs actorIdArgs;
+
+        /// <summary> 目标角色Id参数 </summary>
+        public GameIdArgs targetIdArgs;
+
+        /// <summary> 治疗类型 </summary>
+        public GameActionHealType healType;
+        /// <summary> 治疗数值 </summary>
+        public float value;
+
+        public GameActionRecord_Heal(
+            in GameIdArgs actorRoleIdArgs,
+            in GameIdArgs actorIdArgs,
+            in GameIdArgs targetRoleIdArgs,
+            GameActionHealType healType,
+            float value
+        )
+        {
+            this.actorRoleIdArgs = actorRoleIdArgs;
+            this.actorIdArgs = actorIdArgs;
+            this.targetIdArgs = targetRoleIdArgs;
+            this.healType = healType;
+            this.value = value;
+        }
+    }
+}

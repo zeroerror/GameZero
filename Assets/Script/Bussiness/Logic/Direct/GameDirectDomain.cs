@@ -64,11 +64,7 @@ namespace GamePlay.Bussiness.Logic
             this.entityCollectDomain.Inject(this.context);
 
             // TEST
-            var campId = 0;
-            this.roleDomain.CreatePlayerRole(1001, campId++, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
-            this.roleDomain.CreatePlayerRole(10001, campId++, new GameTransformArgs { position = new GameVec2(0, -2), scale = GameVec2.one, forward = GameVec2.right }, false);
-            this.roleDomain.CreatePlayerRole(10001, campId++, new GameTransformArgs { position = new GameVec2(4, -5), scale = GameVec2.one, forward = GameVec2.left }, false);
-            this.roleDomain.CreatePlayerRole(10001, campId++, new GameTransformArgs { position = new GameVec2(8, -5), scale = GameVec2.one, forward = GameVec2.left }, false);
+            this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
             this.fieldDomain.LoadField(1);
         }
 

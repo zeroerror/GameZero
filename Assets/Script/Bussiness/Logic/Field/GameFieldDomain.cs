@@ -1,4 +1,5 @@
 using GamePlay.Core;
+using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -32,6 +33,36 @@ namespace GamePlay.Bussiness.Logic
 
         public void Tick(float dt)
         {
+            var curField = this._fieldContext.curField;
+            curField.model.monsterAreaModels?.Foreach((area, index) =>
+            {
+                if (curField.IsMonstersSpawned(index)) return;
+                this._SpawnAreaMonsters(area, index);
+            });
+        }
+
+        private void _SpawnAreaMonsters(GameFieldMonsterAreaModel area, int index)
+        {
+            var curField = this._fieldContext.curField;
+            if (curField.IsMonstersSpawned(index)) return;
+            curField.SetMonsterSpawned(index, true);
+
+            var radius = area.radius;
+            area.monsterSpawnModels?.Foreach((spawnModel, idx) =>
+            {
+                for (var i = 0; i < spawnModel.count; i++)
+                {
+                    var angle = GameMathF.Random(0, 360);
+                    var x = radius * GameMathF.Cos(angle);
+                    var y = radius * GameMathF.Sin(angle);
+                    this._context.domainApi.roleApi.CreateMonsterRole(spawnModel.typeId, new GameTransformArgs
+                    {
+                        position = area.position + new GameVec2(x, y),
+                        angle = angle,
+                        scale = GameVec2.zero,
+                    });
+                }
+            });
         }
 
         public void LoadField(int fieldId)

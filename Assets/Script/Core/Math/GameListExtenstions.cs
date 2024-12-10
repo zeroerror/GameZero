@@ -155,5 +155,26 @@ namespace GamePlay.Core
             }
             return result;
         }
+
+        public static void Sort<T>(this List<T> list, Comparison<T> comparison)
+        {
+            list.Sort(comparison);
+        }
+
+        public static T[] Sort<T>(this T[] list, Comparison<T> comparison)
+        {
+            Array.Sort(list, comparison);
+            return list;
+        }
+
+        public static U[] Map<T, U>(this T[] list, Func<T, U> func)
+        {
+            U[] result = new U[list.Length];
+            for (int i = 0; i < list.Length; i++)
+            {
+                result[i] = func(list[i]);
+            }
+            return result;
+        }
     }
 }

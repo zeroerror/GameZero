@@ -40,12 +40,6 @@ namespace GamePlay.Bussiness.Logic
             this._context.domainApi.physicsApi.RemovePhysics(role);
         }
 
-        public GameRoleEntity CreatePlayerRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser)
-        {
-            var e = this.CreateRole(typeId, campId, transArgs, isUser);
-            if (this._roleContext.userRole == null) this._roleContext.userRole = e;
-            return e;
-        }
 
         public GameRoleEntity CreateRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser)
         {
@@ -86,6 +80,20 @@ namespace GamePlay.Bussiness.Logic
             return role;
         }
 
+        public GameRoleEntity CreatePlayerRole(int typeId, in GameTransformArgs transArgs, bool isUser)
+        {
+            var e = this.CreateRole(typeId, 1, transArgs, isUser);
+            if (this._roleContext.userRole == null) this._roleContext.userRole = e;
+            return e;
+        }
+
+        public GameRoleEntity CreateMonsterRole(int typeId, in GameTransformArgs transArgs)
+        {
+            var e = this.CreateRole(typeId, 2, transArgs, false);
+            if (this._roleContext.userRole == null) this._roleContext.userRole = e;
+            return e;
+        }
+
         public void Tick(float dt)
         {
             this.roleInputDomain.Tick();
@@ -115,5 +123,6 @@ namespace GamePlay.Bussiness.Logic
             });
             return nearestEnemy;
         }
+
     }
 }

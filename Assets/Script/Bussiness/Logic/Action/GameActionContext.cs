@@ -6,17 +6,14 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameActionTemplate template { get; private set; }
 
-        public List<GameActionRecord> recordList { get; private set; }
+        public List<GameActionRecord_Dmg> dmgRecordList { get; private set; }
+        public List<GameActionRecord_Heal> healRecordList { get; private set; }
 
         public GameActionContext()
         {
             this.template = new GameActionTemplate();
-            this.recordList = new List<GameActionRecord>();
-        }
-
-        public void AddRecord(GameActionRecord record)
-        {
-            this.recordList.Add(record);
+            this.dmgRecordList = new List<GameActionRecord_Dmg>();
+            this.healRecordList = new List<GameActionRecord_Heal>();
         }
     }
 }

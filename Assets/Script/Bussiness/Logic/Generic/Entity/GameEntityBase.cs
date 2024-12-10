@@ -11,6 +11,9 @@ namespace GamePlay.Bussiness.Logic
         public GameActionTargeterCom actionTargeterCom { get; private set; }
         public GamePhysicsCom physicsCom { get; private set; }
         public GameAttributeCom attributeCom { get; private set; }
+        public void BindAttributeCom(GameAttributeCom attributeCom) => this.attributeCom = attributeCom;
+        public GameAttributeCom baseAttributeCom { get; private set; }
+        public void BindBaseAttributeCom(GameAttributeCom baseAttributeCom) => this.baseAttributeCom = baseAttributeCom;
 
         public GameEntityBase(int typeId, GameEntityType entityType)
         {
@@ -19,6 +22,7 @@ namespace GamePlay.Bussiness.Logic
             actionTargeterCom = new GameActionTargeterCom();
             physicsCom = new GamePhysicsCom();
             attributeCom = new GameAttributeCom();
+            baseAttributeCom = new GameAttributeCom();
         }
 
         public virtual void Clear()
@@ -28,6 +32,7 @@ namespace GamePlay.Bussiness.Logic
             actionTargeterCom.Clear();
             physicsCom.Clear();
             attributeCom.Clear();
+            baseAttributeCom.Clear();
             this.isValid = true;
         }
 

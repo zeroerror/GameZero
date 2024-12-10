@@ -33,7 +33,7 @@ namespace GamePlay.Bussiness.Logic
                 model = null;
                 return false;
             }
-            model = new GameFieldModel();
+            model = so.ToModel();
             _dict.Add(typeId, model);
             return true;
         }

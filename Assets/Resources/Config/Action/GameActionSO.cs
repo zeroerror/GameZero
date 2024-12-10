@@ -10,8 +10,8 @@ namespace GamePlay.Config
     {
         public GameActionType actionType;
         public string desc;
-        public GameActionModel_Dmg dmgAction;
-        public GameActionModel_Heal healAction;
+        public GameActionEM_Dmg dmgActionEM;
+        public GameActionEM_Heal healActionEM;
         public GameActionEM_LaunchProjectile launchProjectileActionEM;
 
         public GameActionEMR actionEMR;
@@ -25,10 +25,10 @@ namespace GamePlay.Config
             switch (actionType)
             {
                 case GameActionType.Dmg:
-                    actionModel = dmgAction;
+                    actionModel = dmgActionEM.ToModel();
                     break;
                 case GameActionType.Heal:
-                    actionModel = healAction;
+                    actionModel = healActionEM.ToModel();
                     break;
                 case GameActionType.LaunchProjectile:
                     actionModel = launchProjectileActionEM.ToModel();

@@ -27,93 +27,86 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public List<GameActionRecord> DoAction(int actionId, GameEntityBase actorEntity)
+        public void DoAction(int actionId, GameEntityBase actorEntity)
         {
             var template = this._actionContext.template;
             if (!template.TryGet(actionId, out var actionModel))
             {
                 GameLogger.LogError($"未找到行为配置：{actionId}");
-                return null;
+                return;
             }
-            var entitySelectApi = this._context.domainApi.entitySelectApi;
-            List<GameActionRecord> recordList = null;
             switch (actionModel)
             {
                 case GameActionModel_Dmg dmgAction:
-                    recordList = this.DoAction_Dmg(dmgAction, actorEntity);
+                    this.DoAction_Dmg(dmgAction, actorEntity);
                     break;
                 case GameActionModel_Heal healAction:
-                    recordList = this.DoAction_Heal(healAction, actorEntity);
+                    this.DoAction_Heal(healAction, actorEntity);
                     break;
                 case GameActionModel_LaunchProjectile launchProjectileAction:
-                    recordList = this.DoAction_LaunchProjectile(launchProjectileAction, actorEntity);
+                    this.DoAction_LaunchProjectile(launchProjectileAction, actorEntity);
                     break;
                 default:
                     GameLogger.LogError($"未处理的行为类型：{actionModel.GetType().Name}");
                     break;
             }
+        }
 
-            recordList?.ForEach((record) =>
+        public void DoAction_Dmg(GameActionModel_Dmg action, GameEntityBase actorEntity)
+        {
+            var recordList = new List<GameActionRecord_Dmg>();
+            var entitySelectApi = this._context.domainApi.entitySelectApi;
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
+            selectedEntities?.ForEach((selectedEntity) =>
             {
-                this._actionContext.AddRecord(record);
+                var record = GameActionUtil_Dmg.CalcDmg(actorEntity, selectedEntity, action);
+                recordList.Add(record);
+                GameActionUtil_Dmg.DoDmg(selectedEntity, record);
+            });
+            recordList.ForEach((record) =>
+            {
+                this._actionContext.dmgRecordList.Add(record);
                 // 提交RC
-                var evArgs = new GameActionRCArgs_Do()
-                {
-                    actionId = actionId,
-                    actorIdArgs = actorEntity.idCom.ToArgs(),
-                    targetIdArgs = record.targetIdArgs
-                };
-                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO, evArgs);
+                var evArgs = new GameActionRCArgs_DoDmg(
+                    action.typeId,
+                    record
+                );
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO_DMG, evArgs);
             });
-            return recordList;
         }
 
-        public List<GameActionRecord> DoAction_Dmg(GameActionModel_Dmg action, GameEntityBase actorEntity)
+        public void DoAction_Heal(GameActionModel_Heal action, GameEntityBase actorEntity)
         {
+            var recordList = new List<GameActionRecord_Heal>();
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
-            var recordList = new List<GameActionRecord>();
             selectedEntities?.ForEach((selEntity) =>
             {
-                var record = new GameActionRecord();
-                record.actionId = action.typeId;
-                record.actorIdArgs = actorEntity.idCom.ToArgs();
-                record.targetIdArgs = selEntity.idCom.ToArgs();
-                //todo 其余行为记录数据
+                var record = GameActionHealUtil.CalcHeal(actorEntity, selEntity, action);
                 recordList.Add(record);
-                GameLogger.Log($"执行行为[伤害]: {record}");
+                GameActionHealUtil.DoHeal(selEntity, record);
             });
-            return recordList;
-        }
-
-        public List<GameActionRecord> DoAction_Heal(GameActionModel_Heal action, GameEntityBase actorEntity)
-        {
-            var entitySelectApi = this._context.domainApi.entitySelectApi;
-            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
-            var recordList = new List<GameActionRecord>();
-            selectedEntities?.ForEach((selEntity) =>
+            recordList.ForEach((record) =>
             {
-                GameLogger.Log($"执行行为[治疗]: {action}");
-                var record = new GameActionRecord();
-                record.actionId = action.typeId;
-                record.actorIdArgs = actorEntity.idCom.ToArgs();
-                record.targetIdArgs = selEntity.idCom.ToArgs();
-                //todo 其余行为记录数据
-                recordList.Add(record);
+                this._actionContext.healRecordList.Add(record);
+                // 提交RC
+                var evArgs = new GameActionRCArgs_DoHeal(
+                    action.typeId,
+                    record
+                );
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO_HEAL, evArgs);
             });
-            return recordList;
         }
 
-        public List<GameActionRecord> DoAction_LaunchProjectile(GameActionModel_LaunchProjectile action, GameEntityBase actorEntity)
+        public void DoAction_LaunchProjectile(GameActionModel_LaunchProjectile action, GameEntityBase actorEntity)
         {
+            var recordList = new List<GameActionRecord_LaunchProjectile>();
             var projectileId = action.projectileId;
             var projectileApi = this._context.domainApi.projectileApi;
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
-            var recordList = new List<GameActionRecord>();
             selectedEntities?.ForEach((selectedEntity) =>
             {
-                GameLogger.Log($"执行行为[发射投射物]: {action}");
                 // 发射锚点位置
                 var transArgs = selectedEntity.transformCom.ToArgs();
                 // 发射偏移, 仅在x轴上对称翻转
@@ -136,13 +129,23 @@ namespace GamePlay.Bussiness.Logic
                         GameLogger.LogError($"行为无法执行, 尚未处理的弹幕类型：{action.barrageType}");
                         break;
                 }
-                var record = new GameActionRecord();
-                record.actionId = action.typeId;
-                record.actorIdArgs = actorEntity.idCom.ToArgs();
-                record.targetIdArgs = selectedEntity.idCom.ToArgs();
+                var record = new GameActionRecord_LaunchProjectile(
+                    actorRoleIdArgs: actorEntity.idCom.ToArgs(),
+                    actorIdArgs: actorEntity.idCom.ToArgs(),
+                    targetRoleIdArgs: selectedEntity.idCom.ToArgs()
+                );
                 recordList.Add(record);
             });
-            return recordList;
+
+            recordList.ForEach((record) =>
+            {
+                // 提交RC
+                var evArgs = new GameActionRCArgs_LaunchProjectile(
+                    action.typeId,
+                    record
+                );
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, evArgs);
+            });
         }
 
         public bool TryGetModel(int actionId, out GameActionModelBase model)
