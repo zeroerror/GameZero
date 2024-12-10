@@ -1,0 +1,37 @@
+namespace GamePlay.Bussiness.Logic
+{
+    public class GameActionModel_Dmg : GameActionModelBase
+    {
+        /// <summary> 伤害类型 </summary>
+        public GameActionDmgType dmgType;
+
+        /// <summary> 伤害数值 </summary>
+        public int value;
+        /// <summary> 数值格式 </summary>
+        public GameActionValueFormat valueFormat;
+        /// <summary> 数值参考类型 </summary>
+        public GameActionValueRefType refType;
+        /// <summary> 数值参考属性 </summary>
+        public GameAttributeType refAttrType;
+
+        public GameActionModel_Dmg(
+            GameActionDmgType dmgType,
+            int value,
+            GameActionValueFormat valueFormat,
+            GameActionValueRefType refType,
+            GameAttributeType refAttrType
+        )
+        {
+            this.dmgType = dmgType;
+            this.value = value;
+            this.valueFormat = valueFormat;
+            this.refType = refType;
+            this.refAttrType = refAttrType;
+        }
+
+        public override string ToString()
+        {
+            return $"伤害类型:{dmgType}, 伤害数值:{value}, 数值格式:{valueFormat}, 数值参考类型:{refType}, 数值参考属性:{refAttrType}";
+        }
+    }
+}

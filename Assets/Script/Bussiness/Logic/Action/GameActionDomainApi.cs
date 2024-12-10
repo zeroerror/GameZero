@@ -10,28 +10,28 @@ namespace GamePlay.Bussiness.Logic
         /// <para>actionId 行为ID</para>
         /// <para>actorEntity 执行者</para>
         /// </summary>
-        public List<GameActionRecord> DoAction(int actionId, GameEntityBase actorEntity);
+        public void DoAction(int actionId, GameEntityBase actorEntity);
 
         /// <summary>
         /// 执行行为 - 伤害
         /// <para>action 伤害行为</para>
         /// <para>actorEntity 执行者</para>
         /// </summary>
-        public List<GameActionRecord> DoAction_Dmg(GameActionModel_Dmg action, GameEntityBase actorEntity);
+        public void DoAction_Dmg(GameActionModel_Dmg action, GameEntityBase actorEntity);
 
         /// <summary>
         /// 执行行为 - 治疗
         /// <para>action 治疗行为</para>
         /// <para>actorEntity 执行者</para>
         /// </summary>
-        public List<GameActionRecord> DoAction_Heal(GameActionModel_Heal action, GameEntityBase actorEntity);
+        public void DoAction_Heal(GameActionModel_Heal action, GameEntityBase actorEntity);
 
         /// <summary>
         /// 执行行为 - 发射投射物
         /// action: 发射投射物行为
         /// actorEntity: 执行者
         /// </summary>
-        public List<GameActionRecord> DoAction_LaunchProjectile(GameActionModel_LaunchProjectile action, GameEntityBase actorEntity);
+        public void DoAction_LaunchProjectile(GameActionModel_LaunchProjectile action, GameEntityBase actorEntity);
 
         /// <summary>
         /// 尝试获取行为模型

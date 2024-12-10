@@ -54,12 +54,12 @@ namespace GamePlay.Config
                 case GameActionType.Dmg:
                     EditorGUILayout.LabelField(" -------- 伤害行为 --------", EditorStyles.boldLabel);
                     this._ShowDmgAction(so);
-                    so.dmgAction.selector = selector;
+                    so.dmgActionEM.selector = selector;
                     break;
                 case GameActionType.Heal:
                     EditorGUILayout.LabelField(" -------- 治疗行为 --------", EditorStyles.boldLabel);
                     this._ShowHealAction(so);
-                    so.healAction.selector = selector;
+                    so.healActionEM.selector = selector;
                     break;
 
                 case GameActionType.LaunchProjectile:
@@ -118,22 +118,22 @@ namespace GamePlay.Config
 
         private void _ShowDmgAction(GameActionSO so)
         {
-            GameActionModel_Dmg dmgAction = so.dmgAction;
+            GameActionModel_Dmg dmgAction = so.dmgActionEM;
             if (dmgAction == null)
             {
                 dmgAction = new GameActionModel_Dmg();
-                so.dmgAction = dmgAction;
+                so.dmgActionEM = dmgAction;
             }
-            dmgAction.dmg = EditorGUILayout.IntField("伤害值", dmgAction.dmg);
+            dmgAction.value = EditorGUILayout.IntField("伤害值", dmgAction.value);
         }
 
         private void _ShowHealAction(GameActionSO actionSO)
         {
-            GameActionModel_Heal healAction = actionSO.healAction;
+            GameActionModel_Heal healAction = actionSO.healActionEM;
             if (healAction == null)
             {
                 healAction = new GameActionModel_Heal();
-                actionSO.healAction = healAction;
+                actionSO.healActionEM = healAction;
             }
             healAction.heal = EditorGUILayout.IntField("治疗值", healAction.heal);
         }

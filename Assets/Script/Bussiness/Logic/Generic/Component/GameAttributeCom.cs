@@ -4,7 +4,6 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameAttributeCom
     {
-
         private List<GameAttribute> _attributes;
 
         public GameAttributeCom()

@@ -45,8 +45,10 @@ namespace GamePlay.Bussiness.Logic
             skill.idCom.SetEntityId(this._skillContext.idService.FetchId());
             // 绑定父子关系
             skill.idCom.SetParent(role);
-            // 绑定TransformCom为角色TransformCom
+            // 组件绑定
             skill.BindTransformCom(role.transformCom);
+            skill.BindAttributeCom(role.attributeCom);
+            skill.BindBaseAttributeCom(role.baseAttributeCom);
             // 添加时间轴事件
             var skillModel = skill.skillModel;
             var timelineEvModels = skillModel.timelineEvModels;
