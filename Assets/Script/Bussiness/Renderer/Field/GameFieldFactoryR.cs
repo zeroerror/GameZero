@@ -23,24 +23,23 @@ namespace GamePlay.Bussiness.Renderer
                 return null;
             }
             // 场景根节点 
-            var go = GameObject.Instantiate(model.fieldPrefab);
-            go.name = "Field_" + typeId;
-            go.transform.SetParent(sceneRoot.transform);
-
-            Dictionary<GameFieldLayerType, GameObject> layerDict = new Dictionary<GameFieldLayerType, GameObject>();
+            var rootGO = GameObject.Instantiate(model.fieldPrefab);
+            rootGO.name = "Field_" + typeId;
+            rootGO.transform.SetParent(sceneRoot.transform);
 
             // 背景层级
-            var backgroundLayer = go.transform.Find(GameFieldLayerCollection.BackgroundLayer)?.gameObject;
+            Dictionary<GameFieldLayerType, GameObject> layerDict = new Dictionary<GameFieldLayerType, GameObject>();
+            var backgroundLayer = rootGO.transform.Find(GameFieldLayerCollection.BackgroundLayer)?.gameObject;
             if (!backgroundLayer) backgroundLayer = new GameObject(GameFieldLayerCollection.BackgroundLayer);
-            backgroundLayer.transform.SetParent(go.transform);
+            backgroundLayer.transform.SetParent(rootGO.transform);
             backgroundLayer.SetPosZ(0);
             backgroundLayer.SetSortingLayer(GameFieldLayerCollection.BackgroundLayerZ, GameFieldLayerCollection.BackgroundLayer);
             layerDict.Add(GameFieldLayerType.Background, backgroundLayer);
 
             // 地面层级
-            var groundLayer = go.transform.Find(GameFieldLayerCollection.GroundLayer)?.gameObject;
+            var groundLayer = rootGO.transform.Find(GameFieldLayerCollection.GroundLayer)?.gameObject;
             if (!groundLayer) groundLayer = new GameObject(GameFieldLayerCollection.GroundLayer);
-            groundLayer.transform.SetParent(go.transform);
+            groundLayer.transform.SetParent(rootGO.transform);
             groundLayer.SetPosZ(0);
             groundLayer.SetSortingLayer(GameFieldLayerCollection.GroundLayerZ, GameFieldLayerCollection.GroundLayer);
             layerDict.Add(GameFieldLayerType.Ground, groundLayer);
@@ -53,9 +52,9 @@ namespace GamePlay.Bussiness.Renderer
             });
 
             // 环境层级
-            var environmentLayer = go.transform.Find(GameFieldLayerCollection.EnvironmentLayer)?.gameObject;
+            var environmentLayer = rootGO.transform.Find(GameFieldLayerCollection.EnvironmentLayer)?.gameObject;
             if (!environmentLayer) environmentLayer = new GameObject(GameFieldLayerCollection.EnvironmentLayer);
-            environmentLayer.transform.SetParent(go.transform);
+            environmentLayer.transform.SetParent(rootGO.transform);
             environmentLayer.SetPosZ(0);
             environmentLayer.SetSortingLayer(GameFieldLayerCollection.EnvironmentLayerZ, GameFieldLayerCollection.EnvironmentLayer);
             layerDict.Add(GameFieldLayerType.Environment, environmentLayer);
@@ -68,30 +67,30 @@ namespace GamePlay.Bussiness.Renderer
             });
 
             // 实体层级
-            var entityLayer = go.transform.Find(GameFieldLayerCollection.EntityLayer)?.gameObject;
+            var entityLayer = rootGO.transform.Find(GameFieldLayerCollection.EntityLayer)?.gameObject;
             if (!entityLayer) entityLayer = new GameObject(GameFieldLayerCollection.EntityLayer);
-            entityLayer.transform.SetParent(go.transform);
+            entityLayer.transform.SetParent(rootGO.transform);
             entityLayer.SetPosZ(0);
             entityLayer.SetSortingLayer(GameFieldLayerCollection.EntityLayerZ, GameFieldLayerCollection.EntityLayer);
             layerDict.Add(GameFieldLayerType.Entity, entityLayer);
 
             // VFX层级
-            var vfxLayer = go.transform.Find(GameFieldLayerCollection.VFXLayer)?.gameObject;
+            var vfxLayer = rootGO.transform.Find(GameFieldLayerCollection.VFXLayer)?.gameObject;
             if (!vfxLayer) vfxLayer = new GameObject(GameFieldLayerCollection.VFXLayer);
-            vfxLayer.transform.SetParent(go.transform);
+            vfxLayer.transform.SetParent(rootGO.transform);
             vfxLayer.SetPosZ(0);
             vfxLayer.SetSortingLayer(GameFieldLayerCollection.VFXLayerZ, GameFieldLayerCollection.VFXLayer);
             layerDict.Add(GameFieldLayerType.VFX, vfxLayer);
 
             // 场景UI层级
-            var sceneUILayer = go.transform.Find(GameFieldLayerCollection.SceneUILayer)?.gameObject;
+            var sceneUILayer = rootGO.transform.Find(GameFieldLayerCollection.SceneUILayer)?.gameObject;
             if (!sceneUILayer) sceneUILayer = new GameObject(GameFieldLayerCollection.SceneUILayer);
-            sceneUILayer.transform.SetParent(go.transform);
+            sceneUILayer.transform.SetParent(rootGO.transform);
             sceneUILayer.SetPosZ(0);
             sceneUILayer.SetSortingLayer(GameFieldLayerCollection.SceneUILayerZ, GameFieldLayerCollection.SceneUILayer);
             layerDict.Add(GameFieldLayerType.SceneUI, sceneUILayer);
 
-            var entity = new GameFieldEntityR(model, go, layerDict);
+            var entity = new GameFieldEntityR(model, rootGO, layerDict);
             return entity;
         }
     }
