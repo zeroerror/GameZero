@@ -5,28 +5,30 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateDomain_Idle() : base() { }
 
-        public override bool CheckEnter(GameRoleEntity entity)
+        public override bool CheckEnter(GameRoleEntity role)
         {
+            var curStateType = role.fsmCom.stateType;
+            if (curStateType == GameRoleStateType.Idle) return false;
             return true;
         }
 
-        public override void Enter(GameRoleEntity entity)
+        public override void Enter(GameRoleEntity role)
         {
-            entity.fsmCom.EnterIdle();            // 提交RC
+            role.fsmCom.EnterIdle();            // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_IDLE, new GameRoleRCArgs_StateEnterIdle
             {
-                fromStateType = entity.fsmCom.stateType,
-                idArgs = entity.idCom.ToArgs(),
+                fromStateType = role.fsmCom.stateType,
+                idArgs = role.idCom.ToArgs(),
             });
         }
 
-        protected override void _Tick(GameRoleEntity entity, float frameTime)
+        protected override void _Tick(GameRoleEntity role, float frameTime)
         {
         }
 
-        protected override GameRoleStateType _CheckExit(GameRoleEntity entity)
+        protected override GameRoleStateType _CheckExit(GameRoleEntity role)
         {
-            var inputCom = entity.inputCom;
+            var inputCom = role.inputCom;
             if (inputCom.TryGetInputArgs(out var inputArgs))
             {
                 if (inputArgs.skillId != 0) return GameRoleStateType.Cast;

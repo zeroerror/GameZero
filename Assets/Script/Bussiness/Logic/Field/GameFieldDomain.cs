@@ -37,8 +37,15 @@ namespace GamePlay.Bussiness.Logic
             curField.model.monsterAreaModels?.Foreach((area, index) =>
             {
                 if (curField.IsMonstersSpawned(index)) return;
+                if (!this._IsTimesUp(area)) return;
                 this._SpawnAreaMonsters(area, index);
             });
+        }
+
+        private bool _IsTimesUp(GameFieldMonsterAreaModel area)
+        {
+            var gameTime = this._context.director.timeScaleCom.gameTime;
+            return gameTime >= area.spawnTime;
         }
 
         private void _SpawnAreaMonsters(GameFieldMonsterAreaModel area, int index)
@@ -58,8 +65,7 @@ namespace GamePlay.Bussiness.Logic
                     this._context.domainApi.roleApi.CreateMonsterRole(spawnModel.typeId, new GameTransformArgs
                     {
                         position = area.position + new GameVec2(x, y),
-                        angle = angle,
-                        scale = GameVec2.zero,
+                        scale = GameVec2.one,
                     });
                 }
             });

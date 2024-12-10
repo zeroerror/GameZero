@@ -76,7 +76,7 @@ namespace GamePlay.Bussiness.Renderer
             cam.transform.eulerAngles = new Vector3(0, 0, 0);
         }
 
-        public void AddToLayer(GameObject go, GameFieldLayerType layerType)
+        public void AddToLayer(GameObject go, GameFieldLayerType layerType, int orderOffset = 0)
         {
             if (!go) return;
             var curField = this._fieldContext.curField;
@@ -86,6 +86,7 @@ namespace GamePlay.Bussiness.Renderer
 
             var sortingLayerName = layerType.ToString();
             var order = GameFieldLayerCollection.GetLayerOrder(layerType, go.transform.position);
+            order += orderOffset;
 
             if (go.TryGetComponent<UnityEngine.Renderer>(out var renderer))
             {

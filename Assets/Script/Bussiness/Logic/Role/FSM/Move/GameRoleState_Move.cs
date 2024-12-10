@@ -4,7 +4,6 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleInputArgs inputArgs;
 
-
         public GameRoleState_Move() { }
 
         public override void Clear()

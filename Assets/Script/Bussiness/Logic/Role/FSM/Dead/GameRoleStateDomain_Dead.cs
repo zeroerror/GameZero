@@ -6,29 +6,40 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateDomain_Dead() : base() { }
 
-        public override bool CheckEnter(GameRoleEntity entity)
+        public override bool CheckEnter(GameRoleEntity role)
         {
+            var stateType = role.fsmCom.stateType;
+            if (stateType == GameRoleStateType.Dead) return false;
             return true;
         }
 
-        public override void Enter(GameRoleEntity entity)
+        public override void Enter(GameRoleEntity role)
         {
-            entity.fsmCom.EnterDead();
+            role.fsmCom.EnterDead();
+            role.physicsCom.collider.isEnable = false;
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DEAD, new GameRoleRCArgs_StateEnterDead
             {
-                fromStateType = entity.fsmCom.stateType,
-                idArgs = entity.idCom.ToArgs(),
+                fromStateType = role.fsmCom.stateType,
+                idArgs = role.idCom.ToArgs(),
             });
         }
 
-        protected override GameRoleStateType _CheckExit(GameRoleEntity entity)
+
+        protected override void _Tick(GameRoleEntity role, float frameTime)
         {
+            role.fsmCom.deadState.stateTime += frameTime;
+        }
+
+        protected override GameRoleStateType _CheckExit(GameRoleEntity role)
+        {
+            var stateTime = role.fsmCom.deadState.stateTime;
+            if (stateTime >= 5)
+            {
+                return GameRoleStateType.Destroyed;
+            }
             return GameRoleStateType.None;
         }
 
-        protected override void _Tick(GameRoleEntity entity, float frameTime)
-        {
-        }
     }
 }

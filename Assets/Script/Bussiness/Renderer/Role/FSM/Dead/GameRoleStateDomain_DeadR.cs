@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnEnter(object args)
         {
-            var evArgs = (GameRoleRCArgs_StateEnterCast)args;
+            var evArgs = (GameRoleRCArgs_StateEnterDead)args;
             ref var idArgs = ref evArgs.idArgs;
             var role = this._roleContext.repo.FindByEntityId(idArgs.entityId);
             if (role == null)
@@ -33,13 +33,14 @@ namespace GamePlay.Bussiness.Renderer
             this.Enter(role);
         }
 
-        public override void Enter(GameRoleEntityR entity, params object[] args)
+        public override void Enter(GameRoleEntityR role, params object[] args)
         {
-            GameLogger.Log($"DeadR enter");
-            this._context.domainApi.roleApi.PlayAnim(entity, "dead");
+            GameLogger.Log($"角色进入死亡[表现层]：{role.idCom.entityId}");
+            this._context.domainApi.roleApi.PlayAnim(role, "dead");
+            role.attributeBarCom.SetActive(false);
         }
 
-        protected override void _Tick(GameRoleEntityR entity, float frameTime)
+        protected override void _Tick(GameRoleEntityR role, float frameTime)
         {
         }
     }

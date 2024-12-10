@@ -8,6 +8,9 @@ namespace GamePlay.Bussiness.Logic
         public GameTransformDomainApi transformApi { get; private set; }
         public void SetTransformApi(GameTransformDomainApi transformApi) => this.transformApi = transformApi;
 
+        public GameAttributeDomainApi attributeApi { get; private set; }
+        public void SetAttributeApi(GameAttributeDomainApi attributeApi) => this.attributeApi = attributeApi;
+
         public GamePhysicsDomainApi physicsApi { get; private set; }
         public void SetPhysicsApi(GamePhysicsDomainApi physicsApi) => this.physicsApi = physicsApi;
 

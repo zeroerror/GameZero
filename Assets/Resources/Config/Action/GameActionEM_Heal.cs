@@ -14,8 +14,7 @@ namespace GamePlay.Config
         public GameActionValueFormat valueFormat;
         [Header("数值参考类型")]
         public GameActionValueRefType refType;
-        [Header("数值参考属性")]
-        public GameAttributeType refAttrType;
+        public GameEntitySelectorEM selectorEM;
 
         public GameActionModel_Heal ToModel()
         {
@@ -23,8 +22,7 @@ namespace GamePlay.Config
                 this.healType,
                 this.value,
                 this.valueFormat,
-                this.refType,
-                this.refAttrType
+                this.refType
             );
         }
     }

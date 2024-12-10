@@ -48,18 +48,17 @@ namespace GamePlay.Config
         private void _ShowAction(GameActionSO so)
         {
             var selectorEM = so.selectorEM;
-            var selector = selectorEM.ToSelector();
             switch (so.actionType)
             {
                 case GameActionType.Dmg:
                     EditorGUILayout.LabelField(" -------- 伤害行为 --------", EditorStyles.boldLabel);
                     this._ShowDmgAction(so);
-                    so.dmgActionEM.selector = selector;
+                    so.dmgActionEM.selectorEM = selectorEM;
                     break;
                 case GameActionType.Heal:
                     EditorGUILayout.LabelField(" -------- 治疗行为 --------", EditorStyles.boldLabel);
                     this._ShowHealAction(so);
-                    so.healActionEM.selector = selector;
+                    so.healActionEM.selectorEM = selectorEM;
                     break;
 
                 case GameActionType.LaunchProjectile:
@@ -118,24 +117,22 @@ namespace GamePlay.Config
 
         private void _ShowDmgAction(GameActionSO so)
         {
-            GameActionModel_Dmg dmgAction = so.dmgActionEM;
-            if (dmgAction == null)
+            var dmgAction_p = serializedObject.FindProperty("dmgActionEM");
+            if (dmgAction_p == null)
             {
-                dmgAction = new GameActionModel_Dmg();
-                so.dmgActionEM = dmgAction;
+                dmgAction_p = new SerializedObject(so).FindProperty("dmgActionEM");
             }
-            dmgAction.value = EditorGUILayout.IntField("伤害值", dmgAction.value);
+            dmgAction_p.DrawProperty();
         }
 
         private void _ShowHealAction(GameActionSO actionSO)
         {
-            GameActionModel_Heal healAction = actionSO.healActionEM;
-            if (healAction == null)
+            var healAction_p = serializedObject.FindProperty("healActionEM");
+            if (healAction_p == null)
             {
-                healAction = new GameActionModel_Heal();
-                actionSO.healActionEM = healAction;
+                healAction_p = new SerializedObject(actionSO).FindProperty("healActionEM");
             }
-            healAction.heal = EditorGUILayout.IntField("治疗值", healAction.heal);
+            healAction_p.DrawProperty();
         }
     }
 }

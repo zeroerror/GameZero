@@ -24,13 +24,15 @@ namespace GamePlay.Core
             if (this.cameraPos == targetPos) return;
             var currentPos = this.camera.transform.position;
             var easedPos = this._easing2DComponent.Tick(currentPos, targetPos, dt);
-            this.cameraPos = easedPos;
+            var camPos = this.cameraPos;
+            camPos.SetVec2(easedPos);
+            this.cameraPos = camPos;
         }
 
         protected override void _Apply()
         {
             if (this.follow == null) return;
-            this.camera.transform.position = this.cameraPos;
+            this.camera.transform.position = this.camera.transform.position.GetSetVec2(this.cameraPos);
         }
 
         public void Set(GameObject follow, GameVec2 followOffset, float duration = 0.1f, GameEasingType easingType = GameEasingType.Linear)

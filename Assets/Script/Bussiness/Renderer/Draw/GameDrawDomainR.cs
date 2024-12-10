@@ -82,9 +82,5 @@ namespace GamePlay.Bussiness.Renderer
                 }
             }
         }
-
-        public void DrawCollider()
-        {
-        }
     }
 }

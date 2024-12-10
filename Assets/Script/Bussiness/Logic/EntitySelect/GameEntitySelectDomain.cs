@@ -57,6 +57,11 @@ namespace GamePlay.Bussiness.Logic
             var list = physicsApi.GetOverlapEntities(selColliderModel, anchorTransformArgs);
             list = list?.Filter((entity) =>
             {
+                if (entity is GameRoleEntity role)
+                {
+                    var isDead = role.fsmCom.stateType == GameRoleStateType.Dead;
+                    if (isDead) return false;
+                }
                 var checkCollided = actorEntity.physicsCom.CheckCollided(entity.idCom.ToArgs());
                 if (checkCollided) return false;
                 var checkSelect = selector.CheckSelect(actorEntity, entity);

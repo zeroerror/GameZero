@@ -9,10 +9,13 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameRoleFSMDomainR()
         {
-            this._stateDomainDict.Add(GameRoleStateType.Idle, new GameRoleStateDomain_IdleR());
-            this._stateDomainDict.Add(GameRoleStateType.Move, new GameRoleStateDomain_MoveR());
-            this._stateDomainDict.Add(GameRoleStateType.Cast, new GameRoleStateDomain_CastR());
-            this._stateDomainDict.Add(GameRoleStateType.Dead, new GameRoleStateDomain_DeadR());
+            this._stateDomainDict = new Dictionary<GameRoleStateType, GameRoleStateDomainBaseR>(){
+                {GameRoleStateType.Idle, new GameRoleStateDomain_IdleR()},
+                {GameRoleStateType.Move, new GameRoleStateDomain_MoveR()},
+                {GameRoleStateType.Cast, new GameRoleStateDomain_CastR()},
+                {GameRoleStateType.Dead, new GameRoleStateDomain_DeadR()},
+                {GameRoleStateType.Destroyed, new GameRoleStateDomain_DestroyedR()}
+            };
         }
 
         public void Inject(GameContextR context)

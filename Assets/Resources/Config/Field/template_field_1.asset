@@ -14,3 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 1
   fieldPrefab: {fileID: 5274905712469144199, guid: 1dd9fe14629b2c74ab2a69049465599a, type: 3}
+  monsterAreaEMs:
+  - position: {x: 15.02, y: -0.63}
+    radius: 1.64
+    monsterSpawnEMs:
+    - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
+      count: 3
+    spawnTime: 1
+  - position: {x: 18.01, y: -5.33}
+    radius: 1.64
+    monsterSpawnEMs:
+    - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
+      count: 3
+    spawnTime: 10
+  - position: {x: -12.08, y: -1.1}
+    radius: 1.64
+    monsterSpawnEMs:
+    - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
+      count: 3
+    spawnTime: 20
+  - position: {x: -15.68, y: -5.44}
+    radius: 1.64
+    monsterSpawnEMs:
+    - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
+      count: 3
+    spawnTime: 30
+  - position: {x: -15.68, y: -5.44}
+    radius: 1.64
+    monsterSpawnEMs:
+    - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
+      count: 3
+    spawnTime: 40

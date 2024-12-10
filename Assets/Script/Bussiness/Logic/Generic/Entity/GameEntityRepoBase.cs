@@ -65,9 +65,9 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 回收实体到仓库对象池 </summary>
         public void Recycle(T entity)
         {
+            if (!this._TryRemoveData(entity)) return;
             var collider = entity.physicsCom.collider;
             if (collider != null) collider.isEnable = false;
-            if (!this._TryRemoveData(entity)) return;
 
             var typeId = entity.idCom.typeId;
             if (!this._poolDict.TryGetValue(typeId, out List<T> entityPool))

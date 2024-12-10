@@ -69,6 +69,11 @@ namespace GamePlay.Core
         {
             var worldCenterPos = circle.worldCenterPos;
             var worldRadius = circle.worldRadius;
+            Draw(worldCenterPos, worldRadius, color);
+        }
+
+        public static void Draw(in GameVec2 worldCenterPos, float worldRadius, Color color)
+        {
             var maxDrawCount = 90;
             var stepAngle = 360 / maxDrawCount;
             var lastPos = worldCenterPos + new GameVec2(worldRadius, 0);

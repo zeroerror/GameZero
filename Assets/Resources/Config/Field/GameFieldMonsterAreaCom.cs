@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Config
@@ -12,6 +13,11 @@ namespace GamePlay.Config
         [Header("生成时机(开局后n秒)")]
         public int spawnTime;
 
+        public void OnEnable()
+        {
+            this.gameObject.SetActive(false);
+        }
+
         public GameFieldMonsterAreaEM ToEM()
         {
             GameFieldMonsterAreaEM model = new GameFieldMonsterAreaEM(
@@ -21,6 +27,16 @@ namespace GamePlay.Config
                 spawnTime
             );
             return model;
+        }
+
+        // 绘制区域 2D的
+        private void OnDrawGizmos()
+        {
+            // 绘制一个2d的圆
+            var color = Color.yellow;
+            Gizmos.color = Color.yellow;
+            GameGizmosExtension.DrawCircle(transform.position, radius);
+            Gizmos.color = color;
         }
     }
 }

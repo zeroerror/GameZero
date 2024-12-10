@@ -14,14 +14,27 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleEntity(GameRoleModel model) : base(model.typeId, GameEntityType.Role)
         {
             this.model = model;
-            model?.attributes?.Foreach((value, index) =>
-            {
-                this.attributeCom.SetAttribute(value);
-            });
+            this.SetByModel(model);
             this.inputCom = new GameRoleInputCom();
             this.fsmCom = new GameRoleFSMCom();
             this.skillCom = new GameSkillComp(this);
             this.aiCom = new GameRoleAICom();
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            this.SetByModel(this.model);
+        }
+
+        public void SetByModel(GameRoleModel model)
+        {
+            if (model == null) return;
+            model.attributes?.Foreach((value, index) =>
+            {
+                this.attributeCom.SetAttribute(value);
+                this.baseAttributeCom.SetAttribute(value);
+            });
         }
 
         public override void Tick(float dt)

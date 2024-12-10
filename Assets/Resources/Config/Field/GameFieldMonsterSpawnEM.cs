@@ -6,14 +6,15 @@ namespace GamePlay.Config
     [System.Serializable]
     public struct GameFieldMonsterSpawnEM
     {
-        [Header("角色类型ID")]
-        public int typeId;
+        [Header("角色模板")]
+        public GameRoleSO roleSO;
         [Header("生成数量")]
         public int count;
 
         public GameFieldMonsterSpawnModel ToModel()
         {
-            return new GameFieldMonsterSpawnModel(typeId, count);
+            if (!roleSO) return default;
+            return new GameFieldMonsterSpawnModel(roleSO.typeId, count);
         }
     }
 }

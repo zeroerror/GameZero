@@ -141,4 +141,16 @@ public static class GameVectorExtensions
         v.x = v2.x;
         v.y = v2.y;
     }
+    public static GameVec3 GetSetVec2(this GameVec3 v, in GameVec3 v2)
+    {
+        v.x = v2.x;
+        v.y = v2.y;
+        return v;
+    }
+    public static GameVec3 GetSetVec2(this GameVec3 v, in GameVec2 v2)
+    {
+        v.x = v2.x;
+        v.y = v2.y;
+        return v;
+    }
 }

@@ -10,6 +10,7 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleDomain roleDomain { get; private set; }
         public GameSkillDomain skillDomain { get; private set; }
         public GameTransformDomain transformDomain { get; private set; }
+        public GameAttributeDomain attributeDomain { get; private set; }
         public GamePhysicsDomain physicsDomain { get; private set; }
         public GameActionDomain actionDomain { get; private set; }
         public GameEntitySelectDomain entitySelectDomain { get; private set; }
@@ -29,6 +30,7 @@ namespace GamePlay.Bussiness.Logic
             this.roleDomain = new GameRoleDomain();
             this.skillDomain = new GameSkillDomain();
             this.transformDomain = new GameTransformDomain();
+            this.attributeDomain = new GameAttributeDomain();
             this.physicsDomain = new GamePhysicsDomain();
             this.actionDomain = new GameActionDomain();
             this.entitySelectDomain = new GameEntitySelectDomain();
@@ -43,6 +45,7 @@ namespace GamePlay.Bussiness.Logic
             this.context.domainApi.SetRoleApi(this.roleDomain);
             this.context.domainApi.SetSkillApi(this.skillDomain);
             this.context.domainApi.SetTransformApi(this.transformDomain);
+            this.context.domainApi.SetAttributeApi(this.attributeDomain);
             this.context.domainApi.SetPhysicsApi(this.physicsDomain);
             this.context.domainApi.SetActionApi(this.actionDomain);
             this.context.domainApi.SetEntitySelectApi(this.entitySelectDomain);
@@ -56,6 +59,7 @@ namespace GamePlay.Bussiness.Logic
             this.roleDomain.Inject(this.context);
             this.skillDomain.Inject(this.context);
             this.transformDomain.Inject(this.context);
+            this.attributeDomain.Inject(this.context);
             this.physicsDomain.Inject(this.context);
             this.actionDomain.Inject(this.context);
             this.entitySelectDomain.Inject(this.context);
@@ -73,6 +77,7 @@ namespace GamePlay.Bussiness.Logic
             this.roleDomain.Dispose();
             this.skillDomain.Dispose();
             this.transformDomain.Dispose();
+            this.attributeDomain.Dispose();
             this.physicsDomain.Dispose();
             this.actionDomain.Dispose();
             this.entitySelectDomain.Dispose();
@@ -88,6 +93,7 @@ namespace GamePlay.Bussiness.Logic
             this.roleDomain.Tick(dt);
             this.skillDomain.Tick(dt);
             this.transformDomain.Tick(dt);
+            this.attributeDomain.Tick(dt);
             this.physicsDomain.Tick(dt);
             this.actionDomain.Tick(dt);
             this.entitySelectDomain.Tick(dt);

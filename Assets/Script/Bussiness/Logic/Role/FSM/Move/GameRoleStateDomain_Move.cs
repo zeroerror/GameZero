@@ -8,6 +8,8 @@ namespace GamePlay.Bussiness.Logic
 
         public override bool CheckEnter(GameRoleEntity role)
         {
+            var curStateType = role.fsmCom.stateType;
+            if (curStateType == GameRoleStateType.Move) return false;
             return true;
         }
 

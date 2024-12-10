@@ -13,11 +13,17 @@ namespace GamePlay.Bussiness.Logic
 
         public void Clear()
         {
+            this._attributes.Clear();
         }
 
         public override string ToString()
         {
-            return $"";
+            var str = "";
+            foreach (var attr in this._attributes)
+            {
+                str += attr.ToString() + "\n";
+            }
+            return str;
         }
 
         public GameAttributeArgs ToArgs()
@@ -29,6 +35,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void SetByArgs(in GameAttributeArgs args)
         {
+            this._attributes = args.attributes.GetRange(0, args.attributes.Count);
         }
 
         public void SetAttribute(in GameAttribute attribute)
@@ -38,10 +45,25 @@ namespace GamePlay.Bussiness.Logic
 
         public void SetAttribute(GameAttributeType type, float value)
         {
+            var oldV = this.GetValue(type);
+            if (oldV == value) return;
+            this._isDirty = true;
+
             var index = this._attributes.FindIndex((a) => a.type == type);
             if (index == -1) this._attributes.Add(new GameAttribute() { type = type, value = value });
             else this._attributes[index] = new GameAttribute() { type = type, value = value };
         }
+
+        public bool CheckDirty()
+        {
+            return this._isDirty;
+        }
+        public void ClearDirty()
+        {
+            this._isDirty = false;
+        }
+        private bool _isDirty = false;
+
 
         public void TryGetAttribute(GameAttributeType type, out GameAttribute attribute)
         {

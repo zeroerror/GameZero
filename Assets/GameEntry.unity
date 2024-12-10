@@ -177,7 +177,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1961220187
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &617180571
@@ -235,7 +235,7 @@ Camera:
   m_GameObject: {fileID: 645607980}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 3
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.34474012, g: 0.43446904, b: 0.5754717, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2

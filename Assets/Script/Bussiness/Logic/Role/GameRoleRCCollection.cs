@@ -12,7 +12,7 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_ROLE_STATE_ENTER_CAST = "RC_GAME_ROLE_STATE_ENTER_CAST";
         /* 角色状态 - 进入 死亡 */
         public static readonly string RC_GAME_ROLE_STATE_ENTER_DEAD = "RC_GAME_ROLE_STATE_ENTER_DEAD";
-        /* 角色状态 - 进入 死亡 */
+        /* 角色状态 - 进入 销毁 */
         public static readonly string RC_GAME_ROLE_STATE_ENTER_DESTROYED = "RC_GAME_ROLE_STATE_ENTER_DESTROYED";
     }
 

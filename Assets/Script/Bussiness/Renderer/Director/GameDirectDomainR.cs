@@ -8,7 +8,8 @@ namespace GamePlay.Bussiness.Renderer
         public GameContextR context { get; private set; }
         public GameRoleDomainR roleDomain { get; private set; }
         public GameSkillDomainR skillDomain { get; private set; }
-        public TransformDomainR transformDomain { get; private set; }
+        public GameTransformDomainR transformDomain { get; private set; }
+        public GameAttributeDomainR attributeDomain { get; private set; }
         public GameVFXDomainR vfxDomain { get; private set; }
         public GameActionDomainR actionDomain { get; private set; }
         public GameDrawDomainR drawDomain { get; private set; }
@@ -27,7 +28,8 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.roleDomain = new GameRoleDomainR();
             this.skillDomain = new GameSkillDomainR();
-            this.transformDomain = new TransformDomainR();
+            this.transformDomain = new GameTransformDomainR();
+            this.attributeDomain = new GameAttributeDomainR();
             this.vfxDomain = new GameVFXDomainR();
             this.actionDomain = new GameActionDomainR();
             this.drawDomain = new GameDrawDomainR();
@@ -42,6 +44,7 @@ namespace GamePlay.Bussiness.Renderer
             this.context.domainApi.SetRoleApi(this.roleDomain);
             this.context.domainApi.SetSkillApi(this.skillDomain);
             this.context.domainApi.SetTransformApi(this.transformDomain);
+            this.context.domainApi.SetAttributeApi(this.attributeDomain);
             this.context.domainApi.SetVFXApi(this.vfxDomain);
             this.context.domainApi.SetActionApi(this.actionDomain);
             this.context.domainApi.SetDrawApi(this.drawDomain);
@@ -55,6 +58,7 @@ namespace GamePlay.Bussiness.Renderer
             this.roleDomain.Inject(this.context);
             this.skillDomain.Inject(this.context);
             this.transformDomain.Inject(this.context);
+            this.attributeDomain.Inject(this.context);
             this.vfxDomain.Inject(this.context);
             this.actionDomain.Inject(this.context);
             this.drawDomain.Inject(this.context);
@@ -68,6 +72,7 @@ namespace GamePlay.Bussiness.Renderer
             this.roleDomain.Dispose();
             this.skillDomain.Dispose();
             this.transformDomain.Dispose();
+            this.attributeDomain.Dispose();
             this.vfxDomain.Dispose();
             this.actionDomain.Dispose();
             this.drawDomain.Dispose();

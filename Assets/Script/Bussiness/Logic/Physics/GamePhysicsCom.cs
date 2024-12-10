@@ -23,7 +23,6 @@ namespace GamePlay.Bussiness.Logic
         /// </summary>
         public void Clear()
         {
-            collider = null;
             ClearCollided();
         }
 

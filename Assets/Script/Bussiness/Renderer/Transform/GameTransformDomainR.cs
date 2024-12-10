@@ -1,13 +1,12 @@
 using GamePlay.Bussiness.Logic;
-using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Renderer
 {
-    public class TransformDomainR : GameTransformDomainApiR
+    public class GameTransformDomainR : GameTransformDomainApiR
     {
         GameContextR _context;
 
-        public TransformDomainR()
+        public GameTransformDomainR()
         {
         }
 

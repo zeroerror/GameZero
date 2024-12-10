@@ -10,15 +10,16 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 是否是无效状态 </summary>
         public bool isInvalid => stateType == GameRoleStateType.None || stateType == GameRoleStateType.Destroyed;
 
+        public GameRoleState_Any anyState { get; private set; }
         public GameRoleState_Idle idleState { get; private set; }
         public GameRoleState_Move moveState { get; private set; }
         public GameRoleState_Cast castState { get; private set; }
         public GameRoleState_Dead deadState { get; private set; }
         public GameRoleState_Destroyed destroyedState { get; private set; }
 
-        public Dictionary<GameRoleStateType, GameRoleStateBase> stateModelDict;
         public GameRoleFSMCom()
         {
+            anyState = new GameRoleState_Any();
             idleState = new GameRoleState_Idle();
             moveState = new GameRoleState_Move();
             castState = new GameRoleState_Cast();

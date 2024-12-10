@@ -81,11 +81,14 @@ namespace GamePlay.Bussiness.Renderer
             var forward = this.transformCom.forward;
             this.FaceTo(forward);
             this.attributeBarCom.Tick(dt);
+            var ratio = this.attributeCom.GetValue(GameAttributeType.HP) / this.baseAttributeCom.GetValue(GameAttributeType.HP);
+            this.attributeBarCom.SetRatio(ratio);
         }
 
         public void setActive(bool active)
         {
             this.go.SetActive(active);
+            this.shadow.SetActive(active);
         }
 
         public void FaceTo(in GameVec2 dir)

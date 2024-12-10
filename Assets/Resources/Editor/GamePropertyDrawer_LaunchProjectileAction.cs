@@ -30,11 +30,11 @@ namespace GamePlay.Config
             {
                 case GameProjectileBarrageType.CustomLaunchOffset:
                     var customLaunchOffsetEM_p = property.FindPropertyRelative("customLaunchOffsetEM");
-                    EditorGUILayout.PropertyField(customLaunchOffsetEM_p, new GUIContent("自定义发射偏移模型"), true);
+                    customLaunchOffsetEM_p.DrawProperty("自定义发射偏移模型");
                     break;
                 case GameProjectileBarrageType.Spread:
                     var spreadModelEM_p = property.FindPropertyRelative("spreadEM");
-                    EditorGUILayout.PropertyField(spreadModelEM_p, new GUIContent("散射模型"), true);
+                    spreadModelEM_p.DrawProperty("散射模型");
                     break;
             }
 

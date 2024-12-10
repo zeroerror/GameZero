@@ -44,25 +44,45 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleEntity CreateRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser)
         {
             var repo = this._roleContext.repo;
-            if (!repo.TryFetch(typeId, out var role)) role = this._roleContext.factory.Load(typeId);
+            var isNew = false;
+            if (!repo.TryFetch(typeId, out var role))
+            {
+                role = this._roleContext.factory.Load(typeId);
+                isNew = true;
+            }
             if (role == null)
             {
-                GameLogger.LogError("角色创建失败，角色ID不存在：" + typeId);
+                GameLogger.LogError("角色创建失败, 角色ID不存在：" + typeId);
                 return null;
             }
             // 变换组件
             role.transformCom.SetByArgs(transArgs);
+            if (transArgs.scale == GameVec2.zero)
+            {
+                GameLogger.LogWarning("角色创建时, scale为0, 自动修正为1");
+                role.transformCom.scale = GameVec2.one;
+            }
+            if (transArgs.angle != 0)
+            {
+                GameLogger.LogWarning("角色创建时, angle不为0, 自动修正为0");
+                role.transformCom.angle = 0;
+            }
             // ID组件
             role.idCom.SetEntityId(this._roleContext.idService.FetchId());
             role.idCom.campId = campId;
-            // 物理组件
-            var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0.625f), 0, 0.7f, 1.25f);
-            this._context.domainApi.physicsApi.CreatePhysics(role, colliderModel);
-            // 技能组件
-            role.model.skillIds?.Foreach((skillId, index) =>
+
+            if (isNew)
             {
-                this._context.domainApi.skillApi.CreateSkill(role, skillId);
-            });
+                // 物理组件
+                var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0.625f), 0, 0.7f, 1.25f);
+                this._context.domainApi.physicsApi.CreatePhysics(role, colliderModel);
+                // 技能组件
+                role.model.skillIds?.Foreach((skillId, index) =>
+                {
+                    this._context.domainApi.skillApi.CreateSkill(role, skillId);
+                });
+            }
+
             repo.TryAdd(role);
 
             // 提交RC事件

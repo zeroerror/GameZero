@@ -5,20 +5,27 @@ namespace GamePlay.Bussiness.Logic
     public class GameRoleFSMDomain : GameRoleFSMDomainApi
     {
         private GameContext _context;
-        private Dictionary<GameRoleStateType, GameRoleStateDomainBase> _stateDomainDict = new Dictionary<GameRoleStateType, GameRoleStateDomainBase>();
+        private GameRoleStateDomainBase _anyStateDomain;
+        private Dictionary<GameRoleStateType, GameRoleStateDomainBase> _stateDomainDict;
 
         public GameRoleFSMDomain()
         {
-            this._stateDomainDict.Add(GameRoleStateType.Idle, new GameRoleStateDomain_Idle());
-            this._stateDomainDict.Add(GameRoleStateType.Move, new GameRoleStateDomain_Move());
-            this._stateDomainDict.Add(GameRoleStateType.Cast, new GameRoleStateDomain_Cast());
-            this._stateDomainDict.Add(GameRoleStateType.Dead, new GameRoleStateDomain_Dead());
-            this._stateDomainDict.Add(GameRoleStateType.Destroyed, new GameRoleStateDomain_Destroyed());
+            this._anyStateDomain = new GameRoleStateDomain_Any();
+
+            this._stateDomainDict = new Dictionary<GameRoleStateType, GameRoleStateDomainBase>
+            {
+                { GameRoleStateType.Idle, new GameRoleStateDomain_Idle() },
+                { GameRoleStateType.Move, new GameRoleStateDomain_Move() },
+                { GameRoleStateType.Cast, new GameRoleStateDomain_Cast() },
+                { GameRoleStateType.Dead, new GameRoleStateDomain_Dead() },
+                { GameRoleStateType.Destroyed, new GameRoleStateDomain_Destroyed() }
+            };
         }
 
         public void Inject(GameContext context)
         {
             this._context = context;
+            this._anyStateDomain.Inject(context);
             foreach (var stateDomain in this._stateDomainDict.Values)
             {
                 stateDomain.Inject(context);
@@ -32,6 +39,9 @@ namespace GamePlay.Bussiness.Logic
             var fsmCom = role.fsmCom;
             var stateType = fsmCom.stateType;
             if (fsmCom.isInvalid) return;
+
+            this._anyStateDomain.Tick(role, dt);
+
             if (!this._stateDomainDict.TryGetValue(stateType, out var stateDomain)) return;
             stateDomain.Tick(role, dt);
         }

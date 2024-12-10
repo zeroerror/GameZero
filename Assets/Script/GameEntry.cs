@@ -14,7 +14,7 @@ public class GameEntry : MonoBehaviour
         gameUIApp = new GameUIApp(GameObject.Find("UIRoot"));
         gameApp = new GameApp();
         gameAppR = new GameAppR(gameApp.directDomain.context, gameObject, gameUIApp.directDomain.context);
-        GameLogger.logLevel = LogLevel.Error;
+        // GameLogger.logLevel = LogLevel.Error;
     }
 
     void Update()

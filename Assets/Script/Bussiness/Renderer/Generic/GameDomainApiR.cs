@@ -9,7 +9,10 @@ namespace GamePlay.Bussiness.Renderer
         public void SetSkillApi(GameSkillDomainApiR skillApi) => this.skillApi = skillApi;
 
         public GameTransformDomainApiR transformApi { get; private set; }
-        public void SetTransformApi(TransformDomainR transformApi) => this.transformApi = transformApi;
+        public void SetTransformApi(GameTransformDomainR transformApi) => this.transformApi = transformApi;
+
+        public GameAttributeDomainApiR attributeApi { get; private set; }
+        public void SetAttributeApi(GameAttributeDomainApiR attributeApi) => this.attributeApi = attributeApi;
 
         public GameVFXDomainApiR vfxApi { get; private set; }
         public void SetVFXApi(GameVFXDomainApiR vfxApi) => this.vfxApi = vfxApi;

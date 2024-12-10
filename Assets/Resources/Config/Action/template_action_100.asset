@@ -15,22 +15,54 @@ MonoBehaviour:
   typeId: 100
   actionType: 1
   desc: 
-  dmgAction:
-    typeId: 100
-    actionType: 1
-    selector:
+  dmgActionEM:
+    dmgType: 1
+    value: 60
+    valueFormat: 1
+    refType: 1
+    selectorEM:
       selectAnchorType: 1
       campType: 1
       entityType: 1
-    dmg: 111
-  healAction:
-    typeId: 0
-    actionType: 0
-    selector:
-      selectAnchorType: 0
-      campType: 0
-      entityType: 0
-    heal: 0
+      selColliderType: 1
+      boxColliderModel:
+        offset: {x: 1.25, y: 1.25}
+        angle: 0
+        width: 2.5
+        height: 2.5
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: -0.04
+        fanAngle: 0
+  healActionEM:
+    healType: 1
+    value: 2
+    valueFormat: 0
+    refType: 0
+    selectorEM:
+      selectAnchorType: 1
+      campType: 1
+      entityType: 1
+      selColliderType: 1
+      boxColliderModel:
+        offset: {x: 1.25, y: 1.25}
+        angle: 0
+        width: 2.5
+        height: 2.5
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: -0.04
+        fanAngle: 0
   launchProjectileActionEM:
     projectileId: 0
     launchOffset: {x: 1230.25, y: 0}

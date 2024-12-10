@@ -74,7 +74,8 @@ namespace GamePlay.Bussiness.Renderer
                     return null;
                 }
                 this._context.domainApi.fielApi.AddToLayer(role.go, GameFieldLayerType.Entity);
-                this._context.domainApi.fielApi.AddToLayer(role.shadow, GameFieldLayerType.Ground);
+                var orderOffset = GameFieldLayerCollection.EnvironmentLayerZ - GameFieldLayerCollection.GroundLayerZ;
+                this._context.domainApi.fielApi.AddToLayer(role.shadow, GameFieldLayerType.Ground, orderOffset);
             }
             role.idCom.SetByArgs(idArgs);
             role.go.name = $"role_{idArgs.typeId}_{role.idCom.entityId}";
@@ -82,18 +83,28 @@ namespace GamePlay.Bussiness.Renderer
             role.SyncTrans();
             this._roleContext.repo.TryAdd(role);
             role.setActive(true);
-            if (isUser) this._roleContext.userRole = role;
+            if (isUser)
+            {
+                this._roleContext.userRole = role;
+                this._context.cameraEntity.followCom.Set(role.go, Vector2.zero);
+            }
 
             var isEnemy = role.idCom.campId != this._roleContext.userRole.idCom.campId;
             var slider = this._roleContext.factory.LoadAttributeBar(isEnemy);
             this._context.uiContext.AddToUIRoot(slider.transform);
             var attributeBarCom = role.attributeBarCom;
             attributeBarCom.SetHPSlider(slider, new Vector2(0, 2));
-            attributeBarCom.SetRatio(1);
-            attributeBarCom.WorldToScreenPoint = this._context.uiContext.WorldToScreenPoint;
+            attributeBarCom.WorldToScreenPoint = this.WorldToScreenPoint;
             return role;
         }
 
+        public Vector3 WorldToScreenPoint(Vector3 v)
+        {
+            var pos = RectTransformUtility.WorldToScreenPoint(this._context.cameraEntity.camera, v);
+            pos.x -= Screen.width / 2;
+            pos.y -= Screen.height / 2;
+            return pos;
+        }
 
         public void Tick(float dt)
         {

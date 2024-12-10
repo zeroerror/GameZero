@@ -21,19 +21,21 @@ public static class GameFieldLayerCollection
     public static readonly string SceneUILayer = "SceneUI";
     public static readonly int SceneUILayerZ = 3000;
 
-    public static readonly int StepZ = 100;
     public static readonly int InnerStepZ = 1;
 
     public static int GetLayerOrder(GameFieldLayerType layerType, in GameVec2 pos)
     {
         var rootOrder = 0;
+        int stepZ = 100;
         switch (layerType)
         {
             case GameFieldLayerType.Background:
                 rootOrder = BackgroundLayerZ;
+                stepZ = 1;
                 break;
             case GameFieldLayerType.Ground:
                 rootOrder = GroundLayerZ;
+                stepZ = 1;
                 break;
             case GameFieldLayerType.Environment:
                 rootOrder = EnvironmentLayerZ;
@@ -46,11 +48,12 @@ public static class GameFieldLayerCollection
                 break;
             case GameFieldLayerType.SceneUI:
                 rootOrder = SceneUILayerZ;
+                stepZ = 1;
                 break;
             default:
                 rootOrder = 0;
                 break;
         }
-        return rootOrder - (int)(pos.y * StepZ);
+        return rootOrder - (int)(pos.y * stepZ);
     }
 }
