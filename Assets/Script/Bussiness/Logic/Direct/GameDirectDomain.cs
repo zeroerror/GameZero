@@ -69,6 +69,9 @@ namespace GamePlay.Bussiness.Logic
 
             // TEST
             this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
+            this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
+            this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
+            this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
             this.fieldDomain.LoadField(1);
         }
 
@@ -94,7 +97,6 @@ namespace GamePlay.Bussiness.Logic
             this.skillDomain.Tick(dt);
             this.transformDomain.Tick(dt);
             this.attributeDomain.Tick(dt);
-            this.physicsDomain.Tick(dt);
             this.actionDomain.Tick(dt);
             this.entitySelectDomain.Tick(dt);
             this.projectileDomain.Tick(dt);

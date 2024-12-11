@@ -75,7 +75,8 @@ namespace GamePlay.Bussiness.Logic
             {
                 // 物理组件
                 var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0.625f), 0, 0.7f, 1.25f);
-                this._context.domainApi.physicsApi.CreatePhysics(role, colliderModel);
+                this._context.domainApi.physicsApi.CreatePhysics(role, colliderModel, false);
+                role.physicsCom.collider.isTrigger = false;
                 // 技能组件
                 role.model.skillIds?.Foreach((skillId, index) =>
                 {

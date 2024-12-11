@@ -1,4 +1,5 @@
 using GamePlay.Core;
+using UnityEditor.MPE;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -16,6 +17,8 @@ namespace GamePlay.Bussiness.Logic
         public override void Enter(GameRoleEntity role)
         {
             role.fsmCom.EnterMove();
+            role.physicsCom.collider.isTrigger = true;
+
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, new GameRoleRCArgs_StateEnterMove
             {
@@ -53,6 +56,11 @@ namespace GamePlay.Bussiness.Logic
                 return GameRoleStateType.Cast;
             }
             return GameRoleStateType.None;
+        }
+
+        public override void ExitTo(GameRoleEntity role, GameRoleStateType toState)
+        {
+            role.physicsCom.collider.isTrigger = false;
         }
 
     }

@@ -10,22 +10,27 @@ namespace GamePlay.Bussiness.Logic
         GameContext _context;
         GamePhysicsContext _physicsContext => _context.physicsContext;
 
+        private GamePhysicsDomain_CollisionRecovery _collisionRecoveryDomain;
+
         public GamePhysicsDomain()
         {
+            this._collisionRecoveryDomain = new GamePhysicsDomain_CollisionRecovery();
         }
 
         public void Dispose()
         {
+            this._collisionRecoveryDomain.Dispose();
         }
 
         public void Inject(GameContext context)
         {
             this._context = context;
+            this._collisionRecoveryDomain.Inject(context);
         }
 
         public void Tick(float dt)
         {
-            _physicsContext.Foreach((physicsCom) =>
+            this._physicsContext.ForeachAll((physicsCom) =>
             {
                 var collider = physicsCom.collider;
                 if (collider != null && collider.isEnable)
@@ -34,9 +39,11 @@ namespace GamePlay.Bussiness.Logic
                     collider.Draw(Color.green);
                 }
             });
+
+            this._collisionRecoveryDomain.Tick(dt);
         }
 
-        public void CreatePhysics(GameEntityBase entity, GameColliderModelBase colliderModel)
+        public void CreatePhysics(GameEntityBase entity, GameColliderModelBase colliderModel, bool isTrigger)
         {
             var physicsCom = entity.physicsCom;
             var id = _physicsContext.idService.FetchId();
@@ -56,6 +63,7 @@ namespace GamePlay.Bussiness.Logic
             if (collider != null)
             {
                 collider.isEnable = true;
+                collider.isTrigger = isTrigger;
                 physicsCom.SetCollider(collider);
                 _physicsContext.Add(physicsCom);
             }
