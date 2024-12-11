@@ -57,7 +57,10 @@ namespace GamePlay.Bussiness.Logic
             {
                 skill.timelineCom.AddEventByFrame(evModel.frame, () =>
                 {
-                    actionApi.DoAction(evModel.actionId, skill);
+                    evModel.actionIds?.Foreach((actionId) =>
+                    {
+                        actionApi.DoAction(actionId, skill);
+                    });
                 });
             });
             skillCom.Add(skill);

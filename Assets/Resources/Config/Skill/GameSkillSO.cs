@@ -26,12 +26,10 @@ namespace GamePlay.Config
 
         public void Update()
         {
-            // 更新动画信息
             if (animClip != null)
             {
                 animName = animClip.name;
                 animLength = animClip.length;
-                // 读取clip中的事件
                 var events = AnimationUtility.GetAnimationEvents(animClip);
                 if (timelineEvents == null || timelineEvents.Length != events.Length) timelineEvents = new GameTimelineEventEM[events.Length];
                 for (int i = 0; i < events.Length; i++)

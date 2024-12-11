@@ -91,7 +91,7 @@ namespace GamePlay.Config
             var color = GUI.color;
             GUI.color = Color.green;
             var skillSOs = Resources.LoadAll<GameSkillSO>(GameConfigCollection.SKILL_CONFIG_DIR_PATH);
-            skillSOs = skillSOs.Filter(skillSO => skillSO.timelineEvents.Contains(e => e.action?.typeId == so.typeId));
+            skillSOs = skillSOs.Filter(skillSO => skillSO.timelineEvents.Contains(e => e.actions?.Find(a => a.typeId == so.typeId) != null));
             if (skillSOs.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被依赖执行的技能 --------", EditorStyles.boldLabel);
@@ -102,7 +102,7 @@ namespace GamePlay.Config
                 }
             }
             var projectileSOs = Resources.LoadAll<GameProjectileSO>(GameConfigCollection.PROJECTILE_CONFIG_DIR_PATH);
-            projectileSOs = projectileSOs.Filter(so => so.timelineEvents.Contains(e => e.action?.typeId == so.typeId));
+            projectileSOs = projectileSOs.Filter(so => so.timelineEvents.Contains(e => e.actions?.Find(a => a.typeId == so.typeId) != null));
             if (projectileSOs.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被依赖执行的投射物 --------", EditorStyles.boldLabel);

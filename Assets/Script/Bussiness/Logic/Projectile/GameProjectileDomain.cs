@@ -85,7 +85,10 @@ namespace GamePlay.Bussiness.Logic
             {
                 timelineCom.AddEventByFrame(evModel.frame, () =>
                 {
-                    this._context.domainApi.actionApi.DoAction(evModel.actionId, projectile);
+                    evModel.actionIds?.Foreach((actionId) =>
+                    {
+                        this._context.domainApi.actionApi.DoAction(actionId, projectile);
+                    });
                 });
             });
             timelineCom.Play();

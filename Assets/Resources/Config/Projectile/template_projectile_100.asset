@@ -16,6 +16,9 @@ MonoBehaviour:
   projectileName: "\u56DE\u65CB\u9556"
   desc: "\u5FEB\u901F\u98DE\u5411\u654C\u4EBA\uFF0C\u51FB\u4E2D\u540E\u56DE\u5230\u624B\u4E2D"
   animClip: {fileID: 7400000, guid: ec5df76121251ff4c9642ff6848b3ef4, type: 2}
+  prefab: {fileID: 0}
+  prefabScale: {x: 1, y: 1}
+  prefabOffset: {x: 0, y: 0}
   animLength: 1
   timelineEvents: []
   lifeTime: 0

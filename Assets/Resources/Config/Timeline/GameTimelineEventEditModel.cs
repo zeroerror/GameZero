@@ -8,7 +8,7 @@ namespace GamePlay.Config
     {
         public float time;
         public int frame;
-        public GameActionSO action;
+        public GameActionSO[] actions;
     }
 
     public static class GameTimelineEventEMExt
@@ -18,14 +18,14 @@ namespace GamePlay.Config
             GameTimelineEventModel m;
             m.time = em.time;
             m.frame = em.frame;
-            m.actionId = em.action.typeId;
+            m.actionIds = em.actions.Map((a) => a.typeId);
             return m;
         }
 
         public static GameTimelineEventModel[] ToModels(this GameTimelineEventEM[] ems)
         {
             if (ems == null) return null;
-            ems = ems.Filter(e => e.action != null);
+            ems = ems.Filter(e => e.actions != null);
             GameTimelineEventModel[] ms = new GameTimelineEventModel[ems.Length];
             for (int i = 0; i < ems.Length; i++)
             {

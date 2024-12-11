@@ -5,6 +5,6 @@ namespace GamePlay.Bussiness.Logic
     {
         public float time;
         public int frame;
-        public int actionId;
+        public int[] actionIds;
     }
 }
