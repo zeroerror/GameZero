@@ -21,9 +21,9 @@ MonoBehaviour:
   - time: 0.26666668
     frame: 16
     actions:
-    - {fileID: 11400000, guid: f32fd62c4c1b4da408a5af86529a8d34, type: 2}
+    - {fileID: 11400000, guid: 0fe48bb3e653ecd4e9ce1174c39d2c4b, type: 2}
   conditionEM:
-    targeterType: 2
+    targeterType: 1
     cdTime: 0
     selectorEM:
       selectAnchorType: 1

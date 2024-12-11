@@ -14,21 +14,31 @@ namespace GamePlay.Config
         public GameProjectileBarrageEM_CustomLaunchOffset customLaunchOffsetEM;
         public GameProjectileBarrageEM_Spread spreadEM;
 
+        public GameEntitySelectorEM selectorEM;
+
+
         public GameActionModel_LaunchProjectile ToModel()
         {
-            GameActionModel_LaunchProjectile model = new GameActionModel_LaunchProjectile();
-            model.projectileId = this.projectileId;
-            model.launchOffset = this.launchOffset;
-            model.barrageType = this.barrageType;
+            GameProjectileBarrageModel_CustomLaunchOffset customLaunchOffsetModel = default;
+            GameProjectileBarrageModel_Spread spreadModel = default;
             switch (this.barrageType)
             {
                 case GameProjectileBarrageType.CustomLaunchOffset:
-                    model.customLaunchOffsetModel = this.customLaunchOffsetEM.ToModel();
+                    customLaunchOffsetModel = this.customLaunchOffsetEM.ToModel();
                     break;
                 case GameProjectileBarrageType.Spread:
-                    model.spreadModel = this.spreadEM.ToModel();
+                    spreadModel = this.spreadEM.ToModel();
                     break;
             }
+
+            GameActionModel_LaunchProjectile model = new GameActionModel_LaunchProjectile(
+                this.projectileId,
+                this.launchOffset,
+                this.barrageType,
+                customLaunchOffsetModel,
+                spreadModel,
+                this.selectorEM.ToSelector()
+            );
             return model;
         }
     }

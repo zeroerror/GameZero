@@ -47,7 +47,7 @@ namespace GamePlay.Config
 
         private void _ShowAction(GameActionSO so)
         {
-            var selectorEM = so.selectorEM;
+            var selectorEM = so.GetCurSelectorEM();
             switch (so.actionType)
             {
                 case GameActionType.Dmg:
@@ -82,8 +82,6 @@ namespace GamePlay.Config
         // 显示选择器数据
         private void _ShowSelectorData(GameActionSO so)
         {
-            var selectorEM_p = serializedObject.FindProperty("selectorEM");
-            selectorEM_p.DrawProperty("选择器");
         }
 
         private void _ShowSkillSORefs(GameActionSO so)

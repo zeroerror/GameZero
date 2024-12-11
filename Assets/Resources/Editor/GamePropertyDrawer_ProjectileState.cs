@@ -49,6 +49,8 @@ namespace GamePlay.Config
             this._DrawTriggerModel(property, "volumeCollisionTriggerModel", "触发器[体积碰撞]");
             if (stateType == GameProjectileStateType.LockOnEntity || stateType == GameProjectileStateType.LockOnPosition) this._DrawTriggerModel(property, "impactTargetTriggerModel", "触发器[抵达目标]");
             else this._DisableTriggerModel(property, "impactTargetTriggerModel");
+
+            EditorGUI.EndProperty();
         }
 
 

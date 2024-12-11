@@ -4,7 +4,7 @@ namespace GamePlay.Bussiness.Logic
     {
         public readonly float duration;
 
-        public GameProjectileTriggerModel_Duration(int actionId, GameProjectileStateType nextStateType, float duration) : base(actionId, nextStateType)
+        public GameProjectileTriggerModel_Duration(int[] actionIds, GameProjectileStateType nextStateType, float duration) : base(actionIds, nextStateType)
         {
             this.duration = duration;
         }

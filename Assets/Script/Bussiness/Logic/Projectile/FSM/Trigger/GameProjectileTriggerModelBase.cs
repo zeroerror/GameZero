@@ -2,12 +2,12 @@ namespace GamePlay.Bussiness.Logic
 {
     public abstract class GameProjectileTriggerModelBase
     {
-        public readonly int actionId;
+        public readonly int[] actionIds;
         public readonly GameProjectileStateType nextStateType;
 
-        public GameProjectileTriggerModelBase(int actionId, GameProjectileStateType nextStateType)
+        public GameProjectileTriggerModelBase(int[] actionIds, GameProjectileStateType nextStateType)
         {
-            this.actionId = actionId;
+            this.actionIds = actionIds;
             this.nextStateType = nextStateType;
         }
     }

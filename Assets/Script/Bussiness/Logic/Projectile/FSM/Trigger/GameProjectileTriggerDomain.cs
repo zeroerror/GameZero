@@ -1,4 +1,5 @@
 using GamePlay.Config;
+using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -61,7 +62,7 @@ namespace GamePlay.Bussiness.Logic
                     if (isSatisfied)
                     {
                         var triggerModel = triggerEntity.model;
-                        if (triggerModel.actionId != 0) actionApi.DoAction(triggerModel.actionId, entity);
+                        triggerModel.actionIds.Foreach(actionId => actionApi.DoAction(actionId, entity));
                         if (triggerModel.nextStateType != GameProjectileStateType.None) nextStateType = triggerModel.nextStateType;
                     }
                 }
@@ -74,7 +75,7 @@ namespace GamePlay.Bussiness.Logic
                     if (isSatisfied)
                     {
                         var triggerModel = triggerEntity.model;
-                        if (triggerModel.actionId != 0) actionApi.DoAction(triggerModel.actionId, entity);
+                        triggerModel.actionIds.Foreach(actionId => actionApi.DoAction(actionId, entity));
                         if (triggerModel.nextStateType != GameProjectileStateType.None) nextStateType = triggerModel.nextStateType;
                     }
                 }
@@ -87,7 +88,7 @@ namespace GamePlay.Bussiness.Logic
                     if (isSatisfied)
                     {
                         var triggerModel = triggerEntity.model;
-                        if (triggerModel.actionId != 0) actionApi.DoAction(triggerModel.actionId, entity);
+                        triggerModel.actionIds.Foreach(actionId => actionApi.DoAction(actionId, entity));
                         if (triggerModel.nextStateType != GameProjectileStateType.None) nextStateType = triggerModel.nextStateType;
                     }
                 }

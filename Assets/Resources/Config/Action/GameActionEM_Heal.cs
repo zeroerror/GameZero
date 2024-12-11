@@ -5,20 +5,18 @@ namespace GamePlay.Config
     [System.Serializable]
     public class GameActionEM_Heal
     {
-        [Header("治疗类型")]
+        public int projectileId;
         public GameActionHealType healType;
-
-        [Header("治疗数值")]
         public int value;
-        [Header("数值格式")]
         public GameActionValueFormat valueFormat;
-        [Header("数值参考类型")]
         public GameActionValueRefType refType;
         public GameEntitySelectorEM selectorEM;
 
         public GameActionModel_Heal ToModel()
         {
             return new GameActionModel_Heal(
+                this.projectileId,
+                this.selectorEM?.ToSelector(),
                 this.healType,
                 this.value,
                 this.valueFormat,

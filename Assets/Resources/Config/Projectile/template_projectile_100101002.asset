@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b63e08219bd61964398ea7781cbcab7c, type: 3}
-  m_Name: template_projectile_200
+  m_Name: template_projectile_100101002
   m_EditorClassIdentifier: 
   typeId: 200
   projectileName: "\u98DE\u9556"
   desc: 
   animClip: {fileID: 7400000, guid: cc3ce71219919ab439e7579e8ca69915, type: 2}
+  prefab: {fileID: 0}
+  prefabScale: {x: 1, y: 1}
+  prefabOffset: {x: 0, y: 0}
   animLength: 0.083333336
   timelineEvents: []
   lifeTime: 0
@@ -58,11 +61,12 @@ MonoBehaviour:
       durationTriggerModel:
         enable: 0
         duration: 0
-        actionSO: {fileID: 0}
+        actionSOs: []
         nextStateType: 0
       volumeCollisionTriggerModel:
         enable: 1
-        actionSO: {fileID: 11400000, guid: 72848d911d917fe4ca3ac696d798e877, type: 2}
+        actionSOs:
+        - {fileID: 11400000, guid: 0c991d1b1dff87e4789f8d09fc3259c8, type: 2}
         nextStateType: 7
         detectEntitySelectorEM:
           selectAnchorType: 1
@@ -86,7 +90,7 @@ MonoBehaviour:
       impactTargetTriggerModel:
         enable: 0
         checkByTargetCollider: 1
-        actionSO: {fileID: 0}
+        actionSOs: []
         nextStateType: 7
         detectEntitySelectorEM:
           selectAnchorType: 1

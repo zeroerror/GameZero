@@ -1,5 +1,4 @@
 using GamePlay.Bussiness.Logic;
-using GamePlay.Bussiness.Renderer;
 using GamePlay.Core;
 using UnityEngine;
 
@@ -15,7 +14,6 @@ namespace GamePlay.Config
         public GameActionEM_LaunchProjectile launchProjectileActionEM;
 
         public GameActionEMR actionEMR;
-        public GameEntitySelectorEM selectorEM;
 
         public GameSkillSO[] skillSORefs;
 
@@ -44,7 +42,6 @@ namespace GamePlay.Config
         private void _SyncToActionModel(GameActionModelBase actionModel)
         {
             if (actionModel == null) return;
-            actionModel.selector = this.selectorEM.ToSelector();
             actionModel.actionType = this.actionType;
             actionModel.typeId = this.typeId;
             this._CorrectModel(actionModel);
@@ -53,10 +50,29 @@ namespace GamePlay.Config
         {
             var selector = actionModel.selector;
             var selectAnchorType = actionModel.selector.selectAnchorType;
-            if (selectAnchorType == GameEntitySelectAnchorType.Self && selectorEM.selColliderType == GameColliderType.None && this.selectorEM.campType != GameCampType.Ally)
+            if (selectAnchorType == GameEntitySelectAnchorType.Self)
             {
-                GameLogger.LogWarning("选择器锚点类型为自身的单选行为，必须选择友方阵营, 否则永远无法满足选取条件");
-                selector.campType = GameCampType.Ally;
+                var selectorEM = this.GetCurSelectorEM();
+                if (selectorEM?.selColliderType == GameColliderType.None && selectorEM?.campType != GameCampType.Ally && selectorEM?.campType != GameCampType.None)
+                {
+                    selector.campType = GameCampType.Ally;
+                }
+            }
+        }
+
+        public GameEntitySelectorEM GetCurSelectorEM()
+        {
+            switch (actionType)
+            {
+                case GameActionType.Dmg:
+                    return this.dmgActionEM.selectorEM;
+                case GameActionType.Heal:
+                    return this.healActionEM.selectorEM;
+                case GameActionType.LaunchProjectile:
+                    return this.launchProjectileActionEM.selectorEM;
+                default:
+                    GameLogger.LogError("GameActionSO: GetSelectorEM: invalid actionType: " + actionType);
+                    return null;
             }
         }
     }

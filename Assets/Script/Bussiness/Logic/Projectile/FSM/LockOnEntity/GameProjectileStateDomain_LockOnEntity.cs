@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileStateDomain_LockOnEntity : GameProjectileStateDomainBase
@@ -34,6 +36,11 @@ namespace GamePlay.Bussiness.Logic
             var fsmCom = projectile.fsmCom;
             GameEntityBase lockOnEntity = null;
             var stateModel = fsmCom.lockOnEntityState.model;
+            if (stateModel.targeterType == GameProjectileTargeterType.None)
+            {
+                GameLogger.LogError("投射物锁定实体状态: 目标类型未设置");
+                return;
+            }
             switch (stateModel.targeterType)
             {
                 case GameProjectileTargeterType.RoleActor:

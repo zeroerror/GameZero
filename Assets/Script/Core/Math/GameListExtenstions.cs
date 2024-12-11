@@ -181,5 +181,10 @@ namespace GamePlay.Core
             }
             return result;
         }
+
+        public static bool HasData<T>(this T[] list)
+        {
+            return list != null && list.Length > 0;
+        }
     }
 }

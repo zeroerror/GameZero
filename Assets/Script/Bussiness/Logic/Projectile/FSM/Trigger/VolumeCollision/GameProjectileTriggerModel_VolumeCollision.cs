@@ -5,10 +5,10 @@ namespace GamePlay.Bussiness.Logic
         public readonly GameEntitySelector detectEntitySelector;
 
         public GameProjectileTriggerModel_VolumeCollision(
-            int actionId,
+            int[] actionIds,
             GameProjectileStateType nextStateType,
             GameEntitySelector detectEntitySelector
-        ) : base(actionId, nextStateType)
+        ) : base(actionIds, nextStateType)
         {
             this.detectEntitySelector = detectEntitySelector;
         }

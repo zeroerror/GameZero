@@ -38,9 +38,10 @@ namespace GamePlay.Config
                     break;
             }
 
-            EditorGUI.EndProperty();
+            var selectorEM_p = property.FindPropertyRelative("selectorEM");
+            selectorEM_p.DrawProperty();
 
-            if (property.serializedObject.hasModifiedProperties) property.serializedObject.ApplyModifiedProperties();
+            EditorGUI.EndProperty();
         }
     }
 }

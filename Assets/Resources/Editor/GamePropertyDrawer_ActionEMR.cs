@@ -11,7 +11,7 @@ namespace GamePlay.Config
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            EditorGUILayout.LabelField("行为表现", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("视觉效果等表现参数", EditorStyles.boldLabel);
 
             var vfxPrefab_p = property.FindPropertyRelative("vfxPrefab");
             vfxPrefab_p.DrawProperty("特效预制体");
@@ -22,6 +22,8 @@ namespace GamePlay.Config
 
             var camShakeModel_p = property.FindPropertyRelative("camShakeModel");
             camShakeModel_p.DrawProperty("相机震动模型");
+
+            EditorGUI.EndProperty();
         }
     }
 }

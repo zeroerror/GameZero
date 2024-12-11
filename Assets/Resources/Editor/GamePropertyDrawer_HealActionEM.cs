@@ -12,8 +12,6 @@ namespace GamePlay.Config
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            EditorGUILayout.LabelField("行为表现", EditorStyles.boldLabel);
-
             var healType_p = property.FindPropertyRelative("healType");
             healType_p.DrawProperty_EnumPopup<GameActionHealType>("治疗类型");
 
@@ -36,6 +34,8 @@ namespace GamePlay.Config
 
             var selectorEM_p = property.FindPropertyRelative("selectorEM");
             selectorEM_p.DrawProperty();
+
+            EditorGUI.EndProperty();
         }
     }
 }

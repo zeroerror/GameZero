@@ -13,11 +13,13 @@ namespace GamePlay.Bussiness.Logic
         public GameActionValueRefType refType;
 
         public GameActionModel_Dmg(
+            int projectileId,
+            GameEntitySelector selector,
             GameActionDmgType dmgType,
             int value,
             GameActionValueFormat valueFormat,
             GameActionValueRefType refType
-        )
+        ) : base(GameActionType.Dmg, projectileId, selector)
         {
             this.dmgType = dmgType;
             this.value = value;

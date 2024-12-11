@@ -3,12 +3,28 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameActionModel_LaunchProjectile : GameActionModelBase
     {
-        public int projectileId;
-        public GameVec2 launchOffset;
+        public readonly int projectileId;
+        public readonly GameVec2 launchOffset;
 
-        public GameProjectileBarrageType barrageType;
-        public GameProjectileBarrageModel_CustomLaunchOffset customLaunchOffsetModel;
-        public GameProjectileBarrageModel_Spread spreadModel;
+        public readonly GameProjectileBarrageType barrageType;
+        public readonly GameProjectileBarrageModel_CustomLaunchOffset customLaunchOffsetModel;
+        public readonly GameProjectileBarrageModel_Spread spreadModel;
+
+        public GameActionModel_LaunchProjectile(
+            int projectileId,
+            in GameVec2 launchOffset,
+            GameProjectileBarrageType barrageType,
+            GameProjectileBarrageModel_CustomLaunchOffset customLaunchOffsetModel,
+            GameProjectileBarrageModel_Spread spreadModel,
+            GameEntitySelector selector
+        ) : base(GameActionType.LaunchProjectile, projectileId, selector)
+        {
+            this.projectileId = projectileId;
+            this.launchOffset = launchOffset;
+            this.barrageType = barrageType;
+            this.customLaunchOffsetModel = customLaunchOffsetModel;
+            this.spreadModel = spreadModel;
+        }
 
         public override string ToString()
         {

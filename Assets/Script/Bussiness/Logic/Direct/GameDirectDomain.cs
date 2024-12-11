@@ -69,9 +69,9 @@ namespace GamePlay.Bussiness.Logic
 
             // TEST
             this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
-            this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
-            this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
-            this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
+            // this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
+            // this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
+            // this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
             this.fieldDomain.LoadField(1);
         }
 

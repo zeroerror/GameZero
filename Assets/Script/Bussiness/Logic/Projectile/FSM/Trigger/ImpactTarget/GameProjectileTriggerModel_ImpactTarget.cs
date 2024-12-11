@@ -6,11 +6,11 @@ namespace GamePlay.Bussiness.Logic
         public readonly bool detectByTargetCollider;
 
         public GameProjectileTriggerModel_ImpactTarget(
-            int actionId,
+            int[] actionIds,
             GameProjectileStateType nextStateType,
             GameEntitySelector selector,
             bool checkByTargetCollider
-        ) : base(actionId, nextStateType)
+        ) : base(actionIds, nextStateType)
         {
             this.detectEntitySelector = selector;
             this.detectByTargetCollider = checkByTargetCollider;
