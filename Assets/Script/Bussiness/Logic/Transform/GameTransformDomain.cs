@@ -1,9 +1,10 @@
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameTransformDomain : GameTransformDomainApi
     {
         GameContext _context;
+        GameTransformContext _transformContext => this._context.transformContext;
 
         public GameTransformDomain()
         {
@@ -22,6 +23,17 @@ namespace GamePlay.Bussiness.Logic
         {
             this._context.roleContext.repo.ForeachEntities(this._RCTransformDirty);
             this._context.projectileContext.repo.ForeachEntities(this._RCTransformDirty);
+
+            this._transformContext.posActions.ForEach((posAction) =>
+            {
+                if (!posAction.transCom.isEnable || posAction.Tick(dt))
+                {
+                    this._context.cmdBufferService.Add(0, () =>
+                    {
+                        this._transformContext.posActions.Remove(posAction);
+                    });
+                }
+            });
         }
 
         private void _RCTransformDirty(GameEntityBase entity)
@@ -32,6 +44,17 @@ namespace GamePlay.Bussiness.Logic
                 idArgs = entity.idCom.ToArgs(),
                 transArgs = entity.transformCom.ToArgs()
             });
+        }
+
+        public void ToPosition(GameTransformCom transCom, in GameVec2 toPos, float duration, GameEasingType easingType)
+        {
+            var action = new GameTransfromPosAction(
+                transCom,
+                toPos,
+                duration,
+                easingType
+            );
+            this._transformContext.posActions.Add(action);
         }
     }
 }

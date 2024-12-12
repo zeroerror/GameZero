@@ -4,6 +4,7 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameTransformCom
     {
+        public bool isEnable = true;
         public int id { get; private set; }
 
         public GameVec2 position

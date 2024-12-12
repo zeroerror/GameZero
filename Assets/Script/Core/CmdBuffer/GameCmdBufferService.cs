@@ -12,6 +12,11 @@ namespace GamePlay.Core
             _cmdBuffers = new List<GameCmdBuffer>();
         }
 
+        /// <summary>
+        /// 添加一个延迟执行的命令
+        /// <para> delay 延迟时间(秒). 0表示会在当前帧的帧末就执行</para>
+        /// <para> cmd 命令</para>
+        /// </summary>
         public void Add(float delay, Action cmd)
         {
             _cmdBuffers.Add(new GameCmdBuffer() { delay = delay, cmd = cmd });

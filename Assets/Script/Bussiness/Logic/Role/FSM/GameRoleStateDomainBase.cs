@@ -14,34 +14,34 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /** 尝试进入状态 */
-        public bool TryEnter(GameRoleEntity entity)
+        public bool TryEnter(GameRoleEntity role)
         {
-            if (!this.CheckEnter(entity)) return false;
-            this.Enter(entity);
+            if (!this.CheckEnter(role)) return false;
+            this.Enter(role);
             return true;
         }
 
         /** 状态更新 */
-        public void Tick(GameRoleEntity entity, float frameTime)
+        public void Tick(GameRoleEntity role, float frameTime)
         {
-            this._Tick(entity, frameTime);
-            var toState = this._CheckExit(entity);
+            this._Tick(role, frameTime);
+            var toState = this._CheckExit(role);
             if (toState != GameRoleStateType.None)
             {
-                this._context.domainApi.roleApi.fsmApi.TryEnter(entity, toState);
+                this._context.domainApi.roleApi.fsmApi.TryEnter(role, toState);
             }
         }
 
         /** 判定进入条件 */
-        public abstract bool CheckEnter(GameRoleEntity entity);
+        public abstract bool CheckEnter(GameRoleEntity role);
         /** 进入. ps: 直接调用则会跳过了条件判定 */
-        public abstract void Enter(GameRoleEntity entity);
+        public abstract void Enter(GameRoleEntity role);
         /** 状态更新 */
-        protected abstract void _Tick(GameRoleEntity entity, float frameTime);
+        protected abstract void _Tick(GameRoleEntity role, float frameTime);
         /** 判定退出条件 */
-        protected abstract GameRoleStateType _CheckExit(GameRoleEntity entity);
+        protected abstract GameRoleStateType _CheckExit(GameRoleEntity role);
         /** 退出状态 */
-        public virtual void ExitTo(GameRoleEntity entity, GameRoleStateType toState) { }
+        public virtual void ExitTo(GameRoleEntity role, GameRoleStateType toState) { }
     }
 
 }

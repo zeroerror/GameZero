@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_100101003
+  m_Name: template_action_100101004
   m_EditorClassIdentifier: 
-  typeId: 100101003
-  actionType: 1
-  desc: "\u4F24\u5BB3"
+  typeId: 100101004
+  actionType: 4
+  desc: "\u51FB\u9000"
   dmgActionEM:
     selectorEM:
       selectAnchorType: 2
@@ -36,7 +36,7 @@ MonoBehaviour:
         radius: 0
         fanAngle: 0
     dmgType: 1
-    value: 10
+    value: 100
     valueFormat: 1
     refType: 1
   healActionEM:
@@ -97,11 +97,11 @@ MonoBehaviour:
         fanAngle: 0
   knockBackActionEM:
     knockBackDirType: 0
-    distance: 0
-    duration: 0
-    easingType: 0
+    distance: 0.3
+    duration: 0.1
+    easingType: 6
     selectorEM:
-      selectAnchorType: 0
+      selectAnchorType: 2
       campType: 0
       entityType: 0
       selColliderType: 0
@@ -121,9 +121,9 @@ MonoBehaviour:
         fanAngle: 0
   actionEMR:
     typeId: 0
-    vfxPrefab: {fileID: 6927947509564487783, guid: ce33e8716848a2542b26d97976a509fb, type: 3}
-    vfxScale: {x: 0.35, y: 0.35}
-    vfxOffset: {x: 0.3, y: 1}
+    vfxPrefab: {fileID: 59758037400367371, guid: 046b88167bb483b43ab350b27cf5909e, type: 3}
+    vfxScale: {x: 0.2, y: 0.2}
+    vfxOffset: {x: 0, y: 0}
     camShakeModel:
       angle: 0
       amplitude: 0

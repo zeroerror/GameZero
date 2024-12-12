@@ -12,6 +12,7 @@ namespace GamePlay.Config
         public GameActionEM_Dmg dmgActionEM;
         public GameActionEM_Heal healActionEM;
         public GameActionEM_LaunchProjectile launchProjectileActionEM;
+        public GameActionEM_KnockBack knockBackActionEM;
 
         public GameActionEMR actionEMR;
 
@@ -31,6 +32,9 @@ namespace GamePlay.Config
                 case GameActionType.LaunchProjectile:
                     actionModel = launchProjectileActionEM.ToModel();
                     break;
+                case GameActionType.KnockBack:
+                    actionModel = knockBackActionEM.ToModel();
+                    break;
                 default:
                     GameLogger.LogError("GameActionSO: GetAction: invalid actionType: " + actionType);
                     return null;
@@ -39,6 +43,7 @@ namespace GamePlay.Config
             return actionModel;
         }
 
+        /// <summary> 同步SO的参数到行为模型 </summary>
         private void _SyncToActionModel(GameActionModelBase actionModel)
         {
             if (actionModel == null) return;
@@ -70,6 +75,8 @@ namespace GamePlay.Config
                     return this.healActionEM.selectorEM;
                 case GameActionType.LaunchProjectile:
                     return this.launchProjectileActionEM.selectorEM;
+                case GameActionType.KnockBack:
+                    return this.knockBackActionEM.selectorEM;
                 default:
                     GameLogger.LogError("GameActionSO: GetSelectorEM: invalid actionType: " + actionType);
                     return null;

@@ -17,6 +17,7 @@ namespace GamePlay.Bussiness.Logic
         {
             role.fsmCom.EnterDead();
             role.physicsCom.collider.isEnable = false;
+            role.transformCom.isEnable = false;
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DEAD, new GameRoleRCArgs_StateEnterDead
             {
@@ -41,5 +42,10 @@ namespace GamePlay.Bussiness.Logic
             return GameRoleStateType.None;
         }
 
+        public override void ExitTo(GameRoleEntity entity, GameRoleStateType toState)
+        {
+            base.ExitTo(entity, toState);
+            entity.transformCom.isEnable = true;
+        }
     }
 }

@@ -5,7 +5,6 @@ namespace GamePlay.Config
     [System.Serializable]
     public class GameActionEM_Dmg
     {
-        public int projectileId;
         public GameEntitySelectorEM selectorEM;
 
         public GameActionDmgType dmgType;
@@ -16,7 +15,7 @@ namespace GamePlay.Config
         public GameActionModel_Dmg ToModel()
         {
             return new GameActionModel_Dmg(
-                this.projectileId,
+                0,
                 this.selectorEM?.ToSelector(),
                 this.dmgType,
                 this.value,

@@ -16,7 +16,6 @@ namespace GamePlay.Config
 
         public GameEntitySelectorEM selectorEM;
 
-
         public GameActionModel_LaunchProjectile ToModel()
         {
             GameProjectileBarrageModel_CustomLaunchOffset customLaunchOffsetModel = default;

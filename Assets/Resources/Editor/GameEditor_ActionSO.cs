@@ -66,6 +66,11 @@ namespace GamePlay.Config
                     var launchProjectileActionEM_p = serializedObject.FindProperty("launchProjectileActionEM");
                     launchProjectileActionEM_p.DrawProperty();
                     break;
+                case GameActionType.KnockBack:
+                    EditorGUILayout.LabelField(" -------- 击退行为 --------", EditorStyles.boldLabel);
+                    var knockBackActionEM_p = serializedObject.FindProperty("knockBackActionEM");
+                    knockBackActionEM_p.DrawProperty();
+                    break;
                 default:
                     EditorGUILayout.HelpBox("未知的行为类型", MessageType.Warning);
                     break;

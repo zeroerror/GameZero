@@ -30,6 +30,7 @@ namespace GamePlay.Bussiness.Renderer
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DO_DMG, this._OnAction_DoDmg);
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DO_HEAL, this._OnAction_DoHeal);
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, this._OnAction_DoLaunchProjectile);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DO_KNOCK_BACK, this._OnAction_DoKnockBack);
         }
 
         private void _UnbindEvents()
@@ -37,6 +38,49 @@ namespace GamePlay.Bussiness.Renderer
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DO_DMG, this._OnAction_DoDmg);
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DO_HEAL, this._OnAction_DoHeal);
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, this._OnAction_DoLaunchProjectile);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DO_KNOCK_BACK, this._OnAction_DoKnockBack);
+        }
+
+
+        /// <summary>
+        /// 执行行为触发的表现
+        /// </summary>
+        /// <param name="actionId"></param>
+        /// <param name="actorEntity"></param>
+        /// <param name="targetEntity"></param>
+        private void _DoActionRenderer(int actionId, GameEntityBase actorEntity, GameEntityBase targetEntity)
+        {
+            if (!this._actionContext.template.TryGet(actionId, out var action))
+            {
+                GameLogger.LogError("行为执行: 未知的行为Id " + actionId);
+                return;
+            }
+            // 特效
+            if (action.vfxPrefabUrl != null)
+            {
+
+                var attachNode = targetEntity is GameRoleEntityR targetEntityR ? targetEntityR.go : null;
+                var attachOffset = action.vfxOffset;
+                attachOffset.x = targetEntity.transformCom.forward.x < 0 ? -attachOffset.x : attachOffset.x;
+                var attachPos = targetEntity.transformCom.position + attachOffset;
+                var args = new GameVFXPlayArgs()
+                {
+                    attachNode = attachNode,
+                    attachOffset = attachOffset,
+                    position = attachPos,
+                    prefabUrl = action.vfxPrefabUrl,
+                    angle = targetEntity.transformCom.angle,
+                    scale = action.vfxScale,
+                    loopDuration = 0,
+                };
+                this._context.domainApi.vfxApi.Play(args);
+            }
+            // 震屏
+            var shakeModel = action.shakeModel;
+            if (shakeModel != null)
+            {
+                this._context.cameraEntity.shakeCom.Shake(shakeModel);
+            }
         }
 
         private void _OnAction_DoDmg(object args)
@@ -87,45 +131,20 @@ namespace GamePlay.Bussiness.Renderer
             this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
         }
 
-        /// <summary>
-        /// 执行行为触发的表现
-        /// </summary>
-        /// <param name="actionId"></param>
-        /// <param name="actorEntity"></param>
-        /// <param name="targetEntity"></param>
-        private void _DoActionRenderer(int actionId, GameEntityBase actorEntity, GameEntityBase targetEntity)
+        private void _OnAction_DoKnockBack(object args)
         {
-            if (!this._actionContext.template.TryGet(actionId, out var action))
+            var evArgs = (GameActionRCArgs_DoKnockBack)args;
+            ref var record = ref evArgs.record;
+            ref var actorIdArgs = ref record.actorIdArgs;
+            var actorEntity = this._context.FindEntity(actorIdArgs);
+            ref var targetIdArgs = ref record.targetIdArgs;
+            var targetEntity = this._context.FindEntity(targetIdArgs);
+            if (actorEntity == null || targetEntity == null)
             {
-                GameLogger.LogError("行为执行: 未知的行为Id " + actionId);
+                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_DO_KNOCK_BACK, args);
                 return;
             }
-            // 特效
-            if (action.vfxPrefabUrl != null)
-            {
-
-                var attachNode = targetEntity is GameRoleEntityR targetEntityR ? targetEntityR.go : null;
-                var attachOffset = action.vfxOffset;
-                attachOffset.x = targetEntity.transformCom.forward.x < 0 ? -attachOffset.x : attachOffset.x;
-                var attachPos = targetEntity.transformCom.position + attachOffset;
-                var args = new GameVFXPlayArgs()
-                {
-                    attachNode = attachNode,
-                    attachOffset = attachOffset,
-                    position = attachPos,
-                    prefabUrl = action.vfxPrefabUrl,
-                    angle = targetEntity.transformCom.angle,
-                    scale = action.vfxScale,
-                    loopDuration = 0,
-                };
-                this._context.domainApi.vfxApi.Play(args);
-            }
-            // 震屏
-            var shakeModel = action.shakeModel;
-            if (shakeModel != null)
-            {
-                this._context.cameraEntity.shakeCom.Shake(shakeModel);
-            }
+            this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
         }
     }
 }

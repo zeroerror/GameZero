@@ -13,13 +13,13 @@ namespace GamePlay.Bussiness.Logic
         public GameActionValueRefType refType;
 
         public GameActionModel_Heal(
-            int projectileId,
+            int typeId,
             GameEntitySelector selector,
             GameActionHealType healType,
             int value,
             GameActionValueFormat valueFormat,
             GameActionValueRefType refType
-        ) : base(GameActionType.Heal, projectileId, selector)
+        ) : base(GameActionType.Heal, typeId, selector)
         {
             this.healType = healType;
             this.value = value;

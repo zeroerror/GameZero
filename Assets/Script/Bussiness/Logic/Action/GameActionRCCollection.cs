@@ -8,6 +8,9 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_ACTION_DO_HEAL = "RC_GAME_ACTION_DO_HEAL";
         /** 行为执行 - 发射投射物 */
         public static readonly string RC_GAME_ACTION_LAUNCH_PROJECTILE = "RC_GAME_ACTION_LAUNCH_PROJECTILE";
+        /** 行为执行 - 执行击退 */
+        public static readonly string RC_GAME_ACTION_DO_KNOCK_BACK = "RC_GAME_ACTION_DO_KNOCK_BACK";
+
     }
 
     public struct GameActionRCArgs_DoDmg
@@ -37,6 +40,17 @@ namespace GamePlay.Bussiness.Logic
         public int actionId;
         public GameActionRecord_LaunchProjectile record;
         public GameActionRCArgs_LaunchProjectile(int actionId, in GameActionRecord_LaunchProjectile record)
+        {
+            this.actionId = actionId;
+            this.record = record;
+        }
+    }
+
+    public struct GameActionRCArgs_DoKnockBack
+    {
+        public int actionId;
+        public GameActionRecord_KnockBack record;
+        public GameActionRCArgs_DoKnockBack(int actionId, in GameActionRecord_KnockBack record)
         {
             this.actionId = actionId;
             this.record = record;

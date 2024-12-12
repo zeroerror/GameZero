@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using GamePlay.Core;
-using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -45,6 +44,9 @@ namespace GamePlay.Bussiness.Logic
                     break;
                 case GameActionModel_LaunchProjectile launchProjectileAction:
                     this.DoAction_LaunchProjectile(launchProjectileAction, actorEntity);
+                    break;
+                case GameActionModel_KnockBack knockBackAction:
+                    this.DoAction_KnockBack(knockBackAction, actorEntity);
                     break;
                 default:
                     GameLogger.LogError($"未处理的行为类型：{actionModel.GetType().Name}");
@@ -145,6 +147,29 @@ namespace GamePlay.Bussiness.Logic
                     record
                 );
                 this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, evArgs);
+            });
+        }
+
+        public void DoAction_KnockBack(GameActionModel_KnockBack action, GameEntityBase actorEntity)
+        {
+            var recordList = new List<GameActionRecord_KnockBack>();
+            var entitySelectApi = this._context.domainApi.entitySelectApi;
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
+            selectedEntities?.ForEach((selectedEntity) =>
+            {
+                var record = GameActionKnockBackUtil.CalcKnockBack(actorEntity, selectedEntity, action);
+                recordList.Add(record);
+                var transformApi = this._context.domainApi.transformApi;
+                GameActionKnockBackUtil.DoKnockBack(selectedEntity, record, transformApi);
+            });
+            recordList.ForEach((record) =>
+            {
+                // 提交RC
+                var evArgs = new GameActionRCArgs_DoKnockBack(
+                    action.typeId,
+                    record
+                );
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO_KNOCK_BACK, evArgs);
             });
         }
 

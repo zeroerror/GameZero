@@ -4,11 +4,13 @@ namespace GamePlay.Bussiness.Logic
     public enum GameActionType
     {
         None = 0,
-        // 伤害
+        /// <summary> 伤害 </summary>
         Dmg = 1,
-        // 治疗
+        /// <summary> 治疗 </summary>
         Heal = 2,
-        // 发射投射物
+        /// <summary> 发射投射物 </summary>
         LaunchProjectile = 3,
+        /// <summary> 击退 </summary>
+        KnockBack = 4,
     }
 }
