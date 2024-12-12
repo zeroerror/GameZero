@@ -9,14 +9,27 @@ namespace GamePlay.Config
     [CustomEditor(typeof(GameActionSO))]
     public class GameEditor_ActionSO : Editor
     {
+        private SerializedObject _serializedObject;
+        private SerializedProperty _typeIdProperty;
+        private SerializedProperty _descProperty;
+        private SerializedProperty _actionTypeProperty;
+
+        private void OnEnable()
+        {
+            this._serializedObject = new SerializedObject(target);
+            this._typeIdProperty = _serializedObject.FindProperty("typeId");
+            this._descProperty = _serializedObject.FindProperty("desc");
+            this._actionTypeProperty = _serializedObject.FindProperty("actionType");
+        }
+
         public override void OnInspectorGUI()
         {
-            EditorGUI.BeginChangeCheck();
+            this._serializedObject.Update();
+
             GameActionSO so = (GameActionSO)target;
             EditorGUILayout.BeginVertical("box");
             this._ShowLogicData(so);
             EditorGUILayout.EndVertical();
-
 
             EditorGUILayout.BeginVertical("box");
             this._ShowRendererData(so);
@@ -30,10 +43,7 @@ namespace GamePlay.Config
             this._ShowSkillSORefs(so);
             EditorGUILayout.EndVertical();
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                EditorUtility.SetDirty(so);
-            }
+            this._serializedObject.ApplyModifiedProperties();
         }
 
         private void _ShowLogicData(GameActionSO so)
@@ -41,6 +51,7 @@ namespace GamePlay.Config
             so.typeId = EditorGUILayout.IntField("类型Id", so.typeId);
             so.desc = EditorGUILayout.TextField("描述", so.desc);
             so.actionType = (GameActionType)EditorGUILayout.EnumPopup("行为类型", so.actionType);
+
             if (so.actionType == GameActionType.None) EditorGUILayout.HelpBox("请选择一个行为类型", MessageType.Warning);
             _ShowAction(so);
         }

@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_100101004
+  m_Name: template_action_1000101001
   m_EditorClassIdentifier: 
-  typeId: 100101004
-  actionType: 4
-  desc: "\u51FB\u9000"
+  typeId: 1000101001
+  actionType: 1
+  desc: "\u68D5\u718A\u653B\u51FB"
   dmgActionEM:
     selectorEM:
       selectAnchorType: 2
       campType: 1
       entityType: 1
-      selColliderType: 2
+      selColliderType: 0
       boxColliderModel:
-        offset: {x: 0, y: 0}
+        offset: {x: 0.5, y: 0.5}
         angle: 0
-        width: 0
-        height: 0
+        width: 1
+        height: 1
       circleColliderModel:
-        offset: {x: 0, y: 0}
+        offset: {x: 0.2, y: 0}
         angle: 0
-        radius: 1
+        radius: 0.5
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -96,14 +96,14 @@ MonoBehaviour:
         radius: 0
         fanAngle: 0
   knockBackActionEM:
-    knockBackDirType: 2
+    knockBackDirType: 0
     distance: 0.3
     duration: 0.1
-    easingType: 6
+    easingType: 0
     selectorEM:
-      selectAnchorType: 2
-      campType: 0
-      entityType: 0
+      selectAnchorType: 1
+      campType: 2
+      entityType: 1
       selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
@@ -121,8 +121,8 @@ MonoBehaviour:
         fanAngle: 0
   actionEMR:
     typeId: 0
-    vfxPrefab: {fileID: 59758037400367371, guid: 046b88167bb483b43ab350b27cf5909e, type: 3}
-    vfxScale: {x: 0.2, y: 0.2}
+    vfxPrefab: {fileID: 6927947509564487783, guid: ce33e8716848a2542b26d97976a509fb, type: 3}
+    vfxScale: {x: 0.25, y: 0.25}
     vfxOffset: {x: 0, y: 0}
     camShakeModel:
       angle: 0

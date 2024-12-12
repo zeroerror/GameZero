@@ -57,6 +57,7 @@ namespace GamePlay.Bussiness.Renderer
             var go = GameObject.Instantiate(prefab);
             var slider = go.GetComponentInChildren<Slider>();
             Debug.Assert(slider != null, "角色工厂[渲染层]: 加载属性条失败, 未找到Slider组件");
+            slider.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 15);
             return slider;
         }
     }
