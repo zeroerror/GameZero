@@ -45,7 +45,7 @@ namespace GamePlay.Bussiness.Renderer
             return res;
         }
 
-        public Slider LoadAttributeBar(bool isEnemy)
+        public Slider LoadHPSlider(bool isEnemy)
         {
             var url = isEnemy ? "UI/Battle/attribute_bar_enemy" : "UI/Battle/attribute_bar_self";
             var prefab = Resources.Load<GameObject>(url);
@@ -58,6 +58,12 @@ namespace GamePlay.Bussiness.Renderer
             var slider = go.GetComponentInChildren<Slider>();
             Debug.Assert(slider != null, "角色工厂[渲染层]: 加载属性条失败, 未找到Slider组件");
             slider.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 15);
+            return slider;
+        }
+
+        public Slider LoadMPSlider()
+        {
+            var slider = this.LoadHPSlider(false);
             return slider;
         }
     }

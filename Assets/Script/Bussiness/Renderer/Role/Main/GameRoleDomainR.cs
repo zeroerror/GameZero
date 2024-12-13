@@ -89,12 +89,23 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.cameraEntity.followCom.Set(role.go, Vector2.zero);
             }
 
-            var isEnemy = role.idCom.campId != this._roleContext.userRole.idCom.campId;
-            var slider = this._roleContext.factory.LoadAttributeBar(isEnemy);
-            this._context.uiContext.AddToUIRoot(slider.transform);
             var attributeBarCom = role.attributeBarCom;
-            attributeBarCom.SetHPSlider(slider, new Vector2(0, 2));
             attributeBarCom.WorldToScreenPoint = this.WorldToScreenPoint;
+
+            var isEnemy = role.idCom.campId != this._roleContext.userRole.idCom.campId;
+            var hpSlider = this._roleContext.factory.LoadHPSlider(isEnemy);
+            this._context.uiContext.AddToUIRoot(hpSlider.transform);
+            attributeBarCom.hpSlider.SetSlider(hpSlider, new Vector2(0, 2));
+
+            this._roleContext.factory.template.TryGet(role.idCom.typeId, out var model);
+            var hasMPSkill = model.skills.Find((skill) => skill.skillType == GameSkillType.MagicAttack) != null;
+            if (hasMPSkill)
+            {
+                var mpSlider = this._roleContext.factory.LoadMPSlider();
+                this._context.uiContext.AddToUIRoot(mpSlider.transform);
+                attributeBarCom.mpSlider.SetSlider(mpSlider, new Vector2(0, 1.8f));
+            }
+
             return role;
         }
 

@@ -4,8 +4,11 @@ namespace GamePlay.Bussiness.Logic
     {
         None = 0,
         HP = 1,
-        Attack = 2,
-        MoveSpeed = 3,
-        AttackSpeed = 4
+        MaxHP = 2,
+        MP = 3,
+        MaxMP = 4,
+        Attack = 5,
+        AttackSpeed = 6,
+        MoveSpeed = 7,
     }
 }

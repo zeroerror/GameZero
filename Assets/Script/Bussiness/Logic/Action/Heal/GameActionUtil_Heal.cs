@@ -31,7 +31,7 @@ namespace GamePlay.Bussiness.Logic
             // 治疗结算
             var curHP = target.attributeCom.GetValue(GameAttributeType.HP);
             var afterHP = curHP + healValue;
-            var maxHP = target.baseAttributeCom.GetValue(GameAttributeType.HP);
+            var maxHP = target.attributeCom.GetValue(GameAttributeType.MaxHP);
             var realHeal = afterHP > maxHP ? maxHP - curHP : healValue;
             var actorRoleIdArgs = actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_Heal(
