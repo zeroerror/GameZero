@@ -9,9 +9,32 @@ namespace GamePlay.Config
     [CustomEditor(typeof(GameSkillSO))]
     public class GameEditor_Skill : Editor
     {
+        private SerializedObject _serializedObject;
+        private SerializedProperty typeId_p;
+        private SerializedProperty desc_p;
+        private SerializedProperty skillType_p;
+        private SerializedProperty animClip_p;
+        private SerializedProperty animName_p;
+        private SerializedProperty animLength_p;
+        private SerializedProperty timelineEvents_p;
+        private SerializedProperty conditionEM_p;
+        private void OnEnable()
+        {
+            this._serializedObject = new SerializedObject(target);
+            this.typeId_p = _serializedObject.FindProperty("typeId");
+            this.desc_p = _serializedObject.FindProperty("desc");
+            this.skillType_p = _serializedObject.FindProperty("skillType");
+            this.animClip_p = _serializedObject.FindProperty("animClip");
+            this.animName_p = _serializedObject.FindProperty("animName");
+            this.animLength_p = _serializedObject.FindProperty("animLength");
+            this.timelineEvents_p = _serializedObject.FindProperty("timelineEvents");
+            this.conditionEM_p = _serializedObject.FindProperty("conditionEM");
+        }
+
         public override void OnInspectorGUI()
         {
-            EditorGUI.BeginChangeCheck();
+            this._serializedObject.Update();
+
             GameSkillSO so = (GameSkillSO)target;
 
             EditorGUILayout.BeginVertical("box");
@@ -22,29 +45,20 @@ namespace GamePlay.Config
             this._ShowRoleSORefs(so);
             EditorGUILayout.EndVertical();
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                EditorUtility.SetDirty(so);
-            }
+            this._serializedObject.ApplyModifiedProperties();
         }
 
         private void _ShowBasicData(GameSkillSO so)
         {
             EditorGUILayout.LabelField("基础信息-------------------------", EditorStyles.boldLabel);
-            so.typeId = EditorGUILayout.IntField("类型Id", so.typeId);
-            so.desc = EditorGUILayout.TextField("描述", so.desc);
-            EditorGUI.BeginChangeCheck();
-            so.animClip = (AnimationClip)EditorGUILayout.ObjectField("动画文件", so.animClip, typeof(AnimationClip), false);
-            if (EditorGUI.EndChangeCheck())
-            {
-                so.Update();
-            }
-            EditorGUILayout.LabelField("动画名称", so.animName);
-            EditorGUILayout.LabelField("动画时长(s)", so.animLength.ToString());
-            var timelineEvents_p = serializedObject.FindProperty("timelineEvents");
-            timelineEvents_p.DrawProperty();
-            var conditionEM_p = serializedObject.FindProperty("conditionEM");
-            conditionEM_p.DrawProperty();
+            this.typeId_p.DrawProperty_Int("类型Id");
+            this.desc_p.DrawProperty("描述");
+            this.skillType_p.DrawProperty("技能类型");
+            this.animClip_p.DrawProperty("动画文件");
+            this.animName_p.DrawProperty("动画名称");
+            this.animLength_p.DrawProperty("动画时长(s)");
+            this.timelineEvents_p.DrawProperty();
+            this.conditionEM_p.DrawProperty();
         }
 
         private void _ShowRoleSORefs(GameSkillSO so)

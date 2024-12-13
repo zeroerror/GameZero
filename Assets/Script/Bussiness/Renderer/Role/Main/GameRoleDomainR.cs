@@ -95,7 +95,7 @@ namespace GamePlay.Bussiness.Renderer
             var isEnemy = role.idCom.campId != this._roleContext.userRole.idCom.campId;
             var hpSlider = this._roleContext.factory.LoadHPSlider(isEnemy);
             this._context.uiContext.AddToUIRoot(hpSlider.transform);
-            attributeBarCom.hpSlider.SetSlider(hpSlider, new Vector2(0, 2));
+            attributeBarCom.hpSlider.SetSlider(hpSlider, new Vector2(0, 100));
 
             this._roleContext.factory.template.TryGet(role.idCom.typeId, out var model);
             var hasMPSkill = model.skills.Find((skill) => skill.skillType == GameSkillType.MagicAttack) != null;
@@ -103,7 +103,7 @@ namespace GamePlay.Bussiness.Renderer
             {
                 var mpSlider = this._roleContext.factory.LoadMPSlider();
                 this._context.uiContext.AddToUIRoot(mpSlider.transform);
-                attributeBarCom.mpSlider.SetSlider(mpSlider, new Vector2(0, 1.8f));
+                attributeBarCom.mpSlider.SetSlider(mpSlider, new Vector2(0, 90f));
             }
 
             return role;

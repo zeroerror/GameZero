@@ -6,7 +6,7 @@ namespace GamePlay.Bussiness.Renderer
     public class GameRoleStateDomain_IdleR : GameRoleStateDomainBaseR
     {
         private static readonly string GAME_RC_EV_NAME = GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_IDLE;
-        public GameRoleStateDomain_IdleR() : base() { }
+        public GameRoleStateDomain_IdleR(TransitToDelegate transitToDelegate) : base(transitToDelegate) { }
 
         public override void BindEvents()
         {
@@ -30,12 +30,13 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GAME_RC_EV_NAME, args);
                 return;
             }
-            this.Enter(role);
+            this.TransitTo(role, GameRoleStateType.Idle, args);
         }
 
-        public override void Enter(GameRoleEntityR entity, params object[] args)
+        public override void Enter(GameRoleEntityR role, params object[] args)
         {
-            this._context.domainApi.roleApi.PlayAnim(entity, "idle");
+            this._context.domainApi.roleApi.PlayAnim(role, "idle");
+            role.fsmCom.EnterIdle();
         }
 
         protected override void _Tick(GameRoleEntityR entity, float frameTime)

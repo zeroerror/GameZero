@@ -6,7 +6,7 @@ namespace GamePlay.Bussiness.Renderer
     public class GameRoleStateDomain_DeadR : GameRoleStateDomainBaseR
     {
         private static readonly string GAME_RC_EV_NAME = GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DEAD;
-        public GameRoleStateDomain_DeadR() : base() { }
+        public GameRoleStateDomain_DeadR(TransitToDelegate transitToDelegate) : base(transitToDelegate) { }
 
         public override void BindEvents()
         {
@@ -30,7 +30,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GAME_RC_EV_NAME, args);
                 return;
             }
-            this.Enter(role);
+            this.TransitTo(role, GameRoleStateType.Dead, args);
         }
 
         public override void Enter(GameRoleEntityR role, params object[] args)
@@ -38,6 +38,7 @@ namespace GamePlay.Bussiness.Renderer
             GameLogger.Log($"角色进入死亡[表现层]：{role.idCom.entityId}");
             this._context.domainApi.roleApi.PlayAnim(role, "dead");
             role.attributeBarCom.SetActive(false);
+            role.fsmCom.EnterDead();
         }
 
         protected override void _Tick(GameRoleEntityR role, float frameTime)

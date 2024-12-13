@@ -1,11 +1,12 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleStateDomain_CastR : GameRoleStateDomainBaseR
     {
         private static readonly string GAME_RC_EV_NAME = GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_CAST;
-        public GameRoleStateDomain_CastR() : base() { }
+        public GameRoleStateDomain_CastR(TransitToDelegate transitToDelegate) : base(transitToDelegate) { }
 
         public override void BindEvents()
         {
@@ -29,24 +30,27 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GAME_RC_EV_NAME, args);
                 return;
             }
-            this.Enter(role, evArgs.skillId);
-
             role.skillCom.TryGet(evArgs.skillId, out var skill);
-            var attackSpeed = role.attributeCom.GetValue(GameAttributeType.AttackSpeed);
-            var length = skill.skillModel.animClip.length;
-            var timeScale = length / attackSpeed;
-            role.animCom.timeScale = timeScale;
+            if (skill.skillModel.effectByAttackSpeed)
+            {
+                var attackSpeed = role.attributeCom.GetValue(GameAttributeType.AttackSpeed);
+                var length = skill.skillModel.animClip.length;
+                var timeScale = attackSpeed * length;
+                role.animCom.timeScale = timeScale;
+            }
+            this.TransitTo(role, GameRoleStateType.Cast, evArgs.skillId);
         }
 
-        public override void Enter(GameRoleEntityR entity, params object[] args)
+        public override void Enter(GameRoleEntityR role, params object[] args)
         {
             var skillId = (int)args[0];
-            entity.skillCom.TryGet(skillId, out var skill);
+            role.skillCom.TryGet(skillId, out var skill);
             var animClip = skill.skillModel.animClip;
-            this._context.domainApi.roleApi.PlayAnim(entity, animClip);
+            this._context.domainApi.roleApi.PlayAnim(role, animClip);
+            role.fsmCom.EnterCast();
         }
 
-        protected override void _Tick(GameRoleEntityR entity, float frameTime)
+        protected override void _Tick(GameRoleEntityR role, float frameTime)
         {
         }
 

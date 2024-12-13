@@ -10,20 +10,13 @@ namespace GamePlay.Config
     [CreateAssetMenu(fileName = "template_skill_", menuName = "游戏玩法/配置/技能模板")]
     public class GameSkillSO : GameSOBase
     {
-        [Header("描述")]
         public string desc;
-        [Header("技能类型")]
         public GameSkillType skillType;
-        [Header("动画文件")]
         public AnimationClip animClip;
-        [Header("动画名称")]
         public string animName;
-        [Header("动画时长(s)")]
         public float animLength;
-        [Header("动画事件")]
         public GameTimelineEventEM[] timelineEvents;
 
-        [Header("技能条件")]
         public GameSkillConditionEM conditionEM;
 
         public void Update()

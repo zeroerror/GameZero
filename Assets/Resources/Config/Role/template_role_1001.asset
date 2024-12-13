@@ -23,3 +23,7 @@ MonoBehaviour:
     value: 10000
   - type: 3
     value: 6
+  - type: 7
+    value: 6
+  - type: 6
+    value: 5

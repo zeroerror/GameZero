@@ -30,8 +30,8 @@ namespace GamePlay.Bussiness.Renderer
         public void Tick(float dt)
         {
             var screenPoint = this._GetScreenPoint();
-            this.hpSlider.rectTransform.anchoredPosition = screenPoint.Add(this.hpSlider.barOffset);
-            this.mpSlider.rectTransform.anchoredPosition = screenPoint.Add(this.mpSlider.barOffset);
+            this.hpSlider.SetAnchorPosition(screenPoint.Add(this.hpSlider.barOffset));
+            this.mpSlider.SetAnchorPosition(screenPoint.Add(this.mpSlider.barOffset));
         }
 
         public void SetActive(bool active)

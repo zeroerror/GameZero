@@ -46,13 +46,13 @@ namespace GamePlay.Bussiness.Logic
             stateDomain.Tick(role, dt);
         }
 
-        public bool TryEnter(GameRoleEntity role, GameRoleStateType state)
+        public bool TryEnter(GameRoleEntity role, GameRoleStateType toState)
         {
-            if (!this._stateDomainDict.TryGetValue(state, out var stateDomain)) return false;
+            if (!this._stateDomainDict.TryGetValue(toState, out var stateDomain)) return false;
             var check = stateDomain.CheckEnter(role);
             if (check)
             {
-                this._ExitToState(role, state);
+                this._ExitToState(role, toState);
                 stateDomain.Enter(role);
             }
             return check;

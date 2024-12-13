@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GamePlay.Core;
 namespace GamePlay.Bussiness.Renderer
 {
 
@@ -10,11 +11,11 @@ namespace GamePlay.Bussiness.Renderer
         public GameRoleFSMDomainR()
         {
             this._stateDomainDict = new Dictionary<GameRoleStateType, GameRoleStateDomainBaseR>(){
-                {GameRoleStateType.Idle, new GameRoleStateDomain_IdleR()},
-                {GameRoleStateType.Move, new GameRoleStateDomain_MoveR()},
-                {GameRoleStateType.Cast, new GameRoleStateDomain_CastR()},
-                {GameRoleStateType.Dead, new GameRoleStateDomain_DeadR()},
-                {GameRoleStateType.Destroyed, new GameRoleStateDomain_DestroyedR()}
+                {GameRoleStateType.Idle, new GameRoleStateDomain_IdleR(this.TransitTo)},
+                {GameRoleStateType.Move, new GameRoleStateDomain_MoveR(this.TransitTo)},
+                {GameRoleStateType.Cast, new GameRoleStateDomain_CastR(this.TransitTo)},
+                {GameRoleStateType.Dead, new GameRoleStateDomain_DeadR(this.TransitTo)},
+                {GameRoleStateType.Destroyed, new GameRoleStateDomain_DestroyedR(this.TransitTo)}
             };
         }
 
@@ -27,12 +28,10 @@ namespace GamePlay.Bussiness.Renderer
             }
         }
 
-
         public void Dispose()
         {
             this.UnbindEvents();
         }
-
 
         public void BindEvents()
         {
@@ -50,7 +49,6 @@ namespace GamePlay.Bussiness.Renderer
             }
         }
 
-
         public void Tick(GameRoleEntityR role, float dt)
         {
             var fsmCom = role.fsmCom;
@@ -60,19 +58,19 @@ namespace GamePlay.Bussiness.Renderer
             stateDomain.Tick(role, dt);
         }
 
-        public void Enter(GameRoleEntityR role, GameRoleStateType state, params object[] args)
+        public void TransitTo(GameRoleEntityR role, GameRoleStateType toState, params object[] args)
         {
-            if (!this._stateDomainDict.TryGetValue(state, out var stateDomain)) return;
-            this._ExitToState(role, state);
-            stateDomain.Enter(role, args);
+            if (!this._stateDomainDict.TryGetValue(toState, out var toStateDomain)) return;
+            this._ExitToState(role, toState);
+            toStateDomain.Enter(role, args);
         }
 
         private void _ExitToState(GameRoleEntityR role, GameRoleStateType toState)
         {
             var fsmCom = role.fsmCom;
-            var stateType = fsmCom.stateType;
-            if (!this._stateDomainDict.TryGetValue(stateType, out var stateDomain)) return;
-            stateDomain.ExitTo(role, toState);
+            var curStateType = fsmCom.stateType;
+            if (!this._stateDomainDict.TryGetValue(curStateType, out var curStateDomain)) return;
+            curStateDomain.ExitTo(role, toState);
         }
     }
 

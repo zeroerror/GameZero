@@ -28,5 +28,14 @@ namespace GamePlay.Bussiness.Logic
             this.timelineEvModels = timelineModels;
             this.conditionModel = conditionModel;
         }
+
+        /// <summary> 是否受到攻速的影响 </summary>
+        public bool effectByAttackSpeed
+        {
+            get
+            {
+                return this.skillType == GameSkillType.NormalAttack;
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace GamePlay.Bussiness.Renderer
     public class GameRoleStateDomain_DestroyedR : GameRoleStateDomainBaseR
     {
         private static readonly string GAME_RC_EV_NAME = GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DESTROYED;
-        public GameRoleStateDomain_DestroyedR() : base() { }
+        public GameRoleStateDomain_DestroyedR(TransitToDelegate transitToDelegate) : base(transitToDelegate) { }
 
         public override void BindEvents()
         {
@@ -30,16 +30,17 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GAME_RC_EV_NAME, args);
                 return;
             }
-            this.Enter(role);
+            this.TransitTo(role, GameRoleStateType.Destroyed, args);
         }
 
-        public override void Enter(GameRoleEntityR entity, params object[] args)
+        public override void Enter(GameRoleEntityR role, params object[] args)
         {
             GameLogger.Log($"角色状态 - 进入销毁状态");
-            entity.SetValid(false);// 标记无效, 等待自动实体回收
+            role.SetValid(false);// 标记无效, 等待自动实体回收
+            role.fsmCom.EnterDestroyed();
         }
 
-        protected override void _Tick(GameRoleEntityR entity, float frameTime)
+        protected override void _Tick(GameRoleEntityR role, float frameTime)
         {
         }
     }

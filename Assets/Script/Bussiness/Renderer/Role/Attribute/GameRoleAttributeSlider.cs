@@ -18,6 +18,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void SetActive(bool active)
         {
+            if (!this.slider) return;
             this.slider.gameObject.SetActive(active);
         }
 
@@ -35,12 +36,20 @@ namespace GamePlay.Bussiness.Renderer
 
         public void SetOffset(in Vector3 offset)
         {
+            if (!this.slider) return;
             this.slider.transform.localPosition = offset;
         }
 
         public void SetRatio(float ratio)
         {
+            if (!this.slider) return;
             this.slider.value = ratio;
+        }
+
+        public void SetAnchorPosition(Vector3 screenPoint)
+        {
+            if (!this.slider) return;
+            this.rectTransform.anchoredPosition = screenPoint;
         }
     }
 }

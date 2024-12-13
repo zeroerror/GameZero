@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 100101
   desc: "\u7334\u5B50\u653B\u51FB"
+  skillType: 1
   animClip: {fileID: 7400000, guid: c6509afe4aba2cc44bcfd5a410a7ebc5, type: 2}
   animName: attack
   animLength: 0.51666665

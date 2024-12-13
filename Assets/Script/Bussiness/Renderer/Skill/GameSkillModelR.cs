@@ -15,5 +15,13 @@ namespace GamePlay.Bussiness.Renderer
             this.skillType = skllType;
             this.animClip = animClip;
         }
+        /// <summary> 是否受到攻速的影响 </summary>
+        public bool effectByAttackSpeed
+        {
+            get
+            {
+                return this.skillType == GameSkillType.NormalAttack;
+            }
+        }
     }
 }

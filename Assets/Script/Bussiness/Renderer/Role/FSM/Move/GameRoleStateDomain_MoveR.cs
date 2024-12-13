@@ -1,12 +1,13 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleStateDomain_MoveR : GameRoleStateDomainBaseR
     {
         private static readonly string GAME_RC_EV_NAME = GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE;
-        public GameRoleStateDomain_MoveR() : base() { }
+        public GameRoleStateDomain_MoveR(TransitToDelegate transitToDelegate) : base(transitToDelegate) { }
 
         public override void BindEvents()
         {
@@ -30,12 +31,13 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GAME_RC_EV_NAME, args);
                 return;
             }
-            this.Enter(role);
+            this.TransitTo(role, GameRoleStateType.Move, args);
         }
 
-        public override void Enter(GameRoleEntityR entity, params object[] args)
+        public override void Enter(GameRoleEntityR role, params object[] args)
         {
-            this._context.domainApi.roleApi.PlayAnim(entity, "move");
+            this._context.domainApi.roleApi.PlayAnim(role, "move");
+            role.fsmCom.EnterMove();
         }
 
         protected override void _Tick(GameRoleEntityR entity, float frameTime)

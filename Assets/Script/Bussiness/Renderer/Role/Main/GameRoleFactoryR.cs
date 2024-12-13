@@ -11,6 +11,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameRoleFactoryR()
         {
+            this.template = new GameRoleTemplateR();
         }
 
         public GameRoleEntityR Load(int typeId)

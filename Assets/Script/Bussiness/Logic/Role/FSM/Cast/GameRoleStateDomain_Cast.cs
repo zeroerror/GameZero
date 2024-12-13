@@ -44,27 +44,37 @@ namespace GamePlay.Bussiness.Logic
             float timeScale = 1;
             var timelineCom = skill.timelineCom;
             // 普攻受到攻速的机制
-            if (skill.skillModel.skillType == GameSkillType.NormalAttack)
+            if (skill.skillModel.effectByAttackSpeed)
             {
                 var attackSpeed = entity.attributeCom.GetValue(GameAttributeType.AttackSpeed);
                 var length = timelineCom.length;
-                timeScale = length / attackSpeed;
+                timeScale = attackSpeed * length;
             }
             timelineCom.Tick(frameTime * timeScale);
         }
 
-        protected override GameRoleStateType _CheckExit(GameRoleEntity entity)
+        protected override GameRoleStateType _CheckExit(GameRoleEntity role)
         {
-            var stateModel = entity.fsmCom.castState;
+            var stateModel = role.fsmCom.castState;
             var skill = stateModel.skill;
             var timelineCom = skill.timelineCom;
             if (!timelineCom.isPlaying) return GameRoleStateType.Idle;
+
+            var inputCom = role.inputCom;
+            if (inputCom.TryGetInputArgs(out var inputArgs))
+            {
+                if (inputArgs.moveDir != GameVec2.zero)
+                {
+                    return GameRoleStateType.Move;
+                }
+            }
+
             return GameRoleStateType.None;
         }
 
-        public override void ExitTo(GameRoleEntity entity, GameRoleStateType toState)
+        public override void ExitTo(GameRoleEntity role, GameRoleStateType toState)
         {
-            base.ExitTo(entity, toState);
+            base.ExitTo(role, toState);
         }
     }
 }

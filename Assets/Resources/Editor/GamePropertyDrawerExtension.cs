@@ -99,5 +99,13 @@ namespace GamePlay.Config
             _AdjustLayout(height);
             return property.boolValue;
         }
+
+        public static string DrawProperty_Str(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false)
+        {
+            if (isReadOnly) EditorGUILayout.TextField(label, property.stringValue);
+            else property.stringValue = EditorGUILayout.TextField(label, property.stringValue);
+            _AdjustLayout(height);
+            return property.stringValue;
+        }
     }
 }
