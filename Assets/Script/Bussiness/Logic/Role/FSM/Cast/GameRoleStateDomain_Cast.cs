@@ -39,9 +39,18 @@ namespace GamePlay.Bussiness.Logic
         {
             var stateModel = entity.fsmCom.castState;
             var skill = stateModel.skill;
-            // 时间轴更新
+
+            // 技能时间轴
+            float timeScale = 1;
             var timelineCom = skill.timelineCom;
-            timelineCom.Tick(frameTime);
+            // 普攻受到攻速的机制
+            if (skill.skillModel.skillType == GameSkillType.NormalAttack)
+            {
+                var attackSpeed = entity.attributeCom.GetValue(GameAttributeType.AttackSpeed);
+                var length = timelineCom.length;
+                timeScale = length / attackSpeed;
+            }
+            timelineCom.Tick(frameTime * timeScale);
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity entity)

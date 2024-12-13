@@ -18,17 +18,17 @@ namespace GamePlay.Bussiness.Renderer
         public virtual void UnbindEvents() { }
 
         /** 状态更新 */
-        public void Tick(GameRoleEntityR entity, float frameTime)
+        public void Tick(GameRoleEntityR role, float frameTime)
         {
-            this._Tick(entity, frameTime);
+            this._Tick(role, frameTime);
         }
 
         /** 进入. ps: 直接调用则会跳过了条件判定 */
-        public abstract void Enter(GameRoleEntityR entity, params object[] args);
+        public abstract void Enter(GameRoleEntityR role, params object[] args);
         /** 状态更新 */
-        protected abstract void _Tick(GameRoleEntityR entity, float frameTime);
+        protected abstract void _Tick(GameRoleEntityR role, float frameTime);
         /** 退出状态 */
-        public virtual void ExitTo(GameRoleEntityR entity, GameRoleStateType toState) { }
+        public virtual void ExitTo(GameRoleEntityR role, GameRoleStateType toState) { }
     }
 
 }

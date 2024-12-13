@@ -4,6 +4,6 @@ namespace GamePlay.Bussiness.Logic
 {
     public struct GameAttributeArgs
     {
-        public List<GameAttribute> attributes;
+        public GameAttribute[] attributes;
     }
 }

@@ -1,5 +1,4 @@
 using GamePlay.Bussiness.Logic;
-using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Renderer
 {
@@ -31,6 +30,12 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
             this.Enter(role, evArgs.skillId);
+
+            role.skillCom.TryGet(evArgs.skillId, out var skill);
+            var attackSpeed = role.attributeCom.GetValue(GameAttributeType.AttackSpeed);
+            var length = skill.skillModel.animClip.length;
+            var timeScale = length / attackSpeed;
+            role.animCom.timeScale = timeScale;
         }
 
         public override void Enter(GameRoleEntityR entity, params object[] args)
@@ -43,6 +48,12 @@ namespace GamePlay.Bussiness.Renderer
 
         protected override void _Tick(GameRoleEntityR entity, float frameTime)
         {
+        }
+
+        public override void ExitTo(GameRoleEntityR role, GameRoleStateType toState)
+        {
+            role.animCom.timeScale = 1;
+            base.ExitTo(role, toState);
         }
     }
 }

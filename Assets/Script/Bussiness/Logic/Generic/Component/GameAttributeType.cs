@@ -6,5 +6,6 @@ namespace GamePlay.Bussiness.Logic
         HP = 1,
         Attack = 2,
         MoveSpeed = 3,
+        AttackSpeed = 4
     }
 }

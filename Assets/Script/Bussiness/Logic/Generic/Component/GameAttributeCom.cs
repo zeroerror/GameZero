@@ -29,13 +29,13 @@ namespace GamePlay.Bussiness.Logic
         public GameAttributeArgs ToArgs()
         {
             var args = new GameAttributeArgs();
-            args.attributes = this._attributes.GetRange(0, this._attributes.Count);
+            args.attributes = this._attributes.ToArray();
             return args;
         }
 
         public void SetByArgs(in GameAttributeArgs args)
         {
-            this._attributes = args.attributes.GetRange(0, args.attributes.Count);
+            this._attributes = new List<GameAttribute>(args.attributes);
         }
 
         public void SetAttribute(in GameAttribute attribute)

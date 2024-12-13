@@ -12,6 +12,8 @@ namespace GamePlay.Config
     {
         [Header("描述")]
         public string desc;
+        [Header("技能类型")]
+        public GameSkillType skillType;
         [Header("动画文件")]
         public AnimationClip animClip;
         [Header("动画名称")]
@@ -43,13 +45,19 @@ namespace GamePlay.Config
 
         public GameSkillModel ToModel()
         {
-            var model = new GameSkillModel(typeId, animName, animLength, timelineEvents.ToModels(), conditionEM.ToModel());
+            var model = new GameSkillModel(
+                typeId,
+                skillType,
+                animName,
+                animLength,
+                timelineEvents.ToModels(),
+                conditionEM.ToModel());
             return model;
         }
 
         public GameSkillModelR ToModelR()
         {
-            var model = new GameSkillModelR(typeId, animClip);
+            var model = new GameSkillModelR(typeId, skillType, animClip);
             return model;
         }
     }
