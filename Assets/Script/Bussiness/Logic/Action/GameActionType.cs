@@ -12,5 +12,7 @@ namespace GamePlay.Bussiness.Logic
         LaunchProjectile = 3,
         /// <summary> 击退 </summary>
         KnockBack = 4,
+        /// <summary> 属性修改 </summary>
+        AttributeModify = 5,
     }
 }

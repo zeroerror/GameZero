@@ -17,7 +17,7 @@ namespace GamePlay.Bussiness.Logic
             // 参考属性值
             float refAttrValue = dmgModel.refType.GetRefAttributeValue(actor, target);
 
-            // 伤害数值 增益/减益
+            // 伤害数值 增幅/减幅
             var dmgValue = refAttrValue * modelValue;
             switch (dmgModel.dmgType)
             {

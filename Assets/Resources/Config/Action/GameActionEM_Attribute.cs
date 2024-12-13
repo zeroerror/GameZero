@@ -2,21 +2,21 @@ using GamePlay.Bussiness.Logic;
 namespace GamePlay.Config
 {
     [System.Serializable]
-    public class GameActionEM_Dmg
+    public class GameActionEM_Attribute
     {
         public GameEntitySelectorEM selectorEM;
 
-        public GameActionDmgType dmgType;
+        public GameAttributeType modifyType;
         public int value;
         public GameActionValueFormat valueFormat;
         public GameActionValueRefType refType;
 
-        public GameActionModel_Dmg ToModel()
+        public GameActionModel_Attribute ToModel()
         {
-            return new GameActionModel_Dmg(
+            return new GameActionModel_Attribute(
                 0,
                 this.selectorEM?.ToSelector(),
-                this.dmgType,
+                this.modifyType,
                 this.value,
                 this.valueFormat,
                 this.refType

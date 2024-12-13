@@ -26,6 +26,11 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
+        public bool TryGetModel(int actionId, out GameActionModelBase model)
+        {
+            return this._context.actionContext.template.TryGet(actionId, out model);
+        }
+
         public void DoAction(int actionId, GameEntityBase actorEntity)
         {
             var template = this._actionContext.template;
@@ -47,6 +52,9 @@ namespace GamePlay.Bussiness.Logic
                     break;
                 case GameActionModel_KnockBack knockBackAction:
                     this.DoAction_KnockBack(knockBackAction, actorEntity);
+                    break;
+                case GameActionModel_Attribute attributeModifyAction:
+                    this.DoAction_AttributeModify(attributeModifyAction, actorEntity);
                     break;
                 default:
                     GameLogger.LogError($"未处理的行为类型：{actionModel.GetType().Name}");
@@ -173,9 +181,26 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public bool TryGetModel(int actionId, out GameActionModelBase model)
+        public void DoAction_AttributeModify(GameActionModel_Attribute action, GameEntityBase actorEntity, bool dontDo = false)
         {
-            return this._context.actionContext.template.TryGet(actionId, out model);
+            var recordList = new List<GameActionRecord_AttributeModify>();
+            var entitySelectApi = this._context.domainApi.entitySelectApi;
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
+            selectedEntities?.ForEach((selectedEntity) =>
+            {
+                var record = GameActionUtil_AttributeModify.CalcAttributeModify(actorEntity, selectedEntity, action);
+                recordList.Add(record);
+                if (!dontDo) GameActionUtil_AttributeModify.DoAttributeModify(selectedEntity, record);
+            });
+            recordList.ForEach((record) =>
+            {
+                // 提交RC
+                var evArgs = new GameActionRCArgs_DoAttributeModify(
+                    action.typeId,
+                    record
+                );
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO_ATTRIBUTE_MODIFY, evArgs);
+            });
         }
     }
 }

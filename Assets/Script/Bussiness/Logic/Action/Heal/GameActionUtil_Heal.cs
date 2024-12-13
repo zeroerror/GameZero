@@ -17,7 +17,7 @@ namespace GamePlay.Bussiness.Logic
             // 参考属性值
             float refAttrValue = healModel.refType.GetRefAttributeValue(actor, target);
 
-            // 治疗数值 增益/减益
+            // 治疗数值 增幅/减幅
             var healValue = refAttrValue * modelValue;
             switch (healModel.healType)
             {
