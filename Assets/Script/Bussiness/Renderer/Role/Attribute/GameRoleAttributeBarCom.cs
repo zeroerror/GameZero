@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameRoleAttributeBarCom(Transform parent)
         {
             this._parent = parent;
-            this.hpSlider = new GameRoleAttributeSlider(0.2f, GameEasingType.Linear);
+            this.hpSlider = new GameRoleAttributeSlider(1f, GameEasingType.Linear);
             this.mpSlider = new GameRoleAttributeSlider(0.0f, GameEasingType.Immediate);
         }
 
@@ -30,8 +30,7 @@ namespace GamePlay.Bussiness.Renderer
         public void Tick(float dt)
         {
             var screenPoint = this._GetScreenPoint();
-            this.hpSlider.SetAnchorPosition(screenPoint.Add(this.hpSlider.barOffset));
-            this.mpSlider.SetAnchorPosition(screenPoint.Add(this.mpSlider.barOffset));
+            this.hpSlider.Tick(dt, screenPoint);
         }
 
         public void SetActive(bool active)

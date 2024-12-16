@@ -6,9 +6,12 @@ namespace GamePlay.Bussiness.Renderer
     public class GameRoleAttributeSlider
     {
         public Slider slider { get; private set; }
-        public Vector2 barOffset { get; private set; }
         public RectTransform rectTransform { get; private set; }
+        public Vector2 barOffset { get; private set; }
+
         public GameEasing1DCom easingCom { get; private set; }
+        private Slider _easeSlider;
+        public RectTransform _easeRectTransform { get; private set; }
 
         public GameRoleAttributeSlider(float duration, GameEasingType type)
         {
@@ -16,10 +19,25 @@ namespace GamePlay.Bussiness.Renderer
             this.easingCom.SetEase(duration, type);
         }
 
+        public void Tick(float dt, in Vector2 screenPoint)
+        {
+            if (!this.slider) return;
+            this.SetAnchorPosition(screenPoint.Add(this.barOffset));
+            var easedValue = this.easingCom.Tick(this._easeSlider.value, this.slider.value, dt);
+            this._easeSlider.value = easedValue;
+        }
+
         public void SetActive(bool active)
         {
             if (!this.slider) return;
             this.slider.gameObject.SetActive(active);
+        }
+
+        public void SetSize(in Vector2 size)
+        {
+            if (!this.slider) return;
+            this.rectTransform.sizeDelta = size;
+            this._easeRectTransform.sizeDelta = size;
         }
 
         /// <summary>
@@ -32,6 +50,9 @@ namespace GamePlay.Bussiness.Renderer
             this.slider = slider;
             this.rectTransform = this.slider.GetComponent<RectTransform>();
             this.barOffset = offset;
+            var fillRect = this.slider.fillRect;
+            this._easeSlider = fillRect.parent.transform.GetComponentInChildren<Slider>();
+            this._easeRectTransform = this._easeSlider.GetComponent<RectTransform>();
         }
 
         public void SetOffset(in Vector3 offset)
@@ -43,6 +64,7 @@ namespace GamePlay.Bussiness.Renderer
         public void SetRatio(float ratio)
         {
             if (!this.slider) return;
+            if (this.slider.value == ratio) return;
             this.slider.value = ratio;
         }
 

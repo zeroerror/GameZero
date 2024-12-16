@@ -19,7 +19,7 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: 182393f5590f05945b7d9af80659f083, type: 2}
   attributes:
-  - type: 1
+  - type: 2
     value: 5000
   - type: 7
     value: 2

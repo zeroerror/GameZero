@@ -34,6 +34,18 @@ namespace GamePlay.Bussiness.Logic
             {
                 this.attributeCom.SetAttribute(value);
                 this.baseAttributeCom.SetAttribute(value);
+
+                // 保证最大生命值和最大魔法值的同步
+                if (value.type == GameAttributeType.MaxHP)
+                {
+                    var attribute = new GameAttribute { type = GameAttributeType.HP, value = value.value };
+                    this.attributeCom.SetAttribute(attribute);
+                }
+                else if (value.type == GameAttributeType.MaxMP)
+                {
+                    var attribute = new GameAttribute { type = GameAttributeType.MP, value = value.value };
+                    this.attributeCom.SetAttribute(attribute);
+                }
             });
         }
 
