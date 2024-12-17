@@ -17,6 +17,7 @@ namespace GamePlay.Bussiness.Logic
         public GameProjectileDomain projectileDomain { get; private set; }
         public GameFieldDomain fieldDomain { get; private set; }
         public GameEntityCollectDomain entityCollectDomain { get; private set; }
+        public GameBuffDomain buffDomain { get; private set; }
 
         public GameDirectDomain()
         {
@@ -37,6 +38,7 @@ namespace GamePlay.Bussiness.Logic
             this.projectileDomain = new GameProjectileDomain();
             this.fieldDomain = new GameFieldDomain();
             this.entityCollectDomain = new GameEntityCollectDomain();
+            this.buffDomain = new GameBuffDomain();
         }
 
         private void _InitContext()
@@ -52,6 +54,7 @@ namespace GamePlay.Bussiness.Logic
             this.context.domainApi.SetProjectileApi(this.projectileDomain);
             this.context.domainApi.SetFieldApi(this.fieldDomain);
             this.context.domainApi.SetEntityCollectApi(this.entityCollectDomain);
+            this.context.domainApi.SetBuffApi(this.buffDomain);
         }
 
         private void _InjectContext()
@@ -66,6 +69,7 @@ namespace GamePlay.Bussiness.Logic
             this.projectileDomain.Inject(this.context);
             this.fieldDomain.Inject(this.context);
             this.entityCollectDomain.Inject(this.context);
+            this.buffDomain.Inject(this.context);
 
             // TEST
             this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
@@ -87,6 +91,7 @@ namespace GamePlay.Bussiness.Logic
             this.projectileDomain.Dispose();
             this.fieldDomain.Dispose();
             this.entityCollectDomain.Dispose();
+            this.buffDomain.Dispose();
         }
 
         protected virtual void _TickDomain(float dt)
@@ -101,6 +106,7 @@ namespace GamePlay.Bussiness.Logic
             this.entitySelectDomain.Tick(dt);
             this.projectileDomain.Tick(dt);
             this.entityCollectDomain.Tick(dt);
+            this.buffDomain.Tick(dt);
         }
 
         public void Update(float dt)

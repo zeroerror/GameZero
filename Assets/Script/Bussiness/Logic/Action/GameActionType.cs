@@ -14,5 +14,7 @@ namespace GamePlay.Bussiness.Logic
         KnockBack = 4,
         /// <summary> 属性修改 </summary>
         AttributeModify = 5,
+        /// <summary> 附加buff </summary>
+        AttachBuff = 6,
     }
 }

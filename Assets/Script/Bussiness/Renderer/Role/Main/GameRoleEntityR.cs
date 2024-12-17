@@ -12,6 +12,7 @@ namespace GamePlay.Bussiness.Renderer
         public readonly GameObject foot;
         public readonly GameObject shadow;
         public readonly GameObject body;
+        public readonly GameBuffComR buffCom;
 
         public Transform transform { get { return this.go.transform; } }
 
@@ -52,6 +53,8 @@ namespace GamePlay.Bussiness.Renderer
             this.fsmCom = new GameRoleFSMComR();
 
             this.skillCom = new GameSkillComponentR(this);
+
+            this.buffCom = new GameBuffComR();
 
             var animator = this.body.GetComponentInChildren<Animator>();
             this.animCom = new GamePlayableCom(animator);

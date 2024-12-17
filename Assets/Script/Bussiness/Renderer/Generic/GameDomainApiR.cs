@@ -32,5 +32,8 @@ namespace GamePlay.Bussiness.Renderer
         public GameEntityCollectDomainApiR entityCollectApi { get; private set; }
         public void SetEntityCollectApi(GameEntityCollectDomainApiR entityCollectApi) => this.entityCollectApi = entityCollectApi;
 
+        public GameBuffDomainApiR buffApi { get; private set; }
+        public void SetBuffApi(GameBuffDomainApiR buffApi) => this.buffApi = buffApi;
+
     }
 }

@@ -5,17 +5,20 @@ namespace GamePlay.Bussiness.Logic
         /// <summary>
         /// 挂载buff 
         /// <para>buffId Buff的类型Id</para>
-        /// <para>targetRole 目标角色</para>
+        /// <para>targetRole 目标</para>
+        /// <para>layer 层数</para>
+        /// <para>realAttachLayer 实际挂载层数</para>
         /// @return 是否挂载成功
         /// </summary>
-        public bool AttachBuff(int buffId, GameRoleEntity targetRole);
+        public bool AttachBuff(int typeId, GameEntityBase target, int layer, out int realAttachLayer);
 
         /// <summary>
         /// 移除buff
         /// <para>buffId Buff的类型Id</para>
-        /// <para>targetRole 目标角色</para>
-        /// @return 是否移除成功
+        /// <para>targetRole 目标</para>
+        /// <para>detachLayer 移除层数</para>
+        /// @return 实际移除层数
         /// </summary>
-        public bool RemoveBuff(int buffId, GameRoleEntity targetRole);
+        public int DetachBuff(int buffId, GameEntityBase target, int layer);
     }
 }

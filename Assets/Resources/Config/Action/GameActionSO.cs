@@ -13,6 +13,7 @@ namespace GamePlay.Config
         public GameActionEM_Heal healActionEM;
         public GameActionEM_LaunchProjectile launchProjectileActionEM;
         public GameActionEM_KnockBack knockBackActionEM;
+        public GameActionEM_AttachBuff attachBuffActionEM;
 
         public GameActionEMR actionEMR;
 
@@ -35,34 +36,15 @@ namespace GamePlay.Config
                 case GameActionType.KnockBack:
                     actionModel = knockBackActionEM.ToModel();
                     break;
+                case GameActionType.AttachBuff:
+                    actionModel = attachBuffActionEM.ToModel();
+                    break;
                 default:
                     GameLogger.LogError("GameActionSO: GetAction: invalid actionType: " + actionType);
                     return null;
             }
             this._SyncToActionModel(actionModel);
             return actionModel;
-        }
-
-        /// <summary> 同步SO的参数到行为模型 </summary>
-        private void _SyncToActionModel(GameActionModelBase actionModel)
-        {
-            if (actionModel == null) return;
-            actionModel.actionType = this.actionType;
-            actionModel.typeId = this.typeId;
-            this._CorrectModel(actionModel);
-        }
-        private void _CorrectModel(GameActionModelBase actionModel)
-        {
-            var selector = actionModel.selector;
-            var selectAnchorType = actionModel.selector.selectAnchorType;
-            if (selectAnchorType == GameEntitySelectAnchorType.Self)
-            {
-                var selectorEM = this.GetCurSelectorEM();
-                if (selectorEM?.selColliderType == GameColliderType.None && selectorEM?.campType != GameCampType.Ally && selectorEM?.campType != GameCampType.None)
-                {
-                    selector.campType = GameCampType.Ally;
-                }
-            }
         }
 
         public GameEntitySelectorEM GetCurSelectorEM()
@@ -77,9 +59,33 @@ namespace GamePlay.Config
                     return this.launchProjectileActionEM.selectorEM;
                 case GameActionType.KnockBack:
                     return this.knockBackActionEM.selectorEM;
+                case GameActionType.AttachBuff:
+                    return this.attachBuffActionEM.selectorEM;
                 default:
-                    GameLogger.LogError("GameActionSO: GetSelectorEM: invalid actionType: " + actionType);
+                    GameLogger.LogError("未处理的行为类型: " + actionType);
                     return null;
+            }
+        }
+
+        /// <summary> 同步SO的参数到行为模型 </summary>
+        private void _SyncToActionModel(GameActionModelBase actionModel)
+        {
+            if (actionModel == null) return;
+            actionModel.actionType = this.actionType;
+            actionModel.typeId = this.typeId;
+            this._CorrectModel(actionModel);
+        }
+        private void _CorrectModel(GameActionModelBase actionModel)
+        {
+            var selector = actionModel.selector;
+            var selectAnchorType = actionModel.selector.selectAnchorType;
+            if (selectAnchorType == GameEntitySelectAnchorType.Actor)
+            {
+                var selectorEM = this.GetCurSelectorEM();
+                if (selectorEM?.selColliderType == GameColliderType.None && selectorEM?.campType != GameCampType.Ally && selectorEM?.campType != GameCampType.None)
+                {
+                    selector.campType = GameCampType.Ally;
+                }
             }
         }
     }

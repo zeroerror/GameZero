@@ -2,6 +2,10 @@ namespace GamePlay.Bussiness.Logic
 {
     public abstract class GameEntityBase
     {
+        public static bool operator !(GameEntityBase entity) => entity == null;
+        public static bool operator true(GameEntityBase entity) => entity != null;
+        public static bool operator false(GameEntityBase entity) => entity == null;
+
         public bool isValid { get; private set; } = true;
         public void SetValid(bool isValid) => this.isValid = isValid;
 
@@ -27,12 +31,12 @@ namespace GamePlay.Bussiness.Logic
 
         public virtual void Clear()
         {
-            idCom.Clear();
-            transformCom.Clear();
-            actionTargeterCom.Clear();
-            physicsCom.Clear();
-            attributeCom.Clear();
-            baseAttributeCom.Clear();
+            idCom?.Clear();
+            transformCom?.Clear();
+            actionTargeterCom?.Clear();
+            physicsCom?.Clear();
+            attributeCom?.Clear();
+            baseAttributeCom?.Clear();
             this.isValid = true;
         }
 
@@ -60,8 +64,13 @@ namespace GamePlay.Bussiness.Logic
             return null;
         }
 
+        public bool TryGetLinkEntity<T>(out T entity) where T : GameEntityBase
+        {
+            entity = TryGetLinkEntity<T>();
+            return entity != null;
+        }
+
         public abstract void Tick(float dt);
         public abstract void Destroy();
-
     }
 }

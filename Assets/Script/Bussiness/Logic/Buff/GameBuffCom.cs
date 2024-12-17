@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Core;
+using UnityEngine.Analytics;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameBuffCom
@@ -32,16 +33,18 @@ namespace GamePlay.Bussiness.Logic
             this.buffList.Add(buff);
         }
 
-        public bool Remove(int buffId)
+        public int DetachBuff(int buffId, int layer)
         {
-            var buff = this.buffList.FindIndex(b => b.model.typeId == buffId);
-            if (buff == -1)
+            var buff = this.buffList.Find(b => b.model.typeId == buffId);
+            if (!buff)
             {
                 GameLogger.LogError("Buff不存在，无法移除：" + buffId);
-                return false;
+                return 0;
             }
-            this.buffList.RemoveAt(buff);
-            return true;
+            if (!buff.isValid) return 0;
+            var removeLayer = buff.DetachLayer(layer);
+            if (!buff.isValid) this.buffList.Remove(buff);
+            return removeLayer;
         }
     }
 }

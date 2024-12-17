@@ -21,8 +21,9 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Clear()
         {
-            base.Clear();
+            this.BindAttributeCom(null);
             this.fsmCom.Clear();
+            base.Clear();
         }
 
         public override void Destroy()

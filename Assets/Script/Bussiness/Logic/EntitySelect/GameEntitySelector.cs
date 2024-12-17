@@ -30,8 +30,8 @@ namespace GamePlay.Bussiness.Logic
             if (this.colliderModel == null)
             {
                 var isSelf = entityA.idCom.entityId == entityB.idCom.entityId;
-                if (isSelf && !this.selectAnchorType.HasFlag(GameEntitySelectAnchorType.Self)) return false;
-                if (!isSelf && !this.selectAnchorType.HasFlag(GameEntitySelectAnchorType.Target)) return false;
+                if (isSelf && !this.selectAnchorType.HasFlag(GameEntitySelectAnchorType.Actor)) return false;
+                if (!isSelf && !this.selectAnchorType.HasFlag(GameEntitySelectAnchorType.ActTarget)) return false;
             }
             return true;
         }

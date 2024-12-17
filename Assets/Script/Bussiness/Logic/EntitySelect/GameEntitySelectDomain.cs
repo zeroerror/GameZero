@@ -35,6 +35,7 @@ namespace GamePlay.Bussiness.Logic
             // 单体选择
             if (isSingleSelect)
             {
+                if (selectAnchorType == GameEntitySelectAnchorType.ActorRole) actorEntity = actorEntity.TryGetLinkEntity<GameRoleEntity>();
                 var selectedEntity = this._GetSingleSelectedEntity(selector, actorEntity, targetEntity, selectAnchorType);
                 if (selectedEntity == null) return null;
                 return new List<GameEntityBase> { selectedEntity };
@@ -44,10 +45,11 @@ namespace GamePlay.Bussiness.Logic
             GameTransformArgs anchorTransformArgs;
             switch (selectAnchorType)
             {
-                case GameEntitySelectAnchorType.Self:
+                case GameEntitySelectAnchorType.Actor:
                     anchorTransformArgs = actorEntity.transformCom.ToArgs();
                     break;
-                case GameEntitySelectAnchorType.Target:
+                case GameEntitySelectAnchorType.ActTarget:
+                    if (!targetEntity) return null;
                     anchorTransformArgs = targetEntity.transformCom.ToArgs();
                     break;
                 default:
@@ -73,8 +75,9 @@ namespace GamePlay.Bussiness.Logic
 
         private GameEntityBase _GetSingleSelectedEntity(GameEntitySelector selector, GameEntityBase actorEntity, GameEntityBase targetEntity, GameEntitySelectAnchorType selectAnchorType)
         {
-            if (selectAnchorType == GameEntitySelectAnchorType.Self) return actorEntity;
-            if (selectAnchorType == GameEntitySelectAnchorType.Target)
+            if (selectAnchorType == GameEntitySelectAnchorType.Actor) return actorEntity;
+            if (selectAnchorType == GameEntitySelectAnchorType.ActorRole) return actorEntity.TryGetLinkEntity<GameRoleEntity>();
+            if (selectAnchorType == GameEntitySelectAnchorType.ActTarget)
             {
                 if (selector.CheckSelect(actorEntity, targetEntity)) return targetEntity;
                 return null;

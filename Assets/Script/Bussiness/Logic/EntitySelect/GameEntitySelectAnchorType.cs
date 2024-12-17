@@ -6,10 +6,14 @@ namespace GamePlay.Bussiness.Logic
     public enum GameEntitySelectAnchorType
     {
         None,
-        // 自身
-        Self,
-        // 目标
-        Target,
+        /// <summary> 行为者 </summary>
+        Actor,
+        /// <summary> 行为目标 </summary>
+        ActTarget,
+        /// <summary> 行为者角色 </summary>
+        ActorRole,
+        /// <summary> 最近的敌人 </summary>
+        NearestEnemy,
     }
 
     public static class GameEntitySelectAnchorTypeExtensions
@@ -18,10 +22,14 @@ namespace GamePlay.Bussiness.Logic
         {
             switch (type)
             {
-                case GameEntitySelectAnchorType.Self:
-                    return "自身";
-                case GameEntitySelectAnchorType.Target:
-                    return "目标";
+                case GameEntitySelectAnchorType.Actor:
+                    return "行为者";
+                case GameEntitySelectAnchorType.ActTarget:
+                    return "行为目标";
+                case GameEntitySelectAnchorType.ActorRole:
+                    return "行为者角色";
+                case GameEntitySelectAnchorType.NearestEnemy:
+                    return "最近的敌人";
                 case GameEntitySelectAnchorType.None:
                 default:
                     return "无";

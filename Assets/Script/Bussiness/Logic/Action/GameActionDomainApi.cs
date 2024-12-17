@@ -4,6 +4,12 @@ namespace GamePlay.Bussiness.Logic
 {
     public interface GameActionDomainApi
     {
+        /// <summary>
+        /// 尝试获取行为模型
+        /// <para>actionId 行为ID</para>
+        /// <para>model 行为模型</para>
+        /// </summary>
+        public bool TryGetModel(int actionId, out GameActionModelBase model);
 
         /// <summary>
         /// 执行行为 
@@ -34,10 +40,26 @@ namespace GamePlay.Bussiness.Logic
         public void DoAction_LaunchProjectile(GameActionModel_LaunchProjectile action, GameEntityBase actorEntity);
 
         /// <summary>
-        /// 尝试获取行为模型
-        /// <para>actionId 行为ID</para>
-        /// <para>model 行为模型</para>
+        /// 执行行为 - 击退
+        /// action: 击退行为
+        /// actorEntity: 执行者
         /// </summary>
-        public bool TryGetModel(int actionId, out GameActionModelBase model);
+        public void DoAction_KnockBack(GameActionModel_KnockBack action, GameEntityBase actorEntity);
+
+        /// <summary>
+        /// 执行行为 - 属性修改
+        /// action: 属性修改行为
+        /// actorEntity: 执行者
+        /// </summary>
+        public void DoAction_AttributeModify(GameActionModel_Attribute action, GameEntityBase actorEntity, bool dontDo = false);
+
+        /// <summary>
+        /// 执行行为 - 附加buff
+        /// action: 附加buff行为
+        /// actorEntity: 执行者
+        /// </summary>
+        public void DoAction_AttachBuff(GameActionModel_AttachBuff action, GameEntityBase actorEntity);
+
+
     }
 }

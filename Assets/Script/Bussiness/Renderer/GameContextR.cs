@@ -18,6 +18,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameVFXContextR vfxContext { get; private set; }
         public GameProjectileContextR projectileContext { get; private set; }
         public GameFieldContextR fieldContext { get; private set; }
+        public GameBuffContextR buffContext { get; private set; }
 
         public GameEventService eventService { get; private set; }
         public GameEventService delayRCEventService { get; private set; }
@@ -40,6 +41,7 @@ namespace GamePlay.Bussiness.Renderer
             this.vfxContext = new GameVFXContextR();
             this.projectileContext = new GameProjectileContextR();
             this.fieldContext = new GameFieldContextR(sceneRoot);
+            this.buffContext = new GameBuffContextR();
 
             this.eventService = new GameEventService();
             this.delayRCEventService = new GameEventService();
@@ -73,6 +75,8 @@ namespace GamePlay.Bussiness.Renderer
                     return this.skillContext.repo.FindByEntityId(idArgs.entityId);
                 case GameEntityType.Projectile:
                     return this.projectileContext.repo.FindByEntityId(idArgs.entityId);
+                case GameEntityType.Buff:
+                    return this.buffContext.repo.FindByEntityId(idArgs.entityId);
                 default:
                     GameLogger.LogError("GameContextR.FindEntityByEntityId: unknown entityType: " + idArgs.entityType);
                     return null;

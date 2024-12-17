@@ -39,9 +39,8 @@ namespace GamePlay.Bussiness.Logic
                 if (modifiedValue > maxMP) realAttributeModify = maxMP - curValue;
             }
 
-            var actorRoleIdArgs = actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_AttributeModify(
-                actorRoleIdArgs,
+                actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default,
                 actor.idCom.ToArgs(),
                 target.idCom.ToArgs(),
                 modifyModel.modifyType,

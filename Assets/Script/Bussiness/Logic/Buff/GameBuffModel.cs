@@ -4,6 +4,7 @@ namespace GamePlay.Bussiness.Logic
     {
         public readonly int typeId;
         public readonly GameBuffRefreshFlag refreshFlag;
+        public readonly int maxLayer;
         public readonly int[] actionIds;
         public readonly GameBuffConditionSetModel conditionSetModel_action;
         public readonly GameBuffConditionSetModel conditionSetModel_remove;
@@ -11,6 +12,7 @@ namespace GamePlay.Bussiness.Logic
         public GameBuffModel(
             int typeId,
             GameBuffRefreshFlag refreshFlag,
+            int maxLayer,
             int[] actionIds,
             GameBuffConditionSetModel conditionSetModel_action,
             GameBuffConditionSetModel conditionSetModel_remove
@@ -18,6 +20,7 @@ namespace GamePlay.Bussiness.Logic
         {
             this.typeId = typeId;
             this.refreshFlag = refreshFlag;
+            this.maxLayer = maxLayer;
             this.actionIds = actionIds;
             this.conditionSetModel_action = conditionSetModel_action;
             this.conditionSetModel_remove = conditionSetModel_remove;

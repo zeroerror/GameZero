@@ -56,6 +56,9 @@ namespace GamePlay.Bussiness.Logic
                 case GameActionModel_Attribute attributeModifyAction:
                     this.DoAction_AttributeModify(attributeModifyAction, actorEntity);
                     break;
+                case GameActionModel_AttachBuff attachBuffAction:
+                    this.DoAction_AttachBuff(attachBuffAction, actorEntity);
+                    break;
                 default:
                     GameLogger.LogError($"未处理的行为类型：{actionModel.GetType().Name}");
                     break;
@@ -77,11 +80,11 @@ namespace GamePlay.Bussiness.Logic
             {
                 this._actionContext.dmgRecordList.Add(record);
                 // 提交RC
-                var evArgs = new GameActionRCArgs_DoDmg(
+                var evArgs = new GameActionRCArgs_Dmg(
                     action.typeId,
                     record
                 );
-                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO_DMG, evArgs);
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DMG, evArgs);
             });
         }
 
@@ -100,11 +103,11 @@ namespace GamePlay.Bussiness.Logic
             {
                 this._actionContext.healRecordList.Add(record);
                 // 提交RC
-                var evArgs = new GameActionRCArgs_DoHeal(
+                var evArgs = new GameActionRCArgs_Heal(
                     action.typeId,
                     record
                 );
-                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO_HEAL, evArgs);
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, evArgs);
             });
         }
 
@@ -140,7 +143,7 @@ namespace GamePlay.Bussiness.Logic
                         break;
                 }
                 var record = new GameActionRecord_LaunchProjectile(
-                    actorRoleIdArgs: actorEntity.idCom.ToArgs(),
+                    actorRoleIdArgs: actorEntity.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                     actorIdArgs: actorEntity.idCom.ToArgs(),
                     targetRoleIdArgs: selectedEntity.idCom.ToArgs()
                 );
@@ -173,11 +176,11 @@ namespace GamePlay.Bussiness.Logic
             recordList.ForEach((record) =>
             {
                 // 提交RC
-                var evArgs = new GameActionRCArgs_DoKnockBack(
+                var evArgs = new GameActionRCArgs_KnockBack(
                     action.typeId,
                     record
                 );
-                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO_KNOCK_BACK, evArgs);
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, evArgs);
             });
         }
 
@@ -195,11 +198,38 @@ namespace GamePlay.Bussiness.Logic
             recordList.ForEach((record) =>
             {
                 // 提交RC
-                var evArgs = new GameActionRCArgs_DoAttributeModify(
+                var evArgs = new GameActionRCArgs_AttributeModify(
                     action.typeId,
                     record
                 );
-                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO_ATTRIBUTE_MODIFY, evArgs);
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, evArgs);
+            });
+        }
+
+        public void DoAction_AttachBuff(GameActionModel_AttachBuff action, GameEntityBase actorEntity)
+        {
+            var recordList = new List<GameActionRecord_AttachBuff>();
+            var entitySelectApi = this._context.domainApi.entitySelectApi;
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
+            selectedEntities?.ForEach((selectedEntity) =>
+            {
+                var isSuc = this._context.domainApi.buffApi.AttachBuff(action.buffId, selectedEntity, action.layer, out var realAttachLayer);
+                if (isSuc) recordList.Add(new GameActionRecord_AttachBuff(
+                    actorRoleIdArgs: actorEntity.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
+                    actorIdArgs: actorEntity.idCom.ToArgs(),
+                    targetRoleIdArgs: selectedEntity.idCom.ToArgs(),
+                    buffId: action.buffId,
+                    layer: realAttachLayer
+                ));
+            });
+            recordList.ForEach((record) =>
+            {
+                // 提交RC
+                var evArgs = new GameActionRCArgs_AttachBuff(
+                    action.typeId,
+                    record
+                );
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, evArgs);
             });
         }
     }

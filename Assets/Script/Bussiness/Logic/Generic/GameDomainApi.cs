@@ -31,5 +31,8 @@ namespace GamePlay.Bussiness.Logic
 
         public GameEntityCollectDomainApi entityCollectApi { get; private set; }
         public void SetEntityCollectApi(GameEntityCollectDomainApi entityCollectApi) => this.entityCollectApi = entityCollectApi;
+
+        public GameBuffDomainApi buffApi { get; private set; }
+        public void SetBuffApi(GameBuffDomainApi buffApi) => this.buffApi = buffApi;
     }
 }

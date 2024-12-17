@@ -19,16 +19,10 @@ namespace GamePlay.Config
 
         public static void DrawProperty(this SerializedProperty property, string label = "", float height = 6, bool isReadOnly = false)
         {
-            EditorGUI.BeginChangeCheck();
             if (isReadOnly)
                 EditorGUILayout.PropertyField(property, new GUIContent(label), true);
             else
                 EditorGUILayout.PropertyField(property, new GUIContent(label));
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                property.serializedObject.ApplyModifiedProperties();
-            }
             _AdjustLayout(height);
         }
 

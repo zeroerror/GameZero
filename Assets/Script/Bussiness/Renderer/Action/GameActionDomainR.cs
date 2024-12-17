@@ -27,18 +27,22 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _BindEvent()
         {
-            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DO_DMG, this._OnAction_DoDmg);
-            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DO_HEAL, this._OnAction_DoHeal);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DMG, this._OnAction_DoDmg);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, this._OnAction_DoHeal);
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, this._OnAction_DoLaunchProjectile);
-            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DO_KNOCK_BACK, this._OnAction_DoKnockBack);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, this._OnAction_DoKnockBack);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, this._OnAction_DoAttributeModify);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, this._OnAction_DoAttachBuff);
         }
 
         private void _UnbindEvents()
         {
-            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DO_DMG, this._OnAction_DoDmg);
-            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DO_HEAL, this._OnAction_DoHeal);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DMG, this._OnAction_DoDmg);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, this._OnAction_DoHeal);
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, this._OnAction_DoLaunchProjectile);
-            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DO_KNOCK_BACK, this._OnAction_DoKnockBack);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, this._OnAction_DoKnockBack);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, this._OnAction_DoAttributeModify);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, this._OnAction_DoAttachBuff);
         }
 
 
@@ -85,7 +89,7 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnAction_DoDmg(object args)
         {
-            var evArgs = (GameActionRCArgs_DoDmg)args;
+            var evArgs = (GameActionRCArgs_Dmg)args;
             ref var dmgRecord = ref evArgs.dmgRecord;
             ref var actorIdArgs = ref dmgRecord.actorIdArgs;
             var actorEntity = this._context.FindEntity(actorIdArgs);
@@ -93,7 +97,7 @@ namespace GamePlay.Bussiness.Renderer
             var targetEntity = this._context.FindEntity(targetIdArgs);
             if (actorEntity == null || targetEntity == null)
             {
-                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_DO_DMG, args);
+                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_DMG, args);
                 return;
             }
             this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
@@ -101,7 +105,7 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnAction_DoHeal(object args)
         {
-            var evArgs = (GameActionRCArgs_DoHeal)args;
+            var evArgs = (GameActionRCArgs_Heal)args;
             ref var healRecord = ref evArgs.healRecord;
             ref var actorIdArgs = ref healRecord.actorIdArgs;
             var actorEntity = this._context.FindEntity(actorIdArgs);
@@ -109,7 +113,7 @@ namespace GamePlay.Bussiness.Renderer
             var targetEntity = this._context.FindEntity(targetIdArgs);
             if (actorEntity == null || targetEntity == null)
             {
-                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_DO_HEAL, args);
+                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, args);
                 return;
             }
             this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
@@ -133,7 +137,7 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnAction_DoKnockBack(object args)
         {
-            var evArgs = (GameActionRCArgs_DoKnockBack)args;
+            var evArgs = (GameActionRCArgs_KnockBack)args;
             ref var record = ref evArgs.record;
             ref var actorIdArgs = ref record.actorIdArgs;
             var actorEntity = this._context.FindEntity(actorIdArgs);
@@ -141,7 +145,39 @@ namespace GamePlay.Bussiness.Renderer
             var targetEntity = this._context.FindEntity(targetIdArgs);
             if (actorEntity == null || targetEntity == null)
             {
-                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_DO_KNOCK_BACK, args);
+                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, args);
+                return;
+            }
+            this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
+        }
+
+        private void _OnAction_DoAttributeModify(object args)
+        {
+            var evArgs = (GameActionRCArgs_AttributeModify)args;
+            ref var record = ref evArgs.record;
+            ref var actorIdArgs = ref record.actorIdArgs;
+            var actorEntity = this._context.FindEntity(actorIdArgs);
+            ref var targetIdArgs = ref record.targetIdArgs;
+            var targetEntity = this._context.FindEntity(targetIdArgs);
+            if (actorEntity == null || targetEntity == null)
+            {
+                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, args);
+                return;
+            }
+            this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
+        }
+
+        private void _OnAction_DoAttachBuff(object args)
+        {
+            var evArgs = (GameActionRCArgs_AttachBuff)args;
+            ref var record = ref evArgs.record;
+            ref var actorIdArgs = ref record.actorIdArgs;
+            var actorEntity = this._context.FindEntity(actorIdArgs);
+            ref var targetIdArgs = ref record.targetIdArgs;
+            var targetEntity = this._context.FindEntity(targetIdArgs);
+            if (actorEntity == null || targetEntity == null)
+            {
+                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, args);
                 return;
             }
             this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);

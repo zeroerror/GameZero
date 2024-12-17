@@ -12,9 +12,8 @@ namespace GamePlay.Config
         [Header("场景内怪物生成区域")]
         public GameFieldMonsterAreaEM[] monsterAreaEMs;
 
-        protected override void OnValidate()
+        protected void OnValidate()
         {
-            base.OnValidate();
             UpdateData();
         }
 

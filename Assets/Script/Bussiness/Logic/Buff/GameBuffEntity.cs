@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameBuffEntity : GameEntityBase
@@ -29,9 +31,13 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Clear()
         {
-            base.Clear();
+            this.BindAttributeCom(null);
+            this.BindTransformCom(null);
             this.elapsedTime = 0;
             this.layer = 1;
+            this.conditionSetEntity_action.Clear();
+            this.conditionSetEntity_remove.Clear();
+            base.Clear();
         }
 
         public override void Tick(float dt)
@@ -41,7 +47,12 @@ namespace GamePlay.Bussiness.Logic
             this.conditionSetEntity_remove.Tick(dt);
         }
 
-        public void AttachLayer(int layer = 1)
+        /// <summary>
+        /// 挂载层数
+        /// <para>layer: 层数</para>
+        /// <returns> 实际挂载层数 </returns>
+        /// </summary>
+        public int AttachLayer(int layer = 1)
         {
             var m = this.model;
             if (m.refreshFlag.HasFlag(GameBuffRefreshFlag.RefreshTime))
@@ -54,8 +65,34 @@ namespace GamePlay.Bussiness.Logic
             }
             if (m.refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer))
             {
-                this.layer += layer;
+                var beforeLayer = this.layer;
+                var afterLayer = beforeLayer + layer;
+                var maxLayer = m.maxLayer == 0 ? int.MaxValue : m.maxLayer;// 0表示无限层数
+                afterLayer = GameMath.Min(afterLayer, maxLayer);
+                this.layer = afterLayer;
+                return afterLayer - beforeLayer;
             }
+            return 0;
+        }
+
+        /// <summary>
+        /// 移除层数
+        /// <para>layer: 层数(0代表全部移除)</para>
+        /// <returns> 实际移除层数 </returns>
+        /// </summary>
+        public int DetachLayer(int layer)
+        {
+            layer = layer == 0 ? int.MaxValue : layer;
+
+            var beforeLayer = this.layer;
+            var afterLayer = beforeLayer - layer;
+            afterLayer = GameMath.Max(afterLayer, 0);
+            this.layer = afterLayer;
+            if (afterLayer <= 0)
+            {
+                this.SetValid(false);
+            }
+            return beforeLayer - afterLayer;
         }
     }
 }
