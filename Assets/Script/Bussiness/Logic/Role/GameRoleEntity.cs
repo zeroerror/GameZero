@@ -6,19 +6,20 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleModel model { get; private set; }
         public GameRoleInputCom inputCom { get; private set; }
-        public GameRoleFSMCom fsmCom { get; private set; }
-        public GameSkillComp skillCom { get; private set; }
-
         public GameRoleAICom aiCom { get; private set; }
+        public GameRoleFSMCom fsmCom { get; private set; }
+        public GameSkillCom skillCom { get; private set; }
+        public GameBuffCom buffCom { get; private set; }
 
         public GameRoleEntity(GameRoleModel model) : base(model.typeId, GameEntityType.Role)
         {
             this.model = model;
             this.SetByModel(model);
             this.inputCom = new GameRoleInputCom();
-            this.fsmCom = new GameRoleFSMCom();
-            this.skillCom = new GameSkillComp(this);
             this.aiCom = new GameRoleAICom();
+            this.fsmCom = new GameRoleFSMCom();
+            this.skillCom = new GameSkillCom(this);
+            this.buffCom = new GameBuffCom();
         }
 
         public override void Clear()

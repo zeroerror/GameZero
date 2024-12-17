@@ -17,7 +17,7 @@ namespace GamePlay.Bussiness.Logic
         public GameProjectileContext projectileContext { get; private set; }
         public GameFieldContext fieldContext { get; private set; }
         public GameTransformContext transformContext { get; private set; }
-
+        public GameBuffContext buffContext { get; private set; }
 
         public GameContext()
         {
@@ -35,6 +35,7 @@ namespace GamePlay.Bussiness.Logic
             this.projectileContext = new GameProjectileContext();
             this.fieldContext = new GameFieldContext();
             this.transformContext = new GameTransformContext();
+            this.buffContext = new GameBuffContext();
         }
 
         public void SubmitRC(string name, object args)
