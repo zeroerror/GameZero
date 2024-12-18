@@ -43,7 +43,6 @@ namespace GamePlay.Config
             }
         }
 
-
         public GameProjectileModelR ToModelR()
         {
             var prefabUrl = this.prefab?.GetPrefabUrl();

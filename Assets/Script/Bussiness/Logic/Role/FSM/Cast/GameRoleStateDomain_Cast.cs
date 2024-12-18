@@ -58,8 +58,9 @@ namespace GamePlay.Bussiness.Logic
             var stateModel = role.fsmCom.castState;
             var skill = stateModel.skill;
             var timelineCom = skill.timelineCom;
-            if (!timelineCom.isPlaying) return GameRoleStateType.Idle;
+            if (timelineCom.isPlaying) return GameRoleStateType.None;
 
+            // -> 移动
             var inputCom = role.inputCom;
             if (inputCom.TryGetInputArgs(out var inputArgs))
             {
@@ -69,7 +70,8 @@ namespace GamePlay.Bussiness.Logic
                 }
             }
 
-            return GameRoleStateType.None;
+            // -> 待机
+            return GameRoleStateType.Idle;
         }
 
         public override void ExitTo(GameRoleEntity role, GameRoleStateType toState)

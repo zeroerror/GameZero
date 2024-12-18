@@ -1338,6 +1338,8 @@ MonoBehaviour:
   monsterSpawnEMs:
   - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
     count: 3
+  - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
+    count: 1
   spawnTime: 20
 --- !u!1 &2177123243163086444
 GameObject:
@@ -2852,6 +2854,8 @@ MonoBehaviour:
   monsterSpawnEMs:
   - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
     count: 3
+  - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
+    count: 3
   spawnTime: 40
 --- !u!1 &5361391429270978426
 GameObject:
@@ -4224,6 +4228,8 @@ MonoBehaviour:
   monsterSpawnEMs:
   - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
     count: 3
+  - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
+    count: 1
   spawnTime: 1
 --- !u!1 &8191809144151242819
 GameObject:

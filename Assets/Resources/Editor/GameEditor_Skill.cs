@@ -59,6 +59,30 @@ namespace GamePlay.Config
             this.animLength_p.DrawProperty("动画时长(s)");
             this.timelineEvents_p.DrawProperty();
             this.conditionEM_p.DrawProperty();
+
+            var clip = this.animClip_p.objectReferenceValue as AnimationClip;
+            if (clip && GUI.changed)
+            {
+                // 同步动画名称和时长
+                this.animName_p.stringValue = clip.name;
+                this.animLength_p.floatValue = clip.length;
+                // 同步时间轴事件
+                var events = AnimationUtility.GetAnimationEvents(clip);
+                for (int i = 0; i < events.Length; i++)
+                {
+                    var e = events[i];
+                    var time = e.time;
+                    var frame = (int)(e.time * GameTimeCollection.frameRate);
+                    var element = this.timelineEvents_p.GetArrayElementAtIndex(i);
+                    if (element == null)
+                    {
+                        this.timelineEvents_p.InsertArrayElementAtIndex(i);
+                        element = this.timelineEvents_p.GetArrayElementAtIndex(i);
+                    }
+                    element.FindPropertyRelative("time").floatValue = time;
+                    element.FindPropertyRelative("frame").intValue = frame;
+                }
+            }
         }
 
         private void _ShowRoleSORefs(GameSkillSO so)

@@ -23,8 +23,9 @@ namespace GamePlay.Bussiness.Renderer
 
             var typePrefab = Resources.Load<GameObject>($"Role/{typeId}/role_prefab_{typeId}");
             var roleGO = typePrefab ? GameObject.Instantiate(typePrefab) : new GameObject();
-            roleGO.AddComponent<Animator>().runtimeAnimatorController = null;
-            roleGO.AddComponent<SpriteRenderer>();
+            if (!roleGO.TryGetComponent<Animator>(out var animator)) animator = roleGO.AddComponent<Animator>();
+            animator.runtimeAnimatorController = null;
+            if (!roleGO.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer = roleGO.AddComponent<SpriteRenderer>();
             roleGO.transform.SetParent(body.transform);
 
             var scale = body.transform.localScale;
@@ -38,7 +39,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public AnimationClip LoadAnimationClip(int typeId, string clipName)
         {
-            var res = Resources.Load<AnimationClip>($"Role/{typeId}/Anim/{clipName}");
+            var res = Resources.Load<AnimationClip>($"Role/{typeId}/{clipName}");
             if (!res)
             {
                 GameLogger.LogError($"角色工厂[渲染层]: 加载动画失败 {typeId} {clipName}");

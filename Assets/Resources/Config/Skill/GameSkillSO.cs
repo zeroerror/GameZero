@@ -19,23 +19,6 @@ namespace GamePlay.Config
 
         public GameSkillConditionEM conditionEM;
 
-        public void Update()
-        {
-            if (animClip != null)
-            {
-                animName = animClip.name;
-                animLength = animClip.length;
-                var events = AnimationUtility.GetAnimationEvents(animClip);
-                if (timelineEvents == null || timelineEvents.Length != events.Length) timelineEvents = new GameTimelineEventEM[events.Length];
-                for (int i = 0; i < events.Length; i++)
-                {
-                    var e = events[i];
-                    timelineEvents[i].time = e.time;
-                    timelineEvents[i].frame = (int)(e.time * GameTimeCollection.frameRate);
-                }
-            }
-        }
-
         public GameSkillModel ToModel()
         {
             var model = new GameSkillModel(
