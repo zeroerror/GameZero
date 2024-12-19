@@ -22,10 +22,16 @@ namespace GamePlay.Config
 
         public GameActionModelR ToModel()
         {
-            if (actVFXScale.x == 0 || actVFXScale.y == 0)
+            if (actEffectPrefab && (actVFXScale.x == 0 || actVFXScale.y == 0))
             {
                 GameLogger.LogWarning("请注意 行为特效缩放值为0");
             }
+
+            if (hitEffectPrefab && (hitVFXScale.x == 0 || hitVFXScale.y == 0))
+            {
+                GameLogger.LogWarning("请注意 受击特效缩放值为0");
+            }
+
             return new GameActionModelR(
                 this.typeId,
                 this.actEffectPrefab?.GetPrefabUrl(),

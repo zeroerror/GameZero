@@ -23,10 +23,15 @@ namespace GamePlay.Bussiness.Logic
 
         public void Tick(GameRoleEntity role, float dt)
         {
+            var attackState = role.aiCom.attackState;
             var inputCom = role.inputCom;
-            if (inputCom.HasInput()) return;
-            var aiCom = role.aiCom;
-            var attackState = aiCom.attackState;
+            if (inputCom.HasInput())
+            {
+                // 已有输入, 重置攻击状态
+                attackState.Clear();
+                return;
+            }
+
             var castTarget = attackState.targetEntity;
             var skillCom = role.skillCom;
             GameSkillEntity castSkill = null;

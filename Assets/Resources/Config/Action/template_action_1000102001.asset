@@ -156,7 +156,7 @@ MonoBehaviour:
     hitVFXOffset: {x: 0, y: 1}
     hitCamShakeModel:
       angle: 0
-      amplitude: 1
-      frequency: 25
-      duration: 0.1
+      amplitude: 0.1
+      frequency: 6
+      duration: 0.2
   skillSORefs: []

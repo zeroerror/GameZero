@@ -35,13 +35,17 @@ namespace GamePlay.Bussiness.Logic
                 dir = _GetKnockBack_SelfForward(actor, target, action);
             }
 
+            // 击退抗性
+            var knockBackResist = target.attributeCom.GetValue(GameAttributeType.KnockbackResist);
+            var distance = action.distance * (1 - knockBackResist);
+
             var actorRoleIdArgs = actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_KnockBack(
                 actorRoleIdArgs,
                 actor.idCom.ToArgs(),
                 target.idCom.ToArgs(),
                 dir,
-                action.distance,
+                distance,
                 action.duration,
                 action.easingType
            );
