@@ -119,6 +119,8 @@ MonoBehaviour:
     count: 3
   - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
     count: 1
+  - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
+    count: 20
   spawnTime: 20
 --- !u!1 &5132421667237102688
 GameObject:
@@ -433,6 +435,8 @@ MonoBehaviour:
     count: 3
   - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
     count: 1
+  - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
+    count: 10
   spawnTime: 1
 --- !u!1 &8960311975285855414
 GameObject:

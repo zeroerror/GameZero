@@ -68,7 +68,8 @@ namespace GamePlay.Config
                 this.animLength_p.floatValue = clip.length;
                 // 同步时间轴事件
                 var events = AnimationUtility.GetAnimationEvents(clip);
-                for (int i = 0; i < events.Length; i++)
+                this.timelineEvents_p.arraySize = events?.Length ?? 0;
+                for (int i = 0; i < this.timelineEvents_p.arraySize; i++)
                 {
                     var e = events[i];
                     var time = e.time;
