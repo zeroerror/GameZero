@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 1000201001
   actionType: 1
-  desc: "\u72C2\u66B4\u8001\u9F20\u6495\u54AC"
+  desc: "\u5C71\u7CBE\u9524\u51FB"
   dmgActionEM:
     selectorEM:
       selectAnchorType: 1
@@ -22,9 +22,9 @@ MonoBehaviour:
       entityType: 1
       selColliderType: 1
       boxColliderModel:
-        offset: {x: 1, y: 1}
+        offset: {x: 2, y: 1}
         angle: 0
-        width: 2
+        width: 4
         height: 2
       circleColliderModel:
         offset: {x: 0.2, y: 0}
@@ -36,7 +36,7 @@ MonoBehaviour:
         radius: 0
         fanAngle: 0
     dmgType: 1
-    value: 100
+    value: 1000
     valueFormat: 1
     refType: 1
   healActionEM:
@@ -143,9 +143,9 @@ MonoBehaviour:
         fanAngle: 0
   actionEMR:
     typeId: 0
-    actEffectPrefab: {fileID: 0}
-    actVFXScale: {x: 0, y: 0}
-    actVFXOffset: {x: 0, y: 0}
+    actEffectPrefab: {fileID: 59758037400367371, guid: af2d000b09c8a6e469b15a8f57de967f, type: 3}
+    actVFXScale: {x: 0.5, y: 1}
+    actVFXOffset: {x: 2, y: 0}
     actCamShakeModel:
       angle: 0
       amplitude: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
     hitVFXOffset: {x: 0, y: 1}
     hitCamShakeModel:
       angle: 0
-      amplitude: 0
+      amplitude: 0.1
       frequency: 6
-      duration: 0
+      duration: 0.2
   skillSORefs: []

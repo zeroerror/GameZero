@@ -36,7 +36,7 @@ MonoBehaviour:
         radius: 0
         fanAngle: 0
     dmgType: 1
-    value: 1111
+    value: 100
     valueFormat: 1
     refType: 1
   healActionEM:
