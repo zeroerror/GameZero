@@ -63,6 +63,13 @@ namespace GamePlay.Bussiness.Logic
                     GameLogger.LogError($"未处理的行为类型：{actionModel.GetType().Name}");
                     break;
             }
+
+            // 提交RC - 行为执行
+            var evArgs = new GameActionRCArgs_Do(
+                actionId,
+                actorEntity.idCom.ToArgs()
+            );
+            this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO, evArgs);
         }
 
         public void DoAction_Dmg(GameActionModel_Dmg action, GameEntityBase actorEntity)

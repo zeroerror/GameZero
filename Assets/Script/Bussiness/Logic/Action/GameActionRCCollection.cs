@@ -2,6 +2,8 @@ namespace GamePlay.Bussiness.Logic
 {
     public static class GameActionRCCollection
     {
+        /** 行为执行 */
+        public static readonly string RC_GAME_ACTION_DO = "RC_GAME_ACTION_DO";
         /** 行为执行 - 伤害行为 */
         public static readonly string RC_GAME_ACTION_DMG = "RC_GAME_ACTION_DO_DMG";
         /** 行为执行 - 治疗行为 */
@@ -14,6 +16,17 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_ACTION_ATTRIBUTE_MODIFY = "RC_GAME_ACTION_DO_ATTRIBUTE_MODIFY";
         /** 行为执行 - 挂载Buff */
         public static readonly string RC_GAME_ACTION_ATTACH_BUFF = "RC_GAME_ACTION_ATTACH_BUFF";
+    }
+
+    public struct GameActionRCArgs_Do
+    {
+        public int actionId;
+        public GameIdArgs actorIdArgs;
+        public GameActionRCArgs_Do(int actionId, in GameIdArgs actorIdArgs)
+        {
+            this.actionId = actionId;
+            this.actorIdArgs = actorIdArgs;
+        }
     }
 
     public struct GameActionRCArgs_Dmg

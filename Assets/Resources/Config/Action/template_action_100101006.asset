@@ -29,7 +29,7 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 3
+        radius: 6
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -143,10 +143,18 @@ MonoBehaviour:
         fanAngle: 0
   actionEMR:
     typeId: 0
-    vfxPrefab: {fileID: 3672937312462212057, guid: d50ee2b048087f947a6d5bb867c63938, type: 3}
-    vfxScale: {x: 0.1, y: 0.1}
-    vfxOffset: {x: 0, y: 0}
-    camShakeModel:
+    actEffectPrefab: {fileID: 3672937312462212057, guid: 24e4ca5ae27d11b4baac1ec375e510b2, type: 3}
+    actVFXScale: {x: 0.6, y: 0.6}
+    actVFXOffset: {x: 0, y: 0}
+    actCamShakeModel:
+      angle: 0
+      amplitude: 0
+      frequency: 0
+      duration: 0
+    hitEffectPrefab: {fileID: 1107324212316225829, guid: 68ba587f440a02d4280724ddfae0aa2e, type: 3}
+    hitVFXScale: {x: 0.5, y: 0.5}
+    hitVFXOffset: {x: 0, y: 2}
+    hitCamShakeModel:
       angle: 0
       amplitude: 0
       frequency: 0

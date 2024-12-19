@@ -143,12 +143,20 @@ MonoBehaviour:
         fanAngle: 0
   actionEMR:
     typeId: 0
-    vfxPrefab: {fileID: 59758037400367371, guid: 046b88167bb483b43ab350b27cf5909e, type: 3}
-    vfxScale: {x: 0.25, y: 0.25}
-    vfxOffset: {x: 0, y: 0}
-    camShakeModel:
+    actEffectPrefab: {fileID: 59758037400367371, guid: af2d000b09c8a6e469b15a8f57de967f, type: 3}
+    actVFXScale: {x: 0.5, y: 1}
+    actVFXOffset: {x: 2, y: 0}
+    actCamShakeModel:
       angle: 0
       amplitude: 0
       frequency: 0
       duration: 0
+    hitEffectPrefab: {fileID: 6927947509564487783, guid: ce33e8716848a2542b26d97976a509fb, type: 3}
+    hitVFXScale: {x: 0.3, y: 0.3}
+    hitVFXOffset: {x: 0, y: 1}
+    hitCamShakeModel:
+      angle: 0
+      amplitude: 1
+      frequency: 25
+      duration: 0.1
   skillSORefs: []

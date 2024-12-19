@@ -77,6 +77,18 @@ namespace GamePlay.Core
 
         public static void SetSortingLayer(this GameObject go, int orderInLayer, string layerName = "Default")
         {
+            var pss = go.GetComponentsInChildren<ParticleSystem>();
+            pss.Foreach((ps) =>
+            {
+                var render = ps.GetComponent<Renderer>();
+                if (render)
+                {
+                    render.sortingLayerName = layerName;
+                    render.sortingOrder = orderInLayer;
+                }
+            });
+            if (pss != null && pss.Length > 0) return;
+
             var renderer = go.GetComponent<Renderer>();
             if (renderer)
             {

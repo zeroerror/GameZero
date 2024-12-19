@@ -27,32 +27,34 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _BindEvent()
         {
-            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DMG, this._OnAction_DoDmg);
-            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, this._OnAction_DoHeal);
-            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, this._OnAction_DoLaunchProjectile);
-            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, this._OnAction_DoKnockBack);
-            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, this._OnAction_DoAttributeModify);
-            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, this._OnAction_DoAttachBuff);
+
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DO, this._OnAction_Do);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DMG, this._OnAction_Dmg);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, this._OnAction_Heal);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, this._OnAction_LaunchProjectile);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, this._OnAction_KnockBack);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, this._OnAction_AttributeModify);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, this._OnAction_AttachBuff);
         }
 
         private void _UnbindEvents()
         {
-            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DMG, this._OnAction_DoDmg);
-            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, this._OnAction_DoHeal);
-            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, this._OnAction_DoLaunchProjectile);
-            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, this._OnAction_DoKnockBack);
-            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, this._OnAction_DoAttributeModify);
-            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, this._OnAction_DoAttachBuff);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DO, this._OnAction_Do);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DMG, this._OnAction_Dmg);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, this._OnAction_Heal);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, this._OnAction_LaunchProjectile);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, this._OnAction_KnockBack);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, this._OnAction_AttributeModify);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, this._OnAction_AttachBuff);
         }
 
-
         /// <summary>
-        /// 执行行为触发的表现
+        /// 执行行为, 只要行为执行就会调用
         /// </summary>
         /// <param name="actionId"></param>
-        /// <param name="actorEntity"></param>
-        /// <param name="targetEntity"></param>
-        private void _DoActionRenderer(int actionId, GameEntityBase actorEntity, GameEntityBase targetEntity)
+        /// <param name="actor"></param>
+        /// <param name="target"></param>
+        private void _DoAction(int actionId, GameEntityBase actor)
         {
             if (!this._actionContext.template.TryGet(actionId, out var action))
             {
@@ -60,127 +62,181 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
             // 特效
-            if (action.vfxPrefabUrl != null)
+            var actEffectUrl = action.actEffectUrl;
+            if (actEffectUrl != null)
             {
 
-                var attachNode = targetEntity is GameRoleEntityR targetEntityR ? targetEntityR.go : null;
-                var attachOffset = action.vfxOffset;
-                attachOffset.x = targetEntity.transformCom.forward.x < 0 ? -attachOffset.x : attachOffset.x;
-                var attachPos = targetEntity.transformCom.position + attachOffset;
+                var attachNode = actor is GameRoleEntityR actRole ? actRole.go : null;
+                var transCom = actor.transformCom;
+                var attachOffset = action.actVFXOffset;
+                attachOffset.x = transCom.forward.x < 0 ? -attachOffset.x : attachOffset.x;
+                var attachPos = transCom.position + attachOffset;
                 var args = new GameVFXPlayArgs()
                 {
                     attachNode = attachNode,
                     attachOffset = attachOffset,
                     position = attachPos,
-                    prefabUrl = action.vfxPrefabUrl,
-                    angle = targetEntity.transformCom.angle,
-                    scale = action.vfxScale,
+                    prefabUrl = actEffectUrl,
+                    angle = transCom.angle,
+                    scale = action.actVFXScale,
                     loopDuration = 0,
                 };
                 this._context.domainApi.vfxApi.Play(args);
             }
             // 震屏
-            var shakeModel = action.shakeModel;
-            if (shakeModel != null)
+            if (action.actCamShakeModel != null)
             {
-                this._context.cameraEntity.shakeCom.Shake(shakeModel);
+                this._context.cameraEntity.shakeCom.Shake(action.actCamShakeModel);
             }
         }
 
-        private void _OnAction_DoDmg(object args)
+        /// <summary>
+        /// 执行行为成功, 只有行为成功命中才会调用
+        /// <para>target: 目标实体</para>
+        /// </summary>
+        private void _DoActionSuccess(int actionId, GameEntityBase target)
+        {
+            if (!this._actionContext.template.TryGet(actionId, out var action))
+            {
+                GameLogger.LogError("行为执行: 未知的行为Id " + actionId);
+                return;
+            }
+            // 特效
+            var hitEffectUrl = action.hitEffectUrl;
+            if (hitEffectUrl != null)
+            {
+
+                var attachNode = target is GameRoleEntityR actRole ? actRole.go : null;
+                var transCom = target.transformCom;
+                var attachOffset = action.hitVFXOffset;
+                attachOffset.x = transCom.forward.x < 0 ? -attachOffset.x : attachOffset.x;
+                var attachPos = transCom.position + attachOffset;
+                var args = new GameVFXPlayArgs()
+                {
+                    attachNode = attachNode,
+                    attachOffset = attachOffset,
+                    position = attachPos,
+                    prefabUrl = hitEffectUrl,
+                    angle = transCom.angle,
+                    scale = action.hitVFXScale,
+                    loopDuration = 0,
+                };
+                this._context.domainApi.vfxApi.Play(args);
+            }
+            // 震屏
+            if (action.hitCamShakeModel != null)
+            {
+                this._context.cameraEntity.shakeCom.Shake(action.hitCamShakeModel);
+            }
+        }
+
+        private void _OnAction_Do(object args)
+        {
+            var evArgs = (GameActionRCArgs_Do)args;
+            ref var actorIdArgs = ref evArgs.actorIdArgs;
+            var actor = this._context.FindEntity(actorIdArgs);
+            if (actor == null)
+            {
+                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_DO, args);
+                return;
+            }
+            this._DoAction(evArgs.actionId, actor);
+        }
+
+        private void _OnAction_Dmg(object args)
         {
             var evArgs = (GameActionRCArgs_Dmg)args;
             ref var dmgRecord = ref evArgs.dmgRecord;
             ref var actorIdArgs = ref dmgRecord.actorIdArgs;
-            var actorEntity = this._context.FindEntity(actorIdArgs);
+            var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref dmgRecord.targetIdArgs;
-            var targetEntity = this._context.FindEntity(targetIdArgs);
-            if (actorEntity == null || targetEntity == null)
+            var target = this._context.FindEntity(targetIdArgs);
+            if (actor == null || target == null)
             {
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_DMG, args);
                 return;
             }
-            this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
+            this._DoActionSuccess(evArgs.actionId, target);
         }
 
-        private void _OnAction_DoHeal(object args)
+        private void _OnAction_Heal(object args)
         {
             var evArgs = (GameActionRCArgs_Heal)args;
             ref var healRecord = ref evArgs.healRecord;
             ref var actorIdArgs = ref healRecord.actorIdArgs;
-            var actorEntity = this._context.FindEntity(actorIdArgs);
+            var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref healRecord.targetIdArgs;
-            var targetEntity = this._context.FindEntity(targetIdArgs);
-            if (actorEntity == null || targetEntity == null)
+            var target = this._context.FindEntity(targetIdArgs);
+            if (actor == null || target == null)
             {
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, args);
                 return;
             }
-            this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
+            this._DoActionSuccess(evArgs.actionId, target);
         }
 
-        private void _OnAction_DoLaunchProjectile(object args)
+        private void _OnAction_LaunchProjectile(object args)
         {
             var evArgs = (GameActionRCArgs_LaunchProjectile)args;
             ref var record = ref evArgs.record;
             ref var actorIdArgs = ref record.actorIdArgs;
-            var actorEntity = this._context.FindEntity(actorIdArgs);
+            var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref record.targetIdArgs;
-            var targetEntity = this._context.FindEntity(targetIdArgs);
-            if (actorEntity == null || targetEntity == null)
+            var target = this._context.FindEntity(targetIdArgs);
+            if (actor == null || target == null)
             {
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, args);
                 return;
             }
-            this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
+            this._DoActionSuccess(evArgs.actionId, target);
         }
 
-        private void _OnAction_DoKnockBack(object args)
+        private void _OnAction_KnockBack(object args)
         {
             var evArgs = (GameActionRCArgs_KnockBack)args;
             ref var record = ref evArgs.record;
             ref var actorIdArgs = ref record.actorIdArgs;
-            var actorEntity = this._context.FindEntity(actorIdArgs);
+            var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref record.targetIdArgs;
-            var targetEntity = this._context.FindEntity(targetIdArgs);
-            if (actorEntity == null || targetEntity == null)
+            var target = this._context.FindEntity(targetIdArgs);
+            if (actor == null || target == null)
             {
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, args);
                 return;
             }
-            this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
+            this._DoActionSuccess(evArgs.actionId, target);
         }
 
-        private void _OnAction_DoAttributeModify(object args)
+        private void _OnAction_AttributeModify(object args)
         {
             var evArgs = (GameActionRCArgs_AttributeModify)args;
             ref var record = ref evArgs.record;
             ref var actorIdArgs = ref record.actorIdArgs;
-            var actorEntity = this._context.FindEntity(actorIdArgs);
+            var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref record.targetIdArgs;
-            var targetEntity = this._context.FindEntity(targetIdArgs);
-            if (actorEntity == null || targetEntity == null)
+            var target = this._context.FindEntity(targetIdArgs);
+            if (actor == null || target == null)
             {
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, args);
                 return;
             }
-            this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
+            this._DoActionSuccess(evArgs.actionId, target);
         }
 
-        private void _OnAction_DoAttachBuff(object args)
+        private void _OnAction_AttachBuff(object args)
         {
             var evArgs = (GameActionRCArgs_AttachBuff)args;
             ref var record = ref evArgs.record;
             ref var actorIdArgs = ref record.actorIdArgs;
-            var actorEntity = this._context.FindEntity(actorIdArgs);
+            var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref record.targetIdArgs;
-            var targetEntity = this._context.FindEntity(targetIdArgs);
-            if (actorEntity == null || targetEntity == null)
+            var target = this._context.FindEntity(targetIdArgs);
+            if (actor == null || target == null)
             {
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, args);
                 return;
             }
-            this._DoActionRenderer(evArgs.actionId, actorEntity, targetEntity);
+            this._DoActionSuccess(evArgs.actionId, target);
         }
     }
 }

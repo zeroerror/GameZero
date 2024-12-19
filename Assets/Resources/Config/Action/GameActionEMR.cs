@@ -10,25 +10,32 @@ namespace GamePlay.Config
     {
         public int typeId;
 
-        public GameObject vfxPrefab;
-        public GameVec2 vfxScale = GameVec2.one;
-        public GameVec2 vfxOffset = GameVec2.zero;
+        public GameObject actEffectPrefab;
+        public GameVec2 actVFXScale = GameVec2.one;
+        public GameVec2 actVFXOffset = GameVec2.zero;
+        public GameCameraShakeModel actCamShakeModel;
 
-        public GameCameraShakeModel camShakeModel;
+        public GameObject hitEffectPrefab;
+        public GameVec2 hitVFXScale = GameVec2.one;
+        public GameVec2 hitVFXOffset = GameVec2.zero;
+        public GameCameraShakeModel hitCamShakeModel;
 
         public GameActionModelR ToModel()
         {
-            var url = this.vfxPrefab?.GetPrefabUrl();
-            if (vfxScale.x == 0 || vfxScale.y == 0)
+            if (actVFXScale.x == 0 || actVFXScale.y == 0)
             {
                 GameLogger.LogWarning("请注意 行为特效缩放值为0");
             }
             return new GameActionModelR(
                 this.typeId,
-                url,
-                this.vfxScale,
-                this.vfxOffset,
-                this.camShakeModel
+                this.actEffectPrefab?.GetPrefabUrl(),
+                this.actVFXScale,
+                this.actVFXOffset,
+                this.actCamShakeModel?.amplitude != 0 ? this.actCamShakeModel : null,
+                this.hitEffectPrefab?.GetPrefabUrl(),
+                this.hitVFXScale,
+                this.hitVFXOffset,
+                this.hitCamShakeModel?.amplitude != 0 ? this.hitCamShakeModel : null
             );
         }
 

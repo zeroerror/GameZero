@@ -16,7 +16,6 @@ namespace GamePlay.Bussiness.Renderer
         public Vector2 attachOffset { get; private set; }
         public bool isAttachParent { get; private set; }
 
-
         public GameParticlePlayCom particleCom { get; private set; }
         public GameTimelineCom timelineCom { get; private set; }
 

@@ -31,7 +31,7 @@ namespace GamePlay.Bussiness.Logic
             var skillCom = role.skillCom;
             GameSkillEntity castSkill = null;
             // 目标存活, 不寻找新的目标
-            if (castTarget == null || castTarget.attributeCom.GetValue(GameAttributeType.HP) <= 0)
+            if (castTarget == null || !castTarget.isValid || castTarget.attributeCom.GetValue(GameAttributeType.HP) <= 0)
             {
                 castTarget = null;
 
