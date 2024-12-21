@@ -62,7 +62,7 @@ namespace GamePlay.Config
         public GameProjectileModelR ToModelR()
         {
             var prefabUrl = this.prefab?.GetPrefabUrl();
-            var model = new GameProjectileModelR(typeId, animClip, prefabUrl, prefabScale, prefabOffset);
+            var model = new GameProjectileModelR(typeId, animClip, prefabUrl, prefabScale, prefabOffset, isLockRotation);
             return model;
         }
     }

@@ -77,7 +77,6 @@ namespace GamePlay.Bussiness.Renderer
                     GameLogger.LogError("[R]弹道创建失败，弹道ID不存在：" + typeId);
                     return;
                 }
-                this._context.domainApi.fielApi.AddToLayer(projectile.root, GameFieldLayerType.VFX);
             }
 
             projectile.idCom.SetEntityId(this._projectileContext.idService.FetchId());
@@ -87,6 +86,9 @@ namespace GamePlay.Bussiness.Renderer
             if (projectile.model.animClip) projectile.animCom.Play(projectile.model.animClip);
             repo.TryAdd(projectile);
             projectile.setActive(true);
+
+            var orderOffset = projectile.model.isLockRotation ? 0 : 1000;
+            this._context.domainApi.fielApi.AddToLayer(projectile.root, GameFieldLayerType.Entity, orderOffset);
         }
 
     }

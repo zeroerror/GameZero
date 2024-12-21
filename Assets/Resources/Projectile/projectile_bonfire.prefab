@@ -9754,7 +9754,7 @@ GameObject:
   - component: {fileID: 3165184348931370311}
   - component: {fileID: 3165184348931370310}
   m_Layer: 0
-  m_Name: vfx_bonfire
+  m_Name: projectile_bonfire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
