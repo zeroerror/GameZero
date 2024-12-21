@@ -18,7 +18,7 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
         }
 
-        public void Dispose()
+        public void Destroy()
         {
         }
 

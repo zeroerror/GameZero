@@ -21,10 +21,10 @@ namespace GamePlay.Bussiness.Logic
             this._attackDomain.Inject(context);
         }
 
-        public void Dispose()
+        public void Destroy()
         {
-            this._idleDomain.Dispose();
-            this._attackDomain.Dispose();
+            this._idleDomain.Destroy();
+            this._attackDomain.Destroy();
         }
 
         public void Tick(float dt)

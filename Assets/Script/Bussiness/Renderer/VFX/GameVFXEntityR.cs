@@ -35,7 +35,7 @@ namespace GamePlay.Bussiness.Renderer
             this.timelineCom.SetLength(this.length);
         }
 
-        public void Dispose()
+        public void Destroy()
         {
         }
 

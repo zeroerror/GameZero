@@ -79,19 +79,19 @@ namespace GamePlay.Bussiness.Logic
             this.fieldDomain.LoadField(1);
         }
 
-        public void Dispose()
+        public void Destroy()
         {
-            this.roleDomain.Dispose();
-            this.skillDomain.Dispose();
-            this.transformDomain.Dispose();
-            this.attributeDomain.Dispose();
-            this.physicsDomain.Dispose();
-            this.actionDomain.Dispose();
-            this.entitySelectDomain.Dispose();
-            this.projectileDomain.Dispose();
-            this.fieldDomain.Dispose();
-            this.entityCollectDomain.Dispose();
-            this.buffDomain.Dispose();
+            this.roleDomain.Destroy();
+            this.skillDomain.Destroy();
+            this.transformDomain.Destroy();
+            this.attributeDomain.Destroy();
+            this.physicsDomain.Destroy();
+            this.actionDomain.Destroy();
+            this.entitySelectDomain.Destroy();
+            this.projectileDomain.Destroy();
+            this.fieldDomain.Destroy();
+            this.entityCollectDomain.Destroy();
+            this.buffDomain.Destroy();
         }
 
         protected virtual void _TickDomain(float dt)

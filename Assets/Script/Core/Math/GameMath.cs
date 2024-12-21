@@ -31,5 +31,7 @@ namespace GamePlay.Core
         public static int Sin(int a) => (int)System.Math.Sin(a);
         public static int Cos(int a) => (int)System.Math.Cos(a);
 
+        public static int RandomRange(int min, int max) => UnityEngine.Random.Range(min, max);
+
     }
 }

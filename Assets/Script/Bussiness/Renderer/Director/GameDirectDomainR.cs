@@ -71,19 +71,19 @@ namespace GamePlay.Bussiness.Renderer
             this.buffDomain.Inject(this.context);
         }
 
-        public void Dispose()
+        public void Destroy()
         {
-            this.roleDomain.Dispose();
-            this.skillDomain.Dispose();
-            this.transformDomain.Dispose();
-            this.attributeDomain.Dispose();
-            this.vfxDomain.Dispose();
-            this.actionDomain.Dispose();
-            this.drawDomain.Dispose();
-            this.projectileDomain.Dispose();
-            this.fieldDomain.Dispose();
-            this.entityCollectDomain.Dispose();
-            this.buffDomain.Dispose();
+            this.roleDomain.Destroy();
+            this.skillDomain.Destroy();
+            this.transformDomain.Destroy();
+            this.attributeDomain.Destroy();
+            this.vfxDomain.Destroy();
+            this.actionDomain.Destroy();
+            this.drawDomain.Destroy();
+            this.projectileDomain.Destroy();
+            this.fieldDomain.Destroy();
+            this.entityCollectDomain.Destroy();
+            this.buffDomain.Destroy();
         }
 
         protected virtual void _TickDomain(float dt)

@@ -1,3 +1,4 @@
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
@@ -6,11 +7,15 @@ namespace GamePlay.Bussiness.UI
     {
         public GameObject uiRoot { get; private set; }
         public Camera uiCamera { get; private set; }
+        public GameUIDomainApi domainApi { get; private set; }
+        public GameCmdBufferService cmdBufferService { get; private set; }
 
         public GameUIContext(GameObject uiRoot)
         {
             this.uiRoot = uiRoot;
             this.uiCamera = GameObject.Find("UICamera")?.GetComponent<Camera>();
+            this.domainApi = new GameUIDomainApi();
+            this.cmdBufferService = new GameCmdBufferService();
             Debug.Assert(this.uiCamera != null, "UICamera not found");
         }
 

@@ -23,9 +23,9 @@ namespace GamePlay.Bussiness.Logic
             this.fsmDomain.Inject(context);
         }
 
-        public void Dispose()
+        public void Destroy()
         {
-            this.fsmDomain.Dispose();
+            this.fsmDomain.Destroy();
         }
 
         public void Tick(float dt)

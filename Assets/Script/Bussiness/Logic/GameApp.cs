@@ -9,12 +9,12 @@ namespace GamePlay.Bussiness.Logic
         public GameApp()
         {
             this.directDomain = new GameDirectDomain();
-            Application.quitting += this.Dispose;
+            Application.quitting += this.Destroy;
         }
 
-        public void Dispose()
+        public void Destroy()
         {
-            this.directDomain.Dispose();
+            this.directDomain.Destroy();
         }
 
         public void Update(float dt)

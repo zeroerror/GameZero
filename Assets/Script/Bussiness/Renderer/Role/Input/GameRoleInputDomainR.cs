@@ -18,7 +18,7 @@ namespace GamePlay.Bussiness.Renderer
             this._context = context;
         }
 
-        public void Dispose()
+        public void Destroy()
         {
         }
 

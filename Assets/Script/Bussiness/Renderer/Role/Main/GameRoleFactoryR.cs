@@ -24,7 +24,6 @@ namespace GamePlay.Bussiness.Renderer
             var typePrefab = Resources.Load<GameObject>($"Role/{typeId}/role_prefab_{typeId}");
             var roleGO = typePrefab ? GameObject.Instantiate(typePrefab) : new GameObject();
             if (!roleGO.TryGetComponent<Animator>(out var animator)) animator = roleGO.AddComponent<Animator>();
-            animator.runtimeAnimatorController = null;
             if (!roleGO.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer = roleGO.AddComponent<SpriteRenderer>();
             roleGO.transform.SetParent(body.transform);
 

@@ -16,11 +16,11 @@ namespace GamePlay.Bussiness.Renderer
             this._context = context;
         }
 
-        public void Dispose()
+        public void Destroy()
         {
             this._vfxContext.repo.ForeachEntities((vfx) =>
             {
-                vfx.Dispose();
+                vfx.Destroy();
             }, true);
         }
 

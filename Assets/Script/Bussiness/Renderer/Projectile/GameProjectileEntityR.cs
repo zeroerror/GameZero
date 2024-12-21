@@ -48,7 +48,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public override void Destroy()
         {
-            this.animCom.Dispose();
+            this.animCom.Destroy();
         }
 
         public override void Tick(float dt)

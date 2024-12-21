@@ -21,11 +21,13 @@ public class GameEntry : MonoBehaviour
     {
         gameApp.Update(Time.deltaTime);
         gameAppR.Update(Time.deltaTime);
+        gameUIApp.Update(Time.deltaTime);
     }
 
     void LateUpdate()
     {
         gameApp.LateUpdate(Time.deltaTime);
         gameAppR.LateUpdate(Time.deltaTime);
+        gameUIApp.LateUpdate(Time.deltaTime);
     }
 }

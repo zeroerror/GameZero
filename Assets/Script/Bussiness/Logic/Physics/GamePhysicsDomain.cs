@@ -17,9 +17,9 @@ namespace GamePlay.Bussiness.Logic
             this._collisionRecoveryDomain = new GamePhysicsDomain_CollisionRecovery();
         }
 
-        public void Dispose()
+        public void Destroy()
         {
-            this._collisionRecoveryDomain.Dispose();
+            this._collisionRecoveryDomain.Destroy();
         }
 
         public void Inject(GameContext context)

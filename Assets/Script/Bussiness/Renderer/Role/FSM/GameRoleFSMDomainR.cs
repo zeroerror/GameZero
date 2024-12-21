@@ -28,7 +28,7 @@ namespace GamePlay.Bussiness.Renderer
             }
         }
 
-        public void Dispose()
+        public void Destroy()
         {
             this.UnbindEvents();
         }

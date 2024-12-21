@@ -39,9 +39,9 @@ namespace GamePlay.Bussiness.Logic
             this._triggerDomain.Inject(context);
         }
 
-        public void Dispose()
+        public void Destroy()
         {
-            this._triggerDomain.Dispose();
+            this._triggerDomain.Destroy();
         }
 
         public void Tick(GameProjectileEntity projectile, float dt)

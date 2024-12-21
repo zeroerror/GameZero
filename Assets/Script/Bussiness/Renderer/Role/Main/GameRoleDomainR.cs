@@ -25,10 +25,10 @@ namespace GamePlay.Bussiness.Renderer
             this._BindEvent();
         }
 
-        public void Dispose()
+        public void Destroy()
         {
             this._UnbindEvents();
-            this.fsmDomain.Dispose();
+            this.fsmDomain.Destroy();
             this._roleContext.repo.ForeachAllEntities((entity) =>
             {
                 entity.Destroy();

@@ -18,7 +18,7 @@ namespace GamePlay.Bussiness.Logic
             this._BindEvent();
         }
 
-        public void Dispose()
+        public void Destroy()
         {
             this._UnbindEvents();
         }

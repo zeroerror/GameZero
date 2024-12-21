@@ -28,11 +28,11 @@ namespace GamePlay.Bussiness.Logic
             this.fsmDomain.Inject(context);
         }
 
-        public void Dispose()
+        public void Destroy()
         {
-            this.roleInputDomain.Dispose();
-            this.roleAIDomain.Dispose();
-            this.fsmDomain.Dispose();
+            this.roleInputDomain.Destroy();
+            this.roleAIDomain.Destroy();
+            this.fsmDomain.Destroy();
         }
 
         public void Collect(GameRoleEntity role)

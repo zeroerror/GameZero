@@ -1,0 +1,15 @@
+using UnityEngine;
+
+namespace GamePlay.Bussiness.UI
+{
+    public interface GameUIJumpTextDomainApi
+    {
+        /// <summary>
+        /// 伤害跳字
+        /// <para> pos: 位置 </para>
+        /// <para> style: 样式 </para>
+        /// <para> txt: 文本 </para>
+        /// </summary>
+        public void JumpText_Dmg(in Vector2 screenPos, int style, string txt, float scale = 1.0f);
+    }
+}

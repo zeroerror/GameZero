@@ -32,7 +32,7 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
-        public void Dispose() { }
+        public void Destroy() { }
 
         public void Tick(GameRoleEntity role, float dt)
         {

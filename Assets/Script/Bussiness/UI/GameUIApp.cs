@@ -9,19 +9,22 @@ namespace GamePlay.Bussiness.UI
         public GameUIApp(GameObject uiRoot)
         {
             this.directDomain = new GameUIDirectDomain(uiRoot);
-            Application.quitting += this.Dispose;
+            Application.quitting += this.Destroy;
         }
 
-        public void Dispose()
+        public void Destroy()
         {
+            this.directDomain.Destroy();
         }
 
         public void Update(float dt)
         {
+            this.directDomain.Update(dt);
         }
 
         public void LateUpdate(float dt)
         {
+            this.directDomain.LateUpdate(dt);
         }
     }
 }

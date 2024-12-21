@@ -16,7 +16,6 @@ MonoBehaviour:
   actionType: 3
   desc: "\u7206\u88C2\u540E\u6563\u5468\u56F4360\xB0\u53D1\u5C04\u5F39\u4F53"
   dmgActionEM:
-    projectileId: 0
     selectorEM:
       selectAnchorType: 0
       campType: 0
@@ -41,7 +40,6 @@ MonoBehaviour:
     valueFormat: 0
     refType: 0
   healActionEM:
-    projectileId: 0
     healType: 0
     value: 0
     valueFormat: 0
@@ -76,8 +74,8 @@ MonoBehaviour:
       - {x: 0, y: 1}
       - {x: -1, y: 0.5}
     spreadEM:
-      count: 10
-      spreadAngle: 360
+      count: 2
+      spreadAngle: 60
     selectorEM:
       selectAnchorType: 1
       campType: 0
@@ -97,12 +95,66 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+  knockBackActionEM:
+    knockBackDirType: 0
+    distance: 0
+    duration: 0
+    easingType: 0
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+  attachBuffActionEM:
+    buffSO: {fileID: 0}
+    layer: 0
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
   actionEMR:
     typeId: 0
-    vfxPrefab: {fileID: 0}
-    vfxScale: {x: 1, y: 1}
-    vfxOffset: {x: 0, y: 0}
-    camShakeModel:
+    actEffectPrefab: {fileID: 0}
+    actVFXScale: {x: 1, y: 1}
+    actVFXOffset: {x: 0, y: 0}
+    actCamShakeModel:
+      angle: 0
+      amplitude: 0
+      frequency: 0
+      duration: 0
+    hitEffectPrefab: {fileID: 0}
+    hitVFXScale: {x: 1, y: 1}
+    hitVFXOffset: {x: 0, y: 0}
+    hitCamShakeModel:
       angle: 0
       amplitude: 0
       frequency: 0

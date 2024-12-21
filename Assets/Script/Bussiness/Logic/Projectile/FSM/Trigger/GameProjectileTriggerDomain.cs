@@ -26,7 +26,7 @@ namespace GamePlay.Bussiness.Logic
             this._impactTargetTriggerDomain.Inject(context);
         }
 
-        public void Dispose()
+        public void Destroy()
         {
         }
 

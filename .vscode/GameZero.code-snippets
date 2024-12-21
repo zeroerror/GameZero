@@ -1,5 +1,5 @@
 {
-	"summary":{
+	"summary": {
 		"prefix": "summary",
 		"body": [
 			"/// <summary> $1 </summary>"
@@ -169,7 +169,7 @@
 			"            this._BindEvent();",
 			"        }",
 			"",
-			"        public void Dispose()",
+			"        public void Destory()",
 			"        {",
 			"            this._UnbindEvents();",
 			"        }",
@@ -204,7 +204,7 @@
 			"            this._context = context;",
 			"        }",
 			"",
-			"        public void Dispose()",
+			"        public void Destory()",
 			"        {",
 			"        }",
 			"",

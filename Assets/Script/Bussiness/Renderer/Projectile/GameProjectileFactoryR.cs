@@ -30,7 +30,6 @@ namespace GamePlay.Bussiness.Renderer
                 clipBody.name = "Body";
                 clipBody.transform.SetParent(go.transform);
                 animator = clipBody.AddComponent<Animator>();
-                animator.runtimeAnimatorController = null;
                 clipBody.AddComponent<SpriteRenderer>();
             }
 

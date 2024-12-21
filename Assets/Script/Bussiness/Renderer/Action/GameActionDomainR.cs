@@ -1,6 +1,8 @@
 
+using System.Runtime.InteropServices;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Renderer
@@ -20,7 +22,7 @@ namespace GamePlay.Bussiness.Renderer
             this._BindEvent();
         }
 
-        public void Dispose()
+        public void Destroy()
         {
             this._UnbindEvents();
         }
@@ -157,6 +159,20 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
             this._DoActionSuccess(evArgs.actionId, target);
+
+            // 伤害跳字
+            var jumpTextDomainApi = this._context.uiContext.domainApi.jumpTextDomainApi;
+            var randomStyle = GameMath.RandomRange(1, 5);//1-4
+            var jumpPos = this.WorldToScreenPoint(target.transformCom.position);
+            jumpTextDomainApi.JumpText_Dmg(jumpPos, randomStyle, dmgRecord.value.ToString(), 0.5f);
+        }
+
+        public Vector3 WorldToScreenPoint(in Vector3 v)
+        {
+            var pos = RectTransformUtility.WorldToScreenPoint(this._context.cameraEntity.camera, v);
+            pos.x -= Screen.width / 2;
+            pos.y -= Screen.height / 2;
+            return pos;
         }
 
         private void _OnAction_Heal(object args)

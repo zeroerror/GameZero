@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public void Dispose()
+        public void Destroy()
         {
         }
 

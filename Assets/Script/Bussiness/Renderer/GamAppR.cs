@@ -11,12 +11,12 @@ namespace GamePlay.Bussiness.Renderer
         public GameAppR(GameContext logicContext, GameObject sceneRoot, GameUIContext uiContext)
         {
             this.directDomain = new GameDirectDomainR(logicContext, sceneRoot, uiContext);
-            Application.quitting += this.Dispose;
+            Application.quitting += this.Destroy;
         }
 
-        public void Dispose()
+        public void Destroy()
         {
-            this.directDomain.Dispose();
+            this.directDomain.Destroy();
         }
 
         public void Update(float dt)
