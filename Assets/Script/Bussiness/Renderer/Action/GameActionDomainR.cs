@@ -164,6 +164,7 @@ namespace GamePlay.Bussiness.Renderer
             var jumpTextDomainApi = this._context.uiContext.domainApi.jumpTextDomainApi;
             var randomStyle = GameMath.RandomRange(1, 5);//1-4
             var jumpPos = this.WorldToScreenPoint(target.transformCom.position);
+            jumpPos.y += 50;
             jumpTextDomainApi.JumpText_Dmg(jumpPos, randomStyle, dmgRecord.value.ToString(), 0.5f);
         }
 

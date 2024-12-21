@@ -53,7 +53,7 @@ namespace GamePlay.Bussiness.UI
                 entity.Tick(dt);
                 if (!entity.playCom.IsPlaying)
                 {
-                    this._uiContext.cmdBufferService.Add(0, () =>
+                    this._uiContext.cmdBufferService.AddDelayCmd(0, () =>
                     {
                         entity.SetActive(false);
                         this._jumpTextEntityList.Remove(entity);

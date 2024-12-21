@@ -28,7 +28,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 if (!posAction.transCom.isEnable || posAction.Tick(dt))
                 {
-                    this._context.cmdBufferService.Add(0, () =>
+                    this._context.cmdBufferService.AddDelayCmd(0, () =>
                     {
                         this._transformContext.posActions.Remove(posAction);
                     });

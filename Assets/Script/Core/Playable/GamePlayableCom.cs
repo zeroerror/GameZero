@@ -16,9 +16,8 @@ namespace GamePlay.Core
         public float timeScale { get; set; } = 1.0f;
         public PlayableGraph currentGraph { get; private set; }
 
-        // public bool IsPlaying => this.currentGraph.IsValid() && this.currentGraph.IsPlaying();
-        public bool IsPlaying => this.time < 0.5;
-        public float time { get; private set; }
+        public bool IsPlaying => this.currentGraph.IsValid() && this.currentGraph.IsPlaying();
+        public float _duration { get; private set; }
 
         public GamePlayableCom(Animator animator)
         {
@@ -42,7 +41,11 @@ namespace GamePlay.Core
             if (!this.currentGraph.IsValid()) return;
             dt *= this.timeScale;
             this.currentGraph.Evaluate(dt);
-            this.time += dt;
+            var time = this.GetCurrentTime();
+            if (time >= this._duration)
+            {
+                this.currentGraph.Stop();
+            }
         }
 
         public void Play(AnimationClip clip, float starTime = 0)
@@ -74,10 +77,10 @@ namespace GamePlay.Core
                 return;
             }
             graph.Play();
-            graph.GetRootPlayable(0).SetTime(starTime);
-            this.time = starTime;
+            this._SetTime(graph, starTime);
             this.currentGraph = graph;
             this.isPause = false;
+            this._duration = this._GetDuration(graph);
         }
 
         private PlayableGraph _Create(AnimationClip clip)
@@ -100,6 +103,42 @@ namespace GamePlay.Core
             if (!this._graphDict.TryGetValue(name, out var cacheGraph)) return;
             if (!cacheGraph.IsValid()) return;
             this.isPause = true;
+        }
+
+        /// <summary> 获取当前Graph的时间 </summary>
+        public double GetCurrentTime()
+        {
+            var graph = this.currentGraph;
+            if (!graph.IsValid()) return 0;
+            var rootPlayable = graph.GetRootPlayable(0); // 获取根节点
+            if (!rootPlayable.IsValid()) return 0;
+            return rootPlayable.GetTime(); // 获取当前时间
+        }
+
+        /// <summary> 获取 Graph 的时长 </summary>
+        private float _GetDuration(in PlayableGraph graph)
+        {
+            if (!graph.IsValid()) return 0;
+            var rootPlayable = graph.GetRootPlayable(0);
+            if (!rootPlayable.IsValid()) return 0;
+            if (rootPlayable.IsPlayableOfType<AnimationClipPlayable>())
+            {
+                var clipPlayable = (AnimationClipPlayable)rootPlayable;
+                var clip = clipPlayable.GetAnimationClip();
+                if (clip != null)
+                {
+                    return clip.length;
+                }
+            }
+            return 0;
+        }
+
+        private void _SetTime(PlayableGraph graph, double time)
+        {
+            if (!graph.IsValid()) return;
+            var rootPlayable = graph.GetRootPlayable(0); // 获取根节点
+            if (!rootPlayable.IsValid()) return;
+            rootPlayable.SetTime(time); // 设置当前时间
         }
 
     }

@@ -18,6 +18,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             this._context = context;
             this._BindEvent();
+            context.cmdBufferService.AddIntervalCmd(0.1f, this._UpdateLayerOrder);
         }
 
         public void Destroy()
@@ -36,11 +37,14 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Tick(float dt)
         {
-            var entityLayer = this._fieldContext.curField.GetLayer(GameFieldLayerType.Entity);
-            this._UpdateLayerOrder(entityLayer, GameFieldLayerType.Entity);
+        }
 
-            var vfxLayer = this._fieldContext.curField.GetLayer(GameFieldLayerType.VFX);
-            this._UpdateLayerOrder(vfxLayer, GameFieldLayerType.VFX);
+        private void _UpdateLayerOrder()
+        {
+            var curField = this._fieldContext.curField;
+            if (!curField) return;
+            this._UpdateLayerOrder(curField.GetLayer(GameFieldLayerType.Entity), GameFieldLayerType.Entity);
+            this._UpdateLayerOrder(curField.GetLayer(GameFieldLayerType.VFX), GameFieldLayerType.VFX);
         }
 
         private void _UpdateLayerOrder(GameObject layer, GameFieldLayerType layerType)

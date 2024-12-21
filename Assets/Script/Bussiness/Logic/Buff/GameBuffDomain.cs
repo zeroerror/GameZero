@@ -49,7 +49,7 @@ namespace GamePlay.Bussiness.Logic
                 var isSatisfied_remove = buff.conditionSetEntity_remove.CheckSatisfied();
                 if (isSatisfied_remove)
                 {
-                    this._context.cmdBufferService.Add(0, () =>
+                    this._context.cmdBufferService.AddDelayCmd(0, () =>
                     {
                         this.DetachBuff(buff.model.typeId, role, 0);
                     });

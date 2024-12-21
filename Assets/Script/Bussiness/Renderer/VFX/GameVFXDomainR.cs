@@ -30,7 +30,7 @@ namespace GamePlay.Bussiness.Renderer
             repo.ForeachEntities((GameVFXEntityR vfx) =>
             {
                 vfx.Tick(dt);
-                if (!vfx.isPlaying) this._context.cmdBufferService.Add(0, () => repo.Recycle(vfx));
+                if (!vfx.isPlaying) this._context.cmdBufferService.AddDelayCmd(0, () => repo.Recycle(vfx));
             });
         }
 
