@@ -15,6 +15,7 @@ namespace GamePlay.Config
         private SerializedProperty prefab_p;
         private SerializedProperty prefabScale_p;
         private SerializedProperty prefabOffset_p;
+        private SerializedProperty isLockRotation_p;
         private SerializedProperty animLength_p;
         private SerializedProperty lifeTime_p;
         private SerializedProperty timelineEvents_p;
@@ -30,6 +31,7 @@ namespace GamePlay.Config
             this.prefab_p = this._serializedObject.FindProperty("prefab");
             this.prefabScale_p = this._serializedObject.FindProperty("prefabScale");
             this.prefabOffset_p = this._serializedObject.FindProperty("prefabOffset");
+            this.isLockRotation_p = this._serializedObject.FindProperty("isLockRotation");
             this.animLength_p = this._serializedObject.FindProperty("animLength");
             this.lifeTime_p = this._serializedObject.FindProperty("lifeTime");
             this.timelineEvents_p = this._serializedObject.FindProperty("timelineEvents");
@@ -55,6 +57,7 @@ namespace GamePlay.Config
             this.prefab_p.DrawProperty<GameObject>("预制体");
             this.prefabScale_p.DrawProperty_Vector2("预制体缩放");
             this.prefabOffset_p.DrawProperty_Vector2("预制体偏移");
+            this.isLockRotation_p.DrawProperty_Bool("锁定旋转");
         }
 
         private void _DrawLogicData()

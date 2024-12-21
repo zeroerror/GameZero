@@ -69,6 +69,8 @@ namespace GamePlay.Bussiness.Renderer
         {
             switch (idArgs.entityType)
             {
+                case GameEntityType.None:
+                    return null;
                 case GameEntityType.Role:
                     return this.roleContext.repo.FindByEntityId(idArgs.entityId);
                 case GameEntityType.Skill:

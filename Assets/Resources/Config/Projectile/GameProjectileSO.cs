@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
 using GamePlay.Core;
@@ -20,6 +21,8 @@ namespace GamePlay.Config
         public GameVec2 prefabScale = GameVec2.one;
         public GameVec2 prefabOffset = GameVec2.zero;
 
+        public bool isLockRotation;
+
         // --------------- 逻辑数据 ---------------
         public float animLength;
         public GameTimelineEventEM[] timelineEvents;
@@ -41,6 +44,19 @@ namespace GamePlay.Config
                     timelineEvents[i].frame = (int)(e.time * GameTimeCollection.frameRate);
                 }
             }
+        }
+
+        public GameProjectileModel ToModel()
+        {
+            var modelSetDict = new Dictionary<GameProjectileStateType, GameProjectileTriggerModelSet>();
+            var stateModelDict = new Dictionary<GameProjectileStateType, object>();
+            foreach (var stateEM in stateEMs)
+            {
+                modelSetDict.Add(stateEM.stateType, stateEM.emSet.ToModelSet());
+                stateModelDict.Add(stateEM.stateType, stateEM.ToModel());
+            }
+            var model = new GameProjectileModel(typeId, animLength, timelineEvents.ToModels(), modelSetDict, stateModelDict, lifeTime, isLockRotation);
+            return model;
         }
 
         public GameProjectileModelR ToModelR()

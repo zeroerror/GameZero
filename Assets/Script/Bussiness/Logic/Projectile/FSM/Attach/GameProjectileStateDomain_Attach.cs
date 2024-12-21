@@ -20,7 +20,7 @@ namespace GamePlay.Bussiness.Logic
                 fromStateType = fsmCom.stateType,
                 idArgs = projectile.idCom.ToArgs(),
                 pos = targeter.targetPosition,
-                targetIdArgs = targeter.targetEntity.idCom.ToArgs()
+                targetIdArgs = targeter.targetEntity ? targeter.targetEntity.idCom.ToArgs() : default,
             });
         }
 

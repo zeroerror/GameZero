@@ -31,10 +31,20 @@ namespace GamePlay.Bussiness.Renderer
             this.model = model;
             this.root = go;
             this.root.name = $"Projectile_{model.typeId}";
-            this.psPlayCom = ps != null ? new GameParticlePlayCom(ps) : null;
+            if (ps != null)
+            {
+                this.psPlayCom = new GameParticlePlayCom(ps);
+            }
+            else if (animator != null)
+            {
+                this.animCom = new GamePlayableCom(animator);
+            }
+            else
+            {
+                GameLogger.LogError("投射物既没有动画也没有特效");
+            }
 
             this.fsmCom = new GameProjectileFSMCom();
-            this.animCom = new GamePlayableCom(animator);
             this.timelineCom = new GameTimelineCom();
             this._posEaseCom = new GameEasing2DCom();
             this._posEaseCom.SetEase(GameTimeCollection.frameTime, GameEasingType.Linear);
@@ -48,12 +58,12 @@ namespace GamePlay.Bussiness.Renderer
 
         public override void Destroy()
         {
-            this.animCom.Destroy();
+            this.animCom?.Destroy();
         }
 
         public override void Tick(float dt)
         {
-            this.animCom.Tick(dt);
+            this.animCom?.Tick(dt);
             this.timelineCom.Tick(dt);
             this.psPlayCom?.Tick(dt);
             var pos = this._posEaseCom.Tick(this.position, this.transformCom.position, dt);

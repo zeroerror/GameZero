@@ -60,7 +60,6 @@ namespace GamePlay.Bussiness.Logic
 
         public void FaceTo(in GameVec2 dir)
         {
-            this.transformCom.forward = dir;
             if (dir.x != 0)
             {
                 var scale = this.transformCom.scale;

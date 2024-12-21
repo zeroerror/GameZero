@@ -58,9 +58,10 @@ namespace GamePlay.Bussiness.Logic
             targeter.targetEntity = targeterType == GameSkillTargterType.Actor ? actor : nearestEnemy;
             targeter.targetPosition = targeter.targetEntity != null ? targeter.targetEntity.transformCom.position : actor.transformCom.position;
             targeter.targetDirection =
-            targeterType == GameSkillTargterType.Direction ? actor.transformCom.forward :
-            targeter.targetEntity != null ? (targeter.targetEntity.transformCom.position - actor.transformCom.position).normalized :
-            actor.transformCom.forward;
+            targeterType == GameSkillTargterType.Direction ?
+                actor.transformCom.forward : targeter.targetEntity != null ?
+                (targeter.targetEntity.transformCom.position - actor.transformCom.position).normalized :
+                actor.transformCom.forward;
             targeterList.Add(targeter);
         }
     }

@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63e08219bd61964398ea7781cbcab7c, type: 3}
+  m_Name: template_projectile_100201001
+  m_EditorClassIdentifier: 
+  typeId: 100201001
+  projectileName: "\u706B\u7130"
+  desc: "\u6301\u7EED\u9020\u6210\u4F24\u5BB3"
+  animClip: {fileID: 0}
+  prefab: {fileID: 3165184348931370313, guid: 19f6db3a801b7af418fb435a0ec5849d, type: 3}
+  prefabScale: {x: 0.25, y: 0.25}
+  prefabOffset: {x: 0, y: 0}
+  isLockRotation: 1
+  animLength: 0.083333336
+  timelineEvents: []
+  lifeTime: 0
+  stateEMs:
+  - stateType: 5
+    attachStateEM:
+      attachType: 3
+      attachOffset: {x: 0, y: 0}
+    fixedDirectionStateEM:
+      speed: 0
+      bounceCount: 0
+      detectSelector:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+    lockOnEntityStateEM:
+      targeterType: 0
+      speed: 0
+      timeToArrive: 0
+    lockOnPositionStateEM:
+      targeterType: 0
+      speed: 0
+      timeToArrive: 0
+    emSet:
+      durationTriggerModel:
+        enable: 1
+        duration: 1
+        actionSOs:
+        - {fileID: 11400000, guid: 28800abe7d1088b41a6b594b7355680b, type: 2}
+        nextStateType: 0
+      volumeCollisionTriggerModel:
+        enable: 0
+        actionSOs: []
+        nextStateType: 0
+        detectEntitySelectorEM:
+          selectAnchorType: 0
+          campType: 0
+          entityType: 0
+          selColliderType: 0
+          boxColliderModel:
+            offset: {x: 0, y: 0}
+            angle: 0
+            width: 0
+            height: 0
+          circleColliderModel:
+            offset: {x: 0, y: 0}
+            angle: 0
+            radius: 0
+          fanColliderModel:
+            offset: {x: 0, y: 0}
+            angle: 0
+            radius: 0
+            fanAngle: 0
+      impactTargetTriggerModel:
+        enable: 0
+        checkByTargetCollider: 0
+        actionSOs: []
+        nextStateType: 0
+        detectEntitySelectorEM:
+          selectAnchorType: 0
+          campType: 0
+          entityType: 0
+          selColliderType: 0
+          boxColliderModel:
+            offset: {x: 0, y: 0}
+            angle: 0
+            width: 0
+            height: 0
+          circleColliderModel:
+            offset: {x: 0, y: 0}
+            angle: 0
+            radius: 0
+          fanColliderModel:
+            offset: {x: 0, y: 0}
+            angle: 0
+            radius: 0
+            fanAngle: 0

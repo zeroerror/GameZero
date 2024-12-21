@@ -38,6 +38,7 @@ namespace GamePlay.Bussiness.Logic
             get { return _angle; }
             set
             {
+                if (isLockRotation) return;
                 if (_angle != value) _angleDirty = true;
                 _angle = value;
             }
@@ -45,14 +46,18 @@ namespace GamePlay.Bussiness.Logic
         private float _angle;
         private bool _angleDirty;
 
+        public bool isLockRotation { get; set; }
+
         public GameVec2 forward
         {
             get { return _forward; }
             set
             {
+                if (isLockRotation) return;
                 if (value.x == 0 && value.y == 0) return;
                 _forward = value;
                 _forwardDirty = true;
+                this._angle = GameVec2.SignedAngle(GameVec2.right, value);
             }
         }
         private GameVec2 _forward;
@@ -65,19 +70,19 @@ namespace GamePlay.Bussiness.Logic
 
         public void Clear()
         {
-            _position = GameVec2.zero;
-            _scale = GameVec2.one;
-            _angle = 0;
-            _forward = GameVec2.up;
+            this.position = GameVec2.zero;
+            this.scale = GameVec2.one;
+            this.angle = 0;
+            this.forward = GameVec2.up;
             ClearDirty();
         }
 
         private void ClearDirty()
         {
-            _posDirty = false;
-            _scaleDirty = false;
-            _angleDirty = false;
-            _forwardDirty = false;
+            this._posDirty = false;
+            this._scaleDirty = false;
+            this._angleDirty = false;
+            this._forwardDirty = false;
         }
 
         public bool CheckDirty()
@@ -100,33 +105,10 @@ namespace GamePlay.Bussiness.Logic
 
         public void SetByArgs(in GameTransformArgs trs)
         {
-            SetPosition(trs.position);
-            SetScale(trs.scale);
-            SetAngle(trs.angle);
-            SetForward(trs.forward);
-        }
-
-        private void SetPosition(GameVec2 v)
-        {
-            _position = v;
-        }
-
-        // 设置缩放
-        private void SetScale(in GameVec2 v)
-        {
-            _scale = v;
-        }
-
-        // 设置角度
-        private void SetAngle(float v)
-        {
-            _angle = v;
-        }
-
-        // 设置前方
-        private void SetForward(GameVec2 v)
-        {
-            _forward = v;
+            this.forward = trs.forward;
+            this.position = trs.position;
+            this.scale = trs.scale;
+            this.angle = trs.angle;
         }
     }
 }

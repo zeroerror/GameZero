@@ -53,7 +53,9 @@ namespace GamePlay.Bussiness.Logic
             scale.y = GameMathF.Abs(scale.y);
             transArgs.scale = scale;
             // 初始化组件
+            if (projectile.model.isLockRotation) transArgs.forward = GameVec2.up;
             projectile.transformCom.SetByArgs(transArgs);
+            projectile.transformCom.isLockRotation = projectile.model.isLockRotation;
             projectile.idCom.SetEntityId(this._projectileContext.idService.FetchId());
             projectile.idCom.SetParent(creator);
             projectile.actionTargeterCom.SetTargeter(targeter);

@@ -81,8 +81,7 @@ namespace GamePlay.Bussiness.Renderer
             this.animCom.Tick(dt);
             var pos = this._posEaseCom.Tick(this.position, this.transformCom.position, dt);
             this.position = pos;
-            var forward = this.transformCom.forward;
-            this.FaceTo(forward);
+            this._FaceToByScale(this.transformCom.scale);
             this.attributeBarCom.Tick(dt);
 
             var hpRatio = this.attributeCom.GetValue(GameAttributeType.HP) / this.attributeCom.GetValue(GameAttributeType.MaxHP);
@@ -98,7 +97,7 @@ namespace GamePlay.Bussiness.Renderer
             this.shadow.SetActive(active);
         }
 
-        public void FaceTo(in GameVec2 dir)
+        public void FaceToDir(in GameVec2 dir)
         {
             var scale = this.transform.lossyScale;
             var absx = Mathf.Abs(scale.x);
@@ -106,12 +105,18 @@ namespace GamePlay.Bussiness.Renderer
             this.transform.localScale = scale;
         }
 
+        private void _FaceToByScale(in Vector2 scale)
+        {
+            var dir = scale.x > 0 ? Vector2.right : Vector2.left;
+            this.FaceToDir(dir);
+        }
+
         public void SyncTrans()
         {
             this.position = this.transformCom.position;
             this.angle = this.transformCom.angle;
             this.scale = this.transformCom.scale;
-            this.FaceTo(this.transformCom.forward);
+            this._FaceToByScale(this.transformCom.scale);
         }
     }
 }
