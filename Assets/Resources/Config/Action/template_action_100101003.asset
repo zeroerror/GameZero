@@ -36,7 +36,7 @@ MonoBehaviour:
         radius: 0
         fanAngle: 0
     dmgType: 1
-    value: 10
+    value: 100
     valueFormat: 1
     refType: 1
   healActionEM:
@@ -119,12 +119,42 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+  attachBuffActionEM:
+    buffSO: {fileID: 0}
+    layer: 0
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
   actionEMR:
     typeId: 0
-    vfxPrefab: {fileID: 6927947509564487783, guid: ce33e8716848a2542b26d97976a509fb, type: 3}
-    vfxScale: {x: 0.35, y: 0.35}
-    vfxOffset: {x: 0.3, y: 1}
-    camShakeModel:
+    actEffectPrefab: {fileID: 6927947509564487783, guid: ce33e8716848a2542b26d97976a509fb, type: 3}
+    actVFXScale: {x: 0.35, y: 0.35}
+    actVFXOffset: {x: 0, y: 1}
+    actCamShakeModel:
+      angle: 0
+      amplitude: 0
+      frequency: 0
+      duration: 0
+    hitEffectPrefab: {fileID: 0}
+    hitVFXScale: {x: 1, y: 1}
+    hitVFXOffset: {x: 0, y: 0}
+    hitCamShakeModel:
       angle: 0
       amplitude: 0
       frequency: 0

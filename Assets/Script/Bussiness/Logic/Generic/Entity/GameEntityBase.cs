@@ -1,3 +1,6 @@
+using GamePlay.Core;
+using GameVec2 = UnityEngine.Vector2;
+
 namespace GamePlay.Bussiness.Logic
 {
     public abstract class GameEntityBase
@@ -72,5 +75,20 @@ namespace GamePlay.Bussiness.Logic
 
         public abstract void Tick(float dt);
         public abstract void Destroy();
+
+        public GameVec2 GetLogicCenterPos()
+        {
+            var pos = transformCom.position;
+            if (this.physicsCom.collider is GameBoxCollider boxCollider)
+            {
+                pos.y += boxCollider.worldHeight * 0.5f;
+            }
+            return pos;
+        }
+
+        public GameVec2 GetLogicBottomPos()
+        {
+            return this.transformCom.position;
+        }
     }
 }

@@ -16,16 +16,16 @@ public static class GameFieldLayerCollection
     public static readonly int EntityLayerZ = 2000;
 
     public static readonly string VFXLayer = "VFX";
-    public static readonly int VFXLayerZ = 2000;
+    public static readonly int VFXLayerZ = 3000;
 
     public static readonly string SceneUILayer = "SceneUI";
-    public static readonly int SceneUILayerZ = 3000;
+    public static readonly int SceneUILayerZ = 4000;
 
     public static readonly int InnerStepZ = 1;
 
     public static int GetLayerOrder(GameFieldLayerType layerType, in GameVec2 pos)
     {
-        var rootOrder = 0;
+        int rootOrder;
         int stepZ = 100;
         switch (layerType)
         {

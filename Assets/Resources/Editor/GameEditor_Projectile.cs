@@ -1,4 +1,3 @@
-using Codice.Client.BaseCommands;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,6 +6,7 @@ namespace GamePlay.Config
     [CustomEditor(typeof(GameProjectileSO))]
     public class GameEditor_Projectile : Editor
     {
+        private SerializedObject _serializedObject;
         private GameProjectileSO so => target as GameProjectileSO;
         private SerializedProperty typeId_p;
         private SerializedProperty projectileName_p;
@@ -22,25 +22,27 @@ namespace GamePlay.Config
 
         private void OnEnable()
         {
-            var serializedObject = new SerializedObject(target);
-            this.typeId_p = serializedObject.FindProperty("typeId");
-            this.projectileName_p = serializedObject.FindProperty("projectileName");
-            this.desc_p = serializedObject.FindProperty("desc");
-            this.animClip_p = serializedObject.FindProperty("animClip");
-            this.prefab_p = serializedObject.FindProperty("prefab");
-            this.prefabScale_p = serializedObject.FindProperty("prefabScale");
-            this.prefabOffset_p = serializedObject.FindProperty("prefabOffset");
-            this.animLength_p = serializedObject.FindProperty("animLength");
-            this.lifeTime_p = serializedObject.FindProperty("lifeTime");
-            this.timelineEvents_p = serializedObject.FindProperty("timelineEvents");
-            this.stateEMs_p = serializedObject.FindProperty("stateEMs");
+            this._serializedObject = new SerializedObject(target);
+            this.typeId_p = this._serializedObject.FindProperty("typeId");
+            this.projectileName_p = this._serializedObject.FindProperty("projectileName");
+            this.desc_p = this._serializedObject.FindProperty("desc");
+            this.animClip_p = this._serializedObject.FindProperty("animClip");
+            this.prefab_p = this._serializedObject.FindProperty("prefab");
+            this.prefabScale_p = this._serializedObject.FindProperty("prefabScale");
+            this.prefabOffset_p = this._serializedObject.FindProperty("prefabOffset");
+            this.animLength_p = this._serializedObject.FindProperty("animLength");
+            this.lifeTime_p = this._serializedObject.FindProperty("lifeTime");
+            this.timelineEvents_p = this._serializedObject.FindProperty("timelineEvents");
+            this.stateEMs_p = this._serializedObject.FindProperty("stateEMs");
         }
 
         public override void OnInspectorGUI()
         {
+            this._serializedObject.Update();
             GameEditorGUILayout.DrawBoxItem(() => this._DrawBasicData());
             GameEditorGUILayout.DrawBoxItem(() => this._DrawLogicData());
             GameEditorGUILayout.DrawBoxItem(() => this._DrawStateData());
+            this._serializedObject.ApplyModifiedProperties();
         }
 
         private void _DrawBasicData()
@@ -94,8 +96,6 @@ namespace GamePlay.Config
         {
             EditorGUILayout.LabelField("状态机-------------------------", EditorStyles.boldLabel);
             // 状态机数组属性
-            var stateEMs_p = serializedObject.FindProperty("stateEMs");
-            // 显示当前状态的数量
             var stateCount = stateEMs_p?.arraySize ?? 0;
             EditorGUILayout.LabelField($"状态数量: {stateCount}");
             // 绘制所有状态并提供删除按钮
@@ -116,7 +116,7 @@ namespace GamePlay.Config
                     GameGUILayout.DrawButton("重置", () =>
                     {
                         so.stateEMs[i] = new GameProjectileStateEM();
-                        serializedObject.Update();
+                        this._serializedObject.Update();
                     }, Color.yellow, 50);
                     GameGUILayout.DrawButton("↑", () =>
                     {

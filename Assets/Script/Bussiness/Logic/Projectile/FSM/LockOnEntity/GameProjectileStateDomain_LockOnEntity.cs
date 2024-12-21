@@ -11,11 +11,12 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Enter(GameProjectileEntity projectile)
         {
-            var targetEntity = projectile.actionTargeterCom.targetEntity;
+            var lockOnEntity = projectile.actionTargeterCom.targetEntity;
             var fsmCom = projectile.fsmCom;
             fsmCom.EnterLockOnEntity();
 
-            var targetPos = targetEntity.transformCom.position;
+            var targetPos = lockOnEntity.GetLogicCenterPos();
+
             var pos = projectile.transformCom.position;
             var offset = targetPos - pos;
             var dir = offset.normalized;
@@ -26,7 +27,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 fromStateType = fsmCom.stateType,
                 idArgs = projectile.idCom.ToArgs(),
-                targetIdArgs = targetEntity.idCom.ToArgs(),
+                targetIdArgs = lockOnEntity.idCom.ToArgs(),
             });
         }
 
@@ -55,7 +56,7 @@ namespace GamePlay.Bussiness.Logic
             if (lockOnEntity == null) return;
 
             var speed = projectile.fsmCom.lockOnEntityState.model.speed;
-            var targetPos = lockOnEntity.transformCom.position;
+            var targetPos = lockOnEntity.GetLogicCenterPos();
             var pos = projectile.transformCom.position;
             var offset = targetPos - pos;
             var dir = offset.normalized;

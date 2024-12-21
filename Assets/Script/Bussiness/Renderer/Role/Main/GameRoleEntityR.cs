@@ -8,13 +8,13 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleEntityR : GameEntityBase
     {
-        public readonly GameObject go;
+        public readonly GameObject root;
         public readonly GameObject foot;
         public readonly GameObject shadow;
         public readonly GameObject body;
         public readonly GameBuffComR buffCom;
 
-        public Transform transform { get { return this.go.transform; } }
+        public Transform transform { get { return this.root.transform; } }
 
         public GameVec2 position
         {
@@ -44,7 +44,7 @@ namespace GamePlay.Bussiness.Renderer
             GameObject body
         ) : base(typeId, GameEntityType.Role)
         {
-            this.go = go;
+            this.root = go;
             this.foot = foot;
             this.shadow = foot.transform.Find("shadow")?.gameObject;
             Debug.Assert(this.shadow != null, "shadow is null");
@@ -94,7 +94,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void setActive(bool active)
         {
-            this.go.SetActive(active);
+            this.root.SetActive(active);
             this.shadow.SetActive(active);
         }
 

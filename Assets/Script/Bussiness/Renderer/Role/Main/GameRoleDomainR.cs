@@ -73,12 +73,12 @@ namespace GamePlay.Bussiness.Renderer
                     GameLogger.LogError("GameRoleDomainR._Create: typeId not found: " + idArgs.typeId);
                     return null;
                 }
-                this._context.domainApi.fielApi.AddToLayer(role.go, GameFieldLayerType.Entity);
+                this._context.domainApi.fielApi.AddToLayer(role.root, GameFieldLayerType.Entity);
                 var orderOffset = GameFieldLayerCollection.EnvironmentLayerZ - GameFieldLayerCollection.GroundLayerZ;
                 this._context.domainApi.fielApi.AddToLayer(role.shadow, GameFieldLayerType.Ground, orderOffset);
             }
             role.idCom.SetByArgs(idArgs);
-            role.go.name = $"role_{idArgs.typeId}_{role.idCom.entityId}";
+            role.root.name = $"role_{idArgs.typeId}_{role.idCom.entityId}";
             role.transformCom.SetByArgs(transArgs);
             role.SyncTrans();
             this._roleContext.repo.TryAdd(role);
@@ -86,7 +86,7 @@ namespace GamePlay.Bussiness.Renderer
             if (isUser)
             {
                 this._roleContext.userRole = role;
-                this._context.cameraEntity.followCom.Set(role.go, Vector2.zero);
+                this._context.cameraEntity.followCom.Set(role.root, Vector2.zero);
             }
 
             var attributeBarCom = role.attributeBarCom;

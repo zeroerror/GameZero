@@ -9,9 +9,9 @@ namespace GamePlay.Bussiness.Renderer
     public class GameProjectileEntityR : GameEntityBase
     {
         public readonly GameProjectileModelR model;
-        public readonly GameObject go;
+        public readonly GameObject root;
         public readonly GameParticlePlayCom psPlayCom;
-        public Transform transform { get { return this.go.transform; } }
+        public Transform transform { get { return this.root.transform; } }
         public GameVec2 position { get { return transform.position; } set { transform.position = new GameVec3(value.x, value.y, transform.position.z); } }
         public float angle { get { return transform.eulerAngles.z; } set { transform.eulerAngles = new GameVec3(0, 0, value); } }
         public GameVec2 scale { get { return transform.localScale; } set { transform.localScale = value; } }
@@ -29,8 +29,8 @@ namespace GamePlay.Bussiness.Renderer
         ) : base(model.typeId, GameEntityType.Projectile)
         {
             this.model = model;
-            this.go = go;
-            this.go.name = $"Projectile_{model.typeId}";
+            this.root = go;
+            this.root.name = $"Projectile_{model.typeId}";
             this.psPlayCom = ps != null ? new GameParticlePlayCom(ps) : null;
 
             this.fsmCom = new GameProjectileFSMCom();
@@ -64,7 +64,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void setActive(bool active)
         {
-            this.go.SetActive(active);
+            this.root.SetActive(active);
             if (active && this.psPlayCom != null)
             {
                 this.psPlayCom.Play(true);

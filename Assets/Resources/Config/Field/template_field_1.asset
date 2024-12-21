@@ -20,6 +20,10 @@ MonoBehaviour:
     monsterSpawnEMs:
     - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
       count: 3
+    - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
+      count: 1
+    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
+      count: 10
     spawnTime: 1
   - position: {x: -8.77, y: -9.77}
     radius: 1.64
@@ -38,6 +42,10 @@ MonoBehaviour:
     monsterSpawnEMs:
     - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
       count: 3
+    - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
+      count: 1
+    - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
+      count: 20
     spawnTime: 20
   - position: {x: 20.34, y: -5.38}
     radius: 1.64
@@ -49,5 +57,7 @@ MonoBehaviour:
     radius: 1.64
     monsterSpawnEMs:
     - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
+      count: 3
+    - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
       count: 3
     spawnTime: 40

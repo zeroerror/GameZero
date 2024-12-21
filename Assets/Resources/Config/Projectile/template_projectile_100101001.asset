@@ -90,7 +90,7 @@ MonoBehaviour:
             fanAngle: 0
       impactTargetTriggerModel:
         enable: 1
-        checkByTargetCollider: 0
+        checkByTargetCollider: 1
         actionSOs:
         - {fileID: 11400000, guid: e3a1513436f46da4294f1f7aef1e403e, type: 2}
         nextStateType: 7

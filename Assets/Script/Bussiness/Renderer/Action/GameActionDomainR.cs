@@ -68,7 +68,7 @@ namespace GamePlay.Bussiness.Renderer
             if (actEffectUrl != null)
             {
 
-                var attachNode = actor is GameRoleEntityR actRole ? actRole.go : null;
+                var attachNode = actor is GameRoleEntityR actRole ? actRole.root : null;
                 var transCom = actor.transformCom;
                 var attachOffset = action.actVFXOffset;
                 attachOffset.x = transCom.forward.x < 0 ? -attachOffset.x : attachOffset.x;
@@ -108,7 +108,7 @@ namespace GamePlay.Bussiness.Renderer
             if (hitEffectUrl != null)
             {
 
-                var attachNode = target is GameRoleEntityR actRole ? actRole.go : null;
+                var attachNode = target is GameRoleEntityR actRole ? actRole.root : null;
                 var transCom = target.transformCom;
                 var attachOffset = action.hitVFXOffset;
                 attachOffset.x = transCom.forward.x < 0 ? -attachOffset.x : attachOffset.x;

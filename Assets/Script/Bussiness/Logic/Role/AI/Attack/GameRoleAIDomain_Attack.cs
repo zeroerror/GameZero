@@ -100,6 +100,7 @@ namespace GamePlay.Bussiness.Logic
             if (hasReached)
             {
                 // 攻击
+                var tarPos = castTarget.GetLogicCenterPos();
                 var args = new GameRoleInputArgs
                 {
                     skillId = castSkill.skillModel.typeId,
@@ -108,8 +109,8 @@ namespace GamePlay.Bussiness.Logic
                         new GameActionTargeterArgs
                         {
                             targetEntity = castTarget,
-                            targetDirection = (castTarget.transformCom.position - role.transformCom.position).normalized,
-                            targetPosition = castTarget.transformCom.position,
+                            targetDirection = ( castTarget.GetLogicCenterPos() - role.transformCom.position).normalized,
+                            targetPosition = castTarget.GetLogicBottomPos(),
                         }
                     }
                 };
