@@ -25,7 +25,7 @@ MonoBehaviour:
       duration: 0
     timeIntervalEM:
       isEnable: 1
-      timeInterval: 0.6
+      timeInterval: 0.2
   conditionSetEM_remove:
     durationEM:
       isEnable: 1

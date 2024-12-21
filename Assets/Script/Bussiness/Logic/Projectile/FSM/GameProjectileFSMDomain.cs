@@ -36,6 +36,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 stateDomain.Inject(context);
             }
+            this._anyStateDomain.Inject(context);
             this._triggerDomain.Inject(context);
         }
 

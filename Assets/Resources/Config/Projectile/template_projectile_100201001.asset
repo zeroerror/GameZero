@@ -22,7 +22,7 @@ MonoBehaviour:
   isLockRotation: 1
   animLength: 0.083333336
   timelineEvents: []
-  lifeTime: 0
+  lifeTime: 5
   stateEMs:
   - stateType: 5
     attachStateEM:
@@ -61,7 +61,7 @@ MonoBehaviour:
     emSet:
       durationTriggerModel:
         enable: 1
-        duration: 1
+        duration: 0.2
         actionSOs:
         - {fileID: 11400000, guid: 28800abe7d1088b41a6b594b7355680b, type: 2}
         nextStateType: 0

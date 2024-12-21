@@ -17,10 +17,10 @@ MonoBehaviour:
   desc: "\u72C2\u66B4\u8001\u9F20\u6495\u54AC"
   dmgActionEM:
     selectorEM:
-      selectAnchorType: 1
+      selectAnchorType: 2
       campType: 1
       entityType: 1
-      selColliderType: 1
+      selColliderType: 0
       boxColliderModel:
         offset: {x: 1, y: 1}
         angle: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
         radius: 0
         fanAngle: 0
     dmgType: 1
-    value: 100
+    value: 300
     valueFormat: 1
     refType: 1
   healActionEM:
