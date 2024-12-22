@@ -15,24 +15,66 @@ MonoBehaviour:
   typeId: 305
   actionType: 3
   desc: "\u53D1\u5C04\u5F39\u4F53"
-  dmgAction:
-    typeId: 0
-    actionType: 0
-    selector:
+  dmgActionEM:
+    dmgType: 0
+    value: 0
+    valueFormat: 0
+    refType: 0
+    selectorEM:
       selectAnchorType: 0
-      campType: 1
+      campType: 0
       entityType: 0
-    dmg: 0
-  healAction:
-    typeId: 0
-    actionType: 0
-    selector:
-      selectAnchorType: 1
-      campType: 1
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+  healActionEM:
+    healType: 0
+    value: 0
+    valueFormat: 0
+    refType: 0
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
       entityType: 0
-    heal: 5156165
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
   launchProjectileActionEM:
-    projectileId: 200
+    projectileId: 100101001
     launchOffset: {x: 0, y: 0}
     launchProjectileSO: {fileID: 11400000, guid: 9cf0845552672f744927287d2249c9ab, type: 2}
     barrageType: 0
@@ -43,31 +85,130 @@ MonoBehaviour:
     spreadEM:
       count: 6
       spreadAngle: 60
-  actionR:
-    typeId: 3
-    vfxClip: {fileID: 0}
-    shakeModel:
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+  knockBackActionEM:
+    knockBackDirType: 0
+    distance: 0
+    duration: 0
+    easingType: 0
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+  attachBuffActionEM:
+    buffSO: {fileID: 0}
+    layer: 0
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+  summonRoleActionEM:
+    roleId: 0
+    count: 0
+    campType: 0
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+  actionEMR:
+    typeId: 0
+    actEffectPrefab: {fileID: 0}
+    actVFXScale: {x: 1, y: 1}
+    actVFXOffset: {x: 0, y: 0}
+    actCamShakeModel:
       angle: 0
       amplitude: 0
       frequency: 0
       duration: 0
-  selectorEM:
-    selectAnchorType: 1
-    campType: 2
-    entityType: 1
-    selColliderType: 0
-    boxColliderModel:
-      offset: {x: 0, y: 0}
+    hitEffectPrefab: {fileID: 0}
+    hitVFXScale: {x: 1, y: 1}
+    hitVFXOffset: {x: 0, y: 0}
+    hitCamShakeModel:
       angle: 0
-      width: 0
-      height: 0
-    circleColliderModel:
-      offset: {x: 0, y: 0}
-      angle: 0
-      radius: 0
-    fanColliderModel:
-      offset: {x: 0, y: 0}
-      angle: 0
-      radius: 0
-      fanAngle: 0
+      amplitude: 0
+      frequency: 0
+      duration: 0
   skillSORefs: []

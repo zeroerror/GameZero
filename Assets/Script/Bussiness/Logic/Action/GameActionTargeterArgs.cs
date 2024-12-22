@@ -10,5 +10,12 @@ namespace GamePlay.Bussiness.Logic
         public GameEntityBase targetEntity;
         public GameVec2 targetPosition;
         public GameVec2 targetDirection;
+
+        public GameActionTargeterArgs(GameEntityBase targetEntity, in GameVec2 targetPosition, in GameVec2 targetDirection)
+        {
+            this.targetEntity = targetEntity;
+            this.targetPosition = targetPosition;
+            this.targetDirection = targetDirection;
+        }
     }
 }

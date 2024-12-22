@@ -71,7 +71,7 @@ namespace GamePlay.Bussiness.Logic
             if (buffCom.TryGet(typeId, out var existBuff))
             {
                 realAttachLayer = existBuff.AttachLayer(layer);
-                _SubmitRC(existBuff);
+                _Attach(existBuff);
                 return true;
             }
 
@@ -93,12 +93,19 @@ namespace GamePlay.Bussiness.Logic
 
             buffCom.Add(newBuff);
             this._buffContext.repo.TryAdd(newBuff);
-            _SubmitRC(newBuff);
+            _Attach(newBuff);
             return true;
 
             // 内置方法
-            void _SubmitRC(GameBuffEntity buff)
+            void _Attach(GameBuffEntity buff)
             {
+                // 设置行为目标
+                buff.actionTargeterCom.SetTargeter(new GameActionTargeterArgs
+                {
+                    targetEntity = targetRole,
+                    targetPosition = targetRole.transformCom.position,
+                    targetDirection = targetRole.forward
+                });
                 // 提交RC事件
                 this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_ATTACH, new GameBuffRCArgs_Attach
                 {

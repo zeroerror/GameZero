@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: template_projectile_100101001
   m_EditorClassIdentifier: 
   typeId: 100101001
-  projectileName: "\u7206\u88C2\u98DE\u9556"
-  desc: "\u7206\u88C2\u98DE\u9556\uFF0C\u51FB\u4E2D\u65F6\u5206\u88C2"
+  projectileName: "\u5B50\u5F39"
+  desc: 
   animClip: {fileID: 0}
   prefab: {fileID: 1681781652526772, guid: 72776f7d79854969be56c3cb320008ab, type: 3}
   prefabScale: {x: 1, y: 1}
@@ -24,12 +24,12 @@ MonoBehaviour:
   timelineEvents: []
   lifeTime: 0
   stateEMs:
-  - stateType: 3
+  - stateType: 2
     attachStateEM:
       attachType: 0
       attachOffset: {x: 0, y: 0}
     fixedDirectionStateEM:
-      speed: 10
+      speed: 15
       bounceCount: 0
       detectSelector:
         selectAnchorType: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
           fanAngle: 0
     lockOnEntityStateEM:
       targeterType: 2
-      speed: 10
+      speed: 15
       timeToArrive: 0
     lockOnPositionStateEM:
       targeterType: 0
@@ -61,14 +61,14 @@ MonoBehaviour:
     emSet:
       durationTriggerModel:
         enable: 0
-        duration: 0.3
-        actionSOs:
-        - {fileID: 11400000, guid: e3a1513436f46da4294f1f7aef1e403e, type: 2}
-        nextStateType: 7
+        duration: 0
+        actionSOs: []
+        nextStateType: 0
       volumeCollisionTriggerModel:
-        enable: 0
+        enable: 1
         actionSOs:
-        - {fileID: 11400000, guid: e3a1513436f46da4294f1f7aef1e403e, type: 2}
+        - {fileID: 11400000, guid: 0c991d1b1dff87e4789f8d09fc3259c8, type: 2}
+        - {fileID: 11400000, guid: 3700334a7d8969f40b3760142a98c858, type: 2}
         nextStateType: 7
         detectEntitySelectorEM:
           selectAnchorType: 1
@@ -78,37 +78,36 @@ MonoBehaviour:
           boxColliderModel:
             offset: {x: 0, y: 0}
             angle: 0
-            width: 0
-            height: 0
+            width: 0.3
+            height: 0.23
           circleColliderModel:
             offset: {x: 0, y: 0}
             angle: 0
-            radius: 1
+            radius: 0.25
           fanColliderModel:
             offset: {x: 0, y: 0}
             angle: 0
             radius: 0
             fanAngle: 0
       impactTargetTriggerModel:
-        enable: 1
+        enable: 0
         checkByTargetCollider: 1
-        actionSOs:
-        - {fileID: 11400000, guid: e3a1513436f46da4294f1f7aef1e403e, type: 2}
+        actionSOs: []
         nextStateType: 7
         detectEntitySelectorEM:
           selectAnchorType: 1
-          campType: 1
-          entityType: 1
+          campType: 0
+          entityType: 0
           selColliderType: 2
           boxColliderModel:
             offset: {x: 0, y: 0}
             angle: 0
-            width: 0
-            height: 0
+            width: 0.3
+            height: 0.3
           circleColliderModel:
             offset: {x: 0, y: 0}
             angle: 0
-            radius: 0.5
+            radius: 0.25
           fanColliderModel:
             offset: {x: 0, y: 0}
             angle: 0

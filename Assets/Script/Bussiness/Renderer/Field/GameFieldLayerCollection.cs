@@ -10,16 +10,16 @@ public static class GameFieldLayerCollection
     public static readonly int GroundLayerZ = 1000;
 
     public static readonly string EnvironmentLayer = "Environment";
-    public static readonly int EnvironmentLayerZ = 2000;
+    public static readonly int EnvironmentLayerZ = 10000;
 
     public static readonly string EntityLayer = "Entity";
-    public static readonly int EntityLayerZ = 2000;
+    public static readonly int EntityLayerZ = 10000;
 
     public static readonly string VFXLayer = "VFX";
-    public static readonly int VFXLayerZ = 2000;
+    public static readonly int VFXLayerZ = 20000;
 
     public static readonly string SceneUILayer = "SceneUI";
-    public static readonly int SceneUILayerZ = 3000;
+    public static readonly int SceneUILayerZ = 30000;
 
     public static readonly int InnerStepZ = 1;
 

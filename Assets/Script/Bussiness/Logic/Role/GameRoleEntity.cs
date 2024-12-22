@@ -60,14 +60,15 @@ namespace GamePlay.Bussiness.Logic
 
         public void FaceTo(in GameVec2 dir)
         {
-            if (dir.x != 0)
-            {
-                var scale = this.transformCom.scale;
-                var absx = GameMathF.Abs(scale.x);
-                scale.x = dir.x > 0 ? absx : -absx;
-                this.transformCom.scale = scale;
-            }
+            if (dir.x == 0) return;
+            var scale = this.transformCom.scale;
+            var absx = GameMathF.Abs(scale.x);
+            scale.x = dir.x > 0 ? absx : -absx;
+            this.transformCom.scale = scale;
+            this._forward = dir;
         }
+        public GameVec2 forward => this._forward;
+        private GameVec2 _forward;
 
     }
 }

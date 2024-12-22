@@ -18,18 +18,18 @@ MonoBehaviour:
   refreshFlag: 1
   maxLayer: 1
   actionSOs:
-  - {fileID: 11400000, guid: e546edd63e190824aacb785d98caa92f, type: 2}
+  - {fileID: 11400000, guid: e3a1513436f46da4294f1f7aef1e403e, type: 2}
   conditionSetEM_action:
     durationEM:
       isEnable: 0
       duration: 0
     timeIntervalEM:
       isEnable: 1
-      timeInterval: 0.2
+      timeInterval: 0.5
   conditionSetEM_remove:
     durationEM:
       isEnable: 1
-      duration: 2
+      duration: 1
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0
