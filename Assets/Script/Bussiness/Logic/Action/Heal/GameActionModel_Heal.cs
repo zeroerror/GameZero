@@ -15,11 +15,12 @@ namespace GamePlay.Bussiness.Logic
         public GameActionModel_Heal(
             int typeId,
             GameEntitySelector selector,
+            GameActionPreconditionSetModel preconditionSet,
             GameActionHealType healType,
             int value,
             GameActionValueFormat valueFormat,
             GameActionValueRefType refType
-        ) : base(GameActionType.Heal, typeId, selector)
+        ) : base(GameActionType.Heal, typeId, selector, preconditionSet)
         {
             this.healType = healType;
             this.value = value;

@@ -9,13 +9,16 @@ namespace GamePlay.Config
         public int value;
         public GameActionValueFormat valueFormat;
         public GameActionValueRefType refType;
+
         public GameEntitySelectorEM selectorEM;
+        public GameActionPreconditionSetEM preconditionSetEM;
 
         public GameActionModel_Heal ToModel()
         {
             return new GameActionModel_Heal(
                 0,
                 this.selectorEM?.ToSelector(),
+                this.preconditionSetEM?.ToModel(),
                 this.healType,
                 this.value,
                 this.valueFormat,

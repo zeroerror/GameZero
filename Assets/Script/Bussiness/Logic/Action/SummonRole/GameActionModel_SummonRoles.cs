@@ -7,15 +7,16 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 个数 </summary>
         public readonly int count;
         /// <summary> 阵营类型 </summary>
-        public GameCampType campType;
+        public readonly GameCampType campType;
 
         public GameActionModel_SummonRoles(
             int typeId,
             GameEntitySelector selector,
+            GameActionPreconditionSetModel preconditionSet,
             int roleId,
             int count,
             GameCampType campType
-        ) : base(GameActionType.SummonRole, typeId, selector)
+        ) : base(GameActionType.SummonRoles, typeId, selector, preconditionSet)
         {
             this.roleId = roleId;
             this.count = count;

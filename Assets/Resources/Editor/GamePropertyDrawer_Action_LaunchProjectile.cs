@@ -41,6 +41,9 @@ namespace GamePlay.Config
             var selectorEM_p = property.FindPropertyRelative("selectorEM");
             selectorEM_p.DrawProperty();
 
+            var preconditionSetEM_p = property.FindPropertyRelative("preconditionSetEM");
+            preconditionSetEM_p.DrawProperty();
+
             EditorGUI.EndProperty();
         }
     }

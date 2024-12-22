@@ -14,6 +14,7 @@ namespace GamePlay.Config
         public GameActionEM_LaunchProjectile launchProjectileActionEM;
         public GameActionEM_KnockBack knockBackActionEM;
         public GameActionEM_AttachBuff attachBuffActionEM;
+        public GameActionEM_SummonRoles summonRoleActionEM;
 
         public GameActionEMR actionEMR;
 
@@ -39,6 +40,9 @@ namespace GamePlay.Config
                 case GameActionType.AttachBuff:
                     actionModel = attachBuffActionEM.ToModel();
                     break;
+                case GameActionType.SummonRoles:
+                    actionModel = summonRoleActionEM.ToModel();
+                    break;
                 default:
                     GameLogger.LogError("GameActionSO: GetAction: invalid actionType: " + actionType);
                     return null;
@@ -61,6 +65,8 @@ namespace GamePlay.Config
                     return this.knockBackActionEM.selectorEM;
                 case GameActionType.AttachBuff:
                     return this.attachBuffActionEM.selectorEM;
+                case GameActionType.SummonRoles:
+                    return this.summonRoleActionEM.selectorEM;
                 default:
                     GameLogger.LogError("未处理的行为类型: " + actionType);
                     return null;

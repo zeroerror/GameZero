@@ -7,7 +7,9 @@ namespace GamePlay.Config
     {
         public GameBuffSO buffSO;
         public int layer;
+
         public GameEntitySelectorEM selectorEM;
+        public GameActionPreconditionSetEM preconditionSetEM;
 
         public GameActionModel_AttachBuff ToModel()
         {
@@ -19,6 +21,7 @@ namespace GamePlay.Config
             var model = new GameActionModel_AttachBuff(
                 0,
                 selectorEM.ToSelector(),
+                preconditionSetEM?.ToModel(),
                 buffSO.typeId,
                 layer
             );

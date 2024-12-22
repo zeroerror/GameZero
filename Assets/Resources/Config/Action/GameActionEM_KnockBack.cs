@@ -10,12 +10,14 @@ namespace GamePlay.Config
         public GameEasingType easingType;
 
         public GameEntitySelectorEM selectorEM;
+        public GameActionPreconditionSetEM preconditionSetEM;
 
         public GameActionModel_KnockBack ToModel()
         {
             var model = new GameActionModel_KnockBack(
                 0,
                 selectorEM.ToSelector(),
+                preconditionSetEM?.ToModel(),
                 knockBackDirType,
                 distance,
                 duration,

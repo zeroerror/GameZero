@@ -12,12 +12,13 @@ namespace GamePlay.Bussiness.Logic
 
         public GameActionModel_LaunchProjectile(
             int projectileId,
+            GameEntitySelector selector,
+            GameActionPreconditionSetModel preconditionSet,
             in GameVec2 launchOffset,
             GameProjectileBarrageType barrageType,
             GameProjectileBarrageModel_CustomLaunchOffset customLaunchOffsetModel,
-            GameProjectileBarrageModel_Spread spreadModel,
-            GameEntitySelector selector
-        ) : base(GameActionType.LaunchProjectile, projectileId, selector)
+            GameProjectileBarrageModel_Spread spreadModel
+        ) : base(GameActionType.LaunchProjectile, projectileId, selector, preconditionSet)
         {
             this.projectileId = projectileId;
             this.launchOffset = launchOffset;

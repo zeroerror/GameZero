@@ -103,10 +103,8 @@ namespace GamePlay.Bussiness.Logic
 
         public GameRoleEntity CreatePlayerRole(int typeId, in GameTransformArgs transArgs, bool isUser)
         {
-            typeId = 20001;//test
             var e = this.CreateRole(typeId, GameRoleCollection.PLAYER_ROLE_CAMP_ID, transArgs, isUser);
             if (this._roleContext.userRole == null) this._roleContext.userRole = e;
-            this.SummonRoles(e, typeId, GameCampType.Ally, 10, e.transformCom.ToArgs());
             return e;
         }
 

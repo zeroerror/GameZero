@@ -38,6 +38,7 @@ namespace GamePlay.Bussiness.Logic
                 GameLogger.LogError($"未找到行为配置：{actionId}");
                 return;
             }
+
             switch (actionModel)
             {
                 case GameActionModel_Dmg dmgAction:
@@ -78,6 +79,8 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
             selectedEntities?.ForEach((selectedEntity) =>
             {
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
+
                 var record = GameActionUtil_Dmg.CalcDmg(actorEntity, selectedEntity, action);
                 recordList.Add(record);
                 GameActionUtil_Dmg.DoDmg(selectedEntity, record);
@@ -99,11 +102,12 @@ namespace GamePlay.Bussiness.Logic
             var recordList = new List<GameActionRecord_Heal>();
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
-            selectedEntities?.ForEach((selEntity) =>
+            selectedEntities?.ForEach((selectedEntity) =>
             {
-                var record = GameActionHealUtil.CalcHeal(actorEntity, selEntity, action);
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
+                var record = GameActionHealUtil.CalcHeal(actorEntity, selectedEntity, action);
                 recordList.Add(record);
-                GameActionHealUtil.DoHeal(selEntity, record);
+                GameActionHealUtil.DoHeal(selectedEntity, record);
             });
             recordList.ForEach((record) =>
             {
@@ -126,6 +130,8 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
             selectedEntities?.ForEach((selectedEntity) =>
             {
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
+
                 // 发射锚点位置
                 var transArgs = selectedEntity.transformCom.ToArgs();
                 // 发射偏移, 仅在x轴上对称翻转
@@ -174,6 +180,8 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
             selectedEntities?.ForEach((selectedEntity) =>
             {
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
+
                 var record = GameActionKnockBackUtil.CalcKnockBack(actorEntity, selectedEntity, action);
                 recordList.Add(record);
                 var transformApi = this._context.domainApi.transformApi;
@@ -197,6 +205,8 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
             selectedEntities?.ForEach((selectedEntity) =>
             {
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
+
                 var record = GameActionUtil_AttributeModify.CalcAttributeModify(actorEntity, selectedEntity, action);
                 recordList.Add(record);
                 if (!dontDo) GameActionUtil_AttributeModify.DoAttributeModify(selectedEntity, record);
@@ -219,6 +229,8 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
             selectedEntities?.ForEach((selectedEntity) =>
             {
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
+
                 var isSuc = this._context.domainApi.buffApi.AttachBuff(action.buffId, selectedEntity, action.layer, out var realAttachLayer);
                 if (isSuc) recordList.Add(new GameActionRecord_AttachBuff(
                     actorRoleIdArgs: actorEntity.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,

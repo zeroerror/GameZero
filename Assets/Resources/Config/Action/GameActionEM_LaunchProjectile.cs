@@ -1,5 +1,4 @@
 using GamePlay.Bussiness.Logic;
-using JetBrains.Annotations;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Config
 {
@@ -15,6 +14,7 @@ namespace GamePlay.Config
         public GameProjectileBarrageEM_Spread spreadEM;
 
         public GameEntitySelectorEM selectorEM;
+        public GameActionPreconditionSetEM preconditionSetEM;
 
         public GameActionModel_LaunchProjectile ToModel()
         {
@@ -32,11 +32,12 @@ namespace GamePlay.Config
 
             GameActionModel_LaunchProjectile model = new GameActionModel_LaunchProjectile(
                 this.projectileId,
+                this.selectorEM.ToSelector(),
+                this.preconditionSetEM?.ToModel(),
                 this.launchOffset,
                 this.barrageType,
                 customLaunchOffsetModel,
-                spreadModel,
-                this.selectorEM.ToSelector()
+                spreadModel
             );
             return model;
         }

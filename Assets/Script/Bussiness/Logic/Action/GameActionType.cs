@@ -17,6 +17,6 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 附加buff </summary>
         AttachBuff = 6,
         /// <summary> 召唤角色 </summary>
-        SummonRole = 7,
+        SummonRoles = 7,
     }
 }

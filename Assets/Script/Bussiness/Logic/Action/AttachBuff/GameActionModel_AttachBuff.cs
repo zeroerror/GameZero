@@ -7,8 +7,15 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 层数 </summary>
         public readonly int layer;
 
-        public GameActionModel_AttachBuff(int typeId, GameEntitySelector selector, int buffId, int layer) : base(GameActionType.AttachBuff, typeId, selector)
+        public GameActionModel_AttachBuff(
+            int typeId,
+            GameEntitySelector selector,
+            GameActionPreconditionSetModel preconditionSet,
+            int buffId,
+            int layer
+        ) : base(GameActionType.AttachBuff, typeId, selector, preconditionSet)
         {
+
             this.buffId = buffId;
             this.layer = layer;
         }

@@ -15,11 +15,12 @@ namespace GamePlay.Bussiness.Logic
         public GameActionModel_Attribute(
             int typeId,
             GameEntitySelector selector,
+            GameActionPreconditionSetModel preconditionSet,
             GameAttributeType attributeType,
             int value,
             GameActionValueFormat valueFormat,
             GameActionValueRefType refType
-        ) : base(GameActionType.AttributeModify, typeId, selector)
+        ) : base(GameActionType.AttributeModify, typeId, selector, preconditionSet)
         {
             this.modifyType = attributeType;
             this.value = value;

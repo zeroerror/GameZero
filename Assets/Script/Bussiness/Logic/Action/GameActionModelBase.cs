@@ -6,12 +6,19 @@ namespace GamePlay.Bussiness.Logic
         public int typeId;
         public GameActionType actionType;
         public GameEntitySelector selector;
+        public GameActionPreconditionSetModel preconditionSet;
 
-        public GameActionModelBase(GameActionType actionType, int typeId, GameEntitySelector selector)
+        public GameActionModelBase(
+            GameActionType actionType,
+            int typeId,
+            GameEntitySelector selector,
+            GameActionPreconditionSetModel preconditionSet
+        )
         {
             this.actionType = actionType;
             this.typeId = typeId;
             this.selector = selector;
+            this.preconditionSet = preconditionSet;
         }
     }
 }

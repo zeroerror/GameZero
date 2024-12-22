@@ -16,6 +16,10 @@ MonoBehaviour:
   actionType: 1
   desc: "buff\u6D4B\u8BD5\u4F24\u5BB3"
   dmgActionEM:
+    dmgType: 1
+    value: 100
+    valueFormat: 1
+    refType: 1
     selectorEM:
       selectAnchorType: 1
       campType: 1
@@ -35,10 +39,11 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
-    dmgType: 1
-    value: 100
-    valueFormat: 1
-    refType: 1
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffId: 0
+        layer: 0
   healActionEM:
     healType: 0
     value: 1
@@ -63,6 +68,11 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffId: 0
+        layer: 0
   launchProjectileActionEM:
     projectileId: 200
     launchOffset: {x: 0, y: 0}
@@ -95,6 +105,11 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffId: 0
+        layer: 0
   knockBackActionEM:
     knockBackDirType: 0
     distance: 1
@@ -119,6 +134,11 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffId: 0
+        layer: 0
   attachBuffActionEM:
     buffSO: {fileID: 0}
     layer: 0
@@ -141,6 +161,39 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffId: 0
+        layer: 0
+  summonRoleActionEM:
+    roleId: 0
+    count: 0
+    campType: 0
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffId: 0
+        layer: 0
   actionEMR:
     typeId: 0
     actEffectPrefab: {fileID: 3672937312462212057, guid: 24e4ca5ae27d11b4baac1ec375e510b2, type: 3}

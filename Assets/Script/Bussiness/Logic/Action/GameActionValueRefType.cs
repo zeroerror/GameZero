@@ -62,10 +62,10 @@ namespace GamePlay.Bussiness.Logic
                     refAttrValue = targetAttrCom.GetValue(GameAttributeType.HP);
                     break;
                 case GameActionValueRefType.ActorMaxHP:
-                    refAttrValue = actorBaseAttrCom.GetValue(GameAttributeType.HP);
+                    refAttrValue = actorBaseAttrCom.GetValue(GameAttributeType.MaxHP);
                     break;
                 case GameActionValueRefType.TargetMaxHP:
-                    refAttrValue = targetBaseAttrCom.GetValue(GameAttributeType.HP);
+                    refAttrValue = targetBaseAttrCom.GetValue(GameAttributeType.MaxHP);
                     break;
                 case GameActionValueRefType.ActorLostHP:
                     refAttrValue = actorBaseAttrCom.GetValue(GameAttributeType.HP) - actorAttrCom.GetValue(GameAttributeType.HP);

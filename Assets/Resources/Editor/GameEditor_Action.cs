@@ -58,11 +58,16 @@ namespace GamePlay.Config
 
         private void _ShowLogicData(GameActionSO so)
         {
+            EditorGUILayout.BeginVertical("box");
             this.typeId_p.DrawProperty_Int("类型ID");
             this.desc_p.DrawProperty_Str("描述");
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.BeginVertical("box");
             var actionType = this.actionType_p.DrawProperty_EnumPopup<GameActionType>("行为类型");
             if (actionType == GameActionType.None) EditorGUILayout.HelpBox("请选择一个行为类型", MessageType.Warning);
             _ShowAction(so);
+            EditorGUILayout.EndVertical();
         }
 
         private void _ShowAction(GameActionSO so)

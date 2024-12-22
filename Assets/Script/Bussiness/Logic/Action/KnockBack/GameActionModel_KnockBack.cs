@@ -15,11 +15,12 @@ namespace GamePlay.Bussiness.Logic
         public GameActionModel_KnockBack(
             int typeId,
             GameEntitySelector selector,
+            GameActionPreconditionSetModel preconditionSet,
             GameActionKnockBackDirType knockBackDirType,
             float distance,
             float duration,
             GameEasingType easingType
-        ) : base(GameActionType.KnockBack, typeId, selector)
+        ) : base(GameActionType.KnockBack, typeId, selector, preconditionSet)
         {
             this.knockBackDirType = knockBackDirType;
             this.distance = distance;

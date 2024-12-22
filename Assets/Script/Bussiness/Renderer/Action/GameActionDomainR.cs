@@ -51,12 +51,12 @@ namespace GamePlay.Bussiness.Renderer
         }
 
         /// <summary>
-        /// 执行行为, 只要行为执行就会调用
+        /// 播放行为特效
         /// </summary>
         /// <param name="actionId"></param>
         /// <param name="actor"></param>
         /// <param name="target"></param>
-        private void _DoAction(int actionId, GameEntityBase actor)
+        private void _PlayActionEffect(int actionId, GameEntityBase actor)
         {
             if (!this._actionContext.template.TryGet(actionId, out var action))
             {
@@ -93,10 +93,10 @@ namespace GamePlay.Bussiness.Renderer
         }
 
         /// <summary>
-        /// 执行行为成功, 只有行为成功命中才会调用
+        /// 播放行为命中特效
         /// <para>target: 目标实体</para>
         /// </summary>
-        private void _DoActionSuccess(int actionId, GameEntityBase target)
+        private void _DoActionHitEffect(int actionId, GameEntityBase target)
         {
             if (!this._actionContext.template.TryGet(actionId, out var action))
             {
@@ -142,7 +142,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_DO, args);
                 return;
             }
-            this._DoAction(evArgs.actionId, actor);
+            this._PlayActionEffect(evArgs.actionId, actor);
         }
 
         private void _OnAction_Dmg(object args)
@@ -158,7 +158,11 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_DMG, args);
                 return;
             }
-            this._DoActionSuccess(evArgs.actionId, target);
+
+            if (evArgs.dmgRecord.value > 0)
+            {
+                this._DoActionHitEffect(evArgs.actionId, target);
+            }
 
             // 伤害跳字
             var jumpTextDomainApi = this._context.uiContext.domainApi.jumpTextDomainApi;
@@ -189,7 +193,10 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, args);
                 return;
             }
-            this._DoActionSuccess(evArgs.actionId, target);
+            if (healRecord.value > 0)
+            {
+                this._DoActionHitEffect(evArgs.actionId, target);
+            }
         }
 
         private void _OnAction_LaunchProjectile(object args)
@@ -205,7 +212,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, args);
                 return;
             }
-            this._DoActionSuccess(evArgs.actionId, target);
+            this._DoActionHitEffect(evArgs.actionId, target);
         }
 
         private void _OnAction_KnockBack(object args)
@@ -221,7 +228,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, args);
                 return;
             }
-            this._DoActionSuccess(evArgs.actionId, target);
+            this._DoActionHitEffect(evArgs.actionId, target);
         }
 
         private void _OnAction_AttributeModify(object args)
@@ -237,7 +244,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, args);
                 return;
             }
-            this._DoActionSuccess(evArgs.actionId, target);
+            this._DoActionHitEffect(evArgs.actionId, target);
         }
 
         private void _OnAction_AttachBuff(object args)
@@ -253,7 +260,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, args);
                 return;
             }
-            this._DoActionSuccess(evArgs.actionId, target);
+            this._DoActionHitEffect(evArgs.actionId, target);
         }
     }
 }

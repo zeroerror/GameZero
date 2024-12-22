@@ -15,11 +15,12 @@ namespace GamePlay.Bussiness.Logic
         public GameActionModel_Dmg(
             int typeId,
             GameEntitySelector selector,
+            GameActionPreconditionSetModel preconditionSet,
             GameActionDmgType dmgType,
             int value,
             GameActionValueFormat valueFormat,
             GameActionValueRefType refType
-        ) : base(GameActionType.Dmg, typeId, selector)
+        ) : base(GameActionType.Dmg, typeId, selector, preconditionSet)
         {
             this.dmgType = dmgType;
             this.value = value;
