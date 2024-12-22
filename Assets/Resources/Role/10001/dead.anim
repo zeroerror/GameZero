@@ -636,7 +636,7 @@ AnimationClip:
     - time: 0
       value: {fileID: -1828946549344447192, guid: f037d5f097755ae4583066e9671b0b34, type: 3}
     - time: 0.016666668
-      value: {fileID: -1381065623766834176, guid: 46d0e4cf6c2cf36448f26f7da9864bc7, type: 3}
+      value: {fileID: -1381065623766834176, guid: f037d5f097755ae4583066e9671b0b34, type: 3}
     attribute: m_Sprite
     path: Body/Head
     classID: 212
@@ -777,7 +777,7 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
     - {fileID: -1828946549344447192, guid: f037d5f097755ae4583066e9671b0b34, type: 3}
-    - {fileID: -1381065623766834176, guid: 46d0e4cf6c2cf36448f26f7da9864bc7, type: 3}
+    - {fileID: -1381065623766834176, guid: f037d5f097755ae4583066e9671b0b34, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -3088,11 +3088,4 @@ AnimationClip:
     flags: 0
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0
-    functionName: SetHead
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 2
-    messageOptions: 0
+  m_Events: []

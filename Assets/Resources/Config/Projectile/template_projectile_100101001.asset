@@ -15,10 +15,11 @@ MonoBehaviour:
   typeId: 100101001
   projectileName: "\u7206\u88C2\u98DE\u9556"
   desc: "\u7206\u88C2\u98DE\u9556\uFF0C\u51FB\u4E2D\u65F6\u5206\u88C2"
-  animClip: {fileID: 7400000, guid: cc3ce71219919ab439e7579e8ca69915, type: 2}
-  prefab: {fileID: 0}
+  animClip: {fileID: 0}
+  prefab: {fileID: 1681781652526772, guid: 72776f7d79854969be56c3cb320008ab, type: 3}
   prefabScale: {x: 1, y: 1}
   prefabOffset: {x: 0, y: 0}
+  isLockRotation: 0
   animLength: 0.083333336
   timelineEvents: []
   lifeTime: 0

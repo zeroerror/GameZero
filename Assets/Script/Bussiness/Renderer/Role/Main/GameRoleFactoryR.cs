@@ -28,7 +28,6 @@ namespace GamePlay.Bussiness.Renderer
             roleGO.transform.SetParent(body.transform);
 
             var scale = body.transform.localScale;
-            scale.x = -scale.x;
             body.transform.localScale = scale;
 
             go.transform.localPosition = new Vector3(0, 0, 0);

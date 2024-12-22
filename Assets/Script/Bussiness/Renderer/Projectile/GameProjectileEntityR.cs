@@ -39,10 +39,6 @@ namespace GamePlay.Bussiness.Renderer
             {
                 this.animCom = new GamePlayableCom(animator);
             }
-            else
-            {
-                GameLogger.LogError("投射物既没有动画也没有特效");
-            }
 
             this.fsmCom = new GameProjectileFSMCom();
             this.timelineCom = new GameTimelineCom();
