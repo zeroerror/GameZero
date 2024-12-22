@@ -60,6 +60,11 @@ namespace GamePlay.Bussiness.Logic
         /// </summary>
         public void DoAction_AttachBuff(GameActionModel_AttachBuff action, GameEntityBase actorEntity);
 
-
+        /// <summary>
+        /// 执行行为 - 召唤友军 
+        /// action: 召唤友军行为
+        /// actorEntity: 执行者
+        /// </summary>
+        public void DoAction_SummonRole(GameActionModel_SummonRoles action, GameEntityBase actorEntity);
     }
 }

@@ -5,7 +5,6 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameActionDomain : GameActionDomainApi
     {
-
         GameContext _context;
         GameActionContext _actionContext => this._context.actionContext;
 
@@ -239,5 +238,33 @@ namespace GamePlay.Bussiness.Logic
                 this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, evArgs);
             });
         }
+
+        public void DoAction_SummonRole(GameActionModel_SummonRoles action, GameEntityBase actorEntity)
+        {
+            var recordList = new List<GameActionRecord_SummonRoles>();
+            var entitySelectApi = this._context.domainApi.entitySelectApi;
+            var roles = this._context.domainApi.roleApi.SummonRoles(action, actorEntity, actorEntity.transformCom.ToArgs());
+            if (roles.HasData())
+            {
+                var record = new GameActionRecord_SummonRoles(
+                    actorRoleIdArgs: actorEntity.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
+                    actorIdArgs: actorEntity.idCom.ToArgs(),
+                    roleId: action.roleId,
+                    count: action.count,
+                    campType: action.campType
+                );
+                recordList.Add(record);
+            }
+            recordList.ForEach((record) =>
+            {
+                // 提交RC
+                var evArgs = new GameActionRCArgs_SummonRoles(
+                    action.typeId,
+                    record
+                );
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_SUMMON_ROLE, evArgs);
+            });
+        }
+
     }
 }

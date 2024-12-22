@@ -4,7 +4,7 @@ namespace GamePlay.Bussiness.Logic
     {
         /// <summary> 行为者角色Id参数, 不一定存在 </summary>
         public GameIdArgs actorRoleIdArgs;
-        /// <summary> 行为者Id参数, 比如技能, 投射物等 </summary>
+        /// <summary> 行为者Id参数, 比如技能, 投射物, BUFF等 </summary>
         public GameIdArgs actorIdArgs;
 
         /// <summary> 目标角色Id参数 </summary>

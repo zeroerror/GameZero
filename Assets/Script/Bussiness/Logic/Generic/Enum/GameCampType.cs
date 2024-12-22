@@ -10,4 +10,24 @@ namespace GamePlay.Bussiness.Logic
         // 中立
         Neutral = 1 << 2
     }
+
+    public static class GameCampTypeExt
+    {
+        public static string ToDesc(this GameCampType campType)
+        {
+            switch (campType)
+            {
+                case GameCampType.None:
+                    return "无";
+                case GameCampType.Enemy:
+                    return "敌方";
+                case GameCampType.Ally:
+                    return "友方";
+                case GameCampType.Neutral:
+                    return "中立";
+                default:
+                    return "未知";
+            }
+        }
+    }
 }

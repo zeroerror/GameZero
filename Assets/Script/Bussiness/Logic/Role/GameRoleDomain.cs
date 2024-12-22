@@ -103,15 +103,16 @@ namespace GamePlay.Bussiness.Logic
 
         public GameRoleEntity CreatePlayerRole(int typeId, in GameTransformArgs transArgs, bool isUser)
         {
-            var e = this.CreateRole(typeId, 1, transArgs, isUser);
+            typeId = 20001;//test
+            var e = this.CreateRole(typeId, GameRoleCollection.PLAYER_ROLE_CAMP_ID, transArgs, isUser);
             if (this._roleContext.userRole == null) this._roleContext.userRole = e;
+            this.SummonRoles(e, typeId, GameCampType.Ally, 10, e.transformCom.ToArgs());
             return e;
         }
 
         public GameRoleEntity CreateMonsterRole(int typeId, in GameTransformArgs transArgs)
         {
-            var e = this.CreateRole(typeId, 2, transArgs, false);
-            if (this._roleContext.userRole == null) this._roleContext.userRole = e;
+            var e = this.CreateRole(typeId, GameRoleCollection.MONSTER_ROLE_CAMP_ID, transArgs, false);
             return e;
         }
 
@@ -145,5 +146,36 @@ namespace GamePlay.Bussiness.Logic
             return nearestEnemy;
         }
 
+        public GameRoleEntity[] SummonRoles(
+            GameEntityBase summoner,
+            int typeId,
+            GameCampType campType,
+            int count,
+            in GameTransformArgs transArgs
+        )
+        {
+            var roles = new GameRoleEntity[count];
+            var pos = summoner.transformCom.position;
+
+            // 判定阵营, 暂时适配玩家和怪物, 小于怪物阵营id的视为玩家角色的阵营Id
+            var summonerCampId = summoner.idCom.campId;
+            var campId = campType == GameCampType.Ally ?
+                summonerCampId : summonerCampId < GameRoleCollection.MONSTER_ROLE_CAMP_ID ?
+                GameRoleCollection.MONSTER_ROLE_CAMP_ID : GameRoleCollection.PLAYER_ROLE_CAMP_ID;
+
+            for (int i = 0; i < count; i++)
+            {
+                var role = this.CreateRole(typeId, campId, transArgs, false);
+                role.transformCom.position = pos + GameVectorUtil.GetXYRandomDirection() * 1f;
+                role.idCom.SetParent(summoner);
+                roles[i] = role;
+            }
+            return roles;
+        }
+
+        public GameRoleEntity[] SummonRoles(GameActionModel_SummonRoles model, GameEntityBase summoner, in GameTransformArgs transArgs)
+        {
+            return this.SummonRoles(summoner, model.typeId, model.campType, model.count, transArgs);
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_ACTION_ATTRIBUTE_MODIFY = "RC_GAME_ACTION_DO_ATTRIBUTE_MODIFY";
         /** 行为执行 - 挂载Buff */
         public static readonly string RC_GAME_ACTION_ATTACH_BUFF = "RC_GAME_ACTION_ATTACH_BUFF";
+        /** 行为执行 - 召唤角色 */
+        public static readonly string RC_GAME_ACTION_SUMMON_ROLE = "RC_GAME_ACTION_SUMMON_ROLE";
     }
 
     public struct GameActionRCArgs_Do
@@ -89,6 +91,17 @@ namespace GamePlay.Bussiness.Logic
         public int actionId;
         public GameActionRecord_AttachBuff record;
         public GameActionRCArgs_AttachBuff(int actionId, in GameActionRecord_AttachBuff record)
+        {
+            this.actionId = actionId;
+            this.record = record;
+        }
+    }
+
+    public struct GameActionRCArgs_SummonRoles
+    {
+        public int actionId;
+        public GameActionRecord_SummonRoles record;
+        public GameActionRCArgs_SummonRoles(int actionId, in GameActionRecord_SummonRoles record)
         {
             this.actionId = actionId;
             this.record = record;
