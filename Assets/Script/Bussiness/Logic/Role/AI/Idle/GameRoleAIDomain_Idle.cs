@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Logic
             idleState.stateTime += dt;
             if (idleState.stateTime > 1)
             {
-                this._context.domainApi.roleApi.apApi.TryEnter(role, GameRoleAIStateType.Attack);
+                this._context.domainApi.roleApi.aiApi.TryEnter(role, GameRoleAIStateType.Attack);
             }
         }
     }

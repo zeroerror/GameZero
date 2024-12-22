@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleAIDomain : GameRoleAIDomainApi
@@ -7,11 +9,13 @@ namespace GamePlay.Bussiness.Logic
 
         GameRoleAIDomain_Idle _idleDomain;
         GameRoleAIDomain_Attack _attackDomain;
+        GameRoleAIDomain_Follow _followDomain;
 
         public GameRoleAIDomain()
         {
             this._idleDomain = new GameRoleAIDomain_Idle();
             this._attackDomain = new GameRoleAIDomain_Attack();
+            this._followDomain = new GameRoleAIDomain_Follow();
         }
 
         public void Inject(GameContext context)
@@ -19,12 +23,14 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
             this._idleDomain.Inject(context);
             this._attackDomain.Inject(context);
+            this._followDomain.Inject(context);
         }
 
         public void Destroy()
         {
             this._idleDomain.Destroy();
             this._attackDomain.Destroy();
+            this._followDomain.Destroy();
         }
 
         public void Tick(float dt)
@@ -42,7 +48,11 @@ namespace GamePlay.Bussiness.Logic
                     case GameRoleAIStateType.Attack:
                         this._attackDomain.Tick(entity, dt);
                         break;
+                    case GameRoleAIStateType.Follow:
+                        this._followDomain.Tick(entity, dt);
+                        break;
                     default:
+                        GameLogger.LogError("GameRoleAIDomain::Tick: 未处理的状态类型: " + aiStateType);
                         break;
                 }
             });
@@ -59,7 +69,11 @@ namespace GamePlay.Bussiness.Logic
                 case GameRoleAIStateType.Attack:
                     aiCom.EnterAttack();
                     break;
+                case GameRoleAIStateType.Follow:
+                    aiCom.EnterFollow();
+                    break;
                 default:
+                    GameLogger.LogError("GameRoleAIDomain::TryEnter: 未处理的状态类型: " + stateType);
                     break;
             }
         }

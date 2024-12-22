@@ -16,7 +16,7 @@ namespace GamePlay.Bussiness.Logic
             this.model = model;
             this.SetByModel(model);
             this.inputCom = new GameRoleInputCom();
-            this.aiCom = new GameRoleAICom();
+            this.aiCom = new GameRoleAICom(this);
             this.fsmCom = new GameRoleFSMCom();
             this.skillCom = new GameSkillCom(this);
             this.buffCom = new GameBuffCom();

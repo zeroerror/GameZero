@@ -76,19 +76,20 @@ namespace GamePlay.Bussiness.Logic
         public abstract void Tick(float dt);
         public abstract void Destroy();
 
-        public GameVec2 GetLogicCenterPos()
+        public GameVec2 logicCenterPos
         {
-            var pos = transformCom.position;
-            if (this.physicsCom.collider is GameBoxCollider boxCollider)
+            get
             {
-                pos.y += boxCollider.worldHeight * 0.5f;
+                var pos = transformCom.position;
+                if (this.physicsCom.collider is GameBoxCollider boxCollider)
+                {
+                    pos.y += boxCollider.worldHeight * 0.5f;
+                }
+                return pos;
             }
-            return pos;
         }
 
-        public GameVec2 GetLogicBottomPos()
-        {
-            return this.transformCom.position;
-        }
+        public GameVec2 logicBottomPos => this.transformCom.position;
+
     }
 }

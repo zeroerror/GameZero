@@ -32,6 +32,14 @@ namespace GamePlay.Bussiness.Logic
                 return;
             }
 
+
+            if (role.aiCom.followState.isFarAway())
+            {
+                // 有激活跟随AI时, 远离时切换至跟随AI状态
+                this._context.domainApi.roleApi.aiApi.TryEnter(role, GameRoleAIStateType.Follow);
+                return;
+            }
+
             var castTarget = attackState.targetEntity;
             var skillCom = role.skillCom;
             GameSkillEntity castSkill = null;
@@ -100,7 +108,7 @@ namespace GamePlay.Bussiness.Logic
             if (hasReached)
             {
                 // 攻击
-                var tarPos = castTarget.GetLogicCenterPos();
+                var tarPos = castTarget.logicCenterPos;
                 var args = new GameRoleInputArgs
                 {
                     skillId = castSkill.skillModel.typeId,
@@ -109,8 +117,8 @@ namespace GamePlay.Bussiness.Logic
                         new GameActionTargeterArgs
                         {
                             targetEntity = castTarget,
-                            targetDirection = ( castTarget.GetLogicCenterPos() - role.transformCom.position).normalized,
-                            targetPosition = castTarget.GetLogicBottomPos(),
+                            targetDirection = ( castTarget.logicCenterPos - role.transformCom.position).normalized,
+                            targetPosition = castTarget.logicBottomPos,
                         }
                     }
                 };

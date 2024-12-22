@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Logic
             var fsmCom = projectile.fsmCom;
             fsmCom.EnterLockOnEntity();
 
-            var targetPos = lockOnEntity.GetLogicCenterPos();
+            var targetPos = lockOnEntity.logicCenterPos;
 
             var pos = projectile.transformCom.position;
             var offset = targetPos - pos;
@@ -56,7 +56,7 @@ namespace GamePlay.Bussiness.Logic
             if (lockOnEntity == null) return;
 
             var speed = projectile.fsmCom.lockOnEntityState.model.speed;
-            var targetPos = lockOnEntity.GetLogicCenterPos();
+            var targetPos = lockOnEntity.logicCenterPos;
             var pos = projectile.transformCom.position;
             var offset = targetPos - pos;
             var dir = offset.normalized;

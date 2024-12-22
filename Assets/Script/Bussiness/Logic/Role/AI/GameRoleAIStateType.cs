@@ -7,5 +7,7 @@ namespace GamePlay.Bussiness.Logic
         Idle = 1,
         /// <summary> 攻击 </summary>
         Attack = 2,
+        /// <summary> 跟随 </summary>
+        Follow = 3,
     }
 }

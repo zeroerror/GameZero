@@ -3,7 +3,7 @@ namespace GamePlay.Bussiness.Logic
     public interface GameRoleDomainApi
     {
         public GameRoleFSMDomainApi fsmApi { get; }
-        public GameRoleAIDomainApi apApi { get; }
+        public GameRoleAIDomainApi aiApi { get; }
 
         /// <summary>
         /// 创建角色

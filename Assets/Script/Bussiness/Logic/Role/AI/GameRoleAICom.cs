@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleAICom
@@ -6,13 +8,15 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleAIStateType aiStateType { get; private set; }
         public GameRoleAIStateType lastAIStateType { get; private set; }
 
-        public GameRoleAIState_Idle idleState;
-        public GameRoleAIState_Attack attackState;
+        public GameRoleAIState_Idle idleState { get; private set; }
+        public GameRoleAIState_Attack attackState { get; private set; }
+        public GameRoleAIState_Follow followState { get; private set; }
 
-        public GameRoleAICom()
+        public GameRoleAICom(GameRoleEntity role)
         {
-            idleState = new GameRoleAIState_Idle();
-            attackState = new GameRoleAIState_Attack();
+            idleState = new GameRoleAIState_Idle(role);
+            attackState = new GameRoleAIState_Attack(role);
+            followState = new GameRoleAIState_Follow(role);
         }
 
         public void EnterIdle()
@@ -23,6 +27,11 @@ namespace GamePlay.Bussiness.Logic
         public void EnterAttack()
         {
             this.SwitchToState(GameRoleAIStateType.Attack);
+        }
+
+        public void EnterFollow()
+        {
+            this.SwitchToState(GameRoleAIStateType.Follow);
         }
 
         public void SwitchToState(GameRoleAIStateType nextState)
@@ -37,7 +46,11 @@ namespace GamePlay.Bussiness.Logic
                 case GameRoleAIStateType.Attack:
                     attackState.Clear();
                     break;
+                case GameRoleAIStateType.Follow:
+                    followState.Clear();
+                    break;
                 default:
+                    GameLogger.LogError("GameRoleAICom.SwitchToState: 未处理的状态类型：" + nextState);
                     break;
             }
         }

@@ -8,7 +8,7 @@ namespace GamePlay.Bussiness.Logic
         GameRoleContext _roleContext => this._context.roleContext;
 
         public GameRoleFSMDomainApi fsmApi => this.fsmDomain;
-        public GameRoleAIDomainApi apApi => this.roleAIDomain;
+        public GameRoleAIDomainApi aiApi => this.roleAIDomain;
 
         public GameRoleInputDomain roleInputDomain { get; private set; }
         public GameRoleAIDomain roleAIDomain { get; private set; }
@@ -168,6 +168,7 @@ namespace GamePlay.Bussiness.Logic
                 var role = this.CreateRole(typeId, campId, transArgs, false);
                 role.transformCom.position = pos + GameVectorUtil.GetXYRandomDirection() * 1f;
                 role.idCom.SetParent(summoner);
+                role.aiCom.followState.followEntity = summoner;// 设定AI跟随目标
                 roles[i] = role;
             }
             return roles;
