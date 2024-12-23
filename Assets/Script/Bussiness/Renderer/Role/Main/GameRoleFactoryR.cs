@@ -37,12 +37,13 @@ namespace GamePlay.Bussiness.Renderer
 
         public AnimationClip LoadAnimationClip(int typeId, string clipName)
         {
-            var res = Resources.Load<AnimationClip>($"Role/{typeId}/{clipName}");
-            if (!res)
+            var animClip = Resources.Load<AnimationClip>($"Role/{typeId}/{clipName}");
+            if (!animClip)
             {
                 GameLogger.LogError($"角色工厂[渲染层]: 加载动画失败 {typeId} {clipName}");
             }
-            return res;
+            animClip.events = null;// 动画事件忽略
+            return animClip;
         }
 
         public Slider LoadHPSlider(bool isEnemy)
