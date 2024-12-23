@@ -44,7 +44,6 @@ namespace GamePlay.Bussiness.Renderer
             var curField = this._fieldContext.curField;
             if (!curField) return;
             this._UpdateLayerOrder(curField.GetLayer(GameFieldLayerType.Entity), GameFieldLayerType.Entity);
-            this._UpdateLayerOrder(curField.GetLayer(GameFieldLayerType.VFX), GameFieldLayerType.VFX);
         }
 
         private void _UpdateLayerOrder(GameObject layer, GameFieldLayerType layerType)

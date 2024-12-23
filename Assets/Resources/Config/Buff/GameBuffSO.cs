@@ -22,6 +22,11 @@ namespace GamePlay.Config
         public GameBuffConditionSetEM conditionSetEM_action;
         [Header("条件集模板 - 移除")]
         public GameBuffConditionSetEM conditionSetEM_remove;
+        [Header("buff特效")]
+        public GameObject vfxPrefab;
+        private string _vfxPrefabUrl;
+        [Header("挂载层级")]
+        public GameFieldLayerType vfxLayerType;
 
         public GameBuffModel ToModel()
         {
@@ -44,7 +49,9 @@ namespace GamePlay.Config
                 maxLayer,
                 actionSOs.Map(e => e.typeId),
                 conditionSetEM_action.ToModel(),
-                conditionSetEM_remove.ToModel()
+                conditionSetEM_remove.ToModel(),
+                _vfxPrefabUrl,
+                vfxLayerType
             );
             return model;
         }

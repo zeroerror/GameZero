@@ -10,11 +10,10 @@ namespace GamePlay.Bussiness.Renderer
 
         public int entityId;
 
-        public GameObject go { get; private set; }
+        public GameObject root { get; private set; }
+        public GameObject body { get; private set; }
 
-        public GameObject attachNode { get; private set; }
-        public Vector2 attachOffset { get; private set; }
-        public bool isAttachParent { get; private set; }
+        public GameVFXPlayArgs playArgs { get; private set; }
 
         public GameParticlePlayCom particleCom { get; private set; }
         public GameTimelineCom timelineCom { get; private set; }
@@ -24,12 +23,15 @@ namespace GamePlay.Bussiness.Renderer
 
         private bool _stopDirty = false;
 
-        public GameVFXEntityR(GameObject go, string prefabUrl)
+        public GameVFXEntityR(GameObject body, string prefabUrl)
         {
-            this.go = go;
+            this.root = new GameObject();
+            body.transform.SetParent(this.root.transform);
+            body.name = "Body";
+            this.body = body;
             this.prefabUrl = prefabUrl;
 
-            var ps = go.GetComponent<ParticleSystem>();
+            var ps = body.GetComponent<ParticleSystem>();
             if (ps) this.particleCom = new GameParticlePlayCom(ps);
             this.timelineCom = new GameTimelineCom();
             this.timelineCom.SetLength(this.length);
@@ -55,36 +57,36 @@ namespace GamePlay.Bussiness.Renderer
         public void Play(in GameVFXPlayArgs args)
         {
             this.particleCom.Play(true);
-            this.go.transform.position = args.position;
-            this.go.transform.eulerAngles = new Vector3(0, 0, args.angle);
-            var scale = args.scale;
-            this.go.transform.localScale = new Vector3(scale.x, scale.y, 1);
+            this.root.transform.position = args.position;
+            this.root.transform.eulerAngles = new Vector3(0, 0, args.angle);
+            this.root.transform.localScale = new Vector3(args.scale.x, args.scale.y, 1);
+
+            this.root.SetActive(true);
             this.timelineCom.Play(args.loopDuration);
-            this.go.SetActive(true);
-            this.attachNode = args.attachNode;
-            this.attachOffset = args.attachOffset;
-            this.isAttachParent = args.isAttachParent;
-            if (args.isAttachParent) this.go.transform.SetParent(args.attachNode.transform);
-            this.go.name = $"VFX_{this.entityId}";
+            this.playArgs = args;
+            if (args.isAttachParent) this.root.transform.SetParent(args.attachNode.transform);
+            this.root.name = $"VFX_{this.entityId}";
             this._stopDirty = true;
         }
 
         private void _TickAttach()
         {
-            if (this.isAttachParent) return;
-            if (this.attachNode == null) return;
-            var pos = this.attachNode.transform.position.Add(this.attachOffset);
-            this.go.transform.position = pos;
-            if (this.attachNode.TryGetSortingLayer(out var order, out var layerName))
+            if (this.playArgs.isAttachParent) return;
+            if (this.playArgs.attachNode == null) return;
+            this.root.transform.position = this.playArgs.attachNode.transform.position;
+            this.body.transform.position = this.playArgs.attachOffset;
+            if (this.playArgs.attachNode.TryGetSortingLayer(out var order, out var layerName))
             {
-                this.go.SetSortingLayer(order + 1, layerName);
+                order += 1;
+                order += this.playArgs.orderOffset;
+                this.root.SetSortingLayer(order, layerName);
             }
         }
 
         public void Stop()
         {
             this._stopDirty = false;
-            this.go.SetActive(false);
+            this.body.SetActive(false);
         }
     }
 }

@@ -1,10 +1,16 @@
 public enum GameFieldLayerType
 {
+    /// <summary> 地面 </summary>
     Ground = 0,
+    /// <summary> 背景 </summary>
     Background = 1,
+    /// <summary> 环境 </summary>
     Environment = 2,
+    /// <summary> 实体 </summary>
     Entity = 3,
+    /// <summary> 特效 </summary>
     VFX = 4,
+    /// <summary> 场景UI </summary>
     SceneUI = 5,
 }
 

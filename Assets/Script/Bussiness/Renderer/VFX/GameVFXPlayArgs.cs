@@ -4,18 +4,22 @@ namespace GamePlay.Bussiness.Renderer
 {
     public struct GameVFXPlayArgs
     {
-        public string prefabUrl;
+        public string url;
 
         public GameVec2 position;
         public float angle;
         public GameVec2 scale;
-        // 0非循环，-1无限循环，>0循环时间
+        /// <summary> 0非循环，-1无限循环，>0循环时间 </summary>
         public float loopDuration;
 
-        // 挂载节点
+        /// <summary> 挂载节点 </summary>
         public GameObject attachNode;
+        /// <summary> 挂载偏移 </summary>
         public GameVec2 attachOffset;
-        // 是否将attachNode作为父节点
+        /// <summary> 是否将attachNode作为父节点 </summary>
         public bool isAttachParent;
+
+        /// <summary> 层级偏移 </summary>
+        public int orderOffset;
     }
 }

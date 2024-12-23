@@ -10,6 +10,8 @@ namespace GamePlay.Bussiness.Renderer
         public readonly int[] actionIds;
         public readonly GameBuffConditionSetModel conditionSetModel_action;
         public readonly GameBuffConditionSetModel conditionSetModel_remove;
+        public readonly string vfxUrl;
+        public readonly GameFieldLayerType vfxLayerType;
 
         public GameBuffModelR(
             int typeId,
@@ -17,7 +19,9 @@ namespace GamePlay.Bussiness.Renderer
             int maxLayer,
             int[] actionIds,
             GameBuffConditionSetModel conditionSetModel_action,
-            GameBuffConditionSetModel conditionSetModel_remove
+            GameBuffConditionSetModel conditionSetModel_remove,
+            string vfxUrl,
+            GameFieldLayerType vfxLayerType
         )
         {
             this.typeId = typeId;
@@ -26,6 +30,8 @@ namespace GamePlay.Bussiness.Renderer
             this.actionIds = actionIds;
             this.conditionSetModel_action = conditionSetModel_action;
             this.conditionSetModel_remove = conditionSetModel_remove;
+            this.vfxUrl = vfxUrl;
+            this.vfxLayerType = vfxLayerType;
         }
     }
 }

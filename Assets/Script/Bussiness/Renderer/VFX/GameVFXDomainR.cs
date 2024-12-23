@@ -1,4 +1,5 @@
 using GamePlay.Core;
+using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
 {
@@ -31,14 +32,26 @@ namespace GamePlay.Bussiness.Renderer
             {
                 vfx.Tick(dt);
                 if (!vfx.isPlaying) this._context.cmdBufferService.AddDelayCmd(0, () => repo.Recycle(vfx));
+                var curField = this._context.fieldContext.curField;
+                this._UpdateLayerOrder(vfx);
             });
+        }
+
+        private void _UpdateLayerOrder(GameVFXEntityR vfxEntity)
+        {
+            var trans = vfxEntity.body.transform;
+            trans.TryGetSortingLayer(out var order, out var layerName);
+            var newOrder = GameFieldLayerCollection.GetLayerOrder(GameFieldLayerType.VFX, trans.position);
+            newOrder += 1;
+            if (order == newOrder) return;
+            trans.SetSortingLayer(newOrder, layerName);
         }
 
         public GameVFXEntityR Play(in GameVFXPlayArgs args)
         {
             var repo = this._vfxContext.repo;
             var factory = this._vfxContext.factory;
-            var prefabUrl = args.prefabUrl;
+            var prefabUrl = args.url;
             if (!repo.TryFetch(prefabUrl, out GameVFXEntityR vfx))
             {
                 vfx = factory.Load(prefabUrl);
@@ -47,7 +60,7 @@ namespace GamePlay.Bussiness.Renderer
                     GameLogger.LogError("VFX加载失败");
                     return null;
                 }
-                this._context.domainApi.fielApi.AddToLayer(vfx.go, GameFieldLayerType.VFX);
+                this._context.domainApi.fielApi.AddToLayer(vfx.body, GameFieldLayerType.VFX);
             }
             vfx.entityId = this._vfxContext.entityIdService.FetchId();
             repo.TryAdd(vfx);

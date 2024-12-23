@@ -82,6 +82,15 @@ namespace GamePlay.Bussiness.Renderer
             newBuff.BindTransformCom(targetRole.transformCom);
             buffCom.Add(newBuff);
             this._buffContext.repo.TryAdd(newBuff);
+
+            // buff特效
+            var args = new GameVFXPlayArgs
+            {
+                url = newBuff.model.vfxUrl,
+                attachNode = targetRole.root,
+            };
+            this._context.domainApi.vfxApi.Play(args);
+
             return;
         }
 
