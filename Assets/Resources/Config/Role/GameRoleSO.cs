@@ -19,6 +19,8 @@ namespace GamePlay.Config
         [Header("属性列表")]
         public GameAttribute[] attributes;
 
+        private string _prefabUrl;
+
         public GameRoleModel ToModel()
         {
             var skillIds = skills?.Select(s => s.typeId).ToArray();
@@ -28,7 +30,8 @@ namespace GamePlay.Config
 
         public GameRoleModelR ToModelR()
         {
-            var model = new GameRoleModelR(roleName, desc, prefab, skills);
+            var isMultyAnimationLayer = this.typeId < 10000;
+            var model = new GameRoleModelR(this.typeId, roleName, desc, _prefabUrl, skills, isMultyAnimationLayer);
             return model;
         }
 

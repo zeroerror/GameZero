@@ -131,7 +131,7 @@ namespace GamePlay.Bussiness.Renderer
             });
         }
 
-        public void PlayAnim(GameRoleEntityR entity, string animName)
+        private void _PlayAnim(GameRoleEntityR entity, string animName)
         {
             var factory = this._roleContext.factory;
             var animCom = entity.animCom;
@@ -146,12 +146,26 @@ namespace GamePlay.Bussiness.Renderer
             }
         }
 
+        public void PlayAnim(GameRoleEntityR entity, string animName)
+        {
+            this._PlayAnim(entity, animName);
+            var isMultyAnimationLayer = entity.model.isMultyAnimationLayer;
+            if (isMultyAnimationLayer)
+            {
+                var upperAnimName = animName + "_u";
+                this._PlayAnim(entity, upperAnimName);
+            }
+        }
+
         public void PlayAnim(GameRoleEntityR entity, AnimationClip clip)
         {
             var animCom = entity.animCom;
             animCom.Play(clip);
+            var isMultyAnimationLayer = entity.model.isMultyAnimationLayer;
+            if (isMultyAnimationLayer)
+            {
+                this._PlayAnim(entity, clip.name + "_u");
+            }
         }
-
     }
-
 }

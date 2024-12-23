@@ -8,6 +8,7 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleEntityR : GameEntityBase
     {
+        public readonly GameRoleModelR model;
         public readonly GameObject root;
         public readonly GameObject foot;
         public readonly GameObject shadow;
@@ -38,12 +39,13 @@ namespace GamePlay.Bussiness.Renderer
         public GameRoleAttributeBarCom attributeBarCom { get; private set; }
 
         public GameRoleEntityR(
-            int typeId,
+            GameRoleModelR model,
             GameObject go,
             GameObject foot,
             GameObject body
-        ) : base(typeId, GameEntityType.Role)
+        ) : base(model.typeId, GameEntityType.Role)
         {
+            this.model = model;
             this.root = go;
             this.foot = foot;
             this.shadow = foot.transform.Find("shadow")?.gameObject;

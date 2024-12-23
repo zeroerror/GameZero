@@ -16,12 +16,18 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameRoleEntityR Load(int typeId)
         {
+            if (!template.TryGet(typeId, out var model))
+            {
+                GameLogger.LogError("角色创建失败，角色ID不存在：" + typeId);
+                return null;
+            }
+
             var prefab = Resources.Load<GameObject>("Role/Prefab/role");
             var go = GameObject.Instantiate(prefab);
             var body = go.transform.Find("body").gameObject;
             var foot = go.transform.Find("foot").gameObject;
 
-            var typePrefab = Resources.Load<GameObject>($"Role/{typeId}/role_prefab_{typeId}");
+            var typePrefab = Resources.Load<GameObject>(model.prefabUrl);
             var roleGO = typePrefab ? GameObject.Instantiate(typePrefab) : new GameObject();
             if (!roleGO.TryGetComponent<Animator>(out var animator)) animator = roleGO.AddComponent<Animator>();
             if (!roleGO.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer = roleGO.AddComponent<SpriteRenderer>();
@@ -31,7 +37,7 @@ namespace GamePlay.Bussiness.Renderer
             body.transform.localScale = scale;
 
             go.transform.localPosition = new Vector3(0, 0, 0);
-            var e = new GameRoleEntityR(typeId, go, foot, body);
+            var e = new GameRoleEntityR(model, go, foot, body);
             return e;
         }
 
