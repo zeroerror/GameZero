@@ -34,8 +34,7 @@ namespace GamePlay.Bussiness.Renderer
             if (skill.skillModel.effectByAttackSpeed)
             {
                 var attackSpeed = role.attributeCom.GetValue(GameAttributeType.AttackSpeed);
-                var length = skill.skillModel.animClip.length;
-                var timeScale = attackSpeed * length;
+                var timeScale = attackSpeed * skill.skillModel.clipLength;
                 role.animCom.timeScale = timeScale;
             }
             this.TransitTo(role, GameRoleStateType.Cast, evArgs.skillId);
@@ -45,8 +44,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             var skillId = (int)args[0];
             role.skillCom.TryGet(skillId, out var skill);
-            var animClip = skill.skillModel.animClip;
-            this._context.domainApi.roleApi.PlayAnim(role, animClip);
+            this._context.domainApi.roleApi.PlayAnim(role, skill.skillModel.clipName);
             role.fsmCom.EnterCast();
         }
 

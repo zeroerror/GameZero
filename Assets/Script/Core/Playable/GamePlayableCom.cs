@@ -20,10 +20,6 @@ namespace GamePlay.Core
                 this._graphDict.TryGetValue(this._currentClipName, out var graph);
                 return graph;
             }
-            set
-            {
-                this._currentClipName = value.GetRootPlayable(0).GetPlayableType().ToString();
-            }
         }
 
         /// <summary> 获取当前Graph的时间 </summary>
@@ -139,6 +135,7 @@ namespace GamePlay.Core
             // 将当前的 ClipPlayable 连接到 LayerMixerPlayable 的第一个输出端口（即索引 0）
             // （保证当前动画片段的正确连接）
             var clipPlayable = graph.GetRootPlayable(0);
+            this._layerMixerPlayable.DisconnectInput(layer);
             this._layerMixerPlayable.ConnectInput(layer, clipPlayable, 0);
             this._layerMixerPlayable.SetInputWeight(layer, weight);
 
@@ -149,9 +146,9 @@ namespace GamePlay.Core
             graph.Play();
 
             // 参数刷新
-            this.currentGraph = graph;
             this.isPause = false;
             this._duration = this._GetDuration(graph);
+            this._currentClipName = name;
         }
 
         private PlayableGraph _CreateGraph(AnimationClip clip, int layer = 0)

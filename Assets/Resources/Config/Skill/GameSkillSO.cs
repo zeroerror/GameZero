@@ -33,7 +33,7 @@ namespace GamePlay.Config
 
         public GameSkillModelR ToModelR()
         {
-            var model = new GameSkillModelR(typeId, skillType, animClip);
+            var model = new GameSkillModelR(typeId, skillType, animName, animLength);
             return model;
         }
     }

@@ -11,10 +11,9 @@ namespace GamePlay.Config
         public string roleName;
         public string desc;
         public GameObject prefab;
+        public string prefabUrl;
         public GameSkillSO[] skills;
         public GameAttribute[] attributes;
-
-        private string _prefabUrl;
 
         public GameRoleModel ToModel()
         {
@@ -26,7 +25,7 @@ namespace GamePlay.Config
         public GameRoleModelR ToModelR()
         {
             var isMultyAnimationLayer = this.typeId < 10000;
-            var model = new GameRoleModelR(this.typeId, roleName, desc, _prefabUrl, skills, isMultyAnimationLayer);
+            var model = new GameRoleModelR(this.typeId, roleName, desc, prefabUrl, skills, isMultyAnimationLayer);
             return model;
         }
 

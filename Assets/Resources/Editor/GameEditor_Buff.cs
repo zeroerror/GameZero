@@ -19,7 +19,7 @@ namespace GamePlay.Config
         private SerializedProperty conditionSetEM_action_p;
         private SerializedProperty conditionSetEM_remove_p;
         private SerializedProperty vfxPrefab_p;
-        private SerializedProperty _vfxPrefabUrl_p;
+        private SerializedProperty vfxPrefabUrl_p;
         private SerializedProperty vfxLayerType_p;
 
         private void OnEnable()
@@ -34,7 +34,7 @@ namespace GamePlay.Config
             this.conditionSetEM_action_p = _serializedObject.FindProperty("conditionSetEM_action");
             this.conditionSetEM_remove_p = _serializedObject.FindProperty("conditionSetEM_remove");
             this.vfxPrefab_p = _serializedObject.FindProperty("vfxPrefab");
-            this._vfxPrefabUrl_p = _serializedObject.FindProperty("_vfxPrefabUrl");
+            this.vfxPrefabUrl_p = _serializedObject.FindProperty("vfxPrefabUrl");
             this.vfxLayerType_p = _serializedObject.FindProperty("vfxLayerType");
         }
 
@@ -53,11 +53,11 @@ namespace GamePlay.Config
             var vfxPrefab = this.vfxPrefab_p.DrawProperty<GameObject>("buff特效");
             if (vfxPrefab)
             {
-                this._vfxPrefabUrl_p.stringValue = AssetDatabase.GetAssetPath(vfxPrefab);
+                this.vfxPrefabUrl_p.stringValue = AssetDatabase.GetAssetPath(vfxPrefab);
             }
             else
             {
-                this._vfxPrefabUrl_p.stringValue = "";
+                this.vfxPrefabUrl_p.stringValue = "";
             }
             this.vfxLayerType_p.DrawProperty_EnumPopup<GameFieldLayerType>("挂载层级");
 

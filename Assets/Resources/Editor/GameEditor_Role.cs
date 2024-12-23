@@ -25,7 +25,7 @@ namespace GamePlay.Config
             this.prefab_p = _serializedObject.FindProperty("prefab");
             this.skills_p = _serializedObject.FindProperty("skills");
             this.attributes_p = _serializedObject.FindProperty("attributes");
-            this._prefabUrl_p = _serializedObject.FindProperty("_prefabUrl");
+            this._prefabUrl_p = _serializedObject.FindProperty("prefabUrl");
         }
 
         public override void OnInspectorGUI()

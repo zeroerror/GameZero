@@ -24,7 +24,7 @@ namespace GamePlay.Config
         public GameBuffConditionSetEM conditionSetEM_remove;
         [Header("buff特效")]
         public GameObject vfxPrefab;
-        private string _vfxPrefabUrl;
+        public string vfxPrefabUrl;
         [Header("挂载层级")]
         public GameFieldLayerType vfxLayerType;
 
@@ -50,7 +50,7 @@ namespace GamePlay.Config
                 actionSOs.Map(e => e.typeId),
                 conditionSetEM_action.ToModel(),
                 conditionSetEM_remove.ToModel(),
-                _vfxPrefabUrl,
+                vfxPrefabUrl,
                 vfxLayerType
             );
             return model;

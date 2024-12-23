@@ -1,3 +1,4 @@
+using System.Runtime.Serialization.Formatters;
 using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Renderer
@@ -23,7 +24,7 @@ namespace GamePlay.Bussiness.Renderer
             this.typeId = typeId;
 
             // 动画事件忽略
-            animClip.events = null;
+            if (animClip) animClip.events = null;
             this.animClip = animClip;
 
             this.prefabUrl = prefabUrl;

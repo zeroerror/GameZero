@@ -152,20 +152,19 @@ namespace GamePlay.Bussiness.Renderer
             var isMultyAnimationLayer = entity.model.isMultyAnimationLayer;
             if (isMultyAnimationLayer)
             {
-                var upperAnimName = animName + "_u";
-                this._PlayAnim(entity, upperAnimName);
+                string[] keys = { "idle", "move", "dead" };
+                var has = keys.Find((key) => animName.Contains(key));
+                if (!string.IsNullOrEmpty(has))
+                {
+                    var upperAnimName = animName + "_l";
+                    this._PlayAnim(entity, upperAnimName);
+                }
             }
         }
 
         public void PlayAnim(GameRoleEntityR entity, AnimationClip clip)
         {
-            var animCom = entity.animCom;
-            animCom.Play(clip);
-            var isMultyAnimationLayer = entity.model.isMultyAnimationLayer;
-            if (isMultyAnimationLayer)
-            {
-                this._PlayAnim(entity, clip.name + "_u");
-            }
+            this._PlayAnim(entity, clip.name);
         }
     }
 }

@@ -84,12 +84,16 @@ namespace GamePlay.Bussiness.Renderer
             this._buffContext.repo.TryAdd(newBuff);
 
             // buff特效
-            var args = new GameVFXPlayArgs
+            var vfxUrl = newBuff.model.vfxUrl;
+            if (!string.IsNullOrEmpty(vfxUrl))
             {
-                url = newBuff.model.vfxUrl,
-                attachNode = targetRole.root,
-            };
-            this._context.domainApi.vfxApi.Play(args);
+                var args = new GameVFXPlayArgs
+                {
+                    url = vfxUrl,
+                    attachNode = targetRole.root,
+                };
+                this._context.domainApi.vfxApi.Play(args);
+            }
 
             return;
         }
