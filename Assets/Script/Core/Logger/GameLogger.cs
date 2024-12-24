@@ -26,5 +26,10 @@ namespace GamePlay.Core
             if (logLevel > LogLevel.Error) return;
             Debug.LogError(message);
         }
+
+        public static void Assert(bool condition, string message)
+        {
+            Debug.Assert(condition, message);
+        }
     }
 }

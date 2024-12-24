@@ -19,7 +19,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameTimelineCom timelineCom { get; private set; }
 
         public bool isPlaying => this.timelineCom.isPlaying;
-        public float length => this.particleCom?.length ?? -1;
+        public float length => this.particleCom.length;
 
         private bool _stopDirty = false;
 
@@ -32,7 +32,12 @@ namespace GamePlay.Bussiness.Renderer
             this.prefabUrl = prefabUrl;
 
             var ps = body.GetComponent<ParticleSystem>();
-            if (ps) this.particleCom = new GameParticlePlayCom(ps);
+            if (ps)
+            {
+                this.particleCom = new GameParticlePlayCom(ps);
+            }
+            GameLogger.Assert(ps, $"特效实体: {prefabUrl} 未找到粒子系统");
+
             this.timelineCom = new GameTimelineCom();
             this.timelineCom.SetLength(this.length);
         }
