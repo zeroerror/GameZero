@@ -19,7 +19,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameTimelineCom timelineCom { get; private set; }
 
         public bool isPlaying => this.timelineCom.isPlaying;
-        public float length => this.particleCom.length;
+        public float length => this.particleCom?.length ?? -1;
 
         private bool _stopDirty = false;
 

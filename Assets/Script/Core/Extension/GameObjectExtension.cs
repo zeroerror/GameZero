@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 
 namespace GamePlay.Core
 {
-    public static class GameUntiyExtension
+    public static class GameObjectExtension
     {
         public static void ForeachChild(this GameObject go, System.Action<GameObject> action)
         {
