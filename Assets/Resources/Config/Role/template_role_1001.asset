@@ -16,7 +16,7 @@ MonoBehaviour:
   roleName: "\u6218\u58EB"
   desc: 
   prefab: {fileID: 1063388345164490, guid: 6f6fbddf32356c04da68330c62a81956, type: 3}
-  prefabUrl: Assets/Resources/Role/1001/role_prefab_1001.prefab
+  prefabUrl: Role/1001/role_prefab_1001
   skills:
   - {fileID: 11400000, guid: 0aa734545aed5594ea2ffe963a084dd5, type: 2}
   attributes:

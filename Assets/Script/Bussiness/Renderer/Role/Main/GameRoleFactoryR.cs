@@ -28,7 +28,13 @@ namespace GamePlay.Bussiness.Renderer
             var foot = go.transform.Find("foot").gameObject;
 
             var typePrefab = Resources.Load<GameObject>(model.prefabUrl);
-            var roleGO = typePrefab ? GameObject.Instantiate(typePrefab) : new GameObject();
+            if (!typePrefab)
+            {
+                GameLogger.LogError($"角色工厂[渲染层]: 加载角色预制体失败 {model.prefabUrl}");
+                return null;
+            }
+            var roleGO = GameObject.Instantiate(typePrefab);
+
             if (!roleGO.TryGetComponent<Animator>(out var animator)) animator = roleGO.AddComponent<Animator>();
             if (!roleGO.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer = roleGO.AddComponent<SpriteRenderer>();
             roleGO.transform.SetParent(body.transform);

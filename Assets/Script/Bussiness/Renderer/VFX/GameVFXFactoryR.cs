@@ -17,10 +17,8 @@ namespace GamePlay.Bussiness.Renderer
                 GameLogger.LogError($"VFX加载失败：{prefabUrl}");
                 return null;
             }
-            var root = new GameObject();
-            var go = GameObject.Instantiate(prefab);
-            go.transform.SetParent(root.transform);
-            var entity = new GameVFXEntityR(root, prefabUrl);
+            var body = GameObject.Instantiate(prefab);
+            var entity = new GameVFXEntityR(body, prefabUrl);
             return entity;
         }
     }

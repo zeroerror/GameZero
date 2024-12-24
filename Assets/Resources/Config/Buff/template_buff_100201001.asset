@@ -33,3 +33,6 @@ MonoBehaviour:
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0
+  vfxPrefab: {fileID: 4763262428129407028, guid: e045502fe65e47041b4e843cee83f6b9, type: 3}
+  vfxPrefabUrl: VFX/vfx_firering
+  vfxLayerType: 0

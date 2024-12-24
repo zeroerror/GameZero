@@ -53,7 +53,7 @@ namespace GamePlay.Config
             var vfxPrefab = this.vfxPrefab_p.DrawProperty<GameObject>("buff特效");
             if (vfxPrefab)
             {
-                this.vfxPrefabUrl_p.stringValue = AssetDatabase.GetAssetPath(vfxPrefab);
+                this.vfxPrefabUrl_p.stringValue = vfxPrefab.GetPrefabUrl();
             }
             else
             {

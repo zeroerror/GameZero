@@ -15,7 +15,7 @@ namespace GamePlay.Config
         private SerializedProperty prefab_p;
         private SerializedProperty skills_p;
         private SerializedProperty attributes_p;
-        private SerializedProperty _prefabUrl_p;
+        private SerializedProperty prefabUrl_p;
 
         private void OnEnable()
         {
@@ -25,7 +25,7 @@ namespace GamePlay.Config
             this.prefab_p = _serializedObject.FindProperty("prefab");
             this.skills_p = _serializedObject.FindProperty("skills");
             this.attributes_p = _serializedObject.FindProperty("attributes");
-            this._prefabUrl_p = _serializedObject.FindProperty("prefabUrl");
+            this.prefabUrl_p = _serializedObject.FindProperty("prefabUrl");
         }
 
         public override void OnInspectorGUI()
@@ -40,11 +40,11 @@ namespace GamePlay.Config
 
             if (prefab)
             {
-                this._prefabUrl_p.stringValue = AssetDatabase.GetAssetPath(prefab);
+                this.prefabUrl_p.stringValue = prefab.GetPrefabUrl();
             }
             else
             {
-                this._prefabUrl_p.stringValue = "";
+                this.prefabUrl_p.stringValue = "";
             }
 
             this._serializedObject.ApplyModifiedProperties();
