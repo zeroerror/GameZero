@@ -61,7 +61,7 @@ namespace GamePlay.Core
                 // 判断是否播放完毕
                 var curGraphTime = this.GetCurrentGraphTime(layer);
                 var curClipLength = this.GetCurrentClipLength(layer);
-                if (curGraphTime >= curClipLength)
+                if (curGraphTime >= curClipLength && !clip.isLooping)
                 {
                     this._Stop(graphName);
                 }
@@ -75,7 +75,7 @@ namespace GamePlay.Core
         /// <para>layer: 层级</para>
         /// <para>weight: 权重</para>
         /// </summary>
-        public void Play(AnimationClip clip, float startTime = 0, int layer = 0, float weight = 1.0f)
+        public void Play(AnimationClip clip, int layer = 0, float weight = 0.5f, float startTime = 0f)
         {
             if (!clip)
             {
@@ -91,17 +91,17 @@ namespace GamePlay.Core
             }
 
             // 动画片段已添加, 播放已有动画
-            this.Play(clip.name, startTime, layer, weight);
+            this.Play(clip.name, layer, weight, startTime);
         }
 
         /// <summary>
         /// 播放已有动画
         /// <para>name: 动画名称</para>
-        /// <para>startTime: 开始时间</para>
         /// <para>layer: 层级</para>
         /// <para>weight: 权重</para>
+        /// <para>startTime: 开始时间</para>
         /// </summary>
-        public void Play(string name, float startTime = 0, int layer = 0, float weight = 1.0f)
+        public void Play(string name, int layer = 0, float weight = 0.5f, float startTime = 0f)
         {
             if (!this._graphDict.TryGetValue(name, out var graph))
             {
@@ -155,7 +155,6 @@ namespace GamePlay.Core
 
             // 将 ClipPlayable 连接到 LayerMixerPlayable 的第一个输出端口（即索引 0）
             this._layerMixerPlayable.ConnectInput(0, clipPlayable, 0);
-            this._layerMixerPlayable.SetInputWeight(layer, 1.0f);
 
             // 将 Graph 和 Animator 绑定
             var output = AnimationPlayableOutput.Create(graph, clip.name, this.animator);
@@ -187,6 +186,7 @@ namespace GamePlay.Core
             this.isPause = true;
             this._currentClips?.Foreach((clip, index) =>
             {
+                if (!clip) return;
                 var graphName = clip.name;
                 if (!this._graphDict.TryGetValue(graphName, out var cacheGraph)) return;
                 if (!cacheGraph.IsValid()) return;

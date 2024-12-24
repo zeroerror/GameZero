@@ -131,40 +131,40 @@ namespace GamePlay.Bussiness.Renderer
             });
         }
 
-        private void _PlayAnim(GameRoleEntityR entity, string animName)
+        private void _PlayAnim(GameRoleEntityR entity, string animName, int layer)
         {
             var factory = this._roleContext.factory;
             var animCom = entity.animCom;
             if (animCom.hasClip(animName))
             {
-                animCom.Play(animName);
+                animCom.Play(animName, layer, 0.5f);
             }
             else
             {
                 var clip = factory.LoadAnimationClip(entity.idCom.typeId, animName);
-                animCom.Play(clip);
+                animCom.Play(clip, layer, 0.5f);
             }
         }
 
         public void PlayAnim(GameRoleEntityR entity, string animName)
         {
-            this._PlayAnim(entity, animName);
-            var isMultyAnimationLayer = entity.model.isMultyAnimationLayer;
-            if (isMultyAnimationLayer)
-            {
-                string[] keys = { "idle", "move", "dead" };
-                var has = keys.Find((key) => animName.Contains(key));
-                if (!string.IsNullOrEmpty(has))
-                {
-                    var upperAnimName = animName + "_l";
-                    this._PlayAnim(entity, upperAnimName);
-                }
-            }
+            this._PlayAnim(entity, animName, 0);
+            // var isMultyAnimationLayer = entity.model.isMultyAnimationLayer;
+            // if (isMultyAnimationLayer)
+            // {
+            //     string[] keys = { "idle", "move", "dead" };
+            //     var has = keys.Find((key) => animName.Contains(key));
+            //     if (!string.IsNullOrEmpty(has))
+            //     {
+            //         var upperAnimName = animName + "_l";
+            //         this._PlayAnim(entity, upperAnimName, 1);
+            //     }
+            // }
         }
 
         public void PlayAnim(GameRoleEntityR entity, AnimationClip clip)
         {
-            this._PlayAnim(entity, clip.name);
+            this._PlayAnim(entity, clip.name, 0);
         }
     }
 }
