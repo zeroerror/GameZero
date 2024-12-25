@@ -11,28 +11,20 @@ namespace GamePlay.Core
         private PlayableGraph _graph;
         private Dictionary<string, AnimationClip> _clipDict;
 
-        /// <summary> 当前播放名称, 多动画片段播放时默认为第一个 </summary>
-        public string playingName => this.playingClips[0]?.name ?? string.Empty;
+        /// <summary> 当前播放名称 </summary>
+        public string playingName => this._playingName;
+        private string _playingName;
 
-        /// <summary> 当前播放时间长度, 多动画片段播放时默认为第一个 </summary>
-        public float playingDuration => this.playingClips[0]?.length ?? -1.0f;
+        /// <summary> 当前播放时间长度 </summary>
+        public float playingDuration => this._playingDuration;
+        private float _playingDuration;
 
-        /// <summary> 当前是否为循环播放, 多动画片段播放时默认为第一个 </summary>
-        public bool isLoop
-        {
-            get
-            {
-                var isOutOfIndex = this.playingClips.Count == 0;
-                if (isOutOfIndex)
-                {
-                    GameLogger.LogError("当前播放片段为空");
-                }
-                return this.playingClips[0]?.isLooping ?? false;
-            }
-        }
+        /// <summary> 当前是否为循环播放 </summary>
+        public bool isLoop => this._isLoop;
+        private bool _isLoop;
 
         /// <summary> 当前播放的时间 </summary>
-        public float time => (float)this._graph.GetRootPlayable(0).GetTime();
+        public float time => this._graph.IsValid() ? (float)this._graph.GetRootPlayable(0).GetTime() : 0.0f;
 
         /// <summary> 当前播放的所有片段, 可能有多个, 比如同时播放上半身和下半身动画 </summary>
         public List<AnimationClip> playingClips { get; private set; }
@@ -56,13 +48,10 @@ namespace GamePlay.Core
         public void Tick(float dt)
         {
             this._graph.Evaluate(dt);
-
             if (!this.isLoop && this.time >= this.playingDuration)
             {
                 this.Stop();
             }
-
-            GameLogger.LogWarning($"名称: {this.playingName}, 时间: {this.time}/{this.playingDuration}");
         }
 
         /// <summary> 设置动画片段 </summary>
@@ -90,15 +79,23 @@ namespace GamePlay.Core
             playableOutput.SetSourcePlayable(clipPlayable);
 
             this.Stop();
+
             this._graph.Play();
             this._graph.GetRootPlayable(0).SetTime(startTime);
             this.playingClips.Add(clip);
+
+            this._playingName = name;
+            this._playingDuration = clip.length;
+            this._isLoop = clip.isLooping;
         }
 
         public void Stop()
         {
             this._graph.Stop();
             this.playingClips.Clear();
+            this._playingName = string.Empty;
+            this._playingDuration = -1.0f;
+            this._isLoop = false;
         }
 
         public bool IsValid()
