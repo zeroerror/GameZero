@@ -32,7 +32,6 @@ namespace GamePlay.Bussiness.Logic
                 return;
             }
 
-
             if (role.aiCom.followState.isFarAway())
             {
                 // 有激活跟随AI时, 远离时切换至跟随AI状态
@@ -60,7 +59,8 @@ namespace GamePlay.Bussiness.Logic
                     {
                         return;
                     }
-                    // 检测角色是否可被选中
+
+                    // 判定角色是否可被选中
                     var curSkill = skillCom.Find((skill) =>
                         {
                             var skillModel = skill.skillModel;
@@ -68,6 +68,23 @@ namespace GamePlay.Bussiness.Logic
                             return sel.CheckSelect(skill, curTar);
                         });
                     if (curSkill == null) return;
+
+                    // 判定技能条件
+                    var inputArgs = new GameRoleInputArgs
+                    {
+                        skillId = curSkill.skillModel.typeId,
+                        targeterArgsList = new List<GameActionTargeterArgs>
+                        {
+                            new GameActionTargeterArgs
+                            {
+                                targetEntity = curTar,
+                                targetDirection = (curTar.logicCenterPos - role.transformCom.position).normalized,
+                                targetPosition = curTar.logicBottomPos,
+                            }
+                        }
+                    };
+                    var isConditionSatisfied = this._context.domainApi.skillApi.CheckCastCondition(role, curSkill, inputArgs);
+                    if (!isConditionSatisfied) return;
 
                     var curDisSqr = curTar.transformCom.position.GetDisSqr(role.transformCom.position);
                     if (curDisSqr < minDisSqr)

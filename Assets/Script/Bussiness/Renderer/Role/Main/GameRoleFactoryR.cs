@@ -1,5 +1,6 @@
 using GamePlay.Core;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 
 namespace GamePlay.Bussiness.Renderer
@@ -22,28 +23,41 @@ namespace GamePlay.Bussiness.Renderer
                 return null;
             }
 
-            var prefab = Resources.Load<GameObject>("Role/Prefab/role");
-            var go = GameObject.Instantiate(prefab);
-            var body = go.transform.Find("body").gameObject;
-            var foot = go.transform.Find("foot").gameObject;
+            // 模板预制体
+            var tmPrefab = Resources.Load<GameObject>("Role/Prefab/role");
+            var root = GameObject.Instantiate(tmPrefab);
+            root.transform.localPosition = new Vector3(0, 0, 0);
+            var body = root.transform.Find("body").gameObject;
+            var foot = root.transform.Find("foot").gameObject;
 
-            var typePrefab = Resources.Load<GameObject>(model.prefabUrl);
-            if (!typePrefab)
+            // 角色预制体
+            var rolePrefab = Resources.Load<GameObject>(model.prefabUrl);
+            if (!rolePrefab)
             {
                 GameLogger.LogError($"角色工厂[渲染层]: 加载角色预制体失败 {model.prefabUrl}");
                 return null;
             }
-            var roleGO = GameObject.Instantiate(typePrefab);
-
+            var roleGO = GameObject.Instantiate(rolePrefab);
             if (!roleGO.TryGetComponent<Animator>(out var animator)) animator = roleGO.AddComponent<Animator>();
             if (!roleGO.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer = roleGO.AddComponent<SpriteRenderer>();
             roleGO.transform.SetParent(body.transform);
 
-            var scale = body.transform.localScale;
-            body.transform.localScale = scale;
+            // 角色挂点
+            var attachmentCom = roleGO.GetComponent<GameRoleAttachmentCom>();
+            // 测试代码, 默认设置弓箭挂点图片
+            if (attachmentCom)
+            {
+                // 加载所有弓箭的精灵
+                var bowSprites = Resources.LoadAll<Sprite>("Equipment/Bow/bow_festive");
+                var bowHandleSprite = bowSprites.Find(sprite => sprite.name == "bow_handle_festive");
+                var bowLimbSprite = bowSprites.Find(sprite => sprite.name == "bow_limb_festive");
+                GameLogger.Assert(bowHandleSprite != null, "角色工厂[渲染层]: 加载弓箭挂点图片失败");
+                GameLogger.Assert(bowLimbSprite != null, "角色工厂[渲染层]: 加载弓箭挂点图片失败");
+                attachmentCom.SetAttachmentSprite_Bow(bowHandleSprite, bowLimbSprite);
+                attachmentCom.SetAttachmentSprite_Visible(GameRoleAttachmentDirectionType.Left, true);
+            }
 
-            go.transform.localPosition = new Vector3(0, 0, 0);
-            var e = new GameRoleEntityR(model, go, foot, body);
+            var e = new GameRoleEntityR(model, root, foot, body, attachmentCom);
             return e;
         }
 

@@ -23,6 +23,16 @@ namespace GamePlay.Bussiness.Logic
             this.skillId = 0;
         }
 
+        public GameRoleInputArgs ToArgs()
+        {
+            return new GameRoleInputArgs
+            {
+                moveDir = this.moveDir,
+                skillId = this.skillId,
+                targeterArgsList = this.targeterArgsList.ToList(),
+            };
+        }
+
         public void SetByArgs(in GameRoleInputArgs args)
         {
             this.moveDir = args.moveDir;

@@ -86,17 +86,22 @@ namespace GamePlay.Bussiness.Logic
 
         public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill)
         {
+            var inputArgs = role.inputCom.ToArgs();
+            return this.CheckCastCondition(role, skill, in inputArgs);
+        }
+
+        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs)
+        {
             var fsmCom = role.fsmCom;
             var stateType = fsmCom.stateType;
             if (stateType == GameRoleStateType.Cast) return false;
 
             // 输入检测
             var skillModel = skill.skillModel;
-            var inputCom = role.inputCom;
             switch (skillModel.conditionModel.targeterType)
             {
                 case GameSkillTargterType.Enemy:
-                    var index = inputCom.targeterArgsList.FindIndex((args) => args.targetEntity != null && args.targetEntity.idCom.campId != role.idCom.campId);
+                    var index = inputArgs.targeterArgsList.FindIndex((args) => args.targetEntity != null && args.targetEntity.idCom.campId != role.idCom.campId);
                     if (index == -1)
                     {
                         GameLogger.LogWarning($"[{skillModel.typeId}]技能释放条件无法满足！ 需要存在目标敌人");
@@ -104,7 +109,7 @@ namespace GamePlay.Bussiness.Logic
                     }
                     break;
                 case GameSkillTargterType.Direction:
-                    var index_d = inputCom.targeterArgsList.FindIndex((args) => args.targetDirection != GameVec2.zero);
+                    var index_d = inputArgs.targeterArgsList.FindIndex((args) => args.targetDirection != GameVec2.zero);
                     if (index_d == -1)
                     {
                         GameLogger.LogWarning($"[{skillModel.typeId}]技能释放条件无法满足！ 需要存在目标方向");
@@ -112,7 +117,7 @@ namespace GamePlay.Bussiness.Logic
                     }
                     break;
                 case GameSkillTargterType.Position:
-                    var index_p = inputCom.targeterArgsList.FindIndex((args) => args.targetPosition != GameVec2.zero);
+                    var index_p = inputArgs.targeterArgsList.FindIndex((args) => args.targetPosition != GameVec2.zero);
                     if (index_p == -1)
                     {
                         GameLogger.LogWarning($"[{skillModel.typeId}]技能释放条件无法满足！ 需要存在目标位置");
@@ -127,7 +132,10 @@ namespace GamePlay.Bussiness.Logic
             }
             // 消耗检测
             // CD
+            if (skill.cdElapsed > 0) return false;
             // 蓝量
+            var mp = role.attributeCom.GetValue(GameAttributeType.MP);
+            if (mp < skill.skillModel.conditionModel.mpCost) return false;
             // 人物状态，比如眩晕，沉默等
             return true;
         }
@@ -143,8 +151,14 @@ namespace GamePlay.Bussiness.Logic
         private void _calcSkillCost(GameRoleEntity role, GameSkillEntity skill)
         {
             var conditionModel = skill.skillModel.conditionModel;
+            // CD
             skill.cdElapsed = conditionModel.cdTime;
-            // todo attr....
+            // 蓝量
+            var mp = role.attributeCom.GetValue(GameAttributeType.MP);
+            mp -= conditionModel.mpCost;
+            mp = mp < 0 ? 0 : mp;
+            var attr = new GameAttribute() { type = GameAttributeType.MP, value = mp };
+            role.attributeCom.SetAttribute(attr);
         }
 
         public bool TryGetModel(int typeId, out GameSkillModel model)

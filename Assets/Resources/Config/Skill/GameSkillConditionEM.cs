@@ -10,12 +10,19 @@ namespace GamePlay.Config
         public GameSkillTargterType targeterType;
         [Header("冷却时间(s)")]
         public float cdTime;
+        [Header("消耗MP")]
+        public float mpCost;
         [Header("选择器")]
         public GameEntitySelectorEM selectorEM;
 
         public GameSkillConditionModel ToModel()
         {
-            return new GameSkillConditionModel(targeterType, cdTime, selectorEM.ToSelector());
+            return new GameSkillConditionModel(
+                targeterType,
+                cdTime,
+                mpCost,
+                selectorEM.ToSelector()
+            );
         }
     }
 }

@@ -38,19 +38,24 @@ namespace GamePlay.Bussiness.Renderer
         public GamePlayableCom animCom { get; private set; }
         public GameRoleAttributeBarCom attributeBarCom { get; private set; }
 
+        public GameRoleAttachmentCom attachmentCom { get; private set; }
+
         public GameRoleEntityR(
             GameRoleModelR model,
-            GameObject go,
+            GameObject root,
             GameObject foot,
-            GameObject body
+            GameObject body,
+            GameRoleAttachmentCom attachmentCom
         ) : base(model.typeId, GameEntityType.Role)
         {
             this.model = model;
-            this.root = go;
+            this.root = root;
             this.foot = foot;
+            this.body = body;
+            this.attachmentCom = attachmentCom;
+
             this.shadow = foot.transform.Find("shadow")?.gameObject;
             Debug.Assert(this.shadow != null, "shadow is null");
-            this.body = body;
 
             this.fsmCom = new GameRoleFSMComR();
 
