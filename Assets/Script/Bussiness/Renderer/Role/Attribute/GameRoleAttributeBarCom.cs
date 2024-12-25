@@ -19,7 +19,7 @@ namespace GamePlay.Bussiness.Renderer
 
         /// <summary> 世界坐标转屏幕坐标接口 </summary>
         public WorldToScreenPointDelegate WorldToScreenPoint;
-        public delegate Vector3 WorldToScreenPointDelegate(Vector3 worldPos);
+        public delegate Vector3 WorldToScreenPointDelegate(in Vector3 worldPos);
         private Vector3 _GetScreenPoint()
         {
             var worldPos = this._parent.position;

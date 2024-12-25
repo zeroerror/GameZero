@@ -51,7 +51,7 @@ namespace GamePlay.Bussiness.UI
             {
                 var entity = this._jumpTextEntityList[i];
                 entity.Tick(dt);
-                if (!entity.playCom.IsPlaying)
+                if (!entity.playCom.isPlaying)
                 {
                     this._uiContext.cmdBufferService.AddDelayCmd(0, () =>
                     {
@@ -97,15 +97,16 @@ namespace GamePlay.Bussiness.UI
             entity.SetActive(true);
 
             var playCom = entity.playCom;
+            playCom.Stop();
             var animName = $"{prefabName}_{style}";
-            if (playCom.hasClip(animName))
+            if (playCom.TryGetClip(animName, out var clip))
             {
-                playCom.Play(animName);
+                playCom.Play(clip);
                 return;
             }
 
             var clipUrl = $"UI/Battle/{animName}";
-            var clip = Resources.Load<AnimationClip>(clipUrl);
+            clip = Resources.Load<AnimationClip>(clipUrl);
             if (clip == null)
             {
                 GameLogger.LogError($"UI跳字: 加载动画失败 {clipUrl}");

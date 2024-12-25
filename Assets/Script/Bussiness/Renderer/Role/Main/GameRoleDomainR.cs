@@ -112,9 +112,14 @@ namespace GamePlay.Bussiness.Renderer
             return role;
         }
 
-        public Vector3 WorldToScreenPoint(Vector3 v)
+        /// <summary>
+        /// 世界坐标转屏幕坐标
+        /// <para> v: 世界坐标 </para>
+        /// </summary>
+        public Vector3 WorldToScreenPoint(in Vector3 v)
         {
-            var pos = RectTransformUtility.WorldToScreenPoint(this._context.cameraEntity.camera, v);
+            var worldCam = this._context.cameraEntity.camera;
+            var pos = RectTransformUtility.WorldToScreenPoint(worldCam, v);
             pos.x -= Screen.width / 2;
             pos.y -= Screen.height / 2;
             return pos;
@@ -135,35 +140,44 @@ namespace GamePlay.Bussiness.Renderer
         {
             var factory = this._roleContext.factory;
             var animCom = entity.animCom;
-            if (animCom.hasClip(animName))
+            if (animCom.TryGetClip(animName, out var clip))
             {
-                animCom.Play(animName, layer, 0.5f);
+                animCom.Play(clip, layer);
+                return;
             }
-            else
-            {
-                var clip = factory.LoadAnimationClip(entity.idCom.typeId, animName);
-                animCom.Play(clip, layer, 0.5f);
-            }
+
+            clip = factory.LoadAnimationClip(entity.idCom.typeId, animName);
+            animCom.Play(clip, layer);
+        }
+
+        private void _StopAnim(GameRoleEntityR entity)
+        {
+            var animCom = entity.animCom;
+            animCom.Stop();
         }
 
         public void PlayAnim(GameRoleEntityR entity, string animName)
         {
-            this._PlayAnim(entity, animName, 0);
-            // var isMultyAnimationLayer = entity.model.isMultyAnimationLayer;
-            // if (isMultyAnimationLayer)
-            // {
-            //     string[] keys = { "idle", "move", "dead" };
-            //     var has = keys.Find((key) => animName.Contains(key));
-            //     if (!string.IsNullOrEmpty(has))
-            //     {
-            //         var upperAnimName = animName + "_l";
-            //         this._PlayAnim(entity, upperAnimName, 1);
-            //     }
-            // }
+            this._StopAnim(entity);
+            var isMultyAnimationLayer = entity.model.isMultyAnimationLayer;
+            if (!isMultyAnimationLayer)
+            {
+                this._PlayAnim(entity, animName, 0);
+                return;
+            }
+            this._PlayAnim(entity, animName, 1);
+            string[] keys = { "idle", "move", "dead" };
+            var has = keys.Find((key) => animName.Contains(key));
+            if (!string.IsNullOrEmpty(has))
+            {
+                var upperAnimName = animName + "_l";
+                this._PlayAnim(entity, upperAnimName, 2);
+            }
         }
 
         public void PlayAnim(GameRoleEntityR entity, AnimationClip clip)
         {
+            this._StopAnim(entity);
             this._PlayAnim(entity, clip.name, 0);
         }
     }
