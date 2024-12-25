@@ -167,18 +167,12 @@ namespace GamePlay.Bussiness.Renderer
             }
             this._PlayAnim(entity, animName, 1);
             string[] keys = { "idle", "move", "dead" };
-            var has = keys.Find((key) => animName.Contains(key));
-            if (!string.IsNullOrEmpty(has))
+            var isKey = keys.Find((key) => animName.Contains(key)) != null;
+            if (isKey)
             {
                 var upperAnimName = animName + "_l";
                 this._PlayAnim(entity, upperAnimName, 2);
             }
-        }
-
-        public void PlayAnim(GameRoleEntityR entity, AnimationClip clip)
-        {
-            this._StopAnim(entity);
-            this._PlayAnim(entity, clip.name, 0);
         }
     }
 }

@@ -1086,7 +1086,7 @@ MonoBehaviour:
   monsterSpawnEMs:
   - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
     count: 3
-  spawnTime: 1
+  spawnTime: 5
 --- !u!1 &8612813971186153705
 GameObject:
   m_ObjectHideFlags: 0

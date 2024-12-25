@@ -44,7 +44,7 @@ namespace GamePlay.Core
             foreach (var kvp in this._graphDict)
             {
                 var graph = kvp.Value;
-                if (!graph.IsValid()) continue;
+                if (!graph.isPlaying) continue;
 
                 graph.Tick(dt);
 

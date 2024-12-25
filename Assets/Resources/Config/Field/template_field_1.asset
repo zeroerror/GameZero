@@ -20,7 +20,7 @@ MonoBehaviour:
     monsterSpawnEMs:
     - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
       count: 3
-    spawnTime: 1
+    spawnTime: 5
   - position: {x: -46.379997, y: -31.11}
     radius: 1.64
     monsterSpawnEMs:

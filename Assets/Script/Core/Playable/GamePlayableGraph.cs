@@ -11,6 +11,10 @@ namespace GamePlay.Core
         private PlayableGraph _graph;
         private Dictionary<string, AnimationClip> _clipDict;
 
+        /// <summary> 是否正在播放 </summary>
+        public bool isPlaying => this._isPlaying;
+        private bool _isPlaying;
+
         /// <summary> 当前播放名称 </summary>
         public string playingName => this._playingName;
         private string _playingName;
@@ -87,6 +91,7 @@ namespace GamePlay.Core
             this._playingName = name;
             this._playingDuration = clip.length;
             this._isLoop = clip.isLooping;
+            this._isPlaying = true;
         }
 
         public void Stop()
@@ -96,17 +101,12 @@ namespace GamePlay.Core
             this._playingName = string.Empty;
             this._playingDuration = -1.0f;
             this._isLoop = false;
+            this._isPlaying = false;
         }
 
         public bool IsValid()
         {
             return this._graph.IsValid();
-        }
-
-        public bool IsPlaying()
-        {
-            if (!this.IsValid()) return false;
-            return this._graph.IsPlaying();
         }
 
         public bool TryGetClip(string name, out AnimationClip clip)
