@@ -31,6 +31,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             var screenPoint = this._GetScreenPoint();
             this.hpSlider.Tick(dt, screenPoint);
+            this.mpSlider.Tick(dt, screenPoint);
         }
 
         public void SetActive(bool active)

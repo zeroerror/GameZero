@@ -55,13 +55,8 @@ namespace GamePlay.Bussiness.Logic
         {
             var targetAttrCom = target.attributeCom;
             var curValue = targetAttrCom.GetValue(record.modifyType);
-            if (curValue <= 0)
-            {
-                return;
-            }
-
-            var afterAttributeModifyHP = curValue + record.modifyValue;
-            targetAttrCom.SetAttribute(GameAttributeType.HP, afterAttributeModifyHP);
+            var afterAttributeModify = curValue + record.modifyValue;
+            targetAttrCom.SetAttribute(record.modifyType, afterAttributeModify);
             GameLogger.Log($"目标:{target.idCom} 受到属性修改:{record.modifyValue}");
         }
     }

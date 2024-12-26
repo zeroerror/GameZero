@@ -8,6 +8,7 @@ namespace GamePlay.Bussiness.Logic
         public GameSkillModel GetSkillModel(int typeId);
         public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill);
         public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs);
+        public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target);
         public void CastSkill(GameRoleEntity role, GameSkillEntity skill);
 
 

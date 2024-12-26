@@ -165,5 +165,17 @@ namespace GamePlay.Bussiness.Logic
         {
             return this._skillContext.factory.template.TryGet(typeId, out model);
         }
+
+        public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target)
+        {
+            var conditionModel = skill.skillModel.conditionModel;
+            if (conditionModel == null) return true;
+            // 检查 - 属性消耗
+            if (role.attributeCom.GetValue(GameAttributeType.MP) < conditionModel.mpCost) return false;
+            // 检查 - 选择器
+            var selector = conditionModel.selector;
+            if (!selector.CheckSelect(target, skill)) return false;
+            return true;
+        }
     }
 }

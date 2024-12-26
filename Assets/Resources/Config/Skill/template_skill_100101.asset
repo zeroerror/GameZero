@@ -23,7 +23,6 @@ MonoBehaviour:
     frame: 28
     actions:
     - {fileID: 11400000, guid: 0fe48bb3e653ecd4e9ce1174c39d2c4b, type: 2}
-    - {fileID: 11400000, guid: 9d4df725f489f444985dcfd3b3a10371, type: 2}
   conditionEM:
     targeterType: 2
     cdTime: 0

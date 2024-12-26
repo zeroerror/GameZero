@@ -61,11 +61,9 @@ namespace GamePlay.Bussiness.Logic
                     }
 
                     // 判定角色是否可被选中
-                    var curSkill = skillCom.Find((skill) =>
+                    var curSkill = skillCom.FindWithPriority((skill) =>
                         {
-                            var skillModel = skill.skillModel;
-                            var sel = skillModel.conditionModel.selector;
-                            return sel.CheckSelect(skill, curTar);
+                            return this._context.domainApi.skillApi.CheckSkillCondition(role, skill, curTar);
                         });
                     if (curSkill == null) return;
 

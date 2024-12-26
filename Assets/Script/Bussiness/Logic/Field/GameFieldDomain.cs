@@ -33,7 +33,6 @@ namespace GamePlay.Bussiness.Logic
 
         public void Tick(float dt)
         {
-            return;
             var curField = this._fieldContext.curField;
             curField.model.monsterAreaModels?.Foreach((area, index) =>
             {
