@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 100101003
   actionType: 1
-  desc: "\u5F13\u7BAD - \u547D\u4E2D\u9020\u6210\u4F24\u5BB3"
+  desc: "\u5F13\u7BAD - \u4F24\u5BB3"
   dmgActionEM:
     dmgType: 1
-    value: 512
+    value: 35
     valueFormat: 1
     refType: 1
     selectorEM:

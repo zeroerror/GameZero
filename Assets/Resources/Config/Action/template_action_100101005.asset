@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 100101005
   actionType: 6
-  desc: "\u6BCF\u6B21\u653B\u51FB\u6062\u590D\u8840\u91CF"
+  desc: "\u5F13\u7BAD - \u6302\u8F7Dbuff"
   dmgActionEM:
     dmgType: 1
     value: 100
