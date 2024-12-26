@@ -103,12 +103,10 @@ namespace GamePlay.Bussiness.Logic
 
             if (castSkill == null)
             {
-                castSkill = skillCom.Find((skill) =>
-                      {
-                          var skillModel = skill.skillModel;
-                          var sel = skillModel.conditionModel.selector;
-                          return sel.CheckSelect(skill, castTarget);
-                      });
+                castSkill = skillCom.FindWithPriority((skill) =>
+                        {
+                            return this._context.domainApi.skillApi.CheckSkillCondition(role, skill, castTarget);
+                        });
             }
             if (castSkill == null)
             {

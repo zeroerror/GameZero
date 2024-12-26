@@ -23,6 +23,11 @@ namespace GamePlay.Bussiness.Logic
 
         public void Tick(float dt)
         {
+            var skillCom = this._skillContext.repo;
+            skillCom.ForeachEntities((skill) =>
+            {
+                skill.Tick(dt);
+            });
         }
 
         public GameSkillEntity CreateSkill(GameRoleEntity role, int typeId)
@@ -170,11 +175,13 @@ namespace GamePlay.Bussiness.Logic
         {
             var conditionModel = skill.skillModel.conditionModel;
             if (conditionModel == null) return true;
+            // 检查 - CD
+            if (skill.cdElapsed > 0) return false;
             // 检查 - 属性消耗
             if (role.attributeCom.GetValue(GameAttributeType.MP) < conditionModel.mpCost) return false;
             // 检查 - 选择器
             var selector = conditionModel.selector;
-            if (!selector.CheckSelect(target, skill)) return false;
+            if (!selector.CheckSelect(skill, target)) return false;
             return true;
         }
     }
