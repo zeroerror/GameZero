@@ -28,7 +28,7 @@ namespace GamePlay.Core
         private bool _isLoop;
 
         /// <summary> 当前播放的时间 </summary>
-        public float time => this._graph.IsValid() ? (float)this._graph.GetRootPlayable(0).GetTime() : 0.0f;
+        public float time => this._graph.IsValid() ? (float)this._graph.GetRootPlayable(0).GetTime() : -1.0f;
 
         /// <summary> 当前播放的所有片段, 可能有多个, 比如同时播放上半身和下半身动画 </summary>
         public List<AnimationClip> playingClips { get; private set; }
@@ -36,6 +36,7 @@ namespace GamePlay.Core
         public GamePlayableGraph(Animator animator)
         {
             this._graph = PlayableGraph.Create();
+            this._graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
             this._animator = animator;
             this._clipDict = new Dictionary<string, AnimationClip>();
             this.playingClips = new List<AnimationClip>(4);
@@ -78,16 +79,21 @@ namespace GamePlay.Core
                 GameLogger.LogError($"动画片段不存在: {name}");
                 return;
             }
+            this.Stop();
+
+            // 设置输出
             var playableOutput = AnimationPlayableOutput.Create(this._graph, "Animation", this._animator);
             var clipPlayable = AnimationClipPlayable.Create(this._graph, clip);
             playableOutput.SetSourcePlayable(clipPlayable);
 
-            this.Stop();
-
+            // 开始播放
             this._graph.Play();
             this._graph.GetRootPlayable(0).SetTime(startTime);
+
+            // 记录到播放列表
             this.playingClips.Add(clip);
 
+            // 记录当前播放信息
             this._playingName = name;
             this._playingDuration = clip.length;
             this._isLoop = clip.isLooping;
@@ -96,7 +102,15 @@ namespace GamePlay.Core
 
         public void Stop()
         {
-            this._graph.Stop();
+            if (this._graph.IsValid())
+            {
+                var playable = this._graph.GetRootPlayable(0);
+                if (playable.IsValid())
+                {
+                    playable.Destroy();
+                }
+            }
+
             this.playingClips.Clear();
             this._playingName = string.Empty;
             this._playingDuration = -1.0f;
