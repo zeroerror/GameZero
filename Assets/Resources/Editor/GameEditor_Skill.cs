@@ -94,7 +94,7 @@ namespace GamePlay.Config
             roleSOs = roleSOs.Filter(roleSO => roleSO.skills.Contains(roleSkillSO => roleSkillSO.typeId == so.typeId));
             if (roleSOs.Length > 0)
             {
-                EditorGUILayout.LabelField(" -------- 被依赖执行的角色 --------", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(" -------- 被以下角色使用 --------", EditorStyles.boldLabel);
                 for (int i = 0; i < roleSOs.Length; i++)
                 {
                     var skillSO = roleSOs[i];
@@ -103,7 +103,5 @@ namespace GamePlay.Config
             }
             GUI.color = color;
         }
-
-
     }
 }

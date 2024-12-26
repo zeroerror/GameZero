@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 100101005
   actionType: 6
-  desc: "\u6302\u8F7D\u6D4B\u8BD5buff"
+  desc: "\u6BCF\u6B21\u653B\u51FB\u6062\u590D\u8840\u91CF"
   dmgActionEM:
     dmgType: 1
     value: 100
@@ -42,7 +42,7 @@ MonoBehaviour:
     preconditionSetEM:
       buffConditionEM:
         enable: 0
-        buffId: 0
+        buffSO: {fileID: 0}
         layer: 0
   healActionEM:
     healType: 0
@@ -71,7 +71,36 @@ MonoBehaviour:
     preconditionSetEM:
       buffConditionEM:
         enable: 0
-        buffId: 0
+        buffSO: {fileID: 0}
+        layer: 0
+  attributeModifyActionEM:
+    modifyType: 0
+    value: 0
+    valueFormat: 0
+    refType: 0
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
         layer: 0
   launchProjectileActionEM:
     projectileId: 200
@@ -108,7 +137,7 @@ MonoBehaviour:
     preconditionSetEM:
       buffConditionEM:
         enable: 0
-        buffId: 0
+        buffSO: {fileID: 0}
         layer: 0
   knockBackActionEM:
     knockBackDirType: 0
@@ -137,7 +166,7 @@ MonoBehaviour:
     preconditionSetEM:
       buffConditionEM:
         enable: 0
-        buffId: 0
+        buffSO: {fileID: 0}
         layer: 0
   attachBuffActionEM:
     buffSO: {fileID: 11400000, guid: a521f0941ee6add4b905572b47060205, type: 2}
@@ -164,8 +193,8 @@ MonoBehaviour:
     preconditionSetEM:
       buffConditionEM:
         enable: 0
-        buffId: 0
-        layer: 0
+        buffSO: {fileID: 0}
+        layer: 1
   summonRoleActionEM:
     roleId: 0
     count: 0
@@ -192,7 +221,7 @@ MonoBehaviour:
     preconditionSetEM:
       buffConditionEM:
         enable: 0
-        buffId: 0
+        buffSO: {fileID: 0}
         layer: 0
   actionEMR:
     typeId: 0

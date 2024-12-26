@@ -15,6 +15,7 @@ namespace GamePlay.Config
         private SerializedProperty actionType_p;
         private SerializedProperty dmgActionEM_p;
         private SerializedProperty healActionEM_p;
+        private SerializedProperty attributeModifyActionEM_p;
         private SerializedProperty launchProjectileActionEM_p;
         private SerializedProperty knockBackActionEM_p;
         private SerializedProperty attachBuffActionEM_p;
@@ -29,6 +30,7 @@ namespace GamePlay.Config
             this.actionType_p = _serializedObject.FindProperty("actionType");
             this.dmgActionEM_p = _serializedObject.FindProperty("dmgActionEM");
             this.healActionEM_p = _serializedObject.FindProperty("healActionEM");
+            this.attributeModifyActionEM_p = _serializedObject.FindProperty("attributeModifyActionEM");
             this.launchProjectileActionEM_p = _serializedObject.FindProperty("launchProjectileActionEM");
             this.knockBackActionEM_p = _serializedObject.FindProperty("knockBackActionEM");
             this.attachBuffActionEM_p = _serializedObject.FindProperty("attachBuffActionEM");
@@ -76,30 +78,34 @@ namespace GamePlay.Config
             switch (so.actionType)
             {
                 case GameActionType.Dmg:
-                    EditorGUILayout.LabelField(" -------- 伤害行为 --------", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField(" -------- 伤害 --------", EditorStyles.boldLabel);
                     this._ShowDmgAction(so);
                     so.dmgActionEM.selectorEM = selectorEM;
                     break;
                 case GameActionType.Heal:
-                    EditorGUILayout.LabelField(" -------- 治疗行为 --------", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField(" -------- 治疗 --------", EditorStyles.boldLabel);
                     this._ShowHealAction(so);
                     so.healActionEM.selectorEM = selectorEM;
                     break;
-
+                case GameActionType.AttributeModify:
+                    EditorGUILayout.LabelField(" -------- 属性修改(+/-) --------", EditorStyles.boldLabel);
+                    this._ShowAttributeModifyAction(so);
+                    so.attributeModifyActionEM.selectorEM = selectorEM;
+                    break;
                 case GameActionType.LaunchProjectile:
-                    EditorGUILayout.LabelField(" -------- 发射投射物行为 --------", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField(" -------- 发射投射物 --------", EditorStyles.boldLabel);
                     launchProjectileActionEM_p.DrawProperty();
                     break;
                 case GameActionType.KnockBack:
-                    EditorGUILayout.LabelField(" -------- 击退行为 --------", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField(" -------- 击退 --------", EditorStyles.boldLabel);
                     knockBackActionEM_p.DrawProperty();
                     break;
                 case GameActionType.AttachBuff:
-                    EditorGUILayout.LabelField(" -------- 附加Buff行为 --------", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField(" -------- 附加Buff --------", EditorStyles.boldLabel);
                     attachBuffActionEM_p.DrawProperty();
                     break;
                 default:
-                    EditorGUILayout.HelpBox("未知的行为类型", MessageType.Warning);
+                    EditorGUILayout.HelpBox($"未知的行为类型：{so.actionType}", MessageType.Warning);
                     break;
             }
         }
@@ -110,26 +116,39 @@ namespace GamePlay.Config
             actionEMR_p.DrawProperty("表现效果");
         }
 
-        private void _ShowSkillSORefs(GameActionSO so)
+        private void _ShowSkillSORefs(GameActionSO actionSO)
         {
             var color = GUI.color;
             GUI.color = Color.green;
             var skillSOs = Resources.LoadAll<GameSkillSO>(GameConfigCollection.SKILL_CONFIG_DIR_PATH);
-            skillSOs = skillSOs.Filter(skillSO => skillSO.timelineEvents.Contains(e => e.actions?.Find(a => a.typeId == so.typeId) != null));
+            skillSOs = skillSOs.Filter(skillSO => skillSO.timelineEvents.Contains(ev => ev.actions?.Find(a => a.typeId == actionSO.typeId) != null));
             if (skillSOs.Length > 0)
             {
-                EditorGUILayout.LabelField(" -------- 被依赖执行的技能 --------", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(" -------- 被以下技能使用 --------", EditorStyles.boldLabel);
                 for (int i = 0; i < skillSOs.Length; i++)
                 {
                     var skillSO = skillSOs[i];
                     EditorGUILayout.ObjectField(skillSO.typeId.ToString(), skillSO, typeof(GameSkillSO), false);
                 }
             }
+
             var projectileSOs = Resources.LoadAll<GameProjectileSO>(GameConfigCollection.PROJECTILE_CONFIG_DIR_PATH);
-            projectileSOs = projectileSOs.Filter(so => so.timelineEvents.Contains(e => e.actions?.Find(a => a.typeId == so.typeId) != null));
+            projectileSOs = projectileSOs.Filter((pjSO) =>
+            {
+                if (pjSO.timelineEvents != null && pjSO.timelineEvents.Contains(e => e.actions.Contains(a => a.typeId == pjSO.typeId)))
+                {
+                    return true;
+                }
+                if (pjSO.stateEMs != null && pjSO.stateEMs.Contains(s => s.emSet.HasRefAction(actionSO.typeId)))
+                {
+                    return true;
+                }
+                return false;
+            }
+            );
             if (projectileSOs.Length > 0)
             {
-                EditorGUILayout.LabelField(" -------- 被依赖执行的投射物 --------", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(" -------- 被以下投射物使用 --------", EditorStyles.boldLabel);
                 for (int i = 0; i < projectileSOs.Length; i++)
                 {
                     var projectileSO = projectileSOs[i];
@@ -155,6 +174,15 @@ namespace GamePlay.Config
                 healActionEM_p = new SerializedObject(actionSO).FindProperty("healActionEM");
             }
             healActionEM_p.DrawProperty();
+        }
+
+        private void _ShowAttributeModifyAction(GameActionSO actionSO)
+        {
+            if (attributeModifyActionEM_p == null)
+            {
+                attributeModifyActionEM_p = new SerializedObject(actionSO).FindProperty("attributeModifyActionEM");
+            }
+            attributeModifyActionEM_p.DrawProperty();
         }
     }
 }

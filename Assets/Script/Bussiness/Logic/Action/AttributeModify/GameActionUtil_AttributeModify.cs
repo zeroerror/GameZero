@@ -10,7 +10,7 @@ namespace GamePlay.Bussiness.Logic
         /// <para name="actor"> 行为者 </para>
         /// <para name="target"> 目标 </para>
         /// <para name="modifyModel"> 属性修改模型 </para>
-        public static GameActionRecord_AttributeModify CalcAttributeModify(GameEntityBase actor, GameEntityBase target, GameActionModel_Attribute modifyModel)
+        public static GameActionRecord_AttributeModify CalcAttributeModify(GameEntityBase actor, GameEntityBase target, GameActionModel_AttributeModify modifyModel)
         {
             // 数值格式化
             var modelValue = modifyModel.valueFormat.FormatValue(modifyModel.value);
@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Logic
             var targetAttrCom = target.attributeCom;
             var modifyType = modifyModel.modifyType;
             var curValue = targetAttrCom.GetValue(modifyType);
-            var modifiedValue = curValue - modifyValue;
+            var modifiedValue = curValue + modifyValue;
             var realAttributeModify = modifiedValue < 0 ? curValue : modifyValue;
 
             // 最大值限制
@@ -32,11 +32,13 @@ namespace GamePlay.Bussiness.Logic
             {
                 var maxHP = targetAttrCom.GetValue(GameAttributeType.MaxHP);
                 if (modifiedValue > maxHP) realAttributeModify = maxHP - curValue;
+                else if (modifiedValue < 0) realAttributeModify = -curValue;
             }
             if (modifyType == GameAttributeType.MP)
             {
-                var maxMP = targetAttrCom.GetValue(GameAttributeType.MaxHP);
+                var maxMP = targetAttrCom.GetValue(GameAttributeType.MaxMP);
                 if (modifiedValue > maxMP) realAttributeModify = maxMP - curValue;
+                else if (modifiedValue < 0) realAttributeModify = -curValue;
             }
 
             var record = new GameActionRecord_AttributeModify(

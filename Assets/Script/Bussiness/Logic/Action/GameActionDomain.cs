@@ -53,7 +53,7 @@ namespace GamePlay.Bussiness.Logic
                 case GameActionModel_KnockBack knockBackAction:
                     this.DoAction_KnockBack(knockBackAction, actorEntity);
                     break;
-                case GameActionModel_Attribute attributeModifyAction:
+                case GameActionModel_AttributeModify attributeModifyAction:
                     this.DoAction_AttributeModify(attributeModifyAction, actorEntity);
                     break;
                 case GameActionModel_AttachBuff attachBuffAction:
@@ -198,7 +198,7 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public void DoAction_AttributeModify(GameActionModel_Attribute action, GameEntityBase actorEntity, bool dontDo = false)
+        public void DoAction_AttributeModify(GameActionModel_AttributeModify action, GameEntityBase actorEntity, bool dontDo = false)
         {
             var recordList = new List<GameActionRecord_AttributeModify>();
             var entitySelectApi = this._context.domainApi.entitySelectApi;

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: template_action_100101002
   m_EditorClassIdentifier: 
   typeId: 100101002
-  actionType: 3
-  desc: "\u6563\u5C04\u5F39\u5E55"
+  actionType: 5
+  desc: "\u5F13\u7BAD - \u547D\u4E2D\u6062\u590D\u84DD\u91CF"
   dmgActionEM:
     dmgType: 0
     value: 0
@@ -51,6 +51,35 @@ MonoBehaviour:
     refType: 0
     selectorEM:
       selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+  attributeModifyActionEM:
+    modifyType: 3
+    value: 10
+    valueFormat: 1
+    refType: 1
+    selectorEM:
+      selectAnchorType: 3
       campType: 0
       entityType: 0
       selColliderType: 0

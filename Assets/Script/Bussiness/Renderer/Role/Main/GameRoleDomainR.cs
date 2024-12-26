@@ -166,7 +166,7 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
             this._PlayAnim(entity, animName, 1);
-            string[] keys = { "idle", "move", "dead" };
+            string[] keys = { "idle", "move" };
             var isKey = keys.Find((key) => animName.Contains(key)) != null;
             if (isKey)
             {

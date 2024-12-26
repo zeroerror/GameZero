@@ -1,6 +1,6 @@
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameActionModel_Attribute : GameActionModelBase
+    public class GameActionModel_AttributeModify : GameActionModelBase
     {
         /// <summary> 修改属性 </summary>
         public GameAttributeType modifyType;
@@ -12,7 +12,7 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 数值参考类型 </summary>
         public GameActionValueRefType refType;
 
-        public GameActionModel_Attribute(
+        public GameActionModel_AttributeModify(
             int typeId,
             GameEntitySelector selector,
             GameActionPreconditionSetModel preconditionSet,

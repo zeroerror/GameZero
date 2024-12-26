@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: template_buff_100201001
   m_EditorClassIdentifier: 
   typeId: 100201001
-  buffName: "\u706B\u7130\u8F68\u8FF9"
-  desc: "\u4E0D\u65AD\u751F\u6210\u706B\u7130"
+  buffName: "\u751F\u673A\u6D8C\u52A8"
+  desc: "\u6BCF\u6B21\u653B\u51FB\u65F6\u6062\u590D10%\u751F\u547D\u503C"
   refreshFlag: 1
   maxLayer: 1
-  actionSOs:
-  - {fileID: 11400000, guid: e3a1513436f46da4294f1f7aef1e403e, type: 2}
+  actionSOs: []
   conditionSetEM_action:
     durationEM:
       isEnable: 0

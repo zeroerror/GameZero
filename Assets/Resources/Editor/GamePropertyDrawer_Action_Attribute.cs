@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GamePlay.Config
 {
-    [CustomPropertyDrawer(typeof(GameActionEM_Attribute))]
+    [CustomPropertyDrawer(typeof(GameActionEM_AttributeModify))]
     public class GamePropertyDrawer_Action_Attribute : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

@@ -28,7 +28,16 @@ namespace GamePlay.Core
         private bool _isLoop;
 
         /// <summary> 当前播放的时间 </summary>
-        public float time => this._graph.IsValid() ? (float)this._graph.GetRootPlayable(0).GetTime() : -1.0f;
+        public float time
+        {
+            get
+            {
+                if (!this._graph.IsValid()) return -1.0f;
+                var playable = this._graph.GetRootPlayable(0);
+                if (!playable.IsValid()) return -1.0f;
+                return (float)playable.GetTime();
+            }
+        }
 
         /// <summary> 当前播放的所有片段, 可能有多个, 比如同时播放上半身和下半身动画 </summary>
         public List<AnimationClip> playingClips { get; private set; }
@@ -102,14 +111,14 @@ namespace GamePlay.Core
 
         public void Stop()
         {
-            if (this._graph.IsValid())
-            {
-                var playable = this._graph.GetRootPlayable(0);
-                if (playable.IsValid())
-                {
-                    playable.Destroy();
-                }
-            }
+            // if (this._graph.IsValid())
+            // {
+            //     var playable = this._graph.GetRootPlayable(0);
+            //     if (playable.IsValid())
+            //     {
+            //         playable.Destroy();
+            //     }
+            // }
 
             this.playingClips.Clear();
             this._playingName = string.Empty;

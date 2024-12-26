@@ -19,6 +19,7 @@ MonoBehaviour:
   prefab: {fileID: 0}
   prefabScale: {x: 1, y: 1}
   prefabOffset: {x: 0, y: 0}
+  isLockRotation: 0
   animLength: 1
   timelineEvents: []
   lifeTime: 0
@@ -59,7 +60,7 @@ MonoBehaviour:
       timeToArrive: 0
     emSet:
       durationTriggerModel:
-        enable: 1
+        enable: 0
         duration: 0.4
         actionSOs: []
         nextStateType: 3

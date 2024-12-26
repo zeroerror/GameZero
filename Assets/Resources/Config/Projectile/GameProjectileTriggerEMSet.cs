@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Config
@@ -18,6 +19,17 @@ namespace GamePlay.Config
                 this.impactTargetTriggerModel?.ToModel()
             );
             return modelSet;
+        }
+
+        public bool HasRefAction(int actionId)
+        {
+            var find = !!durationTriggerModel.actionSOs?.Find(so => so.typeId == actionId);
+            if (find) return true;
+            find = !!volumeCollisionTriggerModel.actionSOs?.Find(so => so.typeId == actionId);
+            if (find) return true;
+            find = !!impactTargetTriggerModel.actionSOs?.Find(so => so.typeId == actionId);
+            if (find) return true;
+            return false;
         }
     }
 }

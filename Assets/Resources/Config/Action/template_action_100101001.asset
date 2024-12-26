@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 100101001
   actionType: 3
-  desc: "\u53D1\u5C04\u5F39\u4F53"
+  desc: "\u53D1\u5C04\u5F13\u7BAD"
   dmgActionEM:
     dmgType: 0
     value: 0
@@ -46,6 +46,35 @@ MonoBehaviour:
         layer: 0
   healActionEM:
     healType: 0
+    value: 0
+    valueFormat: 0
+    refType: 0
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+  attributeModifyActionEM:
+    modifyType: 0
     value: 0
     valueFormat: 0
     refType: 0

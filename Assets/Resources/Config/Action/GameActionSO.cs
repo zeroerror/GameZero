@@ -11,6 +11,7 @@ namespace GamePlay.Config
         public string desc;
         public GameActionEM_Dmg dmgActionEM;
         public GameActionEM_Heal healActionEM;
+        public GameActionEM_AttributeModify attributeModifyActionEM;
         public GameActionEM_LaunchProjectile launchProjectileActionEM;
         public GameActionEM_KnockBack knockBackActionEM;
         public GameActionEM_AttachBuff attachBuffActionEM;
@@ -30,6 +31,9 @@ namespace GamePlay.Config
                     break;
                 case GameActionType.Heal:
                     actionModel = healActionEM.ToModel();
+                    break;
+                case GameActionType.AttributeModify:
+                    actionModel = attributeModifyActionEM.ToModel();
                     break;
                 case GameActionType.LaunchProjectile:
                     actionModel = launchProjectileActionEM.ToModel();
@@ -59,6 +63,8 @@ namespace GamePlay.Config
                     return this.dmgActionEM.selectorEM;
                 case GameActionType.Heal:
                     return this.healActionEM.selectorEM;
+                case GameActionType.AttributeModify:
+                    return this.attributeModifyActionEM.selectorEM;
                 case GameActionType.LaunchProjectile:
                     return this.launchProjectileActionEM.selectorEM;
                 case GameActionType.KnockBack:

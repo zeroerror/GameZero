@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 100101007
   actionType: 2
-  desc: "\u884C\u4E3A\u524D\u7F6E\u6761\u4EF6\u6D4B\u8BD5\uFF0C\u56DE\u590D\u751F\u547D\u503C10%"
+  desc: "\u56DE\u590D\u751F\u547D\u503C10%"
   dmgActionEM:
     dmgType: 1
     value: 100

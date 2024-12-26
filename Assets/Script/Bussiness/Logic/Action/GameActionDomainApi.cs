@@ -51,7 +51,7 @@ namespace GamePlay.Bussiness.Logic
         /// action: 属性修改行为
         /// actorEntity: 执行者
         /// </summary>
-        public void DoAction_AttributeModify(GameActionModel_Attribute action, GameEntityBase actorEntity, bool dontDo = false);
+        public void DoAction_AttributeModify(GameActionModel_AttributeModify action, GameEntityBase actorEntity, bool dontDo = false);
 
         /// <summary>
         /// 执行行为 - 附加buff

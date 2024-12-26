@@ -2,7 +2,7 @@ using GamePlay.Bussiness.Logic;
 namespace GamePlay.Config
 {
     [System.Serializable]
-    public class GameActionEM_Attribute
+    public class GameActionEM_AttributeModify
     {
 
         public GameAttributeType modifyType;
@@ -13,9 +13,9 @@ namespace GamePlay.Config
         public GameEntitySelectorEM selectorEM;
         public GameActionPreconditionSetEM preconditionSetEM;
 
-        public GameActionModel_Attribute ToModel()
+        public GameActionModel_AttributeModify ToModel()
         {
-            return new GameActionModel_Attribute(
+            return new GameActionModel_AttributeModify(
                 0,
                 this.selectorEM?.ToSelector(),
                 this.preconditionSetEM?.ToModel(),

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: template_projectile_100101001
   m_EditorClassIdentifier: 
   typeId: 100101001
-  projectileName: "\u5B50\u5F39"
+  projectileName: "\u5F13\u7BAD"
   desc: 
   animClip: {fileID: 0}
   prefab: {fileID: 1681781652526772, guid: 06574c7ece3376446b6df8dd0e8d14ca, type: 3}
@@ -67,6 +67,7 @@ MonoBehaviour:
       volumeCollisionTriggerModel:
         enable: 1
         actionSOs:
+        - {fileID: 11400000, guid: e3a1513436f46da4294f1f7aef1e403e, type: 2}
         - {fileID: 11400000, guid: 0c991d1b1dff87e4789f8d09fc3259c8, type: 2}
         - {fileID: 11400000, guid: 3700334a7d8969f40b3760142a98c858, type: 2}
         nextStateType: 7
