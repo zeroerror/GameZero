@@ -9,6 +9,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var curStateType = role.fsmCom.stateType;
             if (curStateType == GameRoleStateType.Idle) return false;
+            if (curStateType == GameRoleStateType.Cast && !role.fsmCom.castState.isOver()) return false;
             return true;
         }
 

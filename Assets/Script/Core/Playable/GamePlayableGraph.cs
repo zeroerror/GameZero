@@ -62,10 +62,6 @@ namespace GamePlay.Core
         public void Tick(float dt)
         {
             this._graph.Evaluate(dt);
-            if (!this.isLoop && this.time >= this.playingDuration)
-            {
-                this.Stop();
-            }
         }
 
         /// <summary> 设置动画片段 </summary>
@@ -111,15 +107,6 @@ namespace GamePlay.Core
 
         public void Stop()
         {
-            // if (this._graph.IsValid())
-            // {
-            //     var playable = this._graph.GetRootPlayable(0);
-            //     if (playable.IsValid())
-            //     {
-            //         playable.Destroy();
-            //     }
-            // }
-
             this.playingClips.Clear();
             this._playingName = string.Empty;
             this._playingDuration = -1.0f;

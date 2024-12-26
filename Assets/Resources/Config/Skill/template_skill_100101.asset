@@ -17,16 +17,17 @@ MonoBehaviour:
   skillType: 1
   animClip: {fileID: 7400000, guid: 03733f2ae9d7fd04b9a5d8c06bb144e4, type: 2}
   animName: attack_shot_arrow
-  animLength: 0.5
+  animLength: 0.65
   timelineEvents:
-  - time: 0.33333334
-    frame: 20
+  - time: 0.48333332
+    frame: 28
     actions:
     - {fileID: 11400000, guid: 0fe48bb3e653ecd4e9ce1174c39d2c4b, type: 2}
     - {fileID: 11400000, guid: 9d4df725f489f444985dcfd3b3a10371, type: 2}
   conditionEM:
-    targeterType: 1
+    targeterType: 2
     cdTime: 0
+    mpCost: 0
     selectorEM:
       selectAnchorType: 1
       campType: 1

@@ -13,5 +13,10 @@ namespace GamePlay.Bussiness.Logic
             base.Clear();
             skill = null;
         }
+
+        public bool isOver()
+        {
+            return !this.skill.timelineCom.isPlaying;
+        }
     }
 }
