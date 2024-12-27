@@ -18,7 +18,10 @@ namespace GamePlay.Bussiness.Renderer
                 return null;
             }
             var body = GameObject.Instantiate(prefab);
-            var entity = new GameVFXEntityR(body, prefabUrl);
+            var root = new GameObject();
+            body.transform.SetParent(root.transform);
+            body.name = "Body";
+            var entity = new GameVFXEntityR(root, body, prefabUrl);
             return entity;
         }
     }

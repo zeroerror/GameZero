@@ -125,7 +125,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var frameTime = GameTimeCollection.frameTime;
             dt += this._cacheDt;
-            while (dt > frameTime)
+            while (dt >= frameTime)
             {
                 dt -= frameTime;
                 this.time += frameTime;

@@ -39,7 +39,7 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _UpdateLayerOrder(GameVFXEntityR vfxEntity)
         {
-            var trans = vfxEntity.body.transform;
+            var trans = vfxEntity.root.transform;
             trans.TryGetSortingLayer(out var order, out var layerName);
             var newOrder = GameFieldLayerCollection.GetLayerOrder(GameFieldLayerType.VFX, trans.position);
             newOrder += 1;
@@ -60,7 +60,7 @@ namespace GamePlay.Bussiness.Renderer
                     GameLogger.LogError("VFX加载失败");
                     return null;
                 }
-                this._context.domainApi.fielApi.AddToLayer(vfx.body, GameFieldLayerType.VFX);
+                this._context.domainApi.fielApi.AddToLayer(vfx.root, GameFieldLayerType.VFX);
             }
             vfx.entityId = this._vfxContext.entityIdService.FetchId();
             repo.TryAdd(vfx);

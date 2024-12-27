@@ -224,9 +224,9 @@ MonoBehaviour:
         layer: 0
   actionEMR:
     typeId: 0
-    actEffectPrefab: {fileID: 1107324212316225829, guid: 68ba587f440a02d4280724ddfae0aa2e, type: 3}
-    actVFXScale: {x: 0.1, y: 0.1}
-    actVFXOffset: {x: 0, y: 0}
+    actEffectPrefab: {fileID: 1558332597376287026, guid: 969e7cb4ce441084e9e1aa0fadfed26b, type: 3}
+    actVFXScale: {x: 1, y: 1}
+    actVFXOffset: {x: 0, y: 1}
     actCamShakeModel:
       angle: 0
       amplitude: 0

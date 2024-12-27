@@ -225,17 +225,17 @@ MonoBehaviour:
         layer: 0
   actionEMR:
     typeId: 0
-    actEffectPrefab: {fileID: 1107324212316225829, guid: 68ba587f440a02d4280724ddfae0aa2e, type: 3}
-    actVFXScale: {x: 0.25, y: 0.25}
+    actEffectPrefab: {fileID: 0}
+    actVFXScale: {x: 0, y: 0}
     actVFXOffset: {x: 0, y: 1}
     actCamShakeModel:
       angle: 0
       amplitude: 0
       frequency: 0
       duration: 0
-    hitEffectPrefab: {fileID: 0}
+    hitEffectPrefab: {fileID: 1107324212316225829, guid: 68ba587f440a02d4280724ddfae0aa2e, type: 3}
     hitVFXScale: {x: 1, y: 1}
-    hitVFXOffset: {x: 0, y: 0}
+    hitVFXOffset: {x: 0, y: 1}
     hitCamShakeModel:
       angle: 0
       amplitude: 0

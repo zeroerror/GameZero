@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.Renderer
         public int entityId;
 
         public GameObject root { get; private set; }
-        public GameObject body { get; private set; }
+        private GameObject _body;
 
         public GameVFXPlayArgs playArgs { get; private set; }
 
@@ -23,12 +23,10 @@ namespace GamePlay.Bussiness.Renderer
 
         private bool _stopDirty = false;
 
-        public GameVFXEntityR(GameObject body, string prefabUrl)
+        public GameVFXEntityR(GameObject root, GameObject body, string prefabUrl)
         {
-            this.root = new GameObject();
-            body.transform.SetParent(this.root.transform);
-            body.name = "Body";
-            this.body = body;
+            this.root = root;
+            this._body = body;
             this.prefabUrl = prefabUrl;
 
             var ps = body.GetComponent<ParticleSystem>();
@@ -78,8 +76,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             if (this.playArgs.isAttachParent) return;
             if (this.playArgs.attachNode == null) return;
-            this.root.transform.position = this.playArgs.attachNode.transform.position;
-            this.body.transform.position = this.playArgs.attachOffset;
+            this.root.transform.position = this.playArgs.attachNode.transform.position.Add(this.playArgs.attachOffset);
             if (this.playArgs.attachNode.TryGetSortingLayer(out var order, out var layerName))
             {
                 order += 1;
@@ -91,7 +88,7 @@ namespace GamePlay.Bussiness.Renderer
         public void Stop()
         {
             this._stopDirty = false;
-            this.body.SetActive(false);
+            this.root.SetActive(false);
         }
     }
 }
