@@ -29,7 +29,7 @@ namespace GamePlay.Config
                 actionSOs.Map(e => e.typeId),
                 conditionSetEM_action.ToModel(),
                 conditionSetEM_remove.ToModel(),
-                attributeEMs.Map(e => e.ToModel())
+                attributeEMs?.Map(e => e.ToModel())
             );
             return model;
         }

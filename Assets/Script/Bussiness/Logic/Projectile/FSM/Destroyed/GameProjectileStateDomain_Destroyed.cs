@@ -17,7 +17,7 @@ namespace GamePlay.Bussiness.Logic
                 fromStateType = fsmCom.stateType,
                 idArgs = entity.idCom.ToArgs(),
             });
-            entity.SetValid(false);
+            entity.SetInvalid();
         }
 
         protected override void _Tick(GameProjectileEntity entity, float frameTime)

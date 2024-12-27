@@ -370,6 +370,13 @@ namespace GamePlay.Core
             return minMtv;
         }
 
+        /// <summary>
+        /// 检测碰撞体与点坐标是否发生交叉
+        /// <para>model: 碰撞体模型</para>
+        /// <para>transArgs: 变换参数</para>
+        /// <para>point: 点坐标</para>
+        /// </summary>
+        /// <returns></returns>
         public static bool CheckOverlap(GameColliderModelBase model, in GameTransformArgs transArgs, in GameVec2 point)
         {
             switch (model)

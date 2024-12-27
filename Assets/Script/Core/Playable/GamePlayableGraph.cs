@@ -62,6 +62,10 @@ namespace GamePlay.Core
         public void Tick(float dt)
         {
             this._graph.Evaluate(dt);
+            if (!this._isLoop && this.time >= this.playingDuration)
+            {
+                this.Stop();
+            }
         }
 
         /// <summary> 设置动画片段 </summary>

@@ -41,10 +41,12 @@ namespace GamePlay.Core
             // 时间缩放
             dt *= this.timeScale;
 
+            var hasPlaying = false;
             foreach (var kvp in this._graphDict)
             {
                 var graph = kvp.Value;
                 if (!graph.isPlaying) continue;
+                hasPlaying = true;
 
                 graph.Tick(dt);
 
@@ -53,6 +55,7 @@ namespace GamePlay.Core
                     graph.Stop();
                 }
             }
+            this.isPlaying = hasPlaying;
         }
 
         /// <summary>

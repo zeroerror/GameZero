@@ -34,7 +34,7 @@ namespace GamePlay.Bussiness.Logic
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)
         {
             var stateTime = role.fsmCom.deadState.stateTime;
-            if (stateTime >= 5)
+            if (stateTime >= 2)
             {
                 return GameRoleStateType.Destroyed;
             }

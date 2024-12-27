@@ -90,7 +90,7 @@ namespace GamePlay.Bussiness.Logic
             this.layer = afterLayer;
             if (afterLayer <= 0)
             {
-                this.SetValid(false);
+                this.SetInvalid();
             }
             return beforeLayer - afterLayer;
         }

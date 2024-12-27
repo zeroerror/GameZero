@@ -26,7 +26,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_STATE_ENTER_DESTROYED, args);
                 return;
             }
-            projectile.SetValid(false);
+            projectile.SetInvalid();
             GameLogger.Log("投射物状态进入 - 销毁");
         }
 

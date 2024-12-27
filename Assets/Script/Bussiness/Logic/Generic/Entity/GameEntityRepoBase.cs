@@ -25,6 +25,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var collider = entity.physicsCom.collider;
             if (collider != null) collider.isEnable = true;
+            entity.SetValid();
             GameLogger.Log($"实体仓库 添加: {entity.idCom}");
             return this._TryAddData(entity);
         }
@@ -75,6 +76,8 @@ namespace GamePlay.Bussiness.Logic
                 entityPool = new List<T>();
                 this._poolDict.Add(typeId, entityPool);
             }
+            entity.Clear();
+            entity.SetInvalid();
             entityPool.Add(entity);
             GameLogger.Log($"实体仓库 回收: {entity.idCom}");
         }
@@ -87,7 +90,6 @@ namespace GamePlay.Bussiness.Logic
             var fetchIndex = pool.Count - 1;
             entity = pool[fetchIndex];
             pool.RemoveAt(fetchIndex);
-            entity.Clear();
             return true;
         }
 

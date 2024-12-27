@@ -10,6 +10,7 @@ namespace GamePlay.Config
     public class GameEditor_Role : Editor
     {
         private SerializedObject _serializedObject;
+        private SerializedProperty typeId_p;
         private SerializedProperty roleName_p;
         private SerializedProperty desc_p;
         private SerializedProperty prefab_p;
@@ -20,6 +21,7 @@ namespace GamePlay.Config
         private void OnEnable()
         {
             this._serializedObject = new SerializedObject(target);
+            this.typeId_p = _serializedObject.FindProperty("typeId");
             this.roleName_p = _serializedObject.FindProperty("roleName");
             this.desc_p = _serializedObject.FindProperty("desc");
             this.prefab_p = _serializedObject.FindProperty("prefab");
@@ -32,6 +34,7 @@ namespace GamePlay.Config
         {
             this._serializedObject.Update();
 
+            this.typeId_p.DrawProperty_Int("类型ID");
             this.roleName_p.DrawProperty_Str("名称");
             this.desc_p.DrawProperty_Str("描述");
             var prefab = this.prefab_p.DrawProperty<GameObject>("预制体");

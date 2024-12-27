@@ -36,7 +36,7 @@ namespace GamePlay.Bussiness.Renderer
         public override void Enter(GameRoleEntityR role, params object[] args)
         {
             GameLogger.Log($"角色状态 - 进入销毁状态");
-            role.SetValid(false);// 标记无效, 等待自动实体回收
+            role.SetInvalid();// 标记无效, 等待自动实体回收
             role.fsmCom.EnterDestroyed();
         }
 

@@ -10,7 +10,8 @@ namespace GamePlay.Bussiness.Logic
         public static bool operator false(GameEntityBase entity) => entity == null;
 
         public bool isValid { get; private set; } = true;
-        public void SetValid(bool isValid) => this.isValid = isValid;
+        public void SetValid() => this.isValid = true;
+        public void SetInvalid() => this.isValid = false;
 
         public GameIdCom idCom { get; private set; }
         public GameTransformCom transformCom { get; private set; }
@@ -40,7 +41,6 @@ namespace GamePlay.Bussiness.Logic
             physicsCom?.Clear();
             attributeCom?.Clear();
             baseAttributeCom?.Clear();
-            this.isValid = true;
         }
 
         public bool IsEquals(GameEntityBase other)

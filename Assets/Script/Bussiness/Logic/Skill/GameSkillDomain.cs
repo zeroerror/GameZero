@@ -83,21 +83,22 @@ namespace GamePlay.Bussiness.Logic
             return this._skillContext.factory.template.TryGet(typeId, out model);
         }
 
-        public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target)
+        public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target, bool ignoreDistance = false)
         {
             var conditionModel = skill.skillModel.conditionModel;
             if (conditionModel == null) return true;
+            // 检查 - 范围
+            if (!ignoreDistance && !GamePhysicsResolvingUtil.CheckOverlap(conditionModel.selector.colliderModel, skill.transformCom.ToArgs(), target.transformCom.position)) return false;
             // 检查 - CD
             if (skill.cdElapsed > 0) return false;
             // 检查 - 属性消耗
             if (role.attributeCom.GetValue(GameAttributeType.MP) < conditionModel.mpCost) return false;
             // 检查 - 选择器
-            var selector = conditionModel.selector;
-            if (!selector.CheckSelect(skill, role) && !selector.CheckSelect(skill, target)) return false;
+            if (!conditionModel.selector.CheckSelect(skill, role) && !conditionModel.selector.CheckSelect(skill, target)) return false;
             return true;
         }
 
-        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs)
+        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistance = false)
         {
             var fsmCom = role.fsmCom;
             var stateType = fsmCom.stateType;
@@ -172,12 +173,11 @@ namespace GamePlay.Bussiness.Logic
             role.attributeCom.SetAttribute(attr);
         }
 
-        public GameSkillEntity FindCastableSkill(GameRoleEntity role, GameEntityBase target)
+        public GameSkillEntity FindCastableSkill(GameRoleEntity role, GameEntityBase target, bool ignoreDistance = false)
         {
-            var skillCom = role.skillCom;
-            return skillCom.FindWithPriority((skill) =>
+            return role.skillCom.FindWithPriority((skill) =>
             {
-                return this.CheckSkillCondition(role, skill, target);
+                return this.CheckSkillCondition(role, skill, target, ignoreDistance);
             });
         }
     }

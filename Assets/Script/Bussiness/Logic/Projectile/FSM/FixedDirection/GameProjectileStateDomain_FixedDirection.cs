@@ -1,5 +1,5 @@
 using GamePlay.Core;
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileStateDomain_FixedDirection : GameProjectileStateDomainBase
@@ -32,6 +32,7 @@ namespace GamePlay.Bussiness.Logic
             var model = projectile.fsmCom.fixedDirectionState.model;
             var speed = model.speed;
             var direction = projectile.actionTargeterCom.targetDirection;
+            GameLogger.LogWarning("direction: " + direction);
             var delta = direction * speed * frameTime;
             projectile.transformCom.position += delta;
             projectile.FaceTo(direction);

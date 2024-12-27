@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7831db311c5ebd46b6d178cce183064, type: 3}
+  m_Name: template_field_test
+  m_EditorClassIdentifier: 
+  typeId: -1
+  fieldPrefab: {fileID: 5274905712469144199, guid: 610e7bc972c5e884bb68ec832d83a5ab, type: 3}
+  monsterAreaEMs:
+  - position: {x: -12.6, y: -5.1}
+    radius: 1.64
+    monsterSpawnEMs:
+    - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+      count: 1
+    spawnTime: 0
+  - position: {x: -12.6, y: 0.16}
+    radius: 1.64
+    monsterSpawnEMs:
+    - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+      count: 1
+    spawnTime: 0
+  - position: {x: -12.84, y: 5.38}
+    radius: 1.64
+    monsterSpawnEMs:
+    - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+      count: 1
+    spawnTime: 0
+  - position: {x: 11.79, y: -5.1}
+    radius: 1.64
+    monsterSpawnEMs:
+    - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+      count: 1
+    spawnTime: 0
+  - position: {x: 11.789999, y: 0.16}
+    radius: 1.64
+    monsterSpawnEMs:
+    - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+      count: 1
+    spawnTime: 0
+  - position: {x: 11.549999, y: 5.38}
+    radius: 1.64
+    monsterSpawnEMs:
+    - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+      count: 1
+    spawnTime: 0

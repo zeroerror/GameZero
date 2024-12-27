@@ -57,29 +57,14 @@ namespace GamePlay.Bussiness.Logic
 
             // 抵达施法距离, 设置施法输入 ps: 类似操控角色到达施法距离后输入施法指令
             var colliderModel = castSkill.skillModel.conditionModel.selector.colliderModel;
-            var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(colliderModel, role.transformCom.ToArgs(), castTarget.transformCom.position);
-            var hasReached = mtv != GameVec2.zero;
-            if (hasReached)
+            if (GamePhysicsResolvingUtil.CheckOverlap(colliderModel, role.transformCom.ToArgs(), castTarget.transformCom.position))
             {
-                this._SetCastInput(role, castSkill, castTarget);
+                this._SetInput_Cast(role, castSkill, castTarget);
                 return;
             }
 
-            // 没有抵达有效施法距离, 输入移动
-            var args = new GameRoleInputArgs
-            {
-                skillId = castSkill.skillModel.typeId,
-                targeterArgsList = new List<GameActionTargeterArgs>
-                    {
-                        new GameActionTargeterArgs
-                        {
-                            targetEntity = castTarget,
-                            targetDirection = ( castTarget.logicCenterPos - role.transformCom.position).normalized,
-                            targetPosition = castTarget.logicBottomPos,
-                        }
-                    }
-            };
-            inputCom.SetByArgs(args);
+            // 未抵达施法距离, 设置移动输入
+            this._SetInput_Move(role, castSkill, castTarget);
             return;
         }
 
@@ -96,7 +81,7 @@ namespace GamePlay.Bussiness.Logic
             // 如果当前目标有效, 判定对当前目标是否存在可施法技能, 如果存在则直接返回
             if (!!oldCastTarget && oldCastTarget.IsAlive())
             {
-                var castSkill = this._context.domainApi.skillApi.FindCastableSkill(role, oldCastTarget);
+                var castSkill = this._FindCastableSkill(role, oldCastTarget);
                 if (castSkill)
                 {
                     attackState.castTarget = oldCastTarget;
@@ -113,26 +98,10 @@ namespace GamePlay.Bussiness.Logic
                 if (!castTarget.IsAlive()) return;
 
                 // 对当前目标不存在可施法技能, 跳过
-                var castSkill = this._context.domainApi.skillApi.FindCastableSkill(role, castTarget);
+                var castSkill = this._FindCastableSkill(role, castTarget);
                 if (castSkill == null) return;
 
-                // 检查施法条件
-                var inputArgs = new GameRoleInputArgs
-                {
-                    skillId = castSkill.skillModel.typeId,
-                    targeterArgsList = new List<GameActionTargeterArgs>
-                    {
-                            new GameActionTargeterArgs
-                            {
-                                targetEntity = castTarget,
-                                targetDirection = (castTarget.logicCenterPos - role.transformCom.position).normalized,
-                                targetPosition = castTarget.logicBottomPos,
-                            }
-                    }
-                };
-                var isConditionSatisfied = this._context.domainApi.skillApi.CheckCastCondition(role, castSkill, inputArgs);
-                if (!isConditionSatisfied) return;
-
+                // 距离越近, 优先级越高
                 var curDisSqr = castTarget.transformCom.position.GetDisSqr(role.transformCom.position);
                 if (curDisSqr < minDisSqr)
                 {
@@ -143,7 +112,32 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        private void _SetCastInput(GameRoleEntity role, GameSkillEntity castSkill, GameEntityBase castTarget)
+        private GameSkillEntity _FindCastableSkill(GameRoleEntity role, GameEntityBase target)
+        {
+            var isIgnoreDistance = role.idCom.campId == GameRoleCollection.MONSTER_ROLE_CAMP_ID;// 怪物忽略距离, 会主动靠近目标攻击
+            var castSkill = this._context.domainApi.skillApi.FindCastableSkill(role, target, isIgnoreDistance);
+            return castSkill;
+        }
+
+        private void _SetInput_Cast(GameRoleEntity role, GameSkillEntity castSkill, GameEntityBase castTarget)
+        {
+            var args = new GameRoleInputArgs
+            {
+                skillId = castSkill.skillModel.typeId,
+                targeterArgsList = new List<GameActionTargeterArgs>
+                    {
+                        new GameActionTargeterArgs
+                        {
+                            targetEntity = castTarget,
+                            targetDirection = ( castTarget.logicCenterPos - role.logicCenterPos).normalized,
+                            targetPosition = castTarget.logicBottomPos,
+                        }
+                    }
+            };
+            role.inputCom.SetByArgs(args);
+        }
+
+        private void _SetInput_Move(GameRoleEntity role, GameSkillEntity castSkill, GameEntityBase castTarget)
         {
             var colliderModel = castSkill.skillModel.conditionModel.selector.colliderModel;
             var contactMTV = GamePhysicsResolvingUtil.GetContactMTV(colliderModel, castSkill.transformCom.ToArgs(), castTarget.transformCom.position);

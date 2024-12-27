@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.Logic
                 fromStateType = role.fsmCom.stateType,
                 idArgs = role.idCom.ToArgs(),
             });
-            role.SetValid(false);
+            role.SetInvalid();
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)
