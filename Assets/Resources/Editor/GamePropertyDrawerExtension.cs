@@ -10,22 +10,17 @@ namespace GamePlay.Config
             EditorGUILayout.Space(height);
         }
 
-        public static T DrawProperty<T>(this SerializedProperty property, string label = "", float height = 6, bool isReadOnly = false) where T : Object
+        public static T DrawProperty<T>(this SerializedProperty property, string label = "", float height = 6) where T : Object
         {
-            DrawProperty(property, label, height, isReadOnly);
+            DrawProperty(property, label, height);
             return property.objectReferenceValue as T;
         }
 
-
-        public static void DrawProperty(this SerializedProperty property, string label = "", float height = 6, bool isReadOnly = false)
+        public static void DrawProperty(this SerializedProperty property, string label = "", float height = 6)
         {
-            if (isReadOnly)
-                EditorGUILayout.PropertyField(property, new GUIContent(label), true);
-            else
-                EditorGUILayout.PropertyField(property, new GUIContent(label));
+            EditorGUILayout.PropertyField(property, new GUIContent(label));
             _AdjustLayout(height);
         }
-
 
         public static int DrawProperty_Int(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false)
         {
@@ -101,5 +96,51 @@ namespace GamePlay.Config
             _AdjustLayout(height);
             return property.stringValue;
         }
+
+        public static void DrawProperty_Array(this SerializedProperty property, string label, float height = 6)
+        {
+            EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
+            var count = property?.arraySize ?? 0;
+            EditorGUILayout.LabelField($"{label}数量: {count}");
+            for (var i = 0; i < count; i++)
+            {
+                GameEditorGUILayout.DrawBoxItem(() =>
+                {
+                    var state_p = property.GetArrayElementAtIndex(i);
+                    state_p.DrawProperty($"{label} {i}");
+
+                    EditorGUILayout.BeginHorizontal();
+                    GameGUILayout.DrawButton("删除", () =>
+                    {
+                        property.DeleteArrayElementAtIndex(i);
+                        i--;
+                        count--;
+                    }, Color.red, 50);
+                    GameGUILayout.DrawButton("↑", () =>
+                    {
+                        if (i > 0)
+                        {
+                            property.MoveArrayElement(i, i - 1);
+                        }
+                    }, Color.white, 20);
+                    GameGUILayout.DrawButton("↓", () =>
+                    {
+                        if (i < count - 1)
+                        {
+                            property.MoveArrayElement(i, i + 1);
+                        }
+                    }, Color.white, 20);
+                    EditorGUILayout.EndHorizontal();
+
+                });
+            }
+            // 添加按钮
+            GameGUILayout.DrawButton("添加", () =>
+            {
+                property.InsertArrayElementAtIndex(count);
+            }, Color.green, 100);
+            _AdjustLayout(height);
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 using GamePlay.Core;
+using UnityEditor;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -57,7 +58,7 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
-        public bool AttachBuff(int typeId, GameEntityBase target, int layer, out int realAttachLayer)
+        public bool AttachBuff(int typeId, GameEntityBase actor, GameEntityBase target, int layer, out int realAttachLayer)
         {
             realAttachLayer = 0;
 
@@ -105,6 +106,13 @@ namespace GamePlay.Bussiness.Logic
                     targetEntity = targetRole,
                     targetPosition = targetRole.transformCom.position,
                     targetDirection = targetRole.forward
+                });
+                // buff属性效果
+                buff.model.attributeModels?.Foreach(attrModel =>
+                {
+                    var args = GameActionUtil_AttributeModify.CalcAttributeModify(actor, target, attrModel);
+                    var attr = new GameAttribute(args.modifyType, args.modifyValue);
+                    buff.attributeCom.SetAttribute(attr);
                 });
                 // 提交RC事件
                 this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_ATTACH, new GameBuffRCArgs_Attach

@@ -30,7 +30,7 @@ namespace GamePlay.Bussiness.Logic
             return this._context.actionContext.template.TryGet(actionId, out model);
         }
 
-        public void DoAction(int actionId, GameEntityBase actorEntity)
+        public void DoAction(int actionId, GameEntityBase actor)
         {
             var template = this._actionContext.template;
             if (!template.TryGet(actionId, out var actionModel))
@@ -42,22 +42,22 @@ namespace GamePlay.Bussiness.Logic
             switch (actionModel)
             {
                 case GameActionModel_Dmg dmgAction:
-                    this.DoAction_Dmg(dmgAction, actorEntity);
+                    this.DoAction_Dmg(dmgAction, actor);
                     break;
                 case GameActionModel_Heal healAction:
-                    this.DoAction_Heal(healAction, actorEntity);
+                    this.DoAction_Heal(healAction, actor);
                     break;
                 case GameActionModel_LaunchProjectile launchProjectileAction:
-                    this.DoAction_LaunchProjectile(launchProjectileAction, actorEntity);
+                    this.DoAction_LaunchProjectile(launchProjectileAction, actor);
                     break;
                 case GameActionModel_KnockBack knockBackAction:
-                    this.DoAction_KnockBack(knockBackAction, actorEntity);
+                    this.DoAction_KnockBack(knockBackAction, actor);
                     break;
                 case GameActionModel_AttributeModify attributeModifyAction:
-                    this.DoAction_AttributeModify(attributeModifyAction, actorEntity);
+                    this.DoAction_AttributeModify(attributeModifyAction, actor);
                     break;
                 case GameActionModel_AttachBuff attachBuffAction:
-                    this.DoAction_AttachBuff(attachBuffAction, actorEntity);
+                    this.DoAction_AttachBuff(attachBuffAction, actor);
                     break;
                 default:
                     GameLogger.LogError($"未处理的行为类型：{actionModel.GetType().Name}");
@@ -67,21 +67,21 @@ namespace GamePlay.Bussiness.Logic
             // 提交RC - 行为执行
             var evArgs = new GameActionRCArgs_Do(
                 actionId,
-                actorEntity.idCom.ToArgs()
+                actor.idCom.ToArgs()
             );
             this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO, evArgs);
         }
 
-        public void DoAction_Dmg(GameActionModel_Dmg action, GameEntityBase actorEntity)
+        public void DoAction_Dmg(GameActionModel_Dmg action, GameEntityBase actor)
         {
             var recordList = new List<GameActionRecord_Dmg>();
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.ForEach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
-                var record = GameActionUtil_Dmg.CalcDmg(actorEntity, selectedEntity, action);
+                var record = GameActionUtil_Dmg.CalcDmg(actor, selectedEntity, action);
                 var isSuc = GameActionUtil_Dmg.DoDmg(selectedEntity, record);
                 if (isSuc) recordList.Add(record);
             });
@@ -97,15 +97,15 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public void DoAction_Heal(GameActionModel_Heal action, GameEntityBase actorEntity)
+        public void DoAction_Heal(GameActionModel_Heal action, GameEntityBase actor)
         {
             var recordList = new List<GameActionRecord_Heal>();
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.ForEach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
-                var record = GameActionHealUtil.CalcHeal(actorEntity, selectedEntity, action);
+                var record = GameActionHealUtil.CalcHeal(actor, selectedEntity, action);
                 recordList.Add(record);
                 GameActionHealUtil.DoHeal(selectedEntity, record);
             });
@@ -121,13 +121,13 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public void DoAction_LaunchProjectile(GameActionModel_LaunchProjectile action, GameEntityBase actorEntity)
+        public void DoAction_LaunchProjectile(GameActionModel_LaunchProjectile action, GameEntityBase actor)
         {
             var recordList = new List<GameActionRecord_LaunchProjectile>();
             var projectileId = action.projectileId;
             var projectileApi = this._context.domainApi.projectileApi;
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.ForEach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
@@ -138,25 +138,25 @@ namespace GamePlay.Bussiness.Logic
                 var launchOffet = action.launchOffset;
                 launchOffet.x = transArgs.forward.x > 0 ? launchOffet.x : -launchOffet.x;
                 transArgs.position += launchOffet;
-                var targeter = actorEntity.actionTargeterCom.getCurTargeter();
+                var targeter = actor.actionTargeterCom.getCurTargeter();
                 switch (action.barrageType)
                 {
                     case GameProjectileBarrageType.None:
-                        projectileApi.CreateProjectile(projectileId, actorEntity, transArgs, targeter);
+                        projectileApi.CreateProjectile(projectileId, actor, transArgs, targeter);
                         break;
                     case GameProjectileBarrageType.CustomLaunchOffset:
-                        projectileApi.CreateBarrage(projectileId, actorEntity, transArgs, targeter, action.customLaunchOffsetModel);
+                        projectileApi.CreateBarrage(projectileId, actor, transArgs, targeter, action.customLaunchOffsetModel);
                         break;
                     case GameProjectileBarrageType.Spread:
-                        projectileApi.CreateBarrage(projectileId, actorEntity, transArgs, targeter, action.spreadModel);
+                        projectileApi.CreateBarrage(projectileId, actor, transArgs, targeter, action.spreadModel);
                         break;
                     default:
                         GameLogger.LogError($"行为无法执行, 尚未处理的弹幕类型：{action.barrageType}");
                         break;
                 }
                 var record = new GameActionRecord_LaunchProjectile(
-                    actorRoleIdArgs: actorEntity.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
-                    actorIdArgs: actorEntity.idCom.ToArgs(),
+                    actorRoleIdArgs: actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
+                    actorIdArgs: actor.idCom.ToArgs(),
                     targetRoleIdArgs: selectedEntity.idCom.ToArgs()
                 );
                 recordList.Add(record);
@@ -173,16 +173,16 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public void DoAction_KnockBack(GameActionModel_KnockBack action, GameEntityBase actorEntity)
+        public void DoAction_KnockBack(GameActionModel_KnockBack action, GameEntityBase actor)
         {
             var recordList = new List<GameActionRecord_KnockBack>();
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.ForEach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
-                var record = GameActionKnockBackUtil.CalcKnockBack(actorEntity, selectedEntity, action);
+                var record = GameActionKnockBackUtil.CalcKnockBack(actor, selectedEntity, action);
                 recordList.Add(record);
                 var transformApi = this._context.domainApi.transformApi;
                 GameActionKnockBackUtil.DoKnockBack(selectedEntity, record, transformApi);
@@ -198,16 +198,16 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public void DoAction_AttributeModify(GameActionModel_AttributeModify action, GameEntityBase actorEntity, bool dontDo = false)
+        public void DoAction_AttributeModify(GameActionModel_AttributeModify action, GameEntityBase actor, bool dontDo = false)
         {
             var recordList = new List<GameActionRecord_AttributeModify>();
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.ForEach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
-                var record = GameActionUtil_AttributeModify.CalcAttributeModify(actorEntity, selectedEntity, action);
+                var record = GameActionUtil_AttributeModify.CalcAttributeModify(actor, selectedEntity, action);
                 recordList.Add(record);
                 if (!dontDo) GameActionUtil_AttributeModify.DoAttributeModify(selectedEntity, record);
             });
@@ -222,19 +222,19 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public void DoAction_AttachBuff(GameActionModel_AttachBuff action, GameEntityBase actorEntity)
+        public void DoAction_AttachBuff(GameActionModel_AttachBuff action, GameEntityBase actor)
         {
             var recordList = new List<GameActionRecord_AttachBuff>();
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actorEntity);
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.ForEach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
-                var isSuc = this._context.domainApi.buffApi.AttachBuff(action.buffId, selectedEntity, action.layer, out var realAttachLayer);
+                var isSuc = this._context.domainApi.buffApi.AttachBuff(action.buffId, actor, selectedEntity, action.layer, out var realAttachLayer);
                 if (isSuc) recordList.Add(new GameActionRecord_AttachBuff(
-                    actorRoleIdArgs: actorEntity.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
-                    actorIdArgs: actorEntity.idCom.ToArgs(),
+                    actorRoleIdArgs: actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
+                    actorIdArgs: actor.idCom.ToArgs(),
                     targetRoleIdArgs: selectedEntity.idCom.ToArgs(),
                     buffId: action.buffId,
                     layer: realAttachLayer
@@ -251,16 +251,16 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public void DoAction_SummonRole(GameActionModel_SummonRoles action, GameEntityBase actorEntity)
+        public void DoAction_SummonRole(GameActionModel_SummonRoles action, GameEntityBase actor)
         {
             var recordList = new List<GameActionRecord_SummonRoles>();
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            var roles = this._context.domainApi.roleApi.SummonRoles(action, actorEntity, actorEntity.transformCom.ToArgs());
+            var roles = this._context.domainApi.roleApi.SummonRoles(action, actor, actor.transformCom.ToArgs());
             if (roles.HasData())
             {
                 var record = new GameActionRecord_SummonRoles(
-                    actorRoleIdArgs: actorEntity.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
-                    actorIdArgs: actorEntity.idCom.ToArgs(),
+                    actorRoleIdArgs: actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
+                    actorIdArgs: actor.idCom.ToArgs(),
                     roleId: action.roleId,
                     count: action.count,
                     campType: action.campType

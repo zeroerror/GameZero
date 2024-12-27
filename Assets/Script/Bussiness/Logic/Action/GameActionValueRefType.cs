@@ -7,26 +7,29 @@ namespace GamePlay.Bussiness.Logic
     {
         None,
 
-        /** 固定数值 */
+        /// <summary> 固定数值 </summary>
         Fixed,
 
-        /** 行为者攻击力 */
+        /// <summary> 行为者攻击力 </summary>
         ActorAttack,
-        /** 目标攻击力 */
+        /// <summary> 目标攻击力 </summary>
         TargetAttack,
 
-        /** 行为者血量 */
+        /// <summary> 行为者血量 </summary>
         ActorHP,
-        /** 目标血量 */
+        /// <summary> 目标血量 </summary>
         TargetHP,
-        /** 行为者最大血量 */
+        /// <summary> 行为者最大血量 </summary>
         ActorMaxHP,
-        /** 目标最大血量 */
+        /// <summary> 目标最大血量 </summary>
         TargetMaxHP,
-        /** 行为者已损失血量 */
+        /// <summary> 行为者已损失血量 </summary>
         ActorLostHP,
-        /** 目标已损失血量 */
+        /// <summary> 目标已损失血量 </summary>
         TargetLostHP,
+
+        /// <summary> 行为者攻速 </summary>
+        ActorAttackSpeed,
     }
 
     public static class GameActionValueRefTypeExt
@@ -73,8 +76,11 @@ namespace GamePlay.Bussiness.Logic
                 case GameActionValueRefType.TargetLostHP:
                     refAttrValue = targetBaseAttrCom.GetValue(GameAttributeType.HP) - targetAttrCom.GetValue(GameAttributeType.HP);
                     break;
+                case GameActionValueRefType.ActorAttackSpeed:
+                    refAttrValue = actorBaseAttrCom.GetValue(GameAttributeType.AttackSpeed);
+                    break;
                 default:
-                    GameLogger.LogError("未处理的治疗参考类型" + refType);
+                    GameLogger.LogError("未处理的数值参考类型: " + refType);
                     break;
             }
             return refAttrValue;

@@ -8,6 +8,7 @@ namespace GamePlay.Bussiness.Logic
         public readonly int[] actionIds;
         public readonly GameBuffConditionSetModel conditionSetModel_action;
         public readonly GameBuffConditionSetModel conditionSetModel_remove;
+        public readonly GameBuffAttributeModel[] attributeModels;
 
         public GameBuffModel(
             int typeId,
@@ -15,7 +16,8 @@ namespace GamePlay.Bussiness.Logic
             int maxLayer,
             int[] actionIds,
             GameBuffConditionSetModel conditionSetModel_action,
-            GameBuffConditionSetModel conditionSetModel_remove
+            GameBuffConditionSetModel conditionSetModel_remove,
+            GameBuffAttributeModel[] attributeModels
         )
         {
             this.typeId = typeId;
@@ -24,6 +26,7 @@ namespace GamePlay.Bussiness.Logic
             this.actionIds = actionIds;
             this.conditionSetModel_action = conditionSetModel_action;
             this.conditionSetModel_remove = conditionSetModel_remove;
+            this.attributeModels = attributeModels;
         }
     }
 }

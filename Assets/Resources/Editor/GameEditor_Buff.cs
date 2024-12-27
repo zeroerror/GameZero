@@ -21,6 +21,7 @@ namespace GamePlay.Config
         private SerializedProperty vfxPrefab_p;
         private SerializedProperty vfxPrefabUrl_p;
         private SerializedProperty vfxLayerType_p;
+        private SerializedProperty attributeEMs_p;
 
         private void OnEnable()
         {
@@ -36,6 +37,7 @@ namespace GamePlay.Config
             this.vfxPrefab_p = _serializedObject.FindProperty("vfxPrefab");
             this.vfxPrefabUrl_p = _serializedObject.FindProperty("vfxPrefabUrl");
             this.vfxLayerType_p = _serializedObject.FindProperty("vfxLayerType");
+            this.attributeEMs_p = _serializedObject.FindProperty("attributeEMs");
         }
 
         public override void OnInspectorGUI()
@@ -60,6 +62,8 @@ namespace GamePlay.Config
                 this.vfxPrefabUrl_p.stringValue = "";
             }
             this.vfxLayerType_p.DrawProperty_EnumPopup<GameFieldLayerType>("挂载层级");
+
+            this.attributeEMs_p.DrawProperty_Array("属性效果");
 
             this._serializedObject.ApplyModifiedProperties();
         }
