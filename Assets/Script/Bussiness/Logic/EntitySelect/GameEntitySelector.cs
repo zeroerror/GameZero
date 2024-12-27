@@ -1,3 +1,4 @@
+using System.Runtime.Serialization.Formatters;
 using GamePlay.Core;
 namespace GamePlay.Bussiness.Logic
 {
@@ -22,6 +23,7 @@ namespace GamePlay.Bussiness.Logic
         /// </summary>
         public bool CheckSelect(GameEntityBase entityA, GameEntityBase entityB)
         {
+            if (!entityA || !entityB) return false;
             // 判定阵营
             if (!this.CheckCampType(entityA, entityB)) return false;
             // 判定实体类型

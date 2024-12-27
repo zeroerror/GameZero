@@ -17,7 +17,7 @@ MonoBehaviour:
   desc: "\u5F13\u7BAD - \u4F24\u5BB3"
   dmgActionEM:
     dmgType: 1
-    value: 35
+    value: 50
     valueFormat: 1
     refType: 1
     selectorEM:

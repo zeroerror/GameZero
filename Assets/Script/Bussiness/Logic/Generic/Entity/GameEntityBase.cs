@@ -91,5 +91,12 @@ namespace GamePlay.Bussiness.Logic
 
         public GameVec2 logicBottomPos => this.transformCom.position;
 
+        public bool IsAlive()
+        {
+            if (!this.isValid) return false;
+            if (this.attributeCom.GetValue(GameAttributeType.HP) <= 0) return false;
+            return true;
+        }
+
     }
 }

@@ -78,21 +78,23 @@ namespace GamePlay.Bussiness.Logic
             return skill;
         }
 
-        public GameSkillModel GetSkillModel(int typeId)
+        public bool TryGetModel(int typeId, out GameSkillModel model)
         {
-            var factory = this._skillContext.factory;
-            if (!factory.template.TryGet(typeId, out var model))
-            {
-                GameLogger.LogError("技能模板不存在：" + typeId);
-                return null;
-            }
-            return model;
+            return this._skillContext.factory.template.TryGet(typeId, out model);
         }
 
-        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill)
+        public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target)
         {
-            var inputArgs = role.inputCom.ToArgs();
-            return this.CheckCastCondition(role, skill, in inputArgs);
+            var conditionModel = skill.skillModel.conditionModel;
+            if (conditionModel == null) return true;
+            // 检查 - CD
+            if (skill.cdElapsed > 0) return false;
+            // 检查 - 属性消耗
+            if (role.attributeCom.GetValue(GameAttributeType.MP) < conditionModel.mpCost) return false;
+            // 检查 - 选择器
+            var selector = conditionModel.selector;
+            if (!selector.CheckSelect(skill, role) && !selector.CheckSelect(skill, target)) return false;
+            return true;
         }
 
         public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs)
@@ -109,7 +111,6 @@ namespace GamePlay.Bussiness.Logic
                     var index = inputArgs.targeterArgsList.FindIndex((args) => args.targetEntity != null && args.targetEntity.idCom.campId != role.idCom.campId);
                     if (index == -1)
                     {
-                        GameLogger.LogWarning($"[{skillModel.typeId}]技能释放条件无法满足！ 需要存在目标敌人");
                         return false;
                     }
                     break;
@@ -117,7 +118,6 @@ namespace GamePlay.Bussiness.Logic
                     var index_d = inputArgs.targeterArgsList.FindIndex((args) => args.targetDirection != GameVec2.zero);
                     if (index_d == -1)
                     {
-                        GameLogger.LogWarning($"[{skillModel.typeId}]技能释放条件无法满足！ 需要存在目标方向");
                         return false;
                     }
                     break;
@@ -125,7 +125,6 @@ namespace GamePlay.Bussiness.Logic
                     var index_p = inputArgs.targeterArgsList.FindIndex((args) => args.targetPosition != GameVec2.zero);
                     if (index_p == -1)
                     {
-                        GameLogger.LogWarning($"[{skillModel.typeId}]技能释放条件无法满足！ 需要存在目标位置");
                         return false;
                     }
                     break;
@@ -135,14 +134,21 @@ namespace GamePlay.Bussiness.Logic
                     GameLogger.LogError("未知的技能目标类型");
                     return false;
             }
-            // 消耗检测
-            // CD
-            if (skill.cdElapsed > 0) return false;
-            // 蓝量
-            var mp = role.attributeCom.GetValue(GameAttributeType.MP);
-            if (mp < skill.skillModel.conditionModel.mpCost) return false;
-            // 人物状态，比如眩晕，沉默等
+
+            // 技能条件检测
+            if (!this.CheckSkillCondition(role, skill, inputArgs.targeterArgsList?[0].targetEntity)) return false;
+
+            // 人物状态检测
+
             return true;
+        }
+
+        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill)
+        {
+            var inputArgs = role.inputCom.ToArgs();
+            var check = this.CheckCastCondition(role, skill, in inputArgs);
+            if (!check) GameLogger.LogWarning($"技能施法条件检测失败：{skill.idCom}");
+            return check;
         }
 
         public void CastSkill(GameRoleEntity role, GameSkillEntity skill)
@@ -166,23 +172,13 @@ namespace GamePlay.Bussiness.Logic
             role.attributeCom.SetAttribute(attr);
         }
 
-        public bool TryGetModel(int typeId, out GameSkillModel model)
+        public GameSkillEntity FindCastableSkill(GameRoleEntity role, GameEntityBase target)
         {
-            return this._skillContext.factory.template.TryGet(typeId, out model);
-        }
-
-        public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target)
-        {
-            var conditionModel = skill.skillModel.conditionModel;
-            if (conditionModel == null) return true;
-            // 检查 - CD
-            if (skill.cdElapsed > 0) return false;
-            // 检查 - 属性消耗
-            if (role.attributeCom.GetValue(GameAttributeType.MP) < conditionModel.mpCost) return false;
-            // 检查 - 选择器
-            var selector = conditionModel.selector;
-            if (!selector.CheckSelect(skill, target)) return false;
-            return true;
+            var skillCom = role.skillCom;
+            return skillCom.FindWithPriority((skill) =>
+            {
+                return this.CheckSkillCondition(role, skill, target);
+            });
         }
     }
 }

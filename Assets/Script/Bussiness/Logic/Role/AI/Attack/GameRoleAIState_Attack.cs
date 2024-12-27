@@ -4,7 +4,8 @@ namespace GamePlay.Bussiness.Logic
     {
         public readonly GameRoleEntity role;
 
-        public GameEntityBase targetEntity;
+        public GameEntityBase castTarget;
+        public GameSkillEntity castSkill;
 
         public GameRoleAIState_Attack(GameRoleEntity role)
         {
@@ -14,7 +15,8 @@ namespace GamePlay.Bussiness.Logic
         public override void Clear()
         {
             base.Clear();
-            targetEntity = null;
+            castTarget = null;
+            castSkill = null;
         }
 
     }

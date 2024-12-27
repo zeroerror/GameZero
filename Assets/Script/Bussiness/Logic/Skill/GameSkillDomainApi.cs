@@ -5,18 +5,24 @@ namespace GamePlay.Bussiness.Logic
     public interface GameSkillDomainApi
     {
         public GameSkillEntity CreateSkill(GameRoleEntity role, int typeId);
-        public GameSkillModel GetSkillModel(int typeId);
-        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill);
-        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs);
+
+        /// <summary> 尝试获取技能模型 </summary>
+        public bool TryGetModel(int typeId, out GameSkillModel model);
+
+        /// <summary> 检查技能条件, 包含CD、消耗、选择器等 </summary>
         public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target);
+
+        /// <summary> 根据输入参数, 检查施法条件, 包括角色状态条件和技能条件 </summary>
+        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs);
+
+        /// <summary> 根据技能的目标选取组件, 检查施法条件, 包括角色状态条件和技能条件 </summary>
+        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill);
+
+        /// <summary> 查找针对目标的可施法技能 </summary>
+        public GameSkillEntity FindCastableSkill(GameRoleEntity role, GameEntityBase target);
+
+        /// <summary> 施放技能 </summary>
         public void CastSkill(GameRoleEntity role, GameSkillEntity skill);
 
-
-        /// <summary>
-        /// 尝试获取技能模型
-        /// <para>typeId 类型Id</para>
-        /// <para>model 技能模型</para>
-        /// </summary>
-        public bool TryGetModel(int typeId, out GameSkillModel model);
     }
 }

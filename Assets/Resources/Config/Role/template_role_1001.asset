@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1522ba66d1721704e8b89e4b44541fbd, type: 2}
   attributes:
   - type: 2
-    value: 1000
+    value: 1000000
   - type: 3
     value: 0
   - type: 4

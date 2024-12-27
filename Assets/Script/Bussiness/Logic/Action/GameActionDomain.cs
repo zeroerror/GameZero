@@ -82,8 +82,8 @@ namespace GamePlay.Bussiness.Logic
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
                 var record = GameActionUtil_Dmg.CalcDmg(actorEntity, selectedEntity, action);
-                recordList.Add(record);
-                GameActionUtil_Dmg.DoDmg(selectedEntity, record);
+                var isSuc = GameActionUtil_Dmg.DoDmg(selectedEntity, record);
+                if (isSuc) recordList.Add(record);
             });
             recordList.ForEach((record) =>
             {

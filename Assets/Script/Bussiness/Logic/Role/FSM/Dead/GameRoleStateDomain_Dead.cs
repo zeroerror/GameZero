@@ -26,7 +26,6 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-
         protected override void _Tick(GameRoleEntity role, float frameTime)
         {
             role.fsmCom.deadState.stateTime += frameTime;

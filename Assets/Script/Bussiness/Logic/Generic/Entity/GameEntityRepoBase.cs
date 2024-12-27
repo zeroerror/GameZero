@@ -77,7 +77,6 @@ namespace GamePlay.Bussiness.Logic
             }
             entityPool.Add(entity);
             GameLogger.Log($"实体仓库 回收: {entity.idCom}");
-            entity.Clear();
         }
 
         public virtual bool TryFetch(int typeId, out T entity)
@@ -88,6 +87,7 @@ namespace GamePlay.Bussiness.Logic
             var fetchIndex = pool.Count - 1;
             entity = pool[fetchIndex];
             pool.RemoveAt(fetchIndex);
+            entity.Clear();
             return true;
         }
 

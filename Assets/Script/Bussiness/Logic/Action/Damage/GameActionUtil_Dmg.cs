@@ -44,18 +44,19 @@ namespace GamePlay.Bussiness.Logic
             return record;
         }
 
-        public static void DoDmg(GameEntityBase target, GameActionRecord_Dmg record)
+        public static bool DoDmg(GameEntityBase target, GameActionRecord_Dmg record)
         {
             var targetAttrCom = target.attributeCom;
             var curHP = targetAttrCom.GetValue(GameAttributeType.HP);
             if (curHP <= 0)
             {
-                return;
+                return false;
             }
 
             var afterDmgHP = curHP - record.value;
             targetAttrCom.SetAttribute(GameAttributeType.HP, afterDmgHP);
-            GameLogger.Log($"目标:{target.idCom} 受到伤害:{record.value}");
+            GameLogger.Log($"目标:{target.idCom} 受到伤害{record.value} ({curHP}=>{afterDmgHP})");
+            return true;
         }
     }
 }
