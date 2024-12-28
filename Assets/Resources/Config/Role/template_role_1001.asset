@@ -33,3 +33,5 @@ MonoBehaviour:
     value: 6
   - type: 6
     value: 3
+  - type: 8
+    value: 1

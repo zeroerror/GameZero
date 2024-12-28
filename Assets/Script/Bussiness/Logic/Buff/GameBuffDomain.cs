@@ -44,6 +44,7 @@ namespace GamePlay.Bussiness.Logic
                     buff.model.actionIds?.Foreach(actionId =>
                     {
                         buff.physicsCom.ClearCollided();
+                        buff.attributeCom.SetByCom(buff.idCom.parent.attributeCom);
                         this._context.domainApi.actionApi.DoAction(actionId, buff);
                     });
                 }
@@ -89,7 +90,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 绑定父子关系
-            // newBuff.idCom.SetEntityId(this._buffContext.idService.FetchId());
+            newBuff.idCom.SetEntityId(this._buffContext.idService.FetchId());
             newBuff.idCom.SetParent(targetRole);
             // 组件绑定
             newBuff.BindTransformCom(targetRole.transformCom);
@@ -184,9 +185,9 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /// <summary> 尝试移除buff </summary>
-        public bool TryDetachBuff(GameEntityBase target, int buffId, int layer, out GameBuffEntity removeBuff, out int detachLayer)
+        public bool TryDetachBuff(GameEntityBase target, int buffId, int layer, out GameBuffEntity detachBuff, out int detachLayer)
         {
-            removeBuff = null;
+            detachBuff = null;
             detachLayer = 0;
 
             if (!target.TryGetLinkEntity<GameRoleEntity>(out var targetRole))
@@ -196,24 +197,25 @@ namespace GamePlay.Bussiness.Logic
             }
 
             var buffCom = targetRole.buffCom;
-            removeBuff = buffCom.buffList.Find(b => b.model.typeId == buffId);
-            if (!removeBuff)
+            detachBuff = buffCom.buffList.Find(b => b.model.typeId == buffId);
+            if (!detachBuff)
             {
                 GameLogger.LogError("Buff不存在，无法移除：" + buffId);
                 return false;
             }
 
-            if (!removeBuff.isValid) return false;
+            if (!detachBuff.isValid) return false;
 
             // 移除层数
-            var removeLayer = this._DetachLayer(removeBuff, layer);
+            detachLayer = this._DetachLayer(detachBuff, layer);
             // 刷新buff属性效果
-            this._refreshBuffAttribute(removeBuff, targetRole, targetRole);
+            this._refreshBuffAttribute(detachBuff, targetRole, targetRole);
 
-            if (!removeBuff.isValid) buffCom.buffList.Remove(removeBuff);
+            if (!detachBuff.isValid) buffCom.buffList.Remove(detachBuff);
 
-            this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_REMOVE, new GameBuffRCArgs_Remove
+            this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_DETACH, new GameBuffRCArgs_Detach
             {
+                buffId = buffId,
                 targetIdArgs = targetRole.idCom.ToArgs(),
                 detachLayer = detachLayer,
             });

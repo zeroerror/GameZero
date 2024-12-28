@@ -26,11 +26,13 @@ namespace GamePlay.Bussiness.Renderer
         private void _BindEvent()
         {
             this._context.BindRC(GameBuffRCCollection.RC_GAME_BUFF_ATTACH, this._OnBuffAttach);
+            this._context.BindRC(GameBuffRCCollection.RC_GAME_BUFF_DETACH, this._OnBuffDeAttach);
         }
 
         private void _UnbindEvents()
         {
             this._context.UnbindRC(GameBuffRCCollection.RC_GAME_BUFF_ATTACH, this._OnBuffAttach);
+            this._context.UnbindRC(GameBuffRCCollection.RC_GAME_BUFF_DETACH, this._OnBuffDeAttach);
         }
 
         private void _OnBuffAttach(object args)
@@ -46,6 +48,21 @@ namespace GamePlay.Bussiness.Renderer
             }
 
             this.AttachBuff(evArgs.buffIdArgs, target, evArgs.layer);
+        }
+
+        private void _OnBuffDeAttach(object args)
+        {
+            var evArgs = (GameBuffRCArgs_Detach)args;
+            var targetIdArgs = evArgs.targetIdArgs;
+            // 检查角色异步
+            var target = this._context.roleContext.repo.FindByEntityId(targetIdArgs.entityId);
+            if (target == null)
+            {
+                this._context.DelayRC(GameBuffRCCollection.RC_GAME_BUFF_DETACH, args);
+                return;
+            }
+
+            this.DetachBuff(evArgs.buffId, target, evArgs.detachLayer);
         }
 
         public void Tick(float dt)
@@ -80,7 +97,9 @@ namespace GamePlay.Bussiness.Renderer
             }
 
             newBuff.idCom.SetByArgs(buffIdArgs);
+            newBuff.idCom.SetParent(targetRole);
             newBuff.BindTransformCom(targetRole.transformCom);
+
             buffCom.Add(newBuff);
             this._buffContext.repo.TryAdd(newBuff);
 
