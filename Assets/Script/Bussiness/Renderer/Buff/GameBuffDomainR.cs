@@ -79,6 +79,7 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
 
+            newBuff.idCom.SetByArgs(buffIdArgs);
             newBuff.BindTransformCom(targetRole.transformCom);
             buffCom.Add(newBuff);
             this._buffContext.repo.TryAdd(newBuff);

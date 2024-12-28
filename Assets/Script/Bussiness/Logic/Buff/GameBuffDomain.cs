@@ -89,6 +89,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 绑定父子关系
+            // newBuff.idCom.SetEntityId(this._buffContext.idService.FetchId());
             newBuff.idCom.SetParent(targetRole);
             // 组件绑定
             newBuff.BindTransformCom(targetRole.transformCom);

@@ -24,6 +24,7 @@ namespace GamePlay.Bussiness.Logic
                 repo.ForeachEntities((entity) =>
                 {
                     if (entity.isValid) return;
+                    if (entity.HasReference()) return;
                     this._context.cmdBufferService.AddDelayCmd(0, () =>
                     {
                         repo.Recycle(entity);
@@ -35,6 +36,7 @@ namespace GamePlay.Bussiness.Logic
                 repo.ForeachEntities((entity) =>
                 {
                     if (entity.isValid) return;
+                    if (entity.HasReference()) return;
                     this._context.cmdBufferService.AddDelayCmd(0, () =>
                     {
                         repo.Recycle(entity);
@@ -46,6 +48,7 @@ namespace GamePlay.Bussiness.Logic
                 repo.ForeachEntities((entity) =>
                 {
                     if (entity.isValid) return;
+                    if (entity.HasReference()) return;
                     this._context.cmdBufferService.AddDelayCmd(0, () =>
                     {
                         repo.Recycle(entity);

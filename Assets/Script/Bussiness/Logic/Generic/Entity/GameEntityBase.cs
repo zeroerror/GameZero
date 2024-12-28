@@ -13,6 +13,8 @@ namespace GamePlay.Bussiness.Logic
         public void SetValid() => this.isValid = true;
         public void SetInvalid() => this.isValid = false;
 
+        public bool HasReference() => this.idCom.children.Count > 0;
+
         public GameIdCom idCom { get; private set; }
         public GameTransformCom transformCom { get; private set; }
         public void BindTransformCom(GameTransformCom transformCom) => this.transformCom = transformCom;
