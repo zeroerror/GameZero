@@ -16,13 +16,13 @@ namespace GamePlay.Bussiness.Logic
             switch (action.knockBackDirType)
             {
                 case GameActionKnockBackDirType.ToTarget:
-                    dir = _GetKnockBack_ToTarget(actor, target, action);
+                    dir = _GetKnockBack_ToTarget(actor, target);
                     break;
                 case GameActionKnockBackDirType.ToSelf:
-                    dir = _GetKnockBack_ToSelf(actor, target, action);
+                    dir = _GetKnockBack_ToSelf(actor, target);
                     break;
                 case GameActionKnockBackDirType.SelfForward:
-                    dir = _GetKnockBack_SelfForward(actor, target, action);
+                    dir = _GetKnockBack_SelfForward(actor, target);
                     break;
                 default:
                     GameLogger.LogError($"未处理的击退方向类型：{action.knockBackDirType}");
@@ -32,7 +32,7 @@ namespace GamePlay.Bussiness.Logic
             // 如果方向为0，则默认使用自身朝向
             if (dir == GameVec2.zero)
             {
-                dir = _GetKnockBack_SelfForward(actor, target, action);
+                dir = _GetKnockBack_SelfForward(actor, target);
             }
 
             // 击退抗性
@@ -52,21 +52,21 @@ namespace GamePlay.Bussiness.Logic
             return record;
         }
 
-        private static GameVec2 _GetKnockBack_ToTarget(GameEntityBase actor, GameEntityBase target, GameActionModel_KnockBack action)
+        private static GameVec2 _GetKnockBack_ToTarget(GameEntityBase actor, GameEntityBase target)
         {
             var dir = target.transformCom.position - actor.transformCom.position;
             dir.Normalize();
             return dir;
         }
 
-        private static GameVec2 _GetKnockBack_ToSelf(GameEntityBase actor, GameEntityBase target, GameActionModel_KnockBack action)
+        private static GameVec2 _GetKnockBack_ToSelf(GameEntityBase actor, GameEntityBase target)
         {
-            var dir = actor.transformCom.position - target.transformCom.position;
-            dir.Normalize();
+            var dir = actor.transformCom.forward;
+            dir.NegSelf();
             return dir;
         }
 
-        private static GameVec2 _GetKnockBack_SelfForward(GameEntityBase actor, GameEntityBase target, GameActionModel_KnockBack action)
+        private static GameVec2 _GetKnockBack_SelfForward(GameEntityBase actor, GameEntityBase target)
         {
             var dir = actor.transformCom.forward;
             return dir;

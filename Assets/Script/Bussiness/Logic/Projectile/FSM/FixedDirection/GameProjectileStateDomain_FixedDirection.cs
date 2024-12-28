@@ -1,5 +1,4 @@
 using GamePlay.Core;
-using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileStateDomain_FixedDirection : GameProjectileStateDomainBase
@@ -11,14 +10,13 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Enter(GameProjectileEntity projectile)
         {
-            var fsmCom = projectile.fsmCom;
-            fsmCom.EnterFixedDirection();
             var direction = projectile.actionTargeterCom.targetDirection;
+            projectile.fsmCom.EnterFixedDirection(direction);
             projectile.FaceTo(direction);
             // 提交RC
             this._context.SubmitRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_STATE_ENTER_FIXED_DIRECTION, new GameProjectileRCArgs_StateEnterFixedDirection
             {
-                fromStateType = fsmCom.stateType,
+                fromStateType = projectile.fsmCom.stateType,
                 idArgs = projectile.idCom.ToArgs(),
                 direction = direction,
             });
@@ -31,7 +29,7 @@ namespace GamePlay.Bussiness.Logic
 
             var model = projectile.fsmCom.fixedDirectionState.model;
             var speed = model.speed;
-            var direction = projectile.actionTargeterCom.targetDirection;
+            var direction = fixedDirectionState.direction;
             var delta = direction * speed * frameTime;
             projectile.transformCom.position += delta;
             projectile.FaceTo(direction);

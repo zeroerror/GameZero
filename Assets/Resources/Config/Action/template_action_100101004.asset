@@ -140,9 +140,9 @@ MonoBehaviour:
         buffSO: {fileID: 0}
         layer: 0
   knockBackActionEM:
-    knockBackDirType: 0
-    distance: 0.3
-    duration: 0.1
+    knockBackDirType: 2
+    distance: 0.05
+    duration: 0.05
     easingType: 6
     selectorEM:
       selectAnchorType: 2

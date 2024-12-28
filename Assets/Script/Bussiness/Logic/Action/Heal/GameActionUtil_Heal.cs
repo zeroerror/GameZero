@@ -33,6 +33,10 @@ namespace GamePlay.Bussiness.Logic
             var afterHP = curHP + healValue;
             var maxHP = target.attributeCom.GetValue(GameAttributeType.MaxHP);
             var realHeal = afterHP > maxHP ? maxHP - curHP : healValue;
+
+            // 取2位小数
+            realHeal = GameMathF.ToFixed(realHeal, 2);
+
             var actorRoleIdArgs = actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_Heal(
                 actorRoleIdArgs,

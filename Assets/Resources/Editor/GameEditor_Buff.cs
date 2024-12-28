@@ -49,8 +49,12 @@ namespace GamePlay.Config
                 this.typeId_p.DrawProperty_Int("类型ID");
                 this.buffName_p.DrawProperty_Str("名称");
                 this.desc_p.DrawProperty_Str("描述");
-                this.refreshFlag_p.DrawProperty_EnumPopup<GameBuffRefreshFlag>("刷新类型标记");
-                this.maxLayer_p.DrawProperty_Int("最大层数");
+                this.refreshFlag_p.DrawProperty_EnumFlagsPopup<GameBuffRefreshFlag>("刷新类型标记");
+                var maxLayer = this.maxLayer_p.DrawProperty_Int("最大层数");
+                if (maxLayer < 1)
+                {
+                    this.maxLayer_p.intValue = 1;
+                }
             });
 
             GameEditorGUILayout.DrawBoxItem(() =>
@@ -89,7 +93,7 @@ namespace GamePlay.Config
             var color = GUI.color;
             GUI.color = Color.green;
             var actionSOs = Resources.LoadAll<GameActionSO>(GameConfigCollection.ACTION_CONFIG_DIR_PATH);
-            actionSOs = actionSOs.Filter(actionSO => actionSO.attachBuffActionEM?.buffSO?.typeId == this.typeId_p.intValue);
+            actionSOs = actionSOs.Filter(actionSO => actionSO.actionType == GameActionType.AttachBuff && actionSO.attachBuffActionEM?.buffSO?.typeId == this.typeId_p.intValue);
             if (actionSOs.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被以下行为使用 --------", EditorStyles.boldLabel);

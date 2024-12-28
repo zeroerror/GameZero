@@ -11,6 +11,14 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
+        public void Reset()
+        {
+            this.timeScale = 1.0f;
+            this.gameTime = 0.0f;
+            this.gameFrame = 0;
+            this.cacheDt = 0.0f;
+        }
+
         public int Tick(float dt)
         {
             this.gameTime += dt * this.timeScale;

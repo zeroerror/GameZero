@@ -6,11 +6,12 @@ namespace GamePlay.Core
     {
         Info = 0,
         Warning,
-        Error
+        Error,
+        Debug
     }
     public class GameLogger
     {
-        public static LogLevel logLevel = LogLevel.Warning;
+        public static LogLevel logLevel = LogLevel.Debug;
         public static void Log(string message)
         {
             if (logLevel > LogLevel.Info) return;
@@ -30,6 +31,12 @@ namespace GamePlay.Core
         public static void Assert(bool condition, string message)
         {
             Debug.Assert(condition, message);
+        }
+
+        public static void DebugLog(string message)
+        {
+            if (logLevel > LogLevel.Debug) return;
+            Debug.Log(message);
         }
     }
 }

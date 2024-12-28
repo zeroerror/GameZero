@@ -1,3 +1,4 @@
+using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEditor;
 using UnityEngine;
@@ -137,7 +138,7 @@ namespace GamePlay.Config
             var color = GUI.color;
             GUI.color = Color.green;
             var actionSOs = Resources.LoadAll<GameActionSO>(GameConfigCollection.ACTION_CONFIG_DIR_PATH);
-            actionSOs = actionSOs.Filter(actionSO => actionSO.launchProjectileActionEM?.launchProjectileSO?.typeId == this.typeId_p.intValue);
+            actionSOs = actionSOs.Filter(actionSO => actionSO.actionType == GameActionType.LaunchProjectile && actionSO.launchProjectileActionEM?.launchProjectileSO?.typeId == this.typeId_p.intValue);
             if (actionSOs.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被以下行为使用 --------", EditorStyles.boldLabel);

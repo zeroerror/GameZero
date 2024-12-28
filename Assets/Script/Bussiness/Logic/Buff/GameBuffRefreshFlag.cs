@@ -1,5 +1,6 @@
 namespace GamePlay.Bussiness.Logic
 {
+    [System.Flags]
     public enum GameBuffRefreshFlag
     {
         None,

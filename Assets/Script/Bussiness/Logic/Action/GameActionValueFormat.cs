@@ -16,18 +16,20 @@ namespace GamePlay.Bussiness.Logic
     {
         public static float FormatValue(this GameActionValueFormat format, int value)
         {
+            var formatV = 0f;
             switch (format)
             {
                 case GameActionValueFormat.Fixed:
+                    formatV = value;
                     break;
                 case GameActionValueFormat.Percent:
-                    value = value / 100;
+                    formatV = value / 100f;
                     break;
                 default:
                     GameLogger.LogError("未处理的治疗数值格式" + format);
                     break;
             }
-            return value;
+            return formatV;
         }
     }
 }

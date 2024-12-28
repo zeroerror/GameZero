@@ -14,21 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 100201001
   buffName: "\u751F\u673A\u6D8C\u52A8"
-  desc: "\u83B7\u5F97100%\u653B\u901F\u52A0\u6210, \u6BCF\u6B21\u653B\u51FB\u65F6\u6062\u590D10%\u751F\u547D\u503C"
-  refreshFlag: 1
-  maxLayer: 1
+  desc: "\u6BCF\u4E00\u5C42\u83B7\u5F9715%\u653B\u901F\u52A0\u6210, \u6BCF\u6B21\u653B\u51FB\u547D\u4E2D\u65F6\u6062\u590D2%\u751F\u547D\u503C"
+  refreshFlag: 13
+  maxLayer: 10
   actionSOs: []
   conditionSetEM_action:
     durationEM:
       isEnable: 0
       duration: 0
     timeIntervalEM:
-      isEnable: 1
+      isEnable: 0
       timeInterval: 0.5
   conditionSetEM_remove:
     durationEM:
       isEnable: 1
-      duration: 1
+      duration: 5
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0
@@ -37,6 +37,6 @@ MonoBehaviour:
   vfxLayerType: 0
   attributeEMs:
   - attributeType: 6
-    value: 100
+    value: 15
     valueFormat: 2
     refType: 10

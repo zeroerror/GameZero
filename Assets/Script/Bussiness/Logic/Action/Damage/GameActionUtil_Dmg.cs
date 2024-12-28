@@ -33,6 +33,10 @@ namespace GamePlay.Bussiness.Logic
             var curHP = targetAttrCom.GetValue(GameAttributeType.HP);
             var afterDmgHP = curHP - dmgValue;
             var realDmg = afterDmgHP < 0 ? curHP : dmgValue;
+
+            // 取2位小数
+            realDmg = GameMathF.ToFixed(realDmg, 2);
+
             var actorRoleIdArgs = actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_Dmg(
                 actorRoleIdArgs,

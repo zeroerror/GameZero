@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+using GamePlay.Core;
 using UnityEditor;
 using UnityEngine;
 
@@ -81,6 +83,34 @@ namespace GamePlay.Config
             return currentEnumValue;
         }
 
+        public static T DrawProperty_EnumFlagsPopup<T>(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false) where T : System.Enum
+        {
+            var position = EditorGUILayout.GetControlRect();
+
+            // 获取当前的枚举值
+            var currentEnumInt = property.intValue;
+            var currentEnumValue = (T)System.Enum.ToObject(typeof(T), currentEnumInt);
+
+            // 显示枚举弹出框并更新枚举值
+            currentEnumValue = (T)EditorGUI.EnumFlagsField(position, label, currentEnumValue);
+
+            // 如果只读，直接显示枚举值，但不进行修改
+            if (isReadOnly)
+            {
+                EditorGUILayout.LabelField(label, currentEnumValue.ToString());
+            }
+            else
+            {
+                // 更新序列化属性的枚举索引
+                property.intValue = (int)System.Enum.ToObject(typeof(T), currentEnumValue);
+            }
+
+            // 调整布局
+            _AdjustLayout(height);
+
+            return currentEnumValue;
+        }
+
         public static bool DrawProperty_Bool(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false)
         {
             if (isReadOnly) EditorGUILayout.Toggle(label, property.boolValue);
@@ -141,6 +171,5 @@ namespace GamePlay.Config
             }, Color.green, 100);
             _AdjustLayout(height);
         }
-
     }
 }

@@ -186,5 +186,10 @@ namespace GamePlay.Core
         {
             return list != null && list.Length > 0;
         }
+
+        public static int IndexOf<T>(this System.Array array, T value)
+        {
+            return System.Array.IndexOf(array, value);
+        }
     }
 }

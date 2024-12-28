@@ -50,6 +50,9 @@ namespace GamePlay.Bussiness.Logic
                 else if (modifiedValue < 0) realAttributeModify = -curValue;
             }
 
+            // 取2位小数
+            realAttributeModify = GameMathF.ToFixed(realAttributeModify, 2);
+
             var record = new GameActionRecord_AttributeModify(
                 actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default,
                 actor.idCom.ToArgs(),

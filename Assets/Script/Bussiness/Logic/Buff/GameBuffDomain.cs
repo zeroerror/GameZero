@@ -146,7 +146,9 @@ namespace GamePlay.Bussiness.Logic
                 var maxLayer = buffModel.maxLayer == 0 ? int.MaxValue : buffModel.maxLayer;// 0表示无限层数
                 afterLayer = GameMath.Min(afterLayer, maxLayer);
                 buff.layer = afterLayer;
-                return afterLayer - beforeLayer;
+                var attachLayer = afterLayer - beforeLayer;
+                GameLogger.DebugLog($"Buff层数变化: {beforeLayer} -> {afterLayer}");
+                return attachLayer;
             }
             return 0;
         }
@@ -208,7 +210,9 @@ namespace GamePlay.Bussiness.Logic
             {
                 buff.SetInvalid();
             }
-            return beforeLayer - afterLayer;
+            var detachLayer = beforeLayer - afterLayer;
+            GameLogger.DebugLog($"Buff层数变化: {beforeLayer} -> {afterLayer}");
+            return detachLayer;
         }
 
         /// <summary> 刷新buff属性效果, 同时会刷新目标角色的属性 </summary>
@@ -233,7 +237,7 @@ namespace GamePlay.Bussiness.Logic
                 var roleNewValue = roleOldValue + buffAttr.value - buffOldValue;
                 targetRole.attributeCom.SetAttribute(attrType, roleNewValue);
 
-                GameLogger.LogWarning($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
+                GameLogger.DebugLog($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
             });
         }
     }

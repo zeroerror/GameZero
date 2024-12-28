@@ -58,9 +58,10 @@ namespace GamePlay.Bussiness.Logic
             this.SwitchToState(GameProjectileStateType.Idle);
         }
 
-        public void EnterFixedDirection()
+        public void EnterFixedDirection(in GameVec2 direction)
         {
             this.SwitchToState(GameProjectileStateType.FixedDirection);
+            fixedDirectionState.direction = direction;
         }
 
         public void EnterLockOnEntity()

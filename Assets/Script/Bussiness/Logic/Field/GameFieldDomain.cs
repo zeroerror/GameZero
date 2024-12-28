@@ -39,6 +39,16 @@ namespace GamePlay.Bussiness.Logic
                 if (curField.IsMonstersSpawned(index)) return;
                 if (!this._IsTimesUp(area)) return;
                 this._SpawnAreaMonsters(area, index);
+
+                // // 测试代码 无尽循环
+                // if (index == curField.model.monsterAreaModels.Length - 1)
+                // {
+                //     this._context.director.timeScaleCom.Reset();
+                //     curField.model.monsterAreaModels.Foreach((area, index) =>
+                //     {
+                //         curField.SetMonsterSpawned(index, false);
+                //     });
+                // }
             });
         }
 

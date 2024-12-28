@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 100101006
   actionType: 2
-  desc: "\u5F13\u7BAD - \u6BCF\u6B21\u653B\u51FB\u56DE\u590D\u751F\u547D\u503C10%"
+  desc: "\u7BAD - \u6BCF\u6B21\u653B\u51FB\u56DE\u590D\u751F\u547D\u503C2%"
   dmgActionEM:
     dmgType: 1
     value: 100
@@ -46,7 +46,7 @@ MonoBehaviour:
         layer: 0
   healActionEM:
     healType: 1
-    value: 1
+    value: 2
     valueFormat: 2
     refType: 6
     selectorEM:
