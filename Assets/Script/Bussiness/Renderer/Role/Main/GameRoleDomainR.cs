@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.Renderer
             this._context = context;
             this.inputDomain.Inject(context);
             this.fsmDomain.Inject(context);
-            this._BindEvent();
+            this._BindEvents();
         }
 
         public void Destroy()
@@ -35,7 +35,7 @@ namespace GamePlay.Bussiness.Renderer
             });
         }
 
-        private void _BindEvent()
+        private void _BindEvents()
         {
             this._context.BindRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
             this.fsmDomain.BindEvents();

@@ -124,6 +124,11 @@ namespace GamePlay.Bussiness.Logic
 
         protected void _PreTick(float dt)
         {
+            if (this.director.timeScaleCom.timeScaleDirty)
+            {
+                this.director.timeScaleCom.ClearTimeScaleDirty();
+                this.context.SubmitRC(GameDirectRCCollection.RC_DIRECT_TIME_SCALE_CHANGE, this.director.timeScaleCom.timeScale);
+            }
             this.context.eventService.Tick();
         }
 

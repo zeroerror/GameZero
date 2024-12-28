@@ -2,7 +2,7 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameDirectorTimelineComponent
     {
-        public float timeScale { get; private set; } = 10.0f;
+        public float timeScale { get; private set; } = 1.0f;
         public float gameTime { get; private set; } = 0.0f;
         public int gameFrame { get; private set; } = 0;
         float cacheDt = 0.0f;
@@ -22,5 +22,17 @@ namespace GamePlay.Bussiness.Logic
             this.cacheDt -= tickCount * frameTime;
             return tickCount;
         }
+
+        public void SetTimeScale(float timeScale)
+        {
+            this.timeScale = timeScale;
+            this.timeScaleDirty = true;
+        }
+
+        public void ClearTimeScaleDirty()
+        {
+            this.timeScaleDirty = false;
+        }
+        public bool timeScaleDirty { get; private set; } = false;
     }
 }

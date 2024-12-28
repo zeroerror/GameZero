@@ -58,6 +58,7 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _InjectContext()
         {
+            this._BindEvents();
             this.roleDomain.Inject(this.context);
             this.skillDomain.Inject(this.context);
             this.transformDomain.Inject(this.context);
@@ -73,6 +74,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Destroy()
         {
+            this._UnbindEvents();
             this.roleDomain.Destroy();
             this.skillDomain.Destroy();
             this.transformDomain.Destroy();
@@ -84,6 +86,22 @@ namespace GamePlay.Bussiness.Renderer
             this.fieldDomain.Destroy();
             this.entityCollectDomain.Destroy();
             this.buffDomain.Destroy();
+        }
+
+        private void _BindEvents()
+        {
+            this.context.BindRC(GameDirectRCCollection.RC_DIRECT_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
+        }
+
+        private void _UnbindEvents()
+        {
+            this.context.BindRC(GameDirectRCCollection.RC_DIRECT_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
+        }
+
+        private void _OnTimeScaleChange(object args)
+        {
+            var timeScale = (float)args;
+            this.context.director.timeScaleCom.SetTimeScale(timeScale);
         }
 
         protected virtual void _TickDomain(float dt)
@@ -103,17 +121,21 @@ namespace GamePlay.Bussiness.Renderer
         {
             var director = this.context.director;
             director.Tick(dt);
+            dt *= director.timeScaleCom.timeScale;
             this._PreTick(dt);
             this._Tick(dt);
+            this._LateTick(dt);
         }
 
         public void LateUpdate(float dt)
         {
-            this._LateTick(dt);
+            dt *= this.context.director.timeScaleCom.timeScale;
+            this.context.cameraEntity.Tick(dt);
         }
 
         protected void _PreTick(float dt)
         {
+            this._TickDebugInput();
             this.context.delayRCEventService.Tick();
             this.context.logicContext.rcEventService.Tick();
             this.context.eventService.Tick();
@@ -127,7 +149,24 @@ namespace GamePlay.Bussiness.Renderer
         protected void _LateTick(float dt)
         {
             this.context.cmdBufferService.Tick();
-            this.context.cameraEntity.Tick(dt);
+        }
+
+        private void _TickDebugInput()
+        {
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                var timeScale = this.context.director.timeScaleCom.timeScale;
+                timeScale = timeScale == 1.0f ? 0.1f : timeScale == 0.1f ? 0.0f : 1.0f;
+                this.context.logicContext.director.timeScaleCom.SetTimeScale(timeScale);
+                this.context.director.timeScaleCom.SetTimeScale(timeScale);
+            }
+            if (Input.GetKeyDown(KeyCode.F4))
+            {
+                var timeScale = this.context.director.timeScaleCom.timeScale;
+                timeScale = timeScale == 1.0f ? 2.0f : timeScale == 2.0f ? 3.0f : 1.0f;
+                this.context.logicContext.director.timeScaleCom.SetTimeScale(timeScale);
+                this.context.director.timeScaleCom.SetTimeScale(timeScale);
+            }
         }
     }
 }

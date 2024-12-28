@@ -64,7 +64,6 @@ namespace GamePlay.Bussiness.Logic
         }
         private bool _isDirty = false;
 
-
         public void TryGetAttribute(GameAttributeType type, out GameAttribute attribute)
         {
             attribute = this._attributes.Find((a) => a.type == type);
