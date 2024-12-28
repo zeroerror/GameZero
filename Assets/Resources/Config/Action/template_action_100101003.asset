@@ -17,9 +17,9 @@ MonoBehaviour:
   desc: "\u5F13\u7BAD - \u4F24\u5BB3"
   dmgActionEM:
     dmgType: 1
-    value: 50
-    valueFormat: 1
-    refType: 1
+    value: 100
+    valueFormat: 2
+    refType: 2
     selectorEM:
       selectAnchorType: 2
       campType: 1

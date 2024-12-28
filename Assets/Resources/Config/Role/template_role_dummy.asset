@@ -17,7 +17,8 @@ MonoBehaviour:
   desc: 
   prefab: {fileID: 1063388345164490, guid: 10d5d2caf13b1ef43beb9fc7858bfc23, type: 3}
   prefabUrl: Role/-1/role_prefab_1001
-  skills: []
+  skills:
+  - {fileID: 11400000, guid: 0aa734545aed5594ea2ffe963a084dd5, type: 2}
   attributes:
   - type: 2
     value: 100000000

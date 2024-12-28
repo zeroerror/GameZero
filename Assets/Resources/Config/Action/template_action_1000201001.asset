@@ -18,8 +18,8 @@ MonoBehaviour:
   dmgActionEM:
     dmgType: 1
     value: 250
-    valueFormat: 1
-    refType: 1
+    valueFormat: 2
+    refType: 2
     selectorEM:
       selectAnchorType: 1
       campType: 1

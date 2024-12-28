@@ -34,7 +34,7 @@ namespace GamePlay.Bussiness.Renderer
             if (skill.skillModel.effectByAttackSpeed)
             {
                 var attackSpeed = role.attributeCom.GetValue(GameAttributeType.AttackSpeed);
-                var timeScale = attackSpeed * skill.skillModel.clipLength;
+                var timeScale = attackSpeed == 0 ? 1 : attackSpeed * skill.skillModel.clipLength;
                 role.animCom.timeScale = timeScale;
             }
             this.TransitTo(role, GameRoleStateType.Cast, evArgs.skillId);

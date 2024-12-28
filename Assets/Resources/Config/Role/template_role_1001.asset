@@ -21,6 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0aa734545aed5594ea2ffe963a084dd5, type: 2}
   - {fileID: 11400000, guid: 1522ba66d1721704e8b89e4b44541fbd, type: 2}
   attributes:
+  - type: 5
+    value: 99
   - type: 2
     value: 1000000
   - type: 3

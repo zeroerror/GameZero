@@ -48,7 +48,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 var attackSpeed = entity.attributeCom.GetValue(GameAttributeType.AttackSpeed);
                 var length = timelineCom.length;
-                timeScale = attackSpeed * length;
+                timeScale = attackSpeed == 0 ? 1 : attackSpeed * length;
             }
             timelineCom.Tick(frameTime * timeScale);
         }

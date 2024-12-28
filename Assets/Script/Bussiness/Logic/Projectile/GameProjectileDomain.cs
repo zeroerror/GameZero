@@ -60,6 +60,8 @@ namespace GamePlay.Bussiness.Logic
             projectile.idCom.SetParent(creator);
             projectile.actionTargeterCom.SetTargeter(targeter);
             this._InitTimelineCom(projectile);
+            // 绑定组件
+            projectile.BindAttributeCom(creator.attributeCom);
             // 添加到仓库
             repo.TryAdd(projectile);
             // 提交RC
