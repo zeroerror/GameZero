@@ -17,7 +17,7 @@ namespace GamePlay.Bussiness.Logic
             GameEntityBase actor,
             GameEntityBase target,
             GameAttributeType modifyType,
-            float value,
+            int value,
             GameActionValueFormat valueFormat,
             GameActionValueRefType refType
         )

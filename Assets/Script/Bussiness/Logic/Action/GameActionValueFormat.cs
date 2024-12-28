@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Logic
 
     public static class GameActionValueFormatUtil
     {
-        public static float FormatValue(this GameActionValueFormat format, float value)
+        public static float FormatValue(this GameActionValueFormat format, int value)
         {
             switch (format)
             {

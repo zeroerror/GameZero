@@ -44,28 +44,62 @@ namespace GamePlay.Config
         {
             this._serializedObject.Update();
 
-            this.typeId_p.DrawProperty_Int("类型ID");
-            this.buffName_p.DrawProperty_Str("名称");
-            this.desc_p.DrawProperty_Str("描述");
-            this.refreshFlag_p.DrawProperty_EnumPopup<GameBuffRefreshFlag>("刷新类型标记");
-            this.maxLayer_p.DrawProperty_Int("最大层数");
-            this.actionSOs_p.DrawProperty("行为模板列表");
-            this.conditionSetEM_action_p.DrawProperty("条件集模板 - 触发行为");
-            this.conditionSetEM_remove_p.DrawProperty("条件集模板 - 移除");
-            var vfxPrefab = this.vfxPrefab_p.DrawProperty<GameObject>("buff特效");
-            if (vfxPrefab)
+            GameEditorGUILayout.DrawBoxItem(() =>
             {
-                this.vfxPrefabUrl_p.stringValue = vfxPrefab.GetPrefabUrl();
-            }
-            else
-            {
-                this.vfxPrefabUrl_p.stringValue = "";
-            }
-            this.vfxLayerType_p.DrawProperty_EnumPopup<GameFieldLayerType>("挂载层级");
+                this.typeId_p.DrawProperty_Int("类型ID");
+                this.buffName_p.DrawProperty_Str("名称");
+                this.desc_p.DrawProperty_Str("描述");
+                this.refreshFlag_p.DrawProperty_EnumPopup<GameBuffRefreshFlag>("刷新类型标记");
+                this.maxLayer_p.DrawProperty_Int("最大层数");
+            });
 
-            this.attributeEMs_p.DrawProperty_Array("属性效果");
+            GameEditorGUILayout.DrawBoxItem(() =>
+            {
+                this.actionSOs_p.DrawProperty("行为模板列表");
+                this.conditionSetEM_action_p.DrawProperty("条件集模板 - 触发行为");
+                this.conditionSetEM_remove_p.DrawProperty("条件集模板 - 移除");
+            });
+
+            GameEditorGUILayout.DrawBoxItem(() =>
+            {
+                var vfxPrefab = this.vfxPrefab_p.DrawProperty<GameObject>("buff特效");
+                if (vfxPrefab)
+                {
+                    this.vfxPrefabUrl_p.stringValue = vfxPrefab.GetPrefabUrl();
+                }
+                else
+                {
+                    this.vfxPrefabUrl_p.stringValue = "";
+                }
+                this.vfxLayerType_p.DrawProperty_EnumPopup<GameFieldLayerType>("挂载层级");
+            });
+
+            GameEditorGUILayout.DrawBoxItem(() =>
+            {
+                this.attributeEMs_p.DrawProperty_Array("属性效果");
+            });
+
+            GameEditorGUILayout.DrawBoxItem(() => this._DrawActionSORefs());
 
             this._serializedObject.ApplyModifiedProperties();
+        }
+
+        private void _DrawActionSORefs()
+        {
+            var color = GUI.color;
+            GUI.color = Color.green;
+            var actionSOs = Resources.LoadAll<GameActionSO>(GameConfigCollection.ACTION_CONFIG_DIR_PATH);
+            actionSOs = actionSOs.Filter(actionSO => actionSO.attachBuffActionEM?.buffSO?.typeId == this.typeId_p.intValue);
+            if (actionSOs.Length > 0)
+            {
+                EditorGUILayout.LabelField(" -------- 被以下行为使用 --------", EditorStyles.boldLabel);
+                for (int i = 0; i < actionSOs.Length; i++)
+                {
+                    var actionSO = actionSOs[i];
+                    EditorGUILayout.ObjectField(actionSO.typeId.ToString(), actionSO, typeof(GameActionSO), false);
+                }
+            }
+            GUI.color = color;
         }
 
     }

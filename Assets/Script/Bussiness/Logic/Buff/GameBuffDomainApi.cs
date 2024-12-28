@@ -15,11 +15,12 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary>
         /// 移除buff
-        /// <para>buffId Buff的类型Id</para>
-        /// <para>targetRole 目标</para>
-        /// <para>detachLayer 移除层数</para>
-        /// @return 实际移除层数
+        /// <para>target: 目标</para>
+        /// <para>buffId: Buff的类型Id</para>
+        /// <para>layer: 层数</para>
+        /// <para>removeBuff: 移除的Buff</para>
+        /// <para>detachLayer: 实际移除层数</para>
         /// </summary>
-        public int DetachBuff(int buffId, GameEntityBase target, int layer);
+        public bool TryDetachBuff(GameEntityBase target, int buffId, int layer, out GameBuffEntity removeBuff, out int detachLayer);
     }
 }

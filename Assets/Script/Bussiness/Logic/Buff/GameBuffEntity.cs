@@ -31,7 +31,6 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Clear()
         {
-            this.BindAttributeCom(null);
             this.BindTransformCom(null);
             this.elapsedTime = 0;
             this.layer = 1;

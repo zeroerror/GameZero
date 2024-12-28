@@ -1,3 +1,4 @@
+using GamePlay.Core;
 using UnityEditor;
 using UnityEngine;
 
@@ -44,6 +45,7 @@ namespace GamePlay.Config
             GameEditorGUILayout.DrawBoxItem(() => this._DrawBasicData());
             GameEditorGUILayout.DrawBoxItem(() => this._DrawLogicData());
             GameEditorGUILayout.DrawBoxItem(() => this._DrawStateData());
+            GameEditorGUILayout.DrawBoxItem(() => this._DrawActionSORefs());
             this._serializedObject.ApplyModifiedProperties();
         }
 
@@ -63,22 +65,6 @@ namespace GamePlay.Config
         private void _DrawLogicData()
         {
             EditorGUILayout.LabelField("逻辑数据-------------------------", EditorStyles.boldLabel);
-            // so.animLength = EditorGUILayout.FloatField("动画时长(s)", so.animLength);
-            // so.lifeTime = EditorGUILayout.FloatField("生命周期(s)", so.lifeTime);
-            // var timelineEvents_p = serializedObject.FindProperty("timelineEvents");
-            // var evCount = timelineEvents_p?.arraySize ?? 0;
-            // if (evCount > 0) EditorGUILayout.LabelField($"时间轴事件[{evCount}]");
-            // EditorGUI.indentLevel += 2;
-            // for (var i = 0; i < evCount; i++)
-            // {
-            //     GameEditorGUILayout.DrawBoxItem(() =>
-            //     {
-            //         var ev_p = timelineEvents_p.GetArrayElementAtIndex(i);
-            //         ev_p.DrawProperty($"事件 {i}");
-            //     });
-            // }
-            // EditorGUI.indentLevel -= 2;
-
             this.animLength_p.DrawProperty_Float("动画时长(s)");
             this.lifeTime_p.DrawProperty_Float("生命周期(s)");
             var evCount = this.timelineEvents_p?.arraySize ?? 0;
@@ -144,6 +130,24 @@ namespace GamePlay.Config
             {
                 stateEMs_p.InsertArrayElementAtIndex(stateCount);
             }, Color.green, 100);
+        }
+
+        private void _DrawActionSORefs()
+        {
+            var color = GUI.color;
+            GUI.color = Color.green;
+            var actionSOs = Resources.LoadAll<GameActionSO>(GameConfigCollection.ACTION_CONFIG_DIR_PATH);
+            actionSOs = actionSOs.Filter(actionSO => actionSO.launchProjectileActionEM?.launchProjectileSO?.typeId == this.typeId_p.intValue);
+            if (actionSOs.Length > 0)
+            {
+                EditorGUILayout.LabelField(" -------- 被以下行为使用 --------", EditorStyles.boldLabel);
+                for (int i = 0; i < actionSOs.Length; i++)
+                {
+                    var actionSO = actionSOs[i];
+                    EditorGUILayout.ObjectField(actionSO.typeId.ToString(), actionSO, typeof(GameActionSO), false);
+                }
+            }
+            GUI.color = color;
         }
     }
 }

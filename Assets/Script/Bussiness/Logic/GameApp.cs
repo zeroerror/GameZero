@@ -21,12 +21,5 @@ namespace GamePlay.Bussiness.Logic
         {
             this.directDomain.Update(dt);
         }
-
-        public void LateUpdate(float dt)
-        {
-            this.directDomain.LateUpdate(dt);
-        }
-
-
     }
 }

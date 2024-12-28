@@ -1,3 +1,5 @@
+using GamePlay.Core;
+using UnityEditor;
 using UnityEngine;
 
 namespace GamePlay.Config
@@ -16,3 +18,4 @@ namespace GamePlay.Config
         }
     }
 }
+

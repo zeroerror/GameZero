@@ -76,5 +76,10 @@ namespace GamePlay.Bussiness.Logic
             if (index == -1) return 0;
             return this._attributes[index].value;
         }
+
+        public void Foreach(System.Action<GameAttribute> action)
+        {
+            this._attributes.ForEach(action);
+        }
     }
 }

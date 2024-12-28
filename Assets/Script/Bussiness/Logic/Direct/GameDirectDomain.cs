@@ -76,7 +76,7 @@ namespace GamePlay.Bussiness.Logic
             // this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
             // this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
             // this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(-8, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
-            this.fieldDomain.LoadField(-1);
+            this.fieldDomain.LoadField(1);
         }
 
         public void Destroy()
@@ -118,12 +118,8 @@ namespace GamePlay.Bussiness.Logic
             {
                 this._PreTick(frameTime);
                 this._Tick(frameTime);
+                this._LateTick(dt);
             }
-        }
-
-        public void LateUpdate(float dt)
-        {
-            this._LateTick(dt);
         }
 
         protected void _PreTick(float dt)

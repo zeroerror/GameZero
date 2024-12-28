@@ -1,4 +1,5 @@
 using GamePlay.Core;
+using UnityEngine.Analytics;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -64,6 +65,5 @@ namespace GamePlay.Bussiness.Logic
         }
         public GameVec2 forward => this._forward;
         private GameVec2 _forward;
-
     }
 }

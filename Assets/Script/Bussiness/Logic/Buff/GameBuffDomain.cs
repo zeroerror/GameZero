@@ -52,7 +52,7 @@ namespace GamePlay.Bussiness.Logic
                 {
                     this._context.cmdBufferService.AddDelayCmd(0, () =>
                     {
-                        this.DetachBuff(buff.model.typeId, role, 0);
+                        this.TryDetachBuff(role, buff.model.typeId, 0);
                     });
                 }
             }
@@ -110,9 +110,19 @@ namespace GamePlay.Bussiness.Logic
                 // buff属性效果
                 buff.model.attributeModels?.Foreach(attrModel =>
                 {
+
                     var args = GameActionUtil_AttributeModify.CalcAttributeModify(actor, target, attrModel);
-                    var attr = new GameAttribute(args.modifyType, args.modifyValue);
-                    buff.attributeCom.SetAttribute(attr);
+                    var attrType = args.modifyType;
+                    var buffAttr = new GameAttribute(attrType, args.modifyValue);
+                    var buffOldValue = buff.attributeCom.GetValue(attrType);// 记录buff属性效果旧值
+                    buff.attributeCom.SetAttribute(buffAttr);
+
+                    // 刷新buff对目标属性的影响
+                    var roleOldValue = targetRole.attributeCom.GetValue(attrType);
+                    var roleNewValue = roleOldValue + buffAttr.value - buffOldValue;
+                    targetRole.attributeCom.SetAttribute(attrType, roleNewValue);
+
+                    GameLogger.LogWarning($"附加Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
                 });
                 // 提交RC事件
                 this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_ATTACH, new GameBuffRCArgs_Attach
@@ -124,25 +134,35 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
-        public int DetachBuff(int buffId, GameEntityBase target, int layer)
+        public bool TryDetachBuff(GameEntityBase target, int buffId, int layer, out GameBuffEntity removeBuff, out int detachLayer)
         {
+            removeBuff = null;
+            detachLayer = 0;
+
             if (!target.TryGetLinkEntity<GameRoleEntity>(out var targetRole))
             {
                 GameLogger.LogError("目标不是角色, 暂不支持移除Buff");
-                return 0;
+                return false;
             }
+
             var buffCom = targetRole.buffCom;
-            var detachLayer = buffCom.DetachBuff(buffId, layer);
-            if (detachLayer > 0)
+            if (!buffCom.TryDetachBuff(buffId, layer, out removeBuff, out detachLayer))
             {
-                this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_REMOVE, new GameBuffRCArgs_Remove
-                {
-                    buffId = buffId,
-                    targetIdArgs = targetRole.idCom.ToArgs(),
-                    detachLayer = detachLayer
-                });
+                return false;
             }
-            return detachLayer;
+
+            this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_REMOVE, new GameBuffRCArgs_Remove
+            {
+                targetIdArgs = targetRole.idCom.ToArgs(),
+                detachLayer = detachLayer,
+            });
+
+            return true;
+        }
+
+        public bool TryDetachBuff(GameEntityBase target, int buffId, int layer)
+        {
+            return this.TryDetachBuff(target, buffId, layer, out _, out _);
         }
     }
 }

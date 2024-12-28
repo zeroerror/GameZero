@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 100201001
   buffName: "\u751F\u673A\u6D8C\u52A8"
-  desc: "\u6BCF\u6B21\u653B\u51FB\u65F6\u6062\u590D10%\u751F\u547D\u503C"
+  desc: "\u83B7\u5F97100%\u653B\u901F\u52A0\u6210, \u6BCF\u6B21\u653B\u51FB\u65F6\u6062\u590D10%\u751F\u547D\u503C"
   refreshFlag: 1
   maxLayer: 1
   actionSOs: []
@@ -35,3 +35,8 @@ MonoBehaviour:
   vfxPrefab: {fileID: 4763262428129407028, guid: e045502fe65e47041b4e843cee83f6b9, type: 3}
   vfxPrefabUrl: VFX/vfx_firering
   vfxLayerType: 0
+  attributeEMs:
+  - attributeType: 6
+    value: 100
+    valueFormat: 2
+    refType: 10
