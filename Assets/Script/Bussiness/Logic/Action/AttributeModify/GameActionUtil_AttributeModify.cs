@@ -19,7 +19,8 @@ namespace GamePlay.Bussiness.Logic
             GameAttributeType modifyType,
             int value,
             GameActionValueFormat valueFormat,
-            GameActionValueRefType refType
+            GameActionValueRefType refType,
+            int actionId = 0
         )
         {
             // 数值格式化
@@ -54,6 +55,7 @@ namespace GamePlay.Bussiness.Logic
             realAttributeModify = GameMathF.ToFixed(realAttributeModify, 2);
 
             var record = new GameActionRecord_AttributeModify(
+                actionId,
                 actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default,
                 actor.idCom.ToArgs(),
                 target.idCom.ToArgs(),
@@ -75,7 +77,7 @@ namespace GamePlay.Bussiness.Logic
             var value = modifyModel.value;
             var valueFormat = modifyModel.valueFormat;
             var refType = modifyModel.refType;
-            return CalcAttributeModify(actor, target, modifyType, value, valueFormat, refType);
+            return CalcAttributeModify(actor, target, modifyType, value, valueFormat, refType, modifyModel.typeId);
         }
 
         /// <summary>

@@ -1,8 +1,19 @@
+using System;
+
 namespace GamePlay.Bussiness.Logic
 {
     public abstract class GameBuffConditionEntityBase
     {
         public bool isSatisfied { get; private set; }
+
+        public delegate void ForEachActionRecordDelegate_Dmg(in Action<GameActionRecord_Dmg> actionRecord);
+        public ForEachActionRecordDelegate_Dmg ForEachActionRecord_Dmg;
+
+        public delegate void ForEachActionRecordDelegate_Heal(in Action<GameActionRecord_Heal> actionRecord);
+        public ForEachActionRecordDelegate_Heal ForEachActionRecord_Heal;
+
+        public delegate void ForEachActionRecordDelegate_LaunchProjectile(in Action<GameActionRecord_LaunchProjectile> actionRecord);
+        public ForEachActionRecordDelegate_LaunchProjectile ForEachActionRecord_LaunchProjectile;
 
         public void Tick(float dt)
         {

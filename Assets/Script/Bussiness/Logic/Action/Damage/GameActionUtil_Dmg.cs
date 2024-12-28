@@ -39,6 +39,7 @@ namespace GamePlay.Bussiness.Logic
 
             var actorRoleIdArgs = actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_Dmg(
+                dmgModel.typeId,
                 actorRoleIdArgs,
                 actor.idCom.ToArgs(),
                 target.idCom.ToArgs(),

@@ -2,6 +2,8 @@ namespace GamePlay.Bussiness.Logic
 {
     public struct GameActionRecord_SummonRoles
     {
+        /// <summary> 行为Id </summary>
+        public int actionId;
         /// <summary> 行为者角色Id参数, 不一定存在 </summary>
         public GameIdArgs actorRoleIdArgs;
         /// <summary> 行为者Id参数, 比如技能, 投射物, BUFF等 </summary>
@@ -15,6 +17,7 @@ namespace GamePlay.Bussiness.Logic
         public int count;
 
         public GameActionRecord_SummonRoles(
+            int actionId,
             in GameIdArgs actorRoleIdArgs,
             in GameIdArgs actorIdArgs,
             int roleId,
@@ -22,6 +25,7 @@ namespace GamePlay.Bussiness.Logic
             int count
         )
         {
+            this.actionId = actionId;
             this.actorRoleIdArgs = actorRoleIdArgs;
             this.actorIdArgs = actorIdArgs;
             this.roleId = roleId;

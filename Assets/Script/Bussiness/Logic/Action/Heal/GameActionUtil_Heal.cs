@@ -39,6 +39,7 @@ namespace GamePlay.Bussiness.Logic
 
             var actorRoleIdArgs = actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_Heal(
+                healModel.typeId,
                 actorRoleIdArgs,
                 actor.idCom.ToArgs(),
                 target.idCom.ToArgs(),

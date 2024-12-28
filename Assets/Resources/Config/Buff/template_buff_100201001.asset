@@ -17,7 +17,8 @@ MonoBehaviour:
   desc: "\u6BCF\u4E00\u5C42\u83B7\u5F9715%\u653B\u901F\u52A0\u6210, \u6BCF\u6B21\u653B\u51FB\u547D\u4E2D\u65F6\u6062\u590D2%\u751F\u547D\u503C"
   refreshFlag: 13
   maxLayer: 10
-  actionSOs: []
+  actionSOs:
+  - {fileID: 11400000, guid: 34ec54d23d64b1648a3f2e8a631baabe, type: 2}
   conditionSetEM_action:
     durationEM:
       isEnable: 0
@@ -25,6 +26,9 @@ MonoBehaviour:
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0.5
+    whenDoActionEM:
+      isEnable: 1
+      targetAction: {fileID: 11400000, guid: 0fe48bb3e653ecd4e9ce1174c39d2c4b, type: 2}
   conditionSetEM_remove:
     durationEM:
       isEnable: 1
@@ -32,6 +36,9 @@ MonoBehaviour:
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0
+    whenDoActionEM:
+      isEnable: 0
+      targetAction: {fileID: 0}
   vfxPrefab: {fileID: 4763262428129407028, guid: e045502fe65e47041b4e843cee83f6b9, type: 3}
   vfxPrefabUrl: VFX/vfx_firering
   vfxLayerType: 0

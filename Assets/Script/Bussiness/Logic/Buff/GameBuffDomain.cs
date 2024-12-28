@@ -1,3 +1,4 @@
+using System;
 using GamePlay.Core;
 using UnityEditor;
 
@@ -92,10 +93,35 @@ namespace GamePlay.Bussiness.Logic
             // 组件绑定
             newBuff.BindTransformCom(targetRole.transformCom);
 
+            // 注入buff条件所需delegate
+            this._InjectBuffConditionDelegate(newBuff, actor, targetRole);
+
             buffCom.Add(newBuff);
             this._buffContext.repo.TryAdd(newBuff);
             realAttachLayer = this._AttachBuff(newBuff, actor, targetRole, layer);
             return true;
+        }
+
+        private void _InjectBuffConditionDelegate(GameBuffEntity buff, GameEntityBase actor, GameRoleEntity targetRole)
+        {
+            buff.conditionSetEntity_action.Inject(
+                this._ForeachActionRecord_Dmg,
+                this._ForeachActionRecord_Heal,
+                this._ForeachActionRecord_LaunchProjectile
+
+            );
+        }
+        private void _ForeachActionRecord_Dmg(in Action<GameActionRecord_Dmg> actionRecord)
+        {
+            this._context.actionContext.dmgRecordList.ForEach(actionRecord);
+        }
+        private void _ForeachActionRecord_Heal(in Action<GameActionRecord_Heal> actionRecord)
+        {
+            this._context.actionContext.healRecordList.ForEach(actionRecord);
+        }
+        private void _ForeachActionRecord_LaunchProjectile(in Action<GameActionRecord_LaunchProjectile> actionRecord)
+        {
+            this._context.actionContext.launchProjectileRecordList.ForEach(actionRecord);
         }
 
         /// <summary> 执行挂载buff </summary>

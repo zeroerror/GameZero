@@ -1,6 +1,4 @@
 using GamePlay.Bussiness.Logic;
-using GamePlay.Core;
-using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
 {
@@ -36,7 +34,8 @@ namespace GamePlay.Bussiness.Renderer
 
         public override void Enter(GameRoleEntityR role, params object[] args)
         {
-            this._context.domainApi.roleApi.PlayAnim(role, "move");
+            var canMove = role.attributeCom.GetValue(GameAttributeType.MoveSpeed) > 0;
+            if (canMove) this._context.domainApi.roleApi.PlayAnim(role, "move");
             role.fsmCom.EnterMove();
         }
 

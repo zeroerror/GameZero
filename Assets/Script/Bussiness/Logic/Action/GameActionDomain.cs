@@ -155,6 +155,7 @@ namespace GamePlay.Bussiness.Logic
                         break;
                 }
                 var record = new GameActionRecord_LaunchProjectile(
+                    actionId: action.typeId,
                     actorRoleIdArgs: actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                     actorIdArgs: actor.idCom.ToArgs(),
                     targetRoleIdArgs: selectedEntity.idCom.ToArgs()
@@ -164,6 +165,7 @@ namespace GamePlay.Bussiness.Logic
 
             recordList.ForEach((record) =>
             {
+                this._actionContext.launchProjectileRecordList.Add(record);
                 // 提交RC
                 var evArgs = new GameActionRCArgs_LaunchProjectile(
                     action.typeId,
@@ -233,6 +235,7 @@ namespace GamePlay.Bussiness.Logic
 
                 var isSuc = this._context.domainApi.buffApi.TryAttachBuff(action.buffId, actor, selectedEntity, action.layer, out var realAttachLayer);
                 if (isSuc) recordList.Add(new GameActionRecord_AttachBuff(
+                    actionId: action.typeId,
                     actorRoleIdArgs: actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                     actorIdArgs: actor.idCom.ToArgs(),
                     targetRoleIdArgs: selectedEntity.idCom.ToArgs(),
@@ -259,6 +262,7 @@ namespace GamePlay.Bussiness.Logic
             if (roles.HasData())
             {
                 var record = new GameActionRecord_SummonRoles(
+                    actionId: action.typeId,
                     actorRoleIdArgs: actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                     actorIdArgs: actor.idCom.ToArgs(),
                     roleId: action.roleId,
