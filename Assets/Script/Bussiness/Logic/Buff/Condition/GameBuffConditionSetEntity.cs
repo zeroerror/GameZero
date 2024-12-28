@@ -6,11 +6,11 @@ namespace GamePlay.Bussiness.Logic
         public GameBuffConditionEntity_TimeInterval timeIntervalEntity { get; private set; }
         public GameBuffConditionEntity_WhenDoAction whenDoActionEntity { get; private set; }
 
-        public GameBuffConditionSetEntity(GameBuffConditionSetModel model)
+        public GameBuffConditionSetEntity(GameBuffEntity buff, GameBuffConditionSetModel model)
         {
-            if (model.durationModel != null) this.durationEntity = new GameBuffConditionEntity_Duration(model.durationModel);
-            if (model.timeIntervalModel != null) this.timeIntervalEntity = new GameBuffConditionEntity_TimeInterval(model.timeIntervalModel);
-            if (model.whenDoActionModel != null) this.whenDoActionEntity = new GameBuffConditionEntity_WhenDoAction(model.whenDoActionModel);
+            if (model.durationModel != null) this.durationEntity = new GameBuffConditionEntity_Duration(buff, model.durationModel);
+            if (model.timeIntervalModel != null) this.timeIntervalEntity = new GameBuffConditionEntity_TimeInterval(buff, model.timeIntervalModel);
+            if (model.whenDoActionModel != null) this.whenDoActionEntity = new GameBuffConditionEntity_WhenDoAction(buff, model.whenDoActionModel);
         }
 
         public void Inject(

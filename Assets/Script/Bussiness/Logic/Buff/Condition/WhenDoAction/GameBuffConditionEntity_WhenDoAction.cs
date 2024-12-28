@@ -7,7 +7,7 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameBuffConditionModel_WhenDoAction model { get; private set; }
 
-        public GameBuffConditionEntity_WhenDoAction(GameBuffConditionModel_WhenDoAction model)
+        public GameBuffConditionEntity_WhenDoAction(GameBuffEntity buff, GameBuffConditionModel_WhenDoAction model) : base(buff)
         {
             this.model = model;
         }
@@ -19,16 +19,38 @@ namespace GamePlay.Bussiness.Logic
         protected override bool _Check()
         {
             var isSatisfied = false;
-            // 遍历帧行为记录, 检查是否有符合条件的行为
+
             this.ForEachActionRecord_Dmg((actionRecord) =>
             {
                 var actionId = actionRecord.actionId;
-                if (actionId == model.targetActionId)
+                if (actionId == model.targetActionId && actionRecord.actorRoleIdArgs.entityId == _buff.target.idCom.entityId)
                 {
                     isSatisfied = true;
                 }
             });
-            return isSatisfied;
+            if (isSatisfied) return true;
+
+            this.ForEachActionRecord_Heal((actionRecord) =>
+            {
+                var actionId = actionRecord.actionId;
+                if (actionId == model.targetActionId && actionRecord.actorRoleIdArgs.entityId == _buff.target.idCom.entityId)
+                {
+                    isSatisfied = true;
+                }
+            });
+            if (isSatisfied) return true;
+
+            this.ForEachActionRecord_LaunchProjectile((actionRecord) =>
+            {
+                var actionId = actionRecord.actionId;
+                if (actionId == model.targetActionId && actionRecord.actorRoleIdArgs.entityId == _buff.target.idCom.entityId)
+                {
+                    isSatisfied = true;
+                }
+            });
+            if (isSatisfied) return true;
+
+            return false;
         }
 
         public override void Clear()

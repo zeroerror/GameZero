@@ -6,6 +6,8 @@ namespace GamePlay.Bussiness.Logic
     {
         public bool isSatisfied { get; private set; }
 
+        protected GameBuffEntity _buff;
+
         public delegate void ForEachActionRecordDelegate_Dmg(in Action<GameActionRecord_Dmg> actionRecord);
         public ForEachActionRecordDelegate_Dmg ForEachActionRecord_Dmg;
 
@@ -14,6 +16,11 @@ namespace GamePlay.Bussiness.Logic
 
         public delegate void ForEachActionRecordDelegate_LaunchProjectile(in Action<GameActionRecord_LaunchProjectile> actionRecord);
         public ForEachActionRecordDelegate_LaunchProjectile ForEachActionRecord_LaunchProjectile;
+
+        public GameBuffConditionEntityBase(GameBuffEntity buff)
+        {
+            _buff = buff;
+        }
 
         public void Tick(float dt)
         {

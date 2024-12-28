@@ -50,6 +50,13 @@ namespace GamePlay.Bussiness.Logic
             skill.idCom.SetEntityId(this._skillContext.idService.FetchId());
             // 绑定父子关系
             skill.idCom.SetParent(role);
+            // 如果技能的mp消耗大于角色的mp，那么扩展角色的mp
+            var mpCost = skill.skillModel.conditionModel.mpCost;
+            if (mpCost > role.attributeCom.GetValue(GameAttributeType.MaxMP))
+            {
+                var attr = new GameAttribute() { type = GameAttributeType.MaxMP, value = mpCost };
+                role.attributeCom.SetAttribute(attr);
+            }
             // 组件绑定
             skill.BindTransformCom(role.transformCom);
             skill.BindAttributeCom(role.attributeCom);

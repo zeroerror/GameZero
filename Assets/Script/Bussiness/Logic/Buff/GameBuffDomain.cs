@@ -127,6 +127,9 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 执行挂载buff </summary>
         private int _AttachBuff(GameBuffEntity buff, GameEntityBase actor, GameRoleEntity targetRole, int layer)
         {
+            // 设置目标
+            buff.target = targetRole;
+
             // 设置行为目标
             buff.actionTargeterCom.SetTargeter(new GameActionTargeterArgs
             {

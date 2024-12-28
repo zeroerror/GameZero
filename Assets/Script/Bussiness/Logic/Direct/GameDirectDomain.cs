@@ -102,11 +102,11 @@ namespace GamePlay.Bussiness.Logic
             this.skillDomain.Tick(dt);
             this.transformDomain.Tick(dt);
             this.attributeDomain.Tick(dt);
-            this.actionDomain.Tick(dt);
             this.entitySelectDomain.Tick(dt);
             this.projectileDomain.Tick(dt);
             this.entityCollectDomain.Tick(dt);
             this.buffDomain.Tick(dt);
+            this.actionDomain.Tick(dt);
         }
 
         public void Update(float dt)

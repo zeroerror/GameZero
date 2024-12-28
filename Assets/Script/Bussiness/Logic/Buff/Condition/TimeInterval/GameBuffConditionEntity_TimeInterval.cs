@@ -9,7 +9,7 @@ namespace GamePlay.Bussiness.Logic
 
         public float elapsedTime { get; private set; }
 
-        public GameBuffConditionEntity_TimeInterval(GameBuffConditionModel_TimeInterval model)
+        public GameBuffConditionEntity_TimeInterval(GameBuffEntity buff, GameBuffConditionModel_TimeInterval model) : base(buff)
         {
             this.model = model;
         }

@@ -23,6 +23,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void Tick(float dt)
         {
+            this._actionContext.ClearRecords();
         }
 
         public bool TryGetModel(int actionId, out GameActionModelBase model)

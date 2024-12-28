@@ -17,11 +17,14 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> buff已挂载层数 </summary>
         public int layer;
 
+        /// <summary> buff目标 </summary>
+        public GameEntityBase target;
+
         public GameBuffEntity(GameBuffModel model) : base(model.typeId, GameEntityType.Buff)
         {
             this.model = model;
-            this.conditionSetEntity_action = new GameBuffConditionSetEntity(model.conditionSetModel_action);
-            this.conditionSetEntity_remove = new GameBuffConditionSetEntity(model.conditionSetModel_remove);
+            this.conditionSetEntity_action = new GameBuffConditionSetEntity(this, model.conditionSetModel_action);
+            this.conditionSetEntity_remove = new GameBuffConditionSetEntity(this, model.conditionSetModel_remove);
             this.layer = 1;
         }
 

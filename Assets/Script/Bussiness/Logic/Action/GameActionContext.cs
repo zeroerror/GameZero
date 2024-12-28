@@ -17,5 +17,12 @@ namespace GamePlay.Bussiness.Logic
             this.healRecordList = new List<GameActionRecord_Heal>();
             this.launchProjectileRecordList = new List<GameActionRecord_LaunchProjectile>();
         }
+
+        public void ClearRecords()
+        {
+            this.dmgRecordList.Clear();
+            this.healRecordList.Clear();
+            this.launchProjectileRecordList.Clear();
+        }
     }
 }
