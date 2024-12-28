@@ -9,5 +9,7 @@ namespace GamePlay.Bussiness.Logic
         StackTime = 1 << 1,
         /// <summary> 叠加层数 </summary>
         StackLayer = 1 << 2,
+        /// <summary> 叠加数值 </summary>
+        StackValue = 1 << 3,
     }
 }

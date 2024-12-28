@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.Logic
         /// <para>realAttachLayer: 实际挂载层数</para>
         /// @return 是否挂载成功
         /// </summary>
-        public bool AttachBuff(int typeId, GameEntityBase actor, GameEntityBase target, int layer, out int realAttachLayer);
+        public bool TryAttachBuff(int typeId, GameEntityBase actor, GameEntityBase target, int layer, out int realAttachLayer);
 
         /// <summary>
         /// 移除buff

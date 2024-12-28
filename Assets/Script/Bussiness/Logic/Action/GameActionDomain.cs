@@ -231,7 +231,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
-                var isSuc = this._context.domainApi.buffApi.AttachBuff(action.buffId, actor, selectedEntity, action.layer, out var realAttachLayer);
+                var isSuc = this._context.domainApi.buffApi.TryAttachBuff(action.buffId, actor, selectedEntity, action.layer, out var realAttachLayer);
                 if (isSuc) recordList.Add(new GameActionRecord_AttachBuff(
                     actorRoleIdArgs: actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                     actorIdArgs: actor.idCom.ToArgs(),

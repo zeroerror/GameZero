@@ -58,7 +58,8 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
-        public bool AttachBuff(int typeId, GameEntityBase actor, GameEntityBase target, int layer, out int realAttachLayer)
+        /// <summary> 尝试挂载buff </summary>
+        public bool TryAttachBuff(int typeId, GameEntityBase actor, GameEntityBase target, int layer, out int realAttachLayer)
         {
             realAttachLayer = 0;
 
@@ -71,8 +72,7 @@ namespace GamePlay.Bussiness.Logic
             var buffCom = targetRole.buffCom;
             if (buffCom.TryGet(typeId, out var existBuff))
             {
-                realAttachLayer = existBuff.AttachLayer(layer);
-                _Attach(existBuff);
+                realAttachLayer = this._AttachBuff(existBuff, actor, targetRole, layer);
                 return true;
             }
 
@@ -94,46 +94,64 @@ namespace GamePlay.Bussiness.Logic
 
             buffCom.Add(newBuff);
             this._buffContext.repo.TryAdd(newBuff);
-            _Attach(newBuff);
+            realAttachLayer = this._AttachBuff(newBuff, actor, targetRole, layer);
             return true;
-
-            // 内置方法
-            void _Attach(GameBuffEntity buff)
-            {
-                // 设置行为目标
-                buff.actionTargeterCom.SetTargeter(new GameActionTargeterArgs
-                {
-                    targetEntity = targetRole,
-                    targetPosition = targetRole.transformCom.position,
-                    targetDirection = targetRole.forward
-                });
-                // buff属性效果
-                buff.model.attributeModels?.Foreach(attrModel =>
-                {
-
-                    var args = GameActionUtil_AttributeModify.CalcAttributeModify(actor, target, attrModel);
-                    var attrType = args.modifyType;
-                    var buffAttr = new GameAttribute(attrType, args.modifyValue);
-                    var buffOldValue = buff.attributeCom.GetValue(attrType);// 记录buff属性效果旧值
-                    buff.attributeCom.SetAttribute(buffAttr);
-
-                    // 刷新buff对目标属性的影响
-                    var roleOldValue = targetRole.attributeCom.GetValue(attrType);
-                    var roleNewValue = roleOldValue + buffAttr.value - buffOldValue;
-                    targetRole.attributeCom.SetAttribute(attrType, roleNewValue);
-
-                    GameLogger.LogWarning($"附加Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
-                });
-                // 提交RC事件
-                this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_ATTACH, new GameBuffRCArgs_Attach
-                {
-                    buffIdArgs = buff.idCom.ToArgs(),
-                    targetIdArgs = targetRole.idCom.ToArgs(),
-                    layer = layer
-                });
-            }
         }
 
+        /// <summary> 执行挂载buff </summary>
+        private int _AttachBuff(GameBuffEntity buff, GameEntityBase actor, GameRoleEntity targetRole, int layer)
+        {
+            // 设置行为目标
+            buff.actionTargeterCom.SetTargeter(new GameActionTargeterArgs
+            {
+                targetEntity = targetRole,
+                targetPosition = targetRole.transformCom.position,
+                targetDirection = targetRole.forward
+            });
+
+            // 挂载层数
+            var realLayer = this._AttachLayer(buff, layer);
+            // 刷新buff属性效果
+            this._refreshBuffAttribute(buff, actor, targetRole);
+
+            // 提交RC事件
+            this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_ATTACH, new GameBuffRCArgs_Attach
+            {
+                buffIdArgs = buff.idCom.ToArgs(),
+                targetIdArgs = targetRole.idCom.ToArgs(),
+                layer = realLayer
+            });
+
+            return realLayer;
+        }
+
+        /// <summary> 执行挂载层数 </summary>
+        private int _AttachLayer(GameBuffEntity buff, int layer = 1)
+        {
+            var buffModel = buff.model;
+            var beforeLayer = buff.layer;
+
+            var refreshFlag = buffModel.refreshFlag;
+            if (refreshFlag.HasFlag(GameBuffRefreshFlag.RefreshTime))
+            {
+                buff.conditionSetEntity_remove.RefreshTime();
+            }
+            if (refreshFlag.HasFlag(GameBuffRefreshFlag.StackTime))
+            {
+                buff.conditionSetEntity_remove.StackTime();
+            }
+            if (refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer))
+            {
+                var afterLayer = beforeLayer + layer;
+                var maxLayer = buffModel.maxLayer == 0 ? int.MaxValue : buffModel.maxLayer;// 0表示无限层数
+                afterLayer = GameMath.Min(afterLayer, maxLayer);
+                buff.layer = afterLayer;
+                return afterLayer - beforeLayer;
+            }
+            return 0;
+        }
+
+        /// <summary> 尝试移除buff </summary>
         public bool TryDetachBuff(GameEntityBase target, int buffId, int layer, out GameBuffEntity removeBuff, out int detachLayer)
         {
             removeBuff = null;
@@ -146,10 +164,21 @@ namespace GamePlay.Bussiness.Logic
             }
 
             var buffCom = targetRole.buffCom;
-            if (!buffCom.TryDetachBuff(buffId, layer, out removeBuff, out detachLayer))
+            removeBuff = buffCom.buffList.Find(b => b.model.typeId == buffId);
+            if (!removeBuff)
             {
+                GameLogger.LogError("Buff不存在，无法移除：" + buffId);
                 return false;
             }
+
+            if (!removeBuff.isValid) return false;
+
+            // 移除层数
+            var removeLayer = this._DetachLayer(removeBuff, layer);
+            // 刷新buff属性效果
+            this._refreshBuffAttribute(removeBuff, targetRole, targetRole);
+
+            if (!removeBuff.isValid) buffCom.buffList.Remove(removeBuff);
 
             this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_REMOVE, new GameBuffRCArgs_Remove
             {
@@ -160,9 +189,52 @@ namespace GamePlay.Bussiness.Logic
             return true;
         }
 
+        /// <summary> 尝试移除buff </summary>
         public bool TryDetachBuff(GameEntityBase target, int buffId, int layer)
         {
             return this.TryDetachBuff(target, buffId, layer, out _, out _);
+        }
+
+        /// <summary> 执行移除层数 </summary>
+        private int _DetachLayer(GameBuffEntity buff, int layer)
+        {
+            layer = layer == 0 ? buff.model.maxLayer : layer;
+
+            var beforeLayer = buff.layer;
+            var afterLayer = beforeLayer - layer;
+            afterLayer = GameMath.Max(afterLayer, 0);
+            buff.layer = afterLayer;
+            if (afterLayer <= 0)
+            {
+                buff.SetInvalid();
+            }
+            return beforeLayer - afterLayer;
+        }
+
+        /// <summary> 刷新buff属性效果, 同时会刷新目标角色的属性 </summary>
+        private void _refreshBuffAttribute(GameBuffEntity buff, GameEntityBase actor, GameRoleEntity targetRole)
+        {
+            buff.model.attributeModels?.Foreach(attrModel =>
+            {
+                var args = GameActionUtil_AttributeModify.CalcAttributeModify(actor, targetRole, attrModel);
+                var attrType = args.modifyType;
+
+                // 记录buff属性效果旧值
+                var buffOldValue = buff.attributeCom.GetValue(attrType);
+
+                // 设置buff新的属性效果
+                var buffAttr = new GameAttribute(attrType, args.modifyValue);
+                if (buff.model.refreshFlag.HasFlag(GameBuffRefreshFlag.StackValue)) buffAttr.value *= buff.layer;
+                else if (buff.layer == 0) buffAttr.value = 0;
+                buff.attributeCom.SetAttribute(buffAttr);
+
+                // 刷新buff对目标角色的属性效果
+                var roleOldValue = targetRole.attributeCom.GetValue(attrType);
+                var roleNewValue = roleOldValue + buffAttr.value - buffOldValue;
+                targetRole.attributeCom.SetAttribute(attrType, roleNewValue);
+
+                GameLogger.LogWarning($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
+            });
         }
     }
 }

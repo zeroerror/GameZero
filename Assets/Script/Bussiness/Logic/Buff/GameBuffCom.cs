@@ -31,24 +31,5 @@ namespace GamePlay.Bussiness.Logic
             }
             this.buffList.Add(buff);
         }
-
-        public bool TryDetachBuff(int buffId, int layer, out GameBuffEntity removeBuff, out int removeLayer)
-        {
-            removeLayer = 0;
-            removeBuff = null;
-
-            removeBuff = this.buffList.Find(b => b.model.typeId == buffId);
-            if (!removeBuff)
-            {
-                GameLogger.LogError("Buff不存在，无法移除：" + buffId);
-                return false;
-            }
-
-            if (!removeBuff.isValid) return false;
-            removeLayer = removeBuff.DetachLayer(layer);
-            if (!removeBuff.isValid) this.buffList.Remove(removeBuff);
-
-            return true;
-        }
     }
 }
