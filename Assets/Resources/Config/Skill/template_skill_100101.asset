@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: template_skill_100101
   m_EditorClassIdentifier: 
   typeId: 100101
-  desc: "\u5947\u5E7B\u82F1\u96C4 - \u5C04\u7BAD"
+  desc: "\u5F13\u7BAD\u624B - \u5C04\u7BAD"
   skillType: 1
   animClip: {fileID: 7400000, guid: 03733f2ae9d7fd04b9a5d8c06bb144e4, type: 2}
   animName: attack_shot_arrow

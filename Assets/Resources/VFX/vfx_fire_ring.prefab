@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4763262428129407026}
   - component: {fileID: 4763262428129407029}
   m_Layer: 0
-  m_Name: vfx_firering
+  m_Name: vfx_fire_ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

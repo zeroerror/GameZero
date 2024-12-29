@@ -10,30 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_100101007
+  m_Name: template_action_1
   m_EditorClassIdentifier: 
-  typeId: 100101007
-  actionType: 3
-  desc: "\u53D1\u5C04\u591A\u53EA\u5F13\u7BAD"
+  typeId: 1
+  actionType: 1
+  desc: "\u706B\u7130\u4F24\u5BB3"
   dmgActionEM:
-    dmgType: 0
-    value: 0
-    valueFormat: 0
-    refType: 0
+    dmgType: 1
+    value: 250
+    valueFormat: 1
+    refType: 1
     selectorEM:
-      selectAnchorType: 0
-      campType: 0
-      entityType: 0
-      selColliderType: 0
+      selectAnchorType: 1
+      campType: 1
+      entityType: 1
+      selColliderType: 2
       boxColliderModel:
-        offset: {x: 0, y: 0}
+        offset: {x: 0, y: 0.75}
         angle: 0
-        width: 0
-        height: 0
+        width: 2
+        height: 1.5
       circleColliderModel:
-        offset: {x: 0, y: 0}
+        offset: {x: 0, y: 0.75}
         angle: 0
-        radius: 0
+        radius: 1.5
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -105,8 +105,8 @@ MonoBehaviour:
   launchProjectileActionEM:
     projectileId: 100101001
     launchOffset: {x: 0, y: 0.8}
-    launchProjectileSO: {fileID: 11400000, guid: 9cf0845552672f744927287d2249c9ab, type: 2}
-    barrageType: 1
+    launchProjectileSO: {fileID: 0}
+    barrageType: 0
     customLaunchOffsetEM:
       count: 5
       launchOffsets:
@@ -224,9 +224,9 @@ MonoBehaviour:
         layer: 0
   actionEMR:
     typeId: 0
-    actEffectPrefab: {fileID: 1558332597376287026, guid: 969e7cb4ce441084e9e1aa0fadfed26b, type: 3}
+    actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
-    actVFXOffset: {x: 0, y: 1}
+    actVFXOffset: {x: 0, y: 0}
     actCamShakeModel:
       angle: 0
       amplitude: 0

@@ -260,8 +260,7 @@ namespace GamePlay.Bussiness.Logic
 
                 // 设置buff新的属性效果
                 var buffAttr = new GameAttribute(attrType, args.modifyValue);
-                if (buff.model.refreshFlag.HasFlag(GameBuffRefreshFlag.StackValue)) buffAttr.value *= buff.layer;
-                else if (buff.layer == 0) buffAttr.value = 0;
+                buffAttr.value *= buff.layer;
                 buff.attributeCom.SetAttribute(buffAttr);
 
                 // 刷新buff对目标角色的属性效果

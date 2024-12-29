@@ -120,8 +120,10 @@ namespace GamePlay.Config
         {
             var color = GUI.color;
             GUI.color = Color.green;
+            var actionId = actionSO.typeId;
+
             var skillSOs = Resources.LoadAll<GameSkillSO>(GameConfigCollection.SKILL_CONFIG_DIR_PATH);
-            skillSOs = skillSOs.Filter(skillSO => skillSO.timelineEvents.Contains(ev => ev.actions?.Find(a => a.typeId == actionSO.typeId) != null));
+            skillSOs = skillSOs.Filter(skillSO => skillSO.timelineEvents.Contains(ev => ev.actions?.Find(a => a.typeId == actionId) != null));
             if (skillSOs.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被以下技能使用 --------", EditorStyles.boldLabel);
@@ -135,11 +137,11 @@ namespace GamePlay.Config
             var projectileSOs = Resources.LoadAll<GameProjectileSO>(GameConfigCollection.PROJECTILE_CONFIG_DIR_PATH);
             projectileSOs = projectileSOs.Filter((pjSO) =>
             {
-                if (pjSO.timelineEvents != null && pjSO.timelineEvents.Contains(e => e.actions.Contains(a => a.typeId == pjSO.typeId)))
+                if (pjSO.timelineEvents != null && pjSO.timelineEvents.Contains(e => e.actions.Contains(a => a.typeId == actionId)))
                 {
                     return true;
                 }
-                if (pjSO.stateEMs != null && pjSO.stateEMs.Contains(s => s.emSet.HasRefAction(actionSO.typeId)))
+                if (pjSO.stateEMs != null && pjSO.stateEMs.Contains(s => s.emSet.HasRefAction(actionId)))
                 {
                     return true;
                 }
@@ -155,6 +157,19 @@ namespace GamePlay.Config
                     EditorGUILayout.ObjectField(projectileSO.typeId.ToString(), projectileSO, typeof(GameProjectileSO), false);
                 }
             }
+
+            var buffSOs = Resources.LoadAll<GameBuffSO>(GameConfigCollection.BUFF_CONFIG_DIR_PATH);
+            buffSOs = buffSOs.Filter(buffSO => buffSO.actionSOs?.Contains(a => a.typeId == actionId) == true);
+            if (buffSOs.Length > 0)
+            {
+                EditorGUILayout.LabelField(" -------- 被以下Buff使用 --------", EditorStyles.boldLabel);
+                for (int i = 0; i < buffSOs.Length; i++)
+                {
+                    var buffSO = buffSOs[i];
+                    EditorGUILayout.ObjectField(buffSO.typeId.ToString(), buffSO, typeof(GameBuffSO), false);
+                }
+            }
+
             GUI.color = color;
         }
 

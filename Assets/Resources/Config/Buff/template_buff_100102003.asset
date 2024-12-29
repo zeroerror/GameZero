@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_100201001
+  m_Name: template_buff_100102003
   m_EditorClassIdentifier: 
-  typeId: 100201001
-  buffName: "\u751F\u673A\u6D8C\u52A8"
-  desc: "\u6BCF\u4E00\u5C42\u83B7\u5F9715%\u653B\u901F\u52A0\u6210, \u6BCF\u6B21\u653B\u51FB\u547D\u4E2D\u65F6\u6062\u590D2%\u751F\u547D\u503C"
-  refreshFlag: 13
-  maxLayer: 10
+  typeId: 100102003
+  buffName: "\u6DEC\u6BD2\u5927\u5E08"
+  desc: "\u5BF9\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u65F6\u6302\u8F7D\u4E00\u5C42\u6DEC\u6BD2"
+  refreshFlag: 0
+  maxLayer: 1
   actionSOs:
-  - {fileID: 11400000, guid: 34ec54d23d64b1648a3f2e8a631baabe, type: 2}
+  - {fileID: 11400000, guid: 957fc8e4a8e0407469aebeae213b1638, type: 2}
   conditionSetEM_action:
     durationEM:
       isEnable: 0
@@ -28,7 +28,8 @@ MonoBehaviour:
       timeInterval: 0.5
     whenDoActionEM:
       isEnable: 1
-      targetAction: {fileID: 11400000, guid: 0fe48bb3e653ecd4e9ce1174c39d2c4b, type: 2}
+      targetAction: {fileID: 0}
+      targetActionType: 1
   conditionSetEM_remove:
     durationEM:
       isEnable: 1
@@ -39,11 +40,8 @@ MonoBehaviour:
     whenDoActionEM:
       isEnable: 0
       targetAction: {fileID: 0}
-  vfxPrefab: {fileID: 4763262428129407028, guid: e045502fe65e47041b4e843cee83f6b9, type: 3}
-  vfxPrefabUrl: VFX/vfx_firering
+      targetActionType: 0
+  vfxPrefab: {fileID: 0}
+  vfxPrefabUrl: 
   vfxLayerType: 0
-  attributeEMs:
-  - attributeType: 6
-    value: 15
-    valueFormat: 2
-    refType: 10
+  attributeEMs: []

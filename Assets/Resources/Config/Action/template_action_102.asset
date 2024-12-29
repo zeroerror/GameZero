@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_100101006
+  m_Name: template_action_102
   m_EditorClassIdentifier: 
-  typeId: 100101006
-  actionType: 2
-  desc: "\u7BAD - \u6BCF\u6B21\u653B\u51FB\u56DE\u590D\u751F\u547D\u503C2%"
+  typeId: 102
+  actionType: 1
+  desc: "\u5BF9\u76EE\u6807\u9020\u6210\u51761%\u751F\u547D\u503C\u7684\u771F\u5B9E\u4F24\u5BB3"
   dmgActionEM:
     dmgType: 1
-    value: 100
-    valueFormat: 1
-    refType: 1
+    value: 1
+    valueFormat: 2
+    refType: 7
     selectorEM:
-      selectAnchorType: 1
-      campType: 1
-      entityType: 1
-      selColliderType: 2
+      selectAnchorType: 2
+      campType: 0
+      entityType: 0
+      selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
         layer: 0
   healActionEM:
     healType: 1
-    value: 2
+    value: 1
     valueFormat: 2
     refType: 6
     selectorEM:

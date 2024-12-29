@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b63e08219bd61964398ea7781cbcab7c, type: 3}
-  m_Name: template_projectile_100201001
+  m_Name: template_projectile_1
   m_EditorClassIdentifier: 
-  typeId: 100201001
+  typeId: 1
   projectileName: "\u706B\u7130"
   desc: "\u6301\u7EED\u9020\u6210\u4F24\u5BB3"
   animClip: {fileID: 0}

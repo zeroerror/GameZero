@@ -28,9 +28,9 @@ namespace GamePlay.Bussiness.Logic
             isSatisfied = _Check();
         }
 
-        protected abstract void _Tick(float dt);
+        protected virtual void _Tick(float dt) { }
         protected abstract bool _Check();
-        public abstract void Clear();
+        public virtual void Clear() { }
 
         public static bool operator !(GameBuffConditionEntityBase condition)
         {

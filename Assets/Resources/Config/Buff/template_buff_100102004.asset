@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
+  m_Name: template_buff_100102004
+  m_EditorClassIdentifier: 
+  typeId: 100102004
+  buffName: "\u6DEC\u6BD2"
+  desc: "\u6301\u7EED\u9020\u6210\u4E2D\u6BD2\u4F24\u5BB3"
+  refreshFlag: 4
+  maxLayer: 10
+  actionSOs:
+  - {fileID: 11400000, guid: d9f3c02e27c5a2644955544da91aaeed, type: 2}
+  conditionSetEM_action:
+    durationEM:
+      isEnable: 0
+      duration: 0
+    timeIntervalEM:
+      isEnable: 1
+      timeInterval: 1
+    whenDoActionEM:
+      isEnable: 0
+      targetAction: {fileID: 0}
+      targetActionType: 1
+  conditionSetEM_remove:
+    durationEM:
+      isEnable: 1
+      duration: 5
+    timeIntervalEM:
+      isEnable: 0
+      timeInterval: 0
+    whenDoActionEM:
+      isEnable: 0
+      targetAction: {fileID: 0}
+      targetActionType: 0
+  vfxPrefab: {fileID: 0}
+  vfxPrefabUrl: 
+  vfxLayerType: 0
+  attributeEMs: []

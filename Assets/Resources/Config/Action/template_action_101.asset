@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_100101002
+  m_Name: template_action_101
   m_EditorClassIdentifier: 
-  typeId: 100101002
+  typeId: 101
   actionType: 1
-  desc: "\u5F13\u7BAD - \u4F24\u5BB3"
+  desc: "\u57FA\u4E8E\u81EA\u8EAB1%\u653B\u51FB\u529B\u5BF9\u76EE\u6807\u9020\u6210\u771F\u5B9E\u4F24\u5BB3"
   dmgActionEM:
     dmgType: 1
-    value: 100
+    value: 1
     valueFormat: 2
     refType: 2
     selectorEM:
       selectAnchorType: 2
-      campType: 1
-      entityType: 1
-      selColliderType: 2
+      campType: 0
+      entityType: 0
+      selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 1
+        radius: 6
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -45,12 +45,12 @@ MonoBehaviour:
         buffSO: {fileID: 0}
         layer: 0
   healActionEM:
-    healType: 0
-    value: 0
-    valueFormat: 0
-    refType: 0
+    healType: 1
+    value: 1
+    valueFormat: 2
+    refType: 6
     selectorEM:
-      selectAnchorType: 0
+      selectAnchorType: 3
       campType: 0
       entityType: 0
       selColliderType: 0
@@ -70,9 +70,9 @@ MonoBehaviour:
         fanAngle: 0
     preconditionSetEM:
       buffConditionEM:
-        enable: 0
-        buffSO: {fileID: 0}
-        layer: 0
+        enable: 1
+        buffSO: {fileID: 11400000, guid: a521f0941ee6add4b905572b47060205, type: 2}
+        layer: 1
   attributeModifyActionEM:
     modifyType: 0
     value: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
         layer: 0
   knockBackActionEM:
     knockBackDirType: 0
-    distance: 0
+    distance: 1
     duration: 0
     easingType: 0
     selectorEM:
@@ -233,9 +233,9 @@ MonoBehaviour:
       amplitude: 0
       frequency: 0
       duration: 0
-    hitEffectPrefab: {fileID: 6927947509564487783, guid: ce33e8716848a2542b26d97976a509fb, type: 3}
-    hitVFXScale: {x: 1, y: 1}
-    hitVFXOffset: {x: 0, y: 1}
+    hitEffectPrefab: {fileID: 1491129530001574614, guid: 759e03e02611ecc44b8d3cf76be8ec90, type: 3}
+    hitVFXScale: {x: 0.2, y: 0.2}
+    hitVFXOffset: {x: 0, y: 0}
     hitCamShakeModel:
       angle: 0
       amplitude: 0

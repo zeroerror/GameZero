@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_100101005
+  m_Name: template_action_100102001
   m_EditorClassIdentifier: 
-  typeId: 100101005
+  typeId: 100102001
   actionType: 6
-  desc: "\u5F13\u7BAD - \u6302\u8F7Dbuff"
+  desc: "\u7ED9\u81EA\u8EAB\u6302\u8F7Dbuff - \u5206\u88C2\u7BAD\u672F"
   dmgActionEM:
     dmgType: 1
     value: 100

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_100101004
+  m_Name: template_action_100102003
   m_EditorClassIdentifier: 
-  typeId: 100101004
-  actionType: 4
-  desc: "\u5F13\u7BAD - \u51FB\u9000"
+  typeId: 100102003
+  actionType: 6
+  desc: "\u7ED9\u81EA\u8EAB\u6302\u8F7Dbuff - \u6DEC\u6BD2\u7BAD\u672F"
   dmgActionEM:
     dmgType: 1
     value: 100
@@ -140,9 +140,9 @@ MonoBehaviour:
         buffSO: {fileID: 0}
         layer: 0
   knockBackActionEM:
-    knockBackDirType: 2
-    distance: 0.05
-    duration: 0.05
+    knockBackDirType: 0
+    distance: 0.3
+    duration: 0.1
     easingType: 6
     selectorEM:
       selectAnchorType: 2
@@ -169,10 +169,10 @@ MonoBehaviour:
         buffSO: {fileID: 0}
         layer: 0
   attachBuffActionEM:
-    buffSO: {fileID: 0}
-    layer: 0
+    buffSO: {fileID: 11400000, guid: cdc501ae4b69b8c47a72a10c18e00b00, type: 2}
+    layer: 1
     selectorEM:
-      selectAnchorType: 0
+      selectAnchorType: 3
       campType: 0
       entityType: 0
       selColliderType: 0
@@ -194,7 +194,7 @@ MonoBehaviour:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
-        layer: 0
+        layer: 1
   summonRoleActionEM:
     roleId: 0
     count: 0
@@ -226,14 +226,14 @@ MonoBehaviour:
   actionEMR:
     typeId: 0
     actEffectPrefab: {fileID: 0}
-    actVFXScale: {x: 0, y: 0}
+    actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}
     actCamShakeModel:
       angle: 0
       amplitude: 0
       frequency: 0
       duration: 0
-    hitEffectPrefab: {fileID: 59758037400367371, guid: af2d000b09c8a6e469b15a8f57de967f, type: 3}
+    hitEffectPrefab: {fileID: 0}
     hitVFXScale: {x: 1, y: 1}
     hitVFXOffset: {x: 0, y: 0}
     hitCamShakeModel:

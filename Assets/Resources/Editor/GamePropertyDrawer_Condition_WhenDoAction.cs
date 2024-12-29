@@ -16,8 +16,11 @@ namespace GamePlay.Config
 
             if (isEnable)
             {
-                var duration_p = property.FindPropertyRelative("targetAction");
-                duration_p.DrawProperty("目标行为");
+                var targetAction_p = property.FindPropertyRelative("targetAction");
+                targetAction_p.DrawProperty("目标行为");
+
+                var targetActionType_p = property.FindPropertyRelative("targetActionType");
+                targetActionType_p.DrawProperty("目标行为类型");
             }
 
             EditorGUI.EndProperty();

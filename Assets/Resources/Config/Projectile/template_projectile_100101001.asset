@@ -70,7 +70,6 @@ MonoBehaviour:
         - {fileID: 11400000, guid: e3a1513436f46da4294f1f7aef1e403e, type: 2}
         - {fileID: 11400000, guid: 0c991d1b1dff87e4789f8d09fc3259c8, type: 2}
         - {fileID: 11400000, guid: 3700334a7d8969f40b3760142a98c858, type: 2}
-        - {fileID: 11400000, guid: 9d4df725f489f444985dcfd3b3a10371, type: 2}
         nextStateType: 0
         detectEntitySelectorEM:
           selectAnchorType: 1

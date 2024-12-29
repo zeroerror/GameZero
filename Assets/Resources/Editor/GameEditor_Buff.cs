@@ -55,6 +55,16 @@ namespace GamePlay.Config
                 {
                     this.maxLayer_p.intValue = 1;
                 }
+                var vfxPrefab = this.vfxPrefab_p.DrawProperty<GameObject>("buff特效");
+                if (vfxPrefab)
+                {
+                    this.vfxPrefabUrl_p.stringValue = vfxPrefab.GetPrefabUrl();
+                    this.vfxLayerType_p.DrawProperty_EnumPopup<GameFieldLayerType>("挂载层级");
+                }
+                else
+                {
+                    this.vfxPrefabUrl_p.stringValue = "";
+                }
             });
 
             GameEditorGUILayout.DrawBoxItem(() =>
@@ -62,20 +72,6 @@ namespace GamePlay.Config
                 this.actionSOs_p.DrawProperty("行为模板列表");
                 this.conditionSetEM_action_p.DrawProperty("条件集模板 - 触发行为");
                 this.conditionSetEM_remove_p.DrawProperty("条件集模板 - 移除");
-            });
-
-            GameEditorGUILayout.DrawBoxItem(() =>
-            {
-                var vfxPrefab = this.vfxPrefab_p.DrawProperty<GameObject>("buff特效");
-                if (vfxPrefab)
-                {
-                    this.vfxPrefabUrl_p.stringValue = vfxPrefab.GetPrefabUrl();
-                }
-                else
-                {
-                    this.vfxPrefabUrl_p.stringValue = "";
-                }
-                this.vfxLayerType_p.DrawProperty_EnumPopup<GameFieldLayerType>("挂载层级");
             });
 
             GameEditorGUILayout.DrawBoxItem(() =>
