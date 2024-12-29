@@ -44,7 +44,7 @@ namespace GamePlay.Bussiness.Logic
                     {
                         buff.physicsCom.ClearCollided();
                         buff.attributeCom.SetByCom(buff.idCom.parent.attributeCom);
-                        this._context.domainApi.actionApi.DoAction(actionId, buff);
+                        this._context.domainApi.actionApi.DoAction(actionId, buff, buff.GetActionParam());
                     });
                 }
                 // 移除条件 ps: 没有有效条件时默认为不满足, 也就是默认
@@ -190,14 +190,15 @@ namespace GamePlay.Bussiness.Logic
             {
                 buff.conditionSetEntity_remove.StackTime();
             }
-            if (refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer))
+            // 层数可叠加
+            if (refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer) || beforeLayer == 0)
             {
                 var afterLayer = beforeLayer + layer;
                 var maxLayer = buffModel.maxLayer == 0 ? int.MaxValue : buffModel.maxLayer;// 0表示无限层数
                 afterLayer = GameMath.Min(afterLayer, maxLayer);
                 buff.layer = afterLayer;
                 var attachLayer = afterLayer - beforeLayer;
-                GameLogger.DebugLog($"Buff层数变化: {beforeLayer} -> {afterLayer}");
+                GameLogger.DebugLog($"Buff[{buff.model.typeId}] 层数变化: {beforeLayer} -> {afterLayer}");
                 return attachLayer;
             }
             return 0;

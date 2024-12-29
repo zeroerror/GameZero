@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionModel_AttributeModify : GameActionModelBase
@@ -33,10 +35,10 @@ namespace GamePlay.Bussiness.Logic
             return $"修改属性:{modifyType}, 数值:{value}, 数值格式:{valueFormat}, 数值参考类型:{refType}";
         }
 
-        public override GameActionModelBase GetCustomModel(int customParam)
+        public override GameActionModelBase GetCustomModel(float customParam)
         {
             // 属性修改数值 = 自定义参数 * 原数值
-            var value = customParam * this.value;
+            var value = GameMath.Floor(customParam * this.value);
             return new GameActionModel_AttributeModify(
                 typeId,
                 selector,

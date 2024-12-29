@@ -4,8 +4,8 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameBuffConditionModel_Duration model { get; private set; }
 
-        /// <summary> 额外叠加的次数, 会影响真正持续的时间 </summary>
-        public int extraStackCount;
+        /// <summary> 叠加的次数, 会影响真正持续的时间 </summary>
+        public int stackCount_extra;
 
         public float elapsedTime { get; private set; }
 
@@ -21,14 +21,14 @@ namespace GamePlay.Bussiness.Logic
 
         protected override bool _Check()
         {
-            var duration = this.model.duration + this.extraStackCount * this.model.duration;
+            var duration = this.model.duration + this.stackCount_extra * this.model.duration;
             return this.elapsedTime >= duration;
         }
 
         public override void Clear()
         {
             this.elapsedTime = 0;
-            this.extraStackCount = 0;
+            this.stackCount_extra = 0;
         }
     }
 }

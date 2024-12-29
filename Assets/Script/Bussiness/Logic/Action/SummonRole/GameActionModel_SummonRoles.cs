@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionModel_SummonRoles : GameActionModelBase
@@ -23,10 +25,10 @@ namespace GamePlay.Bussiness.Logic
             this.campType = campType;
         }
 
-        public override GameActionModelBase GetCustomModel(int customParam)
+        public override GameActionModelBase GetCustomModel(float customParam)
         {
             // 召唤角色的个数 = 自定义参数 * 原始召唤角色的个数
-            var count_custom = count * customParam;
+            var count_custom = GameMath.Floor(customParam * count);
             return new GameActionModel_SummonRoles(
                 typeId,
                 selector,

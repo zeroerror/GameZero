@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 100102003
   buffName: "\u6DEC\u6BD2\u5927\u5E08"
-  desc: "\u5BF9\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u65F6\u6302\u8F7D\u4E00\u5C42\u6DEC\u6BD2"
+  desc: "\u5BF9\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u65F6\u6302\u8F7D2\u5C42\u6DEC\u6BD2"
   refreshFlag: 0
   maxLayer: 1
+  actionParam: 200
   actionSOs:
   - {fileID: 11400000, guid: 957fc8e4a8e0407469aebeae213b1638, type: 2}
   conditionSetEM_action:

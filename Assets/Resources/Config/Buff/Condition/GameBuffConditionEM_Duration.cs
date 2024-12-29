@@ -9,10 +9,7 @@ namespace GamePlay.Config
 
         public GameBuffConditionModel_Duration ToModel()
         {
-            if (!this.isEnable)
-            {
-                return null;
-            }
+            if (!this.isEnable) return null;
             return new GameBuffConditionModel_Duration(this.duration);
         }
     }

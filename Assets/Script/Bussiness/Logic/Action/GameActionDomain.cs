@@ -31,7 +31,7 @@ namespace GamePlay.Bussiness.Logic
             return this._context.actionContext.template.TryGet(actionId, out model);
         }
 
-        public void DoAction(int actionId, GameEntityBase actor, int customParam)
+        public void DoAction(int actionId, GameEntityBase actor, float customParam)
         {
             var template = this._actionContext.template;
             if (!template.TryGet(actionId, out var actionModel))

@@ -35,7 +35,6 @@ namespace GamePlay.Bussiness.Logic
             // 单体选择
             if (isSingleSelect)
             {
-                if (selectAnchorType == GameEntitySelectAnchorType.ActorRole) actorEntity = actorEntity.TryGetLinkEntity<GameRoleEntity>();
                 var selectedEntity = this._GetSingleSelectedEntity(selector, actorEntity, targetEntity, selectAnchorType);
                 if (selectedEntity == null) return null;
                 return new List<GameEntityBase> { selectedEntity };
@@ -75,15 +74,18 @@ namespace GamePlay.Bussiness.Logic
 
         private GameEntityBase _GetSingleSelectedEntity(GameEntitySelector selector, GameEntityBase actorEntity, GameEntityBase targetEntity, GameEntitySelectAnchorType selectAnchorType)
         {
-            if (selectAnchorType == GameEntitySelectAnchorType.Actor) return actorEntity;
-            if (selectAnchorType == GameEntitySelectAnchorType.ActorRole) return actorEntity.TryGetLinkEntity<GameRoleEntity>();
-            if (selectAnchorType == GameEntitySelectAnchorType.ActTarget)
+            switch (selectAnchorType)
             {
-                if (selector.CheckSelect(actorEntity, targetEntity)) return targetEntity;
-                return null;
+                case GameEntitySelectAnchorType.Actor:
+                    return actorEntity;
+                case GameEntitySelectAnchorType.ActorRole:
+                    return actorEntity.TryGetLinkEntity<GameRoleEntity>();
+                case GameEntitySelectAnchorType.ActTarget:
+                    return targetEntity;
+                default:
+                    GameLogger.LogError($"单体选择 未处理的选择器锚点类型: {selectAnchorType}");
+                    return null;
             }
-            GameLogger.LogError($"单体选择 未处理的选择器锚点类型: {selectAnchorType}");
-            return null;
         }
     }
 }

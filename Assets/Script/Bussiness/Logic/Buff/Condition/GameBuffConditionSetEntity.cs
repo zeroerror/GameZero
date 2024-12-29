@@ -88,7 +88,7 @@ namespace GamePlay.Bussiness.Logic
         public void StackTime()
         {
             if (!this.durationEntity) return;
-            this.durationEntity.extraStackCount += 1;
+            this.durationEntity.stackCount_extra += 1;
         }
     }
 }

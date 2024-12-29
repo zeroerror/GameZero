@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public struct GameProjectileBarrageModel_Spread
@@ -11,9 +13,9 @@ namespace GamePlay.Bussiness.Logic
             this.spreadAngle = spreadAngle;
         }
 
-        public GameProjectileBarrageModel_Spread GetCustomModel(int customParam)
+        public GameProjectileBarrageModel_Spread GetCustomModel(float customParam)
         {
-            var count = customParam * this.count;
+            var count = GameMath.Floor(customParam * this.count);
             return new GameProjectileBarrageModel_Spread(
                 count,
                 spreadAngle

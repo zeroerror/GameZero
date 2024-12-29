@@ -23,7 +23,7 @@ namespace GamePlay.Bussiness.Logic
             this.model = model;
             this.conditionSetEntity_action = new GameBuffConditionSetEntity(this, model.conditionSetModel_action);
             this.conditionSetEntity_remove = new GameBuffConditionSetEntity(this, model.conditionSetModel_remove);
-            this.layer = 1;
+            this.layer = 0;
         }
 
         public override void Destroy()
@@ -34,7 +34,7 @@ namespace GamePlay.Bussiness.Logic
         {
             this.BindTransformCom(null);
             this.elapsedTime = 0;
-            this.layer = 1;
+            this.layer = 0;
             this.conditionSetEntity_action.Clear();
             this.conditionSetEntity_remove.Clear();
             base.Clear();
@@ -45,6 +45,11 @@ namespace GamePlay.Bussiness.Logic
             this.elapsedTime += dt;
             this.conditionSetEntity_action.Tick(dt);
             this.conditionSetEntity_remove.Tick(dt);
+        }
+
+        public float GetActionParam()
+        {
+            return this.model.actionParam * this.layer;
         }
     }
 }

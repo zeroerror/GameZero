@@ -34,7 +34,6 @@ namespace GamePlay.Core
         public static int RandomRange(int min, int max) => UnityEngine.Random.Range(min, max);
 
         public static int Clamp(this int value, int min, int max) => value < min ? min : value > max ? max : value;
-
-
+        public static int Floor(float value) => (int)System.Math.Floor(value);
     }
 }

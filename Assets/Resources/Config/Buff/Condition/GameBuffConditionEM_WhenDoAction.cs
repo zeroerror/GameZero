@@ -11,8 +11,8 @@ namespace GamePlay.Config
 
         public GameBuffConditionModel_WhenDoAction ToModel()
         {
-            if (!this.isEnable
-                && this.targetAction == null
+            if (!this.isEnable) return null;
+            if (this.targetAction == null
                 && this.targetActionType == GameActionType.None
             ) return null;
 

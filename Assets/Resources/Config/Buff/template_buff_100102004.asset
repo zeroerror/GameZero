@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 100102004
   buffName: "\u6DEC\u6BD2"
-  desc: "\u6301\u7EED\u9020\u6210\u4E2D\u6BD2\u4F24\u5BB3"
-  refreshFlag: 4
+  desc: "\u6BCF\u5C42\u9020\u62101%\u6700\u5927\u751F\u547D\u503C\u7684\u771F\u5B9E\u4F24\u5BB3,
+    \u6700\u591A\u53EF\u53E0\u52A010\u5C42"
+  refreshFlag: 5
   maxLayer: 10
+  actionParam: 100
   actionSOs:
   - {fileID: 11400000, guid: d9f3c02e27c5a2644955544da91aaeed, type: 2}
   conditionSetEM_action:
@@ -25,7 +27,7 @@ MonoBehaviour:
       duration: 0
     timeIntervalEM:
       isEnable: 1
-      timeInterval: 1
+      timeInterval: 2
     whenDoActionEM:
       isEnable: 0
       targetAction: {fileID: 0}

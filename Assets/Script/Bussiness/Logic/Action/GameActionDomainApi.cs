@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace GamePlay.Bussiness.Logic
 {
     public interface GameActionDomainApi
@@ -17,6 +15,13 @@ namespace GamePlay.Bussiness.Logic
         /// <para>actorEntity 执行者</para>
         /// </summary>
         public void DoAction(int actionId, GameEntityBase actorEntity);
+
+        /// <summary>
+        /// 执行行为
+        /// <para>actionId 行为ID</para>
+        /// <para>actor 执行者</para>
+        /// <para>customParam 自定义参数</para>
+        public void DoAction(int actionId, GameEntityBase actor, float customParam);
 
         /// <summary>
         /// 执行行为 - 伤害

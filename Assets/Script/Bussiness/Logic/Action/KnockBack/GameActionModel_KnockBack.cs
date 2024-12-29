@@ -28,7 +28,7 @@ namespace GamePlay.Bussiness.Logic
             this.easingType = easingType;
         }
 
-        public override GameActionModelBase GetCustomModel(int customParam)
+        public override GameActionModelBase GetCustomModel(float customParam)
         {
             // 距离 = 自定义参数 * 原距离
             var distance = customParam * this.distance;

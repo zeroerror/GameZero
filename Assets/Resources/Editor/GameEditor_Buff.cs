@@ -15,6 +15,7 @@ namespace GamePlay.Config
         private SerializedProperty desc_p;
         private SerializedProperty refreshFlag_p;
         private SerializedProperty maxLayer_p;
+        private SerializedProperty actionParam_p;
         private SerializedProperty actionSOs_p;
         private SerializedProperty conditionSetEM_action_p;
         private SerializedProperty conditionSetEM_remove_p;
@@ -31,6 +32,7 @@ namespace GamePlay.Config
             this.desc_p = _serializedObject.FindProperty("desc");
             this.refreshFlag_p = _serializedObject.FindProperty("refreshFlag");
             this.maxLayer_p = _serializedObject.FindProperty("maxLayer");
+            this.actionParam_p = _serializedObject.FindProperty("actionParam");
             this.actionSOs_p = _serializedObject.FindProperty("actionSOs");
             this.conditionSetEM_action_p = _serializedObject.FindProperty("conditionSetEM_action");
             this.conditionSetEM_remove_p = _serializedObject.FindProperty("conditionSetEM_remove");
@@ -55,6 +57,8 @@ namespace GamePlay.Config
                 {
                     this.maxLayer_p.intValue = 1;
                 }
+                this.actionParam_p.DrawProperty_Int("行为参数(百分比)");
+
                 var vfxPrefab = this.vfxPrefab_p.DrawProperty<GameObject>("buff特效");
                 if (vfxPrefab)
                 {

@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionModel_Dmg : GameActionModelBase
@@ -28,10 +30,10 @@ namespace GamePlay.Bussiness.Logic
             this.refType = refType;
         }
 
-        public override GameActionModelBase GetCustomModel(int customParam)
+        public override GameActionModelBase GetCustomModel(float customParam)
         {
             // 伤害数值 = 自定义参数 * 原数值
-            var value = customParam * this.value;
+            var value = GameMath.Floor(customParam * this.value);
             return new GameActionModel_Dmg(
                 typeId,
                 selector,

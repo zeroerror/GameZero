@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionModel_AttachBuff : GameActionModelBase
@@ -25,9 +27,9 @@ namespace GamePlay.Bussiness.Logic
             return $"buff类型Id:{buffId}, 层数:{layer}";
         }
 
-        public override GameActionModelBase GetCustomModel(int customParam)
+        public override GameActionModelBase GetCustomModel(float customParam)
         {
-            var layer = customParam * this.layer;
+            var layer = GameMath.Floor(customParam * this.layer);
             return new GameActionModel_AttachBuff(
                 typeId,
                 selector,

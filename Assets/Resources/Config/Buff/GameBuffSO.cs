@@ -12,6 +12,7 @@ namespace GamePlay.Config
         public string desc;
         public GameBuffRefreshFlag refreshFlag;
         public int maxLayer;
+        public int actionParam;
         public GameActionSO[] actionSOs;
         public GameBuffConditionSetEM conditionSetEM_action;
         public GameBuffConditionSetEM conditionSetEM_remove;
@@ -26,6 +27,7 @@ namespace GamePlay.Config
                 typeId,
                 refreshFlag,
                 maxLayer,
+                actionParam,
                 actionSOs.Map(e => e.typeId),
                 conditionSetEM_action.ToModel(),
                 conditionSetEM_remove.ToModel(),

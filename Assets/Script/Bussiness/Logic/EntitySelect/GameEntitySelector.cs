@@ -31,7 +31,7 @@ namespace GamePlay.Bussiness.Logic
             // 判定锚点类型
             if (this.colliderModel == null)
             {
-                var isSelf = entityA.idCom.entityId == entityB.idCom.entityId;
+                var isSelf = entityA.idCom.IsEquals(entityB.idCom);
                 if (isSelf && !this.selectAnchorType.HasFlag(GameEntitySelectAnchorType.Actor)) return false;
                 if (!isSelf && !this.selectAnchorType.HasFlag(GameEntitySelectAnchorType.ActTarget)) return false;
             }

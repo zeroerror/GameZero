@@ -21,6 +21,6 @@ namespace GamePlay.Bussiness.Logic
             this.preconditionSet = preconditionSet;
         }
 
-        public abstract GameActionModelBase GetCustomModel(int customParam);
+        public abstract GameActionModelBase GetCustomModel(float customParam);
     }
 }

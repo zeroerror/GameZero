@@ -27,7 +27,7 @@ namespace GamePlay.Bussiness.Logic
             this.spreadModel = spreadModel;
         }
 
-        public override GameActionModelBase GetCustomModel(int customParam)
+        public override GameActionModelBase GetCustomModel(float customParam)
         {
             // 弹幕数量 = 自定义参数 * 原弹幕数量
             var spreadModel_custom = this.spreadModel;
