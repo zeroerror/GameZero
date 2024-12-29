@@ -172,7 +172,7 @@ MonoBehaviour:
     buffSO: {fileID: 11400000, guid: cd5a915e26109f74b8af677e9a0c0eff, type: 2}
     layer: 1
     selectorEM:
-      selectAnchorType: 3
+      selectAnchorType: 2
       campType: 0
       entityType: 0
       selColliderType: 0

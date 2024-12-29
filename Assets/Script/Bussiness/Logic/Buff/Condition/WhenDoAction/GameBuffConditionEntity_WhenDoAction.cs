@@ -17,45 +17,58 @@ namespace GamePlay.Bussiness.Logic
             // 遍历 - 伤害记录
             this.ForEachActionRecord_Dmg((actionRecord) =>
             {
-                if (m_check(actionRecord.actorRoleIdArgs.entityId, actionRecord.actionId, GameActionType.Dmg))
-                {
-                    isSatisfied = true;
-                }
+                m_check(actionRecord.actorRoleIdArgs.entityId, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Dmg);
             });
             if (isSatisfied) return true;
 
             // 遍历 - 治疗记录
             this.ForEachActionRecord_Heal((actionRecord) =>
             {
-                if (m_check(actionRecord.actorRoleIdArgs.entityId, actionRecord.actionId, GameActionType.Heal))
-                {
-                    isSatisfied = true;
-                }
+                m_check(actionRecord.actorRoleIdArgs.entityId, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Heal);
             });
             if (isSatisfied) return true;
 
             // 遍历 - 发射投射物记录
             this.ForEachActionRecord_LaunchProjectile((actionRecord) =>
             {
-                if (m_check(actionRecord.actorRoleIdArgs.entityId, actionRecord.actionId, GameActionType.LaunchProjectile))
-                {
-                    isSatisfied = true;
-                }
+                m_check(actionRecord.actorRoleIdArgs.entityId, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.LaunchProjectile);
             });
             if (isSatisfied) return true;
 
             return false;
 
-            bool m_check(int actorRoleEntityId, int actionId, GameActionType actionType)
+            void m_check(int actorRoleEntityId, in GameIdArgs targetIdArgs, int actionId, GameActionType actionType)
             {
+                // 已满足条件, 不再检查
+                if (isSatisfied) return;
                 // 行为实体必须是Buff作用目标
                 var isBuffTargetAct = actorRoleEntityId == _buff.target.idCom.entityId;
-                if (!isBuffTargetAct) return false;
+                if (!isBuffTargetAct) return;
                 // 指定行为Id
-                if (actionId == model.targetActionId) return true;
+                if (actionId == model.targetActionId)
+                {
+                    isSatisfied = true;
+                }
                 // 指定行为类型
-                if (actionType == model.targetActionType) return true;
-                return false;
+                if (actionType == model.targetActionType)
+                {
+                    isSatisfied = true;
+                }
+                if (isSatisfied)
+                {
+                    var actTargetEntity = this.FindEntity(targetIdArgs.entityType, targetIdArgs.entityId);
+                    if (actTargetEntity)
+                    {
+                        // 更新buff的目标选取器
+                        var actorRole = this.FindEntity(GameEntityType.Role, actorRoleEntityId);
+                        var targeter = new GameActionTargeterArgs(
+                            actTargetEntity,
+                            actTargetEntity.transformCom.position,
+                            (actTargetEntity.transformCom.position - actorRole.transformCom.position).normalized
+                        );
+                        this._buff.actionTargeterCom.SetTargeter(targeter);
+                    }
+                }
             }
         }
     }

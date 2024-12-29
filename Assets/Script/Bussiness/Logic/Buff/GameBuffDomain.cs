@@ -106,6 +106,7 @@ namespace GamePlay.Bussiness.Logic
         private void _InjectBuffConditionDelegate(GameBuffEntity buff, GameEntityBase actor, GameRoleEntity targetRole)
         {
             buff.conditionSetEntity_action.Inject(
+                this._context.FindEntity,
                 this._ForeachActionRecord_Dmg,
                 this._ForeachActionRecord_Heal,
                 this._ForeachActionRecord_LaunchProjectile,

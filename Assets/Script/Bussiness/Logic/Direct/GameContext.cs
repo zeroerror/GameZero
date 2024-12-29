@@ -47,5 +47,27 @@ namespace GamePlay.Bussiness.Logic
         {
             this.rcEventService.Bind(rcName, callback);
         }
+
+        public GameEntityBase FindEntity(GameEntityType entityType, int entityId)
+        {
+            switch (entityType)
+            {
+                case GameEntityType.None:
+                    return null;
+                case GameEntityType.Role:
+                    return this.roleContext.repo.FindByEntityId(entityId);
+                case GameEntityType.Skill:
+                    return this.skillContext.repo.FindByEntityId(entityId);
+                case GameEntityType.Projectile:
+                    return this.projectileContext.repo.FindByEntityId(entityId);
+                case GameEntityType.Buff:
+                    return this.buffContext.repo.FindByEntityId(entityId);
+                case GameEntityType.Field:
+                    return this.fieldContext.repo.FindByEntityId(entityId);
+                default:
+                    GameLogger.LogWarning($"查找实体: 未处理的实体类型 {entityType}");
+                    return null;
+            }
+        }
     }
 }

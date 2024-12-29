@@ -8,6 +8,10 @@ namespace GamePlay.Bussiness.Logic
 
         protected GameBuffEntity _buff;
 
+        // 查找角色实体
+        public delegate GameEntityBase FindRoleEntityDelegate(GameEntityType entityType, int entityId);
+        public FindRoleEntityDelegate FindEntity;
+
         // 伤害
         public delegate void ForEachActionRecordDelegate_Dmg(in Action<GameActionRecord_Dmg> actionRecord);
         public ForEachActionRecordDelegate_Dmg ForEachActionRecord_Dmg;

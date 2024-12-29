@@ -27,11 +27,12 @@ namespace GamePlay.Bussiness.Logic
             if (model.whenDoActionModel != null)
             {
                 this.whenDoActionEntity = new GameBuffConditionEntity_WhenDoAction(buff, model.whenDoActionModel);
-                this._entityList.Add(this.timeIntervalEntity);
+                this._entityList.Add(this.whenDoActionEntity);
             }
         }
 
         public void Inject(
+            FindRoleEntityDelegate findEntity,
             ForEachActionRecordDelegate_Dmg forEachActionRecord_Dmg,
             ForEachActionRecordDelegate_Heal forEachActionRecord_Heal,
             ForEachActionRecordDelegate_LaunchProjectile forEachActionRecord_LaunchProjectile,
@@ -45,6 +46,7 @@ namespace GamePlay.Bussiness.Logic
             void m_inject(GameBuffConditionEntityBase conditionEntity)
             {
                 if (!conditionEntity) return;
+                conditionEntity.FindEntity = findEntity;
                 conditionEntity.ForEachActionRecord_Dmg = forEachActionRecord_Dmg;
                 conditionEntity.ForEachActionRecord_Heal = forEachActionRecord_Heal;
                 conditionEntity.ForEachActionRecord_LaunchProjectile = forEachActionRecord_LaunchProjectile;
