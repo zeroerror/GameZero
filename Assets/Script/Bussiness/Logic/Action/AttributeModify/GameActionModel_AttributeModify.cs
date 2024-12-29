@@ -32,5 +32,20 @@ namespace GamePlay.Bussiness.Logic
         {
             return $"修改属性:{modifyType}, 数值:{value}, 数值格式:{valueFormat}, 数值参考类型:{refType}";
         }
+
+        public override GameActionModelBase GetCustomModel(int customParam)
+        {
+            // 属性修改数值 = 自定义参数 * 原数值
+            var value = customParam * this.value;
+            return new GameActionModel_AttributeModify(
+                typeId,
+                selector,
+                preconditionSet,
+                modifyType,
+                value,
+                valueFormat,
+                refType
+            );
+        }
     }
 }

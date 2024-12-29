@@ -10,5 +10,14 @@ namespace GamePlay.Bussiness.Logic
             this.count = count;
             this.spreadAngle = spreadAngle;
         }
+
+        public GameProjectileBarrageModel_Spread GetCustomModel(int customParam)
+        {
+            var count = customParam * this.count;
+            return new GameProjectileBarrageModel_Spread(
+                count,
+                spreadAngle
+            );
+        }
     }
 }

@@ -24,5 +24,17 @@ namespace GamePlay.Bussiness.Logic
         {
             return $"buff类型Id:{buffId}, 层数:{layer}";
         }
+
+        public override GameActionModelBase GetCustomModel(int customParam)
+        {
+            var layer = customParam * this.layer;
+            return new GameActionModel_AttachBuff(
+                typeId,
+                selector,
+                preconditionSet,
+                buffId,
+                layer
+            );
+        }
     }
 }

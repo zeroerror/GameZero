@@ -28,6 +28,21 @@ namespace GamePlay.Bussiness.Logic
             this.refType = refType;
         }
 
+        public override GameActionModelBase GetCustomModel(int customParam)
+        {
+            // 伤害数值 = 自定义参数 * 原数值
+            var value = customParam * this.value;
+            return new GameActionModel_Dmg(
+                typeId,
+                selector,
+                preconditionSet,
+                dmgType,
+                value,
+                valueFormat,
+                refType
+            );
+        }
+
         public override string ToString()
         {
             return $"伤害类型:{dmgType}, 伤害数值:{value}, 数值格式:{valueFormat}, 数值参考类型:{refType}";

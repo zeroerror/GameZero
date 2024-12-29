@@ -31,7 +31,7 @@ namespace GamePlay.Bussiness.Logic
             return this._context.actionContext.template.TryGet(actionId, out model);
         }
 
-        public void DoAction(int actionId, GameEntityBase actor)
+        public void DoAction(int actionId, GameEntityBase actor, int customParam)
         {
             var template = this._actionContext.template;
             if (!template.TryGet(actionId, out var actionModel))
@@ -40,6 +40,24 @@ namespace GamePlay.Bussiness.Logic
                 return;
             }
 
+            // 获取自定义行为模型
+            var customModel = actionModel.GetCustomModel(customParam);
+            this._DoAction(actor, customModel);
+        }
+
+        public void DoAction(int actionId, GameEntityBase actor)
+        {
+            var template = this._actionContext.template;
+            if (!template.TryGet(actionId, out var actionModel))
+            {
+                GameLogger.LogError($"未找到行为配置：{actionId}");
+                return;
+            }
+            this._DoAction(actor, actionModel);
+        }
+
+        private void _DoAction(GameEntityBase actor, GameActionModelBase actionModel)
+        {
             switch (actionModel)
             {
                 case GameActionModel_Dmg dmgAction:
@@ -67,7 +85,7 @@ namespace GamePlay.Bussiness.Logic
 
             // 提交RC - 行为执行
             var evArgs = new GameActionRCArgs_Do(
-                actionId,
+                actionModel.typeId,
                 actor.idCom.ToArgs()
             );
             this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO, evArgs);

@@ -28,6 +28,21 @@ namespace GamePlay.Bussiness.Logic
             this.refType = refType;
         }
 
+        public override GameActionModelBase GetCustomModel(int customParam)
+        {
+            // 治疗数值 = 自定义参数 * 原数值
+            var value = customParam * this.value;
+            return new GameActionModel_Heal(
+                typeId,
+                selector,
+                preconditionSet,
+                healType,
+                value,
+                valueFormat,
+                refType
+            );
+        }
+
         public override string ToString()
         {
             return $"治疗类型:{healType}, 治疗数值:{value}, 数值格式:{valueFormat}, 数值参考类型:{refType}";

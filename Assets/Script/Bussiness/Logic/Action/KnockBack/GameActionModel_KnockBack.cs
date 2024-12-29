@@ -27,5 +27,21 @@ namespace GamePlay.Bussiness.Logic
             this.duration = duration;
             this.easingType = easingType;
         }
+
+        public override GameActionModelBase GetCustomModel(int customParam)
+        {
+            // 距离 = 自定义参数 * 原距离
+            var distance = customParam * this.distance;
+
+            return new GameActionModel_KnockBack(
+                typeId,
+                selector,
+                preconditionSet,
+                knockBackDirType,
+                distance,
+                duration,
+                easingType
+            );
+        }
     }
 }
