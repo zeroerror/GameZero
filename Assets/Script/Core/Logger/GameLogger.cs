@@ -11,7 +11,7 @@ namespace GamePlay.Core
     }
     public class GameLogger
     {
-        public static LogLevel logLevel = LogLevel.Debug;
+        public static LogLevel logLevel = LogLevel.Warning;
         public static void Log(string message)
         {
             if (logLevel > LogLevel.Info) return;

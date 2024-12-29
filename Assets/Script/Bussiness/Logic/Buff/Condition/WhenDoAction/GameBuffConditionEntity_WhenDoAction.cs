@@ -46,10 +46,10 @@ namespace GamePlay.Bussiness.Logic
 
             return false;
 
-            bool m_check(int entityId, int actionId, GameActionType actionType)
+            bool m_check(int actorRoleEntityId, int actionId, GameActionType actionType)
             {
                 // 行为实体必须是Buff作用目标
-                var isBuffTargetAct = entityId == _buff.target.idCom.entityId;
+                var isBuffTargetAct = actorRoleEntityId == _buff.target.idCom.entityId;
                 if (!isBuffTargetAct) return false;
                 // 指定行为Id
                 if (actionId == model.targetActionId) return true;

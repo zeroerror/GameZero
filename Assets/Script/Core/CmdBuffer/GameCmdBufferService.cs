@@ -14,7 +14,7 @@ namespace GamePlay.Core
 
         /// <summary>
         /// 添加一个延迟执行的命令
-        /// <para>delay: 延迟时间(秒). 0表示会在当前帧的帧末就执行</para>
+        /// <para>delay: 延迟时间(秒). 0表示会在当前帧末执行</para>
         /// <para>cmd: 命令</para>
         /// @return 返回指令Id
         /// </summary>

@@ -33,12 +33,11 @@ namespace GamePlay.Bussiness.Logic
         private void _TickBuff(GameRoleEntity role, float dt)
         {
             var buffCom = role.buffCom;
-            for (int i = 0; i < buffCom.buffList.Count; i++)
+            buffCom.Foreach(buff =>
             {
-                var buff = buffCom.buffList[i];
                 buff.Tick(dt);
-                // 行为触发
-                var isSatisfied_action = buff.conditionSetEntity_action.CheckSatisfied();
+                // 行为条件 ps: 没有有效条件时默认为满足
+                var isSatisfied_action = !buff.conditionSetEntity_action.IsValid() || buff.conditionSetEntity_action.CheckSatisfied();
                 if (isSatisfied_action)
                 {
                     buff.model.actionIds?.Foreach(actionId =>
@@ -48,8 +47,8 @@ namespace GamePlay.Bussiness.Logic
                         this._context.domainApi.actionApi.DoAction(actionId, buff);
                     });
                 }
-                // 移除触发
-                var isSatisfied_remove = buff.conditionSetEntity_remove.CheckSatisfied();
+                // 移除条件 ps: 没有有效条件时默认为不满足, 也就是默认
+                var isSatisfied_remove = buff.conditionSetEntity_remove.IsValid() && buff.conditionSetEntity_remove.CheckSatisfied();
                 if (isSatisfied_remove)
                 {
                     this._context.cmdBufferService.AddDelayCmd(0, () =>
@@ -57,7 +56,7 @@ namespace GamePlay.Bussiness.Logic
                         this.TryDetachBuff(role, buff.model.typeId, 0);
                     });
                 }
-            }
+            });
         }
 
         /// <summary> 尝试挂载buff </summary>
@@ -67,7 +66,7 @@ namespace GamePlay.Bussiness.Logic
 
             if (!target.TryGetLinkEntity<GameRoleEntity>(out var targetRole))
             {
-                GameLogger.LogError("目标不是角色, 暂不支持挂载Buff");
+                GameLogger.LogWarning("目标不是角色, 暂不支持挂载Buff");
                 return false;
             }
 
@@ -109,8 +108,11 @@ namespace GamePlay.Bussiness.Logic
             buff.conditionSetEntity_action.Inject(
                 this._ForeachActionRecord_Dmg,
                 this._ForeachActionRecord_Heal,
-                this._ForeachActionRecord_LaunchProjectile
-
+                this._ForeachActionRecord_LaunchProjectile,
+                this._ForeachActionRecord_KnockBack,
+                this._ForeachActionRecord_AttributeModify,
+                this._ForeachActionRecord_AttachBuff,
+                this._ForeachActionRecord_SummonRoles
             );
         }
         private void _ForeachActionRecord_Dmg(in Action<GameActionRecord_Dmg> actionRecord)
@@ -124,6 +126,22 @@ namespace GamePlay.Bussiness.Logic
         private void _ForeachActionRecord_LaunchProjectile(in Action<GameActionRecord_LaunchProjectile> actionRecord)
         {
             this._context.actionContext.launchProjectileRecordList.ForEach(actionRecord);
+        }
+        private void _ForeachActionRecord_KnockBack(in Action<GameActionRecord_KnockBack> actionRecord)
+        {
+            this._context.actionContext.knockBackRecordList.ForEach(actionRecord);
+        }
+        private void _ForeachActionRecord_AttributeModify(in Action<GameActionRecord_AttributeModify> actionRecord)
+        {
+            this._context.actionContext.attributeModifyRecordList.ForEach(actionRecord);
+        }
+        private void _ForeachActionRecord_AttachBuff(in Action<GameActionRecord_AttachBuff> actionRecord)
+        {
+            this._context.actionContext.attachBuffRecordList.ForEach(actionRecord);
+        }
+        private void _ForeachActionRecord_SummonRoles(in Action<GameActionRecord_SummonRoles> actionRecord)
+        {
+            this._context.actionContext.summonRolesRecordList.ForEach(actionRecord);
         }
 
         /// <summary> 执行挂载buff </summary>
@@ -197,8 +215,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             var buffCom = targetRole.buffCom;
-            detachBuff = buffCom.buffList.Find(b => b.model.typeId == buffId);
-            if (!detachBuff)
+            if (!buffCom.TryGet(buffId, out detachBuff))
             {
                 GameLogger.LogError("Buff不存在，无法移除：" + buffId);
                 return false;
@@ -211,7 +228,7 @@ namespace GamePlay.Bussiness.Logic
             // 刷新buff属性效果
             this._refreshBuffAttribute(detachBuff, targetRole, targetRole);
 
-            if (!detachBuff.isValid) buffCom.buffList.Remove(detachBuff);
+            if (!detachBuff.isValid) buffCom.Remove(detachBuff);
 
             this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_DETACH, new GameBuffRCArgs_Detach
             {

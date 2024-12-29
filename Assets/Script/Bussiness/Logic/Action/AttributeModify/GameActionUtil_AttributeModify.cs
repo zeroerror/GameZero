@@ -56,7 +56,7 @@ namespace GamePlay.Bussiness.Logic
 
             var record = new GameActionRecord_AttributeModify(
                 actionId,
-                actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default,
+                actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                 actor.idCom.ToArgs(),
                 target.idCom.ToArgs(),
                 modifyType,

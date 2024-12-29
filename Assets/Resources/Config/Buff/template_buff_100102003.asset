@@ -32,8 +32,8 @@ MonoBehaviour:
       targetActionType: 1
   conditionSetEM_remove:
     durationEM:
-      isEnable: 1
-      duration: 2
+      isEnable: 0
+      duration: 5
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0

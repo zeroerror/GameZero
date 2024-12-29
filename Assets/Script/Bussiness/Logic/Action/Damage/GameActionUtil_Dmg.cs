@@ -37,7 +37,7 @@ namespace GamePlay.Bussiness.Logic
             // 取2位小数
             realDmg = GameMathF.ToFixed(realDmg, 2);
 
-            var actorRoleIdArgs = actor.TryGetLinkEntity<GameEntityBase>()?.idCom.ToArgs() ?? default;
+            var actorRoleIdArgs = actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_Dmg(
                 dmgModel.typeId,
                 actorRoleIdArgs,
@@ -60,7 +60,7 @@ namespace GamePlay.Bussiness.Logic
 
             var afterDmgHP = curHP - record.value;
             targetAttrCom.SetAttribute(GameAttributeType.HP, afterDmgHP);
-            GameLogger.DebugLog($"目标:{target.idCom} 受到伤害{record.value} ({curHP}=>{afterDmgHP})");
+            GameLogger.Log($"目标:{target.idCom} 受到伤害{record.value} ({curHP}=>{afterDmgHP})");
             return true;
         }
     }

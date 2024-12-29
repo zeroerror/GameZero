@@ -8,14 +8,27 @@ namespace GamePlay.Bussiness.Logic
 
         protected GameBuffEntity _buff;
 
+        // 伤害
         public delegate void ForEachActionRecordDelegate_Dmg(in Action<GameActionRecord_Dmg> actionRecord);
         public ForEachActionRecordDelegate_Dmg ForEachActionRecord_Dmg;
-
+        // 治疗
         public delegate void ForEachActionRecordDelegate_Heal(in Action<GameActionRecord_Heal> actionRecord);
         public ForEachActionRecordDelegate_Heal ForEachActionRecord_Heal;
-
+        // 发射投射物
         public delegate void ForEachActionRecordDelegate_LaunchProjectile(in Action<GameActionRecord_LaunchProjectile> actionRecord);
         public ForEachActionRecordDelegate_LaunchProjectile ForEachActionRecord_LaunchProjectile;
+        // 击退
+        public delegate void ForEachActionRecordDelegate_KnockBack(in Action<GameActionRecord_KnockBack> actionRecord);
+        public ForEachActionRecordDelegate_KnockBack ForEachActionRecord_KnockBack;
+        // 属性修改
+        public delegate void ForEachActionRecordDelegate_AttributeModify(in Action<GameActionRecord_AttributeModify> actionRecord);
+        public ForEachActionRecordDelegate_AttributeModify ForEachActionRecord_AttributeModify;
+        // 挂载buff
+        public delegate void ForEachActionRecordDelegate_AttachBuff(in Action<GameActionRecord_AttachBuff> actionRecord);
+        public ForEachActionRecordDelegate_AttachBuff ForEachActionRecord_AttachBuff;
+        // 召唤角色
+        public delegate void ForEachActionRecordDelegate_SummonRoles(in Action<GameActionRecord_SummonRoles> actionRecord);
+        public ForEachActionRecordDelegate_SummonRoles ForEachActionRecord_SummonRoles;
 
         public GameBuffConditionEntityBase(GameBuffEntity buff)
         {

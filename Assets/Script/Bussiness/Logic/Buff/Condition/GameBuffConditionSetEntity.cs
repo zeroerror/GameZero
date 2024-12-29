@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using static GamePlay.Bussiness.Logic.GameBuffConditionEntityBase;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameBuffConditionSetEntity
@@ -6,52 +9,72 @@ namespace GamePlay.Bussiness.Logic
         public GameBuffConditionEntity_TimeInterval timeIntervalEntity { get; private set; }
         public GameBuffConditionEntity_WhenDoAction whenDoActionEntity { get; private set; }
 
+        private List<GameBuffConditionEntityBase> _entityList;
+
         public GameBuffConditionSetEntity(GameBuffEntity buff, GameBuffConditionSetModel model)
         {
-            if (model.durationModel != null) this.durationEntity = new GameBuffConditionEntity_Duration(buff, model.durationModel);
-            if (model.timeIntervalModel != null) this.timeIntervalEntity = new GameBuffConditionEntity_TimeInterval(buff, model.timeIntervalModel);
-            if (model.whenDoActionModel != null) this.whenDoActionEntity = new GameBuffConditionEntity_WhenDoAction(buff, model.whenDoActionModel);
+            this._entityList = new List<GameBuffConditionEntityBase>();
+            if (model.durationModel != null)
+            {
+                this.durationEntity = new GameBuffConditionEntity_Duration(buff, model.durationModel);
+                this._entityList.Add(this.durationEntity);
+            }
+            if (model.timeIntervalModel != null)
+            {
+                this.timeIntervalEntity = new GameBuffConditionEntity_TimeInterval(buff, model.timeIntervalModel);
+                this._entityList.Add(this.timeIntervalEntity);
+            }
+            if (model.whenDoActionModel != null)
+            {
+                this.whenDoActionEntity = new GameBuffConditionEntity_WhenDoAction(buff, model.whenDoActionModel);
+                this._entityList.Add(this.timeIntervalEntity);
+            }
         }
 
         public void Inject(
-            GameBuffConditionEntityBase.ForEachActionRecordDelegate_Dmg forEachActionRecord_Dmg,
-            GameBuffConditionEntityBase.ForEachActionRecordDelegate_Heal forEachActionRecord_Heal,
-            GameBuffConditionEntityBase.ForEachActionRecordDelegate_LaunchProjectile forEachActionRecord_LaunchProjectile)
+            ForEachActionRecordDelegate_Dmg forEachActionRecord_Dmg,
+            ForEachActionRecordDelegate_Heal forEachActionRecord_Heal,
+            ForEachActionRecordDelegate_LaunchProjectile forEachActionRecord_LaunchProjectile,
+            ForEachActionRecordDelegate_KnockBack forEachActionRecord_KnockBack,
+            ForEachActionRecordDelegate_AttributeModify forEachActionRecord_AttributeModify,
+            ForEachActionRecordDelegate_AttachBuff forEachActionRecord_AttachBuff,
+            ForEachActionRecordDelegate_SummonRoles forEachActionRecord_SummonRoles
+        )
         {
-            if (!!this.durationEntity) this.durationEntity.ForEachActionRecord_Dmg = forEachActionRecord_Dmg;
-            if (!!this.timeIntervalEntity) this.timeIntervalEntity.ForEachActionRecord_Dmg = forEachActionRecord_Dmg;
-            if (!!this.whenDoActionEntity) this.whenDoActionEntity.ForEachActionRecord_Dmg = forEachActionRecord_Dmg;
-
-            if (!!this.durationEntity) this.durationEntity.ForEachActionRecord_Heal = forEachActionRecord_Heal;
-            if (!!this.timeIntervalEntity) this.timeIntervalEntity.ForEachActionRecord_Heal = forEachActionRecord_Heal;
-            if (!!this.whenDoActionEntity) this.whenDoActionEntity.ForEachActionRecord_Heal = forEachActionRecord_Heal;
-
-            if (!!this.durationEntity) this.durationEntity.ForEachActionRecord_LaunchProjectile = forEachActionRecord_LaunchProjectile;
-            if (!!this.timeIntervalEntity) this.timeIntervalEntity.ForEachActionRecord_LaunchProjectile = forEachActionRecord_LaunchProjectile;
-            if (!!this.whenDoActionEntity) this.whenDoActionEntity.ForEachActionRecord_LaunchProjectile = forEachActionRecord_LaunchProjectile;
+            foreach (var entity in this._entityList) m_inject(entity);
+            void m_inject(GameBuffConditionEntityBase conditionEntity)
+            {
+                if (!conditionEntity) return;
+                conditionEntity.ForEachActionRecord_Dmg = forEachActionRecord_Dmg;
+                conditionEntity.ForEachActionRecord_Heal = forEachActionRecord_Heal;
+                conditionEntity.ForEachActionRecord_LaunchProjectile = forEachActionRecord_LaunchProjectile;
+                conditionEntity.ForEachActionRecord_KnockBack = forEachActionRecord_KnockBack;
+                conditionEntity.ForEachActionRecord_AttributeModify = forEachActionRecord_AttributeModify;
+                conditionEntity.ForEachActionRecord_AttachBuff = forEachActionRecord_AttachBuff;
+                conditionEntity.ForEachActionRecord_SummonRoles = forEachActionRecord_SummonRoles;
+            }
         }
 
         public void Clear()
         {
-            if (!!this.durationEntity) this.durationEntity.Clear();
-            if (!!this.timeIntervalEntity) this.timeIntervalEntity.Clear();
-            if (!!this.whenDoActionEntity) this.whenDoActionEntity.Clear();
+            this._entityList.ForEach(entity => entity.Clear());
         }
 
         public void Tick(float dt)
         {
-            if (!!this.durationEntity) this.durationEntity.Tick(dt);
-            if (!!this.timeIntervalEntity) this.timeIntervalEntity.Tick(dt);
-            if (!!this.whenDoActionEntity) this.whenDoActionEntity.Tick(dt);
+            this._entityList.ForEach(entity => entity.Tick(dt));
+        }
+
+        /// <summary> 判定条件集合是否存在有效条件 </summary>
+        public bool IsValid()
+        {
+            return this._entityList.Count > 0;
         }
 
         public bool CheckSatisfied()
         {
-            var isSatisfied = true;
-            if (!!this.durationEntity && !this.durationEntity.isSatisfied) isSatisfied = false;
-            if (!!this.timeIntervalEntity && !this.timeIntervalEntity.isSatisfied) isSatisfied = false;
-            if (!!this.whenDoActionEntity && !this.whenDoActionEntity.isSatisfied) isSatisfied = false;
-            return isSatisfied;
+            var unsatisfiedEntity = this._entityList.Find(entity => !entity.isSatisfied);
+            return unsatisfiedEntity == null;
         }
 
         public void RefreshTime()
