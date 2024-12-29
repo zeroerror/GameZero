@@ -103,7 +103,7 @@ namespace GamePlay.Bussiness.Logic
             var count = barrageModel.count;
             if (count <= 0) return null;
             var spreadAngle = barrageModel.spreadAngle;
-            var stepAngle = spreadAngle / (count - 1);
+            var stepAngle = count == 1 ? 0 : spreadAngle / (count - 1);
             var projectiles = new GameProjectileEntity[count];
             var originTarDir = targeter.targetDirection;
             for (var i = 0; i < count; i++)

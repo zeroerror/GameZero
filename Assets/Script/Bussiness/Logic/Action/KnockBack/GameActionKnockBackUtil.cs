@@ -39,7 +39,7 @@ namespace GamePlay.Bussiness.Logic
             var knockBackResist = target.attributeCom.GetValue(GameAttributeType.KnockbackResist);
             var distance = action.distance * (1 - knockBackResist);
 
-            var actorRoleIdArgs = actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default;
+            var actorRoleIdArgs = actor.TryGetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_KnockBack(
                 action.typeId,
                 actorRoleIdArgs,

@@ -17,6 +17,7 @@ MonoBehaviour:
   desc: "\u6BCF\u6B21\u53D1\u5C04\u5F13\u7BAD\u65F6\uFF0C\u4F1A\u989D\u5916\u53D1\u5C04"
   refreshFlag: 4
   maxLayer: 10
+  actionParam: 100
   actionSOs:
   - {fileID: 11400000, guid: 34ec54d23d64b1648a3f2e8a631baabe, type: 2}
   conditionSetEM_action:

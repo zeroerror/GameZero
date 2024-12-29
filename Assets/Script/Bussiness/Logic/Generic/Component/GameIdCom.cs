@@ -4,6 +4,8 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameIdCom
     {
+        public readonly GameEntityBase entity;
+
         public int typeId { get; private set; }
         public GameEntityType entityType { get; private set; }
 
@@ -15,10 +17,11 @@ namespace GamePlay.Bussiness.Logic
 
         public int campId;
 
-        public GameIdCom(int typeId, GameEntityType entityType)
+        public GameIdCom(int typeId, GameEntityType entityType, GameEntityBase entity)
         {
             this.typeId = typeId;
             this.entityType = entityType;
+            this.entity = entity;
         }
 
         public void Clear()
@@ -67,7 +70,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 var parentIdCom = parent.idCom;
                 campId = parentIdCom.campId;
-                parentIdCom.children.Add(parent);
+                parentIdCom.children.Add(this.entity);
             }
         }
 

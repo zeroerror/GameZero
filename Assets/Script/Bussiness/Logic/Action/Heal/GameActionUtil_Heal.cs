@@ -37,7 +37,7 @@ namespace GamePlay.Bussiness.Logic
             // 取2位小数
             realHeal = GameMathF.ToFixed(realHeal, 2);
 
-            var actorRoleIdArgs = actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default;
+            var actorRoleIdArgs = actor.TryGetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_Heal(
                 healModel.typeId,
                 actorRoleIdArgs,

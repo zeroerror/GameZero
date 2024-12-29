@@ -27,7 +27,7 @@ namespace GamePlay.Bussiness.Logic
 
         public GameEntityBase(int typeId, GameEntityType entityType)
         {
-            idCom = new GameIdCom(typeId, entityType);
+            idCom = new GameIdCom(typeId, entityType, this);
             transformCom = new GameTransformCom();
             actionTargeterCom = new GameActionTargeterCom();
             physicsCom = new GamePhysicsCom();
@@ -50,7 +50,10 @@ namespace GamePlay.Bussiness.Logic
             return idCom.IsEquals(other.idCom);
         }
 
-        public T TryGetLinkEntity<T>() where T : GameEntityBase
+        /// <summary>
+        /// 获取指定类型的父辈实体, 会追溯到根实体
+        /// </summary>
+        public T TryGetLinkParent<T>() where T : GameEntityBase
         {
             if (this is T)
             {
@@ -69,9 +72,30 @@ namespace GamePlay.Bussiness.Logic
             return null;
         }
 
+        /// <summary>
+        /// 获取指定类型的子实体
+        /// </summary>
+        public T TryGetLinkChild<T>() where T : GameEntityBase
+        {
+            if (this is T)
+            {
+                return this as T;
+            }
+
+            var c = idCom.children;
+            foreach (var child in c)
+            {
+                if (child is T)
+                {
+                    return child as T;
+                }
+            }
+            return null;
+        }
+
         public bool TryGetLinkEntity<T>(out T entity) where T : GameEntityBase
         {
-            entity = TryGetLinkEntity<T>();
+            entity = TryGetLinkParent<T>();
             return entity != null;
         }
 

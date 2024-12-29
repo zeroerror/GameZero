@@ -11,6 +11,7 @@ namespace GamePlay.Bussiness.Logic
         public readonly GameProjectileBarrageModel_Spread spreadModel;
 
         public GameActionModel_LaunchProjectile(
+            int typeId,
             int projectileId,
             GameEntitySelector selector,
             GameActionPreconditionSetModel preconditionSet,
@@ -18,7 +19,7 @@ namespace GamePlay.Bussiness.Logic
             GameProjectileBarrageType barrageType,
             GameProjectileBarrageModel_CustomLaunchOffset customLaunchOffsetModel,
             GameProjectileBarrageModel_Spread spreadModel
-        ) : base(GameActionType.LaunchProjectile, projectileId, selector, preconditionSet)
+        ) : base(GameActionType.LaunchProjectile, typeId, selector, preconditionSet)
         {
             this.projectileId = projectileId;
             this.launchOffset = launchOffset;
@@ -37,6 +38,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             return new GameActionModel_LaunchProjectile(
+                typeId,
                 projectileId,
                 selector,
                 preconditionSet,

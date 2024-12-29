@@ -79,7 +79,7 @@ namespace GamePlay.Bussiness.Logic
                 case GameEntitySelectAnchorType.Actor:
                     return actorEntity;
                 case GameEntitySelectAnchorType.ActorRole:
-                    return actorEntity.TryGetLinkEntity<GameRoleEntity>();
+                    return actorEntity.TryGetLinkParent<GameRoleEntity>();
                 case GameEntitySelectAnchorType.ActTarget:
                     return targetEntity;
                 default:

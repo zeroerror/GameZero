@@ -37,7 +37,7 @@ namespace GamePlay.Bussiness.Logic
             // 取2位小数
             realDmg = GameMathF.ToFixed(realDmg, 2);
 
-            var actorRoleIdArgs = actor.TryGetLinkEntity<GameRoleEntity>()?.idCom.ToArgs() ?? default;
+            var actorRoleIdArgs = actor.TryGetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_Dmg(
                 dmgModel.typeId,
                 actorRoleIdArgs,
