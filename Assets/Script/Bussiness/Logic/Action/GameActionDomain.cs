@@ -78,6 +78,9 @@ namespace GamePlay.Bussiness.Logic
                 case GameActionModel_AttachBuff attachBuffAction:
                     this.DoAction_AttachBuff(attachBuffAction, actor);
                     break;
+                case GameActionModel_SummonRoles summonRolesAction:
+                    this.DoAction_SummonRole(summonRolesAction, actor);
+                    break;
                 default:
                     GameLogger.LogError($"未处理的行为类型：{actionModel.GetType().Name}");
                     break;

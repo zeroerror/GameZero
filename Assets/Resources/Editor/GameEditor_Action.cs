@@ -19,6 +19,7 @@ namespace GamePlay.Config
         private SerializedProperty launchProjectileActionEM_p;
         private SerializedProperty knockBackActionEM_p;
         private SerializedProperty attachBuffActionEM_p;
+        private SerializedProperty summonRolesActionEM_p;
 
         private SerializedProperty actionEMR_p;
 
@@ -34,6 +35,7 @@ namespace GamePlay.Config
             this.launchProjectileActionEM_p = _serializedObject.FindProperty("launchProjectileActionEM");
             this.knockBackActionEM_p = _serializedObject.FindProperty("knockBackActionEM");
             this.attachBuffActionEM_p = _serializedObject.FindProperty("attachBuffActionEM");
+            this.summonRolesActionEM_p = _serializedObject.FindProperty("summonRolesActionEM");
 
             this.actionEMR_p = _serializedObject.FindProperty("actionEMR");
         }
@@ -103,6 +105,10 @@ namespace GamePlay.Config
                 case GameActionType.AttachBuff:
                     EditorGUILayout.LabelField(" -------- 附加Buff --------", EditorStyles.boldLabel);
                     attachBuffActionEM_p.DrawProperty();
+                    break;
+                case GameActionType.SummonRoles:
+                    EditorGUILayout.LabelField(" -------- 召唤角色 --------", EditorStyles.boldLabel);
+                    summonRolesActionEM_p.DrawProperty();
                     break;
                 default:
                     EditorGUILayout.HelpBox($"未知的行为类型：{so.actionType}", MessageType.Warning);

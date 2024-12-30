@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_2
+  m_Name: template_buff_102
   m_EditorClassIdentifier: 
-  typeId: 2
+  typeId: 102
   buffName: "\u6DEC\u6BD2\u5927\u5E08"
   desc: "\u5BF9\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u65F6\u6302\u8F7D1\u5C42\u6DEC\u6BD2"
   refreshFlag: 0

@@ -175,7 +175,7 @@ namespace GamePlay.Bussiness.Logic
 
         public GameRoleEntity[] SummonRoles(GameActionModel_SummonRoles model, GameEntityBase summoner, in GameTransformArgs transArgs)
         {
-            return this.SummonRoles(summoner, model.typeId, model.campType, model.count, transArgs);
+            return this.SummonRoles(summoner, model.roleId, model.campType, model.count, transArgs);
         }
     }
 }

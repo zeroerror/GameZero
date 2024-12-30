@@ -10,36 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_1
+  m_Name: template_buff_103
   m_EditorClassIdentifier: 
-  typeId: 1
-  buffName: "\u6DEC\u6BD2"
-  desc: "\u6BCF\u5C42\u9020\u62101%\u6700\u5927\u751F\u547D\u503C\u7684\u771F\u5B9E\u4F24\u5BB3,
-    \u6700\u591A\u53EF\u53E0\u52A020\u5C42"
-  refreshFlag: 5
-  maxLayer: 20
-  actionParam: 100
+  typeId: 103
+  buffName: "\u75AB\u75C5\u5927\u5E08"
+  desc: "\u5F53\u654C\u4EBA\u6B7B\u4EA1\u65F6\uFF0C\u4F1A\u4F20\u64AD5\u5C42\u6DEC\u6BD2\u7ED9\u5468\u56F4\u654C\u4EBA"
+  refreshFlag: 0
+  maxLayer: 1
+  actionParam: 500
   actionSOs:
-  - {fileID: 11400000, guid: d9f3c02e27c5a2644955544da91aaeed, type: 2}
+  - {fileID: 11400000, guid: 06845ec2d765b3749a586555f15294a6, type: 2}
   conditionSetEM_action:
     durationEM:
       isEnable: 0
       duration: 0
     timeIntervalEM:
-      isEnable: 1
-      timeInterval: 0.5
+      isEnable: 0
+      timeInterval: 2
     whenDoActionEM:
       isEnable: 0
       targetAction: {fileID: 0}
       targetActionType: 1
     whenRoleStateEnterEM:
-      isEnable: 0
-      campType: 0
-      stateType: 0
+      isEnable: 1
+      campType: 1
+      stateType: 4
   conditionSetEM_remove:
     durationEM:
-      isEnable: 1
-      duration: 5
+      isEnable: 0
+      duration: 0
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0
@@ -51,7 +50,7 @@ MonoBehaviour:
       isEnable: 0
       campType: 0
       stateType: 0
-  vfxPrefab: {fileID: 0}
-  vfxPrefabUrl: 
+  vfxPrefab: {fileID: 3672937312462212057, guid: 24e4ca5ae27d11b4baac1ec375e510b2, type: 3}
+  vfxPrefabUrl: VFX/vfx_electriCircle
   vfxLayerType: 0
   attributeEMs: []

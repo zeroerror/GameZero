@@ -183,12 +183,12 @@ namespace GamePlay.Bussiness.Renderer
                 this._enterStage = (this._enterStage + 1) % 2;
                 if (this._enterStage == 1)
                 {
-                    this._enterActionId = 0;
-                    GameLogger.DebugLog("请输入行为Id:");
+                    this._enterId = 0;
+                    GameLogger.DebugLog("请输入Id:");
                 }
                 else
                 {
-                    GameLogger.DebugLog("当前输入行为Id:" + this._enterActionId);
+                    GameLogger.DebugLog("当前输入Id:" + this._enterId);
                 }
             }
             // 输入阶段
@@ -199,12 +199,12 @@ namespace GamePlay.Bussiness.Renderer
                 {
                     if (keys == "\b")
                     {
-                        if (this._enterActionId > 0) this._enterActionId /= 10;// 退格
+                        if (this._enterId > 0) this._enterId /= 10;// 退格
                     }
                     else
                     {
                         var key = keys[0];
-                        if (key >= '0' && key <= '9') this._enterActionId = this._enterActionId * 10 + (key - '0');// 输入数字
+                        if (key >= '0' && key <= '9') this._enterId = this._enterId * 10 + (key - '0');// 输入数字
                     }
                 }
                 // ctrl + v的输入也要处理
@@ -213,23 +213,42 @@ namespace GamePlay.Bussiness.Renderer
                     var text = GUIUtility.systemCopyBuffer;
                     if (int.TryParse(text, out var actionId))
                     {
-                        this._enterActionId = actionId;
+                        this._enterId = actionId;
                     }
                 }
             }
+
+            // 作为行为Id执行
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                if (this._enterActionId > 0)
+                if (this._enterId > 0)
                 {
-                    GameLogger.DebugLog("执行行为Id:" + this._enterActionId);
                     var userRole_l = this.context.logicContext.roleContext.userRole;
-                    userRole_l.actionTargeterCom.SetTargeter(new GameActionTargeterArgs { targetEntity = userRole_l, targetDirection = userRole_l.transformCom.forward, targetPosition = userRole_l.transformCom.position });
-                    this.context.logicContext.domainApi.actionApi.DoAction(this._enterActionId, userRole_l);
+                    if (userRole_l)
+                    {
+                        GameLogger.DebugLog("执行行为Id:" + this._enterId);
+                        userRole_l.actionTargeterCom.SetTargeter(new GameActionTargeterArgs { targetEntity = userRole_l, targetDirection = userRole_l.transformCom.forward, targetPosition = userRole_l.transformCom.position });
+                        this.context.logicContext.domainApi.actionApi.DoAction(this._enterId, userRole_l);
+                    }
+                }
+            }
+
+            // 作为buffId执行
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                if (this._enterId > 0)
+                {
+                    var userRole_l = this.context.logicContext.roleContext.userRole;
+                    if (userRole_l)
+                    {
+                        GameLogger.DebugLog("执行BuffId:" + this._enterId);
+                        this.context.logicContext.domainApi.buffApi.TryAttachBuff(this._enterId, userRole_l, userRole_l, 1, out var realAttachLayer);
+                    }
                 }
             }
         }
         private int _enterStage;// 0-无输入阶段 1-输入阶段
-        private int _enterActionId;// 输入的buffId
+        private int _enterId;// 输入的buffId
 
     }
 }

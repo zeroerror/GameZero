@@ -10,8 +10,8 @@ namespace GamePlay.Config
     {
         protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var roleId_P = property.FindPropertyRelative("roleId");
-            roleId_P.DrawProperty("角色ID");
+            var roleSO_P = property.FindPropertyRelative("roleSO");
+            roleSO_P.DrawProperty("角色");
 
             var count_p = property.FindPropertyRelative("count");
             count_p.DrawProperty_Int("个数(至少一个)");
