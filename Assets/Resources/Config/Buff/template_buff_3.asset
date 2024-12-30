@@ -15,11 +15,11 @@ MonoBehaviour:
   typeId: 3
   buffName: "\u75AB\u75C5\u5927\u5E08"
   desc: "\u5F53\u5B58\u5728\u6DEC\u6BD2\u7684\u654C\u4EBA\u6B7B\u4EA1\u65F6\uFF0C\u4F1A\u4F20\u64AD1\u5C42\u6DEC\u6BD2\u7ED9\u5468\u56F4\u654C\u4EBA"
-  refreshFlag: 4
-  maxLayer: 2
-  actionParam: 100
+  refreshFlag: 0
+  maxLayer: 1
+  actionParam: 2000
   actionSOs:
-  - {fileID: 11400000, guid: 34c3341f01437694ebcf38d91fafda34, type: 2}
+  - {fileID: 11400000, guid: 06845ec2d765b3749a586555f15294a6, type: 2}
   conditionSetEM_action:
     durationEM:
       isEnable: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
       isEnable: 0
       campType: 0
       stateType: 0
-  vfxPrefab: {fileID: 0}
-  vfxPrefabUrl: 
+  vfxPrefab: {fileID: 3672937312462212057, guid: 24e4ca5ae27d11b4baac1ec375e510b2, type: 3}
+  vfxPrefabUrl: VFX/vfx_electriCircle
   vfxLayerType: 0
   attributeEMs: []

@@ -184,7 +184,7 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 3
+        radius: 5
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -225,8 +225,8 @@ MonoBehaviour:
         layer: 0
   actionEMR:
     typeId: 0
-    actEffectPrefab: {fileID: 0}
-    actVFXScale: {x: 1, y: 1}
+    actEffectPrefab: {fileID: 2430205674200673227, guid: 37797759b9834924eae8798d76ccdabc, type: 3}
+    actVFXScale: {x: 2, y: 2}
     actVFXOffset: {x: 0, y: 0}
     actCamShakeModel:
       angle: 0

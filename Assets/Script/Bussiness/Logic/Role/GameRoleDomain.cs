@@ -116,6 +116,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void Tick(float dt)
         {
+            this._roleContext.ClearRoleStateRecords();
             this.roleInputDomain.Tick();
             this.roleAIDomain.Tick(dt);
             var repo = this._roleContext.repo;

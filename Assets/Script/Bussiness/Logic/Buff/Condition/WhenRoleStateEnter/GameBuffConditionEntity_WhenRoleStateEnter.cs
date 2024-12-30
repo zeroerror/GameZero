@@ -20,17 +20,14 @@ namespace GamePlay.Bussiness.Logic
             List<GameActionTargeterArgs> targeterList = null;
             this.ForeachRoleStateRecord((stateRecord) =>
             {
-                // buff目标不是角色, 跳过
-                var target = this._buff.target;
-                if (target.idCom.entityType != GameEntityType.Role) return;
-                // 非存活状态跳过
                 var role = this.FindEntity(GameEntityType.Role, stateRecord.entityId) as GameRoleEntity;
-                if (!role || !role.IsAlive()) return;
+                if (!role) return;
                 // 检查 状态类型
                 if (stateRecord.stateType != this.model.stateType) return;
                 // 检查 阵营
                 var campType = this.model.campType;
                 var isTargetSelf = campType == GameCampType.None;
+                var target = this._buff.target;
                 if (isTargetSelf)
                 {
                     if (stateRecord.entityId == target.idCom.entityId) _setSatisfied();

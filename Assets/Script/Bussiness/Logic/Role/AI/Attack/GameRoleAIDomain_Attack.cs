@@ -51,7 +51,6 @@ namespace GamePlay.Bussiness.Logic
             var castSkill = attackState.castSkill;
             if (castTarget == null || castSkill == null)
             {
-                this._context.domainApi.roleApi.fsmApi.TryEnter(role, GameRoleStateType.Idle);
                 return;
             }
 

@@ -1,3 +1,4 @@
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public static class GameActionRCCollection
@@ -24,10 +25,12 @@ namespace GamePlay.Bussiness.Logic
     {
         public int actionId;
         public GameIdArgs actorIdArgs;
-        public GameActionRCArgs_Do(int actionId, in GameIdArgs actorIdArgs)
+        public GameVec2 actPos;
+        public GameActionRCArgs_Do(int actionId, in GameIdArgs actorIdArgs, in GameVec2 actPos)
         {
             this.actionId = actionId;
             this.actorIdArgs = actorIdArgs;
+            this.actPos = actPos;
         }
     }
 

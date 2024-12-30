@@ -52,11 +52,10 @@ namespace GamePlay.Bussiness.Renderer
 
         /// <summary>
         /// 播放行为特效
+        /// <para>actor: 执行者实体</para>
+        /// <para>actPos: 执行位置</para>
         /// </summary>
-        /// <param name="actionId"></param>
-        /// <param name="actor"></param>
-        /// <param name="target"></param>
-        private void _PlayActionEffect(int actionId, GameEntityBase actor)
+        private void _PlayActionEffect(int actionId, in Vector2 actPos)
         {
             if (!this._actionContext.template.TryGet(actionId, out var action))
             {
@@ -67,18 +66,12 @@ namespace GamePlay.Bussiness.Renderer
             var actEffectUrl = action.actEffectUrl;
             if (actEffectUrl != null)
             {
-                var attachNode = actor is GameRoleEntityR actRole ? actRole.root : null;
-                var transCom = actor.transformCom;
-                var attachOffset = action.actVFXOffset;
-                attachOffset.x = transCom.forward.x < 0 ? -attachOffset.x : attachOffset.x;
-                var attachPos = transCom.position + attachOffset;
+                var vfxOffset = action.actVFXOffset;
+                var vfxPos = actPos + vfxOffset;
                 var args = new GameVFXPlayArgs()
                 {
-                    attachNode = attachNode,
-                    attachOffset = attachOffset,
-                    position = attachPos,
+                    position = vfxPos,
                     url = actEffectUrl,
-                    angle = transCom.angle,
                     scale = action.actVFXScale,
                     loopDuration = 0,
                 };
@@ -95,7 +88,7 @@ namespace GamePlay.Bussiness.Renderer
         /// 播放行为命中特效
         /// <para>target: 目标实体</para>
         /// </summary>
-        private void _DoActionHitEffect(int actionId, GameEntityBase target)
+        private void _PlayActionHitEffect(int actionId, GameEntityBase target)
         {
             if (!this._actionContext.template.TryGet(actionId, out var action))
             {
@@ -141,7 +134,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_DO, args);
                 return;
             }
-            this._PlayActionEffect(evArgs.actionId, actor);
+            this._PlayActionEffect(evArgs.actionId, evArgs.actPos);
         }
 
         private void _OnAction_Dmg(object args)
@@ -160,7 +153,7 @@ namespace GamePlay.Bussiness.Renderer
 
             if (evArgs.dmgRecord.value > 0)
             {
-                this._DoActionHitEffect(evArgs.actionId, target);
+                this._PlayActionHitEffect(evArgs.actionId, target);
             }
 
             // 伤害跳字
@@ -194,7 +187,7 @@ namespace GamePlay.Bussiness.Renderer
             }
             if (healRecord.value > 0)
             {
-                this._DoActionHitEffect(evArgs.actionId, target);
+                this._PlayActionHitEffect(evArgs.actionId, target);
             }
         }
 
@@ -211,7 +204,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, args);
                 return;
             }
-            this._DoActionHitEffect(evArgs.actionId, target);
+            this._PlayActionHitEffect(evArgs.actionId, target);
         }
 
         private void _OnAction_KnockBack(object args)
@@ -227,7 +220,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, args);
                 return;
             }
-            this._DoActionHitEffect(evArgs.actionId, target);
+            this._PlayActionHitEffect(evArgs.actionId, target);
         }
 
         private void _OnAction_AttributeModify(object args)
@@ -243,7 +236,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, args);
                 return;
             }
-            this._DoActionHitEffect(evArgs.actionId, target);
+            this._PlayActionHitEffect(evArgs.actionId, target);
         }
 
         private void _OnAction_AttachBuff(object args)
@@ -259,7 +252,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, args);
                 return;
             }
-            this._DoActionHitEffect(evArgs.actionId, target);
+            this._PlayActionHitEffect(evArgs.actionId, target);
         }
     }
 }

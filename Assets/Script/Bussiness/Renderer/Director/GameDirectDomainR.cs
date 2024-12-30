@@ -190,12 +190,12 @@ namespace GamePlay.Bussiness.Renderer
                         if (!isSuc)
                         {
                             GameLogger.DebugLog($"尝试给玩家添加Buff失败: {this._enterBuffId}");
-                            this._enterBuffId = 0;
                         }
                         else
                         {
                             GameLogger.DebugLog($"尝试给玩家添加Buff: {this._enterBuffId}, 新增层数: {realAttachLayer}, 当前层数: {userRole_l.buffCom.Get(buffId)?.layer}");
                         }
+                        this._enterBuffId = 0;
                     }
                 }
             }

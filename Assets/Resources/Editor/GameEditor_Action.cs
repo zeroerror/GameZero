@@ -154,7 +154,7 @@ namespace GamePlay.Config
                 for (int i = 0; i < projectileSOs.Length; i++)
                 {
                     var projectileSO = projectileSOs[i];
-                    EditorGUILayout.ObjectField(projectileSO.typeId.ToString(), projectileSO, typeof(GameProjectileSO), false);
+                    EditorGUILayout.ObjectField(projectileSO.desc, projectileSO, typeof(GameProjectileSO), false);
                 }
             }
 
@@ -166,7 +166,7 @@ namespace GamePlay.Config
                 for (int i = 0; i < buffSOs.Length; i++)
                 {
                     var buffSO = buffSOs[i];
-                    EditorGUILayout.ObjectField(buffSO.typeId.ToString(), buffSO, typeof(GameBuffSO), false);
+                    EditorGUILayout.ObjectField(buffSO.desc, buffSO, typeof(GameBuffSO), false);
                 }
             }
 

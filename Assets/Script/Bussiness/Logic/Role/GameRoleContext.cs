@@ -40,5 +40,10 @@ namespace GamePlay.Bussiness.Logic
             oldInputArgs.Update(inputArgs);
             this._playerInputArgs[entityId] = oldInputArgs;
         }
+
+        public void ClearRoleStateRecords()
+        {
+            this.roleStateRecords.Clear();
+        }
     }
 }

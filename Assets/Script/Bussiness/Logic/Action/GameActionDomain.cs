@@ -84,9 +84,11 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 提交RC - 行为执行
+            var actAnchorPos = this._context.domainApi.entitySelectApi.GetSelectorAnchorPosition(actor, actionModel.selector);
             var evArgs = new GameActionRCArgs_Do(
                 actionModel.typeId,
-                actor.idCom.ToArgs()
+                actor.idCom.ToArgs(),
+                actAnchorPos
             );
             this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO, evArgs);
         }

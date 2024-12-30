@@ -23,11 +23,11 @@ namespace GamePlay.Config
 
         public bool HasRefAction(int actionId)
         {
-            var find = !!durationTriggerModel.actionSOs?.Find(so => so.typeId == actionId);
+            var find = !!durationTriggerModel?.actionSOs?.Find(so => so?.typeId == actionId);
             if (find) return true;
-            find = !!volumeCollisionTriggerModel.actionSOs?.Find(so => so.typeId == actionId);
+            find = !!volumeCollisionTriggerModel?.actionSOs?.Find(so => so?.typeId == actionId);
             if (find) return true;
-            find = !!impactTargetTriggerModel.actionSOs?.Find(so => so.typeId == actionId);
+            find = !!impactTargetTriggerModel?.actionSOs?.Find(so => so?.typeId == actionId);
             if (find) return true;
             return false;
         }
