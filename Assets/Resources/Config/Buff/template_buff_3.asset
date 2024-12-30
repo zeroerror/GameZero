@@ -37,8 +37,8 @@ MonoBehaviour:
       stateType: 4
   conditionSetEM_remove:
     durationEM:
-      isEnable: 1
-      duration: 5
+      isEnable: 0
+      duration: 0
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0
