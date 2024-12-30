@@ -27,7 +27,7 @@ MonoBehaviour:
       duration: 0
     timeIntervalEM:
       isEnable: 1
-      timeInterval: 2
+      timeInterval: 0.5
     whenDoActionEM:
       isEnable: 0
       targetAction: {fileID: 0}

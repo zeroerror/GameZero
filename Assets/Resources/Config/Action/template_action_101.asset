@@ -234,7 +234,7 @@ MonoBehaviour:
       frequency: 0
       duration: 0
     hitEffectPrefab: {fileID: 1491129530001574614, guid: 759e03e02611ecc44b8d3cf76be8ec90, type: 3}
-    hitVFXScale: {x: 0.2, y: 0.2}
+    hitVFXScale: {x: 1, y: 1}
     hitVFXOffset: {x: 0, y: 0}
     hitCamShakeModel:
       angle: 0

@@ -70,8 +70,8 @@ MonoBehaviour:
         fanAngle: 0
     preconditionSetEM:
       buffConditionEM:
-        enable: 1
-        buffSO: {fileID: 11400000, guid: a521f0941ee6add4b905572b47060205, type: 2}
+        enable: 0
+        buffSO: {fileID: 0}
         layer: 1
   attributeModifyActionEM:
     modifyType: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
       frequency: 0
       duration: 0
     hitEffectPrefab: {fileID: 1491129530001574614, guid: 759e03e02611ecc44b8d3cf76be8ec90, type: 3}
-    hitVFXScale: {x: 0.2, y: 0.2}
+    hitVFXScale: {x: 1, y: 1}
     hitVFXOffset: {x: 0, y: 0}
     hitCamShakeModel:
       angle: 0
