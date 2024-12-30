@@ -113,36 +113,41 @@ namespace GamePlay.Bussiness.Logic
                 this._ForeachActionRecord_KnockBack,
                 this._ForeachActionRecord_AttributeModify,
                 this._ForeachActionRecord_AttachBuff,
-                this._ForeachActionRecord_SummonRoles
+                this._ForeachActionRecord_SummonRoles,
+                this._ForeachRoleStateRecord_Enter
             );
         }
         private void _ForeachActionRecord_Dmg(in Action<GameActionRecord_Dmg> actionRecord)
         {
-            this._context.actionContext.dmgRecordList.ForEach(actionRecord);
+            this._context.actionContext.dmgRecordList.Foreach(actionRecord);
         }
         private void _ForeachActionRecord_Heal(in Action<GameActionRecord_Heal> actionRecord)
         {
-            this._context.actionContext.healRecordList.ForEach(actionRecord);
+            this._context.actionContext.healRecordList.Foreach(actionRecord);
         }
         private void _ForeachActionRecord_LaunchProjectile(in Action<GameActionRecord_LaunchProjectile> actionRecord)
         {
-            this._context.actionContext.launchProjectileRecordList.ForEach(actionRecord);
+            this._context.actionContext.launchProjectileRecordList.Foreach(actionRecord);
         }
         private void _ForeachActionRecord_KnockBack(in Action<GameActionRecord_KnockBack> actionRecord)
         {
-            this._context.actionContext.knockBackRecordList.ForEach(actionRecord);
+            this._context.actionContext.knockBackRecordList.Foreach(actionRecord);
         }
         private void _ForeachActionRecord_AttributeModify(in Action<GameActionRecord_AttributeModify> actionRecord)
         {
-            this._context.actionContext.attributeModifyRecordList.ForEach(actionRecord);
+            this._context.actionContext.attributeModifyRecordList.Foreach(actionRecord);
         }
         private void _ForeachActionRecord_AttachBuff(in Action<GameActionRecord_AttachBuff> actionRecord)
         {
-            this._context.actionContext.attachBuffRecordList.ForEach(actionRecord);
+            this._context.actionContext.attachBuffRecordList.Foreach(actionRecord);
         }
         private void _ForeachActionRecord_SummonRoles(in Action<GameActionRecord_SummonRoles> actionRecord)
         {
-            this._context.actionContext.summonRolesRecordList.ForEach(actionRecord);
+            this._context.actionContext.summonRolesRecordList.Foreach(actionRecord);
+        }
+        private void _ForeachRoleStateRecord_Enter(in Action<GameRoleStateRecord> stateRecord)
+        {
+            this._context.roleContext.roleStateRecords.Foreach(stateRecord);
         }
 
         /// <summary> 执行挂载buff </summary>

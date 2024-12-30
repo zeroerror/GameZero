@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -83,7 +84,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void Foreach(System.Action<GameAttribute> action)
         {
-            this._attributes.ForEach(action);
+            this._attributes.Foreach(action);
         }
     }
 }

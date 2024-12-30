@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GamePlay.Core;
 using static GamePlay.Bussiness.Logic.GameBuffConditionEntityBase;
 
 namespace GamePlay.Bussiness.Logic
@@ -33,13 +34,14 @@ namespace GamePlay.Bussiness.Logic
 
         public void Inject(
             FindRoleEntityDelegate findEntity,
-            ForEachActionRecordDelegate_Dmg forEachActionRecord_Dmg,
-            ForEachActionRecordDelegate_Heal forEachActionRecord_Heal,
-            ForEachActionRecordDelegate_LaunchProjectile forEachActionRecord_LaunchProjectile,
-            ForEachActionRecordDelegate_KnockBack forEachActionRecord_KnockBack,
-            ForEachActionRecordDelegate_AttributeModify forEachActionRecord_AttributeModify,
-            ForEachActionRecordDelegate_AttachBuff forEachActionRecord_AttachBuff,
-            ForEachActionRecordDelegate_SummonRoles forEachActionRecord_SummonRoles
+            ForeachActionRecordDelegate_Dmg forEachActionRecord_Dmg,
+            ForeachActionRecordDelegate_Heal forEachActionRecord_Heal,
+            ForeachActionRecordDelegate_LaunchProjectile forEachActionRecord_LaunchProjectile,
+            ForeachActionRecordDelegate_KnockBack forEachActionRecord_KnockBack,
+            ForeachActionRecordDelegate_AttributeModify forEachActionRecord_AttributeModify,
+            ForeachActionRecordDelegate_AttachBuff forEachActionRecord_AttachBuff,
+            ForeachActionRecordDelegate_SummonRoles forEachActionRecord_SummonRoles,
+            ForeachRoleStateRecordDelegate forEachRoleStateRecord
         )
         {
             foreach (var entity in this._entityList) m_inject(entity);
@@ -47,24 +49,25 @@ namespace GamePlay.Bussiness.Logic
             {
                 if (!conditionEntity) return;
                 conditionEntity.FindEntity = findEntity;
-                conditionEntity.ForEachActionRecord_Dmg = forEachActionRecord_Dmg;
-                conditionEntity.ForEachActionRecord_Heal = forEachActionRecord_Heal;
-                conditionEntity.ForEachActionRecord_LaunchProjectile = forEachActionRecord_LaunchProjectile;
-                conditionEntity.ForEachActionRecord_KnockBack = forEachActionRecord_KnockBack;
-                conditionEntity.ForEachActionRecord_AttributeModify = forEachActionRecord_AttributeModify;
-                conditionEntity.ForEachActionRecord_AttachBuff = forEachActionRecord_AttachBuff;
-                conditionEntity.ForEachActionRecord_SummonRoles = forEachActionRecord_SummonRoles;
+                conditionEntity.ForeachActionRecord_Dmg = forEachActionRecord_Dmg;
+                conditionEntity.ForeachActionRecord_Heal = forEachActionRecord_Heal;
+                conditionEntity.ForeachActionRecord_LaunchProjectile = forEachActionRecord_LaunchProjectile;
+                conditionEntity.ForeachActionRecord_KnockBack = forEachActionRecord_KnockBack;
+                conditionEntity.ForeachActionRecord_AttributeModify = forEachActionRecord_AttributeModify;
+                conditionEntity.ForeachActionRecord_AttachBuff = forEachActionRecord_AttachBuff;
+                conditionEntity.ForeachActionRecord_SummonRoles = forEachActionRecord_SummonRoles;
+                conditionEntity.ForeachRoleStateRecord = forEachRoleStateRecord;
             }
         }
 
         public void Clear()
         {
-            this._entityList.ForEach(entity => entity.Clear());
+            this._entityList.Foreach(entity => entity.Clear());
         }
 
         public void Tick(float dt)
         {
-            this._entityList.ForEach(entity => entity.Tick(dt));
+            this._entityList.Foreach(entity => entity.Tick(dt));
         }
 
         /// <summary> 判定条件集合是否存在有效条件 </summary>

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -25,7 +26,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void ForeachSkills(System.Action<GameSkillEntity> action)
         {
-            _skillEntities.ForEach(action);
+            _skillEntities.Foreach(action);
         }
 
         /// <summary>

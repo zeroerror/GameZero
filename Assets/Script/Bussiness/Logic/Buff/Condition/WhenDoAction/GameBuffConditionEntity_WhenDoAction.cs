@@ -15,21 +15,21 @@ namespace GamePlay.Bussiness.Logic
             var isSatisfied = false;
 
             // 遍历 - 伤害记录
-            this.ForEachActionRecord_Dmg((actionRecord) =>
+            this.ForeachActionRecord_Dmg((actionRecord) =>
             {
                 m_check(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Dmg);
             });
             if (isSatisfied) return true;
 
             // 遍历 - 治疗记录
-            this.ForEachActionRecord_Heal((actionRecord) =>
+            this.ForeachActionRecord_Heal((actionRecord) =>
             {
                 m_check(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Heal);
             });
             if (isSatisfied) return true;
 
             // 遍历 - 发射投射物记录
-            this.ForEachActionRecord_LaunchProjectile((actionRecord) =>
+            this.ForeachActionRecord_LaunchProjectile((actionRecord) =>
             {
                 m_check(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.LaunchProjectile);
             });
@@ -62,7 +62,8 @@ namespace GamePlay.Bussiness.Logic
                     isSatisfied = true;
                 }
 
-                // 满足时, 同步目标选取器到buff
+                // TODO: 应该记录一个list, 因为可能有多个行为满足条件, 都需要对其处理
+                // 满足时, 同步目标选取器到buff 
                 if (isSatisfied)
                 {
                     var targetEntity = this.FindEntity(targetIdArgs.entityType, targetIdArgs.entityId);

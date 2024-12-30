@@ -44,7 +44,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void Foreach(System.Action<GameBuffEntity> action)
         {
-            this._buffList.ForEach(action);
+            this._buffList.Foreach(action);
         }
     }
 }

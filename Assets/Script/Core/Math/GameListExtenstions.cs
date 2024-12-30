@@ -128,6 +128,11 @@ namespace GamePlay.Core
             list.Foreach((item, index) => action(item));
         }
 
+        public static void Foreach<T>(this List<T> list, Action<T> action)
+        {
+            list.ForEach(action);
+        }
+
         public static string ToString<T>(this T[] list)
         {
             string result = "";

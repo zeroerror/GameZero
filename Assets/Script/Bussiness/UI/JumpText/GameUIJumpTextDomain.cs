@@ -25,12 +25,12 @@ namespace GamePlay.Bussiness.UI
         public void Destroy()
         {
             this._UnbindEvents();
-            this._jumpTextEntityList?.ForEach((entity) =>
+            this._jumpTextEntityList?.Foreach((entity) =>
             {
                 entity.Destroy();
             });
             this._jumpTextEntityList.Clear();
-            this._jumpTextEntityPool?.ForEach((entity) =>
+            this._jumpTextEntityPool?.Foreach((entity) =>
             {
                 entity.Destroy();
             });

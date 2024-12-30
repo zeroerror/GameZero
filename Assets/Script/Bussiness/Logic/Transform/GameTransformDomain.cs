@@ -1,3 +1,4 @@
+using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -24,7 +25,7 @@ namespace GamePlay.Bussiness.Logic
             this._context.roleContext.repo.ForeachEntities(this._RCTransformDirty);
             this._context.projectileContext.repo.ForeachEntities(this._RCTransformDirty);
 
-            this._transformContext.posActions.ForEach((posAction) =>
+            this._transformContext.posActions.Foreach((posAction) =>
             {
                 if (!posAction.transCom.isEnable || posAction.Tick(dt))
                 {

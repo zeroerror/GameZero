@@ -1,15 +1,16 @@
-using System;
 using System.Collections.Generic;
 using GamePlay.Core;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleContext
     {
+        public GameRoleEntity userRole;
+
         public GameRoleRepo repo { get; private set; }
         public GameRoleFactory factory { get; private set; }
         public GameIdService idService { get; private set; }
         private Dictionary<int, GameRoleInputArgs> _playerInputArgs;
-        public GameRoleEntity userRole;
+        public List<GameRoleStateRecord> roleStateRecords;
 
         public GameRoleContext()
         {
@@ -17,6 +18,7 @@ namespace GamePlay.Bussiness.Logic
             this.factory = new GameRoleFactory();
             this.idService = new GameIdService();
             this._playerInputArgs = new Dictionary<int, GameRoleInputArgs>();
+            this.roleStateRecords = new List<GameRoleStateRecord>();
         }
 
         public void ClearPlayerInputArgs()

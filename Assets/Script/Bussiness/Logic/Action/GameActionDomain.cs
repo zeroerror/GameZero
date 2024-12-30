@@ -95,7 +95,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
-            selectedEntities?.ForEach((selectedEntity) =>
+            selectedEntities?.Foreach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
@@ -123,7 +123,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
-            selectedEntities?.ForEach((selectedEntity) =>
+            selectedEntities?.Foreach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
@@ -152,7 +152,7 @@ namespace GamePlay.Bussiness.Logic
             var projectileApi = this._context.domainApi.projectileApi;
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
-            selectedEntities?.ForEach((selectedEntity) =>
+            selectedEntities?.Foreach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
@@ -205,7 +205,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
-            selectedEntities?.ForEach((selectedEntity) =>
+            selectedEntities?.Foreach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
@@ -233,7 +233,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
-            selectedEntities?.ForEach((selectedEntity) =>
+            selectedEntities?.Foreach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
@@ -260,7 +260,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
-            selectedEntities?.ForEach((selectedEntity) =>
+            selectedEntities?.Foreach((selectedEntity) =>
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 

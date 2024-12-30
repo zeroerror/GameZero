@@ -197,7 +197,7 @@ public class GamePhysicsTest : MonoBehaviour
         var mainCam = Camera.main;
         var physicsApi = mainCam.gameObject.GetComponent<GameEntry>().gameApp.directDomain.context.domainApi.physicsApi;
         var overlapEntities = physicsApi.GetOverlapEntities(colliderModel, collider.binder.transformCom.ToArgs());
-        overlapEntities.ForEach((entity) =>
+        overlapEntities.Foreach((entity) =>
         {
             collider.Draw(Color.red);
         });

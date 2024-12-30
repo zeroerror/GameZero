@@ -92,5 +92,22 @@ namespace GamePlay.Bussiness.Logic
             entityId = args.entityId;
             campId = args.campId;
         }
+
+        public bool CheckCampType(GameIdCom idComB, GameCampType campType)
+        {
+            switch (campType)
+            {
+                case GameCampType.None:
+                    return true;
+                case GameCampType.Enemy:
+                    return this.campId != idComB.campId;
+                case GameCampType.Ally:
+                    return this.campId == idComB.campId;
+                case GameCampType.Neutral:
+                    return this.campId == 0 || idComB.campId == 0;
+                default:
+                    return false;
+            }
+        }
     }
 }

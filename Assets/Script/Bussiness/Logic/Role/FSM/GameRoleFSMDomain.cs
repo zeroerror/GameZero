@@ -5,6 +5,8 @@ namespace GamePlay.Bussiness.Logic
     public class GameRoleFSMDomain : GameRoleFSMDomainApi
     {
         private GameContext _context;
+        private GameRoleContext _roleContext => this._context.roleContext;
+
         private GameRoleStateDomainBase _anyStateDomain;
         private Dictionary<GameRoleStateType, GameRoleStateDomainBase> _stateDomainDict;
 

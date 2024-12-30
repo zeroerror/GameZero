@@ -25,7 +25,7 @@ namespace GamePlay.Bussiness.Logic
         {
             if (!entityA || !entityB) return false;
             // 判定阵营
-            if (!this.CheckCampType(entityA, entityB)) return false;
+            if (!entityA.idCom.CheckCampType(entityB.idCom, campType)) return false;
             // 判定实体类型
             if (this.entityType != GameEntityType.None && entityB.idCom.entityType != this.entityType) return false;
             // 判定锚点类型
@@ -38,21 +38,6 @@ namespace GamePlay.Bussiness.Logic
             return true;
         }
 
-        public bool CheckCampType(GameEntityBase entityA, GameEntityBase entityB)
-        {
-            switch (this.campType)
-            {
-                case GameCampType.None:
-                    return true;
-                case GameCampType.Enemy:
-                    return entityA.idCom.campId != entityB.idCom.campId;
-                case GameCampType.Ally:
-                    return entityA.idCom.campId == entityB.idCom.campId;
-                case GameCampType.Neutral:
-                    return entityA.idCom.campId == 0 || entityB.idCom.campId == 0;
-                default:
-                    return false;
-            }
-        }
+
     }
 }
