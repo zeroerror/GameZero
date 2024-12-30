@@ -156,6 +156,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
+                var targeter = actor.actionTargeterCom.getCurTargeter();
                 // 帧末执行
                 this._context.cmdBufferService.AddDelayCmd(0, () =>
                 {
@@ -186,7 +187,8 @@ namespace GamePlay.Bussiness.Logic
                         actionId: action.typeId,
                         actorRoleIdArgs: actor.TryGetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                         actorIdArgs: actor.idCom.ToArgs(),
-                        targetRoleIdArgs: selectedEntity.idCom.ToArgs()
+                        targetRoleIdArgs: selectedEntity.idCom.ToArgs(),
+                        actor.actionTargeterCom.getCurTargeterAsRecord()
                     );
                     this._actionContext.launchProjectileRecordList.Add(record);
                     // 提交RC
@@ -274,6 +276,7 @@ namespace GamePlay.Bussiness.Logic
                         actorRoleIdArgs: actor.TryGetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                         actorIdArgs: actor.idCom.ToArgs(),
                         targetRoleIdArgs: selectedEntity.idCom.ToArgs(),
+                        actor.actionTargeterCom.getCurTargeterAsRecord(),
                         buffId: action.buffId,
                         layer: realAttachLayer
                     );

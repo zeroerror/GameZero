@@ -43,6 +43,7 @@ namespace GamePlay.Bussiness.Logic
                 actorRoleIdArgs,
                 actor.idCom.ToArgs(),
                 target.idCom.ToArgs(),
+                actor.actionTargeterCom.getCurTargeterAsRecord(),
                 GameActionDmgType.Real,
                 realDmg
             );

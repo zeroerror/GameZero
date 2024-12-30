@@ -6,7 +6,6 @@ namespace GamePlay.Bussiness.Logic
     {
         /// <summary> 伤害类型 </summary>
         public GameActionDmgType dmgType;
-
         /// <summary> 伤害数值 </summary>
         public int value;
         /// <summary> 数值格式 </summary>

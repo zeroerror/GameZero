@@ -59,6 +59,7 @@ namespace GamePlay.Bussiness.Logic
                 actor.TryGetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                 actor.idCom.ToArgs(),
                 target.idCom.ToArgs(),
+                actor.actionTargeterCom.getCurTargeterAsRecord(),
                 modifyType,
                 realAttributeModify
             );

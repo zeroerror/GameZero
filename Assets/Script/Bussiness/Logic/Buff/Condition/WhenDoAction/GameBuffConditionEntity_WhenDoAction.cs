@@ -17,27 +17,27 @@ namespace GamePlay.Bussiness.Logic
             // 遍历 - 伤害记录
             this.ForEachActionRecord_Dmg((actionRecord) =>
             {
-                m_check(actionRecord.actorIdArgs, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Dmg);
+                m_check(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Dmg);
             });
             if (isSatisfied) return true;
 
             // 遍历 - 治疗记录
             this.ForEachActionRecord_Heal((actionRecord) =>
             {
-                m_check(actionRecord.actorIdArgs, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Heal);
+                m_check(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Heal);
             });
             if (isSatisfied) return true;
 
             // 遍历 - 发射投射物记录
             this.ForEachActionRecord_LaunchProjectile((actionRecord) =>
             {
-                m_check(actionRecord.actorIdArgs, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.LaunchProjectile);
+                m_check(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.LaunchProjectile);
             });
             if (isSatisfied) return true;
 
             return false;
 
-            void m_check(in GameIdArgs actorIdArgs, in GameIdArgs targetIdArgs, int actionId, GameActionType actionType)
+            void m_check(in GameIdArgs actorIdArgs, in GameActionTargeterArgsRecord actionTargeterRecord, in GameIdArgs targetIdArgs, int actionId, GameActionType actionType)
             {
                 // 已满足条件, 不再检查
                 if (isSatisfied) return;
@@ -62,37 +62,16 @@ namespace GamePlay.Bussiness.Logic
                     isSatisfied = true;
                 }
 
+                // 满足时, 同步目标选取器到buff
                 if (isSatisfied)
                 {
-                    switch (actionType)
-                    {
-                        case GameActionType.Dmg:
-                        case GameActionType.Heal:
-                        case GameActionType.AttributeModify:
-                            // 捕获目标实体
-                            var actTargetEntity = this.FindEntity(targetIdArgs.entityType, targetIdArgs.entityId);
-                            if (actTargetEntity)
-                            {
-                                // 更新buff的目标选取器
-                                var targeter = new GameActionTargeterArgs(
-                                    actTargetEntity,
-                                    actTargetEntity.transformCom.position,
-                                    (actTargetEntity.transformCom.position - actorRoleEntity.transformCom.position).normalized
-                                );
-                                this._buff.actionTargeterCom.SetTargeter(targeter);
-                            }
-                            break;
-                        case GameActionType.LaunchProjectile:
-                            // 捕获投射物实体
-                            var projectileEntity = actorEntity.TryGetLinkChild<GameProjectileEntity>();
-                            if (projectileEntity)
-                            {
-                                // 更新buff的目标选取器
-                                var targeter = projectileEntity.actionTargeterCom.getCurTargeter();
-                                this._buff.actionTargeterCom.SetTargeter(targeter);
-                            }
-                            break;
-                    }
+                    var targetEntity = this.FindEntity(targetIdArgs.entityType, targetIdArgs.entityId);
+                    var targeter = new GameActionTargeterArgs(
+                        targetEntity,
+                        actionTargeterRecord.targetPosition,
+                        actionTargeterRecord.targetDirection
+                    );
+                    this._buff.actionTargeterCom.SetTargeter(targeter);
                 }
             }
         }

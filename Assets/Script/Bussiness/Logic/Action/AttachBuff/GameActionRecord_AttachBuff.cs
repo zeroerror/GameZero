@@ -10,7 +10,8 @@ namespace GamePlay.Bussiness.Logic
         public GameIdArgs actorIdArgs;
         /// <summary> 目标角色Id参数 </summary>
         public GameIdArgs targetIdArgs;
-
+        /// <summary> 行为目标选取器参数记录 </summary>
+        public GameActionTargeterArgsRecord actionTargeter;
         /// <summary> buff类型Id </summary>
         public int buffId;
         /// <summary> 层数 </summary>
@@ -21,6 +22,7 @@ namespace GamePlay.Bussiness.Logic
             in GameIdArgs actorRoleIdArgs,
             in GameIdArgs actorIdArgs,
             in GameIdArgs targetRoleIdArgs,
+            in GameActionTargeterArgsRecord actionTargeter,
             int buffId,
             int layer
         )
@@ -29,6 +31,7 @@ namespace GamePlay.Bussiness.Logic
             this.actorRoleIdArgs = actorRoleIdArgs;
             this.actorIdArgs = actorIdArgs;
             this.targetIdArgs = targetRoleIdArgs;
+            this.actionTargeter = actionTargeter;
             this.buffId = buffId;
             this.layer = layer;
         }

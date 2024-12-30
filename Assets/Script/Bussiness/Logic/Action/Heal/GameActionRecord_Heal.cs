@@ -8,9 +8,10 @@ namespace GamePlay.Bussiness.Logic
         public GameIdArgs actorRoleIdArgs;
         /// <summary> 行为者Id参数, 比如技能, 投射物, BUFF等 </summary>
         public GameIdArgs actorIdArgs;
-
         /// <summary> 目标角色Id参数 </summary>
         public GameIdArgs targetIdArgs;
+        /// <summary> 行为目标选取器参数记录 </summary>
+        public GameActionTargeterArgsRecord actionTargeter;
 
         /// <summary> 治疗类型 </summary>
         public GameActionHealType healType;
@@ -22,6 +23,7 @@ namespace GamePlay.Bussiness.Logic
             in GameIdArgs actorRoleIdArgs,
             in GameIdArgs actorIdArgs,
             in GameIdArgs targetRoleIdArgs,
+            in GameActionTargeterArgsRecord actionTargeter,
             GameActionHealType healType,
             float value
         )
@@ -30,6 +32,7 @@ namespace GamePlay.Bussiness.Logic
             this.actorRoleIdArgs = actorRoleIdArgs;
             this.actorIdArgs = actorIdArgs;
             this.targetIdArgs = targetRoleIdArgs;
+            this.actionTargeter = actionTargeter;
             this.healType = healType;
             this.value = value;
         }

@@ -78,5 +78,15 @@ namespace GamePlay.Bussiness.Logic
             if (_targeterList == null || _targeterList.Count == 0) return default;
             return _targeterList[_curTargeterIndex];
         }
+
+        public GameActionTargeterArgsRecord getCurTargeterAsRecord()
+        {
+            var record = new GameActionTargeterArgsRecord(
+                getCurTargeter().targetEntity?.idCom.ToArgs() ?? default,
+                getCurTargeter().targetPosition,
+                getCurTargeter().targetDirection
+            );
+            return record;
+        }
     }
 }
