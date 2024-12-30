@@ -1,0 +1,27 @@
+using UnityEditor;
+using UnityEngine;
+
+namespace GamePlay.Config
+{
+    [CustomPropertyDrawer(typeof(GameBuffConditionEM_WhenRoleStateEnter))]
+    public class GamePropertyDrawer_Condition_WhenRoleStateEnter : GamePropertyDrawer
+    {
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var isEnable_p = property.FindPropertyRelative("isEnable");
+            var labelTxt = "条件 - 当角色状态进入时";
+            var isEnable = isEnable_p.DrawProperty_Bool(labelTxt);
+
+            EditorGUI.indentLevel += 1;
+            if (isEnable)
+            {
+                var campType_p = property.FindPropertyRelative("campType");
+                campType_p.DrawProperty("筛选阵营类型");
+                var stateType_p = property.FindPropertyRelative("stateType");
+                stateType_p.DrawProperty("角色进入的状态类型");
+            }
+            EditorGUI.indentLevel -= 1;
+        }
+
+    }
+}

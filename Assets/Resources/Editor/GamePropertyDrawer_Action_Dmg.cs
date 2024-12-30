@@ -6,12 +6,10 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameActionEM_Dmg))]
-    public class GamePropertyDrawer_ActionDmg : PropertyDrawer
+    public class GamePropertyDrawer_ActionDmg : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
             var dmgType_p = property.FindPropertyRelative("dmgType");
             dmgType_p.DrawProperty_EnumPopup<GameActionDmgType>("伤害类型");
 
@@ -37,8 +35,6 @@ namespace GamePlay.Config
 
             var preconditionSetEM_p = property.FindPropertyRelative("preconditionSetEM");
             preconditionSetEM_p.DrawProperty();
-
-            EditorGUI.EndProperty();
         }
     }
 }

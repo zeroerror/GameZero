@@ -6,12 +6,10 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameActionEM_KnockBack))]
-    public class GamePropertyDrawer_Action_KnockBack : PropertyDrawer
+    public class GamePropertyDrawer_Action_KnockBack : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
             var knockBackDirType_P = property.FindPropertyRelative("knockBackDirType");
             knockBackDirType_P.DrawProperty_EnumPopup<GameActionKnockBackDirType>("击退方向类型");
 
@@ -30,8 +28,6 @@ namespace GamePlay.Config
 
             var preconditionSetEM_p = property.FindPropertyRelative("preconditionSetEM");
             preconditionSetEM_p.DrawProperty();
-
-            EditorGUI.EndProperty();
         }
     }
 }

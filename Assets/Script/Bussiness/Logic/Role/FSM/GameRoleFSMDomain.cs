@@ -56,6 +56,10 @@ namespace GamePlay.Bussiness.Logic
             {
                 this._ExitToState(role, toState);
                 stateDomain.Enter(role);
+                this._roleContext.roleStateRecords.Add(new GameRoleStateRecord(
+                    role.idCom.entityId,
+                    role.fsmCom.stateType
+                ));
             }
             return check;
         }

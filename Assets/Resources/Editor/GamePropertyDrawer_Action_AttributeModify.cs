@@ -5,12 +5,10 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameActionEM_AttributeModify))]
-    public class GamePropertyDrawer_Action_AttributeModify : PropertyDrawer
+    public class GamePropertyDrawer_Action_AttributeModify : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
             var modifyType_p = property.FindPropertyRelative("modifyType");
             modifyType_p.DrawProperty_EnumPopup<GameAttributeType>("属性修改类型");
 
@@ -36,8 +34,6 @@ namespace GamePlay.Config
 
             var preconditionSetEM_p = property.FindPropertyRelative("preconditionSetEM");
             preconditionSetEM_p.DrawProperty();
-
-            EditorGUI.EndProperty();
         }
     }
 }

@@ -6,12 +6,10 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameActionEM_SummonRoles))]
-    public class GamePropertyDrawer_Action_SummonRoles : PropertyDrawer
+    public class GamePropertyDrawer_Action_SummonRoles : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
             var roleId_P = property.FindPropertyRelative("roleId");
             roleId_P.DrawProperty("角色ID");
 
@@ -30,8 +28,6 @@ namespace GamePlay.Config
 
             var preconditionSetEM_p = property.FindPropertyRelative("preconditionSetEM");
             preconditionSetEM_p.DrawProperty();
-
-            EditorGUI.EndProperty();
         }
     }
 }

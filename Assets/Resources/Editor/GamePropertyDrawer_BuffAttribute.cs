@@ -5,12 +5,10 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameBuffAttributeEM))]
-    public class GamePropertyDrawer_BuffAttribute : PropertyDrawer
+    public class GamePropertyDrawer_BuffAttribute : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
             var attributeType_p = property.FindPropertyRelative("attributeType");
             attributeType_p.DrawProperty_EnumPopup<GameAttributeType>("属性类型");
 
@@ -30,8 +28,6 @@ namespace GamePlay.Config
                 var refType_p = property.FindPropertyRelative("refType");
                 refType_p.DrawProperty_EnumPopup<GameActionValueRefType>("数值参考类型");
             }
-
-            EditorGUI.EndProperty();
         }
     }
 }

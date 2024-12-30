@@ -1,17 +1,14 @@
 using GamePlay.Bussiness.Logic;
-using GamePlay.Bussiness.Renderer;
 using UnityEditor;
 using UnityEngine;
 
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameActionEM_Heal))]
-    public class GamePropertyDrawer_ActionHeal : PropertyDrawer
+    public class GamePropertyDrawer_ActionHeal : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
             var healType_p = property.FindPropertyRelative("healType");
             healType_p.DrawProperty_EnumPopup<GameActionHealType>("治疗类型");
 
@@ -37,8 +34,6 @@ namespace GamePlay.Config
 
             var preconditionSetEM_p = property.FindPropertyRelative("preconditionSetEM");
             preconditionSetEM_p.DrawProperty();
-
-            EditorGUI.EndProperty();
         }
     }
 }

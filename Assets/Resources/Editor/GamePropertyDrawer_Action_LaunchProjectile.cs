@@ -5,12 +5,10 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameActionEM_LaunchProjectile))]
-    public class GamePropertyDrawer_Action_LaunchProjectile : PropertyDrawer
+    public class GamePropertyDrawer_Action_LaunchProjectile : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
             var launchProjectileSO_p = property.FindPropertyRelative("launchProjectileSO");
             var launchProjectileSO = launchProjectileSO_p.DrawProperty<GameProjectileSO>("投射物模板");
 
@@ -43,8 +41,6 @@ namespace GamePlay.Config
 
             var preconditionSetEM_p = property.FindPropertyRelative("preconditionSetEM");
             preconditionSetEM_p.DrawProperty();
-
-            EditorGUI.EndProperty();
         }
     }
 }

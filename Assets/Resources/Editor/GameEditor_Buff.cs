@@ -51,12 +51,25 @@ namespace GamePlay.Config
                 this.typeId_p.DrawProperty_Int("类型ID");
                 this.buffName_p.DrawProperty_Str("名称");
                 this.desc_p.DrawProperty_Str("描述");
-                this.refreshFlag_p.DrawProperty_EnumFlagsPopup<GameBuffRefreshFlag>("刷新类型标记");
+                var refreshFlag = this.refreshFlag_p.DrawProperty_EnumFlagsPopup<GameBuffRefreshFlag>("刷新类型标记");
                 var maxLayer = this.maxLayer_p.DrawProperty_Int("最大层数");
                 if (maxLayer < 1)
                 {
                     this.maxLayer_p.intValue = 1;
                 }
+
+                // 对刷新类型标记的合法性进行校正
+                if (refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer) && maxLayer < 2)
+                {
+                    refreshFlag &= ~GameBuffRefreshFlag.StackLayer;
+                    this.refreshFlag_p.intValue = (int)refreshFlag;
+                }
+                else if (maxLayer > 1 && !refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer))
+                {
+                    refreshFlag |= GameBuffRefreshFlag.StackLayer;
+                    this.refreshFlag_p.intValue = (int)refreshFlag;
+                }
+
                 this.actionParam_p.DrawProperty_Int("行为参数(百分比)");
 
                 var vfxPrefab = this.vfxPrefab_p.DrawProperty<GameObject>("buff特效");
@@ -73,14 +86,20 @@ namespace GamePlay.Config
 
             GameEditorGUILayout.DrawBoxItem(() =>
             {
-                this.actionSOs_p.DrawProperty("行为模板列表");
-                this.conditionSetEM_action_p.DrawProperty("条件集模板 - 触发行为");
-                this.conditionSetEM_remove_p.DrawProperty("条件集模板 - 移除");
+                this.attributeEMs_p.DrawProperty_Array("属性效果");
             });
 
             GameEditorGUILayout.DrawBoxItem(() =>
             {
-                this.attributeEMs_p.DrawProperty_Array("属性效果");
+                this.actionSOs_p.DrawProperty("行为模板列表");
+            });
+            GameEditorGUILayout.DrawBoxItem(() =>
+            {
+                this.conditionSetEM_action_p.DrawProperty("条件集模板 - 触发行为");
+            });
+            GameEditorGUILayout.DrawBoxItem(() =>
+            {
+                this.conditionSetEM_remove_p.DrawProperty("条件集模板 - 移除");
             });
 
             GameEditorGUILayout.DrawBoxItem(() => this._DrawActionSORefs());

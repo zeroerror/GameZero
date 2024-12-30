@@ -4,11 +4,10 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameActionEMR))]
-    public class GamePropertyDrawer_Action_R : PropertyDrawer
+    public class GamePropertyDrawer_Action_R : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
             EditorGUILayout.LabelField("视觉效果等表现参数", EditorStyles.boldLabel);
 
             property.FindPropertyRelative("actEffectPrefab").DrawProperty("行为特效");
@@ -20,8 +19,6 @@ namespace GamePlay.Config
             property.FindPropertyRelative("hitVFXScale").DrawProperty("命中特效缩放");
             property.FindPropertyRelative("hitVFXOffset").DrawProperty("命中特效偏移");
             property.FindPropertyRelative("hitCamShakeModel").DrawProperty("命中相机震动");
-
-            EditorGUI.EndProperty();
         }
     }
 }

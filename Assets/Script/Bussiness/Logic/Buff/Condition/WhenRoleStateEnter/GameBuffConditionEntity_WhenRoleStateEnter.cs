@@ -17,7 +17,6 @@ namespace GamePlay.Bussiness.Logic
 
         protected override bool _Check()
         {
-            var conditionCheck = false;
             List<GameActionTargeterArgs> targeterList = null;
             this.ForeachRoleStateRecord((stateRecord) =>
             {
@@ -27,21 +26,22 @@ namespace GamePlay.Bussiness.Logic
                 // 非存活状态跳过
                 var role = this.FindEntity(GameEntityType.Role, stateRecord.entityId) as GameRoleEntity;
                 if (!role || !role.IsAlive()) return;
-                // 检查是否满足条件
+                // 检查 状态类型
+                if (stateRecord.stateType != this.model.stateType) return;
+                // 检查 阵营
                 var campType = this.model.campType;
                 var isTargetSelf = campType == GameCampType.None;
                 if (isTargetSelf)
                 {
-                    if (stateRecord.entityId == target.idCom.entityId) m_check();
+                    if (stateRecord.entityId == target.idCom.entityId) _setSatisfied();
                 }
                 else
                 {
-                    if (role.idCom.CheckCampType(target.idCom, campType)) m_check();
+                    if (role.idCom.CheckCampType(target.idCom, campType)) _setSatisfied();
                 }
 
-                void m_check()
+                void _setSatisfied()
                 {
-                    conditionCheck = true;
                     if (targeterList == null) targeterList = new List<GameActionTargeterArgs>();
                     var targeter = new GameActionTargeterArgs(
                         role,
@@ -53,14 +53,16 @@ namespace GamePlay.Bussiness.Logic
                 }
             });
 
-            // 满足时, 同步目标选取器列表到buff 
-            if (targeterList != null)
+            // 不满足时, 返回false
+            if (targeterList == null)
             {
-                this._buff.actionTargeterCom.SetTargeterList(targeterList);
-                this._buff.actionTargeterCom.foreachType = GameForeachType.Sequential;
+                return false;
             }
 
-            return conditionCheck;
+            // 满足时, 同步目标选取器列表到buff 
+            this._buff.actionTargeterCom.SetTargeterList(targeterList);
+            this._buff.actionTargeterCom.foreachType = GameForeachType.Sequential;
+            return true;
         }
     }
 }

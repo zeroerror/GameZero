@@ -4,12 +4,10 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameActionEM_AttachBuff))]
-    public class GamePropertyDrawer_Action_AttachBuff : PropertyDrawer
+    public class GamePropertyDrawer_Action_AttachBuff : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
             var buffSO_P = property.FindPropertyRelative("buffSO");
             buffSO_P.DrawProperty("buffSO");
 
@@ -25,8 +23,6 @@ namespace GamePlay.Config
 
             var preconditionSetEM_p = property.FindPropertyRelative("preconditionSetEM");
             preconditionSetEM_p.DrawProperty();
-
-            EditorGUI.EndProperty();
         }
     }
 }

@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-using GamePlay.Core;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,19 +10,19 @@ namespace GamePlay.Config
             EditorGUILayout.Space(height);
         }
 
-        public static T DrawProperty<T>(this SerializedProperty property, string label = "", float height = 6) where T : Object
+        public static T DrawProperty<T>(this SerializedProperty property, string label = "", float height = 4) where T : Object
         {
             DrawProperty(property, label, height);
             return property.objectReferenceValue as T;
         }
 
-        public static void DrawProperty(this SerializedProperty property, string label = "", float height = 6)
+        public static void DrawProperty(this SerializedProperty property, string label = "", float height = 4)
         {
             EditorGUILayout.PropertyField(property, new GUIContent(label));
             _AdjustLayout(height);
         }
 
-        public static int DrawProperty_Int(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false)
+        public static int DrawProperty_Int(this SerializedProperty property, string label, float height = 4, bool isReadOnly = false)
         {
             if (isReadOnly) EditorGUILayout.IntField(label, property.intValue);
             else property.intValue = EditorGUILayout.IntField(label, property.intValue);
@@ -32,7 +30,7 @@ namespace GamePlay.Config
             return property.intValue;
         }
 
-        public static float DrawProperty_Float(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false)
+        public static float DrawProperty_Float(this SerializedProperty property, string label, float height = 4, bool isReadOnly = false)
         {
             if (isReadOnly) EditorGUILayout.FloatField(label, property.floatValue);
             else property.floatValue = EditorGUILayout.FloatField(label, property.floatValue);
@@ -40,7 +38,7 @@ namespace GamePlay.Config
             return property.floatValue;
         }
 
-        public static Vector2 DrawProperty_Vector2(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false)
+        public static Vector2 DrawProperty_Vector2(this SerializedProperty property, string label, float height = 4, bool isReadOnly = false)
         {
             if (isReadOnly) EditorGUILayout.Vector2Field(label, property.vector2Value);
             else property.vector2Value = EditorGUILayout.Vector2Field(label, property.vector2Value);
@@ -48,7 +46,7 @@ namespace GamePlay.Config
             return property.vector2Value;
         }
 
-        public static Vector3 DrawProperty_Vector3(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false)
+        public static Vector3 DrawProperty_Vector3(this SerializedProperty property, string label, float height = 4, bool isReadOnly = false)
         {
             if (isReadOnly) EditorGUILayout.Vector3Field(label, property.vector3Value);
             else property.vector3Value = EditorGUILayout.Vector3Field(label, property.vector3Value);
@@ -56,7 +54,7 @@ namespace GamePlay.Config
             return property.vector3Value;
         }
 
-        public static T DrawProperty_EnumPopup<T>(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false) where T : System.Enum
+        public static T DrawProperty_EnumPopup<T>(this SerializedProperty property, string label, float height = 4, bool isReadOnly = false) where T : System.Enum
         {
             var position = EditorGUILayout.GetControlRect();
 
@@ -83,7 +81,7 @@ namespace GamePlay.Config
             return currentEnumValue;
         }
 
-        public static T DrawProperty_EnumFlagsPopup<T>(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false) where T : System.Enum
+        public static T DrawProperty_EnumFlagsPopup<T>(this SerializedProperty property, string label, float height = 4, bool isReadOnly = false) where T : System.Enum
         {
             var position = EditorGUILayout.GetControlRect();
 
@@ -111,7 +109,7 @@ namespace GamePlay.Config
             return currentEnumValue;
         }
 
-        public static bool DrawProperty_Bool(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false)
+        public static bool DrawProperty_Bool(this SerializedProperty property, string label, float height = 4, bool isReadOnly = false)
         {
             if (isReadOnly) EditorGUILayout.Toggle(label, property.boolValue);
             else property.boolValue = EditorGUILayout.Toggle(label, property.boolValue);
@@ -119,7 +117,7 @@ namespace GamePlay.Config
             return property.boolValue;
         }
 
-        public static string DrawProperty_Str(this SerializedProperty property, string label, float height = 6, bool isReadOnly = false)
+        public static string DrawProperty_Str(this SerializedProperty property, string label, float height = 4, bool isReadOnly = false)
         {
             if (isReadOnly) EditorGUILayout.TextField(label, property.stringValue);
             else property.stringValue = EditorGUILayout.TextField(label, property.stringValue);
@@ -127,7 +125,7 @@ namespace GamePlay.Config
             return property.stringValue;
         }
 
-        public static void DrawProperty_Array(this SerializedProperty property, string label, float height = 6)
+        public static void DrawProperty_Array(this SerializedProperty property, string label, float height = 4)
         {
             EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
             var count = property?.arraySize ?? 0;

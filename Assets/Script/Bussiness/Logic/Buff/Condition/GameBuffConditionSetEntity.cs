@@ -30,6 +30,11 @@ namespace GamePlay.Bussiness.Logic
                 this.whenDoActionEntity = new GameBuffConditionEntity_WhenDoAction(buff, model.whenDoActionModel);
                 this._entityList.Add(this.whenDoActionEntity);
             }
+            if (model.whenRoleStateEnterModel != null)
+            {
+                var entity = new GameBuffConditionEntity_WhenRoleStateEnter(buff, model.whenRoleStateEnterModel);
+                this._entityList.Add(entity);
+            }
         }
 
         public void Inject(

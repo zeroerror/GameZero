@@ -10,30 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_1
+  m_Name: template_action_602
   m_EditorClassIdentifier: 
-  typeId: 1
-  actionType: 1
-  desc: "\u706B\u7130\u4F24\u5BB3"
+  typeId: 602
+  actionType: 6
+  desc: "\u7ED9\u76EE\u6807\u5468\u56F4\u654C\u4EBA\u6302\u8F7Dbuff - \u6DEC\u6BD2"
   dmgActionEM:
     dmgType: 1
-    value: 250
+    value: 100
     valueFormat: 1
     refType: 1
     selectorEM:
-      selectAnchorType: 1
+      selectAnchorType: 2
       campType: 1
       entityType: 1
       selColliderType: 2
       boxColliderModel:
-        offset: {x: 0, y: 0.75}
+        offset: {x: 0, y: 0}
         angle: 0
-        width: 2
-        height: 1.5
+        width: 0
+        height: 0
       circleColliderModel:
-        offset: {x: 0, y: 0.75}
+        offset: {x: 0, y: 0}
         angle: 0
-        radius: 1.5
+        radius: 1
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -103,21 +103,22 @@ MonoBehaviour:
         buffSO: {fileID: 0}
         layer: 0
   launchProjectileActionEM:
-    projectileId: 100101001
-    launchOffset: {x: 0, y: 0.8}
-    launchProjectileSO: {fileID: 0}
-    barrageType: 0
+    projectileId: 200
+    launchOffset: {x: 0, y: 0}
+    launchProjectileSO: {fileID: 11400000, guid: 9cf0845552672f744927287d2249c9ab, type: 2}
+    barrageType: 1
     customLaunchOffsetEM:
-      count: 5
+      count: 2
       launchOffsets:
       - {x: 0, y: 1}
+      - {x: -1, y: 0.5}
     spreadEM:
-      count: 6
-      spreadAngle: 60
+      count: 14
+      spreadAngle: 30
     selectorEM:
-      selectAnchorType: 1
-      campType: 2
-      entityType: 1
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
       selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
@@ -140,11 +141,11 @@ MonoBehaviour:
         layer: 0
   knockBackActionEM:
     knockBackDirType: 0
-    distance: 0
-    duration: 0
-    easingType: 0
+    distance: 0.3
+    duration: 0.1
+    easingType: 6
     selectorEM:
-      selectAnchorType: 0
+      selectAnchorType: 2
       campType: 0
       entityType: 0
       selColliderType: 0
@@ -168,13 +169,13 @@ MonoBehaviour:
         buffSO: {fileID: 0}
         layer: 0
   attachBuffActionEM:
-    buffSO: {fileID: 0}
-    layer: 0
+    buffSO: {fileID: 11400000, guid: cd5a915e26109f74b8af677e9a0c0eff, type: 2}
+    layer: 1
     selectorEM:
-      selectAnchorType: 0
-      campType: 0
-      entityType: 0
-      selColliderType: 0
+      selectAnchorType: 2
+      campType: 1
+      entityType: 1
+      selColliderType: 2
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -183,7 +184,7 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 0
+        radius: 3
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -193,7 +194,7 @@ MonoBehaviour:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
-        layer: 0
+        layer: 1
   summonRoleActionEM:
     roleId: 0
     count: 0

@@ -5,12 +5,10 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameEntitySelectorEM))]
-    public class GamePropertyDrawer_EntitySelector : PropertyDrawer
+    public class GamePropertyDrawer_EntitySelector : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
             var selectAnchorType_p = property.FindPropertyRelative("selectAnchorType");
             var selectAnchorType = selectAnchorType_p.DrawProperty_EnumPopup<GameEntitySelectAnchorType>("选择锚点类型");
             if (selectAnchorType == GameEntitySelectAnchorType.None) EditorGUILayout.HelpBox("请选择一个选择锚点类型", MessageType.Warning);
@@ -52,8 +50,6 @@ namespace GamePlay.Config
                     if (go) this._ModifyFanModel(fanColliderModel_p, go.transform);
                     break;
             }
-
-            EditorGUI.EndProperty();
         }
 
         private void _ModifyBoxModel(SerializedProperty prop, Transform refTrans)

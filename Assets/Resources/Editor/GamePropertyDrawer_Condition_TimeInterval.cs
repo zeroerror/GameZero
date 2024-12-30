@@ -4,23 +4,20 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameBuffConditionEM_TimeInterval))]
-    public class GamePropertyDrawer_ConditionTimeInterval : PropertyDrawer
+    public class GamePropertyDrawer_ConditionTimeInterval : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
             var isEnable_p = property.FindPropertyRelative("isEnable");
             var labelTxt = "条件 - 时间间隔";
             var isEnable = isEnable_p.DrawProperty_Bool(labelTxt);
-
+            EditorGUI.indentLevel += 1;
             if (isEnable)
             {
                 var timeInterval_p = property.FindPropertyRelative("timeInterval");
                 timeInterval_p.DrawProperty_Float("时间间隔(s)");
             }
-
-            EditorGUI.EndProperty();
+            EditorGUI.indentLevel -= 1;
         }
     }
 }

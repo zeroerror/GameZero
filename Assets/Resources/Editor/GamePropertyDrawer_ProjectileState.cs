@@ -1,4 +1,3 @@
-using Codice.Client.BaseCommands;
 using GamePlay.Bussiness.Logic;
 using UnityEditor;
 using UnityEngine;
@@ -6,12 +5,10 @@ using UnityEngine;
 namespace GamePlay.Config
 {
     [CustomPropertyDrawer(typeof(GameProjectileStateEM))]
-    public class GamePropertyDrawer_ProjectileState : PropertyDrawer
+    public class GamePropertyDrawer_ProjectileState : GamePropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
             // 状态模型
             var stateType_p = property.FindPropertyRelative("stateType");
             var stateType = stateType_p.DrawProperty_EnumPopup<GameProjectileStateType>("状态类型");
@@ -49,10 +46,7 @@ namespace GamePlay.Config
             this._DrawTriggerModel(property, "volumeCollisionTriggerModel", "触发器[体积碰撞]");
             if (stateType == GameProjectileStateType.LockOnEntity || stateType == GameProjectileStateType.LockOnPosition) this._DrawTriggerModel(property, "impactTargetTriggerModel", "触发器[抵达目标]");
             else this._DisableTriggerModel(property, "impactTargetTriggerModel");
-
-            EditorGUI.EndProperty();
         }
-
 
         private void _DrawTriggerModel(SerializedProperty property, string triggerName, string label)
         {
