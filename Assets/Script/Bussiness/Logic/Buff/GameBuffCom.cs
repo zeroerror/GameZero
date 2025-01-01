@@ -4,11 +4,16 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameBuffCom
     {
-        private List<GameBuffEntity> _buffList;
+        public List<GameBuffEntity> _buffList { get; private set; }
 
         public GameBuffCom()
         {
             this._buffList = new List<GameBuffEntity>();
+        }
+
+        public void Clear()
+        {
+            this._buffList.Clear();
         }
 
         public bool HasBuff(int buffId)
@@ -45,6 +50,11 @@ namespace GamePlay.Bussiness.Logic
         public void Foreach(System.Action<GameBuffEntity> action)
         {
             this._buffList.Foreach(action);
+        }
+
+        public List<GameBuffEntity> GetBuffList()
+        {
+            return this._buffList?.ToList();
         }
     }
 }

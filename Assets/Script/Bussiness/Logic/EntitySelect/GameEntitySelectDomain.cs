@@ -107,5 +107,33 @@ namespace GamePlay.Bussiness.Logic
             var anchorTrans = this._GetRangeSelectAnchorTrans(actor, target, selectAnchorType);
             return anchorTrans.position;
         }
+
+        public bool CheckSelectorAnchor(GameEntityBase actor, GameEntitySelector selector)
+        {
+            if (actor == null) return false;
+            if (selector == null) return false;
+
+            var selectAnchorType = selector.selectAnchorType;
+            var isSingleSelect = selector.colliderModel == null;
+            var target = actor.actionTargeterCom.targetEntity;
+            if (isSingleSelect)
+            {
+                switch (selectAnchorType)
+                {
+                    case GameEntitySelectAnchorType.Actor:
+                        return actor.IsAlive();
+                    case GameEntitySelectAnchorType.ActorRole:
+                        var role = actor.TryGetLinkParent<GameRoleEntity>();
+                        return role.IsAlive();
+                    case GameEntitySelectAnchorType.ActTarget:
+                        return target.IsAlive();
+                    default:
+                        GameLogger.LogError($"未处理的选择器锚点类型: {selectAnchorType}");
+                        return false;
+                }
+            }
+
+            return actor.IsAlive();
+        }
     }
 }

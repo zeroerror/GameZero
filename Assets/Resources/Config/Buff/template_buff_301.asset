@@ -20,7 +20,7 @@ MonoBehaviour:
   actionParam: 3000
   actionSOs:
   - {fileID: 11400000, guid: b2a6093bf03fdac4aaae20b28e96407f, type: 2}
-  actionCD: 10
+  actionCD: 0
   conditionSetEM_action:
     durationEM:
       isEnable: 0

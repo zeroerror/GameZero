@@ -19,5 +19,15 @@ namespace GamePlay.Bussiness.Logic
         /// <para>selector 选择器</para>
         /// </summary>
         public GameVec2 GetSelectorAnchorPosition(GameEntityBase actor, GameEntitySelector selector);
+
+
+        /// <summary>
+        /// 判断选择器锚点是否有效
+        /// <para>会根据选择锚点类型以及行为方的目标选取器来判断是否存在有效的锚点</para>
+        /// <para>比如锚点角色处于非存活状态，则锚点无效</para>
+        /// <para>actor 执行者</para>
+        /// <para>selector 选择器</para>
+        /// </summary>
+        public bool CheckSelectorAnchor(GameEntityBase actor, GameEntitySelector selector);
     }
 }

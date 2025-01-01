@@ -22,5 +22,11 @@ namespace GamePlay.Bussiness.Logic
         /// <para>detachLayer: 实际移除层数</para>
         /// </summary>
         public bool TryDetachBuff(GameEntityBase target, int buffId, int layer, out GameBuffEntity removeBuff, out int detachLayer);
+
+        /// <summary>
+        /// 移除所有buff
+        /// <para>target: 目标</para>
+        /// </summary>
+        public void DetachAllBuff(GameEntityBase target);
     }
 }

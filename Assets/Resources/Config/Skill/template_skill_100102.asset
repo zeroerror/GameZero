@@ -26,7 +26,7 @@ MonoBehaviour:
   conditionEM:
     targeterType: 2
     cdTime: 0
-    mpCost: 200
+    mpCost: 20
     selectorEM:
       selectAnchorType: 1
       campType: 1

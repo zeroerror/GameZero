@@ -70,9 +70,16 @@ namespace GamePlay.Bussiness.Logic
         }
         private bool _isDirty = false;
 
-        public void TryGetAttribute(GameAttributeType type, out GameAttribute attribute)
+        public bool TryGetAttribute(GameAttributeType type, out GameAttribute attribute)
         {
-            attribute = this._attributes.Find((a) => a.type == type);
+            attribute = default;
+            var idx = this._attributes.FindIndex((a) => a.type == type);
+            if (idx == -1)
+            {
+                return false;
+            }
+            attribute = this._attributes[idx];
+            return true;
         }
 
         public float GetValue(GameAttributeType type)

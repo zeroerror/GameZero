@@ -26,6 +26,7 @@ namespace GamePlay.Bussiness.Logic
         {
             this._context.roleContext.repo.ForeachAllEntities(role =>
             {
+                if (!role.IsAlive()) return;
                 this._TickBuff(role, dt);
             });
         }
@@ -71,6 +72,13 @@ namespace GamePlay.Bussiness.Logic
                 return false;
             }
 
+            // 目标已死亡
+            if (!targetRole.IsAlive())
+            {
+                GameLogger.LogWarning("目标已死亡, 无法挂载Buff");
+                return false;
+            }
+
             var buffCom = targetRole.buffCom;
             if (buffCom.TryGet(typeId, out var existBuff))
             {
@@ -91,7 +99,7 @@ namespace GamePlay.Bussiness.Logic
 
             // 绑定父子关系
             newBuff.idCom.SetEntityId(this._buffContext.idService.FetchId());
-            newBuff.idCom.SetParent(targetRole);
+            newBuff.idCom.SetParent(actor);
             // 组件绑定
             newBuff.BindTransformCom(targetRole.transformCom);
 
@@ -222,6 +230,12 @@ namespace GamePlay.Bussiness.Logic
                 return false;
             }
 
+            // 目标已死亡
+            if (!targetRole.IsAlive())
+            {
+                return false;
+            }
+
             var buffCom = targetRole.buffCom;
             if (!buffCom.TryGet(buffId, out detachBuff))
             {
@@ -252,6 +266,25 @@ namespace GamePlay.Bussiness.Logic
         public bool TryDetachBuff(GameEntityBase target, int buffId, int layer)
         {
             return this.TryDetachBuff(target, buffId, layer, out _, out _);
+        }
+
+        public void DetachAllBuff(GameEntityBase target)
+        {
+            if (!target.TryGetLinkEntity<GameRoleEntity>(out var targetRole))
+            {
+                GameLogger.LogError("目标不是角色, 暂不支持移除Buff");
+                return;
+            }
+
+            // 遍历buff列表, 移除所有buff
+            var buffList = targetRole.buffCom.GetBuffList();
+            buffList.Foreach(buff =>
+            {
+                this.TryDetachBuff(target, buff.model.typeId, 0);
+            });
+
+            // 清空buff列表
+            targetRole.buffCom.Clear();
         }
 
         /// <summary> 执行移除层数 </summary>

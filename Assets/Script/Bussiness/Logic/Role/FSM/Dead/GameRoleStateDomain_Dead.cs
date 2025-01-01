@@ -1,5 +1,3 @@
-using GamePlay.Core;
-
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleStateDomain_Dead : GameRoleStateDomainBase
@@ -18,6 +16,10 @@ namespace GamePlay.Bussiness.Logic
             role.fsmCom.EnterDead();
             role.physicsCom.collider.isEnable = false;
             role.transformCom.isEnable = false;
+
+            // 去除buff
+            this._context.domainApi.buffApi.DetachAllBuff(role);
+
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DEAD, new GameRoleRCArgs_StateEnterDead
             {

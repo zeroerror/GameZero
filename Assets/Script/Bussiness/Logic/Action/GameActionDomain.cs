@@ -58,6 +58,13 @@ namespace GamePlay.Bussiness.Logic
 
         private void _DoAction(GameEntityBase actor, GameActionModelBase actionModel)
         {
+            // 检查
+            var entitySelectApi = this._context.domainApi.entitySelectApi;
+            if (!entitySelectApi.CheckSelectorAnchor(actor, actionModel.selector))
+            {
+                return;
+            }
+
             switch (actionModel)
             {
                 case GameActionModel_Dmg dmgAction:
@@ -87,7 +94,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 提交RC - 行为执行
-            var actAnchorPos = this._context.domainApi.entitySelectApi.GetSelectorAnchorPosition(actor, actionModel.selector);
+            var actAnchorPos = entitySelectApi.GetSelectorAnchorPosition(actor, actionModel.selector);
             var evArgs = new GameActionRCArgs_Do(
                 actionModel.typeId,
                 actor.idCom.ToArgs(),

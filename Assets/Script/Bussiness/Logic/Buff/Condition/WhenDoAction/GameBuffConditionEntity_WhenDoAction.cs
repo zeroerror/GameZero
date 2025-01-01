@@ -80,7 +80,12 @@ namespace GamePlay.Bussiness.Logic
                 // 指定行为类型
                 if (actionType == model.targetActionType)
                 {
-                    this._actionCount++;
+                    // 跳过buff自身造成的行为, 避免嵌套 
+                    var isSelfBuffAct = this._buff.IsEquals(actorEntity);
+                    if (!isSelfBuffAct)
+                    {
+                        this._actionCount++;
+                    }
                 }
 
                 // 窗口期时间开始
