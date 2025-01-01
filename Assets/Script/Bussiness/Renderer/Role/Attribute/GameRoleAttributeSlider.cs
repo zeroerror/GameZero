@@ -23,6 +23,11 @@ namespace GamePlay.Bussiness.Renderer
         {
             if (!this.slider) return;
             this.SetAnchorPosition(screenPoint.Add(this.barOffset));
+            if (this._easeSlider) this._EaseSlider(dt);
+        }
+
+        private void _EaseSlider(float dt)
+        {
             var easedValue = this.easingCom.Tick(this._easeSlider.value, this.slider.value, dt);
             this._easeSlider.value = easedValue;
         }
@@ -37,7 +42,6 @@ namespace GamePlay.Bussiness.Renderer
         {
             if (!this.slider) return;
             this.rectTransform.sizeDelta = size;
-            this._easeRectTransform.sizeDelta = size;
         }
 
         /// <summary>
@@ -52,7 +56,7 @@ namespace GamePlay.Bussiness.Renderer
             this.barOffset = offset;
             var fillRect = this.slider.fillRect;
             this._easeSlider = fillRect.parent.transform.GetComponentInChildren<Slider>();
-            this._easeRectTransform = this._easeSlider.GetComponent<RectTransform>();
+            this._easeRectTransform = this._easeSlider?.GetComponent<RectTransform>();
         }
 
         public void SetOffset(in Vector3 offset)
