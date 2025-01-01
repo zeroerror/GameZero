@@ -5,9 +5,30 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameBuffConditionModel_WhenDoAction model { get; private set; }
 
+        /// <summary> 行为次数 </summary>
+        private int _actionCount;
+        /// <summary> 已过窗口时间 </summary>
+        private float _elapsedWindowTime;
+
         public GameBuffConditionEntity_WhenDoAction(GameBuffEntity buff, GameBuffConditionModel_WhenDoAction model) : base(buff)
         {
             this.model = model;
+        }
+
+        protected override void _Tick(float dt)
+        {
+            base._Tick(dt);
+            this._TickWindowTime(dt);
+        }
+
+        private void _TickWindowTime(float dt)
+        {
+            if (this._actionCount <= 0) return;
+            this._elapsedWindowTime += dt;
+            if (this._elapsedWindowTime >= model.validWindowTime)
+            {
+                this._actionCount = 0;
+            }
         }
 
         protected override bool _Check()
@@ -54,16 +75,23 @@ namespace GamePlay.Bussiness.Logic
                 // 指定行为Id
                 if (actionId == model.targetActionId)
                 {
-                    isSatisfied = true;
+                    this._actionCount++;
                 }
                 // 指定行为类型
                 if (actionType == model.targetActionType)
                 {
-                    isSatisfied = true;
+                    this._actionCount++;
+                }
+
+                // 窗口期时间开始
+                if (this._actionCount == 1)
+                {
+                    this._elapsedWindowTime = 0f;
                 }
 
                 // TODO: 应该记录一个list, 因为可能有多个行为满足条件, 都需要对其处理
                 // 满足时, 同步目标选取器到buff 
+                isSatisfied = this._actionCount >= model.actionCount;
                 if (isSatisfied)
                 {
                     var targetEntity = this.FindEntity(targetIdArgs.entityType, targetIdArgs.entityId);
@@ -73,8 +101,16 @@ namespace GamePlay.Bussiness.Logic
                         actionTargeterRecord.targetDirection
                     );
                     this._buff.actionTargeterCom.SetTargeter(targeter);
+                    this._actionCount = 0;
                 }
             }
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            this._actionCount = 0;
+            this._elapsedWindowTime = 0;
         }
     }
 }

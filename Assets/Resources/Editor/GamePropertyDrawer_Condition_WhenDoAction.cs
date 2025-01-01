@@ -20,6 +20,16 @@ namespace GamePlay.Config
 
                 var targetActionType_p = property.FindPropertyRelative("targetActionType");
                 targetActionType_p.DrawProperty("目标行为类型");
+
+                var actionCount_p = property.FindPropertyRelative("actionCount");
+                var actionCount = actionCount_p.DrawProperty_Int("每N次执行");
+                if (actionCount <= 0)
+                {
+                    actionCount_p.intValue = 1;
+                }
+
+                var validWindowTime_p = property.FindPropertyRelative("validWindowTime");
+                validWindowTime_p.DrawProperty_Float("有效窗口时间(秒, 0代表无限制)");
             }
             EditorGUI.indentLevel -= 1;
         }

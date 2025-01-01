@@ -31,6 +31,7 @@ MonoBehaviour:
       isEnable: 1
       targetAction: {fileID: 0}
       targetActionType: 1
+      actionCount: 1
     whenRoleStateEnterEM:
       isEnable: 0
       campType: 0
@@ -46,6 +47,7 @@ MonoBehaviour:
       isEnable: 0
       targetAction: {fileID: 0}
       targetActionType: 0
+      actionCount: 0
     whenRoleStateEnterEM:
       isEnable: 0
       campType: 0

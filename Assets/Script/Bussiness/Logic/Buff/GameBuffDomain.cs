@@ -40,6 +40,7 @@ namespace GamePlay.Bussiness.Logic
                 var isSatisfied_action = !buff.conditionSetEntity_action.IsValid() || buff.conditionSetEntity_action.CheckSatisfied();
                 if (isSatisfied_action)
                 {
+                    buff.StartCD();
                     buff.model.actionIds?.Foreach(actionId =>
                     {
                         buff.physicsCom.ClearCollided();

@@ -14,6 +14,7 @@ namespace GamePlay.Config
         public int maxLayer;
         public int actionParam;
         public GameActionSO[] actionSOs;
+        public float actionCD;
         public GameBuffConditionSetEM conditionSetEM_action;
         public GameBuffConditionSetEM conditionSetEM_remove;
         public GameObject vfxPrefab;
@@ -28,7 +29,8 @@ namespace GamePlay.Config
                 refreshFlag,
                 maxLayer,
                 actionParam,
-                actionSOs.Map(e => e.typeId),
+                actionSOs?.Map(e => e.typeId),
+                actionCD,
                 conditionSetEM_action.ToModel(),
                 conditionSetEM_remove.ToModel(),
                 attributeEMs?.Map(e => e.ToModel())

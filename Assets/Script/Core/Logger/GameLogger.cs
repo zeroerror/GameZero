@@ -36,7 +36,7 @@ namespace GamePlay.Core
         public static void DebugLog(string message)
         {
             if (logLevel > LogLevel.Debug) return;
-            Debug.Log(message);
+            Debug.LogWarning(message);
         }
     }
 }

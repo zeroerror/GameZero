@@ -7,6 +7,7 @@ namespace GamePlay.Bussiness.Logic
         public readonly int maxLayer;
         public readonly float actionParam;
         public readonly int[] actionIds;
+        public readonly float actionCD;
         public readonly GameBuffConditionSetModel conditionSetModel_action;
         public readonly GameBuffConditionSetModel conditionSetModel_remove;
         public readonly GameBuffAttributeModel[] attributeModels;
@@ -17,6 +18,7 @@ namespace GamePlay.Bussiness.Logic
             int maxLayer,
             int actionParam,
             int[] actionIds,
+            float actionCD,
             GameBuffConditionSetModel conditionSetModel_action,
             GameBuffConditionSetModel conditionSetModel_remove,
             GameBuffAttributeModel[] attributeModels
@@ -27,6 +29,7 @@ namespace GamePlay.Bussiness.Logic
             this.maxLayer = maxLayer;
             this.actionParam = actionParam * 0.01f;
             this.actionIds = actionIds;
+            this.actionCD = actionCD;
             this.conditionSetModel_action = conditionSetModel_action;
             this.conditionSetModel_remove = conditionSetModel_remove;
             this.attributeModels = attributeModels;

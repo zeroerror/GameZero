@@ -1,3 +1,5 @@
+using UnityEngine.Analytics;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameBuffEntity : GameEntityBase
@@ -12,6 +14,8 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary> buff已挂载时间 </summary>
         public float elapsedTime { get; private set; }
+        /** 行为冷却时间 */
+        public float ationCDTime { get; private set; }
         /// <summary> buff已挂载层数 </summary>
         public int layer;
 
@@ -43,8 +47,28 @@ namespace GamePlay.Bussiness.Logic
         public override void Tick(float dt)
         {
             this.elapsedTime += dt;
-            this.conditionSetEntity_action.Tick(dt);
+
+            // 行为冷却时间
+            if (this.ationCDTime > 0)
+            {
+                this.ationCDTime -= dt;
+            }
+
+            // 行为条件集 - 触发
+            var hasActionCD = this.ationCDTime > 0;
+            if (!hasActionCD)
+            {
+                this.conditionSetEntity_action.Tick(dt);
+            }
+
+            // 行为条件集 - 移除
             this.conditionSetEntity_remove.Tick(dt);
+        }
+
+        public void StartCD()
+        {
+            this.ationCDTime = this.model.actionCD;
+            this.conditionSetEntity_action.Clear();
         }
 
         public float GetActionParam()

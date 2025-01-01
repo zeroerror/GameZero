@@ -56,7 +56,10 @@ namespace GamePlay.Bussiness.Logic
 
         protected virtual void _Tick(float dt) { }
         protected abstract bool _Check();
-        public virtual void Clear() { }
+        public virtual void Clear()
+        {
+            this._isSatisfied = false;
+        }
 
         public static bool operator !(GameBuffConditionEntityBase condition)
         {

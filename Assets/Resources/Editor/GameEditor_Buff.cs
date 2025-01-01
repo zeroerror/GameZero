@@ -17,6 +17,7 @@ namespace GamePlay.Config
         private SerializedProperty maxLayer_p;
         private SerializedProperty actionParam_p;
         private SerializedProperty actionSOs_p;
+        private SerializedProperty actionCD_p;
         private SerializedProperty conditionSetEM_action_p;
         private SerializedProperty conditionSetEM_remove_p;
         private SerializedProperty vfxPrefab_p;
@@ -34,6 +35,7 @@ namespace GamePlay.Config
             this.maxLayer_p = _serializedObject.FindProperty("maxLayer");
             this.actionParam_p = _serializedObject.FindProperty("actionParam");
             this.actionSOs_p = _serializedObject.FindProperty("actionSOs");
+            this.actionCD_p = _serializedObject.FindProperty("actionCD");
             this.conditionSetEM_action_p = _serializedObject.FindProperty("conditionSetEM_action");
             this.conditionSetEM_remove_p = _serializedObject.FindProperty("conditionSetEM_remove");
             this.vfxPrefab_p = _serializedObject.FindProperty("vfxPrefab");
@@ -92,6 +94,7 @@ namespace GamePlay.Config
             GameEditorGUILayout.DrawBoxItem(() =>
             {
                 this.actionSOs_p.DrawProperty("行为模板列表");
+                this.actionCD_p.DrawProperty_Float("触发行为后的冷却时间");
             });
             GameEditorGUILayout.DrawBoxItem(() =>
             {
@@ -102,7 +105,7 @@ namespace GamePlay.Config
                 this.conditionSetEM_remove_p.DrawProperty("条件集模板 - 移除");
             });
 
-            GameEditorGUILayout.DrawBoxItem(() => this._DrawActionSORefs());
+            this._DrawActionSORefs();
 
             this._serializedObject.ApplyModifiedProperties();
         }
@@ -113,17 +116,20 @@ namespace GamePlay.Config
             GUI.color = Color.green;
             var actionSOs = Resources.LoadAll<GameActionSO>(GameConfigCollection.ACTION_CONFIG_DIR_PATH);
             actionSOs = actionSOs.Filter(actionSO => actionSO.actionType == GameActionType.AttachBuff && actionSO.attachBuffActionEM?.buffSO?.typeId == this.typeId_p.intValue);
-            if (actionSOs.Length > 0)
-            {
-                EditorGUILayout.LabelField(" -------- 被以下行为使用 --------", EditorStyles.boldLabel);
-                for (int i = 0; i < actionSOs.Length; i++)
-                {
-                    var actionSO = actionSOs[i];
-                    EditorGUILayout.ObjectField(actionSO.typeId.ToString(), actionSO, typeof(GameActionSO), false);
-                }
-            }
-            GUI.color = color;
-        }
+            if (actionSOs.Length == 0) return;
 
+            GameEditorGUILayout.DrawBoxItem(() =>
+            {
+                {
+                    EditorGUILayout.LabelField(" -------- 被以下行为使用 --------", EditorStyles.boldLabel);
+                    for (int i = 0; i < actionSOs.Length; i++)
+                    {
+                        var actionSO = actionSOs[i];
+                        EditorGUILayout.ObjectField(actionSO.typeId.ToString(), actionSO, typeof(GameActionSO), false);
+                    }
+                }
+                GUI.color = color;
+            });
+        }
     }
 }
