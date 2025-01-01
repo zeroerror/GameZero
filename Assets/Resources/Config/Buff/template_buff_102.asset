@@ -20,6 +20,7 @@ MonoBehaviour:
   actionParam: 100
   actionSOs:
   - {fileID: 11400000, guid: 34c3341f01437694ebcf38d91fafda34, type: 2}
+  actionCD: 0
   conditionSetEM_action:
     durationEM:
       isEnable: 0
@@ -32,6 +33,7 @@ MonoBehaviour:
       targetAction: {fileID: 0}
       targetActionType: 1
       actionCount: 1
+      validWindowTime: 0
     whenRoleStateEnterEM:
       isEnable: 0
       campType: 0
@@ -48,11 +50,14 @@ MonoBehaviour:
       targetAction: {fileID: 0}
       targetActionType: 0
       actionCount: 0
+      validWindowTime: 0
     whenRoleStateEnterEM:
       isEnable: 0
       campType: 0
       stateType: 0
-  vfxPrefab: {fileID: 0}
-  vfxPrefabUrl: 
+  vfxPrefab: {fileID: 3672937312462212057, guid: 24e4ca5ae27d11b4baac1ec375e510b2, type: 3}
+  vfxPrefabUrl: VFX/vfx_electriCircle
   vfxLayerType: 0
+  vfxScale: {x: 1, y: 1}
+  vfxOffset: {x: 0, y: 0}
   attributeEMs: []

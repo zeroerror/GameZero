@@ -25,7 +25,7 @@ namespace GamePlay.Bussiness.Logic
         {
             if (this._actionCount <= 0) return;
             this._elapsedWindowTime += dt;
-            if (this._elapsedWindowTime >= model.validWindowTime)
+            if (model.validWindowTime > 0 && this._elapsedWindowTime >= model.validWindowTime)
             {
                 this._actionCount = 0;
             }

@@ -62,7 +62,14 @@ namespace GamePlay.Bussiness.Renderer
             this.particleCom.Play(true);
             this.root.transform.position = args.position;
             this.root.transform.eulerAngles = new Vector3(0, 0, args.angle);
-            this.root.transform.localScale = new Vector3(args.scale.x, args.scale.y, 1);
+
+            var scale = args.scale;
+            if (scale.x <= 0 || scale.y <= 0)
+            {
+                scale = Vector2.one;
+                GameLogger.LogWarning($"特效实体: {this.prefabUrl} 缩放参数错误 {args.scale}, 使用默认值(1,1)");
+            }
+            this.root.transform.localScale = new Vector3(scale.x, scale.y, 1);
 
             this.root.SetActive(true);
             this.timelineCom.Play(args.loopDuration);

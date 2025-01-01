@@ -111,6 +111,8 @@ namespace GamePlay.Bussiness.Renderer
                 {
                     url = vfxUrl,
                     attachNode = targetRole.root,
+                    loopDuration = -1,
+                    layerType = newBuff.model.vfxLayerType
                 };
                 this._context.domainApi.vfxApi.Play(args);
             }

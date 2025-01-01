@@ -87,14 +87,12 @@ namespace GamePlay.Core
                     render.sortingOrder = orderInLayer;
                 }
             });
-            if (pss != null && pss.Length > 0) return;
 
             var renderer = go.GetComponent<Renderer>();
             if (renderer)
             {
                 renderer.sortingLayerName = layerName;
                 renderer.sortingOrder = orderInLayer;
-                return;
             }
 
             var sortingGroup = go.GetComponent<SortingGroup>();
@@ -102,7 +100,6 @@ namespace GamePlay.Core
             {
                 sortingGroup.sortingLayerName = layerName;
                 sortingGroup.sortingOrder = orderInLayer;
-                return;
             }
         }
 

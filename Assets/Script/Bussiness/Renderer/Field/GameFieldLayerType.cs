@@ -1,17 +1,19 @@
 public enum GameFieldLayerType
 {
+    /// <summary> 无 </summary>`
+    None = 0,
     /// <summary> 地面 </summary>
-    Ground = 0,
+    Ground = 1,
     /// <summary> 背景 </summary>
-    Background = 1,
+    Background,
     /// <summary> 环境 </summary>
-    Environment = 2,
+    Environment,
     /// <summary> 实体 </summary>
-    Entity = 3,
+    Entity,
     /// <summary> 特效 </summary>
-    VFX = 4,
+    VFX,
     /// <summary> 场景UI </summary>
-    SceneUI = 5,
+    SceneUI,
 }
 
 public static class GameFieldLayerTypeExt

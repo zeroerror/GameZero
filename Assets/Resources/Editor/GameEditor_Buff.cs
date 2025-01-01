@@ -20,9 +20,13 @@ namespace GamePlay.Config
         private SerializedProperty actionCD_p;
         private SerializedProperty conditionSetEM_action_p;
         private SerializedProperty conditionSetEM_remove_p;
+
         private SerializedProperty vfxPrefab_p;
         private SerializedProperty vfxPrefabUrl_p;
         private SerializedProperty vfxLayerType_p;
+        private SerializedProperty vfxScale_p;
+        private SerializedProperty vfxOffset_p;
+
         private SerializedProperty attributeEMs_p;
 
         private void OnEnable()
@@ -38,9 +42,13 @@ namespace GamePlay.Config
             this.actionCD_p = _serializedObject.FindProperty("actionCD");
             this.conditionSetEM_action_p = _serializedObject.FindProperty("conditionSetEM_action");
             this.conditionSetEM_remove_p = _serializedObject.FindProperty("conditionSetEM_remove");
+
             this.vfxPrefab_p = _serializedObject.FindProperty("vfxPrefab");
             this.vfxPrefabUrl_p = _serializedObject.FindProperty("vfxPrefabUrl");
             this.vfxLayerType_p = _serializedObject.FindProperty("vfxLayerType");
+            this.vfxScale_p = _serializedObject.FindProperty("vfxScale");
+            this.vfxOffset_p = _serializedObject.FindProperty("vfxOffset");
+
             this.attributeEMs_p = _serializedObject.FindProperty("attributeEMs");
         }
 
@@ -79,6 +87,17 @@ namespace GamePlay.Config
                 {
                     this.vfxPrefabUrl_p.stringValue = vfxPrefab.GetPrefabUrl();
                     this.vfxLayerType_p.DrawProperty_EnumPopup<GameFieldLayerType>("挂载层级");
+
+                    var vfxScale = this.vfxScale_p.DrawProperty_Vector2("缩放");
+                    if (vfxScale.x <= 0 || vfxScale.y <= 0)
+                    {
+                        vfxScale = Vector2.one;
+                        this.vfxScale_p.vector2Value = vfxScale;
+                        EditorGUILayout.HelpBox("缩放参数错误, 使用默认值(1,1)", MessageType.Warning);
+                    }
+
+                    this.vfxOffset_p.DrawProperty_Vector2("偏移");
+
                 }
                 else
                 {

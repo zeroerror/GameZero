@@ -18,6 +18,10 @@ namespace GamePlay.Bussiness.Logic
         public bool isPlaying { get; private set; }
         // 0非循环，-1无限循环，>0循环时间
         public float loopDuration { get; private set; }
+        /// <summary> 是否为无限循环 </summary>
+        public bool isEndlessLoop => this.loopDuration < 0;
+        /// <summary> 是否为循环 </summary>
+        public bool IsLoop => this.loopDuration != 0;
 
         // 当前时间
         public float time { get; private set; }
@@ -98,9 +102,8 @@ namespace GamePlay.Bussiness.Logic
         public bool Tick(float dt)
         {
             if (!this.isPlaying) return false;
-            var isLoop = loopDuration > 0;
-            if (!isLoop) this._TickNormal(dt);
-            else this._TickLoop(dt);
+            if (this.IsLoop) this._TickLoop(dt);
+            else this._TickNormal(dt);
             if (!this.isPlaying)
             {
                 this._complete?.Invoke();
@@ -148,7 +151,7 @@ namespace GamePlay.Bussiness.Logic
                 this._TickFrame(this._ConvertToFrame(this._loopTime));
             }
             this._cacheDt = dt;
-            this.isPlaying = this.time < this.loopDuration;
+            if (!this.isEndlessLoop) this.isPlaying = this.time < this.loopDuration;
         }
         private float _loopTime;
 

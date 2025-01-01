@@ -41,8 +41,13 @@ namespace GamePlay.Bussiness.Renderer
         {
             var trans = vfxEntity.root.transform;
             trans.TryGetSortingLayer(out var order, out var layerName);
-            var newOrder = GameFieldLayerCollection.GetLayerOrder(GameFieldLayerType.VFX, trans.position);
-            newOrder += 1;
+            var layerType = vfxEntity.playArgs.layerType;
+
+            if (layerType == GameFieldLayerType.None) layerType = GameFieldLayerType.VFX;//默认为VFX层
+
+            var newOrder = GameFieldLayerCollection.GetLayerOrder(layerType, trans.position);
+            if (layerType == GameFieldLayerType.Entity) newOrder += 1;//若为实体层，则在显示在实体上方
+
             if (order == newOrder) return;
             trans.SetSortingLayer(newOrder, layerName);
         }
@@ -60,7 +65,9 @@ namespace GamePlay.Bussiness.Renderer
                     GameLogger.LogError("VFX加载失败");
                     return null;
                 }
-                this._context.domainApi.fielApi.AddToLayer(vfx.root, GameFieldLayerType.VFX);
+                var layerType = args.layerType;
+                if (layerType == GameFieldLayerType.None) layerType = GameFieldLayerType.VFX;//默认为VFX层
+                this._context.domainApi.fielApi.AddToLayer(vfx.root, layerType);
             }
             vfx.entityId = this._vfxContext.entityIdService.FetchId();
             repo.TryAdd(vfx);

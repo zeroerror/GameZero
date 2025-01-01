@@ -20,6 +20,9 @@ namespace GamePlay.Config
         public GameObject vfxPrefab;
         public string vfxPrefabUrl;
         public GameFieldLayerType vfxLayerType;
+        public Vector2 vfxScale;
+        public Vector2 vfxOffset;
+
         public GameBuffAttributeEM[] attributeEMs;
 
         public GameBuffModel ToModel()
@@ -48,7 +51,9 @@ namespace GamePlay.Config
                 conditionSetEM_action.ToModel(),
                 conditionSetEM_remove.ToModel(),
                 vfxPrefabUrl,
-                vfxLayerType
+                vfxLayerType,
+                vfxScale,
+                vfxOffset
             );
             return model;
         }

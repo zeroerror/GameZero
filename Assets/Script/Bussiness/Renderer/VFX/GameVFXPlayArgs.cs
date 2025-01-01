@@ -19,6 +19,8 @@ namespace GamePlay.Bussiness.Renderer
         /// <summary> 是否将attachNode作为父节点 </summary>
         public bool isAttachParent;
 
+        /// <summary> 层级类型 </summary>
+        public GameFieldLayerType layerType;
         /// <summary> 层级偏移 </summary>
         public int orderOffset;
     }

@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
 {
@@ -12,6 +13,8 @@ namespace GamePlay.Bussiness.Renderer
         public readonly GameBuffConditionSetModel conditionSetModel_remove;
         public readonly string vfxUrl;
         public readonly GameFieldLayerType vfxLayerType;
+        public Vector2 vfxScale;
+        public Vector2 vfxOffset;
 
         public GameBuffModelR(
             int typeId,
@@ -21,7 +24,9 @@ namespace GamePlay.Bussiness.Renderer
             GameBuffConditionSetModel conditionSetModel_action,
             GameBuffConditionSetModel conditionSetModel_remove,
             string vfxUrl,
-            GameFieldLayerType vfxLayerType
+            GameFieldLayerType vfxLayerType,
+            in Vector2 vfxScale,
+            in Vector2 vfxOffset
         )
         {
             this.typeId = typeId;
@@ -32,6 +37,8 @@ namespace GamePlay.Bussiness.Renderer
             this.conditionSetModel_remove = conditionSetModel_remove;
             this.vfxUrl = vfxUrl;
             this.vfxLayerType = vfxLayerType;
+            this.vfxScale = vfxScale;
+            this.vfxOffset = vfxOffset;
         }
     }
 }
