@@ -17,7 +17,13 @@ namespace GamePlay.Bussiness.Logic
         AttackSpeed = 6,
         /// <summary> 移动速度 </summary>
         MoveSpeed = 7,
+
+        /// <summary> 护甲 </summary>
+        Armor = 101,
+        /// <summary> 魔法抗性 </summary>
+        MagicResist = 102,
         /// <summary> 击退抗性 击退抗性越高，被击退距离越短</summary>
-        KnockbackResist = 8,
+        KnockbackResist = 103,
+
     }
 }

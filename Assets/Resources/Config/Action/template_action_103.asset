@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_102
+  m_Name: template_action_103
   m_EditorClassIdentifier: 
-  typeId: 102
+  typeId: 103
   actionType: 1
-  desc: "\u57FA\u4E8E\u81EA\u8EAB1%\u653B\u51FB\u529B\u5BF9\u76EE\u6807\u9020\u6210\u7269\u7406\u4F24\u5BB3"
+  desc: "\u57FA\u4E8E\u81EA\u8EAB1%\u653B\u51FB\u529B\u5BF9\u76EE\u6807\u9020\u6210\u9B54\u6CD5\u4F24\u5BB3"
   dmgActionEM:
-    dmgType: 2
+    dmgType: 3
     value: 1
     valueFormat: 2
     refType: 2

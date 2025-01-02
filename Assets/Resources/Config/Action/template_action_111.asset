@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_102
+  m_Name: template_action_111
   m_EditorClassIdentifier: 
-  typeId: 102
+  typeId: 111
   actionType: 1
-  desc: "\u57FA\u4E8E\u81EA\u8EAB1%\u653B\u51FB\u529B\u5BF9\u76EE\u6807\u9020\u6210\u7269\u7406\u4F24\u5BB3"
+  desc: "\u57FA\u4E8E\u76EE\u68071%\u6700\u5927\u751F\u547D\u503C\u5BF9\u76EE\u6807\u9020\u6210\u771F\u5B9E\u4F24\u5BB3"
   dmgActionEM:
-    dmgType: 2
+    dmgType: 1
     value: 1
     valueFormat: 2
-    refType: 2
+    refType: 7
     selectorEM:
       selectAnchorType: 2
       campType: 0
@@ -233,7 +233,7 @@ MonoBehaviour:
       amplitude: 0
       frequency: 0
       duration: 0
-    hitEffectPrefab: {fileID: 5370980921516771431, guid: 57b2bf142e3f749448034c5779755d40, type: 3}
+    hitEffectPrefab: {fileID: 1491129530001574614, guid: fd50a440beee4f442af6473803c2bcdd, type: 3}
     hitVFXScale: {x: 1, y: 1}
     hitVFXOffset: {x: 0, y: 1}
     hitCamShakeModel:
