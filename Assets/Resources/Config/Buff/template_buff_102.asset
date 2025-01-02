@@ -15,8 +15,8 @@ MonoBehaviour:
   typeId: 102
   buffName: "\u6DEC\u6BD2\u5927\u5E08"
   desc: "\u5BF9\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u65F6\u6302\u8F7D1\u5C42\u6DEC\u6BD2"
-  refreshFlag: 0
-  maxLayer: 1
+  refreshFlag: 4
+  maxLayer: 20
   actionParam: 100
   actionSOs:
   - {fileID: 11400000, guid: 34c3341f01437694ebcf38d91fafda34, type: 2}
@@ -57,7 +57,7 @@ MonoBehaviour:
       stateType: 0
   vfxPrefab: {fileID: 3672937312462212057, guid: 24e4ca5ae27d11b4baac1ec375e510b2, type: 3}
   vfxPrefabUrl: VFX/vfx_electriCircle
-  vfxLayerType: 0
+  vfxLayerType: 1
   vfxScale: {x: 1, y: 1}
   vfxOffset: {x: 0, y: 0}
   attributeEMs: []

@@ -13,125 +13,53 @@ MonoBehaviour:
   m_Name: template_field_1
   m_EditorClassIdentifier: 
   typeId: 1
-  fieldPrefab: {fileID: 5274905712469144199, guid: 1dd9fe14629b2c74ab2a69049465599a, type: 3}
+  fieldPrefab: {fileID: 5274905712469144199, guid: 610e7bc972c5e884bb68ec832d83a5ab, type: 3}
   monsterAreaEMs:
-  - position: {x: -31.289999, y: -19.39}
-    radius: 1.64
+  - position: {x: -13.67, y: 7.04}
+    radius: 0
     monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
-      count: 3
-    spawnTime: 5
-  - position: {x: -46.379997, y: -31.11}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
-      count: 5
-    spawnTime: 5
-  - position: {x: -28.31, y: -31.460001}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
-      count: 5
-    spawnTime: 5
-  - position: {x: -36.5, y: -22.1}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
-      count: 3
-    spawnTime: 10
-  - position: {x: -33, y: 4.2}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
+    - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
       count: 1
-    spawnTime: 15
-  - position: {x: 31.9, y: 20.4}
-    radius: 1.64
+    spawnTime: 0
+  - position: {x: 13.71, y: 7.04}
+    radius: 0
     monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
-      count: 3
-    spawnTime: 30
-  - position: {x: 35.510002, y: 18.849998}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
-      count: 3
-    spawnTime: 30
-  - position: {x: 38.25, y: 16.17}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
-      count: 3
-    spawnTime: 30
-  - position: {x: 8.040001, y: -39.18}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
+    - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
       count: 1
-    spawnTime: 35
-  - position: {x: 11.9800005, y: -39.18}
-    radius: 1.64
+    spawnTime: 0
+  - position: {x: -11.14, y: 4.58}
+    radius: 0
     monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
+    - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
       count: 1
-    spawnTime: 35
-  - position: {x: 19.480001, y: -38.05}
-    radius: 1.64
+    spawnTime: 0
+  - position: {x: 11.1, y: 4.58}
+    radius: 0
     monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
+    - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
       count: 1
-    spawnTime: 35
-  - position: {x: 26.6, y: -35.3}
-    radius: 1.64
+    spawnTime: 0
+  - position: {x: -0.04, y: 3.2599998}
+    radius: 0
     monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
+    - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
       count: 1
-    spawnTime: 35
-  - position: {x: 43.96, y: 9.44}
-    radius: 1.64
+    spawnTime: 0
+  - position: {x: -0.04, y: 0.19}
+    radius: 0
     monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
-      count: 10
-    spawnTime: 50
-  - position: {x: 38.25, y: -33.26}
-    radius: 1.64
+    - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
+      count: 1
+    spawnTime: 0
+  - position: {x: -7.43, y: 3.33}
+    radius: 0
     monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
-      count: 10
-    spawnTime: 50
-  - position: {x: 24.640001, y: -42.559998}
-    radius: 1.64
+    - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
+      count: 1
+    spawnTime: 0
+  - position: {x: 7.35, y: 3.33}
+    radius: 0
     monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
-      count: 10
-    spawnTime: 50
-  - position: {x: 4.3200006, y: -43.98}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
-      count: 10
-    spawnTime: 50
-  - position: {x: -36.2, y: -33}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
-      count: 10
-    spawnTime: 50
-  - position: {x: -40.76, y: -15.170001}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
-      count: 10
-    spawnTime: 50
-  - position: {x: -39.36, y: 11.14}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
-      count: 10
-    spawnTime: 50
-  - position: {x: 24.8, y: 31.970001}
-    radius: 1.64
-    monsterSpawnEMs:
-    - roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
-      count: 10
-    spawnTime: 50
+    - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
+      count: 1
+    spawnTime: 0

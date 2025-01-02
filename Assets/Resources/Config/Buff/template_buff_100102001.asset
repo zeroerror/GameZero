@@ -57,7 +57,7 @@ MonoBehaviour:
       stateType: 0
   vfxPrefab: {fileID: 4763262428129407028, guid: e045502fe65e47041b4e843cee83f6b9, type: 3}
   vfxPrefabUrl: VFX/vfx_fire_ring
-  vfxLayerType: 3
+  vfxLayerType: 1
   vfxScale: {x: 1, y: 1}
   vfxOffset: {x: 0, y: 0}
   attributeEMs: []

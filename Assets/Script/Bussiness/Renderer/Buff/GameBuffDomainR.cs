@@ -104,7 +104,8 @@ namespace GamePlay.Bussiness.Renderer
             this._buffContext.repo.TryAdd(newBuff);
 
             // buff特效
-            var vfxUrl = newBuff.model.vfxUrl;
+            var model = newBuff.model;
+            var vfxUrl = model.vfxUrl;
             if (!string.IsNullOrEmpty(vfxUrl))
             {
                 var args = new GameVFXPlayArgs
@@ -112,7 +113,9 @@ namespace GamePlay.Bussiness.Renderer
                     url = vfxUrl,
                     attachNode = targetRole.root,
                     loopDuration = -1,
-                    layerType = newBuff.model.vfxLayerType
+                    layerType = model.vfxLayerType,
+                    scale = model.vfxScale,
+                    attachOffset = model.vfxOffset,
                 };
                 this._context.domainApi.vfxApi.Play(args);
             }
