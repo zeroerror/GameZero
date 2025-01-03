@@ -56,7 +56,7 @@ namespace GamePlay.Bussiness.Logic
             if (projectile.model.isLockRotation) transArgs.forward = GameVec2.up;
             projectile.transformCom.SetByArgs(transArgs);
             projectile.transformCom.isLockRotation = projectile.model.isLockRotation;
-            projectile.idCom.SetEntityId(this._projectileContext.idService.FetchId());
+            projectile.idCom.entityId = this._projectileContext.idService.FetchId();
             projectile.idCom.SetParent(creator);
             projectile.actionTargeterCom.SetTargeter(targeter);
             this._InitTimelineCom(projectile);

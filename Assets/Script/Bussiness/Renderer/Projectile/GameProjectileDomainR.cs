@@ -79,7 +79,7 @@ namespace GamePlay.Bussiness.Renderer
                 }
             }
 
-            projectile.idCom.SetEntityId(this._projectileContext.idService.FetchId());
+            projectile.idCom.entityId = this._projectileContext.idService.FetchId();
             projectile.idCom.SetParent(creator);
             projectile.transformCom.SetByArgs(transArgs);
             projectile.SyncTrans();

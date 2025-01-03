@@ -5,6 +5,9 @@ namespace GamePlay.Bussiness.Logic
     public class GameActionContext
     {
         public GameActionTemplate template { get; private set; }
+        public GameActionOptionTemplate optionTemplate { get; private set; }
+
+        public Dictionary<int, GameActionOptionEntity> optionEntityDict { get; private set; }
 
         public List<GameActionRecord_Dmg> dmgRecordList { get; private set; }
         public List<GameActionRecord_Heal> healRecordList { get; private set; }
@@ -17,6 +20,9 @@ namespace GamePlay.Bussiness.Logic
         public GameActionContext()
         {
             this.template = new GameActionTemplate();
+            this.optionTemplate = new GameActionOptionTemplate();
+            this.optionEntityDict = new Dictionary<int, GameActionOptionEntity>();
+
             this.dmgRecordList = new List<GameActionRecord_Dmg>();
             this.healRecordList = new List<GameActionRecord_Heal>();
             this.launchProjectileRecordList = new List<GameActionRecord_LaunchProjectile>();

@@ -24,6 +24,7 @@ namespace GamePlay.Bussiness.Logic
         public void BindAttributeCom(GameAttributeCom attributeCom) => this.attributeCom = attributeCom;
         public GameAttributeCom baseAttributeCom { get; private set; }
         public void BindBaseAttributeCom(GameAttributeCom baseAttributeCom) => this.baseAttributeCom = baseAttributeCom;
+        public GameBuffCom buffCom { get; protected set; }
 
         public GameEntityBase(int typeId, GameEntityType entityType)
         {

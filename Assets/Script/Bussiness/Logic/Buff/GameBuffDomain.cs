@@ -97,7 +97,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 绑定父子关系
-            newBuff.idCom.SetEntityId(this._buffContext.idService.FetchId());
+            newBuff.idCom.entityId = this._buffContext.idService.FetchId();
             newBuff.idCom.SetParent(actor);
             // 组件绑定
             newBuff.BindTransformCom(targetRole.transformCom);
@@ -218,24 +218,18 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /// <summary> 尝试移除buff </summary>
-        public bool TryDetachBuff(GameEntityBase target, int buffId, int layer, out GameBuffEntity detachBuff, out int detachLayer)
+        public bool TryDetachBuff(GameEntityBase buffTarget, int buffId, int layer, out GameBuffEntity detachBuff, out int detachLayer)
         {
             detachBuff = null;
             detachLayer = 0;
 
-            if (!target.TryGetLinkEntity<GameRoleEntity>(out var targetRole))
-            {
-                GameLogger.LogError("目标不是角色, 暂不支持移除Buff");
-                return false;
-            }
-
             // 目标已死亡
-            if (!targetRole.IsAlive())
+            if (!buffTarget.IsAlive())
             {
                 return false;
             }
 
-            var buffCom = targetRole.buffCom;
+            var buffCom = buffTarget.buffCom;
             if (!buffCom.TryGet(buffId, out detachBuff))
             {
                 GameLogger.LogError("Buff不存在，无法移除：" + buffId);
@@ -247,14 +241,15 @@ namespace GamePlay.Bussiness.Logic
             // 移除层数
             detachLayer = this._DetachLayer(detachBuff, layer);
             // 刷新buff属性效果
-            this._refreshBuffAttribute(detachBuff, targetRole, targetRole);
+            var actor = detachBuff.idCom.parent;
+            this._refreshBuffAttribute(detachBuff, actor, buffTarget);
 
             if (!detachBuff.isValid) buffCom.Remove(detachBuff);
 
             this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_DETACH, new GameBuffRCArgs_Detach
             {
                 buffId = buffId,
-                targetIdArgs = targetRole.idCom.ToArgs(),
+                targetIdArgs = buffTarget.idCom.ToArgs(),
                 detachLayer = detachLayer,
             });
 
@@ -304,12 +299,12 @@ namespace GamePlay.Bussiness.Logic
             return detachLayer;
         }
 
-        /// <summary> 刷新buff属性效果, 同时会刷新目标角色的属性 </summary>
-        private void _refreshBuffAttribute(GameBuffEntity buff, GameEntityBase actor, GameRoleEntity targetRole)
+        /// <summary> 刷新buff属性效果, 同时会刷新目标的属性 </summary>
+        private void _refreshBuffAttribute(GameBuffEntity buff, GameEntityBase actor, GameEntityBase target)
         {
             buff.model.attributeModels?.Foreach(attrModel =>
             {
-                var args = GameActionUtil_AttributeModify.CalcAttributeModify(actor, targetRole, attrModel);
+                var args = GameActionUtil_AttributeModify.CalcAttributeModify(actor, target, attrModel);
                 var attrType = args.modifyType;
 
                 // 记录buff属性效果旧值
@@ -321,9 +316,9 @@ namespace GamePlay.Bussiness.Logic
                 buff.attributeCom.SetAttribute(buffAttr);
 
                 // 刷新buff对目标角色的属性效果
-                var roleOldValue = targetRole.attributeCom.GetValue(attrType);
+                var roleOldValue = target.attributeCom.GetValue(attrType);
                 var roleNewValue = roleOldValue + buffAttr.value - buffOldValue;
-                targetRole.attributeCom.SetAttribute(attrType, roleNewValue);
+                target.attributeCom.SetAttribute(attrType, roleNewValue);
 
                 GameLogger.DebugLog($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
             });

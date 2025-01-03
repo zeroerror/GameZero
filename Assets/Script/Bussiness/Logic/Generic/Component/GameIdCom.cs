@@ -8,13 +8,10 @@ namespace GamePlay.Bussiness.Logic
 
         public int typeId { get; private set; }
         public GameEntityType entityType { get; private set; }
-
-        public int entityId { get; private set; }
-        public void SetEntityId(int entityId) => this.entityId = entityId;
-
         public GameEntityBase parent { get; private set; }
         public List<GameEntityBase> children = new List<GameEntityBase>();
 
+        public int entityId;
         public int campId;
 
         public GameIdCom(int typeId, GameEntityType entityType, GameEntityBase entity)

@@ -24,6 +24,13 @@ namespace GamePlay.Bussiness.Logic
         public void DoAction(int actionId, GameEntityBase actor, float customParam);
 
         /// <summary>
+        /// 执行行为选项
+        /// <para>optionId 选项ID</para>
+        /// <para>campId 阵营ID</para>
+        /// </summary>
+        public void DoActionOption(int optionId, int campId);
+
+        /// <summary>
         /// 执行行为 - 伤害
         /// <para>action 伤害行为</para>
         /// <para>actorEntity 执行者</para>

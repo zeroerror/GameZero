@@ -47,7 +47,7 @@ namespace GamePlay.Bussiness.Logic
                 return null;
             }
 
-            skill.idCom.SetEntityId(this._skillContext.idService.FetchId());
+            skill.idCom.entityId = this._skillContext.idService.FetchId();
             // 绑定父子关系
             skill.idCom.SetParent(role);
             // 如果技能的mp消耗大于角色的mp，那么扩展角色的mp

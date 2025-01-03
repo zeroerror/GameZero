@@ -1,5 +1,4 @@
 using GamePlay.Core;
-using UnityEngine.Analytics;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -10,7 +9,6 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleAICom aiCom { get; private set; }
         public GameRoleFSMCom fsmCom { get; private set; }
         public GameSkillCom skillCom { get; private set; }
-        public GameBuffCom buffCom { get; private set; }
 
         public GameRoleEntity(GameRoleModel model) : base(model.typeId, GameEntityType.Role)
         {

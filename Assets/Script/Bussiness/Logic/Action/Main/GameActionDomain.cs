@@ -1,6 +1,5 @@
-using System.Collections.Generic;
 using GamePlay.Core;
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionDomain : GameActionDomainApi
@@ -24,6 +23,19 @@ namespace GamePlay.Bussiness.Logic
         public void Tick(float dt)
         {
             this._actionContext.ClearRecords();
+            this._TickOptionEntity(dt);
+        }
+
+        private void _TickOptionEntity()
+        {
+            var optionEntityDict = this._actionContext.optionEntityDict;
+            foreach (var optionEntity in optionEntityDict.Values)
+            {
+                optionEntity.buffCom.Foreach((buff) =>
+                {
+                    buff.Tick();
+                });
+            }
         }
 
         public bool TryGetModel(int actionId, out GameActionModelBase model)
@@ -101,6 +113,33 @@ namespace GamePlay.Bussiness.Logic
                 actAnchorPos
             );
             this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO, evArgs);
+        }
+
+        public void DoActionOption(int optionId, int campId)
+        {
+            var optionTemplate = this._actionContext.optionTemplate;
+            if (!optionTemplate.TryGet(optionId, out var optionModel))
+            {
+                GameLogger.LogError($"未找到选项配置：{optionId}");
+                return;
+            }
+
+            // 获取自定义行为模型
+            var optionEntityDict = this._actionContext.optionEntityDict;
+            if (!optionEntityDict.TryGetValue(campId, out var optionEntity))
+            {
+                // 新建选项实体
+                optionEntity = new GameActionOptionEntity(optionModel);
+                var idCom = optionEntity.idCom;
+                idCom.entityId = this._actionContext.optionEntityDict.Count;
+                idCom.campId = campId;
+                optionEntity.transformCom.position = GameVec2.zero;
+            }
+
+            optionModel.actionIds?.Foreach((actionId) =>
+            {
+                this.DoAction(actionId, optionEntity, optionEntity.lv);
+            });
         }
 
         public void DoAction_Dmg(GameActionModel_Dmg action, GameEntityBase actor)

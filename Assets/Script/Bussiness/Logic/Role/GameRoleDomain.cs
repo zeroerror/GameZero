@@ -68,7 +68,7 @@ namespace GamePlay.Bussiness.Logic
                 role.transformCom.angle = 0;
             }
             // ID组件
-            role.idCom.SetEntityId(this._roleContext.idService.FetchId());
+            role.idCom.entityId = this._roleContext.idService.FetchId();
             role.idCom.campId = campId;
 
             if (isNew)

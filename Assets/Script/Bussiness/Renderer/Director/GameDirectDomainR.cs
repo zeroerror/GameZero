@@ -218,7 +218,6 @@ namespace GamePlay.Bussiness.Renderer
                 }
             }
 
-            // 作为行为Id执行
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 if (this._enterId > 0)
@@ -226,14 +225,13 @@ namespace GamePlay.Bussiness.Renderer
                     var userRole_l = this.context.logicContext.roleContext.userRole;
                     if (userRole_l)
                     {
-                        GameLogger.DebugLog("执行行为Id:" + this._enterId);
+                        GameLogger.DebugLog("执行行为:" + this._enterId);
                         userRole_l.actionTargeterCom.SetTargeter(new GameActionTargeterArgs { targetEntity = userRole_l, targetDirection = userRole_l.transformCom.forward, targetPosition = userRole_l.transformCom.position });
                         this.context.logicContext.domainApi.actionApi.DoAction(this._enterId, userRole_l);
                     }
                 }
             }
 
-            // 作为buffId执行
             if (Input.GetKeyDown(KeyCode.B))
             {
                 if (this._enterId > 0)
@@ -241,8 +239,21 @@ namespace GamePlay.Bussiness.Renderer
                     var userRole_l = this.context.logicContext.roleContext.userRole;
                     if (userRole_l)
                     {
-                        GameLogger.DebugLog("执行BuffId:" + this._enterId);
+                        GameLogger.DebugLog("执行Buff:" + this._enterId);
                         this.context.logicContext.domainApi.buffApi.TryAttachBuff(this._enterId, userRole_l, userRole_l, 1, out var realAttachLayer);
+                    }
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                if (this._enterId > 0)
+                {
+                    var userRole_l = this.context.logicContext.roleContext.userRole;
+                    if (userRole_l)
+                    {
+                        GameLogger.DebugLog("执行行为选项:" + this._enterId);
+                        this.context.logicContext.domainApi.actionApi.DoActionOption(this._enterId, userRole_l.idCom.campId);
                     }
                 }
             }
