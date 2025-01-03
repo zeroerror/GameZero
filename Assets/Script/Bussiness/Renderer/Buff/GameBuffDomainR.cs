@@ -116,6 +116,7 @@ namespace GamePlay.Bussiness.Renderer
                     layerType = model.vfxLayerType,
                     scale = model.vfxScale,
                     attachOffset = model.vfxOffset,
+                    orderOffset = model.vfxOrderOffset,
                 };
                 this._context.domainApi.vfxApi.Play(args);
             }

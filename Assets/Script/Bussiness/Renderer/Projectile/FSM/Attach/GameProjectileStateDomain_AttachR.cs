@@ -41,8 +41,8 @@ namespace GamePlay.Bussiness.Renderer
             var attachEntity = projectile.fsmCom.attachState.attachEntity;
             if (attachEntity is GameRoleEntityR role)
             {
-                role.root.TryGetSortingLayer(out var order, out var layer);
-                projectile.root.SetSortingLayer(order + 1, layer);
+                role.root.TryGetSortingOrder(out var order, out var layer);
+                projectile.root.SetSortingOrder(order + 1, layer);
             }
         }
     }

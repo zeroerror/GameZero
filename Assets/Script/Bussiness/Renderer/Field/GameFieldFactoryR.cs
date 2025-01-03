@@ -33,7 +33,7 @@ namespace GamePlay.Bussiness.Renderer
             if (!backgroundLayer) backgroundLayer = new GameObject(GameFieldLayerCollection.BackgroundLayer);
             backgroundLayer.transform.SetParent(rootGO.transform);
             backgroundLayer.SetPosZ(0);
-            backgroundLayer.SetSortingLayer(GameFieldLayerCollection.BackgroundLayerZ, GameFieldLayerCollection.BackgroundLayer);
+            backgroundLayer.SetSortingOrder(GameFieldLayerCollection.BackgroundLayerZ, GameFieldLayerCollection.BackgroundLayer);
             layerDict.Add(GameFieldLayerType.Background, backgroundLayer);
 
             // 地面层级
@@ -41,14 +41,14 @@ namespace GamePlay.Bussiness.Renderer
             if (!groundLayer) groundLayer = new GameObject(GameFieldLayerCollection.GroundLayer);
             groundLayer.transform.SetParent(rootGO.transform);
             groundLayer.SetPosZ(0);
-            groundLayer.SetSortingLayer(GameFieldLayerCollection.GroundLayerZ, GameFieldLayerCollection.GroundLayer);
+            groundLayer.SetSortingOrder(GameFieldLayerCollection.GroundLayerZ, GameFieldLayerCollection.GroundLayer);
             layerDict.Add(GameFieldLayerType.Ground, groundLayer);
             // 地面层级子节点 
             groundLayer.ForeachChild((child) =>
             {
                 child.SetPosZ(0);
                 var order = GameFieldLayerCollection.GetLayerOrder(GameFieldLayerType.Ground, child.transform.position);
-                child.SetSortingLayer(order, GameFieldLayerCollection.GroundLayer);
+                child.SetSortingOrder(order, GameFieldLayerCollection.GroundLayer);
             });
 
             // 环境层级
@@ -56,14 +56,14 @@ namespace GamePlay.Bussiness.Renderer
             if (!environmentLayer) environmentLayer = new GameObject(GameFieldLayerCollection.EnvironmentLayer);
             environmentLayer.transform.SetParent(rootGO.transform);
             environmentLayer.SetPosZ(0);
-            environmentLayer.SetSortingLayer(GameFieldLayerCollection.EnvironmentLayerZ, GameFieldLayerCollection.EnvironmentLayer);
+            environmentLayer.SetSortingOrder(GameFieldLayerCollection.EnvironmentLayerZ, GameFieldLayerCollection.EnvironmentLayer);
             layerDict.Add(GameFieldLayerType.Environment, environmentLayer);
             // 环境层级子节点
             environmentLayer.ForeachChild((child) =>
             {
                 child.SetPosZ(0);
                 var order = GameFieldLayerCollection.GetLayerOrder(GameFieldLayerType.Environment, child.transform.position);
-                child.SetSortingLayer(order, GameFieldLayerCollection.EnvironmentLayer);
+                child.SetSortingOrder(order, GameFieldLayerCollection.EnvironmentLayer);
             });
 
             // 实体层级
@@ -71,7 +71,7 @@ namespace GamePlay.Bussiness.Renderer
             if (!entityLayer) entityLayer = new GameObject(GameFieldLayerCollection.EntityLayer);
             entityLayer.transform.SetParent(rootGO.transform);
             entityLayer.SetPosZ(0);
-            entityLayer.SetSortingLayer(GameFieldLayerCollection.EntityLayerZ, GameFieldLayerCollection.EntityLayer);
+            entityLayer.SetSortingOrder(GameFieldLayerCollection.EntityLayerZ, GameFieldLayerCollection.EntityLayer);
             layerDict.Add(GameFieldLayerType.Entity, entityLayer);
 
             // VFX层级
@@ -79,7 +79,7 @@ namespace GamePlay.Bussiness.Renderer
             if (!vfxLayer) vfxLayer = new GameObject(GameFieldLayerCollection.VFXLayer);
             vfxLayer.transform.SetParent(rootGO.transform);
             vfxLayer.SetPosZ(0);
-            vfxLayer.SetSortingLayer(GameFieldLayerCollection.VFXLayerZ, GameFieldLayerCollection.VFXLayer);
+            vfxLayer.SetSortingOrder(GameFieldLayerCollection.VFXLayerZ, GameFieldLayerCollection.VFXLayer);
             layerDict.Add(GameFieldLayerType.VFX, vfxLayer);
 
             // 场景UI层级
@@ -87,7 +87,7 @@ namespace GamePlay.Bussiness.Renderer
             if (!sceneUILayer) sceneUILayer = new GameObject(GameFieldLayerCollection.SceneUILayer);
             sceneUILayer.transform.SetParent(rootGO.transform);
             sceneUILayer.SetPosZ(0);
-            sceneUILayer.SetSortingLayer(GameFieldLayerCollection.SceneUILayerZ, GameFieldLayerCollection.SceneUILayer);
+            sceneUILayer.SetSortingOrder(GameFieldLayerCollection.SceneUILayerZ, GameFieldLayerCollection.SceneUILayer);
             layerDict.Add(GameFieldLayerType.SceneUI, sceneUILayer);
 
             var entity = new GameFieldEntityR(model, rootGO, layerDict);

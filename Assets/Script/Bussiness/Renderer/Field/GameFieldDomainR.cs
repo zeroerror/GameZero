@@ -53,7 +53,7 @@ namespace GamePlay.Bussiness.Renderer
                 trans.TryGetSortingLayer(out var order, out var layerName);
                 var newOrder = GameFieldLayerCollection.GetLayerOrder(layerType, trans.position);
                 if (order == newOrder) continue;
-                trans.SetSortingLayer(newOrder, layerName);
+                trans.SetSortingOrder(newOrder, layerName);
             }
         }
 

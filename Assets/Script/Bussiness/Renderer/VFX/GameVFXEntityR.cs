@@ -48,32 +48,57 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.timelineCom.Tick(dt);
             this.particleCom.Tick(dt);
-
             this._TickAttach();
-
             if (!isPlaying && this._stopDirty)
             {
                 this.Stop();
             }
+            this._UpdateLayerOrder();
         }
 
-        public void Play(in GameVFXPlayArgs args)
+        private void _UpdateLayerOrder()
         {
-            this.particleCom.Play(true);
+            var vfxTrans = this.root.transform;
+            vfxTrans.TryGetSortingLayer(out var order, out var layerName);
+
+            var layerType = this.playArgs.layerType;
+            var newOrder = 0;
+            var attachNode = this.playArgs.attachNode;
+            if (layerType == GameFieldLayerType.Entity && attachNode)
+            {
+                // 实体层特效，层级相对于挂载节点
+                attachNode.TryGetSortingOrder(out newOrder, out var attachLayer);
+            }
+            else
+            {
+                // 其余层级，层级相对于特效位置
+                newOrder = GameFieldLayerCollection.GetLayerOrder(layerType, vfxTrans.position);
+            }
+
+            if (order == newOrder) return;
+            vfxTrans.SetSortingOrder(newOrder, layerName);
+        }
+
+        public void Play(GameVFXPlayArgs args)
+        {
+            if (args.scale.x <= 0 || args.scale.y <= 0)
+            {
+                GameLogger.LogWarning($"特效实体: {this.prefabUrl} 缩放参数错误 {args.scale}, 使用默认缩放(1,1)");
+                args.scale = Vector2.one;
+            }
+            if (args.layerType == GameFieldLayerType.None)
+            {
+                GameLogger.LogWarning($"特效实体: {this.prefabUrl} 层级类型未设置, 使用默认层级VFX");
+                args.layerType = GameFieldLayerType.VFX;
+            }
+
+            this.playArgs = args;
             this.root.transform.position = args.position;
             this.root.transform.eulerAngles = new Vector3(0, 0, args.angle);
-
-            var scale = args.scale;
-            if (scale.x <= 0 || scale.y <= 0)
-            {
-                scale = Vector2.one;
-                GameLogger.LogWarning($"特效实体: {this.prefabUrl} 缩放参数错误 {args.scale}, 使用默认值(1,1)");
-            }
-            this.root.transform.localScale = new Vector3(scale.x, scale.y, 1);
-
+            this.root.transform.localScale = args.scale;
+            this.particleCom.Play(true);
             this.root.SetActive(true);
             this.timelineCom.Play(args.loopDuration);
-            this.playArgs = args;
             if (args.isAttachParent) this.root.transform.SetParent(args.attachNode.transform);
             this.root.name = $"VFX_{this.entityId}";
             this._stopDirty = true;
@@ -84,12 +109,6 @@ namespace GamePlay.Bussiness.Renderer
             if (this.playArgs.isAttachParent) return;
             if (this.playArgs.attachNode == null) return;
             this.root.transform.position = this.playArgs.attachNode.transform.position.Add(this.playArgs.attachOffset);
-            if (this.playArgs.attachNode.TryGetSortingLayer(out var order, out var layerName))
-            {
-                order += 1;
-                order += this.playArgs.orderOffset;
-                this.root.SetSortingLayer(order, layerName);
-            }
         }
 
         public void Stop()

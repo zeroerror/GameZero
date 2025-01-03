@@ -22,6 +22,7 @@ namespace GamePlay.Config
         public GameFieldLayerType vfxLayerType;
         public Vector2 vfxScale;
         public Vector2 vfxOffset;
+        public int vfxOrderOffset;
 
         public GameBuffAttributeEM[] attributeEMs;
 
@@ -53,7 +54,8 @@ namespace GamePlay.Config
                 vfxPrefabUrl,
                 vfxLayerType,
                 vfxScale,
-                vfxOffset
+                vfxOffset,
+                vfxOrderOffset
             );
             return model;
         }

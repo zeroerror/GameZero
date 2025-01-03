@@ -1,4 +1,3 @@
-using System.Linq;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEditor;
@@ -24,6 +23,7 @@ namespace GamePlay.Config
         private SerializedProperty vfxPrefab_p;
         private SerializedProperty vfxPrefabUrl_p;
         private SerializedProperty vfxLayerType_p;
+        private SerializedProperty vfxOrderOffset_p;
         private SerializedProperty vfxScale_p;
         private SerializedProperty vfxOffset_p;
 
@@ -46,6 +46,7 @@ namespace GamePlay.Config
             this.vfxPrefab_p = _serializedObject.FindProperty("vfxPrefab");
             this.vfxPrefabUrl_p = _serializedObject.FindProperty("vfxPrefabUrl");
             this.vfxLayerType_p = _serializedObject.FindProperty("vfxLayerType");
+            this.vfxOrderOffset_p = _serializedObject.FindProperty("vfxOrderOffset");
             this.vfxScale_p = _serializedObject.FindProperty("vfxScale");
             this.vfxOffset_p = _serializedObject.FindProperty("vfxOffset");
 
@@ -86,7 +87,15 @@ namespace GamePlay.Config
                 if (vfxPrefab)
                 {
                     this.vfxPrefabUrl_p.stringValue = vfxPrefab.GetPrefabUrl();
-                    this.vfxLayerType_p.DrawProperty_EnumPopup<GameFieldLayerType>("挂载层级");
+
+                    var vfxLayerType = this.vfxLayerType_p.DrawProperty_EnumPopup<GameFieldLayerType>("挂载层级");
+                    if (vfxLayerType == GameFieldLayerType.None)
+                    {
+                        vfxLayerType = GameFieldLayerType.VFX;
+                        this.vfxLayerType_p.enumValueIndex = (int)vfxLayerType;
+                    }
+
+                    this.vfxOrderOffset_p.DrawProperty_Int("层级偏移");
 
                     var vfxScale = this.vfxScale_p.DrawProperty_Vector2("缩放");
                     if (vfxScale.x <= 0 || vfxScale.y <= 0)
@@ -96,8 +105,7 @@ namespace GamePlay.Config
                         EditorGUILayout.HelpBox("缩放参数错误, 使用默认值(1,1)", MessageType.Warning);
                     }
 
-                    this.vfxOffset_p.DrawProperty_Vector2("偏移");
-
+                    this.vfxOffset_p.DrawProperty_Vector2("坐标偏移");
                 }
                 else
                 {

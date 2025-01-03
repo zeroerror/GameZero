@@ -57,7 +57,8 @@ MonoBehaviour:
       stateType: 0
   vfxPrefab: {fileID: 59758037400367371, guid: af2d000b09c8a6e469b15a8f57de967f, type: 3}
   vfxPrefabUrl: VFX/vfx_dust
-  vfxLayerType: 0
+  vfxLayerType: 1
   vfxScale: {x: 1, y: 1}
   vfxOffset: {x: 0, y: 0}
+  vfxOrderOffset: 0
   attributeEMs: []

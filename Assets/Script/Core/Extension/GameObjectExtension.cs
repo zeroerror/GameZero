@@ -75,7 +75,7 @@ namespace GamePlay.Core
             action(tf);
         }
 
-        public static void SetSortingLayer(this GameObject go, int orderInLayer, string layerName = "Default")
+        public static void SetSortingOrder(this GameObject go, int orderInLayer, string layerName = "Default")
         {
             var pss = go.GetComponentsInChildren<ParticleSystem>();
             pss.Foreach((ps) =>
@@ -103,16 +103,16 @@ namespace GamePlay.Core
             }
         }
 
-        public static void SetSortingLayer(this Transform tf, float orderInLayer, string layerName = "Default")
+        public static void SetSortingOrder(this Transform tf, float orderInLayer, string layerName = "Default")
         {
-            SetSortingLayer(tf, (int)orderInLayer, layerName);
+            SetSortingOrder(tf, (int)orderInLayer, layerName);
         }
-        public static void SetSortingLayer(this Transform tf, int orderInLayer, string layerName = "Default")
+        public static void SetSortingOrder(this Transform tf, int orderInLayer, string layerName = "Default")
         {
-            SetSortingLayer(tf.gameObject, orderInLayer, layerName);
+            SetSortingOrder(tf.gameObject, orderInLayer, layerName);
         }
 
-        public static bool TryGetSortingLayer(this GameObject go, out int orderInLayer, out string layerName)
+        public static bool TryGetSortingOrder(this GameObject go, out int orderInLayer, out string layerName)
         {
             orderInLayer = 0;
             layerName = "Default";
@@ -137,7 +137,7 @@ namespace GamePlay.Core
 
         public static bool TryGetSortingLayer(this Transform tf, out int orderInLayer, out string layerName)
         {
-            return TryGetSortingLayer(tf.gameObject, out orderInLayer, out layerName);
+            return TryGetSortingOrder(tf.gameObject, out orderInLayer, out layerName);
         }
 
         public static void SetPosZ(this GameObject go, float z)

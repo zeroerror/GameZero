@@ -32,24 +32,7 @@ namespace GamePlay.Bussiness.Renderer
             {
                 vfx.Tick(dt);
                 if (!vfx.isPlaying) this._context.cmdBufferService.AddDelayCmd(0, () => repo.Recycle(vfx));
-                var curField = this._context.fieldContext.curField;
-                this._UpdateLayerOrder(vfx);
             });
-        }
-
-        private void _UpdateLayerOrder(GameVFXEntityR vfxEntity)
-        {
-            var trans = vfxEntity.root.transform;
-            trans.TryGetSortingLayer(out var order, out var layerName);
-            var layerType = vfxEntity.playArgs.layerType;
-
-            if (layerType == GameFieldLayerType.None) layerType = GameFieldLayerType.VFX;//默认为VFX层
-
-            var newOrder = GameFieldLayerCollection.GetLayerOrder(layerType, trans.position);
-            if (layerType == GameFieldLayerType.Entity) newOrder += 1;//若为实体层，则在显示在实体上方
-
-            if (order == newOrder) return;
-            trans.SetSortingLayer(newOrder, layerName);
         }
 
         public GameVFXEntityR Play(in GameVFXPlayArgs args)

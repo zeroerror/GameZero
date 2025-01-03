@@ -15,6 +15,7 @@ namespace GamePlay.Bussiness.Renderer
         public readonly GameFieldLayerType vfxLayerType;
         public Vector2 vfxScale;
         public Vector2 vfxOffset;
+        public int vfxOrderOffset;
 
         public GameBuffModelR(
             int typeId,
@@ -26,7 +27,8 @@ namespace GamePlay.Bussiness.Renderer
             string vfxUrl,
             GameFieldLayerType vfxLayerType,
             in Vector2 vfxScale,
-            in Vector2 vfxOffset
+            in Vector2 vfxOffset,
+            int vfxOrderOffset
         )
         {
             this.typeId = typeId;
@@ -39,6 +41,7 @@ namespace GamePlay.Bussiness.Renderer
             this.vfxLayerType = vfxLayerType;
             this.vfxScale = vfxScale;
             this.vfxOffset = vfxOffset;
+            this.vfxOrderOffset = vfxOrderOffset;
         }
     }
 }
