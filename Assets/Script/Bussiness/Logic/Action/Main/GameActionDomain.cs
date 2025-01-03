@@ -23,19 +23,6 @@ namespace GamePlay.Bussiness.Logic
         public void Tick(float dt)
         {
             this._actionContext.ClearRecords();
-            this._TickOptionEntity(dt);
-        }
-
-        private void _TickOptionEntity()
-        {
-            var optionEntityDict = this._actionContext.optionEntityDict;
-            foreach (var optionEntity in optionEntityDict.Values)
-            {
-                optionEntity.buffCom.Foreach((buff) =>
-                {
-                    buff.Tick();
-                });
-            }
         }
 
         public bool TryGetModel(int actionId, out GameActionModelBase model)
@@ -124,20 +111,24 @@ namespace GamePlay.Bussiness.Logic
                 return;
             }
 
-            // 获取自定义行为模型
-            var optionEntityDict = this._actionContext.optionEntityDict;
-            if (!optionEntityDict.TryGetValue(campId, out var optionEntity))
+            var optionRepo = this._actionContext.optionRepo;
+            var optionEntity = optionRepo.FindByCampId(campId);
+            if (!optionEntity)
             {
                 // 新建选项实体
                 optionEntity = new GameActionOptionEntity(optionModel);
                 var idCom = optionEntity.idCom;
-                idCom.entityId = this._actionContext.optionEntityDict.Count;
+                idCom.entityId = this._actionContext.idService.FetchId();
                 idCom.campId = campId;
                 optionEntity.transformCom.position = GameVec2.zero;
+                this._actionContext.optionRepo.TryAdd(optionEntity);
             }
+
+            optionEntity.AddLevel();
 
             optionModel.actionIds?.Foreach((actionId) =>
             {
+                optionEntity.physicsCom.ClearCollided();
                 this.DoAction(actionId, optionEntity, optionEntity.lv);
             });
         }

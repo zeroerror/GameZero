@@ -12,7 +12,7 @@ namespace GamePlay.Bussiness.Logic
         public GameActionOptionTemplate()
         {
             _dict = new Dictionary<int, GameActionOptionModel>();
-            var path = GameConfigCollection.ACTION_CONFIG_DIR_PATH;
+            var path = GameConfigCollection.ACTION_OPTION_CONFIG_DIR_PATH;
             var resList = Resources.LoadAll(path, typeof(GameActionOptionSO));
             _soDict = new Dictionary<int, GameActionOptionSO>();
             foreach (var res in resList)

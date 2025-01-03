@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
+  m_Name: template_buff_999990011
+  m_EditorClassIdentifier: 
+  typeId: 999990011
+  buffName: "\u884C\u4E3A\u9009\u987911 - buff\u68C0\u6D4B\u5668"
+  desc: "\u53CB\u519B\u6BCF\u6B21\u653B\u51FB\u90FD\u4F1A\u83B7\u5F97\u989D\u59165%\u653B\u51FB\u529B"
+  refreshFlag: 0
+  maxLayer: 1
+  actionParam: 500
+  actionSOs:
+  - {fileID: 11400000, guid: ea2a6657f32fa954aa42e6900d0e1ffa, type: 2}
+  actionCD: 0
+  conditionSetEM_action:
+    durationEM:
+      isEnable: 0
+      duration: 0
+    timeIntervalEM:
+      isEnable: 0
+      timeInterval: 0
+    whenDoActionEM:
+      isEnable: 1
+      targetAction: {fileID: 0}
+      targetActionType: 1
+      actionCount: 1
+      validWindowTime: 0
+    whenRoleStateEnterEM:
+      isEnable: 0
+      campType: 0
+      stateType: 0
+  conditionSetEM_remove:
+    durationEM:
+      isEnable: 0
+      duration: 8
+    timeIntervalEM:
+      isEnable: 0
+      timeInterval: 0
+    whenDoActionEM:
+      isEnable: 0
+      targetAction: {fileID: 0}
+      targetActionType: 0
+      actionCount: 0
+      validWindowTime: 0
+    whenRoleStateEnterEM:
+      isEnable: 0
+      campType: 0
+      stateType: 0
+  vfxPrefab: {fileID: 4763262428129407028, guid: e045502fe65e47041b4e843cee83f6b9, type: 3}
+  vfxPrefabUrl: VFX/vfx_fire_ring
+  vfxLayerType: 1
+  vfxScale: {x: 1, y: 1}
+  vfxOffset: {x: 0, y: 0}
+  vfxOrderOffset: 0
+  attributeEMs: []

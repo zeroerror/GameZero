@@ -72,7 +72,7 @@ namespace GamePlay.Bussiness.Logic
             this.entityCollectDomain.Inject(this.context);
 
             // TEST
-            this.roleDomain.CreatePlayerRole(1001, new GameTransformArgs { position = new GameVec2(0, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
+            this.roleDomain.CreatePlayerRole(101, new GameTransformArgs { position = new GameVec2(0, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
             this.fieldDomain.LoadField(1);
         }
 

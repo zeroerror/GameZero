@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 201
   actionType: 2
-  desc: "\u5BF9\u81EA\u8EAB\u771F\u5B9E\u6CBB\u75971%\u751F\u547D\u503C"
+  desc: "\u5BF9\u81EA\u8EAB\u771F\u5B9E\u6CBB\u75971%\u6700\u5927\u751F\u547D\u503C"
   dmgActionEM:
     dmgType: 1
     value: 100
@@ -48,7 +48,7 @@ MonoBehaviour:
     healType: 1
     value: 1
     valueFormat: 2
-    refType: 6
+    refType: 8
     selectorEM:
       selectAnchorType: 3
       campType: 0
@@ -195,8 +195,8 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
-  summonRoleActionEM:
-    roleId: 0
+  summonRolesActionEM:
+    roleSO: {fileID: 0}
     count: 0
     campType: 0
     selectorEM:

@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 1
   quality: 1
-  maxLv: 1
-  actionSOs: []
+  desc: "\u884C\u4E3A\u9009\u98791 - \u53CB\u519B\u83B7\u5F975%\u7684\u653B\u51FB\u529B\u52A0\u6210"
+  maxLv: 10
+  actionSOs:
+  - {fileID: 11400000, guid: 61333a3aaed18c24c8f74ce747df0ffc, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   typeId: 100102001
   buffName: "\u5F13\u7BAD\u624B - \u5206\u88C2\u7BAD\u672F"
   desc: "\u6BCF\u6B21\u53D1\u5C04\u5F13\u7BAD\u65F6\uFF0C\u4F1A\u989D\u5916\u53D1\u5C04"
-  refreshFlag: 4
+  refreshFlag: 5
   maxLayer: 3
   actionParam: 300
   actionSOs:
@@ -60,4 +60,5 @@ MonoBehaviour:
   vfxLayerType: 1
   vfxScale: {x: 1, y: 1}
   vfxOffset: {x: 0, y: 0}
+  vfxOrderOffset: 0
   attributeEMs: []

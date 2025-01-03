@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -6,8 +7,8 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameActionTemplate template { get; private set; }
         public GameActionOptionTemplate optionTemplate { get; private set; }
-
-        public Dictionary<int, GameActionOptionEntity> optionEntityDict { get; private set; }
+        public GameActionOptionRepo optionRepo { get; private set; }
+        public GameIdService idService { get; private set; }
 
         public List<GameActionRecord_Dmg> dmgRecordList { get; private set; }
         public List<GameActionRecord_Heal> healRecordList { get; private set; }
@@ -21,7 +22,8 @@ namespace GamePlay.Bussiness.Logic
         {
             this.template = new GameActionTemplate();
             this.optionTemplate = new GameActionOptionTemplate();
-            this.optionEntityDict = new Dictionary<int, GameActionOptionEntity>();
+            this.optionRepo = new GameActionOptionRepo();
+            this.idService = new GameIdService();
 
             this.dmgRecordList = new List<GameActionRecord_Dmg>();
             this.healRecordList = new List<GameActionRecord_Heal>();

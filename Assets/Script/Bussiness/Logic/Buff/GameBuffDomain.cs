@@ -23,16 +23,21 @@ namespace GamePlay.Bussiness.Logic
 
         public void Tick(float dt)
         {
-            this._context.roleContext.repo.ForeachAllEntities(role =>
+            this._context.roleContext.repo.ForeachAllEntities(entity =>
             {
-                if (!role.IsAlive()) return;
-                this._TickBuff(role, dt);
+                if (!entity.IsAlive()) return;
+                this.TickBuff(entity, dt);
             });
+            this._context.actionContext.optionRepo.ForeachAllEntities(entity =>
+          {
+              if (!entity.IsAlive()) return;
+              this.TickBuff(entity, dt);
+          });
         }
 
-        private void _TickBuff(GameRoleEntity role, float dt)
+        public void TickBuff(GameEntityBase entity, float dt)
         {
-            var buffCom = role.buffCom;
+            var buffCom = entity.buffCom;
             buffCom.Foreach(buff =>
             {
                 buff.Tick(dt);
@@ -54,7 +59,7 @@ namespace GamePlay.Bussiness.Logic
                 {
                     this._context.cmdBufferService.AddDelayCmd(0, () =>
                     {
-                        this.TryDetachBuff(role, buff.model.typeId, 0);
+                        this.TryDetachBuff(entity, buff.model.typeId, 0);
                     });
                 }
             });

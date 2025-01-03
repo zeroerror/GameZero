@@ -8,7 +8,6 @@ namespace GamePlay.Bussiness.Logic
     {
         protected Dictionary<int, T> _dict { get; } = new Dictionary<int, T>();
         protected List<T> _list { get; } = new List<T>();
-
         protected Dictionary<int, List<T>> _poolDict { get; } = new Dictionary<int, List<T>>();
 
         public GameEntityRepoBase()
@@ -32,14 +31,20 @@ namespace GamePlay.Bussiness.Logic
 
         private bool _TryAddData(T entity)
         {
-            if (this._dict.ContainsKey(entity.idCom.entityId))
+            var key = this._GetKey(entity);
+            if (this._dict.ContainsKey(key))
             {
                 GameLogger.LogError($"实体仓库 添加失败: {entity.idCom}");
                 return false;
             }
-            this._dict.Add(entity.idCom.entityId, entity);
+            this._dict.Add(key, entity);
             this._list.Add(entity);
             return true;
+        }
+
+        protected virtual int _GetKey(T entity)
+        {
+            return entity.idCom.entityId;
         }
 
         /// <summary> 将实体从仓库永久移除 </summary>
@@ -58,7 +63,8 @@ namespace GamePlay.Bussiness.Logic
 
         private bool _TryRemoveData(T entity)
         {
-            if (!this._dict.Remove(entity.idCom.entityId, out entity)) return false;
+            var key = this._GetKey(entity);
+            if (!this._dict.Remove(key, out entity)) return false;
             this._list.Remove(entity);
             return true;
         }

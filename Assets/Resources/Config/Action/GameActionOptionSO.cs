@@ -9,6 +9,8 @@ namespace GamePlay.Config
     {
         [Header("质量")]
         public GameActionOptionQuality quality;
+        [Header("描述")]
+        public string desc;
         [Header("最大等级")]
         public int maxLv;
         [Header("行为列表")]

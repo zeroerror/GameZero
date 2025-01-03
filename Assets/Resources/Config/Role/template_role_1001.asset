@@ -13,23 +13,18 @@ MonoBehaviour:
   m_Name: template_role_1001
   m_EditorClassIdentifier: 
   typeId: 1001
-  roleName: "\u6218\u58EB"
+  roleName: "\u68D5\u718A"
   desc: 
-  prefab: {fileID: 1063388345164490, guid: 6f6fbddf32356c04da68330c62a81956, type: 3}
-  prefabUrl: Role/1001/role_prefab_1001
+  prefab: {fileID: 2069015975501184387, guid: 5f2f6da5d4c26b34c8f93a3a04d52a15, type: 3}
+  prefabUrl: Role/10001/role_prefab_10001
   skills:
-  - {fileID: 11400000, guid: 0aa734545aed5594ea2ffe963a084dd5, type: 2}
-  - {fileID: 11400000, guid: 1522ba66d1721704e8b89e4b44541fbd, type: 2}
+  - {fileID: 11400000, guid: 182393f5590f05945b7d9af80659f083, type: 2}
   attributes:
   - type: 5
-    value: 99
+    value: 100
   - type: 2
-    value: 1000000
-  - type: 3
-    value: 0
-  - type: 4
-    value: 0
+    value: 100
   - type: 7
-    value: 6
+    value: 2
   - type: 6
-    value: 0.7
+    value: 1

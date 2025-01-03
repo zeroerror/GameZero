@@ -176,6 +176,18 @@ namespace GamePlay.Config
                 }
             }
 
+            var actionOptionSOs = Resources.LoadAll<GameActionOptionSO>(GameConfigCollection.ACTION_OPTION_CONFIG_DIR_PATH);
+            actionOptionSOs = actionOptionSOs.Filter(actionOptionSO => actionOptionSO.actionSOs?.Contains(a => a.typeId == actionId) == true);
+            if (actionOptionSOs.Length > 0)
+            {
+                EditorGUILayout.LabelField(" -------- 被以下ActionOption使用 --------", EditorStyles.boldLabel);
+                for (int i = 0; i < actionOptionSOs.Length; i++)
+                {
+                    var actionOptionSO = actionOptionSOs[i];
+                    EditorGUILayout.ObjectField(actionOptionSO.desc, actionOptionSO, typeof(GameActionOptionSO), false);
+                }
+            }
+
             GUI.color = color;
         }
 

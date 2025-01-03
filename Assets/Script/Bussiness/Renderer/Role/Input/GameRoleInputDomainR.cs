@@ -24,6 +24,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Tick()
         {
+            return;// 自走棋模式
             var inputArgs = new GameRoleInputArgs();
             var userRole = this._roleContext.userRole;
             if (userRole != null)

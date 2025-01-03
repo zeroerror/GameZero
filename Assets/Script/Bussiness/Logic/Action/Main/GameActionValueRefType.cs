@@ -12,8 +12,12 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary> 行为者攻击力 </summary>
         ActorAttack,
+        /// <summary> 行为者基础攻击力 </summary>
+        ActorBaseAttack,
         /// <summary> 目标攻击力 </summary>
         TargetAttack,
+        /// <summary> 目标基础攻击力 </summary>
+        TargetBaseAttack,
 
         /// <summary> 行为者血量 </summary>
         ActorHP,
@@ -30,6 +34,27 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary> 行为者攻速 </summary>
         ActorAttackSpeed,
+        /// <summary> 行为者基础攻速 </summary>
+        ActorBaseAttackSpeed,
+        /// <summary> 目标攻速 </summary>
+        TargetAttackSpeed,
+        /// <summary> 目标基础攻速 </summary>
+        TargetBaseAttackSpeed,
+
+        /// <summary> 行为者魔法值 </summary>
+        ActorMP,
+        /// <summary> 目标魔法值 </summary>
+        TargetMP,
+
+        /// <summary> 行为者护甲 </summary>
+        ActorArmor,
+        /// <summary> 目标护甲 </summary>
+        TargetArmor,
+
+        /// <summary> 行为者魔抗 </summary>
+        ActorMagicResis,
+        /// <summary> 目标魔抗 </summary>
+        TargetMagicResist,
     }
 
     public static class GameActionValueRefTypeExt
@@ -45,19 +70,27 @@ namespace GamePlay.Bussiness.Logic
             float refAttrValue = 0;
             var actorAttrCom = actor.attributeCom;
             var targetAttrCom = target.attributeCom;
-            var actorBaseAttrCom = actor.baseAttributeCom;
-            var targetBaseAttrCom = target.baseAttributeCom;
+            var actorAttrCom_base = actor.baseAttributeCom;
+            var targetAttrCom_base = target.baseAttributeCom;
             switch (refType)
             {
                 case GameActionValueRefType.Fixed:
                     refAttrValue = 1;
                     break;
+
                 case GameActionValueRefType.ActorAttack:
                     refAttrValue = actorAttrCom.GetValue(GameAttributeType.Attack);
+                    break;
+                case GameActionValueRefType.ActorBaseAttack:
+                    refAttrValue = actorAttrCom_base.GetValue(GameAttributeType.Attack);
                     break;
                 case GameActionValueRefType.TargetAttack:
                     refAttrValue = targetAttrCom.GetValue(GameAttributeType.Attack);
                     break;
+                case GameActionValueRefType.TargetBaseAttack:
+                    refAttrValue = targetAttrCom_base.GetValue(GameAttributeType.Attack);
+                    break;
+
                 case GameActionValueRefType.ActorHP:
                     refAttrValue = actorAttrCom.GetValue(GameAttributeType.HP);
                     break;
@@ -65,19 +98,48 @@ namespace GamePlay.Bussiness.Logic
                     refAttrValue = targetAttrCom.GetValue(GameAttributeType.HP);
                     break;
                 case GameActionValueRefType.ActorMaxHP:
-                    refAttrValue = actorBaseAttrCom.GetValue(GameAttributeType.MaxHP);
+                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.MaxHP);
                     break;
                 case GameActionValueRefType.TargetMaxHP:
-                    refAttrValue = targetBaseAttrCom.GetValue(GameAttributeType.MaxHP);
+                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.MaxHP);
                     break;
                 case GameActionValueRefType.ActorLostHP:
-                    refAttrValue = actorBaseAttrCom.GetValue(GameAttributeType.HP) - actorAttrCom.GetValue(GameAttributeType.HP);
+                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.MaxHP) - actorAttrCom.GetValue(GameAttributeType.HP);
                     break;
                 case GameActionValueRefType.TargetLostHP:
-                    refAttrValue = targetBaseAttrCom.GetValue(GameAttributeType.HP) - targetAttrCom.GetValue(GameAttributeType.HP);
+                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.MaxHP) - targetAttrCom.GetValue(GameAttributeType.HP);
                     break;
                 case GameActionValueRefType.ActorAttackSpeed:
-                    refAttrValue = actorBaseAttrCom.GetValue(GameAttributeType.AttackSpeed);
+                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.AttackSpeed);
+                    break;
+                case GameActionValueRefType.TargetAttackSpeed:
+                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.AttackSpeed);
+                    break;
+                case GameActionValueRefType.ActorBaseAttackSpeed:
+                    refAttrValue = actorAttrCom_base.GetValue(GameAttributeType.AttackSpeed);
+                    break;
+                case GameActionValueRefType.TargetBaseAttackSpeed:
+                    refAttrValue = targetAttrCom_base.GetValue(GameAttributeType.AttackSpeed);
+                    break;
+                case GameActionValueRefType.ActorMP:
+                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.MP);
+                    break;
+                case GameActionValueRefType.TargetMP:
+                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.MP);
+                    break;
+
+                case GameActionValueRefType.ActorArmor:
+                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.Armor);
+                    break;
+                case GameActionValueRefType.TargetArmor:
+                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.Armor);
+                    break;
+
+                case GameActionValueRefType.ActorMagicResis:
+                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.MagicResist);
+                    break;
+                case GameActionValueRefType.TargetMagicResist:
+                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.MagicResist);
                     break;
                 default:
                     GameLogger.LogError("未处理的数值参考类型: " + refType);
