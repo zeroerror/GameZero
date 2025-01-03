@@ -17,7 +17,6 @@ namespace GamePlay.Bussiness.Logic
                 fromStateType = fsmCom.stateType,
                 idArgs = entity.idCom.ToArgs(),
             });
-            entity.SetInvalid();
         }
 
         protected override void _Tick(GameProjectileEntity entity, float frameTime)
@@ -25,6 +24,16 @@ namespace GamePlay.Bussiness.Logic
             var fsmCom = entity.fsmCom;
             var stateModel = fsmCom.destroyedState;
             stateModel.stateTime += frameTime;
+        }
+
+        protected override GameProjectileStateType _CheckExit(GameProjectileEntity projectile)
+        {
+            var stateFrame = projectile.fsmCom.destroyedState.stateFrame;
+            if (stateFrame == 1)
+            {
+                projectile.SetInvalid();
+            }
+            return GameProjectileStateType.None;
         }
     }
 

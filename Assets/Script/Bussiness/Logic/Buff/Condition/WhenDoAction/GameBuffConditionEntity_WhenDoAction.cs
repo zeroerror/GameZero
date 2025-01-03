@@ -54,9 +54,8 @@ namespace GamePlay.Bussiness.Logic
             {
                 m_check(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.LaunchProjectile);
             });
-            if (isSatisfied) return true;
 
-            return false;
+            return isSatisfied;
 
             void m_check(in GameIdArgs actorIdArgs, in GameActionTargeterArgsRecord actionTargeterRecord, in GameIdArgs targetIdArgs, int actionId, GameActionType actionType)
             {

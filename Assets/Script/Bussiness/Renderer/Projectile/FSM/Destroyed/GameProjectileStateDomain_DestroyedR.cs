@@ -26,18 +26,20 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_STATE_ENTER_DESTROYED, args);
                 return;
             }
-            projectile.SetInvalid();
+            this.Enter(projectile);
+            this._context.cmdBufferService.AddDelayCmd(GameTimeCollection.frameTime, () =>
+            {
+                projectile.SetInvalid();
+            });
             GameLogger.Log("投射物状态进入 - 销毁");
         }
 
         public override void Enter(GameProjectileEntityR entity)
         {
-            throw new System.NotImplementedException();
         }
 
         protected override void _Tick(GameProjectileEntityR entity, float frameTime)
         {
-            throw new System.NotImplementedException();
         }
     }
 

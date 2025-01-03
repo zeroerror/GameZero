@@ -74,6 +74,7 @@ namespace GamePlay.Bussiness.Renderer
                     url = actEffectUrl,
                     scale = action.actVFXScale,
                     loopDuration = 0,
+                    layerType = GameFieldLayerType.VFX
                 };
                 this._context.domainApi.vfxApi.Play(args);
             }
@@ -114,6 +115,7 @@ namespace GamePlay.Bussiness.Renderer
                     angle = transCom.angle,
                     scale = action.hitVFXScale,
                     loopDuration = 0,
+                    layerType = GameFieldLayerType.VFX
                 };
                 this._context.domainApi.vfxApi.Play(args);
             }

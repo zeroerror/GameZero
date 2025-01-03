@@ -29,8 +29,6 @@ namespace GamePlay.Bussiness.Renderer
         public abstract void Enter(GameProjectileEntityR entity);
         /** 状态更新 */
         protected abstract void _Tick(GameProjectileEntityR entity, float frameTime);
-        /** 退出状态 */
-        public virtual void ExitTo(GameProjectileEntityR entity, GameProjectileStateType toState) { }
     }
 
 }

@@ -1,5 +1,4 @@
 using GamePlay.Core;
-using UnityEngine.Analytics;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -25,10 +24,16 @@ namespace GamePlay.Bussiness.Logic
                 case GameActionDmgType.Real:
                     break;
                 case GameActionDmgType.Physical:
-                    var armor = target.attributeCom.GetValue(GameAttributeType.Armor);
                     // 物理减伤
+                    var armor = target.attributeCom.GetValue(GameAttributeType.Armor);
                     var physicalDmgReduce = armor / (armor + 100);
-                    dmgValue = dmgValue * (1 - armor / (armor + 100));
+                    dmgValue = dmgValue * (1 - physicalDmgReduce);
+                    break;
+                case GameActionDmgType.Magic:
+                    // 魔法减伤
+                    var magicResist = target.attributeCom.GetValue(GameAttributeType.MagicResist);
+                    var magicDmgReduce = magicResist / (magicResist + 100);
+                    dmgValue = dmgValue * (1 - magicDmgReduce);
                     break;
                 default:
                     GameLogger.LogError("未处理的伤害类型");
