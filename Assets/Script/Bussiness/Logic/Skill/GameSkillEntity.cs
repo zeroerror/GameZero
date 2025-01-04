@@ -22,7 +22,6 @@ namespace GamePlay.Bussiness.Logic
         public override void Tick(float dt)
         {
             this.cdElapsed -= dt;
-            this.timelineCom.Tick(dt);
         }
 
         public override void Destroy()

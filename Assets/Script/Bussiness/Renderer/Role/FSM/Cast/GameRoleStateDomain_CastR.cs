@@ -1,5 +1,6 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using UnityEngine.UIElements;
 
 namespace GamePlay.Bussiness.Renderer
 {
@@ -45,7 +46,8 @@ namespace GamePlay.Bussiness.Renderer
             var skillId = (int)args[0];
             role.skillCom.TryGet(skillId, out var skill);
             this._context.domainApi.roleApi.PlayAnim(role, skill.skillModel.clipName);
-            role.fsmCom.EnterCast();
+            role.fsmCom.EnterCast(skill);
+            if (skill.skillModel.skillType == GameSkillType.MagicAttack) role.attributeBarCom.mpSlider.SetActive(false);
         }
 
         protected override void _Tick(GameRoleEntityR role, float frameTime)
@@ -54,8 +56,10 @@ namespace GamePlay.Bussiness.Renderer
 
         public override void ExitTo(GameRoleEntityR role, GameRoleStateType toState)
         {
-            role.animCom.timeScale = 1;
             base.ExitTo(role, toState);
+            role.animCom.timeScale = 1;
+            var skill = role.fsmCom.castState.skill;
+            if (skill.skillModel.skillType == GameSkillType.MagicAttack) role.attributeBarCom.mpSlider.SetActive(true);
         }
     }
 }

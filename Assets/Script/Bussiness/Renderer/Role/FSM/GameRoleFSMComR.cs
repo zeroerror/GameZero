@@ -24,30 +24,31 @@ namespace GamePlay.Bussiness.Renderer
 
         public void EnterIdle()
         {
-            this.SwitchToState(GameRoleStateType.Idle, null);
+            this.SwitchToState(GameRoleStateType.Idle);
         }
 
         public void EnterMove()
         {
-            this.SwitchToState(GameRoleStateType.Move, null);
+            this.SwitchToState(GameRoleStateType.Move);
         }
 
-        public void EnterCast()
+        public void EnterCast(GameSkillEntityR skill)
         {
-            this.SwitchToState(GameRoleStateType.Cast, null);
+            this.SwitchToState(GameRoleStateType.Cast);
+            this.castState.skill = skill;
         }
 
         public void EnterDead()
         {
-            this.SwitchToState(GameRoleStateType.Dead, null);
+            this.SwitchToState(GameRoleStateType.Dead);
         }
 
         public void EnterDestroyed()
         {
-            this.SwitchToState(GameRoleStateType.Destroyed, null);
+            this.SwitchToState(GameRoleStateType.Destroyed);
         }
 
-        public void SwitchToState(GameRoleStateType nextState, GameRoleEntityR role)
+        public void SwitchToState(GameRoleStateType nextState)
         {
             this.lastStateType = this.stateType;
             this.stateType = nextState;

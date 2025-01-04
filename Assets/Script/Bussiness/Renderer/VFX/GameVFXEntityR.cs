@@ -100,7 +100,7 @@ namespace GamePlay.Bussiness.Renderer
             this.root.SetActive(true);
             this.timelineCom.Play(args.loopDuration);
             if (args.isAttachParent) this.root.transform.SetParent(args.attachNode.transform);
-            this.root.name = $"VFX_{this.entityId}";
+            this.root.name = $"VFX_{this.entityId}_{this.prefabUrl}";
             this._stopDirty = true;
         }
 
