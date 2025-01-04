@@ -19,11 +19,13 @@ namespace GamePlay.Bussiness.UI
 
         private TextMeshProUGUI _text;
         public GameObject rootNode { get; private set; }
+        public string prefabName { get; private set; }
         public GamePlayableCom playCom { get; private set; }
 
-        public GameUIJumpTextEntity(GameObject rootNode)
+        public GameUIJumpTextEntity(GameObject rootNode, string prefabName)
         {
             this.rootNode = rootNode;
+            this.prefabName = prefabName;
             this._text = this.rootNode.GetComponentInChildren<TextMeshProUGUI>();
             var animator = this.rootNode.GetComponentInChildren<Animator>();
             this.playCom = new GamePlayableCom(animator);

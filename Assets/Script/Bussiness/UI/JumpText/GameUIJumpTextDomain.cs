@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine;
 
@@ -8,12 +9,12 @@ namespace GamePlay.Bussiness.UI
     {
         GameUIContext _uiContext;
         private List<GameUIJumpTextEntity> _jumpTextEntityList;
-        private List<GameUIJumpTextEntity> _jumpTextEntityPool;
+        private Dictionary<string, List<GameUIJumpTextEntity>> _jumpTextEntityPoolDict;
 
         public GameUIJumpTextDomain()
         {
             this._jumpTextEntityList = new List<GameUIJumpTextEntity>();
-            this._jumpTextEntityPool = new List<GameUIJumpTextEntity>();
+            this._jumpTextEntityPoolDict = new Dictionary<string, List<GameUIJumpTextEntity>>();
         }
 
         public void Inject(GameUIContext uiContext)
@@ -30,11 +31,16 @@ namespace GamePlay.Bussiness.UI
                 entity.Destroy();
             });
             this._jumpTextEntityList.Clear();
-            this._jumpTextEntityPool?.Foreach((entity) =>
+
+            foreach (var pair in this._jumpTextEntityPoolDict)
             {
-                entity.Destroy();
-            });
-            this._jumpTextEntityPool.Clear();
+                pair.Value.Foreach((entity) =>
+                {
+                    entity.Destroy();
+                });
+                pair.Value.Clear();
+            }
+            this._jumpTextEntityPoolDict.Clear();
         }
 
         private void _BindEvent()
@@ -57,47 +63,21 @@ namespace GamePlay.Bussiness.UI
                     {
                         entity.SetActive(false);
                         this._jumpTextEntityList.Remove(entity);
-                        this._jumpTextEntityPool.Add(entity);
+                        var list = this._jumpTextEntityPoolDict.TryGetValue(entity.prefabName, out var entityList) ? entityList : new List<GameUIJumpTextEntity>();
+                        this._jumpTextEntityPoolDict[entity.prefabName] = list;
+                        list.Add(entity);
                     });
                 }
             }
         }
 
-        public void JumpText_Dmg(in Vector2 screenPos, int style, string txt, float scale = 1.0f)
-        {
-            var prefabName = $"jump_text_{GameUIJumpTextType.Dmg.ToText()}";
-            var url = $"UI/Battle/{prefabName}";
-            var prefab = Resources.Load<GameObject>(url);
-            if (!prefab)
-            {
-                GameLogger.LogError($"UI跳字: 加载跳字失败 {url}");
-                return;
-            }
-
-            var entity = this._jumpTextEntityPool.Count > 0 ? this._jumpTextEntityPool[this._jumpTextEntityPool.Count - 1] : null;
-            if (entity != null)
-            {
-                this._jumpTextEntityPool.RemoveAt(this._jumpTextEntityPool.Count - 1);
-            }
-            else
-            {
-                var txtObj = GameObject.Instantiate(prefab);
-                this._uiContext.domainApi.layerApi.AddToUIRoot(txtObj.transform);
-                entity = new GameUIJumpTextEntity(txtObj);
-            }
-
-            entity.text = txt;
-            entity.SetAnchorPosition(screenPos);
-            this.PlayAnim(entity, prefabName, style);
-            this._jumpTextEntityList.Add(entity);
-        }
-
-        public void PlayAnim(GameUIJumpTextEntity entity, string prefabName, int style)
+        private void _PlayAnim(GameUIJumpTextEntity entity, string prefabUrl, int style)
         {
             entity.SetActive(true);
 
             var playCom = entity.playCom;
             playCom.Stop();
+            var prefabName = prefabUrl.Substring(prefabUrl.LastIndexOf('/') + 1);
             var animName = $"{prefabName}_{style}";
             if (playCom.TryGetClip(animName, out var clip))
             {
@@ -105,7 +85,7 @@ namespace GamePlay.Bussiness.UI
                 return;
             }
 
-            var clipUrl = $"UI/Battle/{animName}";
+            var clipUrl = $"{prefabUrl}_{style}";
             clip = Resources.Load<AnimationClip>(clipUrl);
             if (clip == null)
             {
@@ -113,6 +93,81 @@ namespace GamePlay.Bussiness.UI
                 return;
             }
             playCom.Play(clip);
+        }
+
+        public void JumpText_Dmg(in Vector2 screenPos, GameActionDmgType dmgType, int style, string txt, float scale = 1.0f)
+        {
+
+            var url = this._GetDmgPrefabUrl(dmgType);
+            var prefab = Resources.Load<GameObject>(url);
+            if (!prefab)
+            {
+                GameLogger.LogError($"UI跳字: 加载跳字失败 {url}");
+                return;
+            }
+
+            var prefabName = prefab.name;
+            var entity = this._jumpTextEntityPoolDict.TryGetValue(prefabName, out var entityList) ? entityList.Count > 0 ? entityList[0] : null : null;
+            if (entity != null)
+            {
+                entityList.Remove(entity);
+            }
+            else
+            {
+                var txtObj = GameObject.Instantiate(prefab);
+                this._uiContext.domainApi.layerApi.AddToUIRoot(txtObj.transform);
+                entity = new GameUIJumpTextEntity(txtObj, prefabName);
+            }
+
+            entity.text = txt;
+            entity.SetAnchorPosition(screenPos);
+            this._PlayAnim(entity, url, style);
+            this._jumpTextEntityList.Add(entity);
+        }
+
+        private string _GetDmgPrefabUrl(GameActionDmgType dmgType)
+        {
+            var dirName = "";
+            switch (dmgType)
+            {
+                case GameActionDmgType.Real:
+                    dirName = "Real";
+                    break;
+                case GameActionDmgType.Physical:
+                    dirName = "Physical";
+                    break;
+                case GameActionDmgType.Magic:
+                    dirName = "Magic";
+                    break;
+                default:
+                    GameLogger.LogError($"UI跳字: 未处理的伤害类型 {dmgType}");
+                    break;
+            }
+            var prefabName = this._GetDmgPrefabName(dmgType);
+            var url = $"UI/Battle/JumpText/Dmg/{dirName}/{prefabName}";
+            return url;
+        }
+
+        private string _GetDmgPrefabName(GameActionDmgType dmgType)
+        {
+            var suffix = "";
+            switch (dmgType)
+            {
+                case GameActionDmgType.Real:
+                    suffix = "real";
+                    break;
+                case GameActionDmgType.Physical:
+                    suffix = "physical";
+                    break;
+                case GameActionDmgType.Magic:
+                    suffix = "magic";
+                    break;
+                default:
+                    GameLogger.LogError($"UI跳字: 未处理的伤害类型 {dmgType}");
+                    break;
+            }
+
+            return $"jump_text_dmg_{suffix}";
         }
     }
 }

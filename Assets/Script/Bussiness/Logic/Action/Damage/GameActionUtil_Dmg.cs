@@ -56,7 +56,7 @@ namespace GamePlay.Bussiness.Logic
                 actor.idCom.ToArgs(),
                 target.idCom.ToArgs(),
                 actor.actionTargeterCom.getCurTargeterAsRecord(),
-                GameActionDmgType.Real,
+                dmgModel.dmgType,
                 realDmg
             );
             return record;
