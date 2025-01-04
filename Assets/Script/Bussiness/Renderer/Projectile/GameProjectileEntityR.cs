@@ -80,6 +80,7 @@ namespace GamePlay.Bussiness.Renderer
         public void FaceTo(in GameVec2 dir)
         {
             this.transform.eulerAngles = new GameVec3(0, 0, GameVec2.SignedAngle(GameVec2.right, dir));
+            this.transformCom.forward = dir;
         }
 
         public void SyncTrans()

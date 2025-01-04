@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4609135524513012}
   - component: {fileID: 3008171847124507771}
   - component: {fileID: 2769982685956155500}
+  - component: {fileID: 7048829372513490434}
   m_Layer: 0
   m_Name: role_prefab_101
   m_TagString: Untagged
@@ -77,6 +78,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7048829372513490434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063388345164490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94e59b5594fb9240afeb4ae006d1e60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
 --- !u!1 &340468530208337258
 GameObject:
   m_ObjectHideFlags: 0

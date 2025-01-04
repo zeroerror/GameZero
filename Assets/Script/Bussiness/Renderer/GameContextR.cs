@@ -90,5 +90,15 @@ namespace GamePlay.Bussiness.Renderer
                     return null;
             }
         }
+
+        public T FindEntity<T>(in GameIdArgs idArgs) where T : GameEntityBase
+        {
+            var entity = this.FindEntity(idArgs);
+            if (entity == null)
+            {
+                return null;
+            }
+            return entity as T;
+        }
     }
 }

@@ -73,7 +73,7 @@ namespace GamePlay.Bussiness.Logic
             };
             this._context.SubmitRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_CREATE, args);
 
-            // 默认进入待机
+            // 初始化FSM
             this.fsmDomain.InitFSM(projectile);
 
             return projectile;
