@@ -94,7 +94,7 @@ namespace GamePlay.Bussiness.Renderer
 
             var isEnemy = role.idCom.campId != this._roleContext.userRole.idCom.campId;
             var hpSlider = this._roleContext.factory.LoadHPSlider(isEnemy);
-            this._context.uiContext.AddToUIRoot(hpSlider.transform);
+            this._context.uiApi.layerApi.AddToUIRoot(hpSlider.transform);
             attributeBarCom.hpSlider.SetSlider(hpSlider, new Vector2(0, 150));
             attributeBarCom.hpSlider.SetSize(new Vector2(100, 10));
 
@@ -103,7 +103,7 @@ namespace GamePlay.Bussiness.Renderer
             if (hasMPSkill)
             {
                 var mpSlider = this._roleContext.factory.LoadMPSlider();
-                this._context.uiContext.AddToUIRoot(mpSlider.transform);
+                this._context.uiApi.layerApi.AddToUIRoot(mpSlider.transform);
                 attributeBarCom.mpSlider.SetSlider(mpSlider, new Vector2(0, 140));
                 attributeBarCom.mpSlider.SetSize(new Vector2(100, 10));
             }

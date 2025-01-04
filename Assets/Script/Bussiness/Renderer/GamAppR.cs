@@ -8,9 +8,15 @@ namespace GamePlay.Bussiness.Renderer
     {
         public GameDirectDomainR directDomain { get; private set; }
 
-        public GameAppR(GameContext logicContext, GameObject sceneRoot, GameUIContext uiContext)
+        public GameAppR()
         {
-            this.directDomain = new GameDirectDomainR(logicContext, sceneRoot, uiContext);
+            this.directDomain = new GameDirectDomainR();
+            Application.quitting += this.Destroy;
+        }
+
+        public void Inject(GameObject sceneRoot, GameDomainApi logicApi, GameUIDomainApi uiApi)
+        {
+            this.directDomain.Inject(sceneRoot, logicApi, uiApi);
             Application.quitting += this.Destroy;
         }
 

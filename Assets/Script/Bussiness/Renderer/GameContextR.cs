@@ -7,7 +7,7 @@ namespace GamePlay.Bussiness.Renderer
     public class GameContextR
     {
 
-        public GameContext logicContext { get; private set; }
+        public GameDomainApi logicApi { get; private set; }
         public GameCameraEntity cameraEntity { get; private set; }
         public GameDirectorR director { get; private set; }
         public GameDomainApiR domainApi { get; private set; }
@@ -24,12 +24,11 @@ namespace GamePlay.Bussiness.Renderer
         public GameEventService delayRCEventService { get; private set; }
         public GameCmdBufferService cmdBufferService { get; private set; }
 
-        public GameUIContext uiContext { get; private set; }
+        public GameUIDomainApi uiApi { get; private set; }
 
-        public GameContextR(GameContext logicContext, GameObject sceneRoot, GameUIContext uiContext)
+        public GameContextR()
         {
-            this.logicContext = logicContext;
-            this.uiContext = uiContext;
+
             var cam = GameObject.Find("Main Camera")?.GetComponent<Camera>();
             this.cameraEntity = new GameCameraEntity(cam);
             this.director = new GameDirectorR();
@@ -40,7 +39,7 @@ namespace GamePlay.Bussiness.Renderer
             this.actionContext = new GameActionContextR();
             this.vfxContext = new GameVFXContextR();
             this.projectileContext = new GameProjectileContextR();
-            this.fieldContext = new GameFieldContextR(sceneRoot);
+            this.fieldContext = new GameFieldContextR();
             this.buffContext = new GameBuffContextR();
 
             this.eventService = new GameEventService();
@@ -48,15 +47,22 @@ namespace GamePlay.Bussiness.Renderer
             this.cmdBufferService = new GameCmdBufferService();
         }
 
+        public void Inject(GameObject sceneRoot, GameDomainApi logicApi, GameUIDomainApi uiApi)
+        {
+            this.fieldContext.Inject(sceneRoot);
+            this.logicApi = logicApi;
+            this.uiApi = uiApi;
+        }
+
         public void BindRC(string rcName, System.Action<object> callback)
         {
-            this.logicContext.BindRC(rcName, callback);
+            this.logicApi.directApi.BindRC(rcName, callback);
             this.delayRCEventService.Bind(rcName, callback);
         }
 
         public void UnbindRC(string rcName, System.Action<object> callback)
         {
-            this.logicContext.rcEventService.Unbind(rcName, callback);
+            this.logicApi.directApi.UnbindRC(rcName, callback);
             this.delayRCEventService.Unbind(rcName, callback);
         }
 

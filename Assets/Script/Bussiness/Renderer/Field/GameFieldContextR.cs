@@ -11,10 +11,15 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameFieldEntityR curField { get; set; }
 
-        public GameFieldContextR(GameObject sceneRoot)
+        public GameFieldContextR()
         {
             this._repo = new GameFieldRepoR();
-            this._factory = new GameFieldFactoryR(sceneRoot);
+            this._factory = new GameFieldFactoryR();
+        }
+
+        public void Inject(GameObject sceneRoot)
+        {
+            this._factory.Inject(sceneRoot);
         }
     }
 }

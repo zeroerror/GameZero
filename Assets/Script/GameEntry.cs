@@ -11,10 +11,19 @@ public class GameEntry : MonoBehaviour
     public GameUIApp gameUIApp { get; private set; }
     void Start()
     {
-        gameUIApp = new GameUIApp(GameObject.Find("UIRoot"));
         gameApp = new GameApp();
-        gameAppR = new GameAppR(gameApp.directDomain.context, gameObject, gameUIApp.directDomain.context);
+        gameAppR = new GameAppR();
+        gameUIApp = new GameUIApp();
+
         // GameLogger.logLevel = LogLevel.Error;
+        var logicApi = gameApp.directDomain.context.domainApi;
+        var rendererApi = gameAppR.directDomain.context.domainApi;
+        var uiApi = gameUIApp.directDomain.context.domainApi;
+        var sceneRoot = this.gameObject;
+        var uiRoot = GameObject.Find("UIRoot");
+
+        gameAppR.Inject(sceneRoot, logicApi, uiApi);
+        gameUIApp.Inject(uiRoot, logicApi, rendererApi);
     }
 
     void Update()

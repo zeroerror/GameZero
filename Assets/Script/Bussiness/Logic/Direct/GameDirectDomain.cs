@@ -1,8 +1,9 @@
+using System;
 using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameDirectDomain
+    public class GameDirectDomain : GameDirectDomainApi
     {
         public GameDirector director => this.context.director;
 
@@ -44,6 +45,7 @@ namespace GamePlay.Bussiness.Logic
         private void _InitContext()
         {
             this.context = new GameContext();
+            this.context.domainApi.SetDirectApi(this);
             this.context.domainApi.SetFieldApi(this.fieldDomain);
             this.context.domainApi.SetRoleApi(this.roleDomain);
             this.context.domainApi.SetSkillApi(this.skillDomain);
@@ -140,5 +142,26 @@ namespace GamePlay.Bussiness.Logic
             this.physicsDomain.Tick(dt);
             this.context.cmdBufferService.Tick();
         }
+
+        public void SetTimeScale(float timeScale)
+        {
+            this.director.timeScaleCom.SetTimeScale(timeScale);
+        }
+
+        public void TickRCEvents()
+        {
+            this.context.rcEventService.Tick();
+        }
+
+        public void BindRC(string rcName, Action<object> callback)
+        {
+            this.context.BindRC(rcName, callback);
+        }
+
+        public void UnbindRC(string rcName, Action<object> callback)
+        {
+            this.context.UnbindRC(rcName, callback);
+        }
     }
+
 }

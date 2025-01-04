@@ -6,6 +6,16 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleAIDomainApi aiApi { get; }
 
         /// <summary>
+        /// 获取用户角色
+        /// </summary>
+        public GameRoleEntity GetUserRole();
+
+        /// <summary>
+        /// 设置玩家输入参数
+        /// </summary>
+        public void SetUserPlayerInputArgs(in GameRoleInputArgs inputArgs);
+
+        /// <summary>
         /// 创建角色
         /// <para>typeId: 类型Id</para>
         /// <para>campId: 阵营Id</para>
@@ -58,5 +68,12 @@ namespace GamePlay.Bussiness.Logic
             int count,
             in GameTransformArgs transArgs
         );
+
+        /// <summary>
+        /// 获取角色输入参数
+        /// <para>entityId: 实体Id</para>
+        /// <para>inputArgs: 输入参数</para>
+        /// </summary>
+        public bool TryGetPlayerInputArgs(int entityId, out GameRoleInputArgs inputArgs);
     }
 }

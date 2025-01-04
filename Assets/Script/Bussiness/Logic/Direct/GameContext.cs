@@ -48,6 +48,11 @@ namespace GamePlay.Bussiness.Logic
             this.rcEventService.Bind(rcName, callback);
         }
 
+        public void UnbindRC(string rcName, System.Action<object> callback)
+        {
+            this.rcEventService.Unbind(rcName, callback);
+        }
+
         public GameEntityBase FindEntity(GameEntityType entityType, int entityId)
         {
             switch (entityType)

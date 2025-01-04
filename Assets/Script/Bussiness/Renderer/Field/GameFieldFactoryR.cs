@@ -9,10 +9,14 @@ namespace GamePlay.Bussiness.Renderer
         public GameFieldTemplateR template { get; private set; }
         public GameObject sceneRoot { get; private set; }
 
-        public GameFieldFactoryR(GameObject sceneRoot)
+        public GameFieldFactoryR()
+        {
+            template = new GameFieldTemplateR();
+        }
+
+        public void Inject(GameObject sceneRoot)
         {
             this.sceneRoot = sceneRoot;
-            template = new GameFieldTemplateR();
         }
 
         public GameFieldEntityR Load(int typeId)

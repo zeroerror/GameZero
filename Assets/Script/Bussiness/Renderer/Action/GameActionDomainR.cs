@@ -159,11 +159,11 @@ namespace GamePlay.Bussiness.Renderer
             }
 
             // 伤害跳字
-            var jumpTextDomainApi = this._context.uiContext.domainApi.jumpTextDomainApi;
+            var jumpTextApi = this._context.uiApi.jumpTextApi;
             var randomStyle = GameMath.RandomRange(1, 5);//1-4
             var jumpPos = this.WorldToScreenPoint(target.transformCom.position);
             jumpPos.y += 50;
-            jumpTextDomainApi.JumpText_Dmg(jumpPos, randomStyle, dmgRecord.value.ToString(), 0.5f);
+            jumpTextApi.JumpText_Dmg(jumpPos, randomStyle, dmgRecord.value.ToString(), 0.5f);
         }
 
         public Vector3 WorldToScreenPoint(in Vector3 v)

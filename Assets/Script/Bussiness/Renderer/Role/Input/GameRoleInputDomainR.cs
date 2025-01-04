@@ -61,8 +61,7 @@ namespace GamePlay.Bussiness.Renderer
                 // ...
                 if (inputArgs.HasInput())
                 {
-                    var entityId = userRole.idCom.entityId;
-                    this._context.logicContext.roleContext.SetPlayerInputArgs(entityId, inputArgs);
+                    this._context.logicApi.roleApi.SetUserPlayerInputArgs(inputArgs);
                 }
             }
         }

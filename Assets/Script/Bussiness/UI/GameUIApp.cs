@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Bussiness.Renderer;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
@@ -6,9 +7,16 @@ namespace GamePlay.Bussiness.UI
     public class GameUIApp
     {
         public GameUIDirectDomain directDomain { get; private set; }
-        public GameUIApp(GameObject uiRoot)
+
+        public GameUIApp()
         {
-            this.directDomain = new GameUIDirectDomain(uiRoot);
+            this.directDomain = new GameUIDirectDomain();
+            Application.quitting += this.Destroy;
+        }
+
+        public void Inject(GameObject uiRoot, GameDomainApi logicApi, GameDomainApiR rendererApi)
+        {
+            this.directDomain.Inject(uiRoot, logicApi, rendererApi);
             Application.quitting += this.Destroy;
         }
 

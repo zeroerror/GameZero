@@ -2,6 +2,9 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameDomainApiR
     {
+        public GameDirectDomainApiR directApi { get; private set; }
+        public void SetDirectApi(GameDirectDomainApiR directApi) => this.directApi = directApi;
+
         public GameRoleDomainApiR roleApi { get; private set; }
         public void SetRoleApi(GameRoleDomainApiR roleApi) => this.roleApi = roleApi;
 

@@ -177,5 +177,32 @@ namespace GamePlay.Bussiness.Logic
         {
             return this.SummonRoles(summoner, model.roleId, model.campType, model.count, transArgs);
         }
+
+        public GameRoleEntity GetUserRole()
+        {
+            return this._roleContext.userRole;
+        }
+
+        public bool TryGetPlayerInputArgs(int entityId, out GameRoleInputArgs inputArgs)
+        {
+            return this._roleContext.playerInputArgs.TryGetValue(entityId, out inputArgs);
+        }
+
+        public void SetPlayerInputArgs(int entityId, in GameRoleInputArgs inputArgs)
+        {
+            if (!this._roleContext.playerInputArgs.TryGetValue(entityId, out var oldInputArgs))
+            {
+                this._roleContext.playerInputArgs[entityId] = inputArgs;
+                return;
+            }
+            oldInputArgs.Update(inputArgs);
+            this._roleContext.playerInputArgs[entityId] = oldInputArgs;
+        }
+
+        public void SetUserPlayerInputArgs(in GameRoleInputArgs inputArgs)
+        {
+            var entityId = this._roleContext.userRole.idCom.entityId;
+            this.SetPlayerInputArgs(entityId, inputArgs);
+        }
     }
 }
