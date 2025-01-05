@@ -64,7 +64,7 @@ namespace GamePlay.Bussiness.Logic
 
                 var actorEntity = this.FindEntity(actorIdArgs.entityType, actorIdArgs.entityId);
                 if (!actorEntity) return;
-                var actorRoleEntity = actorEntity.TryGetLinkParent<GameRoleEntity>();
+                var actorRoleEntity = actorEntity.GetLinkParent<GameRoleEntity>();
                 if (!actorRoleEntity) return;
 
                 // 行为实体必须是Buff作用目标

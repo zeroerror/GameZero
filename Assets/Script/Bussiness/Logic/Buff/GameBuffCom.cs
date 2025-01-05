@@ -4,7 +4,7 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameBuffCom
     {
-        public List<GameBuffEntity> _buffList { get; private set; }
+        private List<GameBuffEntity> _buffList;
 
         public GameBuffCom()
         {

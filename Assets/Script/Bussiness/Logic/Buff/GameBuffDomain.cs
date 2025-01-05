@@ -35,9 +35,23 @@ namespace GamePlay.Bussiness.Logic
           });
         }
 
+        private GameBuffCom _GetBuffCom(GameEntityBase entity)
+        {
+            if (entity.TryGetLinkParent<GameRoleEntity>(out var role))
+            {
+                return role.buffCom;
+            }
+            if (entity.TryGetLinkParent<GameActionOptionEntity>(out var actionOption))
+            {
+                return actionOption.buffCom;
+            }
+            GameLogger.LogError("获取buff组件失败！未处理的buff目标类型：" + entity.idCom.entityType);
+            return null;
+        }
+
         public void TickBuff(GameEntityBase entity, float dt)
         {
-            var buffCom = entity.buffCom;
+            var buffCom = this._GetBuffCom(entity);
             buffCom.Foreach(buff =>
             {
                 buff.Tick(dt);
@@ -70,7 +84,7 @@ namespace GamePlay.Bussiness.Logic
         {
             realAttachLayer = 0;
 
-            if (!target.TryGetLinkEntity<GameRoleEntity>(out var targetRole))
+            if (!target.TryGetLinkParent<GameRoleEntity>(out var targetRole))
             {
                 GameLogger.LogWarning("目标不是角色, 暂不支持挂载Buff");
                 return false;
@@ -228,13 +242,14 @@ namespace GamePlay.Bussiness.Logic
             detachBuff = null;
             detachLayer = 0;
 
-            // 目标已死亡
-            if (!buffTarget.IsAlive())
+            // 获取buff组件
+            var buffCom = this._GetBuffCom(buffTarget);
+            if (buffCom == null)
             {
+                GameLogger.LogError("未处理的buff目标类型：" + buffTarget.idCom.entityType);
                 return false;
             }
 
-            var buffCom = buffTarget.buffCom;
             if (!buffCom.TryGet(buffId, out detachBuff))
             {
                 GameLogger.LogError("Buff不存在，无法移除：" + buffId);
@@ -269,7 +284,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void DetachAllBuff(GameEntityBase target)
         {
-            if (!target.TryGetLinkEntity<GameRoleEntity>(out var targetRole))
+            if (!target.TryGetLinkParent<GameRoleEntity>(out var targetRole))
             {
                 GameLogger.LogError("目标不是角色, 暂不支持移除Buff");
                 return;

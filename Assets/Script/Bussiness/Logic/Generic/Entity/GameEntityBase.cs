@@ -24,7 +24,6 @@ namespace GamePlay.Bussiness.Logic
         public void BindAttributeCom(GameAttributeCom attributeCom) => this.attributeCom = attributeCom;
         public GameAttributeCom baseAttributeCom { get; private set; }
         public void BindBaseAttributeCom(GameAttributeCom baseAttributeCom) => this.baseAttributeCom = baseAttributeCom;
-        public GameBuffCom buffCom { get; protected set; }
 
         public GameEntityBase(int typeId, GameEntityType entityType)
         {
@@ -54,7 +53,7 @@ namespace GamePlay.Bussiness.Logic
         /// <summary>
         /// 获取指定类型的父辈实体, 会追溯到根实体
         /// </summary>
-        public T TryGetLinkParent<T>() where T : GameEntityBase
+        public T GetLinkParent<T>() where T : GameEntityBase
         {
             if (this is T)
             {
@@ -71,6 +70,12 @@ namespace GamePlay.Bussiness.Logic
                 p = p.idCom.parent;
             }
             return null;
+        }
+
+        public bool TryGetLinkParent<T>(out T entity) where T : GameEntityBase
+        {
+            entity = GetLinkParent<T>();
+            return entity != null;
         }
 
         /// <summary>
@@ -92,12 +97,6 @@ namespace GamePlay.Bussiness.Logic
                 }
             }
             return null;
-        }
-
-        public bool TryGetLinkEntity<T>(out T entity) where T : GameEntityBase
-        {
-            entity = TryGetLinkParent<T>();
-            return entity != null;
         }
 
         public abstract void Tick(float dt);

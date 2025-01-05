@@ -33,7 +33,7 @@ namespace GamePlay.Bussiness.Logic
             switch (stateModel.attachType)
             {
                 case GameProjectileTargeterType.RoleActor:
-                    var roleActor = projectile.TryGetLinkParent<GameRoleEntity>();
+                    var roleActor = projectile.GetLinkParent<GameRoleEntity>();
                     if (roleActor.attributeCom.GetValue(GameAttributeType.HP) <= 0) break;
                     attachPos = roleActor.transformCom.position;
                     projectile.transformCom.forward = roleActor.transformCom.forward;
@@ -65,7 +65,7 @@ namespace GamePlay.Bussiness.Logic
             var stateModel = fsmCom.attachState.model;
             if (stateModel.attachType == GameProjectileTargeterType.RoleActor)
             {
-                var actor = projectile.TryGetLinkParent<GameRoleEntity>();
+                var actor = projectile.GetLinkParent<GameRoleEntity>();
                 if (actor.attributeCom.GetValue(GameAttributeType.HP) <= 0) return GameProjectileStateType.Destroyed;
             }
             else if (stateModel.attachType == GameProjectileTargeterType.Target)

@@ -36,7 +36,9 @@ namespace GamePlay.Core
         public static void DebugLog(string message)
         {
             if (logLevel > LogLevel.Debug) return;
-            Debug.LogWarning(message);
+            Debug.Log($"<color={_debugLogColor}>{message}</color>");
         }
+        // 绿色
+        private static readonly string _debugLogColor = "#00FF00";
     }
 }

@@ -31,7 +31,7 @@ namespace GamePlay.Bussiness.Renderer
             repo.ForeachEntities((GameVFXEntityR vfx) =>
             {
                 vfx.Tick(dt);
-                if (!vfx.isPlaying) this._context.cmdBufferService.AddDelayCmd(0, () => repo.Recycle(vfx));
+                if (!vfx.isPlaying) this.Stop(vfx);
             });
         }
 
@@ -56,6 +56,14 @@ namespace GamePlay.Bussiness.Renderer
             repo.TryAdd(vfx);
             vfx.Play(args);
             return vfx;
+        }
+
+        public void Stop(GameVFXEntityR vfxEntity)
+        {
+            if (vfxEntity == null) return;
+            vfxEntity.Stop();
+            var repo = this._vfxContext.repo;
+            this._context.cmdBufferService.AddDelayCmd(0, () => repo.Recycle(vfxEntity));
         }
     }
 }

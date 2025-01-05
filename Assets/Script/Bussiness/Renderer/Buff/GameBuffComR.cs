@@ -4,21 +4,21 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameBuffComR
     {
-        public List<GameBuffEntityR> buffList { get; private set; }
+        private List<GameBuffEntityR> _buffList;
 
         public GameBuffComR()
         {
-            this.buffList = new List<GameBuffEntityR>();
+            this._buffList = new List<GameBuffEntityR>();
         }
 
         public bool HasBuff(int buffId)
         {
-            return this.buffList.Exists(buff => buff.model.typeId == buffId);
+            return this._buffList.Exists(buff => buff.model.typeId == buffId);
         }
 
         public bool TryGet(int buffId, out GameBuffEntityR buff)
         {
-            buff = this.buffList.Find(b => b.model.typeId == buffId);
+            buff = this._buffList.Find(b => b.model.typeId == buffId);
             return buff != null;
         }
 
@@ -29,20 +29,12 @@ namespace GamePlay.Bussiness.Renderer
                 GameLogger.LogError("Buff已存在，无法重复添加：" + buff.model.typeId);
                 return;
             }
-            this.buffList.Add(buff);
+            this._buffList.Add(buff);
         }
 
-        public void DetachBuff(int buffId, int layer)
+        public bool Remove(GameBuffEntityR buff)
         {
-            var buff = this.buffList.Find(b => b.model.typeId == buffId);
-            if (!buff)
-            {
-                GameLogger.LogError("Buff不存在，无法移除：" + buffId);
-                return;
-            }
-            if (!buff.isValid) return;
-            buff.DetachLayer(layer);
-            if (!buff.isValid) this.buffList.Remove(buff);
+            return this._buffList.Remove(buff);
         }
     }
 }

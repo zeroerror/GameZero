@@ -9,6 +9,7 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleAICom aiCom { get; private set; }
         public GameRoleFSMCom fsmCom { get; private set; }
         public GameSkillCom skillCom { get; private set; }
+        public GameBuffCom buffCom { get; private set; }
 
         public GameRoleEntity(GameRoleModel model) : base(model.typeId, GameEntityType.Role)
         {

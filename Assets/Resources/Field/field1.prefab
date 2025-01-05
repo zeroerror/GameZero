@@ -274,7 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   monsterSpawnEMs:
-  - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+  - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
     count: 1
   spawnTime: 0
 --- !u!1 &1515493129479390628
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   monsterSpawnEMs:
-  - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+  - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
     count: 1
   spawnTime: 0
 --- !u!1 &2589201917877529154
@@ -478,7 +478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   monsterSpawnEMs:
-  - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+  - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
     count: 1
   spawnTime: 0
 --- !u!1 &5132421667237102688
@@ -873,7 +873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   monsterSpawnEMs:
-  - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+  - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
     count: 1
   spawnTime: 0
 --- !u!1 &6518522172126862702
@@ -975,7 +975,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   monsterSpawnEMs:
-  - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+  - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
     count: 1
   spawnTime: 0
 --- !u!1 &6754170900252110648
@@ -1077,7 +1077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   monsterSpawnEMs:
-  - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+  - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
     count: 1
   spawnTime: 0
 --- !u!1 &8844717792833640094
@@ -1179,7 +1179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   monsterSpawnEMs:
-  - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+  - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
     count: 1
   spawnTime: 0
 --- !u!1 &8918148570647480791
@@ -1281,7 +1281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   monsterSpawnEMs:
-  - roleSO: {fileID: 11400000, guid: d15275cfd86b2b748960b05f5e3881ac, type: 2}
+  - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
     count: 1
   spawnTime: 0
 --- !u!1 &8994034746444921863

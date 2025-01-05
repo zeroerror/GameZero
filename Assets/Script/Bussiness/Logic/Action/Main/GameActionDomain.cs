@@ -227,7 +227,7 @@ namespace GamePlay.Bussiness.Logic
                     // 记录
                     var record = new GameActionRecord_LaunchProjectile(
                         actionId: action.typeId,
-                        actorRoleIdArgs: actor.TryGetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default,
+                        actorRoleIdArgs: actor.GetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                         actorIdArgs: actor.idCom.ToArgs(),
                         targetRoleIdArgs: selectedEntity.idCom.ToArgs(),
                         actor.actionTargeterCom.getCurTargeterAsRecord()
@@ -315,7 +315,7 @@ namespace GamePlay.Bussiness.Logic
                     // 记录
                     var record = new GameActionRecord_AttachBuff(
                         actionId: action.typeId,
-                        actorRoleIdArgs: actor.TryGetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default,
+                        actorRoleIdArgs: actor.GetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                         actorIdArgs: actor.idCom.ToArgs(),
                         targetRoleIdArgs: selectedEntity.idCom.ToArgs(),
                         actor.actionTargeterCom.getCurTargeterAsRecord(),
@@ -344,7 +344,7 @@ namespace GamePlay.Bussiness.Logic
                 // 记录
                 var record = new GameActionRecord_SummonRoles(
                     actionId: action.typeId,
-                    actorRoleIdArgs: actor.TryGetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default,
+                    actorRoleIdArgs: actor.GetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default,
                     actorIdArgs: actor.idCom.ToArgs(),
                     roleId: action.roleId,
                     count: action.count,

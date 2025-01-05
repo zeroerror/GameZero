@@ -67,7 +67,7 @@ namespace GamePlay.Bussiness.Logic
                 case GameEntitySelectAnchorType.Actor:
                     return actorEntity;
                 case GameEntitySelectAnchorType.ActorRole:
-                    return actorEntity.TryGetLinkParent<GameRoleEntity>();
+                    return actorEntity.GetLinkParent<GameRoleEntity>();
                 case GameEntitySelectAnchorType.ActTarget:
                     return targetEntity;
                 default:
@@ -123,7 +123,7 @@ namespace GamePlay.Bussiness.Logic
                     case GameEntitySelectAnchorType.Actor:
                         return actor.IsAlive();
                     case GameEntitySelectAnchorType.ActorRole:
-                        var role = actor.TryGetLinkParent<GameRoleEntity>();
+                        var role = actor.GetLinkParent<GameRoleEntity>();
                         return role.IsAlive();
                     case GameEntitySelectAnchorType.ActTarget:
                         return target.IsAlive();

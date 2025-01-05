@@ -1,11 +1,10 @@
-using UnityEngine.Analytics;
-
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionOptionEntity : GameEntityBase
     {
         public GameActionOptionModel model { get; private set; }
         public int lv { get; private set; }
+        public GameBuffCom buffCom { get; private set; }
 
         public GameActionOptionEntity(GameActionOptionModel model) : base(model.typeId, GameEntityType.None)
         {

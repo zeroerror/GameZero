@@ -71,7 +71,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void AttachBuff(GameIdArgs buffIdArgs, GameEntityBase target, int layer)
         {
-            if (!target.TryGetLinkEntity<GameRoleEntityR>(out var targetRole))
+            if (!target.TryGetLinkParent<GameRoleEntityR>(out var targetRole))
             {
                 GameLogger.LogError("目标不是角色, 暂不支持挂载Buff");
                 return;
@@ -118,7 +118,7 @@ namespace GamePlay.Bussiness.Renderer
                     attachOffset = model.vfxOffset,
                     orderOffset = model.vfxOrderOffset,
                 };
-                this._context.domainApi.vfxApi.Play(args);
+                newBuff.vfxEntity = this._context.domainApi.vfxApi.Play(args);
             }
 
             return;
@@ -126,13 +126,24 @@ namespace GamePlay.Bussiness.Renderer
 
         public void DetachBuff(int buffId, GameEntityBase target, int layer)
         {
-            if (!target.TryGetLinkEntity<GameRoleEntityR>(out var targetRole))
+            if (!target.TryGetLinkParent<GameRoleEntityR>(out var targetRole))
             {
                 GameLogger.LogError("目标不是角色, 暂不支持移除Buff");
                 return;
             }
             var buffCom = targetRole.buffCom;
-            buffCom.DetachBuff(buffId, layer);
+            if (!buffCom.TryGet(buffId, out var buff))
+            {
+                GameLogger.LogError("Buff不存在，无法移除：" + buffId);
+                return;
+            }
+            if (!buff.isValid) return;
+            buff.DetachLayer(layer);
+            if (!buff.isValid)
+            {
+                buffCom.Remove(buff);
+                this._context.domainApi.vfxApi.Stop(buff.vfxEntity);
+            }
         }
     }
 }
