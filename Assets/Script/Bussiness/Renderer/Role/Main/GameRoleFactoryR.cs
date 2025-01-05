@@ -74,7 +74,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public Slider LoadHPSlider(bool isEnemy)
         {
-            var url = isEnemy ? "UI/Battle/attribute_bar_enemy" : "UI/Battle/attribute_bar_self";
+            var url = isEnemy ? "UI/Battle/attribute_bar_enemy" : "UI/Battle/attribute_bar_ally";
             var prefab = Resources.Load<GameObject>(url);
             if (!prefab)
             {

@@ -9,6 +9,7 @@ namespace GamePlay.Bussiness.Logic
         protected Dictionary<int, T> _dict { get; } = new Dictionary<int, T>();
         protected List<T> _list { get; } = new List<T>();
         protected Dictionary<int, List<T>> _poolDict { get; } = new Dictionary<int, List<T>>();
+        public int Count => this._list.Count;
 
         public GameEntityRepoBase()
         {
@@ -111,6 +112,15 @@ namespace GamePlay.Bussiness.Logic
             for (var i = 0; i < count; i++)
             {
                 action(this._list[i]);
+            }
+        }
+
+        public virtual void ForeachEntities(System.Action<T, int> action)
+        {
+            var count = this._list.Count;
+            for (var i = 0; i < count; i++)
+            {
+                action(this._list[i], i);
             }
         }
 

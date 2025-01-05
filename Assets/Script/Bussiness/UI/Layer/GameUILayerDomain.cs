@@ -1,3 +1,4 @@
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
@@ -33,9 +34,10 @@ namespace GamePlay.Bussiness.UI
         {
         }
 
-        public void AddToUIRoot(Transform transform)
+        public void AddToUIRoot(Transform transform, GameUILayerType layerType)
         {
-            transform.SetParent(this._context.uiRoot.transform, false);
+            var parent = this._context.layerDict[layerType].transform;
+            transform.SetParent(parent, false);
             transform.localPosition = Vector3.zero;
             transform.localScale = Vector3.one;
         }

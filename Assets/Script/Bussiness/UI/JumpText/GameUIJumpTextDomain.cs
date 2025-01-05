@@ -115,7 +115,7 @@ namespace GamePlay.Bussiness.UI
             else
             {
                 var txtObj = GameObject.Instantiate(prefab);
-                this._uiContext.domainApi.layerApi.AddToUIRoot(txtObj.transform);
+                this._uiContext.domainApi.layerApi.AddToUIRoot(txtObj.transform, GameUILayerType.Scene);
                 entity = new GameUIJumpTextEntity(txtObj, prefabName);
             }
 

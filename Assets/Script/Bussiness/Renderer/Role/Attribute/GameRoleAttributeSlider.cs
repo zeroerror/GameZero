@@ -1,4 +1,5 @@
 using GamePlay.Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 namespace GamePlay.Bussiness.Renderer
@@ -76,6 +77,15 @@ namespace GamePlay.Bussiness.Renderer
         {
             if (!this.slider) return;
             this.rectTransform.anchoredPosition = screenPoint;
+        }
+
+        public void SetText(string text)
+        {
+            if (!this.slider) return;
+            var textGO = this.slider.fillRect.parent.Find("text");
+            var textComp = textGO?.GetComponent<TextMeshProUGUI>();
+            if (!textComp) return;
+            textComp.text = text;
         }
     }
 }

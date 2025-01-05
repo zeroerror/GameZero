@@ -89,6 +89,21 @@ namespace GamePlay.Bussiness.Logic
             return this._attributes[index].value;
         }
 
+        /// <summary>
+        /// 获取属性值的字符串
+        /// <para>大于等于1000, 转化为k, 保留一位小数</para>
+        /// <para>大于等于10000, 转化为w, 保留一位小数</para>
+        /// <para>大于等于1000 0000, 转化为kw, 保留一位小数</para>
+        /// </summary>
+        public string GetValueStr(GameAttributeType type)
+        {
+            var value = this.GetValue(type);
+            if (value >= 100000000) return $"{value / 100000000f:F1}kw";
+            if (value >= 10000) return $"{value / 10000f:F1}w";
+            if (value >= 1000) return $"{value / 1000f:F1}k";
+            return value.ToString();
+        }
+
         public void Foreach(System.Action<GameAttribute> action)
         {
             this._attributes.Foreach(action);

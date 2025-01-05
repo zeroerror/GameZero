@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
+using GamePlay.Bussiness.UI;
 using GamePlay.Core;
 using UnityEngine;
 namespace GamePlay.Bussiness.Renderer
@@ -58,10 +60,6 @@ namespace GamePlay.Bussiness.Renderer
             this._Create(evArgs.idArgs, evArgs.transArgs, evArgs.isUser);
         }
 
-        public void Collect()
-        {
-        }
-
         private GameRoleEntityR _Create(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
         {
             var repo = this._roleContext.repo;
@@ -94,20 +92,19 @@ namespace GamePlay.Bussiness.Renderer
 
             var isEnemy = role.idCom.campId != this._roleContext.userRole.idCom.campId;
             var hpSlider = this._roleContext.factory.LoadHPSlider(isEnemy);
-            this._context.uiApi.layerApi.AddToUIRoot(hpSlider.transform);
+            this._context.uiApi.layerApi.AddToUIRoot(hpSlider.transform, GameUILayerType.Scene);
             attributeBarCom.hpSlider.SetSlider(hpSlider, new Vector2(0, 150));
-            attributeBarCom.hpSlider.SetSize(new Vector2(100, 10));
+            attributeBarCom.hpSlider.SetSize(new Vector2(150, 20));
 
             this._roleContext.factory.template.TryGet(role.idCom.typeId, out var model);
             var hasMPSkill = model.skills.Find((skill) => skill.skillType == GameSkillType.MagicAttack) != null;
             if (hasMPSkill)
             {
                 var mpSlider = this._roleContext.factory.LoadMPSlider();
-                this._context.uiApi.layerApi.AddToUIRoot(mpSlider.transform);
-                attributeBarCom.mpSlider.SetSlider(mpSlider, new Vector2(0, 140));
-                attributeBarCom.mpSlider.SetSize(new Vector2(100, 10));
+                this._context.uiApi.layerApi.AddToUIRoot(mpSlider.transform, GameUILayerType.Scene);
+                attributeBarCom.mpSlider.SetSlider(mpSlider, new Vector2(0, 135));
+                attributeBarCom.mpSlider.SetSize(new Vector2(150, 15));
             }
-
 
             return role;
         }
@@ -129,11 +126,26 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.inputDomain.Tick();
             var repo = this._roleContext.repo;
-            repo.ForeachEntities((entity) =>
+            var entitys = new GameRoleEntityR[repo.Count];
+            repo.ForeachEntities((entity, index) =>
             {
                 entity.Tick(dt);
                 this.fsmDomain.Tick(entity, dt);
+                entitys[index] = entity;
             });
+            entitys.Sort((a, b) =>
+            {
+                var posA = a.transform.position;
+                var posB = b.transform.position;
+                return posA.y.CompareTo(posB.y);
+            });
+            for (int i = 0; i < entitys.Length; i++)
+            {
+                var entity = entitys[i];
+                var attributeBarCom = entity.attributeBarCom;
+                attributeBarCom.hpSlider.rectTransform.SetSiblingIndex(i);
+                attributeBarCom.mpSlider.rectTransform.SetSiblingIndex(i);
+            }
         }
 
         private void _PlayAnim(GameRoleEntityR entity, string animName, int layer)

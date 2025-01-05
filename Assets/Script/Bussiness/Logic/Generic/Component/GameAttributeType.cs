@@ -24,6 +24,5 @@ namespace GamePlay.Bussiness.Logic
         MagicResist = 102,
         /// <summary> 击退抗性 击退抗性越高，被击退距离越短</summary>
         KnockbackResist = 103,
-
     }
 }

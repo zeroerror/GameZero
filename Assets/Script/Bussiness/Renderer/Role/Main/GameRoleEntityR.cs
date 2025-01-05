@@ -91,11 +91,20 @@ namespace GamePlay.Bussiness.Renderer
             this._FaceToByScale(this.transformCom.scale);
             this.attributeBarCom.Tick(dt);
 
-            var hpRatio = this.attributeCom.GetValue(GameAttributeType.HP) / this.attributeCom.GetValue(GameAttributeType.MaxHP);
+            var hp = this.attributeCom.GetValue(GameAttributeType.HP);
+            var maxHP = this.attributeCom.GetValue(GameAttributeType.MaxHP);
+            var hpRatio = hp / maxHP;
             this.attributeBarCom.hpSlider.SetRatio(hpRatio);
+            var hpStr = this.attributeCom.GetValueStr(GameAttributeType.HP);
+            var maxHPStr = this.attributeCom.GetValueStr(GameAttributeType.MaxHP);
+            this.attributeBarCom.hpSlider.SetText($"{hpStr}/{maxHPStr}");
 
             var mpRatio = this.attributeCom.GetValue(GameAttributeType.MP) / this.attributeCom.GetValue(GameAttributeType.MaxMP);
             this.attributeBarCom.mpSlider.SetRatio(mpRatio);
+            var mpStr = this.attributeCom.GetValueStr(GameAttributeType.MP);
+            var maxMPStr = this.attributeCom.GetValueStr(GameAttributeType.MaxMP);
+            this.attributeBarCom.mpSlider.SetText($"{mpStr}/{maxMPStr}");
+
         }
 
         public void setActive(bool active)

@@ -4,6 +4,6 @@ namespace GamePlay.Bussiness.UI
 {
     public interface GameUILayerDomainApi
     {
-        public void AddToUIRoot(Transform transform);
+        public void AddToUIRoot(Transform transform, GameUILayerType layerType);
     }
 }
