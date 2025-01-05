@@ -1,6 +1,5 @@
 using GamePlay.Core;
 using UnityEngine;
-using UnityEngine.U2D;
 using UnityEngine.UI;
 
 namespace GamePlay.Bussiness.Renderer

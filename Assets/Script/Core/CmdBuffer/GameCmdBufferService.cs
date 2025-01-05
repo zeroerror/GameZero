@@ -20,8 +20,9 @@ namespace GamePlay.Core
         /// </summary>
         public int AddDelayCmd(float delay, Action cmd)
         {
-            _cmdBuffers.Add(new GameCmdBuffer() { delay = delay, cmd = cmd });
-            return _cmdBuffers.Count - 1;
+            var cmdBuffer = new GameCmdBuffer() { delay = delay, cmd = cmd };
+            _cmdBuffers.Add(cmdBuffer);
+            return cmdBuffer.id;
         }
 
         /// <summary>
@@ -32,8 +33,9 @@ namespace GamePlay.Core
         /// </summary>
         public int AddIntervalCmd(float interval, Action cmd)
         {
-            _cmdBuffers.Add(new GameCmdBuffer() { interval = interval, cmd = cmd });
-            return _cmdBuffers.Count - 1;
+            var cmdBuffer = new GameCmdBuffer() { interval = interval, cmd = cmd };
+            _cmdBuffers.Add(cmdBuffer);
+            return cmdBuffer.id;
         }
 
         /// <summary>
@@ -42,7 +44,16 @@ namespace GamePlay.Core
         /// </summary>
         public void Remove(int id)
         {
-            _cmdBuffers.RemoveAt(id);
+            var count = _cmdBuffers.Count;
+            for (int i = 0; i < count; i++)
+            {
+                var cmdBuffer = _cmdBuffers[i];
+                if (cmdBuffer.id == id)
+                {
+                    _cmdBuffers.RemoveAt(i);
+                    return;
+                }
+            }
         }
 
         public void Tick()
@@ -66,11 +77,24 @@ namespace GamePlay.Core
 
         private class GameCmdBuffer
         {
+            private static int autoId = 0;
+            public int id;
+
             public Action cmd;
             public float delay;
             public float elapseTime;
             public float interval;
             private int _intervalCount;
+
+            public GameCmdBuffer()
+            {
+                id = autoId++;
+                cmd = null;
+                delay = 0;
+                elapseTime = 0;
+                interval = 0;
+                _intervalCount = 0;
+            }
 
             public bool isDone()
             {

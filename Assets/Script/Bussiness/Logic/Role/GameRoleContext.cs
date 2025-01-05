@@ -11,7 +11,6 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleFactory factory { get; private set; }
         public GameIdService idService { get; private set; }
 
-
         public List<GameRoleStateRecord> roleStateRecords;
 
         public GameRoleContext()

@@ -10,7 +10,7 @@ namespace GamePlay.Bussiness.UI
         /// <summary> 窗口 </summary>
         Window,
         /// <summary> 弹窗 </summary>
-        Popup,
+        PopUp,
         /// <summary> 提示 </summary>
         Tip,
         /// <summary> UI特效 </summary>

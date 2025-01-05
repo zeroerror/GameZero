@@ -9,20 +9,25 @@ namespace GamePlay.Bussiness.UI
 {
     public class GameUIContext
     {
+        public GameDomainApi logicApi { get; private set; }
+        public GameDomainApiR rendererApi { get; private set; }
+
+        public Dictionary<string, GameUIBase> uiBaseDict { get; private set; }
+        public GameUIFactory factory { get; private set; }
+
         public GameUIDirector director { get; private set; }
         public GameObject uiRoot { get; private set; }
         public Camera uiCamera { get; private set; }
         public GameUIDomainApi domainApi { get; private set; }
         public GameCmdBufferService cmdBufferService { get; private set; }
 
-        public GameDomainApi logicApi { get; private set; }
-        public GameDomainApiR rendererApi { get; private set; }
-
         public Dictionary<GameUILayerType, GameObject> layerDict { get; private set; }
 
         public GameUIContext()
         {
             this.director = new GameUIDirector();
+            this.uiBaseDict = new Dictionary<string, GameUIBase>();
+            this.factory = new GameUIFactory();
             this.domainApi = new GameUIDomainApi();
             this.cmdBufferService = new GameCmdBufferService();
         }

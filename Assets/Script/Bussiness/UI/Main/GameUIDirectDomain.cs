@@ -1,10 +1,12 @@
+using System;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUIDirectDomain
+    public class GameUIDirectDomain : GameUIDirectDomainApi
     {
         public GameUIContext context { get; private set; }
         public GameUIDebugDomain debugDomain { get; private set; }
@@ -15,6 +17,10 @@ namespace GamePlay.Bussiness.UI
         {
             this.context = new GameUIContext();
             this._InitDomain();
+            this.SetTimeout(1, () =>
+            {
+                this.OpenUI<GameUI_ActionOption>();
+            });
         }
 
         private void _InitDomain()
@@ -34,6 +40,7 @@ namespace GamePlay.Bussiness.UI
         {
             this.context.Inject(uiRoot, logicApi, rendererApi);
             var domainApi = this.context.domainApi;
+            domainApi.SetDirectDomainApi(this);
             domainApi.SetJumpTextDomainApi(this.jumpTextDomain);
             domainApi.SetLayerApi(this.layerDomain);
         }
@@ -85,6 +92,60 @@ namespace GamePlay.Bussiness.UI
         protected void _LateTick(float dt)
         {
             this.context.cmdBufferService.Tick();
+        }
+
+        public int SetInterval(float interval, Action callback)
+        {
+            return this.context.cmdBufferService.AddIntervalCmd(interval, callback);
+        }
+
+        public int SetTimeout(float delay, Action callback)
+        {
+            return this.context.cmdBufferService.AddDelayCmd(delay, callback);
+        }
+
+        public void RemoveTimer(int timerId)
+        {
+            this.context.cmdBufferService.Remove(timerId);
+        }
+
+        public void OpenUI<T>(object args = null) where T : GameUIBase
+        {
+            var uiName = typeof(T).Name;
+            if (this.context.uiBaseDict.TryGetValue(uiName, out var uiBase))
+            {
+                uiBase.Show();
+                return;
+            }
+
+            // 创建UI实例
+            uiBase = Activator.CreateInstance<T>();
+
+            // 加载UI资源
+            var uiUrl = uiBase.uiUrl;
+            var rootGO = this.context.factory.LoadUI(uiUrl);
+            if (rootGO == null) return;
+
+            // 设置对应层级
+            var layerType = uiBase.layerType;
+            var layer = this.context.layerDict[layerType];
+            rootGO.transform.SetParent(layer.transform, false);
+            // 根据分辨率设置rootgo的recttransform
+            rootGO.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
+
+            // 弹窗、window 默认添加一个灰色背景
+            if (uiBase.layerType == GameUILayerType.PopUp || uiBase.layerType == GameUILayerType.Window)
+            {
+                var maskImage = rootGO.GetComponent<Image>() ?? rootGO.AddComponent<Image>();
+                maskImage.color = new Color(0, 0, 0, 0.5f);
+                maskImage.raycastTarget = true;
+            }
+
+            // UI生命周期
+            uiBase.Inject(rootGO, this.context.domainApi);
+            uiBase.Init(args);
+            uiBase.Show();
+            this.context.uiBaseDict[uiName] = uiBase;
         }
     }
 }
