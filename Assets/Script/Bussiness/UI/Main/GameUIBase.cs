@@ -8,7 +8,7 @@ namespace GamePlay.Bussiness.UI
     public abstract class GameUIBase
     {
         public GameObject go { get; private set; }
-        private GameUIDomainApi domainApi;
+        protected GameUIDomainApi domainApi;
 
         public abstract GameUILayerType layerType { get; }
         public abstract string uiPkgUrl { get; }

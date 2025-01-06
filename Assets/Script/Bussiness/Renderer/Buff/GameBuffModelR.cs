@@ -6,6 +6,7 @@ namespace GamePlay.Bussiness.Renderer
     public class GameBuffModelR
     {
         public readonly int typeId;
+        public readonly string desc;
         public readonly GameBuffRefreshFlag refreshFlag;
         public readonly int maxLayer;
         public readonly int[] actionIds;
@@ -19,6 +20,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameBuffModelR(
             int typeId,
+            string desc,
             GameBuffRefreshFlag refreshFlag,
             int maxLayer,
             int[] actionIds,
@@ -32,6 +34,7 @@ namespace GamePlay.Bussiness.Renderer
         )
         {
             this.typeId = typeId;
+            this.desc = desc;
             this.refreshFlag = refreshFlag;
             this.maxLayer = maxLayer;
             this.actionIds = actionIds;

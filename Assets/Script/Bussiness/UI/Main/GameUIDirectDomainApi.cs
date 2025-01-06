@@ -3,6 +3,12 @@ namespace GamePlay.Bussiness.UI
     public interface GameUIDirectDomainApi
     {
         /// <summary>
+        /// 打开UI
+        /// <para>args: 传递参数</para>
+        /// </summary>
+        public void OpenUI<T>(object args = null) where T : GameUIBase;
+
+        /// <summary>
         /// 设置定时器
         /// <para>interval: 间隔时间(s)</para>
         /// <para>callback: 回调函数</para>

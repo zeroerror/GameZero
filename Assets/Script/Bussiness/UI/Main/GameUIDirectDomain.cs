@@ -43,6 +43,7 @@ namespace GamePlay.Bussiness.UI
             domainApi.SetDirectDomainApi(this);
             domainApi.SetJumpTextDomainApi(this.jumpTextDomain);
             domainApi.SetLayerApi(this.layerDomain);
+            domainApi.SetRendererApi(rendererApi);
         }
 
         private void _InjectContext()

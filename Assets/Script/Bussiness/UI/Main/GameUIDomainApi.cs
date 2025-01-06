@@ -1,3 +1,5 @@
+using GamePlay.Bussiness.Renderer;
+
 namespace GamePlay.Bussiness.UI
 {
     public class GameUIDomainApi
@@ -10,6 +12,9 @@ namespace GamePlay.Bussiness.UI
 
         public GameUILayerDomainApi layerApi { get; private set; }
         public void SetLayerApi(GameUILayerDomainApi layerDomainApi) => this.layerApi = layerDomainApi;
+
+        public GameDomainApiR rendererApi { get; private set; }
+        public void SetRendererApi(GameDomainApiR rendererApi) => this.rendererApi = rendererApi;
 
         public GameUIDomainApi()
         {

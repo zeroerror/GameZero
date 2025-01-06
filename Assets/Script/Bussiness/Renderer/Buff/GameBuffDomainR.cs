@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 
@@ -145,5 +146,16 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.domainApi.vfxApi.Stop(buff.vfxEntity);
             }
         }
+
+        public bool TryGetBuffModel(int buffId, out GameBuffModelR buffModel)
+        {
+            return this._buffContext.factory.template.TryGet(buffId, out buffModel);
+        }
+
+        public List<GameBuffModelR> GetBuffModelList()
+        {
+            return this._buffContext.factory.template.GetBuffList();
+        }
+
     }
 }

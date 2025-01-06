@@ -46,6 +46,7 @@ namespace GamePlay.Config
         {
             var model = new GameBuffModelR(
                 typeId,
+                desc,
                 refreshFlag,
                 maxLayer,
                 actionSOs.Map(e => e.typeId),

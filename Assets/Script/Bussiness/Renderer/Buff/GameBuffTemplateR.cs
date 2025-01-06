@@ -37,5 +37,15 @@ namespace GamePlay.Bussiness.Renderer
             _dict.Add(typeId, model);
             return true;
         }
+
+        public List<GameBuffModelR> GetBuffList()
+        {
+            var list = new List<GameBuffModelR>();
+            foreach (var so in _soDict.Values)
+            {
+                list.Add(so.ToModelR());
+            }
+            return list;
+        }
     }
 }
