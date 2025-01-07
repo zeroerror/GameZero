@@ -34,6 +34,7 @@ namespace GamePlay.Bussiness.Logic
         public void Tick(float dt)
         {
             var curField = this._fieldContext.curField;
+            if (!curField) return;
             curField.model.monsterAreaModels?.Foreach((area, index) =>
             {
                 if (curField.IsMonstersSpawned(index)) return;

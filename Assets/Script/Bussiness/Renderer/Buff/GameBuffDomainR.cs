@@ -154,7 +154,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public List<GameBuffModelR> GetBuffModelList()
         {
-            return this._buffContext.factory.template.GetBuffList();
+            return this._buffContext.factory.template.GetBuffModelList();
         }
 
     }

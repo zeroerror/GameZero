@@ -50,6 +50,11 @@ namespace GamePlay.Bussiness.Renderer
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, this._OnAction_AttachBuff);
         }
 
+        public bool TryGetModel(int actionId, out GameActionModelR model)
+        {
+            return this._actionContext.template.TryGet(actionId, out model);
+        }
+
         /// <summary>
         /// 播放行为特效
         /// <para>actor: 执行者实体</para>

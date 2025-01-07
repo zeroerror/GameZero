@@ -47,11 +47,11 @@ public class GameUIBinderEditor : Editor
         codeBuilder.AppendLine();
         codeBuilder.AppendLine($"public class Game{prefabName}Binder");
         codeBuilder.AppendLine("{");
-        codeBuilder.AppendLine("    private GameObject _gameObject;");
+        codeBuilder.AppendLine("    public GameObject gameObject{ get; private set; }");
         codeBuilder.AppendLine();
         codeBuilder.AppendLine($"    public Game{prefabName}Binder(GameObject gameObject)");
         codeBuilder.AppendLine("    {");
-        codeBuilder.AppendLine("        _gameObject = gameObject;");
+        codeBuilder.AppendLine("        this.gameObject = gameObject;");
         codeBuilder.AppendLine("    }");
         codeBuilder.AppendLine();
 
@@ -83,7 +83,7 @@ public class GameUIBinderEditor : Editor
             if (!isBinder)
             {
                 var typeName = "GameObject";
-                codeBuilder.AppendLine($"    public {typeName} {varName} => {varField} ?? ({varField} = _gameObject.transform.Find(\"{varName}\").gameObject);");
+                codeBuilder.AppendLine($"    public {typeName} {varName} => {varField} ?? ({varField} = this.gameObject.transform.Find(\"{varName}\").gameObject);");
                 codeBuilder.AppendLine($"    private {typeName} {varField};");
             }
             else

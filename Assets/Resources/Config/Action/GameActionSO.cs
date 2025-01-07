@@ -8,7 +8,6 @@ namespace GamePlay.Config
     public class GameActionSO : GameSOBase
     {
         public GameActionType actionType;
-        public string desc;
         public GameActionEM_Dmg dmgActionEM;
         public GameActionEM_Heal healActionEM;
         public GameActionEM_AttributeModify attributeModifyActionEM;
@@ -26,7 +25,7 @@ namespace GamePlay.Config
             if (actionType == GameActionType.None) actionType = GameActionType.Dmg;
         }
 
-        public GameActionModelBase GetActionModel()
+        public GameActionModelBase ToActionModel()
         {
             GameActionModelBase actionModel;
             switch (actionType)
@@ -90,6 +89,7 @@ namespace GamePlay.Config
             if (actionModel == null) return;
             actionModel.actionType = this.actionType;
             actionModel.typeId = this.typeId;
+            this.actionEMR.typeId = this.typeId;
             this._CorrectModel(actionModel);
         }
         private void _CorrectModel(GameActionModelBase actionModel)

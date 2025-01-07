@@ -33,7 +33,7 @@ namespace GamePlay.Bussiness.Logic
                 model = null;
                 return false;
             }
-            model = so.GetActionModel();
+            model = so.ToActionModel();
             _dict.Add(typeId, model);
             return true;
         }

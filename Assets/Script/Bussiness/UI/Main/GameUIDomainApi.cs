@@ -1,3 +1,4 @@
+using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
 
 namespace GamePlay.Bussiness.UI
@@ -15,6 +16,9 @@ namespace GamePlay.Bussiness.UI
 
         public GameDomainApiR rendererApi { get; private set; }
         public void SetRendererApi(GameDomainApiR rendererApi) => this.rendererApi = rendererApi;
+
+        public GameDomainApi logicApi { get; private set; }
+        public void SetLogicApi(GameDomainApi logicApi) => this.logicApi = logicApi;
 
         public GameUIDomainApi()
         {

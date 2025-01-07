@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
@@ -358,6 +359,11 @@ namespace GamePlay.Bussiness.Logic
                 );
                 this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_SUMMON_ROLE, evArgs);
             });
+        }
+
+        public List<GameActionOptionModel> GetActionOptionModelList()
+        {
+            return this._actionContext.optionTemplate.GetActionOptionModelList();
         }
     }
 }

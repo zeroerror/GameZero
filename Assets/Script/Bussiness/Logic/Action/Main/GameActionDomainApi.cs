@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace GamePlay.Bussiness.Logic
 {
     public interface GameActionDomainApi
@@ -8,6 +10,11 @@ namespace GamePlay.Bussiness.Logic
         /// <para>model 行为模型</para>
         /// </summary>
         public bool TryGetModel(int actionId, out GameActionModelBase model);
+
+        /// <summary>
+        /// 获取行为选项模型列表
+        /// </summary>
+        public List<GameActionOptionModel> GetActionOptionModelList();
 
         /// <summary>
         /// 执行行为 

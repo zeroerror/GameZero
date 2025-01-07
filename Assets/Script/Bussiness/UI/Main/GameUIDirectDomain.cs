@@ -40,10 +40,11 @@ namespace GamePlay.Bussiness.UI
         {
             this.context.Inject(uiRoot, logicApi, rendererApi);
             var domainApi = this.context.domainApi;
+            domainApi.SetRendererApi(rendererApi);
+            domainApi.SetLogicApi(logicApi);
             domainApi.SetDirectDomainApi(this);
             domainApi.SetJumpTextDomainApi(this.jumpTextDomain);
             domainApi.SetLayerApi(this.layerDomain);
-            domainApi.SetRendererApi(rendererApi);
         }
 
         private void _InjectContext()

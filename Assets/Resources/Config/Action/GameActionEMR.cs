@@ -9,6 +9,7 @@ namespace GamePlay.Config
     public class GameActionEMR
     {
         public int typeId;
+        public string desc;
 
         public GameObject actEffectPrefab;
         public GameVec2 actVFXScale = GameVec2.one;
@@ -34,6 +35,7 @@ namespace GamePlay.Config
 
             return new GameActionModelR(
                 this.typeId,
+                this.desc,
                 this.actEffectPrefab?.GetPrefabUrl(),
                 this.actVFXScale,
                 this.actVFXOffset,

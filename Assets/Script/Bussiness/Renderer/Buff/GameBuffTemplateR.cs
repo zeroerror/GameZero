@@ -38,12 +38,13 @@ namespace GamePlay.Bussiness.Renderer
             return true;
         }
 
-        public List<GameBuffModelR> GetBuffList()
+        public List<GameBuffModelR> GetBuffModelList()
         {
             var list = new List<GameBuffModelR>();
             foreach (var so in _soDict.Values)
             {
-                list.Add(so.ToModelR());
+                if (!TryGet(so.typeId, out var model)) continue;
+                list.Add(model);
             }
             return list;
         }

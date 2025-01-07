@@ -11,7 +11,6 @@ namespace GamePlay.Config
     {
         private SerializedObject _serializedObject;
         private SerializedProperty typeId_p;
-        private SerializedProperty desc_p;
         private SerializedProperty actionType_p;
         private SerializedProperty dmgActionEM_p;
         private SerializedProperty healActionEM_p;
@@ -27,7 +26,6 @@ namespace GamePlay.Config
         {
             this._serializedObject = new SerializedObject(target);
             this.typeId_p = _serializedObject.FindProperty("typeId");
-            this.desc_p = _serializedObject.FindProperty("desc");
             this.actionType_p = _serializedObject.FindProperty("actionType");
             this.dmgActionEM_p = _serializedObject.FindProperty("dmgActionEM");
             this.healActionEM_p = _serializedObject.FindProperty("healActionEM");
@@ -64,7 +62,6 @@ namespace GamePlay.Config
         {
             EditorGUILayout.BeginVertical("box");
             this.typeId_p.DrawProperty_Int("类型ID");
-            this.desc_p.DrawProperty_Str("描述");
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical("box");

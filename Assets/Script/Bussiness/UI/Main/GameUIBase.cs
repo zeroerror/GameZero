@@ -38,7 +38,7 @@ namespace GamePlay.Bussiness.UI
             _OnInit();
             this.state = GameUIStateType.Inited;
         }
-        protected abstract void _OnInit();
+        protected virtual void _OnInit() { }
 
         /// <summary>
         /// 显示
@@ -60,7 +60,7 @@ namespace GamePlay.Bussiness.UI
             }
             this.state = GameUIStateType.Showed;
         }
-        protected abstract void _OnShow();
+        protected virtual void _OnShow() { }
 
         public void Hide()
         {
@@ -69,7 +69,7 @@ namespace GamePlay.Bussiness.UI
             this._RemoveAllTimer();
             this.state = GameUIStateType.Hided;
         }
-        protected abstract void _OnHide();
+        protected virtual void _OnHide() { }
 
         public void Destroy()
         {
@@ -77,7 +77,7 @@ namespace GamePlay.Bussiness.UI
             _OnDestroy();
             this.state = GameUIStateType.Destroyed;
         }
-        protected abstract void _OnDestroy();
+        protected virtual void _OnDestroy() { }
 
         #region [Timer]
         private List<int> _timerIdList;
@@ -98,5 +98,10 @@ namespace GamePlay.Bussiness.UI
         }
         #endregion
 
+        protected void _AddClick(GameObject go, Action callback)
+        {
+            var clickCom = go.GetComponent<GameUIClickCom>() ?? go.AddComponent<GameUIClickCom>();
+            clickCom.onClick = callback;
+        }
     }
 }

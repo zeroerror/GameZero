@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class GameActionOptionMainViewBinder
 {
-    private GameObject _gameObject;
+    public GameObject gameObject{ get; private set; }
 
     public GameActionOptionMainViewBinder(GameObject gameObject)
     {
-        _gameObject = gameObject;
+        this.gameObject = gameObject;
     }
 
-    public GameObject optionGroup => _optionGroup ?? (_optionGroup = _gameObject.transform.Find("optionGroup").gameObject);
+    public GameObject optionGroup => _optionGroup ?? (_optionGroup = this.gameObject.transform.Find("optionGroup").gameObject);
     private GameObject _optionGroup;
     public GameOptionBinder option1 => _option1 ?? (_option1 = new GameOptionBinder(GameObject.Find("option1")));
     private GameOptionBinder _option1;

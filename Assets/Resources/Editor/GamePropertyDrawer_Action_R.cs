@@ -10,15 +10,25 @@ namespace GamePlay.Config
         {
             EditorGUILayout.LabelField("视觉效果等表现参数", EditorStyles.boldLabel);
 
-            property.FindPropertyRelative("actEffectPrefab").DrawProperty("行为特效");
-            property.FindPropertyRelative("actVFXScale").DrawProperty("行为特效缩放");
-            property.FindPropertyRelative("actVFXOffset").DrawProperty("行为特效偏移");
-            property.FindPropertyRelative("actCamShakeModel").DrawProperty("行为相机震动");
+            var desc_p = property.FindPropertyRelative("desc");
+            desc_p.DrawProperty_Str("描述");
+            var actEffectPrefab_p = property.FindPropertyRelative("actEffectPrefab");
+            actEffectPrefab_p.DrawProperty("行为特效");
+            var actVFXScale_p = property.FindPropertyRelative("actVFXScale");
+            actVFXScale_p.DrawProperty_Vector2("行为特效缩放");
+            var actVFXOffset_p = property.FindPropertyRelative("actVFXOffset");
+            actVFXOffset_p.DrawProperty_Vector2("行为特效偏移");
+            var actCamShakeModel_p = property.FindPropertyRelative("actCamShakeModel");
+            actCamShakeModel_p.DrawProperty("行为相机震动");
 
-            property.FindPropertyRelative("hitEffectPrefab").DrawProperty("命中特效");
-            property.FindPropertyRelative("hitVFXScale").DrawProperty("命中特效缩放");
-            property.FindPropertyRelative("hitVFXOffset").DrawProperty("命中特效偏移");
-            property.FindPropertyRelative("hitCamShakeModel").DrawProperty("命中相机震动");
+            var hitEffectPrefab_p = property.FindPropertyRelative("hitEffectPrefab");
+            hitEffectPrefab_p.DrawProperty("命中特效");
+            var hitVFXScale_p = property.FindPropertyRelative("hitVFXScale");
+            hitVFXScale_p.DrawProperty_Vector2("命中特效缩放");
+            var hitVFXOffset_p = property.FindPropertyRelative("hitVFXOffset");
+            hitVFXOffset_p.DrawProperty_Vector2("命中特效偏移");
+            var hitCamShakeModel_p = property.FindPropertyRelative("hitCamShakeModel");
+            hitCamShakeModel_p.DrawProperty("命中相机震动");
         }
     }
 }

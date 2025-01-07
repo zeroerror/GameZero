@@ -37,5 +37,16 @@ namespace GamePlay.Bussiness.Logic
             _dict.Add(typeId, model);
             return true;
         }
+
+        public List<GameActionOptionModel> GetActionOptionModelList()
+        {
+            var list = new List<GameActionOptionModel>();
+            foreach (var so in _soDict.Values)
+            {
+                if (!TryGet(so.typeId, out var model)) continue;
+                list.Add(model);
+            }
+            return list;
+        }
     }
 }

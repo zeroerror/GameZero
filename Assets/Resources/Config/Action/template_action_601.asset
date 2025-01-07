@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 601
   actionType: 6
-  desc: "\u7ED9\u76EE\u6807\u6302\u8F7Dbuff - \u6DEC\u6BD2"
   dmgActionEM:
     dmgType: 1
     value: 100
@@ -225,6 +224,7 @@ MonoBehaviour:
         layer: 0
   actionEMR:
     typeId: 0
+    desc: "\u7ED9\u76EE\u6807\u6302\u8F7Dbuff - \u6DEC\u6BD2"
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}

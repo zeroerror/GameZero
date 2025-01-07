@@ -6,6 +6,7 @@ namespace GamePlay.Bussiness.Renderer
     public class GameActionModelR
     {
         public int typeId;
+        public string desc;
 
         public string actEffectUrl;
         public GameVec2 actVFXScale = GameVec2.one;
@@ -19,6 +20,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameActionModelR(
             int typeId,
+            string desc,
             string actEffectUrl,
             in GameVec2 actVFXScale,
             in GameVec2 actVFXOffset,
@@ -29,6 +31,7 @@ namespace GamePlay.Bussiness.Renderer
             GameCameraShakeModel hitCamShakeModel)
         {
             this.typeId = typeId;
+            this.desc = desc;
 
             this.actEffectUrl = actEffectUrl;
             this.actVFXScale = actVFXScale;
