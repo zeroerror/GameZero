@@ -9,6 +9,11 @@ namespace GamePlay.Bussiness.UI
         public void OpenUI<T>(object args = null) where T : GameUIBase;
 
         /// <summary>
+        /// 关闭UI
+        /// </summary>
+        public void CloseUI<T>(T ui) where T : GameUIBase;
+
+        /// <summary>
         /// 设置定时器
         /// <para>interval: 间隔时间(s)</para>
         /// <para>callback: 回调函数</para>

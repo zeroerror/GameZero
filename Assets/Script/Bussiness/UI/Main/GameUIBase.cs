@@ -66,7 +66,6 @@ namespace GamePlay.Bussiness.UI
         {
             if (this.state == GameUIStateType.Hided) return;
             _OnHide();
-            this._RemoveAllTimer();
             this.state = GameUIStateType.Hided;
         }
         protected virtual void _OnHide() { }
@@ -74,6 +73,7 @@ namespace GamePlay.Bussiness.UI
         public void Destroy()
         {
             if (this.state == GameUIStateType.Destroyed) return;
+            this._RemoveAllTimer();
             _OnDestroy();
             this.state = GameUIStateType.Destroyed;
         }
@@ -102,6 +102,11 @@ namespace GamePlay.Bussiness.UI
         {
             var clickCom = go.GetComponent<GameUIClickCom>() ?? go.AddComponent<GameUIClickCom>();
             clickCom.onClick = callback;
+        }
+
+        protected void _Close()
+        {
+            domainApi.directApi.CloseUI(this);
         }
     }
 }

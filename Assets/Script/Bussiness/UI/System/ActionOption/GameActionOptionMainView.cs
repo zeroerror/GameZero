@@ -50,6 +50,10 @@ namespace GamePlay.Bussiness.UI
 
         private void _OnClickOption(int index)
         {
+            var option = this._optionModels[index];
+            var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
+            this.domainApi.logicApi.actionApi.DoActionOption(option.typeId, playerCampId);
+            this._Close();
         }
 
         private List<GameActionOptionModel> _getRandomActionOptions(int count)

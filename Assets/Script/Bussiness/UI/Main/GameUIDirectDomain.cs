@@ -1,6 +1,7 @@
 using System;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
+using GamePlay.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -114,7 +115,7 @@ namespace GamePlay.Bussiness.UI
         public void OpenUI<T>(object args = null) where T : GameUIBase
         {
             var uiName = typeof(T).Name;
-            if (this.context.uiBaseDict.TryGetValue(uiName, out var uiBase))
+            if (this.context.uiDict.TryGetValue(uiName, out var uiBase))
             {
                 uiBase.Show();
                 return;
@@ -147,7 +148,19 @@ namespace GamePlay.Bussiness.UI
             uiBase.Inject(rootGO, this.context.domainApi);
             uiBase.Init(args);
             uiBase.Show();
-            this.context.uiBaseDict[uiName] = uiBase;
+            this.context.uiDict[uiName] = uiBase;
+        }
+
+        public void CloseUI<T>(T ui) where T : GameUIBase
+        {
+            var uiName = ui.uiName;
+            if (!this.context.uiDict.TryGetValue(uiName, out var _))
+            {
+                GameLogger.LogWarning($"UI不存在或已经关闭: {uiName}");
+                return;
+            }
+            ui.Destroy();
+            this.context.uiDict.Remove(uiName);
         }
     }
 }
