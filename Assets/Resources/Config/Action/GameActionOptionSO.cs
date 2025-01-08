@@ -24,6 +24,7 @@ namespace GamePlay.Config
             }
             var model = new GameActionOptionModel(
                 this.typeId,
+                this.desc,
                 this.quality,
                 this.maxLv,
                 this.actionSOs.Map(so => so.typeId)

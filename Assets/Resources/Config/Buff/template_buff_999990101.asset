@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
+  m_Name: template_buff_999990101
+  m_EditorClassIdentifier: 
+  typeId: 999990101
+  buffName: "\u884C\u4E3A\u9009\u9879101 - buff\u6548\u679C"
+  desc: "\u53CB\u519B\u6BCF\u6B21\u653B\u51FB\u90FD\u4F1A\u9020\u6210\u989D\u591620\u771F\u5B9E\u4F24\u5BB3"
+  refreshFlag: 4
+  maxLayer: 10
+  actionParam: 2000
+  actionSOs:
+  - {fileID: 11400000, guid: 30a3d8bce0d165748bbdc078299599a2, type: 2}
+  actionCD: 0
+  conditionSetEM_action:
+    durationEM:
+      isEnable: 0
+      duration: 0
+    timeIntervalEM:
+      isEnable: 0
+      timeInterval: 0
+    whenDoActionEM:
+      isEnable: 1
+      targetAction: {fileID: 0}
+      targetActionType: 1
+      actionCount: 1
+      validWindowTime: 0
+    whenRoleStateEnterEM:
+      isEnable: 0
+      campType: 0
+      stateType: 0
+  conditionSetEM_remove:
+    durationEM:
+      isEnable: 0
+      duration: 8
+    timeIntervalEM:
+      isEnable: 0
+      timeInterval: 0
+    whenDoActionEM:
+      isEnable: 0
+      targetAction: {fileID: 0}
+      targetActionType: 0
+      actionCount: 0
+      validWindowTime: 0
+    whenRoleStateEnterEM:
+      isEnable: 0
+      campType: 0
+      stateType: 0
+  vfxPrefab: {fileID: 0}
+  vfxPrefabUrl: 
+  vfxLayerType: 1
+  vfxScale: {x: 1, y: 1}
+  vfxOffset: {x: 0, y: 0}
+  vfxOrderOffset: 0
+  attributeEMs: []

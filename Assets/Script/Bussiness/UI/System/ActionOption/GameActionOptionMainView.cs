@@ -39,7 +39,7 @@ namespace GamePlay.Bussiness.UI
 
         private string _GetOptionDesc(GameActionOptionModel option)
         {
-            var desc = "";
+            var desc = option.desc + "\n";
             option.actionIds?.Foreach(actionId =>
             {
                 if (!this.domainApi.rendererApi.actionApi.TryGetModel(actionId, out var action)) return;
