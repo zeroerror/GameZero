@@ -13,12 +13,15 @@ namespace GamePlay.Bussiness.Logic
         public static GameActionRecord_Dmg CalcDmg(GameEntityBase actor, GameEntityBase target, GameActionModel_Dmg dmgModel)
         {
             // 数值格式化
-            var modelValue = dmgModel.valueFormat.FormatValue(dmgModel.value);
+            var modelValue = (float)dmgModel.value;
+            var randomOffset = GameMathF.RandomRange(dmgModel.randomValueOffset);
+            modelValue += randomOffset;
+            var formatValue = dmgModel.valueFormat.FormatValue(modelValue);
             // 参考属性值
             float refAttrValue = dmgModel.refType.GetRefAttributeValue(actor, target);
 
             // 伤害数值 增幅/减幅
-            var dmgValue = refAttrValue * modelValue;
+            var dmgValue = refAttrValue * formatValue;
             switch (dmgModel.dmgType)
             {
                 case GameActionDmgType.Real:

@@ -1,5 +1,6 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Config
 {
     [System.Serializable]
@@ -10,6 +11,7 @@ namespace GamePlay.Config
 
         public GameEntitySelectorEM selectorEM;
         public GameActionPreconditionSetEM preconditionSetEM;
+        public GameVec2 randomValueOffset;
 
         public GameActionModel_AttachBuff ToModel()
         {
@@ -20,10 +22,11 @@ namespace GamePlay.Config
             }
             var model = new GameActionModel_AttachBuff(
                 0,
-                selectorEM.ToSelector(),
-                preconditionSetEM?.ToModel(),
-                buffSO.typeId,
-                layer
+                this.selectorEM.ToSelector(),
+                this.preconditionSetEM?.ToModel(),
+                this.randomValueOffset,
+                this.buffSO.typeId,
+                this.layer
             );
             return model;
         }

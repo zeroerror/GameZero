@@ -15,6 +15,7 @@ namespace GamePlay.Config
 
         public GameEntitySelectorEM selectorEM;
         public GameActionPreconditionSetEM preconditionSetEM;
+        public GameVec2 randomValueOffset;
 
         public GameActionModel_LaunchProjectile ToModel()
         {
@@ -35,6 +36,7 @@ namespace GamePlay.Config
                 this.projectileId,
                 this.selectorEM.ToSelector(),
                 this.preconditionSetEM?.ToModel(),
+                this.randomValueOffset,
                 this.launchOffset,
                 this.barrageType,
                 customLaunchOffsetModel,

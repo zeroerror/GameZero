@@ -16,6 +16,9 @@ namespace GamePlay.Config
             var distance_p = property.FindPropertyRelative("distance");
             distance_p.DrawProperty_Float("击退距离");
 
+            var randomValueOffset_p = property.FindPropertyRelative("randomValueOffset");
+            randomValueOffset_p.DrawProperty_Vector2("随机值偏移");
+
             var duration_p = property.FindPropertyRelative("duration");
             duration_p.DrawProperty_Float("持续时间");
 

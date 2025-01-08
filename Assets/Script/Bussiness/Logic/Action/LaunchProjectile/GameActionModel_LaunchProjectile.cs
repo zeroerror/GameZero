@@ -15,11 +15,12 @@ namespace GamePlay.Bussiness.Logic
             int projectileId,
             GameEntitySelector selector,
             GameActionPreconditionSetModel preconditionSet,
+            in GameVec2 randomValueOffset,
             in GameVec2 launchOffset,
             GameProjectileBarrageType barrageType,
             GameProjectileBarrageModel_CustomLaunchOffset customLaunchOffsetModel,
             GameProjectileBarrageModel_Spread spreadModel
-        ) : base(GameActionType.LaunchProjectile, typeId, selector, preconditionSet)
+        ) : base(GameActionType.LaunchProjectile, typeId, selector, preconditionSet, randomValueOffset)
         {
             this.projectileId = projectileId;
             this.launchOffset = launchOffset;
@@ -38,13 +39,14 @@ namespace GamePlay.Bussiness.Logic
             }
 
             return new GameActionModel_LaunchProjectile(
-                typeId,
-                projectileId,
-                selector,
-                preconditionSet,
-                launchOffset,
-                barrageType,
-                customLaunchOffsetModel,
+                this.typeId,
+                this.projectileId,
+                this.selector,
+                this.preconditionSet,
+                this.randomValueOffset,
+                this.launchOffset,
+                this.barrageType,
+                this.customLaunchOffsetModel,
                 spreadModel_custom
             );
         }

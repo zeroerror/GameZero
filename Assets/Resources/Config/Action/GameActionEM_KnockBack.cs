@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Config
 {
     [System.Serializable]
@@ -11,17 +12,19 @@ namespace GamePlay.Config
 
         public GameEntitySelectorEM selectorEM;
         public GameActionPreconditionSetEM preconditionSetEM;
+        public GameVec2 randomValueOffset;
 
         public GameActionModel_KnockBack ToModel()
         {
             var model = new GameActionModel_KnockBack(
                 0,
-                selectorEM.ToSelector(),
-                preconditionSetEM?.ToModel(),
-                knockBackDirType,
-                distance,
-                duration,
-                easingType
+                this.selectorEM.ToSelector(),
+                this.preconditionSetEM?.ToModel(),
+                this.randomValueOffset,
+                this.knockBackDirType,
+                this.distance,
+                this.duration,
+                this.easingType
             );
             return model;
         }

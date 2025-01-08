@@ -55,5 +55,12 @@ namespace GamePlay.Core
         {
             return System.MathF.Round(value, digits);
         }
+
+        /// <summary>
+        /// [min..max)
+        /// </summary>
+        /// <returns></returns>
+        public static float RandomRange(float min, float max) => UnityEngine.Random.Range(min, max);
+        public static float RandomRange(in UnityEngine.Vector2 range) => RandomRange(range.x, range.y);
     }
 }

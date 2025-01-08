@@ -1,4 +1,5 @@
 using GamePlay.Core;
+using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -18,11 +19,12 @@ namespace GamePlay.Bussiness.Logic
             int typeId,
             GameEntitySelector selector,
             GameActionPreconditionSetModel preconditionSet,
+            in GameVec2 randomValueOffset,
             GameActionHealType healType,
             int value,
             GameActionValueFormat valueFormat,
             GameActionValueRefType refType
-        ) : base(GameActionType.Heal, typeId, selector, preconditionSet)
+        ) : base(GameActionType.Heal, typeId, selector, preconditionSet, randomValueOffset)
         {
             this.healType = healType;
             this.value = value;
@@ -38,6 +40,7 @@ namespace GamePlay.Bussiness.Logic
                 typeId,
                 selector,
                 preconditionSet,
+                randomValueOffset,
                 healType,
                 value,
                 valueFormat,

@@ -1,5 +1,5 @@
 using GamePlay.Bussiness.Logic;
-using UnityEngine;
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Config
 {
     [System.Serializable]
@@ -12,6 +12,7 @@ namespace GamePlay.Config
 
         public GameEntitySelectorEM selectorEM;
         public GameActionPreconditionSetEM preconditionSetEM;
+        public GameVec2 randomValueOffset;
 
         public GameActionModel_Heal ToModel()
         {
@@ -19,6 +20,7 @@ namespace GamePlay.Config
                 0,
                 this.selectorEM?.ToSelector(),
                 this.preconditionSetEM?.ToModel(),
+                this.randomValueOffset,
                 this.healType,
                 this.value,
                 this.valueFormat,

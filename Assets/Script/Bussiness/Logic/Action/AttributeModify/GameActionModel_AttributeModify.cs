@@ -1,5 +1,5 @@
 using GamePlay.Core;
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionModel_AttributeModify : GameActionModelBase
@@ -18,11 +18,12 @@ namespace GamePlay.Bussiness.Logic
             int typeId,
             GameEntitySelector selector,
             GameActionPreconditionSetModel preconditionSet,
+            in GameVec2 randomValueOffset,
             GameAttributeType attributeType,
             int value,
             GameActionValueFormat valueFormat,
             GameActionValueRefType refType
-        ) : base(GameActionType.AttributeModify, typeId, selector, preconditionSet)
+        ) : base(GameActionType.AttributeModify, typeId, selector, preconditionSet, randomValueOffset)
         {
             this.modifyType = attributeType;
             this.value = value;
@@ -43,6 +44,7 @@ namespace GamePlay.Bussiness.Logic
                 typeId,
                 selector,
                 preconditionSet,
+                randomValueOffset,
                 modifyType,
                 value,
                 valueFormat,

@@ -1,5 +1,5 @@
 using GamePlay.Core;
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionModel_Dmg : GameActionModelBase
@@ -17,11 +17,12 @@ namespace GamePlay.Bussiness.Logic
             int typeId,
             GameEntitySelector selector,
             GameActionPreconditionSetModel preconditionSet,
+            in GameVec2 randomValueOffset,
             GameActionDmgType dmgType,
             int value,
             GameActionValueFormat valueFormat,
             GameActionValueRefType refType
-        ) : base(GameActionType.Dmg, typeId, selector, preconditionSet)
+        ) : base(GameActionType.Dmg, typeId, selector, preconditionSet, randomValueOffset)
         {
             this.dmgType = dmgType;
             this.value = value;
@@ -37,6 +38,7 @@ namespace GamePlay.Bussiness.Logic
                 typeId,
                 selector,
                 preconditionSet,
+                randomValueOffset,
                 dmgType,
                 value,
                 valueFormat,

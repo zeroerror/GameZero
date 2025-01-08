@@ -19,6 +19,8 @@ namespace GamePlay.Config
             {
                 count_p.intValue = 1;
             }
+            var randomValueOffset_p = property.FindPropertyRelative("randomValueOffset");
+            randomValueOffset_p.DrawProperty_Vector2("随机值偏移");
 
             var campType_p = property.FindPropertyRelative("campType");
             campType_p.DrawProperty_EnumPopup<GameCampType>("阵营");

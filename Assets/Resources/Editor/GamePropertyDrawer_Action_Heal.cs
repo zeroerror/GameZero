@@ -15,6 +15,9 @@ namespace GamePlay.Config
             var value_p = property.FindPropertyRelative("value");
             value_p.DrawProperty_Int("治疗数值");
 
+            var randomValueOffset_p = property.FindPropertyRelative("randomValueOffset");
+            randomValueOffset_p.DrawProperty_Vector2("随机值偏移");
+
             var valueFormat_p = property.FindPropertyRelative("valueFormat");
             var valueFormat = valueFormat_p.DrawProperty_EnumPopup<GameActionValueFormat>("数值格式");
 

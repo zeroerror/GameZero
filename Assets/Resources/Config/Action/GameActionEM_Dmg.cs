@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Config
 {
     [System.Serializable]
@@ -11,6 +12,7 @@ namespace GamePlay.Config
 
         public GameEntitySelectorEM selectorEM;
         public GameActionPreconditionSetEM preconditionSetEM;
+        public GameVec2 randomValueOffset;
 
         public GameActionModel_Dmg ToModel()
         {
@@ -18,6 +20,7 @@ namespace GamePlay.Config
                 0,
                 this.selectorEM?.ToSelector(),
                 this.preconditionSetEM?.ToModel(),
+                this.randomValueOffset,
                 this.dmgType,
                 this.value,
                 this.valueFormat,

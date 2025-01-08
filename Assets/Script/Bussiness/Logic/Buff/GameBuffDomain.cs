@@ -82,6 +82,12 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 尝试挂载buff </summary>
         public bool TryAttachBuff(int typeId, GameEntityBase actor, GameEntityBase target, int layer, out int realAttachLayer)
         {
+            // 如果actor是option, 则buff的行为者设置为target
+            if (actor is GameActionOptionEntity)
+            {
+                actor = target;
+            }
+
             realAttachLayer = 0;
 
             if (!target.TryGetLinkParent<GameRoleEntity>(out var targetRole))

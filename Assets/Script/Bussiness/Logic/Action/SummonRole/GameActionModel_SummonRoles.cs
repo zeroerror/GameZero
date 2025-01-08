@@ -1,5 +1,5 @@
 using GamePlay.Core;
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionModel_SummonRoles : GameActionModelBase
@@ -15,10 +15,11 @@ namespace GamePlay.Bussiness.Logic
             int typeId,
             GameEntitySelector selector,
             GameActionPreconditionSetModel preconditionSet,
+            in GameVec2 randomValueOffset,
             int roleId,
             int count,
             GameCampType campType
-        ) : base(GameActionType.SummonRoles, typeId, selector, preconditionSet)
+        ) : base(GameActionType.SummonRoles, typeId, selector, preconditionSet, randomValueOffset)
         {
             this.roleId = roleId;
             this.count = count;
@@ -33,6 +34,7 @@ namespace GamePlay.Bussiness.Logic
                 typeId,
                 selector,
                 preconditionSet,
+                randomValueOffset,
                 roleId,
                 count_custom,
                 campType

@@ -1,5 +1,5 @@
 using GamePlay.Core;
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionModel_AttachBuff : GameActionModelBase
@@ -13,9 +13,10 @@ namespace GamePlay.Bussiness.Logic
             int typeId,
             GameEntitySelector selector,
             GameActionPreconditionSetModel preconditionSet,
+            in GameVec2 randomValueOffset,
             int buffId,
             int layer
-        ) : base(GameActionType.AttachBuff, typeId, selector, preconditionSet)
+        ) : base(GameActionType.AttachBuff, typeId, selector, preconditionSet, randomValueOffset)
         {
 
             this.buffId = buffId;
@@ -34,6 +35,7 @@ namespace GamePlay.Bussiness.Logic
                 typeId,
                 selector,
                 preconditionSet,
+                randomValueOffset,
                 buffId,
                 layer
             );

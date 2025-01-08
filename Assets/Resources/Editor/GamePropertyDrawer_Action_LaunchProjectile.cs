@@ -41,6 +41,9 @@ namespace GamePlay.Config
 
             var preconditionSetEM_p = property.FindPropertyRelative("preconditionSetEM");
             preconditionSetEM_p.DrawProperty();
+
+            var randomValueOffset_p = property.FindPropertyRelative("randomValueOffset");
+            randomValueOffset_p.DrawProperty_Vector2("随机值偏移");
         }
     }
 }

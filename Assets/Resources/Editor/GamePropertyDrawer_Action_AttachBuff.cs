@@ -18,6 +18,9 @@ namespace GamePlay.Config
                 layer.intValue = 1;
             }
 
+            var randomValueOffset_p = property.FindPropertyRelative("randomValueOffset");
+            randomValueOffset_p.DrawProperty_Vector2("随机值偏移");
+
             var selectorEM_p = property.FindPropertyRelative("selectorEM");
             selectorEM_p.DrawProperty();
 

@@ -1,5 +1,6 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Config
 {
     [System.Serializable]
@@ -11,6 +12,7 @@ namespace GamePlay.Config
 
         public GameEntitySelectorEM selectorEM;
         public GameActionPreconditionSetEM preconditionSetEM;
+        public GameVec2 randomValueOffset;
 
         public GameActionModel_SummonRoles ToModel()
         {
@@ -21,11 +23,12 @@ namespace GamePlay.Config
             }
             var model = new GameActionModel_SummonRoles(
                 0,
-                selectorEM.ToSelector(),
-                preconditionSetEM?.ToModel(),
-                roleSO.typeId,
-                count,
-                campType
+                this.selectorEM.ToSelector(),
+                this.preconditionSetEM?.ToModel(),
+                this.randomValueOffset,
+                this.roleSO.typeId,
+                this.count,
+                this.campType
             );
             return model;
         }

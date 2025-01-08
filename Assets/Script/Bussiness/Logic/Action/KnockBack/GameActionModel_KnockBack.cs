@@ -1,3 +1,4 @@
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionModel_KnockBack : GameActionModelBase
@@ -16,11 +17,12 @@ namespace GamePlay.Bussiness.Logic
             int typeId,
             GameEntitySelector selector,
             GameActionPreconditionSetModel preconditionSet,
+            in GameVec2 randomValueOffset,
             GameActionKnockBackDirType knockBackDirType,
             float distance,
             float duration,
             GameEasingType easingType
-        ) : base(GameActionType.KnockBack, typeId, selector, preconditionSet)
+        ) : base(GameActionType.KnockBack, typeId, selector, preconditionSet, randomValueOffset)
         {
             this.knockBackDirType = knockBackDirType;
             this.distance = distance;
@@ -37,6 +39,7 @@ namespace GamePlay.Bussiness.Logic
                 typeId,
                 selector,
                 preconditionSet,
+                randomValueOffset,
                 knockBackDirType,
                 distance,
                 duration,
