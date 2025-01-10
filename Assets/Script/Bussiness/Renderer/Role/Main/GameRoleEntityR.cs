@@ -1,4 +1,3 @@
-using System.Collections.Specialized;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine;
@@ -8,14 +7,15 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleEntityR : GameEntityBase
     {
-        public readonly GameRoleModelR model;
-        public readonly GameObject root;
-        public readonly GameObject foot;
-        public readonly GameObject shadow;
-        public readonly GameObject body;
-        public readonly GameBuffComR buffCom;
+        /// <summary> 模型, 用于获取角色的属性、技能等信息. 如果正在变身, 则获取的是变身后的模型 </summary>
+        public GameRoleModelR model => this.roleTransformCom.isTransforming ? this.roleTransformCom.model : this._originalModel;
+        public GameRoleModelR originalModel => this._originalModel;
+        private readonly GameRoleModelR _originalModel;
 
-        public Transform transform { get { return this.root.transform; } }
+        /// <summary> 身体组件, 用于获取角色的根节点、身体节点、脚节点. 如果正在变身, 则获取的是变身后的身体组件 </summary>
+        public GameRoleBodyCom bodyCom => this.roleTransformCom.isTransforming ? this.roleTransformCom.bodyCom : this._originalBodyCom;
+        public GameRoleBodyCom originalBodyCom => this._originalBodyCom;
+        private readonly GameRoleBodyCom _originalBodyCom;
 
         public GameVec2 position
         {
@@ -23,7 +23,7 @@ namespace GamePlay.Bussiness.Renderer
             set
             {
                 transform.position = new GameVec3(value.x, value.y, transform.position.z);
-                if (this.shadow) this.shadow.transform.position = transform.position;
+                if (this.bodyCom.shadow) this.bodyCom.shadow.transform.position = transform.position;
             }
         }
 
@@ -33,43 +33,39 @@ namespace GamePlay.Bussiness.Renderer
 
         private GameEasing2DCom _posEaseCom;
 
-        public GameRoleFSMComR fsmCom { get; private set; }
-        public GameSkillComponentR skillCom { get; private set; }
-        public GamePlayableCom animCom { get; private set; }
-        public GameRoleAttributeBarCom attributeBarCom { get; private set; }
+        public GamePlayableCom animCom => this.roleTransformCom.isTransforming ? this.roleTransformCom.animCom : this._animCom;
+        private GamePlayableCom _animCom;
 
-        public GameRoleAttachmentCom attachmentCom { get; private set; }
+        public Transform transform { get { return this.bodyCom.root.transform; } }
+        public GameRoleFSMComR fsmCom { get; private set; }
+
+        public GameSkillComR skillCom => this.roleTransformCom.isTransforming ? this.roleTransformCom.skillCom : this._skillCom;
+        private GameSkillComR _skillCom;
+
+        public GameRoleAttributeBarCom attributeBarCom { get; private set; }
+        public readonly GameBuffComR buffCom;
+        public GameRoleTransformComR roleTransformCom { get; private set; }
 
         public GameRoleEntityR(
             GameRoleModelR model,
-            GameObject root,
-            GameObject foot,
-            GameObject body,
-            GameRoleAttachmentCom attachmentCom
+            GameRoleBodyCom bodyCom
         ) : base(model.typeId, GameEntityType.Role)
         {
-            this.model = model;
-            this.root = root;
-            this.foot = foot;
-            this.body = body;
-            this.attachmentCom = attachmentCom;
-
-            this.shadow = foot.transform.Find("shadow")?.gameObject;
-            Debug.Assert(this.shadow != null, "shadow is null");
+            this._originalModel = model;
+            this._originalBodyCom = bodyCom;
 
             this.fsmCom = new GameRoleFSMComR();
-
-            this.skillCom = new GameSkillComponentR(this);
-
+            this._skillCom = new GameSkillComR(this);
             this.buffCom = new GameBuffComR();
 
-            var animator = this.body.GetComponentInChildren<Animator>();
-            this.animCom = new GamePlayableCom(animator);
+            var animator = bodyCom.body.GetComponentInChildren<Animator>();
+            this._animCom = new GamePlayableCom(animator);
 
             this._posEaseCom = new GameEasing2DCom();
             this._posEaseCom.SetEase(0.05f, GameEasingType.Linear);
 
             this.attributeBarCom = new GameRoleAttributeBarCom(this.transform);
+            this.roleTransformCom = new GameRoleTransformComR(this, animator);
         }
 
         public override void Clear()
@@ -104,13 +100,12 @@ namespace GamePlay.Bussiness.Renderer
             var mpStr = this.attributeCom.GetValueStr(GameAttributeType.MP);
             var maxMPStr = this.attributeCom.GetValueStr(GameAttributeType.MaxMP);
             this.attributeBarCom.mpSlider.SetText($"{mpStr}/{maxMPStr}");
-
         }
 
         public void setActive(bool active)
         {
-            this.root.SetActive(active);
-            this.shadow.SetActive(active);
+            this.bodyCom.root.SetActive(active);
+            this.bodyCom.shadow.SetActive(active);
         }
 
         public void FaceToDir(in GameVec2 dir)

@@ -75,5 +75,12 @@ namespace GamePlay.Bussiness.Logic
         /// <para>inputArgs: 输入参数</para>
         /// </summary>
         public bool TryGetPlayerInputArgs(int entityId, out GameRoleInputArgs inputArgs);
+
+        /// <summary>
+        /// 变换角色
+        /// <para>role: 角色</para>
+        /// <para>transRoleId: 变换角色Id</para>
+        /// </summary>
+        public void TransformRole(GameRoleEntity role, int transRoleId);
     }
 }

@@ -31,6 +31,11 @@ namespace GamePlay.Bussiness.Logic
             return this._context.actionContext.template.TryGet(actionId, out model);
         }
 
+        public List<GameActionOptionModel> GetActionOptionModelList()
+        {
+            return this._actionContext.optionTemplate.GetActionOptionModelList();
+        }
+
         public void DoAction(int actionId, GameEntityBase actor, float customParam)
         {
             var template = this._actionContext.template;
@@ -361,9 +366,71 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public List<GameActionOptionModel> GetActionOptionModelList()
+        public void DoAction_CharacterTransform(GameActionModel_CharacterTransform action, GameEntityBase actor)
         {
-            return this._actionContext.optionTemplate.GetActionOptionModelList();
+            var selector = action.selector;
+            if (selector.selectAnchorType == GameEntitySelectAnchorType.Actor && !selector.isRangeSelect)
+            {
+                // 锚点选中自己且为单选, 则代表将自身变身为自身当前选取的目标
+                var targeter = actor.actionTargeterCom.getCurTargeter();
+                var targetEntity = targeter.targetEntity;
+                if (!(targetEntity is GameRoleEntity targetRole))
+                {
+                    GameLogger.LogError($"变身目标不是角色实体：{targetEntity.idCom.entityId}, 暂不支持");
+                    return;
+                }
+                GameLogger.Assert(targetRole != null, "变身行为未找到目标");
+                this._CharacterTransform(actor, targetRole, action, actor, targetRole.model.typeId);
+                return;
+            }
+
+            var entitySelectApi = this._context.domainApi.entitySelectApi;
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
+            selectedEntities?.Foreach((selectedEntity) =>
+            {
+                this._CharacterTransform(actor, selectedEntity, action, selectedEntity, action.transRoleId);
+            });
+        }
+
+        /// <summary>
+        /// 角色变身
+        /// <para>actor: 行为发起者</para>
+        /// <para>target: 变身目标</para>
+        /// <para>action: 行为模型</para>
+        /// <para>transTarget: 被变身的目标</para>
+        /// <para>transRoleId: 变身后的角色ID</para>
+        /// </summary>
+        private void _CharacterTransform(
+            GameEntityBase actor,
+            GameEntityBase target,
+            GameActionModel_CharacterTransform action,
+            GameEntityBase transTarget,
+            int transRoleId)
+        {
+            if (!action.preconditionSet.CheckSatisfied(transTarget)) return;
+            if (!(transTarget is GameRoleEntity transTargetRole))
+            {
+                GameLogger.LogError($"变身目标不是角色实体：{transTarget.idCom}, 暂不支持");
+                return;
+            }
+
+            // 立即计算
+            var record = GameActionUtil_CharacterTransform.CalcCharacterTransform(actor, target, action);
+            // 帧末执行
+            this._context.cmdBufferService.AddDelayCmd(0, () =>
+            {
+                // 执行
+                GameActionUtil_CharacterTransform.DoCharacterTransform(transTargetRole, record);
+                this._context.domainApi.roleApi.TransformRole(transTargetRole, transRoleId);
+                // 记录
+                this._actionContext.transformRecordList.Add(record);
+                // 提交RC 
+                var evArgs = new GameActionRCArgs_CharacterTransform(
+                    action.typeId,
+                    record
+                );
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_TRANSFORM, evArgs);
+            });
         }
     }
 }

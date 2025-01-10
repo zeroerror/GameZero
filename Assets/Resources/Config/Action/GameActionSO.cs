@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace GamePlay.Config
         public GameActionEM_KnockBack knockBackActionEM;
         public GameActionEM_AttachBuff attachBuffActionEM;
         public GameActionEM_SummonRoles summonRolesActionEM;
+        public GameActionEM_CharacterTransform characterTransformActionEM;
 
         public GameActionEMR actionEMR;
 
@@ -51,6 +53,9 @@ namespace GamePlay.Config
                 case GameActionType.SummonRoles:
                     actionModel = summonRolesActionEM.ToModel();
                     break;
+                case GameActionType.CharacterTransform:
+                    actionModel = characterTransformActionEM.ToModel();
+                    break;
                 default:
                     GameLogger.LogError("GameActionSO: GetAction: invalid actionType: " + actionType);
                     return null;
@@ -77,6 +82,8 @@ namespace GamePlay.Config
                     return this.attachBuffActionEM.selectorEM;
                 case GameActionType.SummonRoles:
                     return this.summonRolesActionEM.selectorEM;
+                case GameActionType.CharacterTransform:
+                    return this.characterTransformActionEM.selectorEM;
                 default:
                     GameLogger.LogError("未处理的行为类型: " + actionType);
                     return null;

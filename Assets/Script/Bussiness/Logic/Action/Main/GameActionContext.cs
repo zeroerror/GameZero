@@ -17,6 +17,7 @@ namespace GamePlay.Bussiness.Logic
         public List<GameActionRecord_AttributeModify> attributeModifyRecordList { get; private set; }
         public List<GameActionRecord_AttachBuff> attachBuffRecordList { get; private set; }
         public List<GameActionRecord_SummonRoles> summonRolesRecordList { get; private set; }
+        public List<GameActionRecord_CharacterTransform> transformRecordList { get; private set; }
 
         public GameActionContext()
         {
@@ -32,6 +33,7 @@ namespace GamePlay.Bussiness.Logic
             this.attributeModifyRecordList = new List<GameActionRecord_AttributeModify>();
             this.attachBuffRecordList = new List<GameActionRecord_AttachBuff>();
             this.summonRolesRecordList = new List<GameActionRecord_SummonRoles>();
+            this.transformRecordList = new List<GameActionRecord_CharacterTransform>();
         }
 
         public void ClearRecords()
@@ -43,6 +45,7 @@ namespace GamePlay.Bussiness.Logic
             this.attributeModifyRecordList.Clear();
             this.attachBuffRecordList.Clear();
             this.summonRolesRecordList.Clear();
+            this.transformRecordList.Clear();
         }
     }
 }

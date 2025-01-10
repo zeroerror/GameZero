@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_999990003
+  m_Name: template_action_999000010
   m_EditorClassIdentifier: 
-  typeId: 999990003
+  typeId: 999000010
   actionType: 5
   dmgActionEM:
     dmgType: 0
@@ -43,6 +43,7 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+    randomValueOffset: {x: 0, y: 0}
   healActionEM:
     healType: 0
     value: 0
@@ -72,11 +73,12 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+    randomValueOffset: {x: 0, y: 0}
   attributeModifyActionEM:
-    modifyType: 3
+    modifyType: 5
     value: 5
     valueFormat: 2
-    refType: 17
+    refType: 5
     selectorEM:
       selectAnchorType: 1
       campType: 2
@@ -101,6 +103,7 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+    randomValueOffset: {x: 0, y: 0}
   launchProjectileActionEM:
     projectileId: 0
     launchOffset: {x: 0, y: 0}
@@ -136,6 +139,7 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+    randomValueOffset: {x: 0, y: 0}
   knockBackActionEM:
     knockBackDirType: 0
     distance: 0
@@ -165,6 +169,7 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+    randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
     buffSO: {fileID: 0}
     layer: 0
@@ -192,6 +197,7 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+    randomValueOffset: {x: 0, y: 0}
   summonRolesActionEM:
     roleSO: {fileID: 0}
     count: 0
@@ -220,9 +226,38 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+    randomValueOffset: {x: 0, y: 0}
+  characterTransformActionEM:
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+    randomValueOffset: {x: 0, y: 0}
+    roleSO: {fileID: 0}
+    attributeList: []
   actionEMR:
     typeId: 0
-    desc: "\u53CB\u519B\u83B7\u5F975%\u7684\u521D\u59CB\u6CD5\u529B\u503C"
+    desc: "\u53CB\u519B\u83B7\u5F975%\u7684\u653B\u51FB\u529B\u52A0\u6210"
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}

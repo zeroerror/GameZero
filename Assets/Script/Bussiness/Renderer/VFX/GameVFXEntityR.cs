@@ -42,6 +42,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Destroy()
         {
+            GameObject.Destroy(this.root);
         }
 
         public void Tick(float dt)
@@ -99,7 +100,7 @@ namespace GamePlay.Bussiness.Renderer
             this.particleCom.Play(true);
             this.root.SetActive(true);
             this.timelineCom.Play(args.loopDuration);
-            if (args.isAttachParent) this.root.transform.SetParent(args.attachNode.transform);
+            if (args.isAttachParent) this.SetParent(args.attachNode.transform);
             this.root.name = $"VFX_{this.entityId}_{this.prefabUrl}";
             this._stopDirty = true;
         }
@@ -115,6 +116,11 @@ namespace GamePlay.Bussiness.Renderer
         {
             this._stopDirty = false;
             this.root.SetActive(false);
+        }
+
+        public void SetParent(Transform parent)
+        {
+            this.root.transform.SetParent(parent);
         }
     }
 }

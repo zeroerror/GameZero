@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_999990101
+  m_Name: template_action_999001020
   m_EditorClassIdentifier: 
-  typeId: 999990101
+  typeId: 999001020
   actionType: 6
   dmgActionEM:
     dmgType: 1
@@ -171,7 +171,7 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
-    buffSO: {fileID: 11400000, guid: e412217c9a649754ea0dacc4698dd6aa, type: 2}
+    buffSO: {fileID: 11400000, guid: d93a7dfbdf8086b48a6eda3384b1f9bc, type: 2}
     layer: 10
     selectorEM:
       selectAnchorType: 1
@@ -227,10 +227,37 @@ MonoBehaviour:
         buffSO: {fileID: 0}
         layer: 0
     randomValueOffset: {x: 0, y: 0}
+  characterTransformActionEM:
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+    randomValueOffset: {x: 0, y: 0}
+    roleSO: {fileID: 0}
+    attributeList: []
   actionEMR:
     typeId: 0
-    desc: "\u53CB\u519B\u6BCF\u6B21\u9020\u6210\u4F24\u5BB3, \u989D\u5916\u9020\u621020\u771F\u5B9E\u4F24\u5BB3
-      , \u53EF\u53E0\u52A0\u6700\u591A10\u5C42"
+    desc: "\u53CB\u519B\u89E6\u53D1\u4F24\u5BB3\u65F6"
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}

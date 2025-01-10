@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: template_action_option_11
   m_EditorClassIdentifier: 
   typeId: 11
-  quality: 1
-  desc: "\u884C\u4E3A\u9009\u987911 - \u53CB\u519B\u6BCF\u6B21\u653B\u51FB\u90FD\u4F1A\u83B7\u5F97\u989D\u59165%\u653B\u51FB\u529B"
+  quality: 2
+  desc: "\u53CB\u519B\u6BCF\u6B21\u653B\u51FB\u90FD\u4F1A\u83B7\u5F97\u989D\u59165%\u653B\u51FB\u529B"
   maxLv: 10
   actionSOs:
   - {fileID: 11400000, guid: 181b54593ea0f5c4fb52cbfcff236fed, type: 2}

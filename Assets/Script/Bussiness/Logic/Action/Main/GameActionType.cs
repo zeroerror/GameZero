@@ -18,5 +18,10 @@ namespace GamePlay.Bussiness.Logic
         AttachBuff = 6,
         /// <summary> 召唤角色 </summary>
         SummonRoles = 7,
+        /// <summary> 角色变身 </summary>
+        CharacterTransform = 8,
+
+        /// <summary> 击杀 </summary>
+        Kill = 999,
     }
 }

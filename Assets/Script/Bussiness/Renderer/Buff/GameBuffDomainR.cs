@@ -112,7 +112,7 @@ namespace GamePlay.Bussiness.Renderer
                 var args = new GameVFXPlayArgs
                 {
                     url = vfxUrl,
-                    attachNode = targetRole.root,
+                    attachNode = targetRole.bodyCom.root,
                     loopDuration = -1,
                     layerType = model.vfxLayerType,
                     scale = model.vfxScale,

@@ -36,5 +36,10 @@ namespace GamePlay.Bussiness.Renderer
         {
             return this._buffList.Remove(buff);
         }
+
+        public void ForeachAllBuffs(System.Action<GameBuffEntityR> action)
+        {
+            this._buffList.ForEach(action);
+        }
     }
 }

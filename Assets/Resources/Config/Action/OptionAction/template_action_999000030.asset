@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_999990102
+  m_Name: template_action_999000030
   m_EditorClassIdentifier: 
-  typeId: 999990102
-  actionType: 6
+  typeId: 999000030
+  actionType: 5
   dmgActionEM:
-    dmgType: 1
-    value: 20
-    valueFormat: 1
-    refType: 1
+    dmgType: 0
+    value: 0
+    valueFormat: 0
+    refType: 0
     selectorEM:
-      selectAnchorType: 2
+      selectAnchorType: 0
       campType: 0
       entityType: 0
       selColliderType: 0
@@ -75,10 +75,10 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
   attributeModifyActionEM:
-    modifyType: 5
+    modifyType: 3
     value: 5
     valueFormat: 2
-    refType: 5
+    refType: 17
     selectorEM:
       selectAnchorType: 1
       campType: 2
@@ -171,22 +171,22 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
-    buffSO: {fileID: 11400000, guid: d93a7dfbdf8086b48a6eda3384b1f9bc, type: 2}
-    layer: 10
+    buffSO: {fileID: 0}
+    layer: 0
     selectorEM:
-      selectAnchorType: 1
-      campType: 2
-      entityType: 1
-      selColliderType: 1
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        width: 9999
-        height: 9999
+        width: 0
+        height: 0
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 9999
+        radius: 0
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -227,9 +227,37 @@ MonoBehaviour:
         buffSO: {fileID: 0}
         layer: 0
     randomValueOffset: {x: 0, y: 0}
+  characterTransformActionEM:
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+    randomValueOffset: {x: 0, y: 0}
+    roleSO: {fileID: 0}
+    attributeList: []
   actionEMR:
     typeId: 0
-    desc: "\u53CB\u519B\u89E6\u53D1\u4F24\u5BB3\u65F6\u4F1A\u6709\u968F\u673A\u4F24\u5BB3\u52A0\u6210\u30142%-20%\u3015"
+    desc: "\u53CB\u519B\u83B7\u5F975%\u7684\u521D\u59CB\u6CD5\u529B\u503C"
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}

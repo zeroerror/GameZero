@@ -5,16 +5,50 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameSkillCom
     {
+        private GameRoleEntity _role;
         private List<GameSkillEntity> _skillEntities;
 
-        public GameSkillCom(GameRoleEntity entity)
+        public GameSkillCom(GameRoleEntity role)
         {
+            _role = role;
             _skillEntities = new List<GameSkillEntity>();
+        }
+
+        public void Clear()
+        {
+            _skillEntities.Foreach(s => s.Clear());
+            _skillEntities.Clear();
         }
 
         public void Add(GameSkillEntity skill)
         {
             _skillEntities.Add(skill);
+            _skillEntities.Sort((a, b) => a.skillModel.skillType - b.skillModel.skillType);
+            _CorrectMP(skill);
+        }
+
+        /// <summary> 修正技能消耗的法力值 </summary>
+        private void _CorrectMP(GameSkillEntity skill)
+        {
+            var mpCost = skill.skillModel.conditionModel.mpCost;
+            if (mpCost > this._role.attributeCom.GetValue(GameAttributeType.MaxMP))
+            {
+                var attr = new GameAttribute() { type = GameAttributeType.MaxMP, value = mpCost };
+                this._role.attributeCom.SetAttribute(attr);
+            }
+        }
+
+        public void CorrectMP()
+        {
+            this.ForeachSkills(skill =>
+            {
+                this._CorrectMP(skill);
+            });
+        }
+
+        public void AddList(List<GameSkillEntity> skills)
+        {
+            _skillEntities.AddRange(skills);
             _skillEntities.Sort((a, b) => a.skillModel.skillType - b.skillModel.skillType);
         }
 

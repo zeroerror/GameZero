@@ -45,6 +45,10 @@ namespace GamePlay.Bussiness.Logic
         ActorMP,
         /// <summary> 目标魔法值 </summary>
         TargetMP,
+        /// <summary> 行为者最大魔法值 </summary>
+        ActorMaxMP,
+        /// <summary> 目标最大魔法值 </summary>
+        TargetMaxMP,
 
         /// <summary> 行为者护甲 </summary>
         ActorArmor,
@@ -126,6 +130,12 @@ namespace GamePlay.Bussiness.Logic
                     break;
                 case GameActionValueRefType.TargetMP:
                     refAttrValue = targetAttrCom.GetValue(GameAttributeType.MP);
+                    break;
+                case GameActionValueRefType.ActorMaxMP:
+                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.MaxMP);
+                    break;
+                case GameActionValueRefType.TargetMaxMP:
+                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.MaxMP);
                     break;
 
                 case GameActionValueRefType.ActorArmor:

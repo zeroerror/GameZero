@@ -2,13 +2,18 @@ using System.Collections.Generic;
 
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameSkillComponentR
+    public class GameSkillComR
     {
         private List<GameSkillEntityR> _skillEntities;
 
-        public GameSkillComponentR(GameRoleEntityR entity)
+        public GameSkillComR(GameRoleEntityR entity)
         {
             _skillEntities = new List<GameSkillEntityR>();
+        }
+
+        public void Clear()
+        {
+            _skillEntities.Clear();
         }
 
         public void Add(GameSkillEntityR skill)

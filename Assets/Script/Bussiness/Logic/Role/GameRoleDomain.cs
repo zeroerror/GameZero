@@ -204,5 +204,35 @@ namespace GamePlay.Bussiness.Logic
             var entityId = this._roleContext.userRole.idCom.entityId;
             this.SetPlayerInputArgs(entityId, inputArgs);
         }
+
+        public void TransformRole(GameRoleEntity role, int transRoleId)
+        {
+            if (!this._roleContext.factory.template.TryGet(transRoleId, out var model))
+            {
+                GameLogger.LogError("变身失败，变身ID不存在：" + transRoleId);
+            }
+
+            // 变身前默认结束变身
+            role.characterTransformCom.EndTransform();
+
+            // 变身后的技能
+            this._context.domainApi.skillApi.CreateTransformSkill(role, model.skillIds);
+
+            // 变身
+            role.characterTransformCom.StartTransform(model);
+
+            // 提交RC事件
+            this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_TRANSFORM, new GameRoleRCArgs_CharacterTransform
+            {
+                idArgs = role.idCom.ToArgs(),
+                transRoleId = transRoleId
+            });
+        }
+
+        public void EndTransformRole(GameRoleEntity role)
+        {
+            role.characterTransformCom.EndTransform();
+            role.skillCom.CorrectMP();
+        }
     }
 }

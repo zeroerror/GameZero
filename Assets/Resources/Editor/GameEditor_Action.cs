@@ -19,6 +19,7 @@ namespace GamePlay.Config
         private SerializedProperty knockBackActionEM_p;
         private SerializedProperty attachBuffActionEM_p;
         private SerializedProperty summonRolesActionEM_p;
+        private SerializedProperty characterTransformActionEM_p;
 
         private SerializedProperty actionEMR_p;
 
@@ -34,6 +35,7 @@ namespace GamePlay.Config
             this.knockBackActionEM_p = _serializedObject.FindProperty("knockBackActionEM");
             this.attachBuffActionEM_p = _serializedObject.FindProperty("attachBuffActionEM");
             this.summonRolesActionEM_p = _serializedObject.FindProperty("summonRolesActionEM");
+            this.characterTransformActionEM_p = _serializedObject.FindProperty("characterTransformActionEM");
 
             this.actionEMR_p = _serializedObject.FindProperty("actionEMR");
         }
@@ -106,6 +108,10 @@ namespace GamePlay.Config
                 case GameActionType.SummonRoles:
                     EditorGUILayout.LabelField(" -------- 召唤角色 --------", EditorStyles.boldLabel);
                     summonRolesActionEM_p.DrawProperty();
+                    break;
+                case GameActionType.CharacterTransform:
+                    EditorGUILayout.LabelField(" -------- 角色变身 --------", EditorStyles.boldLabel);
+                    characterTransformActionEM_p.DrawProperty();
                     break;
                 default:
                     EditorGUILayout.HelpBox($"未知的行为类型：{so.actionType}", MessageType.Warning);
@@ -181,7 +187,8 @@ namespace GamePlay.Config
                 for (int i = 0; i < actionOptionSOs.Length; i++)
                 {
                     var actionOptionSO = actionOptionSOs[i];
-                    EditorGUILayout.ObjectField(actionOptionSO.desc, actionOptionSO, typeof(GameActionOptionSO), false);
+                    var tips = $"选项[{actionOptionSO.typeId}]: {actionOptionSO.desc}";
+                    EditorGUILayout.ObjectField(tips, actionOptionSO, typeof(GameActionOptionSO), false);
                 }
             }
 

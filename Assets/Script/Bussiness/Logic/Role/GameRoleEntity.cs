@@ -10,6 +10,7 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleFSMCom fsmCom { get; private set; }
         public GameSkillCom skillCom { get; private set; }
         public GameBuffCom buffCom { get; private set; }
+        public GameCharacterTransformCom characterTransformCom { get; private set; }
 
         public GameRoleEntity(GameRoleModel model) : base(model.typeId, GameEntityType.Role)
         {
@@ -20,6 +21,7 @@ namespace GamePlay.Bussiness.Logic
             this.fsmCom = new GameRoleFSMCom();
             this.skillCom = new GameSkillCom(this);
             this.buffCom = new GameBuffCom();
+            this.characterTransformCom = new GameCharacterTransformCom(this);
         }
 
         public override void Clear()

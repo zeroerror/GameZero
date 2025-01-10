@@ -21,7 +21,13 @@ namespace GamePlay.Bussiness.Renderer
                 GameLogger.LogError("角色创建失败，角色ID不存在：" + typeId);
                 return null;
             }
+            var bodyCom = GetBodyCom(model);
+            var e = new GameRoleEntityR(model, bodyCom);
+            return e;
+        }
 
+        public GameRoleBodyCom GetBodyCom(GameRoleModelR model)
+        {
             // 模板预制体
             var tmPrefab = Resources.Load<GameObject>("Role/Prefab/role");
             var root = GameObject.Instantiate(tmPrefab);
@@ -55,9 +61,8 @@ namespace GamePlay.Bussiness.Renderer
                 attachmentCom.SetAttachmentSprite_Bow(bowHandleSprite, bowLimbSprite);
                 attachmentCom.SetAttachmentSprite_Visible(GameRoleAttachmentDirectionType.Left, true);
             }
-
-            var e = new GameRoleEntityR(model, root, foot, body, attachmentCom);
-            return e;
+            var bodyCom = new GameRoleBodyCom(body, foot, roleGO, attachmentCom);
+            return bodyCom;
         }
 
         public AnimationClip LoadAnimationClip(int typeId, string clipName)

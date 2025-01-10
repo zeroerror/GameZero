@@ -106,7 +106,7 @@ namespace GamePlay.Bussiness.Renderer
             if (hitEffectUrl != null)
             {
 
-                var attachNode = target is GameRoleEntityR targetRole ? targetRole.root : null;
+                var attachNode = target is GameRoleEntityR targetRole ? targetRole.bodyCom.root : null;
                 var transCom = target.transformCom;
                 var attachOffset = action.hitVFXOffset;
                 attachOffset.x = transCom.forward.x < 0 ? -attachOffset.x : attachOffset.x;

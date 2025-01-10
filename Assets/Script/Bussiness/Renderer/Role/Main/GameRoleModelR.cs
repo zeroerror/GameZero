@@ -1,5 +1,4 @@
 using GamePlay.Config;
-using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
 {
@@ -14,7 +13,7 @@ namespace GamePlay.Bussiness.Renderer
         /// <summary> 预制体路径 </summary>
         public readonly string prefabUrl;
         /// <summary> 角色技能列表 </summary>
-        public readonly GameSkillSO[] skills;
+        public readonly GameSkillSO[] skillSOs;
         /// <summary> 是否为多层级动画 </summary>
         public readonly bool isMultyAnimationLayer;
 
@@ -30,7 +29,7 @@ namespace GamePlay.Bussiness.Renderer
             this.roleName = roleName;
             this.desc = desc;
             this.prefabUrl = prefabUrl;
-            this.skills = skills;
+            this.skillSOs = skills;
             this.isMultyAnimationLayer = isMultyAnimationLayer;
         }
     }

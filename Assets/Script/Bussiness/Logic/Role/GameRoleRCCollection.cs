@@ -4,6 +4,8 @@ namespace GamePlay.Bussiness.Logic
     {
         /** 角色 - 创建 */
         public static readonly string RC_GAME_ROLE_CREATE = "RC_GAME_ROLE_CREATE";
+        /* 角色 - 变身 */
+        public static readonly string RC_GAME_ROLE_TRANSFORM = "RC_GAME_ROLE_TRANSFORM";
         /* 角色状态 - 进入 待机 */
         public static readonly string RC_GAME_ROLE_STATE_ENTER_IDLE = "RC_GAME_ROLE_STATE_ENTER_IDLE";
         /* 角色状态 - 进入 移动 */
@@ -21,6 +23,12 @@ namespace GamePlay.Bussiness.Logic
         public GameIdArgs idArgs;
         public GameTransformArgs transArgs;
         public bool isUser;
+    }
+
+    public struct GameRoleRCArgs_CharacterTransform
+    {
+        public GameIdArgs idArgs;
+        public int transRoleId;
     }
 
     public struct GameRoleRCArgs_StateEnterIdle

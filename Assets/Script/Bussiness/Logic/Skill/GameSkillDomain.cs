@@ -30,9 +30,13 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public GameSkillEntity CreateSkill(GameRoleEntity role, int typeId)
+        public bool TryGetModel(int typeId, out GameSkillModel model)
         {
-            var skillCom = role.skillCom;
+            return this._skillContext.factory.template.TryGet(typeId, out model);
+        }
+
+        private GameSkillEntity _CreateSkill(GameRoleEntity role, int typeId, GameSkillCom skillCom)
+        {
             if (skillCom.TryGet(typeId, out var _))
             {
                 GameLogger.LogError("技能创建失败，技能已存在：" + typeId);
@@ -50,13 +54,6 @@ namespace GamePlay.Bussiness.Logic
             skill.idCom.entityId = this._skillContext.idService.FetchId();
             // 绑定父子关系
             skill.idCom.SetParent(role);
-            // 如果技能的mp消耗大于角色的mp，那么扩展角色的mp
-            var mpCost = skill.skillModel.conditionModel.mpCost;
-            if (mpCost > role.attributeCom.GetValue(GameAttributeType.MaxMP))
-            {
-                var attr = new GameAttribute() { type = GameAttributeType.MaxMP, value = mpCost };
-                role.attributeCom.SetAttribute(attr);
-            }
             // 组件绑定
             skill.BindTransformCom(role.transformCom);
             skill.BindAttributeCom(role.attributeCom);
@@ -77,7 +74,13 @@ namespace GamePlay.Bussiness.Logic
             });
             skillCom.Add(skill);
             repo.TryAdd(skill);
+            return skill;
+        }
 
+        public GameSkillEntity CreateSkill(GameRoleEntity role, int typeId)
+        {
+            var skillCom = role.skillCom;
+            var skill = this._CreateSkill(role, typeId, skillCom);
             // 提交RC
             this._context.SubmitRC(GameSkillRCCollection.RC_GAMES_SKILL_CREATE,
                 new GameSkillRCArgs_Create { roleIdArgs = role.idCom.ToArgs(), skillIdArgs = skill.idCom.ToArgs() }
@@ -85,9 +88,29 @@ namespace GamePlay.Bussiness.Logic
             return skill;
         }
 
-        public bool TryGetModel(int typeId, out GameSkillModel model)
+        public GameSkillEntity[] CreateTransformSkill(GameRoleEntity role, int[] skillIds)
         {
-            return this._skillContext.factory.template.TryGet(typeId, out model);
+            if (!skillIds.HasData())
+            {
+                return null;
+            }
+
+            var skillCom = role.characterTransformCom.skillCom;
+            var skills = new GameSkillEntity[skillIds.Length];
+            skillIds.Foreach((skillId, index) =>
+            {
+                var skill = this._CreateSkill(role, skillId, skillCom);
+                skills[index] = skill;
+            });
+
+            // 提交RC
+            var skillIdArgsList = skills.Map((skill) => skill.idCom.ToArgs());
+            this._context.SubmitRC(GameSkillRCCollection.RC_GAMES_SKILL_TRANSFORM,
+                new GameSkillRCArgs_CharacterTransform { roleIdArgs = role.idCom.ToArgs(), skillIdArgsList = skillIdArgsList }
+            );
+
+            skillCom.CorrectMP();
+            return skills;
         }
 
         public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target, bool ignoreDistance = false)

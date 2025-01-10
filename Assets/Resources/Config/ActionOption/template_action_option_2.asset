@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 2
   quality: 1
-  desc: "\u884C\u4E3A\u9009\u98792 - \u53CB\u519B\u83B7\u5F975%\u7684\u653B\u901F\u52A0\u6210"
+  desc: "\u53CB\u519B\u83B7\u5F975%\u7684\u653B\u901F\u52A0\u6210"
   maxLv: 10
   actionSOs:
   - {fileID: 11400000, guid: c0e424305eff6e14c87493c25107973e, type: 2}

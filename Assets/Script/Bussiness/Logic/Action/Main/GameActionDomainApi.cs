@@ -85,5 +85,12 @@ namespace GamePlay.Bussiness.Logic
         /// actorEntity: 执行者
         /// </summary>
         public void DoAction_SummonRole(GameActionModel_SummonRoles action, GameEntityBase actorEntity);
+
+        /// <summary>
+        /// 执行行为 - 变身
+        /// action: 变身行为
+        /// actor: 执行者
+        /// </summary>
+        public void DoAction_CharacterTransform(GameActionModel_CharacterTransform action, GameEntityBase actor);
     }
 }
