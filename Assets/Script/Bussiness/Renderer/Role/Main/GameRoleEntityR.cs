@@ -60,12 +60,12 @@ namespace GamePlay.Bussiness.Renderer
 
             var animator = bodyCom.body.GetComponentInChildren<Animator>();
             this._animCom = new GamePlayableCom(animator);
+            this.roleTransformCom = new GameRoleTransformComR(this, animator);
 
             this._posEaseCom = new GameEasing2DCom();
             this._posEaseCom.SetEase(0.05f, GameEasingType.Linear);
 
             this.attributeBarCom = new GameRoleAttributeBarCom(this.transform);
-            this.roleTransformCom = new GameRoleTransformComR(this, animator);
         }
 
         public override void Clear()

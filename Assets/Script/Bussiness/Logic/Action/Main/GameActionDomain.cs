@@ -93,6 +93,9 @@ namespace GamePlay.Bussiness.Logic
                 case GameActionModel_SummonRoles summonRolesAction:
                     this.DoAction_SummonRole(summonRolesAction, actor);
                     break;
+                case GameActionModel_CharacterTransform characterTransformAction:
+                    this.DoAction_CharacterTransform(characterTransformAction, actor);
+                    break;
                 default:
                     GameLogger.LogError($"未处理的行为类型：{actionModel.GetType().Name}");
                     break;
@@ -379,8 +382,13 @@ namespace GamePlay.Bussiness.Logic
                     GameLogger.LogError($"变身目标不是角色实体：{targetEntity.idCom.entityId}, 暂不支持");
                     return;
                 }
-                GameLogger.Assert(targetRole != null, "变身行为未找到目标");
-                this._CharacterTransform(actor, targetRole, action, actor, targetRole.model.typeId);
+                if (!actor.TryGetLinkParent<GameRoleEntity>(out var transTarget))
+                {
+                    GameLogger.Assert(targetRole != null, "变身行为未找到目标");
+                    return;
+                }
+
+                this._CharacterTransform(actor, targetRole, action, transTarget, targetRole.model.typeId);
                 return;
             }
 

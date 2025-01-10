@@ -256,8 +256,8 @@ MonoBehaviour:
     roleSO: {fileID: 0}
     attributeList: []
   actionEMR:
-    typeId: 0
-    desc: "\u51FB\u6740\u76EE\u6807\u540E"
+    typeId: 999001030
+    desc: "\u51FB\u6740\u76EE\u6807\u540E, \u53D8\u8EAB\u4E3A\u5BF9\u65B9, \u5E76\u83B7\u5F97\u521D\u59CB\u6EE1\u80FD\u91CF"
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}

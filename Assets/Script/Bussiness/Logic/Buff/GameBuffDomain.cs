@@ -236,7 +236,7 @@ namespace GamePlay.Bussiness.Logic
                 afterLayer = GameMath.Min(afterLayer, maxLayer);
                 buff.layer = afterLayer;
                 var attachLayer = afterLayer - beforeLayer;
-                GameLogger.DebugLog($"Buff[{buff.model.typeId}] 层数变化: {beforeLayer} -> {afterLayer}");
+                GameLogger.DebugLog($"实体: {buff.target.idCom} Buff[{buff.model.typeId}] 层数变化: {beforeLayer} -> {afterLayer}");
                 return attachLayer;
             }
             return 0;

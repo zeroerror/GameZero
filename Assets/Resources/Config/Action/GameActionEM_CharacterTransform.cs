@@ -15,17 +15,12 @@ namespace GamePlay.Config
 
         public GameActionModel_CharacterTransform ToModel()
         {
-            if (roleSO == null)
-            {
-                GameLogger.LogError($"变身行为未设置角色");
-                return null;
-            }
             var model = new GameActionModel_CharacterTransform(
                 0,
                 this.selectorEM.ToSelector(),
                 this.preconditionSetEM?.ToModel(),
                 this.randomValueOffset,
-                this.roleSO.typeId,
+                this.roleSO?.typeId ?? 0,
                 this.attributeList
             );
             return model;
