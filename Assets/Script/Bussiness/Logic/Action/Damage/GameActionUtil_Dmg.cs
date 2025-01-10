@@ -65,7 +65,7 @@ namespace GamePlay.Bussiness.Logic
             return record;
         }
 
-        public static bool DoDmg(GameEntityBase target, GameActionRecord_Dmg record)
+        public static bool DoDmg(GameEntityBase target, ref GameActionRecord_Dmg record)
         {
             var targetAttrCom = target.attributeCom;
             var curHP = targetAttrCom.GetValue(GameAttributeType.HP);
@@ -76,6 +76,10 @@ namespace GamePlay.Bussiness.Logic
 
             var afterDmgHP = curHP - record.value;
             targetAttrCom.SetAttribute(GameAttributeType.HP, afterDmgHP);
+            if (afterDmgHP <= 0)
+            {
+                record.isKill = true;
+            }
             GameLogger.Log($"目标:{target.idCom} 受到伤害{record.value} ({curHP}=>{afterDmgHP})");
             return true;
         }

@@ -38,76 +38,93 @@ namespace GamePlay.Bussiness.Logic
             // 遍历 - 伤害记录
             this.ForeachActionRecord_Dmg((actionRecord) =>
             {
-                m_check(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Dmg);
+                isSatisfied = _MainCheck(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Dmg);
+                if (!isSatisfied) isSatisfied = this._ExtraCheckDmg(actionRecord.actorIdArgs, actionRecord, actionRecord.targetIdArgs);
             });
             if (isSatisfied) return true;
 
             // 遍历 - 治疗记录
             this.ForeachActionRecord_Heal((actionRecord) =>
             {
-                m_check(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Heal);
+                isSatisfied = _MainCheck(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Heal);
             });
             if (isSatisfied) return true;
 
             // 遍历 - 发射投射物记录
             this.ForeachActionRecord_LaunchProjectile((actionRecord) =>
             {
-                m_check(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.LaunchProjectile);
+                isSatisfied = _MainCheck(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.LaunchProjectile);
             });
 
             return isSatisfied;
+        }
 
-            void m_check(in GameIdArgs actorIdArgs, in GameActionTargeterArgsRecord actionTargeterRecord, in GameIdArgs targetIdArgs, int actionId, GameActionType actionType)
+        private bool _BasicCheck(in GameIdArgs actorIdArgs)
+        {
+            // 行为实体必须是Buff作用目标
+            var actorEntity = this.FindEntity(actorIdArgs.entityType, actorIdArgs.entityId);
+            if (!actorEntity) return false;
+            var actorRoleEntity = actorEntity.GetLinkParent<GameRoleEntity>();
+            if (!actorRoleEntity) return false;
+            var isBuffTargetAct = actorRoleEntity.idCom.entityId == _buff.target.idCom.entityId;
+            if (!isBuffTargetAct) return false;
+            return true;
+        }
+
+        private bool _MainCheck(in GameIdArgs actorIdArgs, in GameActionTargeterArgsRecord actionTargeterRecord, in GameIdArgs targetIdArgs, int actionId, GameActionType actionType)
+        {
+            // 基础检查
+            if (!_BasicCheck(actorIdArgs)) return false;
+            // 指定行为Id
+            if (actionId == model.targetActionId)
             {
-                // 已满足条件, 不再检查
-                if (isSatisfied) return;
-
-                var actorEntity = this.FindEntity(actorIdArgs.entityType, actorIdArgs.entityId);
-                if (!actorEntity) return;
-                var actorRoleEntity = actorEntity.GetLinkParent<GameRoleEntity>();
-                if (!actorRoleEntity) return;
-
-                // 行为实体必须是Buff作用目标
-                var isBuffTargetAct = actorRoleEntity.idCom.entityId == _buff.target.idCom.entityId;
-                if (!isBuffTargetAct) return;
-
-                // 指定行为Id
-                if (actionId == model.targetActionId)
-                {
-                    this._actionCount++;
-                }
-                // 指定行为类型
-                if (actionType == model.targetActionType)
-                {
-                    // 跳过buff自身造成的行为, 避免嵌套 
-                    var isSelfBuffAct = this._buff.IsEquals(actorEntity);
-                    if (!isSelfBuffAct)
-                    {
-                        this._actionCount++;
-                    }
-                }
-
-                // 窗口期时间开始
-                if (this._actionCount == 1)
-                {
-                    this._elapsedWindowTime = 0f;
-                }
-
-                // TODO: 应该记录一个list, 因为可能有多个行为满足条件, 都需要对其处理
-                // 满足时, 同步目标选取器到buff 
-                isSatisfied = this._actionCount >= model.actionCount;
-                if (isSatisfied)
-                {
-                    var targetEntity = this.FindEntity(targetIdArgs.entityType, targetIdArgs.entityId);
-                    var targeter = new GameActionTargeterArgs(
-                        targetEntity,
-                        actionTargeterRecord.targetPosition,
-                        actionTargeterRecord.targetDirection
-                    );
-                    this._buff.actionTargeterCom.SetTargeter(targeter);
-                    this._actionCount = 0;
-                }
+                this._actionCount++;
             }
+            // 指定行为类型
+            if (actionType == model.targetActionType)
+            {
+                this._actionCount++;
+            }
+            return this._CheckSatisfy(actionTargeterRecord, targetIdArgs);
+        }
+
+        private bool _ExtraCheckDmg(in GameIdArgs actorIdArgs, GameActionRecord_Dmg record, in GameIdArgs targetIdArgs)
+        {
+            // 基础检查
+            if (!this._BasicCheck(actorIdArgs)) return false;
+            // 非击杀行为, 不做判定
+            if (this.model.targetActionType != GameActionType.Kill) return false;
+            // 跳过非击杀行为
+            if (!record.isKill) return false;
+            // 判定为击杀行为, 计数
+            this._actionCount++;
+            // 检查满足条件
+            return this._CheckSatisfy(record.actionTargeter, targetIdArgs);
+        }
+
+        private bool _CheckSatisfy(in GameActionTargeterArgsRecord actionTargeterRecord, in GameIdArgs targetIdArgs)
+        {
+            // 窗口期时间开始
+            if (this._actionCount == 1)
+            {
+                this._elapsedWindowTime = 0f;
+            }
+            // TODO: 应该记录一个list, 因为可能有多个行为满足条件, 都需要对其处理
+            // 满足时, 同步目标选取器到buff 
+            var isSatisfied = this._actionCount >= model.actionCount;
+            if (isSatisfied)
+            {
+                var targetEntity = this.FindEntity(targetIdArgs.entityType, targetIdArgs.entityId);
+                var targeter = new GameActionTargeterArgs(
+                    targetEntity,
+                    actionTargeterRecord.targetPosition,
+                    actionTargeterRecord.targetDirection
+                );
+                this._buff.actionTargeterCom.SetTargeter(targeter);
+                this._actionCount = 0;
+            }
+
+            return isSatisfied;
         }
 
         public override void Clear()

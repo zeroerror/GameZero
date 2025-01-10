@@ -263,8 +263,8 @@ MonoBehaviour:
     typeId: 0
     desc: "\u53D8\u8EAB\u4E3A\u5BF9\u65B9, \u5E76\u83B7\u5F97\u521D\u59CB\u6EE1\u80FD\u91CF"
     actEffectPrefab: {fileID: 1558332597376287026, guid: 969e7cb4ce441084e9e1aa0fadfed26b, type: 3}
-    actVFXScale: {x: 1, y: 1}
-    actVFXOffset: {x: 0, y: 0}
+    actVFXScale: {x: 2, y: 2}
+    actVFXOffset: {x: 0, y: 1}
     actCamShakeModel:
       angle: 0
       amplitude: 0

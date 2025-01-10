@@ -153,7 +153,7 @@ namespace GamePlay.Bussiness.Logic
                 this._context.cmdBufferService.AddDelayCmd(0, () =>
                 {
                     // 执行
-                    var isSuc = GameActionUtil_Dmg.DoDmg(selectedEntity, record);
+                    var isSuc = GameActionUtil_Dmg.DoDmg(selectedEntity, ref record);
                     if (!isSuc) return;
                     // 记录
                     this._actionContext.dmgRecordList.Add(record);

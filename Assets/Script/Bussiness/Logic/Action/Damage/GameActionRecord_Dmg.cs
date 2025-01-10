@@ -17,6 +17,8 @@ namespace GamePlay.Bussiness.Logic
         public GameActionDmgType dmgType;
         /// <summary> 伤害数值 </summary>
         public float value;
+        /// <summary> 是否为击杀 </summary>
+        public bool isKill;
 
         public GameActionRecord_Dmg(
             int actionId,
@@ -25,8 +27,8 @@ namespace GamePlay.Bussiness.Logic
             in GameIdArgs targetRoleIdArgs,
             in GameActionTargeterArgsRecord actionTargeter,
             GameActionDmgType dmgType,
-            float value
-        )
+            float value,
+            bool isKill = false)
         {
             this.actionId = actionId;
             this.actorRoleIdArgs = actorRoleIdArgs;
@@ -35,6 +37,7 @@ namespace GamePlay.Bussiness.Logic
             this.actionTargeter = actionTargeter;
             this.dmgType = dmgType;
             this.value = value;
+            this.isKill = isKill;
         }
     }
 }

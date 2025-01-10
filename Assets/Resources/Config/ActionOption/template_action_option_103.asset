@@ -17,4 +17,4 @@ MonoBehaviour:
   desc: "\u6B7B\u4EA1\u6D41\u6D3E - \u89D2\u8272\u626E\u6F14"
   maxLv: 10
   actionSOs:
-  - {fileID: 11400000, guid: 9ee73b2dbccf93643b6d82650b920877, type: 2}
+  - {fileID: 11400000, guid: 3d58783a71ca2c041a7dbf1541622a93, type: 2}
