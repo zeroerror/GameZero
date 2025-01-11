@@ -28,5 +28,12 @@ namespace GamePlay.Bussiness.Logic
         /// <para>target: 目标</para>
         /// </summary>
         public void DetachAllBuff(GameEntityBase target);
+
+        /// <summary>
+        /// 转移buff组件内容, 包括buff列表, 以及buff作用的目标
+        /// <para> 参考的buff组件 </para>
+        /// <para> 目标角色 </para>
+        /// </summary>
+        public void TranserBuffCom(GameBuffCom refBuffCom, GameRoleEntity targetRole);
     }
 }

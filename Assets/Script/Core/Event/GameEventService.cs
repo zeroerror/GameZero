@@ -10,7 +10,7 @@ namespace GamePlay.Core
     public class GameEventService
     {
         Dictionary<string, List<System.Action<object>>> _listeners = new();
-        Dictionary<string, List<GameEventSubmit>> _submitLists = new();
+        List<GameEventSubmit> _submitList = new();
 
         public void Submit(string name, object args)
         {
@@ -22,8 +22,7 @@ namespace GamePlay.Core
         }
         public void Submit(in GameEventSubmit submit)
         {
-            if (!_submitLists.ContainsKey(submit.name)) _submitLists[submit.name] = new List<GameEventSubmit>();
-            _submitLists[submit.name].Add(submit);
+            _submitList.Add(submit);
         }
 
         public void Bind(string name, System.Action<object> callback)
@@ -41,22 +40,17 @@ namespace GamePlay.Core
 
         public void Tick()
         {
-            foreach (var kv in _submitLists)
+            var count = _submitList.Count;
+            for (var i = 0; i < count; i++)
             {
-                var name = kv.Key;
-                var list = kv.Value;
-                var count = list.Count;
-                for (int i = 0; i < count; i++)
+                var submit = _submitList[i];
+                if (!_listeners.ContainsKey(submit.name)) continue;
+                foreach (var listener in _listeners[submit.name])
                 {
-                    var submit = list[i];
-                    if (!_listeners.ContainsKey(name)) continue;
-                    foreach (var listener in _listeners[name])
-                    {
-                        listener(submit.args);
-                    }
+                    listener(submit.args);
                 }
-                list.RemoveRange(0, count);
             }
+            _submitList.RemoveRange(0, count);
         }
     }
 

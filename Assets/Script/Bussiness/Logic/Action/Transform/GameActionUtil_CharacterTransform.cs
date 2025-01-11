@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Core;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -39,25 +40,25 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary>
         /// 执行变身
-        /// <para name="target"> 目标 </para>
-        /// <para name="record"> 属性记录 </para>
+        /// <para>oldRole 变身前角色</para>
+        /// <para>newRole 变身后角色</para>
         /// </summary>
-        public static void DoCharacterTransform(GameEntityBase target, GameActionRecord_CharacterTransform record)
+        public static void DoCharacterTransform(GameEntityBase oldRole, GameEntityBase newRole, in GameActionRecord_CharacterTransform record)
         {
+            GameLogger.Log($"目标:{oldRole.idCom} 变身 => {newRole.idCom}");
+            var oldAttrCom = oldRole.attributeCom;
+            var newAttrCom = newRole.attributeCom;
+            newAttrCom.CopyFrom(oldAttrCom);
+
             var transAttributes = record.transAttributes;
-            if (transAttributes == null || transAttributes.Length == 0)
+            if (transAttributes != null && transAttributes.HasData())
             {
-                return;
+                transAttributes?.Foreach(attr =>
+                {
+                    newAttrCom.SetAttribute(attr);
+                    GameLogger.Log($"特殊属性变化: {attr}");
+                });
             }
-            GameLogger.Log($"目标:{target.idCom} 变身");
-            transAttributes?.Foreach(attr =>
-            {
-                var targetAttrCom = target.attributeCom;
-                var curValue = targetAttrCom.GetValue(attr.type);
-                var afterValue = curValue + attr.value;
-                targetAttrCom.SetAttribute(attr.type, afterValue);
-                GameLogger.Log($"属性:{attr.type} 当前值:{curValue} 变身后:{afterValue}");
-            });
         }
     }
 }

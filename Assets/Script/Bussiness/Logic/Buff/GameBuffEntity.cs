@@ -1,5 +1,3 @@
-using UnityEngine.Analytics;
-
 namespace GamePlay.Bussiness.Logic
 {
     public class GameBuffEntity : GameEntityBase

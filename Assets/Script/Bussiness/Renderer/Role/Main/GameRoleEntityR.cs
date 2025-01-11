@@ -91,6 +91,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.bodyCom.root.SetActive(active);
             this.bodyCom.shadow.SetActive(active);
+            this.attributeBarCom.SetActive(active);
         }
 
         public void FaceToDir(in GameVec2 dir)

@@ -17,6 +17,11 @@ namespace GamePlay.Bussiness.Logic
             this._attributes.Clear();
         }
 
+        public void CopyFrom(GameAttributeCom com)
+        {
+            this._attributes = new List<GameAttribute>(com._attributes);
+        }
+
         public override string ToString()
         {
             var str = "";

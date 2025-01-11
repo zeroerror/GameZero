@@ -40,14 +40,71 @@ namespace GamePlay.Bussiness.Logic
             this._context.domainApi.physicsApi.RemovePhysics(role);
         }
 
-        private GameRoleEntity _LoadRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser, int customEntityId = -1)
+        public GameRoleEntity GetUserRole()
+        {
+            return this._roleContext.userRole;
+        }
+
+        public bool TryGetPlayerInputArgs(int entityId, out GameRoleInputArgs inputArgs)
+        {
+            return this._roleContext.playerInputArgs.TryGetValue(entityId, out inputArgs);
+        }
+
+        public void SetPlayerInputArgs(int entityId, in GameRoleInputArgs inputArgs)
+        {
+            if (!this._roleContext.playerInputArgs.TryGetValue(entityId, out var oldInputArgs))
+            {
+                this._roleContext.playerInputArgs[entityId] = inputArgs;
+                return;
+            }
+            oldInputArgs.Update(inputArgs);
+            this._roleContext.playerInputArgs[entityId] = oldInputArgs;
+        }
+
+        public void SetUserPlayerInputArgs(in GameRoleInputArgs inputArgs)
+        {
+            var entityId = this._roleContext.userRole.idCom.entityId;
+            this.SetPlayerInputArgs(entityId, inputArgs);
+        }
+
+        public GameRoleEntity CreatePlayerRole(int typeId, in GameTransformArgs transArgs, bool isUser)
+        {
+            var role = this.CreateRole(typeId, GameRoleCollection.PLAYER_ROLE_CAMP_ID, transArgs, isUser);
+            if (isUser && this._roleContext.userRole == null) this._roleContext.userRole = role;
+            return role;
+        }
+
+        public GameRoleEntity CreateMonsterRole(int typeId, in GameTransformArgs transArgs)
+        {
+            var role = this.CreateRole(typeId, GameRoleCollection.MONSTER_ROLE_CAMP_ID, transArgs, false);
+            return role;
+        }
+
+        public GameRoleEntity CreateRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser)
+        {
+            var role = this._LoadRole(typeId, campId, transArgs);
+            this._roleContext.repo.TryAdd(role);
+
+            // 提交RC事件
+            this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, new GameRoleRCArgs_Create
+            {
+                idArgs = role.idCom.ToArgs(),
+                transArgs = role.transformCom.ToArgs(),
+                isUser = isUser,
+                isEnemy = campId != GameRoleCollection.PLAYER_ROLE_CAMP_ID
+            });
+
+            // 其余领域的初始化逻辑
+            this._InitByOtherDomains(role);
+            return role;
+        }
+
+        private GameRoleEntity _LoadRole(int typeId, int campId, in GameTransformArgs transArgs)
         {
             var repo = this._roleContext.repo;
-            var isNew = false;
             if (!repo.TryFetch(typeId, out var role))
             {
                 role = this._roleContext.factory.Load(typeId);
-                isNew = true;
             }
             if (role == null)
             {
@@ -67,58 +124,25 @@ namespace GamePlay.Bussiness.Logic
                 role.transformCom.angle = 0;
             }
             // ID组件
-            if (customEntityId == -1) role.idCom.entityId = this._roleContext.idService.FetchId();
-            else role.idCom.entityId = customEntityId;
+            role.idCom.entityId = this._roleContext.idService.FetchId();
             role.idCom.campId = campId;
+            return role;
+        }
 
-            if (isNew)
+        private void _InitByOtherDomains(GameRoleEntity role)
+        {
+            // 物理组件
+            var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0.625f), 0, 0.7f, 1.25f);
+            this._context.domainApi.physicsApi.CreatePhysics(role, colliderModel, false);
+            role.physicsCom.collider.isTrigger = false;
+            // 技能组件
+            role.model.skillIds?.Foreach((skillId, index) =>
             {
-                // 物理组件
-                var colliderModel = new GameBoxColliderModel(new GameVec2(0, 0.625f), 0, 0.7f, 1.25f);
-                this._context.domainApi.physicsApi.CreatePhysics(role, colliderModel, false);
-                role.physicsCom.collider.isTrigger = false;
-                // 技能组件
-                role.model.skillIds?.Foreach((skillId, index) =>
-                {
-                    this._context.domainApi.skillApi.CreateSkill(role, skillId);
-                });
-            }
-
-            // 提交RC事件
-            this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, new GameRoleRCArgs_Create
-            {
-                idArgs = role.idCom.ToArgs(),
-                transArgs = role.transformCom.ToArgs(),
-                isUser = isUser
+                this._context.domainApi.skillApi.CreateSkill(role, skillId);
             });
-
             // 默认进入待机
             this.fsmDomain.TryEnter(role, GameRoleStateType.Idle);
             this.roleAIDomain.TryEnter(role, GameRoleAIStateType.Idle);
-
-            return role;
-        }
-
-        public GameRoleEntity CreateRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser)
-        {
-            var role = this._LoadRole(typeId, campId, transArgs, isUser);
-            this._roleContext.repo.TryAdd(role);
-            return role;
-        }
-
-        public GameRoleEntity CreatePlayerRole(int typeId, in GameTransformArgs transArgs, bool isUser)
-        {
-            var role = this._LoadRole(typeId, GameRoleCollection.PLAYER_ROLE_CAMP_ID, transArgs, isUser);
-            this._roleContext.repo.TryAdd(role);
-            if (this._roleContext.userRole == null) this._roleContext.userRole = role;
-            return role;
-        }
-
-        public GameRoleEntity CreateMonsterRole(int typeId, in GameTransformArgs transArgs)
-        {
-            var role = this.CreateRole(typeId, GameRoleCollection.MONSTER_ROLE_CAMP_ID, transArgs, false);
-            this._roleContext.repo.TryAdd(role);
-            return role;
         }
 
         public void Tick(float dt)
@@ -185,34 +209,7 @@ namespace GamePlay.Bussiness.Logic
             return this.SummonRoles(summoner, model.roleId, model.campType, model.count, transArgs);
         }
 
-        public GameRoleEntity GetUserRole()
-        {
-            return this._roleContext.userRole;
-        }
-
-        public bool TryGetPlayerInputArgs(int entityId, out GameRoleInputArgs inputArgs)
-        {
-            return this._roleContext.playerInputArgs.TryGetValue(entityId, out inputArgs);
-        }
-
-        public void SetPlayerInputArgs(int entityId, in GameRoleInputArgs inputArgs)
-        {
-            if (!this._roleContext.playerInputArgs.TryGetValue(entityId, out var oldInputArgs))
-            {
-                this._roleContext.playerInputArgs[entityId] = inputArgs;
-                return;
-            }
-            oldInputArgs.Update(inputArgs);
-            this._roleContext.playerInputArgs[entityId] = oldInputArgs;
-        }
-
-        public void SetUserPlayerInputArgs(in GameRoleInputArgs inputArgs)
-        {
-            var entityId = this._roleContext.userRole.idCom.entityId;
-            this.SetPlayerInputArgs(entityId, inputArgs);
-        }
-
-        public void TransformRole(GameRoleEntity role, int transToRoleId)
+        public void TransformRole(GameRoleEntity role, int transToRoleId, in GameActionRecord_CharacterTransform record)
         {
             if (!this._roleContext.factory.template.TryGet(transToRoleId, out var model))
             {
@@ -220,8 +217,10 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 创建变身角色
+            var newRole = this._LoadRole(transToRoleId, role.idCom.campId, role.transformCom.ToArgs());
+            newRole.idCom.entityId = role.idCom.entityId;
             var isUser = role == this._roleContext.userRole;
-            var newRole = this._LoadRole(transToRoleId, role.idCom.campId, role.transformCom.ToArgs(), isUser, role.idCom.entityId);
+            if (isUser) this._roleContext.userRole = newRole;
 
             // 将新角色替换就旧的角色, 若未处于变身状态, 将oldRole记录在变身角色仓库
             var oldRole = this._roleContext.repo.Replace(newRole);
@@ -235,6 +234,20 @@ namespace GamePlay.Bussiness.Logic
             {
                 idArgs = newRole.idCom.ToArgs(),
             });
+
+            // 其余领域的初始化逻辑
+            this._InitByOtherDomains(newRole);
+
+            // 转移buff
+            this._context.domainApi.buffApi.TranserBuffCom(oldRole.buffCom, newRole);
+
+            // 变身后的属性变化
+            GameActionUtil_CharacterTransform.DoCharacterTransform(oldRole, newRole, record);
+
+            // 旧的角色先设置为invalid
+            oldRole.SetInvalid();
+            var collider = oldRole.physicsCom.collider;
+            if (collider != null) collider.isEnable = false;
         }
     }
 }

@@ -428,8 +428,7 @@ namespace GamePlay.Bussiness.Logic
             this._context.cmdBufferService.AddDelayCmd(0, () =>
             {
                 // 执行
-                GameActionUtil_CharacterTransform.DoCharacterTransform(transTargetRole, record);
-                this._context.domainApi.roleApi.TransformRole(transTargetRole, transToRoleId);
+                this._context.domainApi.roleApi.TransformRole(transTargetRole, transToRoleId, record);
                 // 记录
                 this._actionContext.transformRecordList.Add(record);
                 // 提交RC 

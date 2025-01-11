@@ -4,32 +4,32 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameBuffCom
     {
-        private List<GameBuffEntity> _buffList;
+        public List<GameBuffEntity> buffList { get; private set; }
 
         public GameBuffCom()
         {
-            this._buffList = new List<GameBuffEntity>();
+            this.buffList = new List<GameBuffEntity>();
         }
 
         public void Clear()
         {
-            this._buffList.Clear();
+            this.buffList.Clear();
         }
 
         public bool HasBuff(int buffId)
         {
-            return this._buffList.Exists(buff => buff.model.typeId == buffId);
+            return this.buffList.Exists(buff => buff.model.typeId == buffId);
         }
 
         public bool TryGet(int buffId, out GameBuffEntity buff)
         {
-            buff = this._buffList.Find(b => b.model.typeId == buffId);
+            buff = this.buffList.Find(b => b.model.typeId == buffId);
             return buff != null;
         }
 
         public GameBuffEntity Get(int buffId)
         {
-            return this._buffList.Find(b => b.model.typeId == buffId);
+            return this.buffList.Find(b => b.model.typeId == buffId);
         }
 
         public void Add(GameBuffEntity buff)
@@ -39,22 +39,22 @@ namespace GamePlay.Bussiness.Logic
                 GameLogger.LogError("Buff已存在，无法重复添加：" + buff.model.typeId);
                 return;
             }
-            this._buffList.Add(buff);
+            this.buffList.Add(buff);
         }
 
         public bool Remove(GameBuffEntity buff)
         {
-            return this._buffList.Remove(buff);
+            return this.buffList.Remove(buff);
         }
 
         public void Foreach(System.Action<GameBuffEntity> action)
         {
-            this._buffList.Foreach(action);
+            this.buffList.Foreach(action);
         }
 
         public List<GameBuffEntity> GetBuffList()
         {
-            return this._buffList?.ToList();
+            return this.buffList?.ToList();
         }
     }
 }

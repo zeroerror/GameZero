@@ -46,6 +46,11 @@ namespace GamePlay.Bussiness.Logic
         public void CreatePhysics(GameEntityBase entity, GameColliderModelBase colliderModel, bool isTrigger)
         {
             var physicsCom = entity.physicsCom;
+            if (physicsCom.collider != null)
+            {
+                return;
+            }
+
             var id = _physicsContext.idService.FetchId();
             GameColliderBase collider = null;
             switch (colliderModel)

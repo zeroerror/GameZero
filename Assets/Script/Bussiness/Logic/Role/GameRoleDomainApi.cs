@@ -80,7 +80,8 @@ namespace GamePlay.Bussiness.Logic
         /// 变换角色
         /// <para>role: 角色</para>
         /// <para>transRoleId: 变换角色Id</para>
+        /// <para>record: 变换记录</para>
         /// </summary>
-        public void TransformRole(GameRoleEntity role, int transRoleId);
+        public void TransformRole(GameRoleEntity role, int transRoleId, in GameActionRecord_CharacterTransform record);
     }
 }

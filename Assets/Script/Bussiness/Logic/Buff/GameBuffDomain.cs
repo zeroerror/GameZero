@@ -349,5 +349,18 @@ namespace GamePlay.Bussiness.Logic
                 GameLogger.DebugLog($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
             });
         }
+
+        public void TranserBuffCom(GameBuffCom refBuffCom, GameRoleEntity targetRole)
+        {
+            var buffList = targetRole.buffCom.buffList;
+            buffList.Clear();
+            buffList.AddRange(refBuffCom.buffList);
+            buffList.Foreach(buff =>
+            {
+                buff.target = targetRole;
+            });
+            refBuffCom.buffList.Clear();
+        }
+
     }
 }

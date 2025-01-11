@@ -166,12 +166,14 @@ namespace GamePlay.Bussiness.Renderer
             // 转移buff特效的挂载节点
             buffList.Foreach((buff) =>
             {
-                var newPlayArgs = buff.vfxEntity.playArgs;
+                var vfxEntity = buff.vfxEntity;
+                if (vfxEntity == null) return;
+                var newPlayArgs = vfxEntity.playArgs;
                 if (newPlayArgs.attachNode)
                 {
                     newPlayArgs.attachNode = targetRole.bodyCom.root;
                 }
-                buff.vfxEntity.SetPlayArgs(newPlayArgs);
+                vfxEntity.SetPlayArgs(newPlayArgs);
             });
         }
     }

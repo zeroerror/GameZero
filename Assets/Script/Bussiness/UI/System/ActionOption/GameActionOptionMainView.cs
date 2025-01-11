@@ -20,6 +20,9 @@ namespace GamePlay.Bussiness.UI
         protected override void _OnInit()
         {
             this.viewBinder = new GameActionOptionMainViewBinder(this.go);
+
+            this.domainApi.logicApi.directApi.SetTimeScale(0.01f);
+            this.domainApi.rendererApi.directApi.SetTimeScale(0.01f);
         }
 
         protected override void _OnShow()
@@ -54,6 +57,8 @@ namespace GamePlay.Bussiness.UI
             var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
             this.domainApi.logicApi.actionApi.DoActionOption(option.typeId, playerCampId);
             this._Close();
+            this.domainApi.logicApi.directApi.SetTimeScale(1);
+            this.domainApi.rendererApi.directApi.SetTimeScale(1);
         }
 
         private List<GameActionOptionModel> _getRandomActionOptions(int count)

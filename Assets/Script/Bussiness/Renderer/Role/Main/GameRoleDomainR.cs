@@ -154,6 +154,9 @@ namespace GamePlay.Bussiness.Renderer
 
             // 转移buff
             this._context.domainApi.buffApi.TranserBuffCom(oldRole.buffCom, newRole);
+
+            // 隐藏旧角色
+            oldRole.setActive(false);
         }
 
         /// <summary>
