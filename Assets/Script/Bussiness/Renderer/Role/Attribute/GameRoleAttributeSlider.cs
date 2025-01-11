@@ -69,6 +69,10 @@ namespace GamePlay.Bussiness.Renderer
         public void SetRatio(float ratio)
         {
             if (!this.slider) return;
+            if (ratio > 1 || ratio < 0 || float.IsNaN(ratio))
+            {
+                return;
+            }
             if (this.slider.value == ratio) return;
             this.slider.value = ratio;
         }
