@@ -88,31 +88,6 @@ namespace GamePlay.Bussiness.Logic
             return skill;
         }
 
-        public GameSkillEntity[] CreateTransformSkill(GameRoleEntity role, int[] skillIds)
-        {
-            if (!skillIds.HasData())
-            {
-                return null;
-            }
-
-            var skillCom = role.characterTransformCom.skillCom;
-            var skills = new GameSkillEntity[skillIds.Length];
-            skillIds.Foreach((skillId, index) =>
-            {
-                var skill = this._CreateSkill(role, skillId, skillCom);
-                skills[index] = skill;
-            });
-
-            // 提交RC
-            var skillIdArgsList = skills.Map((skill) => skill.idCom.ToArgs());
-            this._context.SubmitRC(GameSkillRCCollection.RC_GAMES_SKILL_TRANSFORM,
-                new GameSkillRCArgs_CharacterTransform { roleIdArgs = role.idCom.ToArgs(), skillIdArgsList = skillIdArgsList }
-            );
-
-            skillCom.CorrectMP();
-            return skills;
-        }
-
         public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target, bool ignoreDistanceCondition = false)
         {
             var conditionModel = skill.skillModel.conditionModel;

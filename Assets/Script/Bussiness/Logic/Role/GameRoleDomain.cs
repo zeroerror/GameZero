@@ -40,8 +40,7 @@ namespace GamePlay.Bussiness.Logic
             this._context.domainApi.physicsApi.RemovePhysics(role);
         }
 
-
-        public GameRoleEntity CreateRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser)
+        private GameRoleEntity _LoadRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser, int customEntityId = -1)
         {
             var repo = this._roleContext.repo;
             var isNew = false;
@@ -68,7 +67,8 @@ namespace GamePlay.Bussiness.Logic
                 role.transformCom.angle = 0;
             }
             // ID组件
-            role.idCom.entityId = this._roleContext.idService.FetchId();
+            if (customEntityId == -1) role.idCom.entityId = this._roleContext.idService.FetchId();
+            else role.idCom.entityId = customEntityId;
             role.idCom.campId = campId;
 
             if (isNew)
@@ -83,8 +83,6 @@ namespace GamePlay.Bussiness.Logic
                     this._context.domainApi.skillApi.CreateSkill(role, skillId);
                 });
             }
-
-            repo.TryAdd(role);
 
             // 提交RC事件
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, new GameRoleRCArgs_Create
@@ -101,17 +99,26 @@ namespace GamePlay.Bussiness.Logic
             return role;
         }
 
+        public GameRoleEntity CreateRole(int typeId, int campId, in GameTransformArgs transArgs, bool isUser)
+        {
+            var role = this._LoadRole(typeId, campId, transArgs, isUser);
+            this._roleContext.repo.TryAdd(role);
+            return role;
+        }
+
         public GameRoleEntity CreatePlayerRole(int typeId, in GameTransformArgs transArgs, bool isUser)
         {
-            var e = this.CreateRole(typeId, GameRoleCollection.PLAYER_ROLE_CAMP_ID, transArgs, isUser);
-            if (this._roleContext.userRole == null) this._roleContext.userRole = e;
-            return e;
+            var role = this._LoadRole(typeId, GameRoleCollection.PLAYER_ROLE_CAMP_ID, transArgs, isUser);
+            this._roleContext.repo.TryAdd(role);
+            if (this._roleContext.userRole == null) this._roleContext.userRole = role;
+            return role;
         }
 
         public GameRoleEntity CreateMonsterRole(int typeId, in GameTransformArgs transArgs)
         {
-            var e = this.CreateRole(typeId, GameRoleCollection.MONSTER_ROLE_CAMP_ID, transArgs, false);
-            return e;
+            var role = this.CreateRole(typeId, GameRoleCollection.MONSTER_ROLE_CAMP_ID, transArgs, false);
+            this._roleContext.repo.TryAdd(role);
+            return role;
         }
 
         public void Tick(float dt)
@@ -212,27 +219,22 @@ namespace GamePlay.Bussiness.Logic
                 GameLogger.LogError("变身失败, 模板不存在: " + transToRoleId);
             }
 
-            // 变身前默认结束变身
-            role.characterTransformCom.EndTransform();
+            // 创建变身角色
+            var isUser = role == this._roleContext.userRole;
+            var newRole = this._LoadRole(transToRoleId, role.idCom.campId, role.transformCom.ToArgs(), isUser, role.idCom.entityId);
 
-            // 变身后的技能
-            this._context.domainApi.skillApi.CreateTransformSkill(role, model.skillIds);
-
-            // 变身
-            role.characterTransformCom.StartTransform(model);
+            // 将新角色替换就旧的角色, 若未处于变身状态, 将oldRole记录在变身角色仓库
+            var oldRole = this._roleContext.repo.Replace(newRole);
+            if (!this._roleContext.transfromRepo.TryFindByEntityId(role.idCom.entityId, out var _))
+            {
+                this._roleContext.transfromRepo.TryAdd(oldRole);
+            }
 
             // 提交RC事件
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_TRANSFORM, new GameRoleRCArgs_CharacterTransform
             {
-                idArgs = role.idCom.ToArgs(),
-                transToRoleId = transToRoleId
+                idArgs = newRole.idCom.ToArgs(),
             });
-        }
-
-        public void EndTransformRole(GameRoleEntity role)
-        {
-            role.characterTransformCom.EndTransform();
-            role.skillCom.CorrectMP();
         }
     }
 }

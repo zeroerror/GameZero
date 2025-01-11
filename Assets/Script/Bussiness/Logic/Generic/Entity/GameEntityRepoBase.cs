@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using GamePlay.Core;
-using UnityEngine.SocialPlatforms.Impl;
 
 namespace GamePlay.Bussiness.Logic
 {

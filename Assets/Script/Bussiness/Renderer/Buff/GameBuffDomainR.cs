@@ -157,5 +157,22 @@ namespace GamePlay.Bussiness.Renderer
             return this._buffContext.factory.template.GetBuffModelList();
         }
 
+        public void TranserBuffCom(GameBuffComR refBuffCom, GameRoleEntityR targetRole)
+        {
+            var buffList = targetRole.buffCom.buffList;
+            buffList.Clear();
+            buffList.AddRange(refBuffCom.buffList);
+            refBuffCom.buffList.Clear();
+            // 转移buff特效的挂载节点
+            buffList.Foreach((buff) =>
+            {
+                var newPlayArgs = buff.vfxEntity.playArgs;
+                if (newPlayArgs.attachNode)
+                {
+                    newPlayArgs.attachNode = targetRole.bodyCom.root;
+                }
+                buff.vfxEntity.SetPlayArgs(newPlayArgs);
+            });
+        }
     }
 }

@@ -41,14 +41,14 @@ namespace GamePlay.Bussiness.Renderer
         private void _BindEvents()
         {
             this._context.BindRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
-            this._context.BindRC(GameRoleRCCollection.RC_GAME_ROLE_TRANSFORM, this._OnRoleTransform);
+            this._context.BindRC(GameRoleRCCollection.RC_GAME_ROLE_TRANSFORM, this._OnTransformRole);
             this.fsmDomain.BindEvents();
         }
 
         private void _UnbindEvents()
         {
             this._context.UnbindRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
-            this._context.UnbindRC(GameRoleRCCollection.RC_GAME_ROLE_TRANSFORM, this._OnRoleTransform);
+            this._context.UnbindRC(GameRoleRCCollection.RC_GAME_ROLE_TRANSFORM, this._OnTransformRole);
             this.fsmDomain.UnbindEvents();
         }
 
@@ -60,10 +60,10 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
             var evArgs = (GameRoleRCArgs_Create)args;
-            this._Create(evArgs.idArgs, evArgs.transArgs, evArgs.isUser);
+            this._CreateRole(evArgs.idArgs, evArgs.transArgs, evArgs.isUser);
         }
 
-        private GameRoleEntityR _Create(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
+        private GameRoleEntityR _LoadRole(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
         {
             var repo = this._roleContext.repo;
             if (!repo.TryFetch(idArgs.typeId, out var role))
@@ -82,7 +82,6 @@ namespace GamePlay.Bussiness.Renderer
             role.bodyCom.root.name = $"role_{idArgs.typeId}_{role.idCom.entityId}";
             role.transformCom.SetByArgs(transArgs);
             role.SyncTrans();
-            this._roleContext.repo.TryAdd(role);
             role.setActive(true);
             if (isUser)
             {
@@ -108,11 +107,17 @@ namespace GamePlay.Bussiness.Renderer
                 attributeBarCom.mpSlider.SetSlider(mpSlider, new Vector2(0, 135));
                 attributeBarCom.mpSlider.SetSize(new Vector2(150, 15));
             }
-
             return role;
         }
 
-        private void _OnRoleTransform(object args)
+        private GameRoleEntityR _CreateRole(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
+        {
+            var role = this._LoadRole(idArgs, transArgs, isUser);
+            this._roleContext.repo.TryAdd(role);
+            return role;
+        }
+
+        private void _OnTransformRole(object args)
         {
             if (this._context.fieldContext.curField == null)
             {
@@ -120,42 +125,35 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
             var evArgs = (GameRoleRCArgs_CharacterTransform)args;
-            this._CharacterTransform(evArgs.idArgs, evArgs.transToRoleId);
+            this._TransformRole(evArgs.idArgs);
         }
 
-        private void _CharacterTransform(in GameIdArgs idArgs, int transToRoleId)
+        private void _TransformRole(in GameIdArgs idArgs)
         {
-            if (!this._roleContext.repo.TryFindByEntityId(idArgs.entityId, out var transTarget))
+            if (!this._roleContext.repo.TryFindByEntityId(idArgs.entityId, out var role))
             {
-                GameLogger.LogError("GameRoleDomainR._CharacterTransform: 受变身角色不存在: " + idArgs.entityId);
+                GameLogger.LogError("变身失败, 受变身角色不存在: " + idArgs.entityId);
                 return;
             }
 
+            var transToRoleId = idArgs.typeId;
             if (!this._roleContext.factory.template.TryGet(transToRoleId, out var model))
             {
-                GameLogger.LogError("GameRoleDomainR._CharacterTransform: 变身模板不存在: " + transToRoleId);
-                return;
+                GameLogger.LogError("变身失败, 模板不存在: " + transToRoleId);
             }
 
-            // 变身前默认结束变身
-            transTarget.characterTransformCom.EndTransform();
-            // 变身
-            var bodyCom = this._roleContext.factory.GetBodyCom(model);
-            transTarget.characterTransformCom.StartTransform(model, bodyCom);
+            var isUser = role == this._roleContext.userRole;
+            var newRole = this._LoadRole(idArgs, role.transformCom.ToArgs(), isUser);
 
-            // 更新buff特效的挂载节点
-            transTarget.buffCom.ForeachAllBuffs((buff) =>
+            // 将新角色替换就旧的角色, 若未处于变身状态, 将oldRole记录在变身角色仓库
+            var oldRole = this._roleContext.repo.Replace(newRole);
+            if (!this._roleContext.transfromRepo.TryFindByEntityId(role.idCom.entityId, out var _))
             {
-                var vfxEntity = buff.vfxEntity;
-                if (vfxEntity == null) return;
-                var playArgs = vfxEntity.playArgs;
-                if (!playArgs.attachNode) return;
-                playArgs.attachNode = bodyCom.root;
-                if (playArgs.isAttachParent)
-                {
-                    vfxEntity.SetParent(playArgs.attachNode.transform);
-                }
-            });
+                this._roleContext.transfromRepo.TryAdd(oldRole);
+            }
+
+            // 转移buff
+            this._context.domainApi.buffApi.TranserBuffCom(oldRole.buffCom, newRole);
         }
 
         /// <summary>

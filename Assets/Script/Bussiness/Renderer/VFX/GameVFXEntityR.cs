@@ -14,6 +14,7 @@ namespace GamePlay.Bussiness.Renderer
         private GameObject _body;
 
         public GameVFXPlayArgs playArgs { get; private set; }
+        public void SetPlayArgs(in GameVFXPlayArgs args) => this.playArgs = args;
 
         public GameParticlePlayCom particleCom { get; private set; }
         public GameTimelineCom timelineCom { get; private set; }

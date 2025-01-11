@@ -3,7 +3,6 @@ namespace GamePlay.Bussiness.Logic
     public interface GameSkillDomainApi
     {
         public GameSkillEntity CreateSkill(GameRoleEntity role, int typeId);
-        public GameSkillEntity[] CreateTransformSkill(GameRoleEntity role, int[] skillIds);
 
         /// <summary> 尝试获取技能模型 </summary>
         public bool TryGetModel(int typeId, out GameSkillModel model);

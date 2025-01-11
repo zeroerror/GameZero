@@ -27,13 +27,11 @@ namespace GamePlay.Bussiness.Renderer
         private void _BindEvent()
         {
             this._context.BindRC(GameSkillRCCollection.RC_GAMES_SKILL_CREATE, this._OnSkillCreate);
-            this._context.BindRC(GameSkillRCCollection.RC_GAMES_SKILL_TRANSFORM, this._OnSkillTransform);
         }
 
         private void _UnbindEvents()
         {
             this._context.UnbindRC(GameSkillRCCollection.RC_GAMES_SKILL_CREATE, this._OnSkillCreate);
-            this._context.UnbindRC(GameSkillRCCollection.RC_GAMES_SKILL_TRANSFORM, this._OnSkillTransform);
         }
 
         public void Tick(float dt) { }
@@ -56,14 +54,14 @@ namespace GamePlay.Bussiness.Renderer
         private GameSkillEntityR _CreateSkill(GameRoleEntityR role, in GameIdArgs skillIdArgs, GameSkillComR skillCom)
         {
             var typeId = skillIdArgs.typeId;
-            if (skillCom.TryGet(typeId, out var skill))
+            if (skillCom.TryGet(typeId, out var _))
             {
                 GameLogger.LogError("技能创建失败，技能已存在：" + typeId);
                 return null;
             }
 
             var repo = this._skillContext.repo;
-            if (!repo.TryFetch(skillIdArgs.entityId, out skill)) skill = this._skillContext.factory.Load(typeId);
+            if (!repo.TryFetch(skillIdArgs.entityId, out var skill)) skill = this._skillContext.factory.Load(typeId);
             if (skill == null)
             {
                 GameLogger.LogError("技能创建失败，技能ID不存在：" + typeId);
@@ -82,31 +80,6 @@ namespace GamePlay.Bussiness.Renderer
         {
             var skill = this._CreateSkill(role, skillIdArgs, role.skillCom);
             return skill;
-        }
-
-        public void _OnSkillTransform(object args)
-        {
-            var evArgs = (GameSkillRCArgs_CharacterTransform)args;
-            var roleIdArgs = evArgs.roleIdArgs;
-            // 检查角色异步
-            var role = this._context.roleContext.repo.FindByEntityId(roleIdArgs.entityId);
-            if (role == null)
-            {
-                this._context.DelayRC(GameSkillRCCollection.RC_GAMES_SKILL_TRANSFORM, args);
-                return;
-            }
-            var skillIdArgsList = evArgs.skillIdArgsList;
-            this._CharacterTransformSkill(role, skillIdArgsList);
-        }
-
-        private void _CharacterTransformSkill(GameRoleEntityR role, GameIdArgs[] skillIdArgsList)
-        {
-            var characterTransformCom = role.characterTransformCom;
-            var skillCom = characterTransformCom.skillCom;
-            skillIdArgsList?.Foreach((skillIdArgs, index) =>
-            {
-                this._CreateSkill(role, skillIdArgs, skillCom);
-            });
         }
     }
 }

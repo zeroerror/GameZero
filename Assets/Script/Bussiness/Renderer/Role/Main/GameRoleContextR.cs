@@ -3,8 +3,9 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleContextR
     {
-        public GameRoleRepoR repo => this._repo;
-        GameRoleRepoR _repo;
+        public GameRoleRepoR repo { get; private set; }
+        public GameRoleRepoR transfromRepo { get; private set; }
+
         public GameRoleFactoryR factory => this._factory;
         GameRoleFactoryR _factory;
 
@@ -12,7 +13,8 @@ namespace GamePlay.Bussiness.Renderer
 
         public GameRoleContextR()
         {
-            this._repo = new GameRoleRepoR();
+            this.repo = new GameRoleRepoR();
+            this.transfromRepo = new GameRoleRepoR();
             this._factory = new GameRoleFactoryR();
         }
 

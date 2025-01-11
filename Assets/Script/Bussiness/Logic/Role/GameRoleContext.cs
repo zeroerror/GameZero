@@ -8,6 +8,8 @@ namespace GamePlay.Bussiness.Logic
         public Dictionary<int, GameRoleInputArgs> playerInputArgs { get; private set; }
 
         public GameRoleRepo repo { get; private set; }
+        public GameRoleRepo transfromRepo { get; private set; }
+
         public GameRoleFactory factory { get; private set; }
         public GameIdService idService { get; private set; }
 
@@ -16,6 +18,7 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleContext()
         {
             this.repo = new GameRoleRepo();
+            this.transfromRepo = new GameRoleRepo();
             this.factory = new GameRoleFactory();
             this.idService = new GameIdService();
             this.playerInputArgs = new Dictionary<int, GameRoleInputArgs>();

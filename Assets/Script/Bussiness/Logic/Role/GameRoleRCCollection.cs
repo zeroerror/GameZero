@@ -28,7 +28,6 @@ namespace GamePlay.Bussiness.Logic
     public struct GameRoleRCArgs_CharacterTransform
     {
         public GameIdArgs idArgs;
-        public int transToRoleId;
     }
 
     public struct GameRoleRCArgs_StateEnterIdle
