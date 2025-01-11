@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using GamePlay.Core;
-using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     /// <summary>
@@ -113,8 +112,7 @@ namespace GamePlay.Bussiness.Logic
 
         private GameSkillEntity _FindCastableSkill(GameRoleEntity role, GameEntityBase target)
         {
-            var isIgnoreDistance = role.idCom.campId == GameRoleCollection.MONSTER_ROLE_CAMP_ID;// 怪物忽略距离, 会主动靠近目标攻击
-            var castSkill = this._context.domainApi.skillApi.FindCastableSkill(role, target, isIgnoreDistance);
+            var castSkill = this._context.domainApi.skillApi.FindCastableSkill(role, target);
             return castSkill;
         }
 

@@ -4,22 +4,28 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleEntity : GameEntityBase
     {
-        public GameRoleModel model { get; private set; }
+        public GameRoleModel model => this.characterTransformCom.isTransforming ? this.characterTransformCom.model : this._originalModel;
+        public GameRoleModel originalModel => this._originalModel;
+        private readonly GameRoleModel _originalModel;
+
         public GameRoleInputCom inputCom { get; private set; }
         public GameRoleAICom aiCom { get; private set; }
         public GameRoleFSMCom fsmCom { get; private set; }
-        public GameSkillCom skillCom { get; private set; }
+
+        public GameSkillCom skillCom => this.characterTransformCom.isTransforming ? this.characterTransformCom.skillCom : this._skillCom;
+        private GameSkillCom _skillCom;
+
         public GameBuffCom buffCom { get; private set; }
         public GameCharacterTransformCom characterTransformCom { get; private set; }
 
         public GameRoleEntity(GameRoleModel model) : base(model.typeId, GameEntityType.Role)
         {
-            this.model = model;
+            this._originalModel = model;
             this.SetByModel(model);
             this.inputCom = new GameRoleInputCom();
             this.aiCom = new GameRoleAICom(this);
             this.fsmCom = new GameRoleFSMCom();
-            this.skillCom = new GameSkillCom(this);
+            this._skillCom = new GameSkillCom(this);
             this.buffCom = new GameBuffCom();
             this.characterTransformCom = new GameCharacterTransformCom(this);
         }

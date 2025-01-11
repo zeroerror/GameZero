@@ -63,20 +63,12 @@ namespace GamePlay.Bussiness.Logic
 
         public void SetTargeterList(List<GameActionTargeterArgs> targeterList)
         {
-            // 剔除死亡的目标
-            targeterList.RemoveAll(targeter => !!targeter.targetEntity && !targeter.targetEntity.IsAlive());
-            if (targeterList.Count == 0) return;
-
             Clear();
             _targeterList = targeterList.ToList();
         }
 
         public void SetTargeter(in GameActionTargeterArgs targeter)
         {
-            // 剔除死亡的目标
-            var targetEntity = targeter.targetEntity;
-            if (!!targetEntity && !targetEntity.IsAlive()) return;
-
             Clear();
             _targeterList = new List<GameActionTargeterArgs> { targeter };
         }

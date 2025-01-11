@@ -101,8 +101,8 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _CharacterTransformSkill(GameRoleEntityR role, GameIdArgs[] skillIdArgsList)
         {
-            var roleTransformCom = role.roleTransformCom;
-            var skillCom = roleTransformCom.skillCom;
+            var characterTransformCom = role.characterTransformCom;
+            var skillCom = characterTransformCom.skillCom;
             skillIdArgsList?.Foreach((skillIdArgs, index) =>
             {
                 this._CreateSkill(role, skillIdArgs, skillCom);

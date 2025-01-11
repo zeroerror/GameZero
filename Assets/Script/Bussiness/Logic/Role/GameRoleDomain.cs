@@ -205,11 +205,11 @@ namespace GamePlay.Bussiness.Logic
             this.SetPlayerInputArgs(entityId, inputArgs);
         }
 
-        public void TransformRole(GameRoleEntity role, int transRoleId)
+        public void TransformRole(GameRoleEntity role, int transToRoleId)
         {
-            if (!this._roleContext.factory.template.TryGet(transRoleId, out var model))
+            if (!this._roleContext.factory.template.TryGet(transToRoleId, out var model))
             {
-                GameLogger.LogError("变身失败，变身ID不存在：" + transRoleId);
+                GameLogger.LogError("变身失败, 模板不存在: " + transToRoleId);
             }
 
             // 变身前默认结束变身
@@ -225,7 +225,7 @@ namespace GamePlay.Bussiness.Logic
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_TRANSFORM, new GameRoleRCArgs_CharacterTransform
             {
                 idArgs = role.idCom.ToArgs(),
-                transRoleId = transRoleId
+                transToRoleId = transToRoleId
             });
         }
 

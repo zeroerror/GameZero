@@ -120,31 +120,31 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
             var evArgs = (GameRoleRCArgs_CharacterTransform)args;
-            this._CharacterTransform(evArgs.idArgs, evArgs.transRoleId);
+            this._CharacterTransform(evArgs.idArgs, evArgs.transToRoleId);
         }
 
-        private void _CharacterTransform(in GameIdArgs idArgs, int transRoleId)
+        private void _CharacterTransform(in GameIdArgs idArgs, int transToRoleId)
         {
-            if (!this._roleContext.repo.TryFetch(idArgs.typeId, out var role))
+            if (!this._roleContext.repo.TryFindByEntityId(idArgs.entityId, out var transTarget))
             {
-                GameLogger.LogError("GameRoleDomainR._CharacterTransform: roleId not found: " + idArgs.typeId);
+                GameLogger.LogError("GameRoleDomainR._CharacterTransform: 受变身角色不存在: " + idArgs.entityId);
                 return;
             }
 
-            if (!this._roleContext.factory.template.TryGet(transRoleId, out var model))
+            if (!this._roleContext.factory.template.TryGet(transToRoleId, out var model))
             {
-                GameLogger.LogError("GameRoleDomainR._CharacterTransform: 变身模板不存在: " + transRoleId);
+                GameLogger.LogError("GameRoleDomainR._CharacterTransform: 变身模板不存在: " + transToRoleId);
                 return;
             }
 
             // 变身前默认结束变身
-            role.roleTransformCom.EndTransform();
+            transTarget.characterTransformCom.EndTransform();
             // 变身
             var bodyCom = this._roleContext.factory.GetBodyCom(model);
-            role.roleTransformCom.StartTransform(model, bodyCom);
+            transTarget.characterTransformCom.StartTransform(model, bodyCom);
 
             // 更新buff特效的挂载节点
-            role.buffCom.ForeachAllBuffs((buff) =>
+            transTarget.buffCom.ForeachAllBuffs((buff) =>
             {
                 var vfxEntity = buff.vfxEntity;
                 if (vfxEntity == null) return;
@@ -192,22 +192,22 @@ namespace GamePlay.Bussiness.Renderer
             {
                 var entity = entitys[i];
                 var attributeBarCom = entity.attributeBarCom;
-                attributeBarCom.hpSlider.rectTransform.SetSiblingIndex(i);
-                attributeBarCom.mpSlider.rectTransform.SetSiblingIndex(i);
+                attributeBarCom.hpSlider.SetSiblingIndex(i);
+                attributeBarCom.mpSlider.SetSiblingIndex(i);
             }
         }
 
-        private void _PlayAnim(GameRoleEntityR entity, string animName, int layer)
+        private void _PlayAnim(GameRoleEntityR role, string animName, int layer)
         {
             var factory = this._roleContext.factory;
-            var animCom = entity.animCom;
+            var animCom = role.animCom;
             if (animCom.TryGetClip(animName, out var clip))
             {
                 animCom.Play(clip, layer);
                 return;
             }
 
-            clip = factory.LoadAnimationClip(entity.idCom.typeId, animName);
+            clip = factory.LoadAnimationClip(role.model.typeId, animName);
             animCom.Play(clip, layer);
         }
 

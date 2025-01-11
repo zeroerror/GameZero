@@ -113,12 +113,12 @@ namespace GamePlay.Bussiness.Logic
             return skills;
         }
 
-        public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target, bool ignoreDistance = false)
+        public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target, bool ignoreDistanceCondition = false)
         {
             var conditionModel = skill.skillModel.conditionModel;
             if (conditionModel == null) return true;
             // 检查 - 范围
-            if (!ignoreDistance && !GamePhysicsResolvingUtil.CheckOverlap(conditionModel.selector.colliderModel, skill.transformCom.ToArgs(), target.transformCom.position)) return false;
+            if (!ignoreDistanceCondition && !GamePhysicsResolvingUtil.CheckOverlap(conditionModel.selector.colliderModel, skill.transformCom.ToArgs(), target.transformCom.position)) return false;
             // 检查 - CD
             if (skill.cdElapsed > 0) return false;
             // 检查 - 属性消耗
@@ -128,7 +128,7 @@ namespace GamePlay.Bussiness.Logic
             return true;
         }
 
-        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistance = false)
+        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistanceCondition = false)
         {
             var fsmCom = role.fsmCom;
             var stateType = fsmCom.stateType;
@@ -203,11 +203,12 @@ namespace GamePlay.Bussiness.Logic
             role.attributeCom.SetAttribute(attr);
         }
 
-        public GameSkillEntity FindCastableSkill(GameRoleEntity role, GameEntityBase target, bool ignoreDistance = false)
+        public GameSkillEntity FindCastableSkill(GameRoleEntity role, GameEntityBase target, bool ignoreDistanceCondition = true)
         {
+            if (!target.IsAlive()) return null;// 非存活目标, 不可施法 TODO： 除非是复活类技能
             return role.skillCom.FindWithPriority((skill) =>
             {
-                return this.CheckSkillCondition(role, skill, target, ignoreDistance);
+                return this.CheckSkillCondition(role, skill, target, ignoreDistanceCondition);
             });
         }
     }

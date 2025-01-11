@@ -79,6 +79,12 @@ namespace GamePlay.Bussiness.Renderer
             this.rectTransform.anchoredPosition = screenPoint;
         }
 
+        public void SetSiblingIndex(int i)
+        {
+            if (!this.slider) return;
+            rectTransform.SetSiblingIndex(i);
+        }
+
         public void SetText(string text)
         {
             if (!this.slider) return;

@@ -24,7 +24,7 @@ namespace GamePlay.Config
 
         public GameRoleModelR ToModelR()
         {
-            var isMultyAnimationLayer = this.typeId < 10000;
+            var isMultyAnimationLayer = this.typeId < 1000;
             var model = new GameRoleModelR(this.typeId, roleName, desc, prefabUrl, skills, isMultyAnimationLayer);
             return model;
         }

@@ -4,6 +4,9 @@ namespace GamePlay.Bussiness.Logic
     {
         private GameRoleEntity _role;
 
+        /// <summary> 是否正在变身 </summary>
+        public bool isTransforming => this.model != null;
+
         /// <summary> 模型 </summary>
         public GameRoleModel model { get; private set; }
         /// <summary> 技能组件 </summary>

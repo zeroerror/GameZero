@@ -6,6 +6,8 @@ namespace GamePlay.Bussiness.Renderer
     public class GameRoleTransformComR
     {
         private GameRoleEntityR _role;
+
+        /// <summary> 是否正在变身 </summary>
         public bool isTransforming => this.model != null;
 
         /// <summary> 模型 </summary>
@@ -38,6 +40,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void EndTransform()
         {
+            if (!this.isTransforming) return;
             this.bodyCom.Destroy();
             this.model = null;
             this.bodyCom = null;

@@ -1,18 +1,17 @@
-using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
 {
     public class GameRoleAttributeBarCom
     {
-        private Transform _parent;
+        private GameRoleEntityR _entity;
 
         public GameRoleAttributeSlider hpSlider { get; private set; }
         public GameRoleAttributeSlider mpSlider { get; private set; }
 
-        public GameRoleAttributeBarCom(Transform parent)
+        public GameRoleAttributeBarCom(GameRoleEntityR entity)
         {
-            this._parent = parent;
+            this._entity = entity;
             this.hpSlider = new GameRoleAttributeSlider(1f, GameEasingType.Linear);
             this.mpSlider = new GameRoleAttributeSlider(0.0f, GameEasingType.Immediate);
         }
@@ -22,7 +21,7 @@ namespace GamePlay.Bussiness.Renderer
         public delegate Vector3 WorldToScreenPointDelegate(in Vector3 worldPos);
         private Vector3 _GetScreenPoint()
         {
-            var worldPos = this._parent.position;
+            var worldPos = this._entity.position;
             var screenPoint = this.WorldToScreenPoint(worldPos);
             return screenPoint;
         }

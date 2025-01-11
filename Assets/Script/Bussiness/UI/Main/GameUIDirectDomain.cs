@@ -114,17 +114,15 @@ namespace GamePlay.Bussiness.UI
 
         public void OpenUI<T>(object args = null) where T : GameUIBase
         {
-            var uiName = typeof(T).Name;
-            if (this.context.uiDict.TryGetValue(uiName, out var uiBase))
+            var inst = Activator.CreateInstance<T>();
+            var uiName = inst.uiName;
+            if (this.context.uiDict.ContainsKey(uiName))
             {
-                uiBase.Show();
+                GameLogger.LogWarning($"UI已经打开: {uiName}");
                 return;
             }
-
-            // 创建UI实例
-            uiBase = Activator.CreateInstance<T>();
-
             // 加载UI资源
+            var uiBase = inst;
             var uiUrl = uiBase.uiUrl;
             var rootGO = this.context.factory.LoadUI(uiUrl);
             if (rootGO == null) return;
@@ -151,16 +149,20 @@ namespace GamePlay.Bussiness.UI
             this.context.uiDict[uiName] = uiBase;
         }
 
-        public void CloseUI<T>(T ui) where T : GameUIBase
+        public void CloseUI(string uiName)
         {
-            var uiName = ui.uiName;
-            if (!this.context.uiDict.TryGetValue(uiName, out var _))
+            if (!this.context.uiDict.TryGetValue(uiName, out var ui))
             {
                 GameLogger.LogWarning($"UI不存在或已经关闭: {uiName}");
                 return;
             }
             ui.Destroy();
             this.context.uiDict.Remove(uiName);
+        }
+
+        public void CloseUI<T>(T ui) where T : GameUIBase
+        {
+            this.CloseUI(ui.uiName);
         }
     }
 }

@@ -37,6 +37,7 @@ namespace GamePlay.Bussiness.Renderer
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, this._OnAction_KnockBack);
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, this._OnAction_AttributeModify);
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, this._OnAction_AttachBuff);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_TRANSFORM, this._OnAction_CharacterTransform);
         }
 
         private void _UnbindEvents()
@@ -48,6 +49,7 @@ namespace GamePlay.Bussiness.Renderer
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, this._OnAction_KnockBack);
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, this._OnAction_AttributeModify);
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, this._OnAction_AttachBuff);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_TRANSFORM, this._OnAction_CharacterTransform);
         }
 
         public bool TryGetModel(int actionId, out GameActionModelR model)
@@ -257,6 +259,22 @@ namespace GamePlay.Bussiness.Renderer
             if (actor == null || target == null)
             {
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, args);
+                return;
+            }
+            this._PlayActionHitEffect(evArgs.actionId, target);
+        }
+
+        private void _OnAction_CharacterTransform(object args)
+        {
+            var evArgs = (GameActionRCArgs_CharacterTransform)args;
+            ref var record = ref evArgs.record;
+            ref var actorIdArgs = ref record.actorIdArgs;
+            var actor = this._context.FindEntity(actorIdArgs);
+            ref var targetIdArgs = ref record.targetIdArgs;
+            var target = this._context.FindEntity(targetIdArgs);
+            if (actor == null || target == null)
+            {
+                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_TRANSFORM, args);
                 return;
             }
             this._PlayActionHitEffect(evArgs.actionId, target);

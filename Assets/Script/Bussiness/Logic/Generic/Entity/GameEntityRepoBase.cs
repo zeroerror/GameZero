@@ -106,6 +106,11 @@ namespace GamePlay.Bussiness.Logic
             return null;
         }
 
+        public virtual bool TryFindByEntityId(int entityId, out T entity)
+        {
+            return this._dict.TryGetValue(entityId, out entity);
+        }
+
         public virtual void ForeachEntities(System.Action<T> action)
         {
             var count = this._list.Count;

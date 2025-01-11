@@ -1,12 +1,10 @@
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
 using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionModel_CharacterTransform : GameActionModelBase
     {
-        public readonly int transRoleId;
+        public readonly int transToRoleId;
         public readonly GameActionModel_CharacterTransformAttribute[] attributeList;
 
         public GameActionModel_CharacterTransform(
@@ -14,11 +12,11 @@ namespace GamePlay.Bussiness.Logic
             GameEntitySelector selector,
             GameActionPreconditionSetModel preconditionSet,
             in GameVec2 randomValueOffset,
-            int transRoleId,
+            int transToRoleId,
             GameActionModel_CharacterTransformAttribute[] attributeList
         ) : base(GameActionType.CharacterTransform, typeId, selector, preconditionSet, randomValueOffset)
         {
-            this.transRoleId = transRoleId;
+            this.transToRoleId = transToRoleId;
             this.attributeList = attributeList;
         }
 
@@ -42,7 +40,7 @@ namespace GamePlay.Bussiness.Logic
                 this.selector,
                 this.preconditionSet,
                 this.randomValueOffset,
-                this.transRoleId,
+                this.transToRoleId,
                 list
             );
         }

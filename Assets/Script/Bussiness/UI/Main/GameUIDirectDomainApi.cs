@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.UI
         /// <summary>
         /// 关闭UI
         /// </summary>
-        public void CloseUI<T>(T ui) where T : GameUIBase;
+        public void CloseUI(string uiName);
 
         /// <summary>
         /// 设置定时器

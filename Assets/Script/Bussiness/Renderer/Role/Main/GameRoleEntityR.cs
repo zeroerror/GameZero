@@ -8,12 +8,13 @@ namespace GamePlay.Bussiness.Renderer
     public class GameRoleEntityR : GameEntityBase
     {
         /// <summary> 模型, 用于获取角色的属性、技能等信息. 如果正在变身, 则获取的是变身后的模型 </summary>
-        public GameRoleModelR model => this.roleTransformCom.isTransforming ? this.roleTransformCom.model : this._originalModel;
+        public GameRoleModelR model => this.characterTransformCom.isTransforming ? this.characterTransformCom.model : this._originalModel;
         public GameRoleModelR originalModel => this._originalModel;
         private readonly GameRoleModelR _originalModel;
 
         /// <summary> 身体组件, 用于获取角色的根节点、身体节点、脚节点. 如果正在变身, 则获取的是变身后的身体组件 </summary>
-        public GameRoleBodyCom bodyCom => this.roleTransformCom.isTransforming ? this.roleTransformCom.bodyCom : this._originalBodyCom;
+        public GameRoleBodyCom bodyCom => this.characterTransformCom.isTransforming ? this.characterTransformCom.bodyCom : this._originalBodyCom;
+
         public GameRoleBodyCom originalBodyCom => this._originalBodyCom;
         private readonly GameRoleBodyCom _originalBodyCom;
 
@@ -33,18 +34,18 @@ namespace GamePlay.Bussiness.Renderer
 
         private GameEasing2DCom _posEaseCom;
 
-        public GamePlayableCom animCom => this.roleTransformCom.isTransforming ? this.roleTransformCom.animCom : this._animCom;
-        private GamePlayableCom _animCom;
+        public GamePlayableCom animCom => this.characterTransformCom.isTransforming ? this.characterTransformCom.animCom : this._originalAnimCom;
+        private GamePlayableCom _originalAnimCom;
 
         public Transform transform { get { return this.bodyCom.root.transform; } }
         public GameRoleFSMComR fsmCom { get; private set; }
 
-        public GameSkillComR skillCom => this.roleTransformCom.isTransforming ? this.roleTransformCom.skillCom : this._skillCom;
+        public GameSkillComR skillCom => this.characterTransformCom.isTransforming ? this.characterTransformCom.skillCom : this._skillCom;
         private GameSkillComR _skillCom;
 
         public GameRoleAttributeBarCom attributeBarCom { get; private set; }
         public readonly GameBuffComR buffCom;
-        public GameRoleTransformComR roleTransformCom { get; private set; }
+        public GameRoleTransformComR characterTransformCom { get; private set; }
 
         public GameRoleEntityR(
             GameRoleModelR model,
@@ -59,13 +60,13 @@ namespace GamePlay.Bussiness.Renderer
             this.buffCom = new GameBuffComR();
 
             var animator = bodyCom.body.GetComponentInChildren<Animator>();
-            this._animCom = new GamePlayableCom(animator);
-            this.roleTransformCom = new GameRoleTransformComR(this, animator);
+            this._originalAnimCom = new GamePlayableCom(animator);
+            this.characterTransformCom = new GameRoleTransformComR(this, animator);
 
             this._posEaseCom = new GameEasing2DCom();
             this._posEaseCom.SetEase(0.05f, GameEasingType.Linear);
 
-            this.attributeBarCom = new GameRoleAttributeBarCom(this.transform);
+            this.attributeBarCom = new GameRoleAttributeBarCom(this);
         }
 
         public override void Clear()

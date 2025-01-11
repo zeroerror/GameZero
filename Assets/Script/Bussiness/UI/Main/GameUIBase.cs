@@ -76,6 +76,8 @@ namespace GamePlay.Bussiness.UI
             this._RemoveAllTimer();
             _OnDestroy();
             this.state = GameUIStateType.Destroyed;
+            GameObject.Destroy(this.go);
+            this.go = null;
         }
         protected virtual void _OnDestroy() { }
 
@@ -106,7 +108,7 @@ namespace GamePlay.Bussiness.UI
 
         protected void _Close()
         {
-            domainApi.directApi.CloseUI(this);
+            domainApi.directApi.CloseUI(this.uiName);
         }
     }
 }

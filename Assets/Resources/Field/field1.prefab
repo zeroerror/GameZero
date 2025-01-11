@@ -304,7 +304,7 @@ Transform:
   m_GameObject: {fileID: 1515493129479390628}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 0.19, z: 0}
+  m_LocalPosition: {x: -0.04, y: 8.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   monsterSpawnEMs:
-  - roleSO: {fileID: 11400000, guid: 366bbbb51efbaf54882f2b28073de769, type: 2}
+  - roleSO: {fileID: 11400000, guid: 709935fc857ec644888d97df94cac1ab, type: 2}
     count: 1
   spawnTime: 0
 --- !u!1 &2589201917877529154

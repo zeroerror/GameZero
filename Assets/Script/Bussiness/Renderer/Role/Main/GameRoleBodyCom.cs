@@ -28,6 +28,7 @@ namespace GamePlay.Bussiness.Renderer
         public void SetActive(bool active)
         {
             this.root.SetActive(active);
+            this.shadow.SetActive(active);
         }
     }
 }
