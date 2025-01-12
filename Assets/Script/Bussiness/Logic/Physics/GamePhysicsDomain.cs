@@ -100,6 +100,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 var physicsCom = entity.physicsCom;
                 var collider = physicsCom.collider;
+                if (collider == null || !collider.isEnable) return;
                 var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(collider, colliderModel, transformArgs);
                 var isOverlap = mtv != GameVec2.zero;
                 if (isOverlap)

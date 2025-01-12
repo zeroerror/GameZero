@@ -61,13 +61,16 @@ namespace GamePlay.Bussiness.Logic
 
         private bool _BasicCheck(in GameIdArgs actorIdArgs)
         {
-            // 行为实体必须是Buff作用目标
+            // 行为实体必须是Buff挂载的角色
             var actorEntity = this.FindEntity(actorIdArgs.entityType, actorIdArgs.entityId);
             if (!actorEntity) return false;
             var actorRoleEntity = actorEntity.GetLinkParent<GameRoleEntity>();
             if (!actorRoleEntity) return false;
             var isBuffTargetAct = actorRoleEntity.idCom.entityId == _buff.target.idCom.entityId;
             if (!isBuffTargetAct) return false;
+            // buff自身触发的行为不计数, 防止死循环
+            var isBuffAct = this._buff.idCom.IsEquals(actorIdArgs);
+            if (isBuffAct) return false;
             return true;
         }
 

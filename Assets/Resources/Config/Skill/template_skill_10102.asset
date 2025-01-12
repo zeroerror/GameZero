@@ -17,10 +17,10 @@ MonoBehaviour:
   skillType: 2
   animClip: {fileID: 7400000, guid: 03733f2ae9d7fd04b9a5d8c06bb144e4, type: 2}
   animName: attack_shot_arrow
-  animLength: 1
+  animLength: 0.73333335
   timelineEvents:
-  - time: 0.8333333
-    frame: 49
+  - time: 0.6166667
+    frame: 37
     actions:
     - {fileID: 11400000, guid: f07b7ca2a97c87b4ea3197e21bee2226, type: 2}
   conditionEM:

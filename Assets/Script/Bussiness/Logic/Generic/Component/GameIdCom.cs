@@ -46,6 +46,12 @@ namespace GamePlay.Bussiness.Logic
             return entityType == other.entityType && entityId == other.entityId;
         }
 
+        // 判断是否相等
+        public bool IsEquals(in GameIdArgs other)
+        {
+            return entityType == other.entityType && entityId == other.entityId;
+        }
+
         // 设置父实体
         public void SetParent(GameEntityBase parent)
         {
