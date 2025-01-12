@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace GamePlay.Config
 {
-    [CustomPropertyDrawer(typeof(GameActionEM_AttachBuff))]
-    public class GamePropertyDrawer_Action_AttachBuff : GamePropertyDrawer
+    [CustomPropertyDrawer(typeof(GameActionEM_DetachBuff))]
+    public class GamePropertyDrawer_Action_DetachBuff : GamePropertyDrawer
     {
         protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -12,7 +12,7 @@ namespace GamePlay.Config
             buffSO_P.DrawProperty("buffSO");
 
             var layer = property.FindPropertyRelative("layer");
-            layer.DrawProperty_Int("层数(至少一层)");
+            layer.DrawProperty_Int("层数(0代表移除全部)");
             if (layer.intValue < 1)
             {
                 layer.intValue = 1;

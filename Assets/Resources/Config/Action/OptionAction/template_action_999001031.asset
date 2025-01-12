@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: template_action_999001031
   m_EditorClassIdentifier: 
   typeId: 999001031
-  actionType: 8
+  actionType: 9
   dmgActionEM:
     dmgType: 1
     value: 20
@@ -200,7 +200,7 @@ MonoBehaviour:
     randomValueOffset: {x: 0, y: 0}
   summonRolesActionEM:
     roleSO: {fileID: 0}
-    count: 0
+    count: 1
     campType: 0
     selectorEM:
       selectAnchorType: 0

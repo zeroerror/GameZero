@@ -18,6 +18,7 @@ namespace GamePlay.Config
         private SerializedProperty launchProjectileActionEM_p;
         private SerializedProperty knockBackActionEM_p;
         private SerializedProperty attachBuffActionEM_p;
+        private SerializedProperty detachBuffActionEM_p;
         private SerializedProperty summonRolesActionEM_p;
         private SerializedProperty characterTransformActionEM_p;
 
@@ -34,6 +35,7 @@ namespace GamePlay.Config
             this.launchProjectileActionEM_p = _serializedObject.FindProperty("launchProjectileActionEM");
             this.knockBackActionEM_p = _serializedObject.FindProperty("knockBackActionEM");
             this.attachBuffActionEM_p = _serializedObject.FindProperty("attachBuffActionEM");
+            this.detachBuffActionEM_p = _serializedObject.FindProperty("detachBuffActionEM");
             this.summonRolesActionEM_p = _serializedObject.FindProperty("summonRolesActionEM");
             this.characterTransformActionEM_p = _serializedObject.FindProperty("characterTransformActionEM");
 
@@ -104,6 +106,10 @@ namespace GamePlay.Config
                 case GameActionType.AttachBuff:
                     EditorGUILayout.LabelField(" -------- 附加Buff --------", EditorStyles.boldLabel);
                     attachBuffActionEM_p.DrawProperty();
+                    break;
+                case GameActionType.DetachBuff:
+                    EditorGUILayout.LabelField(" -------- 移除Buff --------", EditorStyles.boldLabel);
+                    detachBuffActionEM_p.DrawProperty();
                     break;
                 case GameActionType.SummonRoles:
                     EditorGUILayout.LabelField(" -------- 召唤角色 --------", EditorStyles.boldLabel);

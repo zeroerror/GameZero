@@ -16,10 +16,12 @@ namespace GamePlay.Bussiness.Logic
         AttributeModify = 5,
         /// <summary> 附加buff </summary>
         AttachBuff = 6,
+        /// <summary> 移除buff </summary>
+        DetachBuff = 7,
         /// <summary> 召唤角色 </summary>
-        SummonRoles = 7,
+        SummonRoles = 8,
         /// <summary> 角色变身 </summary>
-        CharacterTransform = 8,
+        CharacterTransform = 9,
 
         /// <summary> 击杀 </summary>
         Kill = 999,

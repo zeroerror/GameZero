@@ -15,6 +15,7 @@ namespace GamePlay.Config
         public GameActionEM_LaunchProjectile launchProjectileActionEM;
         public GameActionEM_KnockBack knockBackActionEM;
         public GameActionEM_AttachBuff attachBuffActionEM;
+        public GameActionEM_DetachBuff detachBuffActionEM;
         public GameActionEM_SummonRoles summonRolesActionEM;
         public GameActionEM_CharacterTransform characterTransformActionEM;
 
@@ -50,6 +51,9 @@ namespace GamePlay.Config
                 case GameActionType.AttachBuff:
                     actionModel = attachBuffActionEM.ToModel();
                     break;
+                case GameActionType.DetachBuff:
+                    actionModel = detachBuffActionEM.ToModel();
+                    break;
                 case GameActionType.SummonRoles:
                     actionModel = summonRolesActionEM.ToModel();
                     break;
@@ -80,6 +84,8 @@ namespace GamePlay.Config
                     return this.knockBackActionEM.selectorEM;
                 case GameActionType.AttachBuff:
                     return this.attachBuffActionEM.selectorEM;
+                case GameActionType.DetachBuff:
+                    return this.detachBuffActionEM.selectorEM;
                 case GameActionType.SummonRoles:
                     return this.summonRolesActionEM.selectorEM;
                 case GameActionType.CharacterTransform:
