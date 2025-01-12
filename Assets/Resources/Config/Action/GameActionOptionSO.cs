@@ -7,6 +7,9 @@ namespace GamePlay.Config
     [CreateAssetMenu(fileName = "template_action_option_", menuName = "游戏玩法/配置/行为选项模板")]
     public class GameActionOptionSO : GameSOBase
     {
+        [Header("是否禁用")]
+        public bool disable;
+
         [Header("质量")]
         public GameActionOptionQuality quality;
         [Header("描述")]

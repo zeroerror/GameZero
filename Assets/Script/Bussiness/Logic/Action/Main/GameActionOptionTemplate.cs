@@ -18,6 +18,7 @@ namespace GamePlay.Bussiness.Logic
             foreach (var res in resList)
             {
                 var so = res as GameActionOptionSO;
+                if (so.disable) continue;
                 _soDict.Add(so.typeId, so);
             }
         }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: template_action_option_101
   m_EditorClassIdentifier: 
   typeId: 101
+  disable: 1
   quality: 3
   desc: "\u4F24\u5BB3\u9891\u7387\u6D41\u6D3E - \u4FDD\u5E95\u8F93\u51FA"
   maxLv: 10
