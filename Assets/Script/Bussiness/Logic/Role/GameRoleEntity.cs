@@ -29,6 +29,7 @@ namespace GamePlay.Bussiness.Logic
         {
             base.Clear();
             this.SetByModel(this.model);
+            this.skillCom.Clear();
         }
 
         public void SetByModel(GameRoleModel model)

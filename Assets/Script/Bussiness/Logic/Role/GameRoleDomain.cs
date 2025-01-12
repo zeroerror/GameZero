@@ -241,10 +241,18 @@ namespace GamePlay.Bussiness.Logic
             // 转移buff
             this._context.domainApi.buffApi.TranserBuffCom(oldRole.buffCom, newRole);
 
+            // 转移父子关系
+            var children = oldRole.idCom.children;
+            children.Foreach((child) =>
+            {
+                child.idCom.SetParent(newRole);
+            });
+            children.Clear();
+
             // 变身后的属性变化
             GameActionUtil_CharacterTransform.DoCharacterTransform(oldRole, newRole, record);
 
-            // 旧的角色先设置为invalid
+            // 新旧角色的状态变化
             oldRole.SetInvalid();
             var collider = oldRole.physicsCom.collider;
             if (collider != null) collider.isEnable = false;

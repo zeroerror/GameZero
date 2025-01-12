@@ -73,6 +73,7 @@ namespace GamePlay.Bussiness.Logic
         public void Recycle(T entity)
         {
             if (!this._TryRemoveData(entity)) return;
+            GameLogger.Log($"实体仓库 回收: {entity.idCom}");
             var collider = entity.physicsCom.collider;
             if (collider != null) collider.isEnable = false;
 
@@ -82,10 +83,9 @@ namespace GamePlay.Bussiness.Logic
                 entityPool = new List<T>();
                 this._poolDict.Add(typeId, entityPool);
             }
+            entityPool.Add(entity);
             entity.Clear();
             entity.SetInvalid();
-            entityPool.Add(entity);
-            GameLogger.Log($"实体仓库 回收: {entity.idCom}");
         }
 
         public virtual bool TryFetch(int typeId, out T entity)
@@ -96,6 +96,7 @@ namespace GamePlay.Bussiness.Logic
             var fetchIndex = pool.Count - 1;
             entity = pool[fetchIndex];
             pool.RemoveAt(fetchIndex);
+            entity.SetValid();
             return true;
         }
 

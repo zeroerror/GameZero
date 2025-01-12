@@ -93,7 +93,7 @@ namespace GamePlay.Bussiness.Renderer
             attributeBarCom.WorldToScreenPoint = this.WorldToScreenPoint;
 
             var isEnemy = role.idCom.campId != this._roleContext.userRole.idCom.campId;
-            var hpSlider = this._roleContext.factory.LoadHPSlider(isEnemy);
+            var hpSlider = attributeBarCom.hpSlider.slider ?? this._roleContext.factory.LoadHPSlider(isEnemy);
             this._context.uiApi.layerApi.AddToUIRoot(hpSlider.transform, GameUILayerType.Scene);
             attributeBarCom.hpSlider.SetSlider(hpSlider, new Vector2(0, 150));
             attributeBarCom.hpSlider.SetSize(new Vector2(150, 20));
@@ -102,7 +102,7 @@ namespace GamePlay.Bussiness.Renderer
             var hasMPSkill = model.skillSOs.Find((skill) => skill.skillType == GameSkillType.MagicAttack) != null;
             if (hasMPSkill)
             {
-                var mpSlider = this._roleContext.factory.LoadMPSlider();
+                var mpSlider = attributeBarCom.mpSlider.slider ?? this._roleContext.factory.LoadMPSlider();
                 this._context.uiApi.layerApi.AddToUIRoot(mpSlider.transform, GameUILayerType.Scene);
                 attributeBarCom.mpSlider.SetSlider(mpSlider, new Vector2(0, 135));
                 attributeBarCom.mpSlider.SetSize(new Vector2(150, 15));
@@ -156,6 +156,7 @@ namespace GamePlay.Bussiness.Renderer
             this._context.domainApi.buffApi.TranserBuffCom(oldRole.buffCom, newRole);
 
             // 隐藏旧角色
+            oldRole.SetInvalid();
             oldRole.setActive(false);
         }
 

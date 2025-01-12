@@ -24,7 +24,7 @@ MonoBehaviour:
   - type: 5
     value: 100
   - type: 2
-    value: 1000000
+    value: 10000
   - type: 3
     value: 0
   - type: 4

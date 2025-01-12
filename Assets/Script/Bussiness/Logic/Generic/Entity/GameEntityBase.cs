@@ -11,7 +11,10 @@ namespace GamePlay.Bussiness.Logic
 
         public bool isValid { get; private set; } = true;
         public void SetValid() => this.isValid = true;
-        public void SetInvalid() => this.isValid = false;
+        public void SetInvalid()
+        {
+            this.isValid = false;
+        }
 
         public bool HasReference() => this.idCom.children.Count > 0;
 

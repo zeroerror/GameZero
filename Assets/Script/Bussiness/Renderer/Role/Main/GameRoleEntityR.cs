@@ -57,6 +57,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             base.Clear();
             this.setActive(false);
+            this.skillCom.Clear();
         }
 
         public override void Destroy()
