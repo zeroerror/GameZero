@@ -47,6 +47,7 @@ namespace GamePlay.Bussiness.Logic
             if (skill.skillModel.effectByAttackSpeed)
             {
                 var attackSpeed = entity.attributeCom.GetValue(GameAttributeType.AttackSpeed);
+                attackSpeed = GameMathF.Min(attackSpeed, 5);
                 var length = timelineCom.length;
                 timeScale = attackSpeed == 0 ? 1 : attackSpeed * length;
             }

@@ -133,6 +133,7 @@ namespace GamePlay.Bussiness.Logic
                 dt -= frameTime;
                 this.time += frameTime;
                 this._TickFrame(this.frame);
+                if (this.time >= this.length) break;
             }
             this._cacheDt = dt;
             this.isPlaying = this.time < this.length;

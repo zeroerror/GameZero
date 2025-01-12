@@ -7,7 +7,6 @@ namespace GamePlay.Bussiness.Logic
     {
         GameContext _context;
         GameActionContext _actionContext => this._context.actionContext;
-
         public GameActionDomain()
         {
         }

@@ -30,6 +30,7 @@ namespace GamePlay.Config
         {
             var model = new GameBuffModel(
                 typeId,
+                desc,
                 refreshFlag,
                 maxLayer,
                 actionParam,

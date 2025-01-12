@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_502
+  m_Name: template_action_999001041
   m_EditorClassIdentifier: 
-  typeId: 502
-  actionType: 5
+  typeId: 999001041
+  actionType: 6
   dmgActionEM:
-    dmgType: 0
-    value: 0
-    valueFormat: 0
-    refType: 0
+    dmgType: 1
+    value: 20
+    valueFormat: 1
+    refType: 1
     selectorEM:
-      selectAnchorType: 0
+      selectAnchorType: 2
       campType: 0
       entityType: 0
       selColliderType: 0
@@ -75,20 +75,20 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
   attributeModifyActionEM:
-    modifyType: 6
-    value: 100
+    modifyType: 5
+    value: 5
     valueFormat: 2
-    refType: 12
+    refType: 5
     selectorEM:
-      selectAnchorType: 3
-      campType: 0
-      entityType: 0
-      selColliderType: 0
+      selectAnchorType: 1
+      campType: 2
+      entityType: 1
+      selColliderType: 1
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        width: 0
-        height: 0
+        width: 9999
+        height: 9999
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -105,20 +105,18 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
   launchProjectileActionEM:
-    projectileId: 100101001
+    projectileId: 0
     launchOffset: {x: 0, y: 0}
-    launchProjectileSO: {fileID: 11400000, guid: 9cf0845552672f744927287d2249c9ab, type: 2}
-    barrageType: 1
+    launchProjectileSO: {fileID: 0}
+    barrageType: 0
     customLaunchOffsetEM:
-      count: 2
-      launchOffsets:
-      - {x: 0, y: 1}
-      - {x: -1, y: 0.5}
+      count: 0
+      launchOffsets: []
     spreadEM:
-      count: 6
-      spreadAngle: 30
+      count: 0
+      spreadAngle: 0
     selectorEM:
-      selectAnchorType: 3
+      selectAnchorType: 0
       campType: 0
       entityType: 0
       selColliderType: 0
@@ -173,6 +171,34 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
+    buffSO: {fileID: 11400000, guid: 6e1591d0b06966647bef8b364729e9cc, type: 2}
+    layer: 1
+    selectorEM:
+      selectAnchorType: 3
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 9999
+        height: 9999
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 9999
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+    randomValueOffset: {x: 0, y: 0}
+  detachBuffActionEM:
     buffSO: {fileID: 0}
     layer: 0
     selectorEM:
@@ -258,19 +284,19 @@ MonoBehaviour:
     roleSO: {fileID: 0}
     attributeList: []
   actionEMR:
-    typeId: 0
-    desc: "\u81EA\u8EAB\u653B\u901F+1%"
+    typeId: 999001040
+    desc: "\u53CB\u519B\u6BCF\u6B21\u91CA\u653E\u6280\u80FD\uFF0C\u83B7\u5F97\u77ED\u6682\u7206\u53D1\u6027\u653B\u901F\u52A0\u6210"
     actEffectPrefab: {fileID: 0}
-    actVFXScale: {x: 0, y: 0}
-    actVFXOffset: {x: 0, y: 1}
+    actVFXScale: {x: 1, y: 1}
+    actVFXOffset: {x: 0, y: 0}
     actCamShakeModel:
       angle: 0
       amplitude: 0
       frequency: 0
       duration: 0
-    hitEffectPrefab: {fileID: 1107324212316225829, guid: 68ba587f440a02d4280724ddfae0aa2e, type: 3}
+    hitEffectPrefab: {fileID: 0}
     hitVFXScale: {x: 1, y: 1}
-    hitVFXOffset: {x: 0, y: 1}
+    hitVFXOffset: {x: 0, y: 0}
     hitCamShakeModel:
       angle: 0
       amplitude: 0

@@ -64,6 +64,7 @@ namespace GamePlay.Bussiness.Logic
                     {
                         buff.physicsCom.ClearCollided();
                         buff.attributeCom.SetByCom(buff.idCom.parent.attributeCom);
+                        buff.baseAttributeCom.SetByCom(buff.idCom.parent.baseAttributeCom);
                         this._context.domainApi.actionApi.DoAction(actionId, buff, buff.GetActionParam());
                     });
                 }
@@ -236,7 +237,7 @@ namespace GamePlay.Bussiness.Logic
                 afterLayer = GameMath.Min(afterLayer, maxLayer);
                 buff.layer = afterLayer;
                 var attachLayer = afterLayer - beforeLayer;
-                GameLogger.DebugLog($"实体: {buff.target.idCom} Buff[{buff.model.typeId}] 层数变化: {beforeLayer} -> {afterLayer}");
+                GameLogger.DebugLog($"{buff.target.idCom} [{buff.model}] 层数叠加: {beforeLayer} -> {afterLayer}");
                 return attachLayer;
             }
             return 0;
@@ -321,7 +322,7 @@ namespace GamePlay.Bussiness.Logic
                 buff.SetInvalid();
             }
             var detachLayer = beforeLayer - afterLayer;
-            GameLogger.DebugLog($"Buff层数变化: {beforeLayer} -> {afterLayer}");
+            GameLogger.DebugLog($"{buff.target.idCom} [{buff.model}] 层数移除: {beforeLayer} -> {afterLayer}");
             return detachLayer;
         }
 
@@ -346,7 +347,7 @@ namespace GamePlay.Bussiness.Logic
                 var roleNewValue = roleOldValue + buffAttr.value - buffOldValue;
                 target.attributeCom.SetAttribute(attrType, roleNewValue);
 
-                GameLogger.DebugLog($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
+                GameLogger.Log($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
             });
         }
 
