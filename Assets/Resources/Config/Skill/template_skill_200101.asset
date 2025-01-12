@@ -25,7 +25,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: b297016468182cb438c3568ff871d6f7, type: 2}
   conditionEM:
     targeterType: 2
-    cdTime: 2
+    cdTime: 0
     mpCost: 0
     selectorEM:
       selectAnchorType: 1

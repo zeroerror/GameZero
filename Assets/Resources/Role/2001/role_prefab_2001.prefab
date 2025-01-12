@@ -606,8 +606,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 117150395161187362}
-  - component: {fileID: 5348429189093309385}
   - component: {fileID: 117150395161187365}
+  - component: {fileID: 8556808881133832041}
   m_Layer: 0
   m_Name: role_prefab_2001
   m_TagString: Untagged
@@ -631,18 +631,6 @@ Transform:
   - {fileID: 117150393779553010}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!210 &5348429189093309385
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 117150395161187363}
-  m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 200
-  m_SortAtRoot: 0
 --- !u!95 &117150395161187365
 Animator:
   serializedVersion: 5
@@ -664,6 +652,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8556808881133832041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117150395161187363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94e59b5594fb9240afeb4ae006d1e60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roleSO: {fileID: 11400000, guid: 4fca790c35680bb49885ad916bc8dbef, type: 2}
 --- !u!1 &188064519148664878
 GameObject:
   m_ObjectHideFlags: 0

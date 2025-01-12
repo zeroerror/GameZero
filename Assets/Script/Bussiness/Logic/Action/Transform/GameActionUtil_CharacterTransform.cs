@@ -50,6 +50,10 @@ namespace GamePlay.Bussiness.Logic
             var newAttrCom = newRole.attributeCom;
             newAttrCom.CopyFrom(oldAttrCom);
 
+            var oldBaseAttrCom = oldRole.baseAttributeCom;
+            var newBaseAttrCom = newRole.baseAttributeCom;
+            newBaseAttrCom.CopyFrom(oldBaseAttrCom);
+
             var transAttributes = record.transAttributes;
             if (transAttributes != null && transAttributes.HasData())
             {
