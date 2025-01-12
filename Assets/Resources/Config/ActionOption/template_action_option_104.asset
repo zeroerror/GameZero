@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ca41dd7c039d24d850d27820794532, type: 3}
+  m_Name: template_action_option_104
+  m_EditorClassIdentifier: 
+  typeId: 104
+  quality: 3
+  desc: "\u4E00\u9F13\u4F5C\u6C14: \u53CB\u519B\u6BCF\u6B21\u91CA\u653E\u6280\u80FD\uFF0C\u83B7\u5F97\u77ED\u6682\u7206\u53D1\u6027\u653B\u901F\u52A0\u6210"
+  maxLv: 10
+  actionSOs:
+  - {fileID: 11400000, guid: ee25fa4028e72f5439e353f1ef417848, type: 2}
