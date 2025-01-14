@@ -56,9 +56,13 @@ namespace GamePlay.Bussiness.Logic
             {
                 this._ExitToState(role, toState);
                 stateDomain.Enter(role);
+
+                var stateType = role.fsmCom.stateType;
+                var skillType = stateType == GameRoleStateType.Cast ? role.fsmCom.castState.skill.skillModel.skillType : GameSkillType.None;
                 this._roleContext.roleStateRecords.Add(new GameRoleStateRecord(
                     role.idCom.entityId,
-                    role.fsmCom.stateType
+                    stateType,
+                    skillType
                 ));
             }
             return check;

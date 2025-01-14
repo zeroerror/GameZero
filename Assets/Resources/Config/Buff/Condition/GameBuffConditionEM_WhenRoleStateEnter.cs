@@ -8,11 +8,12 @@ namespace GamePlay.Config
         public bool isEnable;
         public GameCampType campType;
         public GameRoleStateType stateType;
+        public GameSkillType skillType;
 
         public GameBuffConditionModel_WhenRoleStateEnter ToModel()
         {
             if (!this.isEnable) return null;
-            return new GameBuffConditionModel_WhenRoleStateEnter(this.campType, this.stateType);
+            return new GameBuffConditionModel_WhenRoleStateEnter(this.campType, this.stateType, this.skillType);
         }
     }
 }

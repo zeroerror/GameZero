@@ -18,7 +18,12 @@ namespace GamePlay.Config
                 var campType_p = property.FindPropertyRelative("campType");
                 campType_p.DrawProperty("筛选阵营类型");
                 var stateType_p = property.FindPropertyRelative("stateType");
-                stateType_p.DrawProperty("角色进入的状态类型");
+                var stateType = stateType_p.DrawProperty_EnumPopup<GameRoleStateType>("角色进入的状态类型");
+                if (stateType == GameRoleStateType.Cast)
+                {
+                    var skillType_p = property.FindPropertyRelative("skillType");
+                    skillType_p.DrawProperty("技能类型(作为施法状态的进一步筛选)");
+                }
             }
             EditorGUI.indentLevel -= 1;
         }
