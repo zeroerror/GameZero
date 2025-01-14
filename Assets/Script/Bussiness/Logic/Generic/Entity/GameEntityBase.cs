@@ -120,16 +120,9 @@ namespace GamePlay.Bussiness.Logic
 
         public GameVec2 logicBottomPos => this.transformCom.position;
 
-        public bool IsAlive()
+        public virtual bool IsAlive()
         {
-            if (!this.isValid) return false;
-
-            // 检查基础属性中是否存在最大生命值属性, 如果不存在则默认为存活
-            if (!this.baseAttributeCom.TryGetAttribute(GameAttributeType.MaxHP, out var hpAttribute)) return true;
-
-            // 检查当前生命值是否大于0
-            var hp = this.attributeCom.GetValue(GameAttributeType.HP);
-            return hp > 0;
+            return this.isValid;
         }
 
     }

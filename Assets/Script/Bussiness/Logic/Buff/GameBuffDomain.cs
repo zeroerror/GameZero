@@ -221,8 +221,6 @@ namespace GamePlay.Bussiness.Logic
 
             // 挂载层数
             var realLayer = this._AttachLayer(buff, layer);
-            // 刷新buff属性效果
-            this._refreshBuffAttribute(buff, actor, targetRole);
 
             // 提交RC事件
             this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_ATTACH, new GameBuffRCArgs_Attach
@@ -237,6 +235,13 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary> 执行挂载层数 </summary>
         private int _AttachLayer(GameBuffEntity buff, int layer = 1)
+        {
+            var attachLayer = this._GetAttachLayer(buff, layer);
+            this._refreshBuffAttribute(buff, buff.idCom.parent, buff.target);
+            return attachLayer;
+        }
+
+        private int _GetAttachLayer(GameBuffEntity buff, int layer = 1)
         {
             var buffModel = buff.model;
             var beforeLayer = buff.layer;
@@ -288,9 +293,6 @@ namespace GamePlay.Bussiness.Logic
 
             // 移除层数
             detachLayer = this._DetachLayer(detachBuff, layer);
-            // 刷新buff属性效果
-            var actor = detachBuff.idCom.parent;
-            this._refreshBuffAttribute(detachBuff, actor, buffTarget);
 
             if (!detachBuff.isValid) buffCom.Remove(detachBuff);
 
@@ -330,7 +332,16 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /// <summary> 执行移除层数 </summary>
-        private int _DetachLayer(GameBuffEntity buff, int layer)
+        private int _DetachLayer(GameBuffEntity detachBuff, int layer)
+        {
+            var detachLayer = this._GetDetachLayer(detachBuff, layer);
+            var actor = detachBuff.idCom.parent;
+            this._refreshBuffAttribute(detachBuff, actor, detachBuff.target);
+            return detachLayer;
+        }
+
+        /// <summary> 执行移除层数 </summary>
+        private int _GetDetachLayer(GameBuffEntity buff, int layer)
         {
             layer = layer == 0 ? buff.model.maxLayer : layer;
 

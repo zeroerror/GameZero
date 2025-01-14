@@ -1,4 +1,5 @@
 using GamePlay.Core;
+using UnityEngine.Analytics;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -30,6 +31,13 @@ namespace GamePlay.Bussiness.Logic
             base.Clear();
             this.SetByModel(this.model);
             this.skillCom.Clear();
+        }
+
+        public override bool IsAlive()
+        {
+            if (!base.IsAlive()) return false;
+            var stateType = this.fsmCom.stateType;
+            return stateType != GameRoleStateType.Dead;
         }
 
         public void SetByModel(GameRoleModel model)
