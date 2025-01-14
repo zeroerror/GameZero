@@ -1,9 +1,6 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using GamePlay.Bussiness.Logic;
-using GamePlay.Bussiness.Renderer;
 using GamePlay.Core;
-using UnityEngine;
 using UnityEngine.UI;
 namespace GamePlay.Bussiness.UI
 {

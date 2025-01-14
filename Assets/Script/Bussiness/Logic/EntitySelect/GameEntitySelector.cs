@@ -26,7 +26,7 @@ namespace GamePlay.Bussiness.Logic
             if (!entityA || !entityB) return false;
             // 判定阵营
             if (!entityA.idCom.CheckCampType(entityB.idCom, campType)) return false;
-            // 判定实体类型
+            // 判定实体类型 ps: none默认通过
             if (this.entityType != GameEntityType.None && entityB.idCom.entityType != this.entityType) return false;
             // 判定锚点类型
             if (this.colliderModel == null)

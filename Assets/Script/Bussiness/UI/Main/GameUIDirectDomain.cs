@@ -18,10 +18,10 @@ namespace GamePlay.Bussiness.UI
         {
             this.context = new GameUIContext();
             this._InitDomain();
-            this.SetTimeout(1, () =>
-            {
-                this.OpenUI<GameUI_ActionOption>();
-            });
+            // this.SetTimeout(1, () =>
+            // {
+            //     this.OpenUI<GameUI_ActionOption>();
+            // });
         }
 
         private void _InitDomain()
