@@ -25,6 +25,8 @@ namespace GamePlay.Bussiness.Logic
                 if (!role) return;
                 // 检查 状态类型
                 if (stateRecord.stateType != this.model.stateType) return;
+                // 检查 施法状态下的技能类型
+                if (stateRecord.stateType == GameRoleStateType.Cast && stateRecord.skillType != this.model.skillType) return;
                 // 检查 阵营
                 var campType = this.model.campType;
                 var isTargetSelf = campType == GameCampType.None;

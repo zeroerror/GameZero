@@ -9,11 +9,18 @@ namespace GamePlay.Bussiness.Logic
         public readonly GameCampType campType;
         /// <summary> 角色状态类型 </summary>
         public readonly GameRoleStateType stateType;
+        /// <summary> 技能类型(作为施法状态的进一步筛选) </summary>
+        public readonly GameSkillType skillType;
 
-        public GameBuffConditionModel_WhenRoleStateEnter(GameCampType campType, GameRoleStateType stateType)
+        public GameBuffConditionModel_WhenRoleStateEnter(
+            GameCampType campType,
+            GameRoleStateType stateType,
+            GameSkillType skillType
+        )
         {
             this.campType = campType;
             this.stateType = stateType;
+            this.skillType = skillType;
         }
     }
 }
