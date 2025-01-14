@@ -44,11 +44,6 @@ namespace GamePlay.Bussiness.Logic
             this._attributes = new List<GameAttribute>(args.attributes);
         }
 
-        public void SetByCom(GameAttributeCom com)
-        {
-            this._attributes = new List<GameAttribute>(com._attributes);
-        }
-
         public void SetAttribute(in GameAttribute attribute)
         {
             this.SetAttribute(attribute.type, attribute.value);

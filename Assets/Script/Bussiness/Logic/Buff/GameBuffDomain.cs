@@ -53,7 +53,7 @@ namespace GamePlay.Bussiness.Logic
         public void TickBuff(GameEntityBase entity, float dt)
         {
             var buffCom = this._GetBuffCom(entity);
-            buffCom.Foreach(buff =>
+            buffCom.Foreach((Action<GameBuffEntity>)(buff =>
             {
                 buff.Tick(dt);
                 // buff层数选择器
@@ -81,13 +81,13 @@ namespace GamePlay.Bussiness.Logic
                 if (isSatisfied_action)
                 {
                     buff.StartCD();
-                    buff.model.actionIds?.Foreach(actionId =>
+                    buff.model.actionIds?.Foreach((Action<int>)(actionId =>
                     {
                         buff.physicsCom.ClearCollided();
-                        buff.attributeCom.SetByCom(buff.idCom.parent.attributeCom);
-                        buff.baseAttributeCom.SetByCom(buff.idCom.parent.baseAttributeCom);
+                        buff.attributeCom.CopyFrom(buff.idCom.parent.attributeCom);
+                        buff.baseAttributeCom.CopyFrom(buff.idCom.parent.baseAttributeCom);
                         this._context.domainApi.actionApi.DoAction(actionId, buff, buff.GetActionParam());
-                    });
+                    }));
                 }
                 // 移除条件 ps: 没有有效条件时默认为不满足, 也就是默认
                 var isSatisfied_remove = buff.conditionSetEntity_remove.IsValid() && buff.conditionSetEntity_remove.CheckSatisfied();
@@ -98,7 +98,7 @@ namespace GamePlay.Bussiness.Logic
                         this.TryDetachBuff(entity, buff.model.typeId, 0);
                     });
                 }
-            });
+            }));
         }
 
         /// <summary> 尝试挂载buff </summary>
@@ -356,16 +356,16 @@ namespace GamePlay.Bussiness.Logic
                 var attrType = args.modifyType;
 
                 // 记录buff属性效果旧值
-                var buffOldValue = buff.attributeCom.GetValue(attrType);
+                var buffOldValue = buff.targetEffect.GetValue(attrType);
 
                 // 设置buff新的属性效果
-                var buffAttr = new GameAttribute(attrType, args.modifyValue);
-                buffAttr.value *= buff.layer;
-                buff.attributeCom.SetAttribute(buffAttr);
+                var newEffect = new GameAttribute(attrType, args.modifyValue);
+                newEffect.value *= buff.layer;
+                buff.targetEffect.SetAttribute(newEffect);
 
                 // 刷新buff对目标角色的属性效果
                 var roleOldValue = target.attributeCom.GetValue(attrType);
-                var roleNewValue = roleOldValue + buffAttr.value - buffOldValue;
+                var roleNewValue = roleOldValue + newEffect.value - buffOldValue;
                 target.attributeCom.SetAttribute(attrType, roleNewValue);
 
                 GameLogger.Log($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");

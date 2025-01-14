@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_999005020
+  m_Name: template_buff_999005021
   m_EditorClassIdentifier: 
-  typeId: 999005020
-  buffName: "\u884C\u4E3A\u9009\u9879502 - buff\u6761\u4EF6"
-  desc: "\u5F53\u4E00\u4E2A\u5355\u4F4D\u6B7B\u4EA1\u65F6, \u53CB\u519B\u83B7\u5F9710%\u653B\u51FB\u529B\u548C\u6CD5\u5F3A\u52A0\u6210"
-  refreshFlag: 0
-  maxLayer: 1
+  typeId: 999005021
+  buffName: "\u884C\u4E3A\u9009\u9879502 - buff\u6548\u679C"
+  desc: "\u53CB\u519B\u83B7\u5F9710%\u653B\u51FB\u529B\u548C\u6CD5\u5F3A\u52A0\u6210"
+  refreshFlag: 4
+  maxLayer: 20
   actionParam: 100
   actionSOs:
-  - {fileID: 11400000, guid: 5d4507eaeba2c8a4e8fe9a74ef64a49e, type: 2}
+  - {fileID: 11400000, guid: d81b201062f69044db9f9aa88b1e8aa2, type: 2}
   actionCD: 0
   conditionSetEM_action:
     durationEM:
@@ -83,4 +83,8 @@ MonoBehaviour:
   vfxScale: {x: 1, y: 1}
   vfxOffset: {x: 0, y: 0}
   vfxOrderOffset: 0
-  attributeEMs: []
+  attributeEMs:
+  - attributeType: 5
+    value: 10
+    valueFormat: 2
+    refType: 3

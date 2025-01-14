@@ -20,6 +20,6 @@ MonoBehaviour:
   skills: []
   attributes:
   - type: 2
-    value: 100000000
+    value: 5000
   - type: 6
     value: 1

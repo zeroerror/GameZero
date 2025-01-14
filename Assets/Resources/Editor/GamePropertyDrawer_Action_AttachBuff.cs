@@ -13,10 +13,6 @@ namespace GamePlay.Config
 
             var layer = property.FindPropertyRelative("layer");
             layer.DrawProperty_Int("层数(至少一层)");
-            if (layer.intValue < 1)
-            {
-                layer.intValue = 1;
-            }
 
             // var randomValueOffset_p = property.FindPropertyRelative("randomValueOffset");
             // randomValueOffset_p.DrawProperty_Vector2("随机值偏移");

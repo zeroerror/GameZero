@@ -19,13 +19,15 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary> buff目标 </summary>
         public GameEntityBase target;
+        /// <summary> 目标效果 </summary>
+        public GameAttributeCom targetEffect { get; private set; }
 
         public GameBuffEntity(GameBuffModel model) : base(model.typeId, GameEntityType.Buff)
         {
             this.model = model;
             this.conditionSetEntity_action = new GameBuffConditionSetEntity(this, model.conditionSetModel_action);
             this.conditionSetEntity_remove = new GameBuffConditionSetEntity(this, model.conditionSetModel_remove);
-            this.layer = 0;
+            this.targetEffect = new GameAttributeCom();
         }
 
         public override void Destroy()

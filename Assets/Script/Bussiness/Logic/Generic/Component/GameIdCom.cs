@@ -101,6 +101,7 @@ namespace GamePlay.Bussiness.Logic
             switch (campType)
             {
                 case GameCampType.None:
+                case GameCampType.All:
                     return true;
                 case GameCampType.Enemy:
                     return this.campId != idComB.campId;
