@@ -16,7 +16,7 @@ namespace GamePlay.Config
 
         public GameProjectileStateModel_FixedDirection ToModel()
         {
-            return new GameProjectileStateModel_FixedDirection(speed, bounceCount, detectSelector.ToSelector());
+            return new GameProjectileStateModel_FixedDirection(speed, bounceCount, detectSelector.ToModel());
         }
     }
 }

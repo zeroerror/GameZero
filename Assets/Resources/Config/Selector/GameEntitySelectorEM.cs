@@ -19,7 +19,7 @@ namespace GamePlay.Config
         public GameCircleColliderModel circleColliderModel;
         public GameFanColliderModel fanColliderModel;
 
-        public GameEntitySelector ToSelector()
+        public GameEntitySelector ToModel()
         {
             GameEntitySelector selector = new GameEntitySelector();
             selector.selectAnchorType = this.selectAnchorType;

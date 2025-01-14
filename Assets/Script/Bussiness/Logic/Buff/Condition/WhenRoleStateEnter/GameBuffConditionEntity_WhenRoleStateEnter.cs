@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Logic
 {
     /// <summary>
-    /// buff条件实体 - 当死亡时(即亡语)
+    /// buff条件实体 - 当角色状态进入时
     /// <para>当满足以下任意条件时，都算作满足条件</para>
     /// </summary>
     public class GameBuffConditionEntity_WhenRoleStateEnter : GameBuffConditionEntityBase

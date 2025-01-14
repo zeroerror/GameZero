@@ -22,7 +22,7 @@ namespace GamePlay.Config
             var model = new GameProjectileTriggerModel_VolumeCollision(
                 actionIds,
                 nextStateType,
-                detectEntitySelectorEM.ToSelector()
+                detectEntitySelectorEM.ToModel()
             );
             return model;
         }

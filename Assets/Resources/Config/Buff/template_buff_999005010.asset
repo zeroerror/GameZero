@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_999001041
+  m_Name: template_buff_999005010
   m_EditorClassIdentifier: 
-  typeId: 999001041
-  buffName: "\u884C\u4E3A\u9009\u9879104 - buff\u6548\u679C"
-  desc: "\u7206\u53D1\u6027\u653B\u901F\u52A0\u6210"
+  typeId: 999005010
+  buffName: "\u884C\u4E3A\u9009\u9879501 - buff\u6548\u679C"
+  desc: "\u51FB\u6740\u76EE\u6807\u540E, \u53D8\u8EAB\u4E3A\u5BF9\u65B9, \u5E76\u83B7\u5F97\u521D\u59CB\u6EE1\u80FD\u91CF"
   refreshFlag: 4
-  maxLayer: 3
+  maxLayer: 10
   actionParam: 100
-  actionSOs: []
+  actionSOs:
+  - {fileID: 11400000, guid: 63464312229026f409b7b8101698fa66, type: 2}
   actionCD: 0
   conditionSetEM_action:
     durationEM:
@@ -28,19 +29,20 @@ MonoBehaviour:
       isEnable: 0
       timeInterval: 0
     whenDoActionEM:
-      isEnable: 0
+      isEnable: 1
       targetAction: {fileID: 0}
-      targetActionType: 0
+      targetActionType: 999
       actionCount: 1
       validWindowTime: 0
     whenRoleStateEnterEM:
       isEnable: 0
-      campType: 2
-      stateType: 3
+      campType: 0
+      stateType: 0
+      skillType: 0
   conditionSetEM_remove:
     durationEM:
-      isEnable: 1
-      duration: 2
+      isEnable: 0
+      duration: 8
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0
@@ -54,14 +56,31 @@ MonoBehaviour:
       isEnable: 0
       campType: 0
       stateType: 0
-  vfxPrefab: {fileID: 3672937312462212057, guid: 24e4ca5ae27d11b4baac1ec375e510b2, type: 3}
-  vfxPrefabUrl: VFX/vfx_electriCircle
+      skillType: 0
+  layerSelectorEnable: 0
+  layerSelectorEM:
+    selectAnchorType: 0
+    campType: 0
+    entityType: 0
+    selColliderType: 0
+    boxColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      width: 0
+      height: 0
+    circleColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+    fanColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+      fanAngle: 0
+  vfxPrefab: {fileID: 0}
+  vfxPrefabUrl: 
   vfxLayerType: 1
   vfxScale: {x: 1, y: 1}
   vfxOffset: {x: 0, y: 0}
   vfxOrderOffset: 0
-  attributeEMs:
-  - attributeType: 6
-    value: 100
-    valueFormat: 2
-    refType: 13
+  attributeEMs: []

@@ -18,7 +18,7 @@ namespace GamePlay.Config
         {
             return new GameActionModel_Heal(
                 0,
-                this.selectorEM?.ToSelector(),
+                this.selectorEM?.ToModel(),
                 this.preconditionSetEM?.ToModel(),
                 this.randomValueOffset,
                 this.healType,

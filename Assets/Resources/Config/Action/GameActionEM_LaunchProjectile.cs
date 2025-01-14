@@ -34,7 +34,7 @@ namespace GamePlay.Config
             GameActionModel_LaunchProjectile model = new GameActionModel_LaunchProjectile(
                 0,
                 this.projectileId,
-                this.selectorEM.ToSelector(),
+                this.selectorEM.ToModel(),
                 this.preconditionSetEM?.ToModel(),
                 this.randomValueOffset,
                 this.launchOffset,

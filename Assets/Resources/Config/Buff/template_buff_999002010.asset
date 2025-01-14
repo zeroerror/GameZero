@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_999001030
+  m_Name: template_buff_999002010
   m_EditorClassIdentifier: 
-  typeId: 999001030
-  buffName: "\u884C\u4E3A\u9009\u9879103 - \u68C0\u6D4B\u5F53\u91CA\u653E\u80FD\u91CF\u6280\u80FD\u65F6"
-  desc: "\u5F53\u91CA\u653E\u80FD\u91CF\u6280\u80FD\u65F6, \u89E6\u53D1\u77ED\u6682\u7206\u53D1\u6027\u653B\u901F\u52A0\u6210"
-  refreshFlag: 0
-  maxLayer: 1
-  actionParam: 100
-  actionSOs:
-  - {fileID: 11400000, guid: b0d4771f7ea9a3947b4f13c0d30b5034, type: 2}
-  actionCD: 5
+  typeId: 999002010
+  buffName: "\u884C\u4E3A\u9009\u9879201 - buff\u6548\u679C"
+  desc: "\u573A\u4E0A\u5B58\u6D3B\u7684\u53CB\u519B\u8D8A\u591A, \u83B7\u5F97\u8D8A\u9AD8\u7684\u653B\u901F\u52A0\u6210"
+  refreshFlag: 4
+  maxLayer: 20
+  actionParam: 0
+  actionSOs: []
+  actionCD: 0
   conditionSetEM_action:
     durationEM:
       isEnable: 0
@@ -35,14 +34,14 @@ MonoBehaviour:
       actionCount: 1
       validWindowTime: 0
     whenRoleStateEnterEM:
-      isEnable: 1
-      campType: 2
-      stateType: 3
-      skillType: 2
+      isEnable: 0
+      campType: 0
+      stateType: 0
+      skillType: 0
   conditionSetEM_remove:
     durationEM:
       isEnable: 0
-      duration: 2
+      duration: 8
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0
@@ -57,17 +56,17 @@ MonoBehaviour:
       campType: 0
       stateType: 0
       skillType: 0
-  layerSelectorEnable: 0
+  layerSelectorEnable: 1
   layerSelectorEM:
-    selectAnchorType: 0
-    campType: 0
-    entityType: 0
-    selColliderType: 0
+    selectAnchorType: 1
+    campType: 2
+    entityType: 1
+    selColliderType: 1
     boxColliderModel:
       offset: {x: 0, y: 0}
       angle: 0
-      width: 0
-      height: 0
+      width: 9999
+      height: 9999
     circleColliderModel:
       offset: {x: 0, y: 0}
       angle: 0
@@ -77,10 +76,14 @@ MonoBehaviour:
       angle: 0
       radius: 0
       fanAngle: 0
-  vfxPrefab: {fileID: 3672937312462212057, guid: 24e4ca5ae27d11b4baac1ec375e510b2, type: 3}
-  vfxPrefabUrl: VFX/vfx_electriCircle
+  vfxPrefab: {fileID: 0}
+  vfxPrefabUrl: 
   vfxLayerType: 1
   vfxScale: {x: 1, y: 1}
   vfxOffset: {x: 0, y: 0}
   vfxOrderOffset: 0
-  attributeEMs: []
+  attributeEMs:
+  - attributeType: 6
+    value: 10
+    valueFormat: 2
+    refType: 13

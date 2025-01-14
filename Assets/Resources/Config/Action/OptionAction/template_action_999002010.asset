@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_999001031
+  m_Name: template_action_999002010
   m_EditorClassIdentifier: 
-  typeId: 999001031
-  actionType: 9
+  typeId: 999002010
+  actionType: 6
   dmgActionEM:
     dmgType: 1
     value: 20
@@ -171,8 +171,8 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
-    buffSO: {fileID: 11400000, guid: d93a7dfbdf8086b48a6eda3384b1f9bc, type: 2}
-    layer: 10
+    buffSO: {fileID: 11400000, guid: 935ac772222beaa438f7d4b6753060f4, type: 2}
+    layer: 1
     selectorEM:
       selectAnchorType: 1
       campType: 2
@@ -198,9 +198,37 @@ MonoBehaviour:
         buffSO: {fileID: 0}
         layer: 0
     randomValueOffset: {x: 0, y: 0}
+  detachBuffActionEM:
+    buffSO: {fileID: 0}
+    layer: 0
+    selectorEM:
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+    randomValueOffset: {x: 0, y: 0}
   summonRolesActionEM:
     roleSO: {fileID: 0}
-    count: 1
+    count: 0
     campType: 0
     selectorEM:
       selectAnchorType: 0
@@ -229,7 +257,7 @@ MonoBehaviour:
     randomValueOffset: {x: 0, y: 0}
   characterTransformActionEM:
     selectorEM:
-      selectAnchorType: 1
+      selectAnchorType: 0
       campType: 0
       entityType: 0
       selColliderType: 0
@@ -254,17 +282,13 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
     roleSO: {fileID: 0}
-    attributeList:
-    - attributeType: 3
-      value: 100
-      valueFormat: 2
-      refType: 19
+    attributeList: []
   actionEMR:
-    typeId: 0
-    desc: "\u53D8\u8EAB\u4E3A\u5BF9\u65B9, \u5E76\u83B7\u5F97\u521D\u59CB\u6EE1\u80FD\u91CF"
-    actEffectPrefab: {fileID: 1558332597376287026, guid: 969e7cb4ce441084e9e1aa0fadfed26b, type: 3}
-    actVFXScale: {x: 2, y: 2}
-    actVFXOffset: {x: 0, y: 1}
+    typeId: 999001030
+    desc: "\u573A\u4E0A\u5B58\u6D3B\u7684\u53CB\u519B\u8D8A\u591A, \u83B7\u5F97\u8D8A\u9AD8\u7684\u653B\u901F\u52A0\u6210"
+    actEffectPrefab: {fileID: 0}
+    actVFXScale: {x: 1, y: 1}
+    actVFXOffset: {x: 0, y: 0}
     actCamShakeModel:
       angle: 0
       amplitude: 0

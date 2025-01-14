@@ -23,7 +23,7 @@ namespace GamePlay.Config
             }
             var model = new GameActionModel_SummonRoles(
                 0,
-                this.selectorEM.ToSelector(),
+                this.selectorEM.ToModel(),
                 this.preconditionSetEM?.ToModel(),
                 this.randomValueOffset,
                 this.roleSO.typeId,

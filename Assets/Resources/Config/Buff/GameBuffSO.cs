@@ -17,6 +17,9 @@ namespace GamePlay.Config
         public float actionCD;
         public GameBuffConditionSetEM conditionSetEM_action;
         public GameBuffConditionSetEM conditionSetEM_remove;
+        public bool layerSelectorEnable;
+        public GameEntitySelectorEM layerSelectorEM;
+
         public GameObject vfxPrefab;
         public string vfxPrefabUrl;
         public GameFieldLayerType vfxLayerType;
@@ -29,16 +32,17 @@ namespace GamePlay.Config
         public GameBuffModel ToModel()
         {
             var model = new GameBuffModel(
-                typeId,
-                desc,
-                refreshFlag,
-                maxLayer,
-                actionParam,
-                actionSOs?.Map(e => e.typeId),
-                actionCD,
-                conditionSetEM_action.ToModel(),
-                conditionSetEM_remove.ToModel(),
-                attributeEMs?.Map(e => e.ToModel())
+                this.typeId,
+                this.desc,
+                this.refreshFlag,
+                this.maxLayer,
+                this.actionParam,
+                this.actionSOs?.Map(e => e.typeId),
+                this.actionCD,
+                this.conditionSetEM_action.ToModel(),
+                this.conditionSetEM_remove.ToModel(),
+                this.attributeEMs?.Map(e => e.ToModel()),
+                this.layerSelectorEnable ? this.layerSelectorEM?.ToModel() : null
             );
             return model;
         }
@@ -46,18 +50,18 @@ namespace GamePlay.Config
         public GameBuffModelR ToModelR()
         {
             var model = new GameBuffModelR(
-                typeId,
-                desc,
-                refreshFlag,
-                maxLayer,
-                actionSOs.Map(e => e.typeId),
-                conditionSetEM_action.ToModel(),
-                conditionSetEM_remove.ToModel(),
-                vfxPrefabUrl,
-                vfxLayerType,
-                vfxScale,
-                vfxOffset,
-                vfxOrderOffset
+                this.typeId,
+                this.desc,
+                this.refreshFlag,
+                this.maxLayer,
+                this.actionSOs.Map(e => e.typeId),
+                this.conditionSetEM_action.ToModel(),
+                this.conditionSetEM_remove.ToModel(),
+                this.vfxPrefabUrl,
+                this.vfxLayerType,
+                this.vfxScale,
+                this.vfxOffset,
+                this.vfxOrderOffset
             );
             return model;
         }

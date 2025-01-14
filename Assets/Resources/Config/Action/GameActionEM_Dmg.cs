@@ -18,7 +18,7 @@ namespace GamePlay.Config
         {
             return new GameActionModel_Dmg(
                 0,
-                this.selectorEM?.ToSelector(),
+                this.selectorEM?.ToModel(),
                 this.preconditionSetEM?.ToModel(),
                 this.randomValueOffset,
                 this.dmgType,

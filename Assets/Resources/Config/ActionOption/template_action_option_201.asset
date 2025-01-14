@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6ca41dd7c039d24d850d27820794532, type: 3}
-  m_Name: template_action_option_103
+  m_Name: template_action_option_201
   m_EditorClassIdentifier: 
-  typeId: 103
+  typeId: 201
   disable: 0
   quality: 3
-  desc: "\u4F24\u5BB3\u9891\u7387\u6D41\u6D3E - \u4E00\u9F13\u4F5C\u6C14"
+  desc: "\u53EC\u5524\u6D41\u6D3E - \u4F17\u5FD7\u6210\u57CE"
   maxLv: 10
   actionSOs:
-  - {fileID: 11400000, guid: ee25fa4028e72f5439e353f1ef417848, type: 2}
+  - {fileID: 11400000, guid: 71e9c6e650b673343925269df23926b6, type: 2}

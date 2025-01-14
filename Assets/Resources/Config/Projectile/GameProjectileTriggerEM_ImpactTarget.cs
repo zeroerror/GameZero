@@ -25,7 +25,7 @@ namespace GamePlay.Config
             var model = new GameProjectileTriggerModel_ImpactTarget(
                 actionIds,
                 nextStateType,
-                detectEntitySelectorEM.ToSelector(),
+                detectEntitySelectorEM.ToModel(),
                 checkByTargetCollider
             );
             return model;

@@ -1,5 +1,6 @@
 using System;
 using GamePlay.Core;
+using UnityEngine.Analytics;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -55,6 +56,26 @@ namespace GamePlay.Bussiness.Logic
             buffCom.Foreach(buff =>
             {
                 buff.Tick(dt);
+                // buff层数选择器
+                var layerSelector = buff.model.layerSelector;
+                if (layerSelector != null)
+                {
+                    var selectedEntities = this._context.domainApi.entitySelectApi.SelectEntities(layerSelector, entity, false);
+                    var layer = selectedEntities?.Count ?? 0;
+                    if (layer != buff.layer)
+                    {
+                        var layerOffset = layer - buff.layer;
+                        GameLogger.DebugLog($"buff层数变化 {buff.layer} -> {layer}");
+                        if (layerOffset > 0)
+                        {
+                            this._AttachLayer(buff, layerOffset);
+                        }
+                        else
+                        {
+                            this._DetachLayer(buff, layerOffset);
+                        }
+                    }
+                }
                 // 行为条件 ps: 没有有效条件时默认为满足
                 var isSatisfied_action = !buff.conditionSetEntity_action.IsValid() || buff.conditionSetEntity_action.CheckSatisfied();
                 if (isSatisfied_action)

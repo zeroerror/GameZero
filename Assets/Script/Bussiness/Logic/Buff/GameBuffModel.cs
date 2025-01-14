@@ -13,6 +13,9 @@ namespace GamePlay.Bussiness.Logic
         public readonly GameBuffConditionSetModel conditionSetModel_remove;
         public readonly GameBuffAttributeModel[] attributeModels;
 
+        /// <summary> 用于根据当前满足选择的目标数量决定buff层数 </summary>
+        public readonly GameEntitySelector layerSelector;
+
         public GameBuffModel(
             int typeId,
             string desc,
@@ -23,7 +26,8 @@ namespace GamePlay.Bussiness.Logic
             float actionCD,
             GameBuffConditionSetModel conditionSetModel_action,
             GameBuffConditionSetModel conditionSetModel_remove,
-            GameBuffAttributeModel[] attributeModels
+            GameBuffAttributeModel[] attributeModels,
+            GameEntitySelector layerSelector
         )
         {
             this.typeId = typeId;
@@ -36,6 +40,7 @@ namespace GamePlay.Bussiness.Logic
             this.conditionSetModel_action = conditionSetModel_action;
             this.conditionSetModel_remove = conditionSetModel_remove;
             this.attributeModels = attributeModels;
+            this.layerSelector = layerSelector;
         }
 
         public override string ToString()

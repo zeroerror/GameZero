@@ -19,6 +19,8 @@ namespace GamePlay.Config
         private SerializedProperty actionCD_p;
         private SerializedProperty conditionSetEM_action_p;
         private SerializedProperty conditionSetEM_remove_p;
+        private SerializedProperty layerSelectorEnable_p;
+        private SerializedProperty layerSelectorEM_p;
 
         private SerializedProperty vfxPrefab_p;
         private SerializedProperty vfxPrefabUrl_p;
@@ -42,6 +44,8 @@ namespace GamePlay.Config
             this.actionCD_p = _serializedObject.FindProperty("actionCD");
             this.conditionSetEM_action_p = _serializedObject.FindProperty("conditionSetEM_action");
             this.conditionSetEM_remove_p = _serializedObject.FindProperty("conditionSetEM_remove");
+            this.layerSelectorEnable_p = _serializedObject.FindProperty("layerSelectorEnable");
+            this.layerSelectorEM_p = _serializedObject.FindProperty("layerSelectorEM");
 
             this.vfxPrefab_p = _serializedObject.FindProperty("vfxPrefab");
             this.vfxPrefabUrl_p = _serializedObject.FindProperty("vfxPrefabUrl");
@@ -131,7 +135,11 @@ namespace GamePlay.Config
             {
                 this.conditionSetEM_remove_p.DrawProperty("条件集模板 - 移除");
             });
-
+            GameEditorGUILayout.DrawBoxItem(() =>
+            {
+                var layerSelectorEnable = this.layerSelectorEnable_p.DrawProperty_Bool("层数选择器 开/关");
+                if (layerSelectorEnable) this.layerSelectorEM_p.DrawProperty();
+            });
             this._DrawActionSORefs();
 
             this._serializedObject.ApplyModifiedProperties();
@@ -152,7 +160,7 @@ namespace GamePlay.Config
                     for (int i = 0; i < actionSOs.Length; i++)
                     {
                         var actionSO = actionSOs[i];
-                        EditorGUILayout.ObjectField(actionSO.typeId.ToString(), actionSO, typeof(GameActionSO), false);
+                        EditorGUILayout.ObjectField(actionSO.actionEMR.desc.ToString(), actionSO, typeof(GameActionSO), false);
                     }
                 }
                 GUI.color = color;

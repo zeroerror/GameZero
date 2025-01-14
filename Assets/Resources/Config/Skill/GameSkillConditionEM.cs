@@ -21,7 +21,7 @@ namespace GamePlay.Config
                 targeterType,
                 cdTime,
                 mpCost,
-                selectorEM.ToSelector()
+                selectorEM.ToModel()
             );
         }
     }

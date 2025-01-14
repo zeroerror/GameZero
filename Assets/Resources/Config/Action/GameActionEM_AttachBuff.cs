@@ -22,7 +22,7 @@ namespace GamePlay.Config
             }
             var model = new GameActionModel_AttachBuff(
                 0,
-                this.selectorEM.ToSelector(),
+                this.selectorEM.ToModel(),
                 this.preconditionSetEM?.ToModel(),
                 this.randomValueOffset,
                 this.buffSO.typeId,

@@ -19,7 +19,7 @@ namespace GamePlay.Config
         {
             return new GameActionModel_AttributeModify(
                 0,
-                this.selectorEM?.ToSelector(),
+                this.selectorEM?.ToModel(),
                 this.preconditionSetEM?.ToModel(),
                 this.randomValueOffset,
                 this.modifyType,
