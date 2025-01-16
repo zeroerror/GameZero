@@ -1,7 +1,7 @@
 namespace GamePlay.Bussiness.Logic
 {
     /// <summary>
-    /// buff条件模型 - 当死亡时(即亡语)
+    /// buff条件模型 - 当角色状态进入时
     /// </summary>
     public class GameBuffConditionModel_WhenRoleStateEnter
     {

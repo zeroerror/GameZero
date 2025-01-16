@@ -20,7 +20,7 @@ namespace GamePlay.Bussiness.Logic
             int value,
             GameActionValueFormat valueFormat,
             GameActionValueRefType refType,
-            int actionId = 0
+            int actionId
         )
         {
             // 数值格式化
@@ -88,13 +88,13 @@ namespace GamePlay.Bussiness.Logic
         /// <para name="buffAttributeModel"> buff属性模型 </para>
         /// </summary>
         /// <returns></returns>
-        public static GameActionRecord_AttributeModify CalcAttributeModify(GameEntityBase actor, GameEntityBase target, GameBuffAttributeModel buffAttributeModel)
+        public static GameActionRecord_AttributeModify CalcAttributeModify(GameEntityBase actor, GameEntityBase target, GameBuffAttributeModel buffAttributeModel, int actionId)
         {
             var modifyType = buffAttributeModel.modifyType;
             var value = buffAttributeModel.value;
             var valueFormat = buffAttributeModel.valueFormat;
             var refType = buffAttributeModel.refType;
-            return CalcAttributeModify(actor, target, modifyType, value, valueFormat, refType);
+            return CalcAttributeModify(actor, target, modifyType, value, valueFormat, refType, actionId);
         }
 
         /// <summary>

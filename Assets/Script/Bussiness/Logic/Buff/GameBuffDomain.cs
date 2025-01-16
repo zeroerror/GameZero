@@ -1,6 +1,6 @@
 using System;
+using System.Collections.Generic;
 using GamePlay.Core;
-using UnityEngine.Analytics;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -36,6 +36,7 @@ namespace GamePlay.Bussiness.Logic
           });
         }
 
+        /// <summary> 角色实体和行为选项实体会持有buff组件 </summary>
         private GameBuffCom _GetBuffCom(GameEntityBase entity)
         {
             if (entity.TryGetLinkParent<GameRoleEntity>(out var role))
@@ -50,32 +51,14 @@ namespace GamePlay.Bussiness.Logic
             return null;
         }
 
-        public void TickBuff(GameEntityBase entity, float dt)
+        public void TickBuff(GameEntityBase buffOwner, float dt)
         {
-            var buffCom = this._GetBuffCom(entity);
-            buffCom.Foreach((Action<GameBuffEntity>)(buff =>
+            var buffCom = this._GetBuffCom(buffOwner);
+            buffCom.Foreach(buff =>
             {
                 buff.Tick(dt);
                 // buff层数选择器
-                var layerSelector = buff.model.layerSelector;
-                if (layerSelector != null)
-                {
-                    var selectedEntities = this._context.domainApi.entitySelectApi.SelectEntities(layerSelector, entity, false);
-                    var layer = selectedEntities?.Count ?? 0;
-                    if (layer != buff.layer)
-                    {
-                        var layerOffset = layer - buff.layer;
-                        GameLogger.DebugLog($"buff层数变化 {buff.layer} -> {layer}");
-                        if (layerOffset > 0)
-                        {
-                            this._AttachLayer(buff, layerOffset);
-                        }
-                        else
-                        {
-                            this._DetachLayer(buff, layerOffset);
-                        }
-                    }
-                }
+                this._TickBuffLayerSelector(buff);
                 // 行为条件 ps: 没有有效条件时默认为满足
                 var isSatisfied_action = !buff.conditionSetEntity_action.IsValid() || buff.conditionSetEntity_action.CheckSatisfied();
                 if (isSatisfied_action)
@@ -95,10 +78,43 @@ namespace GamePlay.Bussiness.Logic
                 {
                     this._context.cmdBufferService.AddDelayCmd(0, () =>
                     {
-                        this.TryDetachBuff(entity, buff.model.typeId, 0);
+                        this.TryDetachBuff(buffOwner, buff.model.typeId, 0);
                     });
                 }
-            }));
+            });
+        }
+
+        private void _TickBuffLayerSelector(GameBuffEntity buff)
+        {
+            var layerSelector = buff.model.layerSelector;
+            if (layerSelector == null) return;
+            var selectedEntities = this._context.domainApi.entitySelectApi.SelectEntities(layerSelector, buff, false);
+            var layer = selectedEntities?.Count ?? 0;
+            if (layer == buff.layer) return;
+            var targeterList = new List<GameActionTargeterArgs>();
+            selectedEntities?.Foreach(selectedEntity =>
+            {
+                var targeter = new GameActionTargeterArgs
+                {
+                    targetEntity = selectedEntity,
+                    targetPosition = selectedEntity.transformCom.position,
+                    targetDirection = (selectedEntity.transformCom.position - buff.owner.transformCom.position).normalized
+                };
+                targeterList.Add(targeter);
+            });
+
+            buff.actionTargeterCom.SetTargeterList(targeterList);
+            buff.actionTargeterCom.foreachType = GameForeachType.Sequential;
+            var layerOffset = layer - buff.layer;
+            GameLogger.DebugLog($"buff选择器改变了层数: {buff.layer} -> {layer}");
+            if (layerOffset > 0)
+            {
+                this._AttachLayer(buff, layerOffset);
+            }
+            else
+            {
+                this._DetachLayer(buff, layerOffset);
+            }
         }
 
         /// <summary> 尝试挂载buff </summary>
@@ -128,7 +144,7 @@ namespace GamePlay.Bussiness.Logic
             var buffCom = targetRole.buffCom;
             if (buffCom.TryGet(typeId, out var existBuff))
             {
-                realAttachLayer = this._AttachBuff(existBuff, actor, targetRole, layer);
+                realAttachLayer = this._AttachBuff(existBuff, targetRole, layer);
                 return true;
             }
 
@@ -150,18 +166,31 @@ namespace GamePlay.Bussiness.Logic
             newBuff.BindTransformCom(targetRole.transformCom);
 
             // 注入buff条件所需delegate
-            this._InjectBuffConditionDelegate(newBuff, actor, targetRole);
+            this._InjectBuffConditionDelegate(newBuff, targetRole);
 
             buffCom.Add(newBuff);
             this._buffContext.repo.TryAdd(newBuff);
-            realAttachLayer = this._AttachBuff(newBuff, actor, targetRole, layer);
+            realAttachLayer = this._AttachBuff(newBuff, targetRole, layer);
             return true;
         }
 
-        private void _InjectBuffConditionDelegate(GameBuffEntity buff, GameEntityBase actor, GameRoleEntity targetRole)
+        private void _InjectBuffConditionDelegate(GameBuffEntity buff, GameRoleEntity targetRole)
         {
+            buff.conditionSetEntity_remove.Inject(
+                this._context.FindEntity,
+                this._context.domainApi,
+                this._ForeachActionRecord_Dmg,
+                this._ForeachActionRecord_Heal,
+                this._ForeachActionRecord_LaunchProjectile,
+                this._ForeachActionRecord_KnockBack,
+                this._ForeachActionRecord_AttributeModify,
+                this._ForeachActionRecord_AttachBuff,
+                this._ForeachActionRecord_SummonRoles,
+                this._ForeachRoleStateRecord_Enter
+            );
             buff.conditionSetEntity_action.Inject(
                 this._context.FindEntity,
+                this._context.domainApi,
                 this._ForeachActionRecord_Dmg,
                 this._ForeachActionRecord_Heal,
                 this._ForeachActionRecord_LaunchProjectile,
@@ -206,10 +235,10 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /// <summary> 执行挂载buff </summary>
-        private int _AttachBuff(GameBuffEntity buff, GameEntityBase actor, GameRoleEntity targetRole, int layer)
+        private int _AttachBuff(GameBuffEntity buff, GameRoleEntity targetRole, int layer)
         {
             // 设置目标
-            buff.target = targetRole;
+            buff.owner = targetRole;
 
             // 设置行为目标
             buff.actionTargeterCom.SetTargeter(new GameActionTargeterArgs
@@ -234,14 +263,14 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /// <summary> 执行挂载层数 </summary>
-        private int _AttachLayer(GameBuffEntity buff, int layer = 1)
+        private int _AttachLayer(GameBuffEntity buff, int layer)
         {
             var attachLayer = this._GetAttachLayer(buff, layer);
-            this._refreshBuffAttribute(buff, buff.idCom.parent, buff.target);
+            this._refreshBuffAttribute(buff, buff.idCom.parent);
             return attachLayer;
         }
 
-        private int _GetAttachLayer(GameBuffEntity buff, int layer = 1)
+        private int _GetAttachLayer(GameBuffEntity buff, int layer)
         {
             var buffModel = buff.model;
             var beforeLayer = buff.layer;
@@ -259,11 +288,11 @@ namespace GamePlay.Bussiness.Logic
             if (refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer) || beforeLayer == 0)
             {
                 var afterLayer = beforeLayer + layer;
-                var maxLayer = buffModel.maxLayer == 0 ? int.MaxValue : buffModel.maxLayer;// 0表示无限层数
+                var maxLayer = buffModel.maxLayer == 0 ? int.MaxValue : buffModel.maxLayer;// 0表示最大层数不限制
                 afterLayer = GameMath.Min(afterLayer, maxLayer);
                 buff.layer = afterLayer;
                 var attachLayer = afterLayer - beforeLayer;
-                GameLogger.DebugLog($"{buff.target.idCom} [{buff.model}] 层数叠加: {beforeLayer} -> {afterLayer}");
+                GameLogger.DebugLog($"{buff.owner.idCom} [{buff.model}] 层数叠加: {beforeLayer} -> {afterLayer}");
                 return attachLayer;
             }
             return 0;
@@ -336,7 +365,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var detachLayer = this._GetDetachLayer(detachBuff, layer);
             var actor = detachBuff.idCom.parent;
-            this._refreshBuffAttribute(detachBuff, actor, detachBuff.target);
+            this._refreshBuffAttribute(detachBuff, actor);
             return detachLayer;
         }
 
@@ -354,33 +383,40 @@ namespace GamePlay.Bussiness.Logic
                 buff.SetInvalid();
             }
             var detachLayer = beforeLayer - afterLayer;
-            GameLogger.DebugLog($"{buff.target.idCom} [{buff.model}] 层数移除: {beforeLayer} -> {afterLayer}");
+            GameLogger.DebugLog($"{buff.owner.idCom} [{buff.model}] 层数移除: {beforeLayer} -> {afterLayer}");
             return detachLayer;
         }
 
         /// <summary> 刷新buff属性效果, 同时会刷新目标的属性 </summary>
-        private void _refreshBuffAttribute(GameBuffEntity buff, GameEntityBase actor, GameEntityBase target)
+        private void _refreshBuffAttribute(GameBuffEntity buff, GameEntityBase actor)
         {
+            var targetEntity = buff.actionTargeterCom.getCurTargeter().targetEntity;
+            if (!targetEntity)
+            {
+                GameLogger.LogError("Buff当前不存在选取目标, 无法刷新buff属性效果");
+                return;
+            }
             buff.model.attributeModels?.Foreach(attrModel =>
             {
-                var args = GameActionUtil_AttributeModify.CalcAttributeModify(actor, target, attrModel);
+                var args = GameActionUtil_AttributeModify.CalcAttributeModify(actor, targetEntity, attrModel, 0);
                 var attrType = args.modifyType;
 
                 // 记录buff属性效果旧值
-                var buffOldValue = buff.targetEffect.GetValue(attrType);
+                var buffOldValue = buff.ownEffect.GetValue(attrType);
 
                 // 设置buff新的属性效果
                 var newEffect = new GameAttribute(attrType, args.modifyValue);
                 newEffect.value *= buff.layer;
-                buff.targetEffect.SetAttribute(newEffect);
+                buff.ownEffect.SetAttribute(newEffect);
 
                 // 刷新buff对目标角色的属性效果
-                var roleOldValue = target.attributeCom.GetValue(attrType);
+                var roleOldValue = buff.owner.attributeCom.GetValue(attrType);
                 var roleNewValue = roleOldValue + newEffect.value - buffOldValue;
-                target.attributeCom.SetAttribute(attrType, roleNewValue);
+                buff.owner.attributeCom.SetAttribute(attrType, roleNewValue);
 
                 GameLogger.Log($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
             });
+            buff.actionTargeterCom.UpdateTargeter();
         }
 
         public void TranserBuffCom(GameBuffCom refBuffCom, GameRoleEntity targetRole)
@@ -390,7 +426,7 @@ namespace GamePlay.Bussiness.Logic
             buffList.AddRange(refBuffCom.buffList);
             buffList.Foreach(buff =>
             {
-                buff.target = targetRole;
+                buff.owner = targetRole;
             });
             refBuffCom.buffList.Clear();
         }

@@ -19,6 +19,9 @@ namespace GamePlay.Config
             var entityType_p = property.FindPropertyRelative("entityType");
             entityType_p.DrawProperty_EnumPopup<GameEntityType>("实体类型");
 
+            var onlySelectDead_p = property.FindPropertyRelative("onlySelectDead");
+            onlySelectDead_p.DrawProperty("是否仅选择死亡单位");
+
             var selColliderType_p = property.FindPropertyRelative("selColliderType");
             var selColliderType = selColliderType_p.DrawProperty_EnumPopup<GameColliderType>("碰撞体类型");
 

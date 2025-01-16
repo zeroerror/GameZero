@@ -24,24 +24,25 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public List<GameEntityBase> SelectEntities(GameEntitySelector selector, GameEntityBase actorEntity, bool ignoreRepeatCollision = true)
+        public List<GameEntityBase> SelectEntities(GameEntitySelector selector, GameEntityBase actEntity, bool ignoreRepeatCollision = true)
         {
             var physicsApi = this._context.domainApi.physicsApi;
             var selColliderModel = selector.colliderModel;
             var isSingleSelect = selColliderModel == null;
-            var targetEntity = actorEntity.actionTargeterCom.targetEntity;
+            var targetEntity = actEntity.actionTargeterCom.targetEntity;
             var selectAnchorType = selector.selectAnchorType;
 
             // 单体选择
             if (isSingleSelect)
             {
-                var selectedEntity = this._GetSingleSelectedEntity(actorEntity, targetEntity, selectAnchorType);
+                var selectedEntity = this._GetSingleSelectedEntity(actEntity, targetEntity, selectAnchorType);
                 if (selectedEntity == null) return null;
+                if (!selector.onlySelectDead && !selectedEntity.IsAlive()) return null;
                 return new List<GameEntityBase> { selectedEntity };
             }
 
             // 范围选择 - 锚点
-            GameTransformArgs anchorTransformArgs = this._GetRangeSelectAnchorTrans(actorEntity, targetEntity, selectAnchorType);
+            GameTransformArgs anchorTransformArgs = this._GetRangeSelectAnchorTrans(actEntity, targetEntity, selectAnchorType);
 
             var list = physicsApi.GetOverlapEntities(selColliderModel, anchorTransformArgs);
             list = list?.Filter((entity) =>
@@ -51,10 +52,10 @@ namespace GamePlay.Bussiness.Logic
                     var isDead = role.fsmCom.stateType == GameRoleStateType.Dead;
                     if (isDead) return false;
                 }
-                var checkCollided = actorEntity.physicsCom.CheckCollided(entity.idCom.ToArgs());
+                var checkCollided = actEntity.physicsCom.CheckCollided(entity.idCom.ToArgs());
                 if (checkCollided) return false;
-                var checkSelect = selector.CheckSelect(actorEntity, entity);
-                if (ignoreRepeatCollision && checkSelect) actorEntity.physicsCom.AddCollided(entity.idCom.ToArgs());
+                var checkSelect = selector.CheckSelect(actEntity, entity);
+                if (ignoreRepeatCollision && checkSelect) actEntity.physicsCom.AddCollided(entity.idCom.ToArgs());
                 return checkSelect;
             });
             return list;

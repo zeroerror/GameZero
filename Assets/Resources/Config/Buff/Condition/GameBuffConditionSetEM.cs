@@ -8,14 +8,16 @@ namespace GamePlay.Config
         public GameBuffConditionEM_TimeInterval timeIntervalEM;
         public GameBuffConditionEM_WhenDoAction whenDoActionEM;
         public GameBuffConditionEM_WhenRoleStateEnter whenRoleStateEnterEM;
+        public GameBuffConditionEM_WhenUnitCountChange whenUnitCountChangeEM;
 
         public GameBuffConditionSetModel ToModel()
         {
             return new GameBuffConditionSetModel(
-                this.durationEM?.ToModel(),
-                this.timeIntervalEM?.ToModel(),
-                this.whenDoActionEM?.ToModel(),
-                this.whenRoleStateEnterEM?.ToModel()
+                this.durationEM != null && this.durationEM.isEnable ? this.durationEM.ToModel() : null,
+                this.timeIntervalEM != null && this.timeIntervalEM.isEnable ? this.timeIntervalEM.ToModel() : null,
+                this.whenDoActionEM != null && this.whenDoActionEM.isEnable ? this.whenDoActionEM.ToModel() : null,
+                this.whenRoleStateEnterEM != null && this.whenRoleStateEnterEM.isEnable ? this.whenRoleStateEnterEM.ToModel() : null,
+                this.whenUnitCountChangeEM != null && this.whenUnitCountChangeEM.isEnable ? this.whenUnitCountChangeEM.ToModel() : null
             );
         }
     }

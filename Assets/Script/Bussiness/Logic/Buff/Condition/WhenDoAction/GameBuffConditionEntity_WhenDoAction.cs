@@ -66,7 +66,7 @@ namespace GamePlay.Bussiness.Logic
             if (!actorEntity) return false;
             var actorRoleEntity = actorEntity.GetLinkParent<GameRoleEntity>();
             if (!actorRoleEntity) return false;
-            var isBuffTargetAct = actorRoleEntity.idCom.entityId == _buff.target.idCom.entityId;
+            var isBuffTargetAct = actorRoleEntity.idCom.entityId == _buff.owner.idCom.entityId;
             if (!isBuffTargetAct) return false;
             // buff自身触发的行为不计数, 防止死循环
             var isBuffAct = this._buff.idCom.IsEquals(actorIdArgs);

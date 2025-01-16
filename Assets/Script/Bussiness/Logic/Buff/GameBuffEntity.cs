@@ -17,17 +17,17 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> buff已挂载层数 </summary>
         public int layer;
 
-        /// <summary> buff目标 </summary>
-        public GameEntityBase target;
-        /// <summary> 目标效果 </summary>
-        public GameAttributeCom targetEffect { get; private set; }
+        /// <summary> buff持有者 </summary>
+        public GameEntityBase owner;
+        /// <summary> buff持有效果 </summary>
+        public GameAttributeCom ownEffect { get; private set; }
 
         public GameBuffEntity(GameBuffModel model) : base(model.typeId, GameEntityType.Buff)
         {
             this.model = model;
             this.conditionSetEntity_action = new GameBuffConditionSetEntity(this, model.conditionSetModel_action);
             this.conditionSetEntity_remove = new GameBuffConditionSetEntity(this, model.conditionSetModel_remove);
-            this.targetEffect = new GameAttributeCom();
+            this.ownEffect = new GameAttributeCom();
         }
 
         public override void Destroy()

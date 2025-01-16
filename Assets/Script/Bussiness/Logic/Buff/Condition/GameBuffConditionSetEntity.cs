@@ -35,10 +35,16 @@ namespace GamePlay.Bussiness.Logic
                 var entity = new GameBuffConditionEntity_WhenRoleStateEnter(buff, model.whenRoleStateEnterModel);
                 this._entityList.Add(entity);
             }
+            if (model.whenUnitCountChangeModel != null)
+            {
+                var entity = new GameBuffConditionEntity_WhenUnitCountChange(buff, model.whenUnitCountChangeModel);
+                this._entityList.Add(entity);
+            }
         }
 
         public void Inject(
             FindRoleEntityDelegate findEntity,
+            GameDomainApi domainApi,
             ForeachActionRecordDelegate_Dmg forEachActionRecord_Dmg,
             ForeachActionRecordDelegate_Heal forEachActionRecord_Heal,
             ForeachActionRecordDelegate_LaunchProjectile forEachActionRecord_LaunchProjectile,
@@ -62,6 +68,7 @@ namespace GamePlay.Bussiness.Logic
                 conditionEntity.ForeachActionRecord_AttachBuff = forEachActionRecord_AttachBuff;
                 conditionEntity.ForeachActionRecord_SummonRoles = forEachActionRecord_SummonRoles;
                 conditionEntity.ForeachRoleStateRecord = forEachRoleStateRecord;
+                conditionEntity.setDomainApi(domainApi);
             }
         }
 

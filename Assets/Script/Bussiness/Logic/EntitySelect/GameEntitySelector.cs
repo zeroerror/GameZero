@@ -5,15 +5,18 @@ namespace GamePlay.Bussiness.Logic
     [System.Serializable]
     public class GameEntitySelector
     {
-        // 选择锚点类型
+        /// <summary> 选择锚点类型 </summary>
         public GameEntitySelectAnchorType selectAnchorType;
-        // 阵营类型
+        /// <summary> 阵营类型 </summary>
         public GameCampType campType;
-        // 实体类型
+        /// <summary> 实体类型 </summary>
         public GameEntityType entityType;
-        // 碰撞模型
+        /// <summary> 是否仅选择死亡单位 </summary>
+        public bool onlySelectDead;
+        /// <summary> 碰撞模型 </summary>
         public GameColliderModelBase colliderModel;
 
+        /// <summary> 是否是范围选择 </summary>
         public bool isRangeSelect => this.colliderModel != null;
 
         /// <summary>
@@ -35,6 +38,8 @@ namespace GamePlay.Bussiness.Logic
                 if (isSelf && !this.selectAnchorType.HasFlag(GameEntitySelectAnchorType.Actor)) return false;
                 if (!isSelf && !this.selectAnchorType.HasFlag(GameEntitySelectAnchorType.ActTarget)) return false;
             }
+            // 判断是否仅选择死亡单位
+            if (this.onlySelectDead && entityB.IsAlive()) return false;
             return true;
         }
 

@@ -6,14 +6,11 @@ namespace GamePlay.Config
     [System.Serializable]
     public class GameEntitySelectorEM
     {
-        [Header("选择锚点类型")]
         public GameEntitySelectAnchorType selectAnchorType;
-        [Header("阵营类型")]
         public GameCampType campType;
-        [Header("实体类型")]
         public GameEntityType entityType;
+        public bool onlySelectDead;
 
-        [Header("范围选择类型")]
         public GameColliderType selColliderType;
         public GameBoxColliderModel boxColliderModel;
         public GameCircleColliderModel circleColliderModel;
@@ -25,6 +22,7 @@ namespace GamePlay.Config
             selector.selectAnchorType = this.selectAnchorType;
             selector.campType = this.campType;
             selector.entityType = this.entityType;
+            selector.onlySelectDead = this.onlySelectDead;
             switch (this.selColliderType)
             {
                 case GameColliderType.None:

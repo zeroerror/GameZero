@@ -31,7 +31,8 @@ namespace GamePlay.Bussiness.Logic
                     attr.attributeType,
                     attr.value,
                     attr.valueFormat,
-                    attr.refType
+                    attr.refType,
+                    0
                 );
                 record.transAttributes[index] = new GameAttribute(modifyRecord.modifyType, modifyRecord.modifyValue);
             });

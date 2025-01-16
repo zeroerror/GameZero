@@ -43,6 +43,11 @@ namespace GamePlay.Bussiness.Logic
         public ForeachRoleStateRecordDelegate ForeachRoleStateRecord;
         #endregion
 
+        #region [========================================api]
+        protected GameDomainApi _domainApi;
+        public void setDomainApi(GameDomainApi api) => this._domainApi = api;
+        #endregion
+
         public GameBuffConditionEntityBase(GameBuffEntity buff)
         {
             _buff = buff;
@@ -59,6 +64,10 @@ namespace GamePlay.Bussiness.Logic
         public virtual void Clear()
         {
             this._isSatisfied = false;
+        }
+        public virtual void Reset()
+        {
+            this.Clear();
         }
 
         public static bool operator !(GameBuffConditionEntityBase condition)

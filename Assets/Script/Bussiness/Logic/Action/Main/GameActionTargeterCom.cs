@@ -43,7 +43,7 @@ namespace GamePlay.Bussiness.Logic
             _targeterList.RemoveAll(targeter =>
             {
                 var target = targeter.targetEntity;
-                return target == null;// todo 过滤死亡
+                return target == null;
             });
 
             if (foreachType == GameForeachType.None) return;

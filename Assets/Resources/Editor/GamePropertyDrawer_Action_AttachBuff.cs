@@ -12,7 +12,7 @@ namespace GamePlay.Config
             buffSO_P.DrawProperty("buffSO");
 
             var layer = property.FindPropertyRelative("layer");
-            layer.DrawProperty_Int("层数(至少一层)");
+            layer.DrawProperty_Int("层数");
 
             // var randomValueOffset_p = property.FindPropertyRelative("randomValueOffset");
             // randomValueOffset_p.DrawProperty_Vector2("随机值偏移");

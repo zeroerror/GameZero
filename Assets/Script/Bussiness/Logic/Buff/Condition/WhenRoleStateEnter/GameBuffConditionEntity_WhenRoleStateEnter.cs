@@ -4,7 +4,6 @@ namespace GamePlay.Bussiness.Logic
 {
     /// <summary>
     /// buff条件实体 - 当角色状态进入时
-    /// <para>当满足以下任意条件时，都算作满足条件</para>
     /// </summary>
     public class GameBuffConditionEntity_WhenRoleStateEnter : GameBuffConditionEntityBase
     {
@@ -29,7 +28,7 @@ namespace GamePlay.Bussiness.Logic
                 // 检查 阵营
                 var campType = this.model.campType;
                 var isTargetSelf = campType == GameCampType.None;
-                var target = this._buff.target;
+                var target = this._buff.owner;
                 if (isTargetSelf)
                 {
                     if (stateRecord.entityId == target.idCom.entityId) _setSatisfied();
@@ -45,7 +44,7 @@ namespace GamePlay.Bussiness.Logic
                     var targeter = new GameActionTargeterArgs(
                         role,
                         role.transformCom.position,
-                        (role.transformCom.position - target.transformCom.position).normalized
+                        (target.transformCom.position - role.transformCom.position).normalized
                     );
                     targeterList.Add(targeter);
                     return;
