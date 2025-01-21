@@ -40,6 +40,11 @@ namespace GamePlay.Bussiness.Logic
                 var entity = new GameBuffConditionEntity_WhenUnitCountChange(buff, model.whenUnitCountChangeModel);
                 this._entityList.Add(entity);
             }
+            if (model.whenAttributeChangeModel != null)
+            {
+                var entity = new GameBuffConditionEntity_WhenAttributeChange(buff, model.whenAttributeChangeModel);
+                this._entityList.Add(entity);
+            }
         }
 
         public void Inject(

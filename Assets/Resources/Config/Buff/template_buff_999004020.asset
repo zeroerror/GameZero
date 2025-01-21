@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
+  m_Name: template_buff_999004020
+  m_EditorClassIdentifier: 
+  typeId: 999004020
+  buffName: "\u884C\u4E3A\u9009\u9879402 - buff\u6761\u4EF6"
+  desc: "\u62A4\u76FE\u6D88\u8017\u5B8C\u65F6, \u89E6\u53D1\u7206\u88C2\u6548\u679C,
+    \u5BF9\u5468\u56F4\u654C\u4EBA\u9020\u6210\u7B49\u91CF\u4F24\u5BB3"
+  refreshFlag: 4
+  maxLayer: 10
+  actionParam: 100
+  actionSOs: []
+  actionCD: 0
+  conditionSetEM_action:
+    durationEM:
+      isEnable: 0
+      duration: 0
+    timeIntervalEM:
+      isEnable: 0
+      timeInterval: 0
+    whenDoActionEM:
+      isEnable: 0
+      targetAction: {fileID: 0}
+      targetActionType: 999
+      actionCount: 1
+      validWindowTime: 0
+    whenRoleStateEnterEM:
+      isEnable: 1
+      campType: 0
+      stateType: 3
+      skillType: 2
+    whenUnitCountChangeEM:
+      isEnable: 0
+      selectorEM:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      countCondition: 0
+    whenAttributeChangeEM:
+      isEnable: 0
+      valueA: 0
+      valueFormatA: 0
+      refTypeA: 0
+      valueB: 0
+      valueFormatB: 0
+      refTypeB: 0
+      compareType: 0
+  conditionSetEM_remove:
+    durationEM:
+      isEnable: 0
+      duration: 8
+    timeIntervalEM:
+      isEnable: 0
+      timeInterval: 0
+    whenDoActionEM:
+      isEnable: 0
+      targetAction: {fileID: 0}
+      targetActionType: 0
+      actionCount: 0
+      validWindowTime: 0
+    whenRoleStateEnterEM:
+      isEnable: 0
+      campType: 0
+      stateType: 0
+      skillType: 0
+    whenUnitCountChangeEM:
+      isEnable: 0
+      selectorEM:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      countCondition: 0
+    whenAttributeChangeEM:
+      isEnable: 0
+      valueA: 0
+      valueFormatA: 0
+      refTypeA: 0
+      valueB: 0
+      valueFormatB: 0
+      refTypeB: 0
+      compareType: 0
+  layerSelectorEnable: 0
+  layerSelectorEM:
+    selectAnchorType: 0
+    campType: 0
+    entityType: 0
+    onlySelectDead: 0
+    selColliderType: 0
+    boxColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      width: 0
+      height: 0
+    circleColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+    fanColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+      fanAngle: 0
+  vfxPrefab: {fileID: 0}
+  vfxPrefabUrl: 
+  vfxLayerType: 1
+  vfxScale: {x: 1, y: 1}
+  vfxOffset: {x: 0, y: 0}
+  vfxOrderOffset: 0
+  attributeEMs: []

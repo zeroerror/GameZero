@@ -146,5 +146,25 @@ namespace GamePlay.Bussiness.Logic
             return refAttrValue;
         }
 
+        public static bool IsTargetRef(this GameActionValueRefType refType)
+        {
+            switch (refType)
+            {
+                case GameActionValueRefType.TargetAttack:
+                case GameActionValueRefType.TargetBaseAttack:
+                case GameActionValueRefType.TargetHP:
+                case GameActionValueRefType.TargetMaxHP:
+                case GameActionValueRefType.TargetLostHP:
+                case GameActionValueRefType.TargetAttackSpeed:
+                case GameActionValueRefType.TargetBaseAttackSpeed:
+                case GameActionValueRefType.TargetMP:
+                case GameActionValueRefType.TargetMaxMP:
+                case GameActionValueRefType.TargetDmgResist:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
     }
 }
