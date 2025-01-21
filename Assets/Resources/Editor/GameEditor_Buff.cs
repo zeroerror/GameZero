@@ -21,6 +21,8 @@ namespace GamePlay.Config
         private SerializedProperty conditionSetEM_remove_p;
         private SerializedProperty layerSelectorEnable_p;
         private SerializedProperty layerSelectorEM_p;
+        private SerializedProperty layerValueRefEnable_p;
+        private SerializedProperty layerValueRefEM_p;
 
         private SerializedProperty vfxPrefab_p;
         private SerializedProperty vfxPrefabUrl_p;
@@ -46,6 +48,8 @@ namespace GamePlay.Config
             this.conditionSetEM_remove_p = _serializedObject.FindProperty("conditionSetEM_remove");
             this.layerSelectorEnable_p = _serializedObject.FindProperty("layerSelectorEnable");
             this.layerSelectorEM_p = _serializedObject.FindProperty("layerSelectorEM");
+            this.layerValueRefEnable_p = _serializedObject.FindProperty("layerValueRefEnable");
+            this.layerValueRefEM_p = _serializedObject.FindProperty("layerValueRefEM");
 
             this.vfxPrefab_p = _serializedObject.FindProperty("vfxPrefab");
             this.vfxPrefabUrl_p = _serializedObject.FindProperty("vfxPrefabUrl");
@@ -67,10 +71,10 @@ namespace GamePlay.Config
                 this.buffName_p.DrawProperty_Str("名称");
                 this.desc_p.DrawProperty_Str("描述");
                 var refreshFlag = this.refreshFlag_p.DrawProperty_EnumFlagsPopup<GameBuffRefreshFlag>("刷新类型标记");
-                var maxLayer = this.maxLayer_p.DrawProperty_Int("最大层数");
-                if (maxLayer < 1)
+                var maxLayer = this.maxLayer_p.DrawProperty_Int("最大层数(0代表无限)");
+                if (maxLayer < 0)
                 {
-                    this.maxLayer_p.intValue = 1;
+                    this.maxLayer_p.intValue = 0;
                 }
 
                 // 对刷新类型标记的合法性进行校正
@@ -79,7 +83,7 @@ namespace GamePlay.Config
                     refreshFlag &= ~GameBuffRefreshFlag.StackLayer;
                     this.refreshFlag_p.intValue = (int)refreshFlag;
                 }
-                else if (maxLayer > 1 && !refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer))
+                else if (maxLayer == 0 || maxLayer > 1 && !refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer))
                 {
                     refreshFlag |= GameBuffRefreshFlag.StackLayer;
                     this.refreshFlag_p.intValue = (int)refreshFlag;
@@ -137,8 +141,13 @@ namespace GamePlay.Config
             });
             GameEditorGUILayout.DrawBoxItem(() =>
             {
-                var layerSelectorEnable = this.layerSelectorEnable_p.DrawProperty_Bool("层数选择器 开/关");
+                var layerSelectorEnable = this.layerSelectorEnable_p.DrawProperty_Bool("层数选择器[单位数量]");
                 if (layerSelectorEnable) this.layerSelectorEM_p.DrawProperty();
+            });
+            GameEditorGUILayout.DrawBoxItem(() =>
+            {
+                var layerValueRefEnable = this.layerValueRefEnable_p.DrawProperty_Bool("层数选择器[属性数值]");
+                if (layerValueRefEnable) this.layerValueRefEM_p.DrawProperty();
             });
             this._DrawActionSORefs();
 

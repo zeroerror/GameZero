@@ -87,33 +87,46 @@ namespace GamePlay.Bussiness.Logic
         private void _TickBuffLayerSelector(GameBuffEntity buff)
         {
             var layerSelector = buff.model.layerSelector;
-            if (layerSelector == null) return;
-            var selectedEntities = this._context.domainApi.entitySelectApi.SelectEntities(layerSelector, buff, false);
-            var layer = selectedEntities?.Count ?? 0;
-            if (layer == buff.layer) return;
-            var targeterList = new List<GameActionTargeterArgs>();
-            selectedEntities?.Foreach(selectedEntity =>
+            var layerValueRefModel = buff.model.layerValueRefModel;
+            var layerOffset = 0;
+            if (layerSelector != null)
             {
-                var targeter = new GameActionTargeterArgs
+                var selectedEntities = this._context.domainApi.entitySelectApi.SelectEntities(layerSelector, buff, false);
+                var layer = selectedEntities?.Count ?? 0;
+                if (layer == buff.layer) return;
+                var targeterList = new List<GameActionTargeterArgs>();
+                selectedEntities?.Foreach(selectedEntity =>
                 {
-                    targetEntity = selectedEntity,
-                    targetPosition = selectedEntity.transformCom.position,
-                    targetDirection = (selectedEntity.transformCom.position - buff.owner.transformCom.position).normalized
-                };
-                targeterList.Add(targeter);
-            });
+                    var targeter = new GameActionTargeterArgs
+                    {
+                        targetEntity = selectedEntity,
+                        targetPosition = selectedEntity.transformCom.position,
+                        targetDirection = (selectedEntity.transformCom.position - buff.owner.transformCom.position).normalized
+                    };
+                    targeterList.Add(targeter);
+                });
 
-            buff.actionTargeterCom.SetTargeterList(targeterList);
-            buff.actionTargeterCom.foreachType = GameForeachType.Sequential;
-            var layerOffset = layer - buff.layer;
-            GameLogger.DebugLog($"buff选择器改变了层数: {buff.layer} -> {layer}");
+                buff.actionTargeterCom.SetTargeterList(targeterList);
+                buff.actionTargeterCom.foreachType = GameForeachType.Sequential;
+                layerOffset = layer - buff.layer;
+            }
+            else if (layerValueRefModel != null)
+            {
+                var actor = buff.idCom.parent;
+                var target = buff.actionTargeterCom.getCurTargeter().targetEntity;
+                var needRefTarget = layerValueRefModel.refType.IsTargetRef();
+                if (needRefTarget && !target) return;
+                var refValue = layerValueRefModel.refType.GetRefAttributeValue(actor, target, layerValueRefModel.value, layerValueRefModel.valueFormat);
+                layerOffset = (int)refValue - buff.layer;
+            }
+
             if (layerOffset > 0)
             {
                 this._AttachLayer(buff, layerOffset);
             }
-            else
+            else if (layerOffset < 0)
             {
-                this._DetachLayer(buff, layerOffset);
+                this._DetachLayer(buff, -layerOffset);
             }
         }
 
@@ -414,7 +427,7 @@ namespace GamePlay.Bussiness.Logic
                 var roleNewValue = roleOldValue + newEffect.value - buffOldValue;
                 buff.owner.attributeCom.SetAttribute(attrType, roleNewValue);
 
-                GameLogger.Log($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
+                GameLogger.DebugLog($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
             });
             buff.actionTargeterCom.UpdateTargeter();
         }

@@ -54,6 +54,11 @@ namespace GamePlay.Bussiness.Logic
         ActorDmgResist,
         /// <summary> 目标伤害抗性 </summary>
         TargetDmgResist,
+
+        /// <summary> 行为者护盾值 </summary>
+        ActorShield,
+        /// <summary> 目标护盾值 </summary>
+        TargetShield,
     }
 
     public static class GameActionValueRefTypeExt
@@ -139,11 +144,35 @@ namespace GamePlay.Bussiness.Logic
                 case GameActionValueRefType.TargetDmgResist:
                     refAttrValue = targetAttrCom.GetValue(GameAttributeType.NormalDmgResist);
                     break;
+                case GameActionValueRefType.ActorShield:
+                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.Shield);
+                    break;
+                case GameActionValueRefType.TargetShield:
+                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.Shield);
+                    break;
                 default:
                     GameLogger.LogError("未处理的数值参考类型: " + refType);
                     break;
             }
             return refAttrValue;
+        }
+
+        /// <summary>
+        /// 获取参考值
+        /// <para> actor 行为者 </para>
+        /// <para> targetEntity 目标 </para>
+        /// <para> value 数值 </para>
+        /// <para> valueFormat 数值格式化 </para>
+        /// </summary>
+        public static float GetRefAttributeValue(this GameActionValueRefType refType, GameEntityBase actor, GameEntityBase targetEntity, int value, GameActionValueFormat valueFormat)
+        {
+            // 数值格式化
+            var formatValue = valueFormat.FormatValue(value);
+            // 参考属性值
+            var refAttrValue = refType.GetRefAttributeValue(actor, targetEntity);
+            // 参考值
+            var refValue = refAttrValue * formatValue;
+            return refValue;
         }
 
         public static bool IsTargetRef(this GameActionValueRefType refType)

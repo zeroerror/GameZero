@@ -13,12 +13,6 @@ namespace GamePlay.Config
             var selectAnchorType = selectAnchorType_p.DrawProperty_EnumPopup<GameEntitySelectAnchorType>("选择锚点类型");
             if (selectAnchorType == GameEntitySelectAnchorType.None) EditorGUILayout.HelpBox("请选择一个选择锚点类型", MessageType.Warning);
 
-            var campType_p = property.FindPropertyRelative("campType");
-            campType_p.DrawProperty_EnumPopup<GameCampType>("阵营类型");
-
-            var entityType_p = property.FindPropertyRelative("entityType");
-            entityType_p.DrawProperty_EnumPopup<GameEntityType>("实体类型");
-
             var onlySelectDead_p = property.FindPropertyRelative("onlySelectDead");
             onlySelectDead_p.DrawProperty("是否仅选择死亡单位");
 
@@ -52,6 +46,14 @@ namespace GamePlay.Config
                     fanColliderModel_p.DrawProperty("扇形碰撞体");
                     if (go) this._ModifyFanModel(fanColliderModel_p, go.transform);
                     break;
+            }
+
+            if (selColliderType != GameColliderType.None)
+            {
+                var campType_p = property.FindPropertyRelative("campType");
+                campType_p.DrawProperty_EnumPopup<GameCampType>("阵营类型");
+                var entityType_p = property.FindPropertyRelative("entityType");
+                entityType_p.DrawProperty_EnumPopup<GameEntityType>("实体类型");
             }
         }
 

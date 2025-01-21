@@ -91,6 +91,21 @@ namespace GamePlay.Bussiness.Renderer
             return slider;
         }
 
+        public Slider LoadShieldSlider()
+        {
+            var url = "UI/Battle/attribute_bar_shield";
+            var prefab = Resources.Load<GameObject>(url);
+            if (!prefab)
+            {
+                GameLogger.LogError($"角色工厂[渲染层]: 加载属性条失败 {url}");
+                return null;
+            }
+            var go = GameObject.Instantiate(prefab);
+            var slider = go.GetComponentInChildren<Slider>();
+            Debug.Assert(slider != null, "角色工厂[渲染层]: 加载属性条失败, 未找到Slider组件");
+            return slider;
+        }
+
         public Slider LoadMPSlider()
         {
             var url = "UI/Battle/attribute_bar_mp";

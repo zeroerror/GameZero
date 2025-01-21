@@ -86,6 +86,18 @@ namespace GamePlay.Bussiness.Renderer
             var mpStr = this.attributeCom.GetValueStr(GameAttributeType.MP);
             var maxMPStr = this.attributeCom.GetValueStr(GameAttributeType.MaxMP);
             this.attributeBarCom.mpSlider.SetText($"{mpStr}/{maxMPStr}");
+
+            var shieldRatio = this.attributeCom.GetValue(GameAttributeType.Shield) / this.attributeCom.GetValue(GameAttributeType.MaxHP);
+            this.attributeBarCom.shieldSlider.SetRatio(shieldRatio);
+            if (shieldRatio == 0)
+            {
+                this.attributeBarCom.shieldSlider.SetText("");
+            }
+            else
+            {
+                var shieldStr = this.attributeCom.GetValueStr(GameAttributeType.Shield);
+                this.attributeBarCom.shieldSlider.SetText($"{shieldStr}");
+            }
         }
 
         public void setActive(bool active)

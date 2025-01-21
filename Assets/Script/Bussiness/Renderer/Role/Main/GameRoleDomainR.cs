@@ -107,6 +107,12 @@ namespace GamePlay.Bussiness.Renderer
                 attributeBarCom.mpSlider.SetSlider(mpSlider, new Vector2(0, 135));
                 attributeBarCom.mpSlider.SetSize(new Vector2(150, 15));
             }
+
+            var shieldSlider = attributeBarCom.shieldSlider.slider ?? this._roleContext.factory.LoadShieldSlider();
+            this._context.uiApi.layerApi.AddToUIRoot(shieldSlider.transform, GameUILayerType.Scene);
+            attributeBarCom.shieldSlider.SetSlider(shieldSlider, new Vector2(0, 120));
+            attributeBarCom.shieldSlider.SetSize(new Vector2(150, 15));
+
             return role;
         }
 

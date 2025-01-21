@@ -176,7 +176,7 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
-    buffSO: {fileID: 11400000, guid: ba8df302a86e2ef4484ee00db453eac4, type: 2}
+    buffSO: {fileID: 11400000, guid: cec077d192246174cabae2805b8c4c01, type: 2}
     layer: 1
     selectorEM:
       selectAnchorType: 1
@@ -294,7 +294,8 @@ MonoBehaviour:
     attributeList: []
   actionEMR:
     typeId: 999001030
-    desc: "\u6BCF\u6B21\u53CB\u519B\u91CA\u653E\u6280\u80FD\u90FD\u4F1A\u83B7\u5F9710%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE"
+    desc: "\u62A4\u76FE\u6D88\u8017\u5B8C\u65F6, \u89E6\u53D1\u7206\u88C2\u6548\u679C,
+      \u5BF9\u5468\u56F4\u654C\u4EBA\u9020\u6210\u7B49\u91CF\u4F24\u5BB3"
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}

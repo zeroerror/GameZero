@@ -5,7 +5,6 @@ namespace GamePlay.Config
     [System.Serializable]
     public class GameActionEM_AttributeModify
     {
-
         public GameAttributeType modifyType;
         public int value;
         public GameActionValueFormat valueFormat;

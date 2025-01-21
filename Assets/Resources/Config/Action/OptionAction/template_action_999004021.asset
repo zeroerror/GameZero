@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
   m_Name: template_action_999004021
   m_EditorClassIdentifier: 
-  typeId: 999004020
-  actionType: 6
+  typeId: 999004021
+  actionType: 1
   dmgActionEM:
-    dmgType: 1
-    value: 20
-    valueFormat: 1
-    refType: 1
+    dmgType: 2
+    value: 100
+    valueFormat: 2
+    refType: 22
     selectorEM:
-      selectAnchorType: 2
-      campType: 0
-      entityType: 0
+      selectAnchorType: 1
+      campType: 1
+      entityType: 1
       onlySelectDead: 0
-      selColliderType: 0
+      selColliderType: 2
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 0
+        radius: 5
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
     layer: 1
     selectorEM:
       selectAnchorType: 1
-      campType: 2
+      campType: 1
       entityType: 1
       onlySelectDead: 0
       selColliderType: 1
@@ -294,7 +294,7 @@ MonoBehaviour:
     attributeList: []
   actionEMR:
     typeId: 999001030
-    desc: "\u6BCF\u6B21\u53CB\u519B\u91CA\u653E\u6280\u80FD\u90FD\u4F1A\u83B7\u5F9710%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE"
+    desc: "\u5BF9\u5468\u56F4\u654C\u4EBA\u9020\u6210\u672C\u6B21\u6D88\u8017\u7684100%\u62A4\u76FE\u503C\u4F24\u5BB3"
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}

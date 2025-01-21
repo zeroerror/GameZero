@@ -11,30 +11,23 @@ namespace GamePlay.Bussiness.Logic
 
         protected override bool _Check()
         {
-            var actor = this._buff.owner;
-            var targetEntity = this._buff.actionTargeterCom.getCurTargeter().targetEntity;
+
+            var entityListA = this._domainApi.entitySelectApi.SelectEntities(this.model.selectorA, this._buff, false);
+            var entityListB = this._domainApi.entitySelectApi.SelectEntities(this.model.selectorB, this._buff, false);
+            var entityA = entityListA?.Count > 0 ? entityListA[0] : null;
+            var entityB = entityListB?.Count > 0 ? entityListB[0] : null;
+
             var needRefTarget = this.model.refTypeA.IsTargetRef() || this.model.refTypeB.IsTargetRef();
-            if (needRefTarget && !targetEntity)
+            if (needRefTarget && !entityB)
             {
                 // 需要参考目标, 但是目标不存在
                 return false;
             }
 
-            var refValueA = _GetRefValue(actor, targetEntity, this.model.valueA, this.model.valueFormatA, this.model.refTypeA);
-            var refValueB = _GetRefValue(actor, targetEntity, this.model.valueB, this.model.valueFormatB, this.model.refTypeB);
+            var refValueA = this.model.refTypeA.GetRefAttributeValue(entityA, entityB, this.model.valueA, this.model.valueFormatA);
+            var refValueB = this.model.refTypeB.GetRefAttributeValue(entityA, entityB, this.model.valueB, this.model.valueFormatB);
             var compareResult = this.model.compareType.Compare(refValueA, refValueB);
             return compareResult;
-        }
-
-        private float _GetRefValue(GameEntityBase actor, GameEntityBase targetEntity, int value, GameActionValueFormat valueFormat, GameActionValueRefType refType)
-        {
-            // 数值格式化
-            var formatValue = valueFormat.FormatValue(value);
-            // 参考属性值
-            var refAttrValue = refType.GetRefAttributeValue(actor, targetEntity);
-            // 参考值
-            var refValue = refAttrValue * formatValue;
-            return refValue;
         }
 
         public override void Clear()

@@ -109,10 +109,6 @@ namespace GamePlay.Bussiness.Logic
             var afterAttributeModify = curValue + record.modifyValue;
             targetAttrCom.SetAttribute(record.modifyType, afterAttributeModify);
             GameLogger.Log($"目标:{target.idCom} 受到属性修改{record.modifyValue} ({curValue}=>{afterAttributeModify})");
-            if (record.modifyType == GameAttributeType.AttackSpeed)
-            {
-                GameLogger.DebugLog($"Buff属性效果: 攻速变化 {record.modifyValue} ({curValue}=>{afterAttributeModify})");
-            }
         }
 
     }

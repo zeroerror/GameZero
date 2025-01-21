@@ -1,3 +1,4 @@
+using GamePlay.Bussiness.Config;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
 using GamePlay.Core;
@@ -17,8 +18,12 @@ namespace GamePlay.Config
         public float actionCD;
         public GameBuffConditionSetEM conditionSetEM_action;
         public GameBuffConditionSetEM conditionSetEM_remove;
+
         public bool layerSelectorEnable;
         public GameEntitySelectorEM layerSelectorEM;
+
+        public bool layerValueRefEnable;
+        public GameActionValueRefEM layerValueRefEM;
 
         public GameObject vfxPrefab;
         public string vfxPrefabUrl;
@@ -42,7 +47,8 @@ namespace GamePlay.Config
                 this.conditionSetEM_action.ToModel(),
                 this.conditionSetEM_remove.ToModel(),
                 this.attributeEMs?.Map(e => e.ToModel()),
-                this.layerSelectorEnable ? this.layerSelectorEM?.ToModel() : null
+                this.layerSelectorEnable ? this.layerSelectorEM?.ToModel() : null,
+                this.layerValueRefEM.ToModel()
             );
             return model;
         }

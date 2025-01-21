@@ -21,6 +21,8 @@ namespace GamePlay.Config
                 valueFormatA_p.DrawProperty("属性A格式");
                 var refTypeA_p = property.FindPropertyRelative("refTypeA");
                 refTypeA_p.DrawProperty("属性A参考类型");
+                var selectorEM_A_p = property.FindPropertyRelative("selectorEM_A");
+                selectorEM_A_p.DrawProperty("选择器A");
 
                 var valueB_p = property.FindPropertyRelative("valueB");
                 valueB_p.DrawProperty_Int("属性B");
@@ -28,6 +30,8 @@ namespace GamePlay.Config
                 valueFormatB_p.DrawProperty("属性B格式");
                 var refTypeB_p = property.FindPropertyRelative("refTypeB");
                 refTypeB_p.DrawProperty("属性B参考类型");
+                var selectorEM_B_p = property.FindPropertyRelative("selectorEM_B");
+                selectorEM_B_p.DrawProperty("选择器B");
 
                 var compareType_p = property.FindPropertyRelative("compareType");
                 compareType_p.DrawProperty("比较类型");
