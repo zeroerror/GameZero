@@ -50,15 +50,10 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 目标最大魔法值 </summary>
         TargetMaxMP,
 
-        /// <summary> 行为者护甲 </summary>
-        ActorArmor,
-        /// <summary> 目标护甲 </summary>
-        TargetArmor,
-
-        /// <summary> 行为者魔抗 </summary>
-        ActorMagicResis,
-        /// <summary> 目标魔抗 </summary>
-        TargetMagicResist,
+        /// <summary> 行为者伤害抗性 </summary>
+        ActorDmgResist,
+        /// <summary> 目标伤害抗性 </summary>
+        TargetDmgResist,
     }
 
     public static class GameActionValueRefTypeExt
@@ -138,18 +133,11 @@ namespace GamePlay.Bussiness.Logic
                     refAttrValue = targetAttrCom.GetValue(GameAttributeType.MaxMP);
                     break;
 
-                case GameActionValueRefType.ActorArmor:
-                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.Armor);
+                case GameActionValueRefType.ActorDmgResist:
+                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.NormalDmgResist);
                     break;
-                case GameActionValueRefType.TargetArmor:
-                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.Armor);
-                    break;
-
-                case GameActionValueRefType.ActorMagicResis:
-                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.MagicResist);
-                    break;
-                case GameActionValueRefType.TargetMagicResist:
-                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.MagicResist);
+                case GameActionValueRefType.TargetDmgResist:
+                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.NormalDmgResist);
                     break;
                 default:
                     GameLogger.LogError("未处理的数值参考类型: " + refType);

@@ -26,17 +26,10 @@ namespace GamePlay.Bussiness.Logic
             {
                 case GameActionDmgType.Real:
                     break;
-                case GameActionDmgType.Physical:
-                    // 物理减伤
-                    var armor = target.attributeCom.GetValue(GameAttributeType.Armor);
-                    var physicalDmgReduce = armor / (armor + 100);
-                    dmgValue = dmgValue * (1 - physicalDmgReduce);
-                    break;
-                case GameActionDmgType.Magic:
-                    // 魔法减伤
-                    var magicResist = target.attributeCom.GetValue(GameAttributeType.MagicResist);
-                    var magicDmgReduce = magicResist / (magicResist + 100);
-                    dmgValue = dmgValue * (1 - magicDmgReduce);
+                case GameActionDmgType.Normal:
+                    var dmgResist = target.attributeCom.GetValue(GameAttributeType.NormalDmgResist);
+                    var dmgReduce = dmgResist / (dmgResist + 100);
+                    dmgValue = dmgValue * (1 - dmgReduce);
                     break;
                 default:
                     GameLogger.LogError("未处理的伤害类型");
@@ -74,13 +67,22 @@ namespace GamePlay.Bussiness.Logic
                 return false;
             }
 
-            var afterDmgHP = curHP - record.value;
+            var dmgValue = record.value;
+
+            // 护盾
+            var shield = targetAttrCom.GetValue(GameAttributeType.Shield);
+            var shieldValue = dmgValue > shield ? shield : dmgValue;
+            var afterShield = shield - shieldValue;
+            targetAttrCom.SetAttribute(GameAttributeType.Shield, afterShield);
+            dmgValue -= shieldValue;
+
+            var afterDmgHP = curHP - dmgValue;
             targetAttrCom.SetAttribute(GameAttributeType.HP, afterDmgHP);
             if (afterDmgHP <= 0)
             {
                 record.isKill = true;
             }
-            GameLogger.Log($"目标:{target.idCom} 受到伤害{record.value} ({curHP}=>{afterDmgHP})");
+            GameLogger.Log($"目标:{target.idCom} 受到伤害{dmgValue} ({curHP}=>{afterDmgHP})");
             return true;
         }
     }

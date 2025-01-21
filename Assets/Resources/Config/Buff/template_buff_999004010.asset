@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_999005021
+  m_Name: template_buff_999004010
   m_EditorClassIdentifier: 
-  typeId: 999005021
-  buffName: "\u884C\u4E3A\u9009\u9879502 - buff\u6548\u679C"
-  desc: "\u53CB\u519B\u83B7\u5F9710%\u653B\u51FB\u529B\u52A0\u6210"
+  typeId: 999004010
+  buffName: "\u884C\u4E3A\u9009\u9879401 - buff\u6761\u4EF6"
+  desc: "\u6BCF\u6B21\u53CB\u519B\u91CA\u653E\u6280\u80FD\u90FD\u4F1A\u83B7\u5F9710%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE"
   refreshFlag: 4
-  maxLayer: 20
+  maxLayer: 10
   actionParam: 100
   actionSOs:
-  - {fileID: 11400000, guid: 5d4507eaeba2c8a4e8fe9a74ef64a49e, type: 2}
+  - {fileID: 11400000, guid: 2496a68d6e408b84596caa1e37eb6eb5, type: 2}
   actionCD: 0
   conditionSetEM_action:
     durationEM:
@@ -36,9 +36,9 @@ MonoBehaviour:
       validWindowTime: 0
     whenRoleStateEnterEM:
       isEnable: 1
-      campType: 7
-      stateType: 4
-      skillType: 0
+      campType: 0
+      stateType: 3
+      skillType: 2
     whenUnitCountChangeEM:
       isEnable: 0
       selectorEM:
@@ -105,16 +105,16 @@ MonoBehaviour:
       countCondition: 0
   layerSelectorEnable: 0
   layerSelectorEM:
-    selectAnchorType: 1
+    selectAnchorType: 0
     campType: 0
-    entityType: 1
+    entityType: 0
     onlySelectDead: 0
-    selColliderType: 1
+    selColliderType: 0
     boxColliderModel:
       offset: {x: 0, y: 0}
       angle: 0
-      width: 9999
-      height: 9999
+      width: 0
+      height: 0
     circleColliderModel:
       offset: {x: 0, y: 0}
       angle: 0
@@ -130,8 +130,4 @@ MonoBehaviour:
   vfxScale: {x: 1, y: 1}
   vfxOffset: {x: 0, y: 0}
   vfxOrderOffset: 0
-  attributeEMs:
-  - attributeType: 5
-    value: 10
-    valueFormat: 2
-    refType: 3
+  attributeEMs: []

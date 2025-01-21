@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 999005020
   buffName: "\u884C\u4E3A\u9009\u9879502 - buff\u6761\u4EF6"
-  desc: "\u5F53\u4E00\u4E2A\u5355\u4F4D\u6B7B\u4EA1\u65F6, \u53CB\u519B\u83B7\u5F9710%\u653B\u51FB\u529B\u548C\u6CD5\u5F3A\u52A0\u6210"
+  desc: "\u5F53\u4E00\u4E2A\u5355\u4F4D\u6B7B\u4EA1\u65F6, \u53CB\u519B\u83B7\u5F9710%\u653B\u51FB\u529B\u52A0\u6210"
   refreshFlag: 0
   maxLayer: 1
   actionParam: 100
@@ -39,6 +39,29 @@ MonoBehaviour:
       campType: 7
       stateType: 4
       skillType: 0
+    whenUnitCountChangeEM:
+      isEnable: 0
+      selectorEM:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      countCondition: 0
   conditionSetEM_remove:
     durationEM:
       isEnable: 0
@@ -57,11 +80,35 @@ MonoBehaviour:
       campType: 0
       stateType: 0
       skillType: 0
+    whenUnitCountChangeEM:
+      isEnable: 0
+      selectorEM:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      countCondition: 0
   layerSelectorEnable: 0
   layerSelectorEM:
     selectAnchorType: 1
     campType: 0
     entityType: 1
+    onlySelectDead: 0
     selColliderType: 1
     boxColliderModel:
       offset: {x: 0, y: 0}

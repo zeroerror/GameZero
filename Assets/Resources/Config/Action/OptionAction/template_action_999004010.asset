@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_999005020
+  m_Name: template_action_999004010
   m_EditorClassIdentifier: 
-  typeId: 999005020
+  typeId: 999004010
   actionType: 6
   dmgActionEM:
     dmgType: 1
@@ -176,7 +176,7 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
-    buffSO: {fileID: 11400000, guid: 115ab095843ae114e8931523c0cf701e, type: 2}
+    buffSO: {fileID: 11400000, guid: ba8df302a86e2ef4484ee00db453eac4, type: 2}
     layer: 1
     selectorEM:
       selectAnchorType: 1
@@ -293,8 +293,8 @@ MonoBehaviour:
     roleSO: {fileID: 0}
     attributeList: []
   actionEMR:
-    typeId: 999005020
-    desc: "\u5F53\u4E00\u4E2A\u5355\u4F4D\u6B7B\u4EA1\u65F6, \u53CB\u519B\u83B7\u5F9710%\u653B\u51FB\u529B\u52A0\u6210"
+    typeId: 999001030
+    desc: "\u6BCF\u6B21\u53CB\u519B\u91CA\u653E\u6280\u80FD\u90FD\u4F1A\u83B7\u5F9710%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE"
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}

@@ -133,11 +133,8 @@ namespace GamePlay.Bussiness.UI
                 case GameActionDmgType.Real:
                     dirName = "Real";
                     break;
-                case GameActionDmgType.Physical:
+                case GameActionDmgType.Normal:
                     dirName = "Physical";
-                    break;
-                case GameActionDmgType.Magic:
-                    dirName = "Magic";
                     break;
                 default:
                     GameLogger.LogError($"UI跳字: 未处理的伤害类型 {dmgType}");
@@ -156,11 +153,8 @@ namespace GamePlay.Bussiness.UI
                 case GameActionDmgType.Real:
                     suffix = "real";
                     break;
-                case GameActionDmgType.Physical:
+                case GameActionDmgType.Normal:
                     suffix = "physical";
-                    break;
-                case GameActionDmgType.Magic:
-                    suffix = "magic";
                     break;
                 default:
                     GameLogger.LogError($"UI跳字: 未处理的伤害类型 {dmgType}");
