@@ -15,7 +15,7 @@ MonoBehaviour:
   typeId: 999001040
   buffName: "\u884C\u4E3A\u9009\u9879104 - \u68C0\u6D4B\u5F53\u91CA\u653E\u80FD\u91CF\u6280\u80FD\u65F6"
   desc: "\u751F\u547D\u503C\u8D8A\u4F4E, \u653B\u901F\u8D8A\u5FEB, \u4F46\u653B\u51FB\u529B\u8D8A\u4F4E"
-  refreshFlag: 0
+  refreshFlag: 4
   maxLayer: 0
   actionParam: 0
   actionSOs: []
