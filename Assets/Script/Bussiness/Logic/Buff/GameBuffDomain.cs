@@ -59,7 +59,7 @@ namespace GamePlay.Bussiness.Logic
                 if (!buff.isValid) return;
                 buff.Tick(dt);
                 // buff层数选择器
-                this._TickBuffLayerSelector(buff);
+                this._TickLayerMonitors(buff);
                 // 行为条件 ps: 没有有效条件时默认为满足
                 var isSatisfied_action = !buff.conditionSetEntity_action.IsValid() || buff.conditionSetEntity_action.CheckSatisfied();
                 if (isSatisfied_action)
@@ -85,7 +85,8 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        private void _TickBuffLayerSelector(GameBuffEntity buff)
+        /// <summary> 更新buff层数监视器对层数的影响 </summary>
+        private void _TickLayerMonitors(GameBuffEntity buff)
         {
             var layerSelector = buff.model.layerSelector;
             var layerValueRefModel = buff.model.layerValueRefModel;
@@ -263,7 +264,16 @@ namespace GamePlay.Bussiness.Logic
             });
 
             // 挂载层数
-            var realLayer = this._AttachLayer(buff, layer);
+            int realLayer;
+            if (buff.model.HasLayerMonitor())
+            {
+                this._TickLayerMonitors(buff);
+                realLayer = buff.layer;
+            }
+            else
+            {
+                realLayer = this._AttachLayer(buff, layer);
+            }
 
             // 提交RC事件
             this._context.SubmitRC(GameBuffRCCollection.RC_GAME_BUFF_ATTACH, new GameBuffRCArgs_Attach
@@ -381,14 +391,17 @@ namespace GamePlay.Bussiness.Logic
             var afterLayer = beforeLayer - layer;
             afterLayer = GameMath.Max(afterLayer, 0);
             buff.layer = afterLayer;
-            if (afterLayer <= 0 && buff.model.IsRemoveAtZeroLayer())
-            {
-                buff.SetInvalid();
-            }
+
             var actor = buff.idCom.parent;
             this._refreshBuffAttribute(buff, actor);
 
             GameLogger.DebugLog($"{buff.owner.idCom} [{buff.model}] 层数移除: {beforeLayer} -> {afterLayer}");
+
+            if (afterLayer <= 0 && buff.model.NeedRemoveAtZeroLayer())
+            {
+                buff.SetInvalid();
+                GameLogger.DebugLog($"{buff.owner.idCom} [{buff.model}] 置为无效");
+            }
 
             var detachLayer = beforeLayer - afterLayer;
             return detachLayer;
@@ -420,8 +433,6 @@ namespace GamePlay.Bussiness.Logic
                 // 刷新buff对目标角色的属性效果
                 var roleOldValue = buff.owner.attributeCom.GetValue(attrType);
                 var offset = newEffect.value - buffOldValue;
-                // var roleNewValue = roleOldValue + offset;
-                // buff.owner.attributeCom.SetAttribute(attrType, roleNewValue);
                 GameActionUtil_AttributeModify.DoAttributeModify(buff.owner, attrType, offset);
 
                 var roleNewValue = buff.owner.attributeCom.GetValue(attrType);

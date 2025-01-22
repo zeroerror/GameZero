@@ -132,7 +132,11 @@ namespace GamePlay.Bussiness.Logic
                 this._actionContext.optionRepo.TryAdd(optionEntity);
             }
 
-            optionEntity.AddLevel();
+            if (!optionEntity.AddLevel())
+            {
+                GameLogger.LogWarning($"选项等级已达上限：{optionEntity.lv}");
+                return;
+            }
 
             optionModel.actionIds?.Foreach((actionId) =>
             {

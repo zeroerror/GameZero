@@ -53,14 +53,21 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /// <summary>
-        /// 是否在0层时移除
-        /// <para> 存在层数选择器、层数属性值引用, 层数为0时不移除 </para>
+        /// 是否需要在0层时移除
+        /// <para> 存在层数监控时不移除 </para>
         /// </summary>
-        public bool IsRemoveAtZeroLayer()
+        public bool NeedRemoveAtZeroLayer()
         {
-            if (this.layerValueRefModel != null) return false;
-            if (this.layerSelector != null) return false;
+            if (this.HasLayerMonitor()) return false;
             return true;
+        }
+
+        /// <summary>
+        /// 是否有层数监控
+        /// </summary>
+        public bool HasLayerMonitor()
+        {
+            return this.layerSelector != null || this.layerValueRefModel != null;
         }
     }
 }

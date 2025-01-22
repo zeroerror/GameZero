@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_999001030
+  m_Name: template_buff_999001040
   m_EditorClassIdentifier: 
-  typeId: 999001030
-  buffName: "\u884C\u4E3A\u9009\u9879103 - \u68C0\u6D4B\u5F53\u91CA\u653E\u80FD\u91CF\u6280\u80FD\u65F6"
-  desc: "\u5F53\u91CA\u653E\u80FD\u91CF\u6280\u80FD\u65F6, \u89E6\u53D1\u77ED\u6682\u7206\u53D1\u6027\u653B\u901F\u52A0\u6210"
+  typeId: 999001040
+  buffName: "\u884C\u4E3A\u9009\u9879104 - \u68C0\u6D4B\u5F53\u91CA\u653E\u80FD\u91CF\u6280\u80FD\u65F6"
+  desc: "\u751F\u547D\u503C\u8D8A\u4F4E, \u653B\u901F\u8D8A\u5FEB, \u4F46\u653B\u51FB\u529B\u8D8A\u4F4E"
   refreshFlag: 0
-  maxLayer: 1
-  actionParam: 100
-  actionSOs:
-  - {fileID: 11400000, guid: d74a02c76fa8e2f4d9a4dd1ff706ba18, type: 2}
-  actionCD: 5
+  maxLayer: 0
+  actionParam: 0
+  actionSOs: []
+  actionCD: 0
   conditionSetEM_action:
     durationEM:
       isEnable: 0
@@ -222,15 +221,23 @@ MonoBehaviour:
       angle: 0
       radius: 0
       fanAngle: 0
-  layerValueRefEnable: 0
+  layerValueRefEnable: 1
   layerValueRefEM:
-    value: 0
-    valueFormat: 0
-    refType: 0
+    value: 1
+    valueFormat: 1
+    refType: 26
   vfxPrefab: {fileID: 3672937312462212057, guid: 24e4ca5ae27d11b4baac1ec375e510b2, type: 3}
   vfxPrefabUrl: VFX/vfx_electriCircle
   vfxLayerType: 1
   vfxScale: {x: 1, y: 1}
   vfxOffset: {x: 0, y: 0}
   vfxOrderOffset: 0
-  attributeEMs: []
+  attributeEMs:
+  - attributeType: 6
+    value: 1
+    valueFormat: 2
+    refType: 13
+  - attributeType: 5
+    value: -1
+    valueFormat: 2
+    refType: 3

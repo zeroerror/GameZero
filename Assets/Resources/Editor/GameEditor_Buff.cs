@@ -81,12 +81,12 @@ namespace GamePlay.Config
                 if (refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer) && maxLayer < 2)
                 {
                     refreshFlag &= ~GameBuffRefreshFlag.StackLayer;
-                    this.refreshFlag_p.intValue = (int)refreshFlag;
+                    this.refreshFlag_p.enumValueFlag = (int)refreshFlag;
                 }
                 else if (maxLayer == 0 || maxLayer > 1 && !refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer))
                 {
                     refreshFlag |= GameBuffRefreshFlag.StackLayer;
-                    this.refreshFlag_p.intValue = (int)refreshFlag;
+                    this.refreshFlag_p.enumValueFlag = (int)refreshFlag;
                 }
 
                 this.actionParam_p.DrawProperty_Int("行为参数(百分比)");

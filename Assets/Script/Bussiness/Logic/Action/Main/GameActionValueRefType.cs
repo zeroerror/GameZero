@@ -8,63 +8,68 @@ namespace GamePlay.Bussiness.Logic
         None,
 
         /// <summary> 固定数值 </summary>
-        Fixed,
+        Fixed = 1,
 
         /// <summary> 行为者攻击力 </summary>
-        ActorAttack,
+        ActorAttack = 2,
         /// <summary> 行为者基础攻击力 </summary>
-        ActorBaseAttack,
+        ActorBaseAttack = 3,
         /// <summary> 目标攻击力 </summary>
-        TargetAttack,
+        TargetAttack = 4,
         /// <summary> 目标基础攻击力 </summary>
-        TargetBaseAttack,
+        TargetBaseAttack = 5,
 
         /// <summary> 行为者血量 </summary>
-        ActorHP,
+        ActorHP = 6,
         /// <summary> 目标血量 </summary>
-        TargetHP,
+        TargetHP = 7,
         /// <summary> 行为者最大血量 </summary>
-        ActorMaxHP,
+        ActorMaxHP = 8,
         /// <summary> 目标最大血量 </summary>
-        TargetMaxHP,
+        TargetMaxHP = 9,
         /// <summary> 行为者已损失血量 </summary>
-        ActorLostHP,
+        ActorLostHP = 10,
         /// <summary> 目标已损失血量 </summary>
-        TargetLostHP,
+        TargetLostHP = 11,
 
         /// <summary> 行为者攻速 </summary>
-        ActorAttackSpeed,
+        ActorAttackSpeed = 12,
         /// <summary> 行为者基础攻速 </summary>
-        ActorBaseAttackSpeed,
+        ActorBaseAttackSpeed = 13,
         /// <summary> 目标攻速 </summary>
-        TargetAttackSpeed,
+        TargetAttackSpeed = 14,
         /// <summary> 目标基础攻速 </summary>
-        TargetBaseAttackSpeed,
+        TargetBaseAttackSpeed = 15,
 
         /// <summary> 行为者魔法值 </summary>
-        ActorMP,
+        ActorMP = 16,
         /// <summary> 目标魔法值 </summary>
-        TargetMP,
+        TargetMP = 17,
         /// <summary> 行为者最大魔法值 </summary>
-        ActorMaxMP,
+        ActorMaxMP = 18,
         /// <summary> 目标最大魔法值 </summary>
-        TargetMaxMP,
+        TargetMaxMP = 19,
 
         /// <summary> 行为者伤害抗性 </summary>
-        ActorDmgResist,
+        ActorDmgResist = 20,
         /// <summary> 目标伤害抗性 </summary>
-        TargetDmgResist,
+        TargetDmgResist = 21,
 
         /// <summary> 行为者护盾值 </summary>
-        ActorShield,
+        ActorShield = 22,
         /// <summary> 目标护盾值 </summary>
-        TargetShield,
+        TargetShield = 23,
 
         // 期间最大护盾值: 从护盾获取开始计算, 到消耗完毕, 期间内达到的最大护盾值
         /// <summary> 行为者期间最大护盾值 </summary>
-        ActorPeriodMaxShield,
+        ActorPeriodMaxShield = 24,
         /// <summary> 目标期间最大护盾值 </summary>
-        TargetMaxShield,
+        TargetMaxShield = 25,
+
+        /// <summary> 行为者已损失血量百分比 </summary>
+        ActorLostHPPecent = 26,
+        /// <summary> 目标已损失血量百分比 </summary>
+        TargetLostHPPecent = 27,
     }
 
     public static class GameActionValueRefTypeExt
@@ -161,6 +166,16 @@ namespace GamePlay.Bussiness.Logic
                     break;
                 case GameActionValueRefType.TargetMaxShield:
                     refAttrValue = targetAttrCom_base.GetValue(GameAttributeType.Shield);
+                    break;
+                case GameActionValueRefType.ActorLostHPPecent:
+                    refAttrValue = actorAttrCom.GetValue(GameAttributeType.HP) / actorAttrCom.GetValue(GameAttributeType.MaxHP);
+                    refAttrValue = 1 - refAttrValue;
+                    refAttrValue *= 100;
+                    break;
+                case GameActionValueRefType.TargetLostHPPecent:
+                    refAttrValue = targetAttrCom.GetValue(GameAttributeType.HP) / targetAttrCom.GetValue(GameAttributeType.MaxHP);
+                    refAttrValue = 1 - refAttrValue;
+                    refAttrValue *= 100;
                     break;
                 default:
                     GameLogger.LogError("未处理的数值参考类型: " + refType);

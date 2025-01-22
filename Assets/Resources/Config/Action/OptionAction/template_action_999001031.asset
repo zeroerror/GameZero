@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_999001041
+  m_Name: template_action_999001031
   m_EditorClassIdentifier: 
-  typeId: 999001041
+  typeId: 999001031
   actionType: 6
   dmgActionEM:
     dmgType: 1
@@ -23,6 +23,7 @@ MonoBehaviour:
       selectAnchorType: 2
       campType: 0
       entityType: 0
+      onlySelectDead: 0
       selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
@@ -53,6 +54,7 @@ MonoBehaviour:
       selectAnchorType: 0
       campType: 0
       entityType: 0
+      onlySelectDead: 0
       selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
@@ -83,6 +85,7 @@ MonoBehaviour:
       selectAnchorType: 1
       campType: 2
       entityType: 1
+      onlySelectDead: 0
       selColliderType: 1
       boxColliderModel:
         offset: {x: 0, y: 0}
@@ -119,6 +122,7 @@ MonoBehaviour:
       selectAnchorType: 0
       campType: 0
       entityType: 0
+      onlySelectDead: 0
       selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
@@ -149,6 +153,7 @@ MonoBehaviour:
       selectAnchorType: 0
       campType: 0
       entityType: 0
+      onlySelectDead: 0
       selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
@@ -174,10 +179,11 @@ MonoBehaviour:
     buffSO: {fileID: 11400000, guid: 6e1591d0b06966647bef8b364729e9cc, type: 2}
     layer: 1
     selectorEM:
-      selectAnchorType: 3
-      campType: 0
-      entityType: 0
-      selColliderType: 0
+      selectAnchorType: 1
+      campType: 2
+      entityType: 1
+      onlySelectDead: 0
+      selColliderType: 1
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -205,6 +211,7 @@ MonoBehaviour:
       selectAnchorType: 0
       campType: 0
       entityType: 0
+      onlySelectDead: 0
       selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
@@ -234,6 +241,7 @@ MonoBehaviour:
       selectAnchorType: 0
       campType: 0
       entityType: 0
+      onlySelectDead: 0
       selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
@@ -260,6 +268,7 @@ MonoBehaviour:
       selectAnchorType: 0
       campType: 0
       entityType: 0
+      onlySelectDead: 0
       selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
