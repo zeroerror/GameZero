@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_999004020
+  m_Name: template_buff_999006010
   m_EditorClassIdentifier: 
-  typeId: 999004020
-  buffName: "\u884C\u4E3A\u9009\u9879402 - buff\u6761\u4EF6"
-  desc: "\u62A4\u76FE\u6D88\u8017\u5B8C\u65F6, \u89E6\u53D1\u7206\u88C2\u6548\u679C,
-    \u5BF9\u5468\u56F4\u654C\u4EBA\u9020\u6210\u7B49\u91CF\u4F24\u5BB3"
+  typeId: 999006010
+  buffName: "\u884C\u4E3A\u9009\u9879601 - buff\u6548\u679C"
+  desc: "\u6240\u6709\u6CBB\u7597\u63D0\u534710%"
   refreshFlag: 4
-  maxLayer: 0
-  actionParam: 100
-  actionSOs:
-  - {fileID: 11400000, guid: eb21b855bdcf3f248ad25912da780215, type: 2}
+  maxLayer: 10
+  actionParam: 0
+  actionSOs: []
   actionCD: 0
   conditionSetEM_action:
     durationEM:
@@ -37,9 +35,9 @@ MonoBehaviour:
       validWindowTime: 0
     whenRoleStateEnterEM:
       isEnable: 0
-      campType: 0
-      stateType: 3
-      skillType: 2
+      campType: 7
+      stateType: 4
+      skillType: 0
     whenUnitCountChangeEM:
       isEnable: 0
       selectorEM:
@@ -64,12 +62,12 @@ MonoBehaviour:
           fanAngle: 0
       countCondition: 0
     whenAttributeChangeEM:
-      isEnable: 1
+      isEnable: 0
       valueA: 0
-      valueFormatA: 1
-      refTypeA: 22
+      valueFormatA: 0
+      refTypeA: 0
       selectorEM_A:
-        selectAnchorType: 3
+        selectAnchorType: 0
         campType: 0
         entityType: 0
         onlySelectDead: 0
@@ -88,11 +86,11 @@ MonoBehaviour:
           angle: 0
           radius: 0
           fanAngle: 0
-      valueB: 100
-      valueFormatB: 2
-      refTypeB: 22
+      valueB: 0
+      valueFormatB: 0
+      refTypeB: 0
       selectorEM_B:
-        selectAnchorType: 3
+        selectAnchorType: 0
         campType: 0
         entityType: 0
         onlySelectDead: 0
@@ -111,7 +109,7 @@ MonoBehaviour:
           angle: 0
           radius: 0
           fanAngle: 0
-      compareType: 1
+      compareType: 0
   conditionSetEM_remove:
     durationEM:
       isEnable: 0
@@ -204,16 +202,16 @@ MonoBehaviour:
       compareType: 0
   layerSelectorEnable: 0
   layerSelectorEM:
-    selectAnchorType: 0
+    selectAnchorType: 1
     campType: 0
-    entityType: 0
+    entityType: 1
     onlySelectDead: 0
-    selColliderType: 0
+    selColliderType: 1
     boxColliderModel:
       offset: {x: 0, y: 0}
       angle: 0
-      width: 0
-      height: 0
+      width: 9999
+      height: 9999
     circleColliderModel:
       offset: {x: 0, y: 0}
       angle: 0
@@ -225,13 +223,17 @@ MonoBehaviour:
       fanAngle: 0
   layerValueRefEnable: 0
   layerValueRefEM:
-    value: 100
-    valueFormat: 2
-    refType: 24
-  vfxPrefab: {fileID: 59758037400367371, guid: af2d000b09c8a6e469b15a8f57de967f, type: 3}
-  vfxPrefabUrl: VFX/vfx_dust
+    value: 0
+    valueFormat: 0
+    refType: 0
+  vfxPrefab: {fileID: 0}
+  vfxPrefabUrl: 
   vfxLayerType: 1
   vfxScale: {x: 1, y: 1}
   vfxOffset: {x: 0, y: 0}
   vfxOrderOffset: 0
-  attributeEMs: []
+  attributeEMs:
+  - attributeType: 301
+    value: 10
+    valueFormat: 2
+    refType: 1

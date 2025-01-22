@@ -20,7 +20,8 @@ namespace GamePlay.Bussiness.Logic
             // 参考属性值
             float refAttrValue = dmgModel.refType.GetRefAttributeValue(actor, target);
 
-            // 伤害数值 增幅/减幅
+
+            // 减伤
             var dmgValue = refAttrValue * formatValue;
             switch (dmgModel.dmgType)
             {
@@ -35,6 +36,10 @@ namespace GamePlay.Bussiness.Logic
                     GameLogger.LogError("未处理的伤害类型");
                     break;
             }
+
+            // 增伤
+            var dmgAddition = actor.attributeCom.GetValue(GameAttributeType.DmgAddition);
+            dmgValue = dmgValue * (1 + dmgAddition);
 
             // 伤害结算
             var targetAttrCom = target.attributeCom;

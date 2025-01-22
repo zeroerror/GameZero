@@ -25,5 +25,10 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary> 物理护盾 </summary>
         Shield = 201,
+
+        /// <summary> 治疗加成 </summary>
+        HealAddition = 301,
+        /// <summary> 伤害加成 </summary>
+        DmgAddition = 302,
     }
 }

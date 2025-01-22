@@ -137,7 +137,7 @@ namespace GamePlay.Bussiness.Logic
             optionModel.actionIds?.Foreach((actionId) =>
             {
                 optionEntity.physicsCom.ClearCollided();
-                this.DoAction(actionId, optionEntity, optionEntity.lv);
+                this.DoAction(actionId, optionEntity);
             });
         }
 

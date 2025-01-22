@@ -17,16 +17,11 @@ namespace GamePlay.Bussiness.Logic
             // 参考属性值
             float refAttrValue = healModel.refType.GetRefAttributeValue(actor, target);
 
-            // 治疗数值 增幅/减幅
             var healValue = refAttrValue * modelValue;
-            switch (healModel.healType)
-            {
-                case GameActionHealType.Real:
-                    break;
-                default:
-                    GameLogger.LogError("未处理的治疗类型");
-                    break;
-            }
+
+            // 增疗
+            var healAddition = actor.attributeCom.GetValue(GameAttributeType.HealAddition);
+            healValue = healValue * (1 + healAddition);
 
             // 治疗结算
             var curHP = target.attributeCom.GetValue(GameAttributeType.HP);
