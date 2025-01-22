@@ -293,7 +293,7 @@ MonoBehaviour:
     roleSO: {fileID: 0}
     attributeList: []
   actionEMR:
-    typeId: 999001030
+    typeId: 999004020
     desc: "\u62A4\u76FE\u6D88\u8017\u5B8C\u65F6, \u89E6\u53D1\u7206\u88C2\u6548\u679C,
       \u5BF9\u5468\u56F4\u654C\u4EBA\u9020\u6210\u7B49\u91CF\u4F24\u5BB3"
     actEffectPrefab: {fileID: 0}

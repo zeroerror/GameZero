@@ -1,5 +1,3 @@
-using GamePlay.Config;
-
 namespace GamePlay.Bussiness.Logic
 {
     public class GameBuffModel
@@ -52,6 +50,17 @@ namespace GamePlay.Bussiness.Logic
         public override string ToString()
         {
             return $"[{typeId}] 描述:{desc}";
+        }
+
+        /// <summary>
+        /// 是否在0层时移除
+        /// <para> 存在层数选择器、层数属性值引用, 层数为0时不移除 </para>
+        /// </summary>
+        public bool IsRemoveAtZeroLayer()
+        {
+            if (this.layerValueRefModel != null) return false;
+            if (this.layerSelector != null) return false;
+            return true;
         }
     }
 }

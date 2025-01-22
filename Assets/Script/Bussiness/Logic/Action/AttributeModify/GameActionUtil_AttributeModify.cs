@@ -102,13 +102,28 @@ namespace GamePlay.Bussiness.Logic
         /// <para name="target"> 目标 </para>
         /// <para name="record"> 属性修改记录 </para>
         /// </summary>
-        public static void DoAttributeModify(GameEntityBase target, GameActionRecord_AttributeModify record)
+        public static void DoAttributeModify(GameEntityBase target, GameAttributeType modifyType, float modifyValue)
         {
             var targetAttrCom = target.attributeCom;
-            var curValue = targetAttrCom.GetValue(record.modifyType);
-            var afterAttributeModify = curValue + record.modifyValue;
-            targetAttrCom.SetAttribute(record.modifyType, afterAttributeModify);
-            GameLogger.Log($"目标:{target.idCom} 受到属性修改{record.modifyValue} ({curValue}=>{afterAttributeModify})");
+            var curValue = targetAttrCom.GetValue(modifyType);
+            var afterAttributeModify = curValue + modifyValue;
+            targetAttrCom.SetAttribute(modifyType, afterAttributeModify);
+
+            // 护盾的最大护盾值刷新
+            if (modifyType == GameAttributeType.Shield)
+            {
+                var targetBaseAttrCom = target.baseAttributeCom;
+                var periodMaxShield = targetBaseAttrCom.GetValue(GameAttributeType.Shield);
+                // 护盾大于记录值 || 护盾重新累计
+                if (afterAttributeModify > periodMaxShield || (curValue == 0 && afterAttributeModify > 0))
+                {
+                    periodMaxShield = afterAttributeModify;
+                    targetBaseAttrCom.SetAttribute(GameAttributeType.Shield, periodMaxShield);
+                    GameLogger.DebugLog($"目标:{target.idCom} 护盾期间最大值刷新{periodMaxShield}");
+                }
+            }
+
+            GameLogger.Log($"目标:{target.idCom} 受到属性修改{modifyValue} ({curValue}=>{afterAttributeModify})");
         }
 
     }

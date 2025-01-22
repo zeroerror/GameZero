@@ -59,6 +59,12 @@ namespace GamePlay.Bussiness.Logic
         ActorShield,
         /// <summary> 目标护盾值 </summary>
         TargetShield,
+
+        // 期间最大护盾值: 从护盾获取开始计算, 到消耗完毕, 期间内达到的最大护盾值
+        /// <summary> 行为者期间最大护盾值 </summary>
+        ActorPeriodMaxShield,
+        /// <summary> 目标期间最大护盾值 </summary>
+        TargetMaxShield,
     }
 
     public static class GameActionValueRefTypeExt
@@ -149,6 +155,12 @@ namespace GamePlay.Bussiness.Logic
                     break;
                 case GameActionValueRefType.TargetShield:
                     refAttrValue = targetAttrCom.GetValue(GameAttributeType.Shield);
+                    break;
+                case GameActionValueRefType.ActorPeriodMaxShield:
+                    refAttrValue = actorAttrCom_base.GetValue(GameAttributeType.Shield);
+                    break;
+                case GameActionValueRefType.TargetMaxShield:
+                    refAttrValue = targetAttrCom_base.GetValue(GameAttributeType.Shield);
                     break;
                 default:
                     GameLogger.LogError("未处理的数值参考类型: " + refType);

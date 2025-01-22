@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_999004010
+  m_Name: template_buff_999004011
   m_EditorClassIdentifier: 
-  typeId: 999004010
-  buffName: "\u884C\u4E3A\u9009\u9879401 - buff\u6761\u4EF6"
-  desc: "\u6BCF\u6B21\u53CB\u519B\u91CA\u653E\u6280\u80FD\u90FD\u4F1A\u83B7\u5F9710%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE"
+  typeId: 999004011
+  buffName: "\u884C\u4E3A\u9009\u9879401 - buff\u6548\u679C"
+  desc: "\u4F1A\u83B7\u5F9710%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE, \u6301\u7EED\u4E00\u5B9A\u65F6\u95F4"
   refreshFlag: 4
   maxLayer: 10
   actionParam: 100
-  actionSOs:
-  - {fileID: 11400000, guid: 453dfdc0f17c3ee47b9f43470529ad54, type: 2}
+  actionSOs: []
   actionCD: 0
   conditionSetEM_action:
     durationEM:
@@ -35,10 +34,10 @@ MonoBehaviour:
       actionCount: 1
       validWindowTime: 0
     whenRoleStateEnterEM:
-      isEnable: 1
+      isEnable: 0
       campType: 0
       stateType: 3
-      skillType: 1
+      skillType: 2
     whenUnitCountChangeEM:
       isEnable: 0
       selectorEM:
@@ -113,8 +112,8 @@ MonoBehaviour:
       compareType: 0
   conditionSetEM_remove:
     durationEM:
-      isEnable: 0
-      duration: 8
+      isEnable: 1
+      duration: 5
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0
@@ -233,4 +232,8 @@ MonoBehaviour:
   vfxScale: {x: 1, y: 1}
   vfxOffset: {x: 0, y: 0}
   vfxOrderOffset: 0
-  attributeEMs: []
+  attributeEMs:
+  - attributeType: 201
+    value: 10
+    valueFormat: 2
+    refType: 8

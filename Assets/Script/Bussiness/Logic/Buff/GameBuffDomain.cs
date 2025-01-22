@@ -30,10 +30,10 @@ namespace GamePlay.Bussiness.Logic
                 this.TickBuff(entity, dt);
             });
             this._context.actionContext.optionRepo.ForeachAllEntities(entity =>
-          {
-              if (!entity.IsAlive()) return;
-              this.TickBuff(entity, dt);
-          });
+            {
+                if (!entity.IsAlive()) return;
+                this.TickBuff(entity, dt);
+            });
         }
 
         /// <summary> 角色实体和行为选项实体会持有buff组件 </summary>
@@ -56,6 +56,7 @@ namespace GamePlay.Bussiness.Logic
             var buffCom = this._GetBuffCom(buffOwner);
             buffCom.Foreach(buff =>
             {
+                if (!buff.isValid) return;
                 buff.Tick(dt);
                 // buff层数选择器
                 this._TickBuffLayerSelector(buff);
@@ -278,36 +279,35 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 执行挂载层数 </summary>
         private int _AttachLayer(GameBuffEntity buff, int layer)
         {
-            var attachLayer = this._GetAttachLayer(buff, layer);
-            this._refreshBuffAttribute(buff, buff.idCom.parent);
-            return attachLayer;
-        }
-
-        private int _GetAttachLayer(GameBuffEntity buff, int layer)
-        {
             var buffModel = buff.model;
             var beforeLayer = buff.layer;
 
+            // 时间刷新
             var refreshFlag = buffModel.refreshFlag;
             if (refreshFlag.HasFlag(GameBuffRefreshFlag.RefreshTime))
             {
                 buff.conditionSetEntity_remove.RefreshTime();
             }
+
+            // 时间叠加
             if (refreshFlag.HasFlag(GameBuffRefreshFlag.StackTime))
             {
                 buff.conditionSetEntity_remove.StackTime();
             }
-            // 层数可叠加
+
+            // 层数叠加
             if (refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer) || beforeLayer == 0)
             {
                 var afterLayer = beforeLayer + layer;
                 var maxLayer = buffModel.maxLayer == 0 ? int.MaxValue : buffModel.maxLayer;// 0表示最大层数不限制
                 afterLayer = GameMath.Min(afterLayer, maxLayer);
                 buff.layer = afterLayer;
-                var attachLayer = afterLayer - beforeLayer;
+                this._refreshBuffAttribute(buff, buff.idCom.parent);
                 GameLogger.DebugLog($"{buff.owner.idCom} [{buff.model}] 层数叠加: {beforeLayer} -> {afterLayer}");
+                var attachLayer = afterLayer - beforeLayer;
                 return attachLayer;
             }
+
             return 0;
         }
 
@@ -374,31 +374,26 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /// <summary> 执行移除层数 </summary>
-        private int _DetachLayer(GameBuffEntity detachBuff, int layer)
-        {
-            var detachLayer = this._GetDetachLayer(detachBuff, layer);
-            var actor = detachBuff.idCom.parent;
-            this._refreshBuffAttribute(detachBuff, actor);
-            return detachLayer;
-        }
-
-        /// <summary> 执行移除层数 </summary>
-        private int _GetDetachLayer(GameBuffEntity buff, int layer)
+        private int _DetachLayer(GameBuffEntity buff, int layer)
         {
             layer = layer == 0 ? buff.model.maxLayer : layer;
-
             var beforeLayer = buff.layer;
             var afterLayer = beforeLayer - layer;
             afterLayer = GameMath.Max(afterLayer, 0);
             buff.layer = afterLayer;
-            if (afterLayer <= 0)
+            if (afterLayer <= 0 && buff.model.IsRemoveAtZeroLayer())
             {
                 buff.SetInvalid();
             }
-            var detachLayer = beforeLayer - afterLayer;
+            var actor = buff.idCom.parent;
+            this._refreshBuffAttribute(buff, actor);
+
             GameLogger.DebugLog($"{buff.owner.idCom} [{buff.model}] 层数移除: {beforeLayer} -> {afterLayer}");
+
+            var detachLayer = beforeLayer - afterLayer;
             return detachLayer;
         }
+
 
         /// <summary> 刷新buff属性效果, 同时会刷新目标的属性 </summary>
         private void _refreshBuffAttribute(GameBuffEntity buff, GameEntityBase actor)
@@ -424,9 +419,12 @@ namespace GamePlay.Bussiness.Logic
 
                 // 刷新buff对目标角色的属性效果
                 var roleOldValue = buff.owner.attributeCom.GetValue(attrType);
-                var roleNewValue = roleOldValue + newEffect.value - buffOldValue;
-                buff.owner.attributeCom.SetAttribute(attrType, roleNewValue);
+                var offset = newEffect.value - buffOldValue;
+                // var roleNewValue = roleOldValue + offset;
+                // buff.owner.attributeCom.SetAttribute(attrType, roleNewValue);
+                GameActionUtil_AttributeModify.DoAttributeModify(buff.owner, attrType, offset);
 
+                var roleNewValue = buff.owner.attributeCom.GetValue(attrType);
                 GameLogger.DebugLog($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
             });
             buff.actionTargeterCom.UpdateTargeter();

@@ -120,7 +120,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             var optionRepo = this._actionContext.optionRepo;
-            var optionEntity = optionRepo.FindByCampId(campId);
+            var optionEntity = optionRepo.FindOption(campId, optionModel.typeId);
             if (!optionEntity)
             {
                 // 新建选项实体
@@ -155,8 +155,7 @@ namespace GamePlay.Bussiness.Logic
                 this._context.cmdBufferService.AddDelayCmd(0, () =>
                 {
                     // 执行
-                    var isSuc = GameActionUtil_Dmg.DoDmg(selectedEntity, ref record);
-                    if (!isSuc) return;
+                    GameActionUtil_Dmg.DoDmg(selectedEntity, ref record);
                     // 记录
                     this._actionContext.dmgRecordList.Add(record);
                     // 提交RC
@@ -293,7 +292,7 @@ namespace GamePlay.Bussiness.Logic
                 this._context.cmdBufferService.AddDelayCmd(0, () =>
                 {
                     // 执行
-                    if (!dontDo) GameActionUtil_AttributeModify.DoAttributeModify(selectedEntity, record);
+                    if (!dontDo) GameActionUtil_AttributeModify.DoAttributeModify(selectedEntity, record.modifyType, record.modifyValue);
                     // 记录
                     this._actionContext.attributeModifyRecordList.Add(record);
                     // 提交RC

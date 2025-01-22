@@ -48,7 +48,7 @@ namespace GamePlay.Config
                 this.conditionSetEM_remove.ToModel(),
                 this.attributeEMs?.Map(e => e.ToModel()),
                 this.layerSelectorEnable ? this.layerSelectorEM?.ToModel() : null,
-                this.layerValueRefEM.ToModel()
+                this.layerValueRefEnable ? this.layerValueRefEM?.ToModel() : null
             );
             return model;
         }

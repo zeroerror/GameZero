@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: template_action_999004011
   m_EditorClassIdentifier: 
   typeId: 999004011
-  actionType: 5
+  actionType: 6
   dmgActionEM:
     dmgType: 1
     value: 20
@@ -77,16 +77,16 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
   attributeModifyActionEM:
-    modifyType: 201
-    value: 10
+    modifyType: 5
+    value: 5
     valueFormat: 2
-    refType: 8
+    refType: 5
     selectorEM:
-      selectAnchorType: 3
-      campType: 0
-      entityType: 0
+      selectAnchorType: 1
+      campType: 2
+      entityType: 1
       onlySelectDead: 0
-      selColliderType: 0
+      selColliderType: 1
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -176,14 +176,14 @@ MonoBehaviour:
         layer: 0
     randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
-    buffSO: {fileID: 11400000, guid: dbace877691369742804944ac1164ac7, type: 2}
+    buffSO: {fileID: 11400000, guid: 0a00c8ed0ccb2384394454cfdda1d197, type: 2}
     layer: 1
     selectorEM:
-      selectAnchorType: 1
+      selectAnchorType: 3
       campType: 2
       entityType: 1
       onlySelectDead: 0
-      selColliderType: 1
+      selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -293,8 +293,8 @@ MonoBehaviour:
     roleSO: {fileID: 0}
     attributeList: []
   actionEMR:
-    typeId: 999001030
-    desc: "\u81EA\u8EAB\u83B7\u5F9710%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE"
+    typeId: 999004010
+    desc: "\u83B7\u5F9710%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE, \u6301\u7EED5s"
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}

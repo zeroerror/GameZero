@@ -18,7 +18,7 @@ MonoBehaviour:
     dmgType: 2
     value: 100
     valueFormat: 2
-    refType: 22
+    refType: 24
     selectorEM:
       selectAnchorType: 1
       campType: 1
@@ -33,7 +33,7 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 5
+        radius: 50
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -293,8 +293,8 @@ MonoBehaviour:
     roleSO: {fileID: 0}
     attributeList: []
   actionEMR:
-    typeId: 999001030
-    desc: "\u5BF9\u5468\u56F4\u654C\u4EBA\u9020\u6210\u672C\u6B21\u6D88\u8017\u7684100%\u62A4\u76FE\u503C\u4F24\u5BB3"
+    typeId: 999004021
+    desc: "\u5BF9\u5468\u56F4\u654C\u4EBA\u9020\u6210\u671F\u95F4\u6700\u5927\u62A4\u76FE\u503C\u4F24\u5BB3"
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}
