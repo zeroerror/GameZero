@@ -38,6 +38,10 @@ namespace GamePlay.Core
             _listeners[name].Remove(callback);
         }
 
+        /// <summary>
+        /// 处理所有的提交事件分发给监听者, 并清空本次处理的提交事件
+        /// 若触发事件又提交了新的事件, 则会在下一帧处理, 避免死循环
+        /// </summary>
         public void Tick()
         {
             var count = _submitList.Count;

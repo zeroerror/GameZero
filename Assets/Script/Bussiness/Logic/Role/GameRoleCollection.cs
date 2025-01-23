@@ -4,7 +4,7 @@ namespace GamePlay.Bussiness.Logic
     {
         /// <summary> 玩家角色阵营Id </summary>
         public static readonly int PLAYER_ROLE_CAMP_ID = 1;
-        /// <summary> 怪物角色阵营Id </summary>
-        public static readonly int MONSTER_ROLE_CAMP_ID = 1000;
+        /// <summary> 敌方角色阵营Id </summary>
+        public static readonly int ENEMY_ROLE_CAMP_ID = 1000;
     }
 }

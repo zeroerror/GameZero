@@ -18,10 +18,6 @@ namespace GamePlay.Bussiness.UI
         {
             this.context = new UIContext();
             this._InitDomain();
-            // this.SetTimeout(1, () =>
-            // {
-            //     this.OpenUI<UI_ActionOption>();
-            // });
         }
 
         private void _InitDomain()
@@ -50,6 +46,7 @@ namespace GamePlay.Bussiness.UI
 
         private void _InjectContext()
         {
+            this._BindEvents();
             this.debugDomain.Inject(this.context);
             this.jumpTextDomain.Inject(this.context);
             this.layerDomain.Inject(this.context);
@@ -57,6 +54,7 @@ namespace GamePlay.Bussiness.UI
 
         public void Destroy()
         {
+            this._UnbindEvents();
             this.debugDomain.Destroy();
             this.jumpTextDomain.Destroy();
             this.layerDomain.Destroy();
@@ -67,6 +65,39 @@ namespace GamePlay.Bussiness.UI
             this.debugDomain.Tick();
             this.jumpTextDomain.Tick(dt);
             this.layerDomain.Tick(dt);
+        }
+
+        private void _BindEvents()
+        {
+            this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, this._OnStateEnterSettling);
+            this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
+        }
+
+        private void _UnbindEvents()
+        {
+            this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, this._OnStateEnterSettling);
+            this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
+        }
+
+        private void _OnStateEnterSettling(object args)
+        {
+        }
+
+        private void _OnStateEnterFightPreparing(object args)
+        {
+            var evArgs = (GameDirectorRCArgs_StateEnterFightPreparing)args;
+            var actionOptions = evArgs.actionOptions;
+            // 2s后打开行为选项界面
+            this.context.cmdBufferService.AddDelayCmd(2, () =>
+            {
+                var onChooseOption = new Action<int>((optionId) =>
+                {
+                    var lcArgs = new GameLCArgs_ActionOptionSelected(optionId);
+                    this.context.logicApi.directApi.SubmitEvent(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, lcArgs);
+                });
+                var viewInput = new UIActionOptionMainViewInput(actionOptions, onChooseOption);
+                this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));
+            });
         }
 
         public void Update(float dt)
@@ -85,6 +116,7 @@ namespace GamePlay.Bussiness.UI
 
         protected void _PreTick(float dt)
         {
+            this.context.delayRCEventService.Tick();
         }
 
         protected void _Tick(float dt)
@@ -112,7 +144,7 @@ namespace GamePlay.Bussiness.UI
             this.context.cmdBufferService.Remove(timerId);
         }
 
-        public void OpenUI<T>(object args = null) where T : UIBase
+        public void OpenUI<T>(UIViewInput viewInput = null) where T : UIBase
         {
             var inst = Activator.CreateInstance<T>();
             var uiName = inst.uiName;
@@ -144,7 +176,7 @@ namespace GamePlay.Bussiness.UI
 
             // UI生命周期
             uiBase.Inject(rootGO, this.context.domainApi);
-            uiBase.Init(args);
+            uiBase.Init(viewInput);
             uiBase.Show();
             this.context.uiDict[uiName] = uiBase;
         }

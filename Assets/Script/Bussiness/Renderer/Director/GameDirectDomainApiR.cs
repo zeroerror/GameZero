@@ -1,6 +1,6 @@
 namespace GamePlay.Bussiness.Renderer
 {
-    public interface GameDirectDomainApiR
+    public interface GameDirectorDomainApiR
     {
         public void SetTimeScale(float timeScale);
     }

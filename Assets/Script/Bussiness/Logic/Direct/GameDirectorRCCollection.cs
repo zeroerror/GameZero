@@ -1,0 +1,35 @@
+using System.Collections.Generic;
+
+namespace GamePlay.Bussiness.Logic
+{
+    public static class GameDirectorRCCollection
+    {
+        /// <summary> 导演 - 时间缩放变更 </summary>
+        public static readonly string RC_GAME_DIRECTOR_TIME_SCALE_CHANGE = "RC_GAME_DIRECTOR_TIME_SCALE_CHANGE";
+        /// <summary> 导演 - 进入 战斗 </summary>
+        public static readonly string RC_GAME_DIRECTOR_STATE_ENTER_FIGHTING = "RC_GAME_DIRECTOR_STATE_ENTER_FIGHTING";
+        /// <summary> 导演 - 进入 结算 </summary>
+        public static readonly string RC_GAME_DIRECTOR_STATE_ENTER_SETTLING = "RC_GAME_DIRECTOR_STATE_ENTER_SETTLING";
+        /// <summary> 导演 - 进入 战斗准备 </summary>
+        public static readonly string RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING = "RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING";
+    }
+
+    public struct GameDirectorRCArgs_StateEnterFighting
+    {
+        public GameDirectorStateType fromStateType;
+    }
+
+    public struct GameDirectorRCArgs_StateEnterSettling
+    {
+        public GameDirectorStateType fromStateType;
+        public int playerCount;
+        public int enemyCount;
+        public bool isWin;
+    }
+
+    public struct GameDirectorRCArgs_StateEnterFightPreparing
+    {
+        public GameDirectorStateType fromStateType;
+        public List<GameActionOptionModel> actionOptions;
+    }
+}

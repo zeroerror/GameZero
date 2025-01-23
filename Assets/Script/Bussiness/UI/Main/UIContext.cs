@@ -11,6 +11,7 @@ namespace GamePlay.Bussiness.UI
     {
         public GameDomainApi logicApi { get; private set; }
         public GameDomainApiR rendererApi { get; private set; }
+        public GameEventService delayRCEventService { get; private set; }
 
         public Dictionary<string, UIBase> uiDict { get; private set; }
         public UIFactory factory { get; private set; }
@@ -25,6 +26,7 @@ namespace GamePlay.Bussiness.UI
 
         public UIContext()
         {
+            this.delayRCEventService = new GameEventService();
             this.director = new UIDirector();
             this.uiDict = new Dictionary<string, UIBase>();
             this.factory = new UIFactory();
@@ -60,6 +62,23 @@ namespace GamePlay.Bussiness.UI
                 layerGO.transform.SetParent(uiRoot.transform, false);
                 this.layerDict[type] = layerGO;
             }
+        }
+
+        public void BindRC(string rcName, System.Action<object> callback)
+        {
+            this.logicApi.directApi.BindRC(rcName, callback);
+            this.delayRCEventService.Bind(rcName, callback);
+        }
+
+        public void UnbindRC(string rcName, System.Action<object> callback)
+        {
+            this.logicApi.directApi.UnbindRC(rcName, callback);
+            this.delayRCEventService.Unbind(rcName, callback);
+        }
+
+        public void DelayRC(string rcName, object args)
+        {
+            this.delayRCEventService.Submit(rcName, args);
         }
     }
 }

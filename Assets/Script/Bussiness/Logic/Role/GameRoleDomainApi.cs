@@ -37,7 +37,7 @@ namespace GamePlay.Bussiness.Logic
         /// <para>typeId: 类型Id</para>
         /// <para>transArgs: 变换参数</para>
         /// </summary>
-        public GameRoleEntity CreateMonsterRole(int typeId, in GameTransformArgs transArgs);
+        public GameRoleEntity CreateEnemyRole(int typeId, in GameTransformArgs transArgs);
 
         /// <summary>
         /// 获取最近的敌人

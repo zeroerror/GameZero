@@ -17,7 +17,7 @@ namespace GamePlay.Bussiness.UI
 
         public UIStateType state { get; private set; }
 
-        protected object _inputArgs;
+        protected UIViewInput _viewInput;
 
         public UIBase()
         {
@@ -32,9 +32,9 @@ namespace GamePlay.Bussiness.UI
         /// <summary>
         /// 初始化, 定义UI的预制体信息, 以及界面传参
         /// </summary>
-        public void Init(object inputArgs)
+        public void Init(UIViewInput viewInput)
         {
-            this._inputArgs = inputArgs;
+            this._viewInput = viewInput;
             _OnInit();
             this.state = UIStateType.Inited;
         }
@@ -44,9 +44,9 @@ namespace GamePlay.Bussiness.UI
         /// 显示
         /// <para>inputArgs: 输入参数</para>
         /// </summary>
-        public void Show(object inputArgs = null)
+        public void Show(UIViewInput viewInput = null)
         {
-            if (inputArgs != null) this._inputArgs = inputArgs;
+            if (viewInput != null) this._viewInput = viewInput;
             _OnShow();
             // 根据UI类型, 区分不同的显示方式
             switch (layerType)
@@ -78,6 +78,7 @@ namespace GamePlay.Bussiness.UI
             this.state = UIStateType.Destroyed;
             GameObject.Destroy(this.go);
             this.go = null;
+            this._viewInput.closeAction?.Invoke();
         }
         protected virtual void _OnDestroy() { }
 

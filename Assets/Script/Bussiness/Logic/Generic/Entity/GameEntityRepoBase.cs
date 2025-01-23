@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GamePlay.Core;
 
@@ -111,7 +112,7 @@ namespace GamePlay.Bussiness.Logic
             return this._dict.TryGetValue(entityId, out entity);
         }
 
-        public virtual void ForeachEntities(System.Action<T> action)
+        public virtual void ForeachEntities(Action<T> action)
         {
             var count = this._list.Count;
             for (var i = 0; i < count; i++)
@@ -120,7 +121,7 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
-        public virtual void ForeachEntities(System.Action<T, int> action)
+        public virtual void ForeachEntities(Action<T, int> action)
         {
             var count = this._list.Count;
             for (var i = 0; i < count; i++)
@@ -129,7 +130,7 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
-        public virtual void ForeachAllEntities(System.Action<T> action)
+        public virtual void ForeachAllEntities(Action<T> action)
         {
             for (var i = 0; i < this._list.Count; i++)
             {
@@ -142,6 +143,11 @@ namespace GamePlay.Bussiness.Logic
                     action(entity);
                 }
             }
+        }
+
+        public int GetEntityCount(Predicate<T> predicate)
+        {
+            return this._list.FindAll(predicate).Count;
         }
     }
 }

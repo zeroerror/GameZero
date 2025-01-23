@@ -74,9 +74,9 @@ namespace GamePlay.Bussiness.Logic
             return role;
         }
 
-        public GameRoleEntity CreateMonsterRole(int typeId, in GameTransformArgs transArgs)
+        public GameRoleEntity CreateEnemyRole(int typeId, in GameTransformArgs transArgs)
         {
-            var role = this.CreateRole(typeId, GameRoleCollection.MONSTER_ROLE_CAMP_ID, transArgs, false);
+            var role = this.CreateRole(typeId, GameRoleCollection.ENEMY_ROLE_CAMP_ID, transArgs, false);
             return role;
         }
 
@@ -190,8 +190,8 @@ namespace GamePlay.Bussiness.Logic
             // 判定阵营, 暂时适配玩家和怪物, 小于怪物阵营id的视为玩家角色的阵营Id
             var summonerCampId = summoner.idCom.campId;
             var campId = campType == GameCampType.Ally ?
-                summonerCampId : summonerCampId < GameRoleCollection.MONSTER_ROLE_CAMP_ID ?
-                GameRoleCollection.MONSTER_ROLE_CAMP_ID : GameRoleCollection.PLAYER_ROLE_CAMP_ID;
+                summonerCampId : summonerCampId < GameRoleCollection.ENEMY_ROLE_CAMP_ID ?
+                GameRoleCollection.ENEMY_ROLE_CAMP_ID : GameRoleCollection.PLAYER_ROLE_CAMP_ID;
 
             for (int i = 0; i < count; i++)
             {

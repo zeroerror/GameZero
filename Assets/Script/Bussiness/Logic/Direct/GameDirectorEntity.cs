@@ -1,9 +1,10 @@
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameDirector
+    public class GameDirectorEntity
     {
         public GameDirectorFSMCom fsmCom { get; private set; } = new GameDirectorFSMCom();
         public GameDirectorTimelineComponent timeScaleCom { get; private set; } = new GameDirectorTimelineComponent();
+        public int coins;
 
         public int Tick(float dt)
         {

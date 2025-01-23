@@ -4,9 +4,9 @@ namespace GamePlay.Bussiness.UI
     {
         /// <summary>
         /// 打开UI
-        /// <para>args: 传递参数</para>
+        /// <para>viewInput: 界面传参</para>
         /// </summary>
-        public void OpenUI<T>(object args = null) where T : UIBase;
+        public void OpenUI<T>(UIViewInput viewInput = null) where T : UIBase;
 
         /// <summary>
         /// 关闭UI

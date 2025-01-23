@@ -4,11 +4,11 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameApp
     {
-        public GameDirectDomain directDomain { get; private set; }
+        public GameDirectorDomain directDomain { get; private set; }
 
         public GameApp()
         {
-            this.directDomain = new GameDirectDomain();
+            this.directDomain = new GameDirectorDomain();
             Application.quitting += this.Destroy;
         }
 

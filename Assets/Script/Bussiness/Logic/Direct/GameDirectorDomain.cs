@@ -3,9 +3,12 @@ using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameDirectDomain : GameDirectDomainApi
+    public class GameDirectorDomain : GameDirectorDomainApi
     {
-        public GameDirector director => this.context.director;
+        public GameDirectorEntity director => this.context.director;
+
+        public GameDirectorFSMDomain fsmDomain { get; private set; }
+        public GameDirectorFSMDomainApi fsmApi => this.fsmDomain;
 
         public GameContext context { get; private set; }
         public GameFieldDomain fieldDomain { get; private set; }
@@ -20,7 +23,7 @@ namespace GamePlay.Bussiness.Logic
         public GameEntitySelectDomain entitySelectDomain { get; private set; }
         public GameEntityCollectDomain entityCollectDomain { get; private set; }
 
-        public GameDirectDomain()
+        public GameDirectorDomain()
         {
             this._InitDomain();
             this._InitContext();
@@ -40,6 +43,7 @@ namespace GamePlay.Bussiness.Logic
             this.physicsDomain = new GamePhysicsDomain();
             this.entitySelectDomain = new GameEntitySelectDomain();
             this.entityCollectDomain = new GameEntityCollectDomain();
+            this.fsmDomain = new GameDirectorFSMDomain(this);
         }
 
         private void _InitContext()
@@ -61,6 +65,7 @@ namespace GamePlay.Bussiness.Logic
 
         private void _InjectContext()
         {
+            this.fsmDomain.Inject(this.context);
             this.fieldDomain.Inject(this.context);
             this.roleDomain.Inject(this.context);
             this.skillDomain.Inject(this.context);
@@ -76,10 +81,12 @@ namespace GamePlay.Bussiness.Logic
             // TEST
             this.fieldDomain.LoadField(1);
             this.roleDomain.CreatePlayerRole(101, new GameTransformArgs { position = new GameVec2(0, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
+            this.fsmDomain.TryEnter(this.director, GameDirectorStateType.Fighting);
         }
 
         public void Destroy()
         {
+            this.fsmDomain.Destroy();
             this.fieldDomain.Destroy();
             this.roleDomain.Destroy();
             this.skillDomain.Destroy();
@@ -93,7 +100,7 @@ namespace GamePlay.Bussiness.Logic
             this.entityCollectDomain.Destroy();
         }
 
-        protected virtual void _TickDomain(float dt)
+        public virtual void TickDomain(float dt)
         {
             this.fieldDomain.Tick(dt);
             if (this.context.fieldContext.curField == null) return;
@@ -107,6 +114,7 @@ namespace GamePlay.Bussiness.Logic
             this.physicsDomain.Tick(dt);
             this.entitySelectDomain.Tick(dt);
             this.entityCollectDomain.Tick(dt);
+            this.physicsDomain.Tick(dt);
         }
 
         public void Update(float dt)
@@ -116,31 +124,10 @@ namespace GamePlay.Bussiness.Logic
             var frameTime = GameTimeCollection.frameTime;
             for (var i = 0; i < tickCount; i++)
             {
-                this._PreTick(frameTime);
-                this._Tick(frameTime);
-                this._LateTick(dt);
+                this.context.eventService.Tick();
+                this.fsmDomain.Tick(this.director, frameTime);
+                this.context.cmdBufferService.Tick();
             }
-        }
-
-        protected void _PreTick(float dt)
-        {
-            if (this.director.timeScaleCom.timeScaleDirty)
-            {
-                this.director.timeScaleCom.ClearTimeScaleDirty();
-                this.context.SubmitRC(GameDirectRCCollection.RC_DIRECT_TIME_SCALE_CHANGE, this.director.timeScaleCom.timeScale);
-            }
-            this.context.eventService.Tick();
-        }
-
-        protected void _Tick(float dt)
-        {
-            this._TickDomain(dt);
-        }
-
-        protected void _LateTick(float dt)
-        {
-            this.physicsDomain.Tick(dt);
-            this.context.cmdBufferService.Tick();
         }
 
         public void SetTimeScale(float timeScale)
@@ -161,6 +148,11 @@ namespace GamePlay.Bussiness.Logic
         public void UnbindRC(string rcName, Action<object> callback)
         {
             this.context.UnbindRC(rcName, callback);
+        }
+
+        public void SubmitEvent(string eventName, object args)
+        {
+            this.context.eventService.Submit(eventName, args);
         }
     }
 

@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 2361942118436639396}
   - component: {fileID: 7995527506746409066}
   m_Layer: 5
-  m_Name: ActionOptionMainView
+  m_Name: UIActionOptionMainView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

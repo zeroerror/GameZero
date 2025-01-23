@@ -2,19 +2,19 @@ namespace GamePlay.Bussiness.Logic
 {
     public static class GameRoleRCCollection
     {
-        /** 角色 - 创建 */
+        /// <summary> 角色 - 创建 </summary>
         public static readonly string RC_GAME_ROLE_CREATE = "RC_GAME_ROLE_CREATE";
-        /* 角色 - 变身 */
+        /// <summary> 角色 - 变身 </summary>    
         public static readonly string RC_GAME_ROLE_TRANSFORM = "RC_GAME_ROLE_TRANSFORM";
-        /* 角色状态 - 进入 待机 */
+        /// <summary> 角色 - 进入 待机 </summary>
         public static readonly string RC_GAME_ROLE_STATE_ENTER_IDLE = "RC_GAME_ROLE_STATE_ENTER_IDLE";
-        /* 角色状态 - 进入 移动 */
+        /// <summary> 角色 - 进入 移动 </summary>
         public static readonly string RC_GAME_ROLE_STATE_ENTER_MOVE = "RC_GAME_ROLE_STATE_ENTER_MOVE";
-        /* 角色状态 - 进入 施法 */
+        /// <summary> 角色 - 进入 施法 </summary>
         public static readonly string RC_GAME_ROLE_STATE_ENTER_CAST = "RC_GAME_ROLE_STATE_ENTER_CAST";
-        /* 角色状态 - 进入 死亡 */
+        /// <summary> 角色 - 进入 死亡 </summary>
         public static readonly string RC_GAME_ROLE_STATE_ENTER_DEAD = "RC_GAME_ROLE_STATE_ENTER_DEAD";
-        /* 角色状态 - 进入 销毁 */
+        /// <summary> 角色 - 进入 摧毁 </summary>
         public static readonly string RC_GAME_ROLE_STATE_ENTER_DESTROYED = "RC_GAME_ROLE_STATE_ENTER_DESTROYED";
     }
 

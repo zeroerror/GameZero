@@ -34,7 +34,9 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
-        public void Destroy() { }
+        public void Destroy()
+        {
+        }
 
         public void Tick(GameRoleEntity role, float dt)
         {

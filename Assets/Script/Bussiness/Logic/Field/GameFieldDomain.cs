@@ -73,7 +73,7 @@ namespace GamePlay.Bussiness.Logic
                     var angle = GameMathF.Random(0, 360);
                     var x = radius * GameMathF.Cos(angle);
                     var y = radius * GameMathF.Sin(angle);
-                    this._context.domainApi.roleApi.CreateMonsterRole(spawnModel.typeId, new GameTransformArgs
+                    this._context.domainApi.roleApi.CreateEnemyRole(spawnModel.typeId, new GameTransformArgs
                     {
                         position = area.position + new GameVec2(x, y),
                         scale = GameVec2.one,

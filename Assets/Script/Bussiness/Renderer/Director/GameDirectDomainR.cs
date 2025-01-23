@@ -1,10 +1,9 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.UI;
-using GamePlay.Core;
 using UnityEngine;
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameDirectDomainR : GameDirectDomainApiR
+    public class GameDirectDomainR : GameDirectorDomainApiR
     {
         public GameContextR context { get; private set; }
         public GameRoleDomainR roleDomain { get; private set; }
@@ -97,12 +96,12 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _BindEvents()
         {
-            this.context.BindRC(GameDirectRCCollection.RC_DIRECT_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
+            this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
         }
 
         private void _UnbindEvents()
         {
-            this.context.BindRC(GameDirectRCCollection.RC_DIRECT_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
+            this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
         }
 
         private void _OnTimeScaleChange(object args)
@@ -142,8 +141,11 @@ namespace GamePlay.Bussiness.Renderer
 
         protected void _PreTick(float dt)
         {
+            // 被上一帧延迟的RC事件, 需要在最开始处理
             this.context.delayRCEventService.Tick();
+            // 触发本次逻辑的RC事件 ps: UI层无需再次触发 
             this.context.logicApi.directApi.TickRCEvents();
+            // 触发内部的事件
             this.context.eventService.Tick();
         }
 

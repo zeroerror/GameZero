@@ -1,9 +1,22 @@
+using System;
 using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine.UI;
 namespace GamePlay.Bussiness.UI
 {
+    public struct UIActionOptionMainViewInput
+    {
+        public List<GameActionOptionModel> optionModels;
+        public Action<int> onChooseOption;
+
+        public UIActionOptionMainViewInput(List<GameActionOptionModel> optionModels, Action<int> onChooseOption)
+        {
+            this.optionModels = optionModels;
+            this.onChooseOption = onChooseOption;
+        }
+    }
+
     public class UIActionOptionMainView : UIBase
     {
         public override UILayerType layerType => UILayerType.PopUp;
@@ -11,8 +24,8 @@ namespace GamePlay.Bussiness.UI
         public override string uiName => "UIActionOptionMainView";
         public UIActionOptionMainViewBinder viewBinder;
 
-        private List<GameActionOptionModel> _optionModels;
-
+        private UIActionOptionMainViewInput _optionViewInput;
+        private List<GameActionOptionModel> _optionModels => this._optionViewInput.optionModels;
 
         protected override void _OnInit()
         {
@@ -20,11 +33,11 @@ namespace GamePlay.Bussiness.UI
 
             this.domainApi.logicApi.directApi.SetTimeScale(0.01f);
             this.domainApi.rendererApi.directApi.SetTimeScale(0.01f);
+            this._optionViewInput = (UIActionOptionMainViewInput)this._viewInput.customData;
         }
 
         protected override void _OnShow()
         {
-            this._optionModels = this._getRandomActionOptions(3);
             var text1 = this.viewBinder.option1.text;
             text1.GetComponent<Text>().text = this._GetOptionDesc(this._optionModels[0]);
             var text2 = this.viewBinder.option2.text;
@@ -62,26 +75,9 @@ namespace GamePlay.Bussiness.UI
             this._Close();
             this.domainApi.logicApi.directApi.SetTimeScale(1);
             this.domainApi.rendererApi.directApi.SetTimeScale(1);
-        }
 
-        private List<GameActionOptionModel> _getRandomActionOptions(int count)
-        {
-            var actionApi = this.domainApi.logicApi.actionApi;
-            var list = actionApi.GetActionOptionModelList();
-            var result = new List<GameActionOptionModel>();
-            for (int i = 0; i < count; i++)
-            {
-                var index = GameMath.RandomRange(0, list.Count);
-                var model = list[index];
-                if (model == null)
-                {
-                    i--;
-                    continue;
-                }
-                result.Add(model);
-                list[index] = null;
-            }
-            return result;
+            var input = (UIActionOptionMainViewInput)this._viewInput.customData;
+            input.onChooseOption?.Invoke(option.typeId);
         }
     }
 }
