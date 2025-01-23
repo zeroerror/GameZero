@@ -149,5 +149,10 @@ namespace GamePlay.Bussiness.Logic
         {
             return this._list.FindAll(predicate).Count;
         }
+
+        public List<T> ToList()
+        {
+            return new List<T>(this._list);
+        }
     }
 }

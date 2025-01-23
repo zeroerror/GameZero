@@ -1,3 +1,4 @@
+using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -19,37 +20,38 @@ namespace GamePlay.Bussiness.Logic
             var fsmCom = director.fsmCom;
             var loadingState = fsmCom.loadingState;
             loadingState.loadFieldId = loadFieldId;
-            if (curField)
+            if (!curField || curField.model.typeId != loadFieldId)
             {
-                if (curField.model.typeId == loadFieldId)
-                {
-                    this._context.domainApi.fieldApi.ClearField(curField);
-                }
-                else
-                {
-                    this._context.domainApi.fieldApi.DestroyField(curField);
-                }
-                return;
+                this._context.domainApi.fieldApi.DestroyField(curField);
+                curField = this._context.domainApi.fieldApi.LoadField(loadFieldId);
             }
 
+            this._context.domainApi.fieldApi.ClearField(curField);
             fsmCom.EnterLoading(loadFieldId);
-            this._context.domainApi.fieldApi.LoadField(loadFieldId);
-            this._context.domainApi.roleApi.CreatePlayerRole(101, new GameTransformArgs { position = new GameVec2(0, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
+
+            this._context.domainApi.roleApi.CreatePlayerRole(101, new GameTransformArgs
+            {
+                position = new GameVec2(0, -5),
+                scale = GameVec2.one,
+                forward = GameVec2.right
+            }, true);
+            GameLogger.DebugLog("导演 - 进入加载状态 " + loadFieldId);
         }
 
         protected override void _Tick(GameDirectorEntity director, float frameTime)
         {
+            this._directorDomain.TickDomain(frameTime);
         }
 
-        protected override GameDirectorStateType _CheckExit(GameDirectorEntity director)
+        protected override (GameDirectorStateType, object) _CheckExit(GameDirectorEntity director)
         {
             var curField = this._context.fieldContext.curField;
-            if (curField == null) return GameDirectorStateType.None;
+            if (curField == null) return (GameDirectorStateType.None, null);
             if (curField.model.typeId == director.fsmCom.loadingState.loadFieldId)
             {
-                return GameDirectorStateType.Fighting;
+                return (GameDirectorStateType.FightPreparing, null);
             }
-            return GameDirectorStateType.None;
+            return (GameDirectorStateType.None, null);
         }
     }
 }

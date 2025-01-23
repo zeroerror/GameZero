@@ -64,11 +64,6 @@ namespace GamePlay.Bussiness.Logic
         {
             // // 检查
             var entitySelectApi = this._context.domainApi.entitySelectApi;
-            // if (!entitySelectApi.CheckSelectorAnchor(actor, actionModel.selector))
-            // {
-            //     return;
-            // }
-
             switch (actionModel)
             {
                 case GameActionModel_Dmg dmgAction:
@@ -130,12 +125,6 @@ namespace GamePlay.Bussiness.Logic
                 idCom.campId = campId;
                 optionEntity.transformCom.position = GameVec2.zero;
                 this._actionContext.optionRepo.TryAdd(optionEntity);
-            }
-
-            if (!optionEntity.AddLevel())
-            {
-                GameLogger.LogWarning($"选项等级已达上限：{optionEntity.lv}");
-                return;
             }
 
             optionModel.actionIds?.Foreach((actionId) =>

@@ -35,11 +35,6 @@ namespace GamePlay.Bussiness.Logic
             this.fsmDomain.Destroy();
         }
 
-        public void Collect(GameRoleEntity role)
-        {
-            this._context.domainApi.physicsApi.RemovePhysics(role);
-        }
-
         public GameRoleEntity GetUserRole()
         {
             return this._roleContext.userRole;
@@ -256,6 +251,26 @@ namespace GamePlay.Bussiness.Logic
             oldRole.SetInvalid();
             var collider = oldRole.physicsCom.collider;
             if (collider != null) collider.isEnable = false;
+        }
+
+        public void RemoveAllRoles()
+        {
+            var repo = this._roleContext.repo;
+            var list = repo.ToList();
+            list.Foreach((entity) =>
+            {
+                this.fsmDomain.TryEnter(entity, GameRoleStateType.Destroyed);
+            });
+            this._roleContext.userRole = null;
+        }
+
+        public void DetachAllRolesBuffs()
+        {
+            var repo = this._roleContext.repo;
+            repo.ForeachEntities((entity) =>
+            {
+                this._context.domainApi.buffApi.DetachAllBuffs(entity);
+            });
         }
     }
 }

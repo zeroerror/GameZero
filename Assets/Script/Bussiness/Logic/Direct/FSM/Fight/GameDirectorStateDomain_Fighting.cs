@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameDirectorStateDomain_Fighting : GameDirectorStateDomainBase
@@ -15,6 +17,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var fsmCom = director.fsmCom;
             fsmCom.EnterFighting();
+            GameLogger.DebugLog("导演 - 进入战斗状态");
             // 提交RC
             this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHTING, new GameDirectorRCArgs_StateEnterFighting
             {
@@ -22,15 +25,15 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        protected override GameDirectorStateType _CheckExit(GameDirectorEntity director)
+        protected override (GameDirectorStateType, object) _CheckExit(GameDirectorEntity director)
         {
             var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
             var playerCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == playerCampId);
-            if (playerCount == 0) return GameDirectorStateType.Settling;
+            if (playerCount == 0) return (GameDirectorStateType.Settling, null);
             var enemyCampId = GameRoleCollection.ENEMY_ROLE_CAMP_ID;
             var enemyCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == enemyCampId);
-            if (enemyCount == 0) return GameDirectorStateType.Settling;
-            return GameDirectorStateType.None;
+            if (enemyCount == 0) return (GameDirectorStateType.Settling, null);
+            return (GameDirectorStateType.None, null);
         }
 
         protected override void _Tick(GameDirectorEntity director, float frameTime)

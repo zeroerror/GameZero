@@ -364,7 +364,7 @@ namespace GamePlay.Bussiness.Logic
             return this.TryDetachBuff(target, buffId, layer, out _, out _);
         }
 
-        public void DetachAllBuff(GameEntityBase target)
+        public void DetachAllBuffs(GameEntityBase target)
         {
             if (!target.TryGetLinkParent<GameRoleEntity>(out var targetRole))
             {

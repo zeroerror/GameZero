@@ -40,16 +40,6 @@ namespace GamePlay.Bussiness.Logic
                 if (curField.IsMonstersSpawned(index)) return;
                 if (!this._IsTimesUp(area)) return;
                 this._SpawnAreaMonsters(area, index);
-
-                // // 测试代码 无尽循环
-                // if (index == curField.model.monsterAreaModels.Length - 1)
-                // {
-                //     this._context.director.timeScaleCom.Reset();
-                //     curField.model.monsterAreaModels.Foreach((area, index) =>
-                //     {
-                //         curField.SetMonsterSpawned(index, false);
-                //     });
-                // }
             });
         }
 
@@ -82,31 +72,38 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public void LoadField(int fieldId)
+        public GameFieldEntity LoadField(int fieldId)
         {
             var repo = this._fieldContext.repo;
             if (!repo.TryFetch(fieldId, out var field)) field = this._fieldContext.factory.Load(fieldId);
             if (field == null)
             {
                 GameLogger.LogError("场景加载失败, 没有找到场景模板: " + fieldId);
-                return;
+                return null;
             }
             this._fieldContext.curField = field;
             this._fieldContext.repo.TryAdd(field);
             // 提交RC
             this._context.SubmitRC(GameFieldRCCollection.RC_GAME_FIELD_CREATE, new GameFieldRCArgs_Create { typeId = fieldId });
+            return field;
         }
 
         public void ClearField(GameFieldEntity field)
         {
+            if (!field) return;
             field.Clear();
+            this._context.domainApi.roleApi.RemoveAllRoles();
+            this._context.domainApi.projectileApi.RemoveAllProjectiles();
             // 提交RC
             this._context.SubmitRC(GameFieldRCCollection.RC_GAME_FIELD_CLEAR, new GameFieldRCArgs_Clear { typeId = field.model.typeId });
         }
 
         public void DestroyField(GameFieldEntity field)
         {
+            if (!field) return;
             this._fieldContext.repo.TryRemove(field);
+            this._context.domainApi.roleApi.RemoveAllRoles();
+            this._context.domainApi.projectileApi.RemoveAllProjectiles();
             // 提交RC
             this._context.SubmitRC(GameFieldRCCollection.RC_GAME_FIELD_DESTROY, new GameFieldRCArgs_Destroy { typeId = field.model.typeId });
         }

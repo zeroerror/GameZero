@@ -27,7 +27,7 @@ namespace GamePlay.Bussiness.Logic
         /// 移除所有buff
         /// <para>target: 目标</para>
         /// </summary>
-        public void DetachAllBuff(GameEntityBase target);
+        public void DetachAllBuffs(GameEntityBase target);
 
         /// <summary>
         /// 转移buff组件内容, 包括buff列表, 以及buff作用的目标

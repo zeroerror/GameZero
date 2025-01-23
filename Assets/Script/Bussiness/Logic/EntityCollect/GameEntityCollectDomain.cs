@@ -17,7 +17,7 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public void Tick(float dt)
+        public void Tick()
         {
             {
                 var repo = this._context.roleContext.repo;

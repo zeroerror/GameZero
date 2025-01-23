@@ -1,5 +1,4 @@
 using GamePlay.Core;
-using UnityEngine.Analytics;
 using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
@@ -137,6 +136,16 @@ namespace GamePlay.Bussiness.Logic
                 projectiles[i] = p;
             }
             return projectiles;
+        }
+
+        public void RemoveAllProjectiles()
+        {
+            var repo = this._projectileContext.repo;
+            var list = repo.ToList();
+            list.Foreach((entity) =>
+            {
+                this.fsmDomain.TryEnter(entity, GameProjectileStateType.Destroyed);
+            });
         }
     }
 }

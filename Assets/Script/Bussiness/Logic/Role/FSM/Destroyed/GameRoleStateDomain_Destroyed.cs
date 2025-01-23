@@ -16,6 +16,10 @@ namespace GamePlay.Bussiness.Logic
         public override void Enter(GameRoleEntity role)
         {
             role.fsmCom.EnterDestroyed();
+
+            // 去除buff
+            this._context.domainApi.buffApi.DetachAllBuffs(role);
+
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DESTROYED, new GameRoleRCArgs_StateEnterDestroyed
             {

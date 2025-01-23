@@ -83,5 +83,15 @@ namespace GamePlay.Bussiness.Logic
         /// <para>record: 变换记录</para>
         /// </summary>
         public void TransformRole(GameRoleEntity role, int transRoleId, in GameActionRecord_CharacterTransform record);
+
+        /// <summary>
+        /// 移除所有角色
+        /// </summary>
+        public void RemoveAllRoles();
+
+        /// <summary>
+        /// 移除所有角色的Buff
+        /// </summary>
+        public void DetachAllRolesBuffs();
     }
 }

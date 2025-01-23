@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using GamePlay.Core;
-using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
@@ -23,7 +21,7 @@ namespace GamePlay.Bussiness.Logic
             this._context = context;
         }
 
-        public void Tick(float dt)
+        public void Tick()
         {
             var physicsComs_notTrigger = _physicsContext.physicsComs_notTrigger;
             for (int i = 0; i < physicsComs_notTrigger.Count; i++)

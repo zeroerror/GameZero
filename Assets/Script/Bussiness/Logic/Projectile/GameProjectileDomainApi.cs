@@ -5,6 +5,9 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 状态机API </summary>
         public GameProjectileFSMDomainApi fsmApi { get; }
 
+        /// <summary> 清空所有投射物 </summary>
+        public void RemoveAllProjectiles();
+
         /// <summary> 创建投射物 </summary>
         public GameProjectileEntity CreateProjectile(int typeId, GameEntityBase creator, GameTransformArgs transArgs, in GameActionTargeterArgs targeter);
 

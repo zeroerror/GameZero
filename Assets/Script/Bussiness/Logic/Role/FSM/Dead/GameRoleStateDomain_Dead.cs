@@ -18,7 +18,7 @@ namespace GamePlay.Bussiness.Logic
             role.transformCom.isEnable = false;
 
             // 去除buff
-            this._context.domainApi.buffApi.DetachAllBuff(role);
+            this._context.domainApi.buffApi.DetachAllBuffs(role);
 
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DEAD, new GameRoleRCArgs_StateEnterDead

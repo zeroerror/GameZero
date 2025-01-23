@@ -52,6 +52,7 @@ namespace GamePlay.Bussiness.Logic
                     var isDead = role.fsmCom.stateType == GameRoleStateType.Dead;
                     if (isDead) return false;
                 }
+                if (!selector.onlySelectDead && !entity.IsAlive()) return false;
                 var checkCollided = actEntity.physicsCom.CheckCollided(entity.idCom.ToArgs());
                 if (checkCollided) return false;
                 var checkSelect = selector.CheckSelect(actEntity, entity);

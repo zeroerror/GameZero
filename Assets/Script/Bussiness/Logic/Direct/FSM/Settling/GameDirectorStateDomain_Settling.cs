@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameDirectorStateDomain_Settling : GameDirectorStateDomainBase
@@ -21,6 +23,11 @@ namespace GamePlay.Bussiness.Logic
             var fsmCom = director.fsmCom;
             fsmCom.EnterSettling(playerCount, enemyCount, isWin);
 
+            this._context.domainApi.roleApi.DetachAllRolesBuffs();
+
+            GameLogger.DebugLog("导演 - 进入结算状态");
+            GameLogger.DebugLog($"导演 - 结算结果: 玩家{playerCount} - 敌人{enemyCount} - 结果{(isWin ? "胜利" : "失败")}");
+
             // 提交RC
             this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, new GameDirectorRCArgs_StateEnterSettling
             {
@@ -35,16 +42,17 @@ namespace GamePlay.Bussiness.Logic
         {
             var fsmCom = director.fsmCom;
             fsmCom.settlingState.stateTime += frameTime;
+            this._directorDomain.entityCollectDomain.Tick();
         }
 
-        protected override GameDirectorStateType _CheckExit(GameDirectorEntity director)
+        protected override (GameDirectorStateType, object) _CheckExit(GameDirectorEntity director)
         {
             var settlingState = director.fsmCom.settlingState;
-            if (settlingState.stateTime >= 2 && settlingState.isWin)
+            if (settlingState.stateTime >= 0.5 && settlingState.isWin)
             {
-                return GameDirectorStateType.FightPreparing;
+                return (GameDirectorStateType.Loading, 1);
             }
-            return GameDirectorStateType.None;
+            return (GameDirectorStateType.None, null);
         }
 
         public override void ExitTo(GameDirectorEntity director, GameDirectorStateType toState)

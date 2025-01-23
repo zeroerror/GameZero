@@ -87,8 +87,6 @@ namespace GamePlay.Bussiness.UI
                 return;
             }
 
-            var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
-            this.domainApi.logicApi.actionApi.DoActionOption(option.typeId, playerCampId);
             this._Close();
             this.domainApi.logicApi.directApi.SetTimeScale(1);
             this.domainApi.rendererApi.directApi.SetTimeScale(1);

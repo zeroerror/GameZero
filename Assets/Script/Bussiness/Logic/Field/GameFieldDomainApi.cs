@@ -6,7 +6,7 @@ namespace GamePlay.Bussiness.Logic
         /// 加载场景
         /// <para>fieldId: 场景ID</para>
         /// </summary>
-        public void LoadField(int fieldId);
+        public GameFieldEntity LoadField(int fieldId);
 
         /// <summary>
         /// 清理场景

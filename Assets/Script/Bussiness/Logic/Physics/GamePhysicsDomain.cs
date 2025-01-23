@@ -28,7 +28,7 @@ namespace GamePlay.Bussiness.Logic
             this._collisionRecoveryDomain.Inject(context);
         }
 
-        public void Tick(float dt)
+        public void Tick()
         {
             this._physicsContext.ForeachAll((physicsCom) =>
             {
@@ -40,7 +40,7 @@ namespace GamePlay.Bussiness.Logic
                 }
             });
 
-            this._collisionRecoveryDomain.Tick(dt);
+            this._collisionRecoveryDomain.Tick();
         }
 
         public void CreatePhysics(GameEntityBase entity, GameColliderModelBase colliderModel, bool isTrigger)

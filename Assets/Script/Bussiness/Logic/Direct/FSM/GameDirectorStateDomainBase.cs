@@ -29,10 +29,10 @@ namespace GamePlay.Bussiness.Logic
         public void Tick(GameDirectorEntity director, float frameTime)
         {
             this._Tick(director, frameTime);
-            var toState = this._CheckExit(director);
+            var (toState, args) = this._CheckExit(director);
             if (toState != GameDirectorStateType.None)
             {
-                this._context.domainApi.directApi.fsmApi.TryEnter(director, toState);
+                this._context.domainApi.directApi.fsmApi.TryEnter(director, toState, args);
             }
         }
 
@@ -43,7 +43,7 @@ namespace GamePlay.Bussiness.Logic
         /** 状态更新 */
         protected abstract void _Tick(GameDirectorEntity director, float frameTime);
         /** 判定退出条件 */
-        protected abstract GameDirectorStateType _CheckExit(GameDirectorEntity director);
+        protected abstract (GameDirectorStateType, object) _CheckExit(GameDirectorEntity director);
         /** 退出状态 */
         public virtual void ExitTo(GameDirectorEntity director, GameDirectorStateType toState) { }
     }

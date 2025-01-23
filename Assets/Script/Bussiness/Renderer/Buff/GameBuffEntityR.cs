@@ -44,6 +44,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void DetachLayer(int layer)
         {
+            layer = layer == 0 ? this.layer : layer;// 0表示全部移除
             this.layer -= layer;
             if (this.layer <= 0)
             {

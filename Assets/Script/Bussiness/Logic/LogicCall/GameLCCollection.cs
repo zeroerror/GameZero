@@ -8,11 +8,11 @@ namespace GamePlay.Bussiness.Logic
 
     public struct GameLCArgs_ActionOptionSelected
     {
-        public int actionOptionId;
+        public int optionId;
 
-        public GameLCArgs_ActionOptionSelected(int actionOptionId)
+        public GameLCArgs_ActionOptionSelected(int optionId)
         {
-            this.actionOptionId = actionOptionId;
+            this.optionId = optionId;
         }
     }
 }

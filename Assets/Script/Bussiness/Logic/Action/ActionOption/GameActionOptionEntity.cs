@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameActionOptionEntity : GameEntityBase
@@ -10,13 +12,13 @@ namespace GamePlay.Bussiness.Logic
         {
             this.model = model;
             this.buffCom = new GameBuffCom();
-            this.lv = 0;
+            this.lv = 1;
         }
 
         public override void Clear()
         {
             base.Clear();
-            this.lv = 0;
+            this.lv = 1;
         }
 
         public override void Tick(float dt)
@@ -37,6 +39,7 @@ namespace GamePlay.Bussiness.Logic
                 return false;
             }
             this.lv++;
+            GameLogger.DebugLog($"行为选项升级至 {this.lv}: {this.model.typeId}{this.model.desc}");
             return true;
         }
     }

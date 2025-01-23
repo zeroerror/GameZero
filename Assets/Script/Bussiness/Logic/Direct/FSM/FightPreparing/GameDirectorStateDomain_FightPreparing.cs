@@ -22,17 +22,34 @@ namespace GamePlay.Bussiness.Logic
         private void _onActionOptionSelected(object args)
         {
             var evArgs = (GameLCArgs_ActionOptionSelected)args;
-            var actionOptionId = evArgs.actionOptionId;
+            var optionId = evArgs.optionId;
             var fightPreparingState = this._context.director.fsmCom.fightPreparingState;
             var options = fightPreparingState.options;
-            var selectedOption = options.Find((option) => option.typeId == actionOptionId);
+            var selectedOption = options.Find((option) => option.typeId == optionId);
             if (selectedOption == null)
             {
-                GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onActionOptionSelected: 未找到选项 " + actionOptionId);
+                GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onActionOptionSelected: 未找到选项 " + optionId);
                 return;
             }
-
             fightPreparingState.selectedOption = selectedOption;
+
+            // 执行所有选项的行为
+            var userRole = this._context.roleContext.userRole;
+            var playerCampId = userRole.idCom.campId;
+            var optionRepo = this._context.actionContext.optionRepo;
+            var option = optionRepo.FindOption(userRole.idCom.campId, optionId);
+            if (option)
+            {
+                option.AddLevel();
+            }
+            optionRepo.ForeachEntities((option) =>
+            {
+                this._context.domainApi.actionApi.DoActionOption(option.model.typeId, playerCampId);
+            });
+            if (!option)
+            {
+                this._context.domainApi.actionApi.DoActionOption(optionId, playerCampId);
+            }
         }
 
         public override bool CheckEnter(GameDirectorEntity director, object args = null)
@@ -45,6 +62,7 @@ namespace GamePlay.Bussiness.Logic
             var actionOptions = this._getRandomActionOptions(3);
             var fsmCom = director.fsmCom;
             fsmCom.EnterFightPreparing(actionOptions);
+            GameLogger.DebugLog("导演 - 进入战斗准备状态");
 
             // 提交RC
             this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, new GameDirectorRCArgs_StateEnterFightPreparing
@@ -58,15 +76,15 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        protected override GameDirectorStateType _CheckExit(GameDirectorEntity director)
+        protected override (GameDirectorStateType, object) _CheckExit(GameDirectorEntity director)
         {
             // 一直等待, 直到玩家选择了一个选项
             var fsmCom = director.fsmCom;
             if (fsmCom.fightPreparingState.selectedOption != null)
             {
-                return GameDirectorStateType.Fighting;
+                return (GameDirectorStateType.Fighting, 1);
             }
-            return GameDirectorStateType.None;
+            return (GameDirectorStateType.None, null);
         }
 
         private List<GameActionOptionModel> _getRandomActionOptions(int count)
