@@ -4,8 +4,8 @@ using System.Text;
 using System.IO;
 using System.Collections.Generic;
 
-[CustomEditor(typeof(GameUIBinder))]
-public class GameUIBinderEditor : Editor
+[CustomEditor(typeof(UIBinder))]
+public class UIBinderEditor : Editor
 {
     private Dictionary<string, bool> _binderDict = new Dictionary<string, bool>();
 
@@ -15,7 +15,7 @@ public class GameUIBinderEditor : Editor
 
         if (GUILayout.Button("生成UI绑定代码"))
         {
-            var root = ((GameUIBinder)target).transform;
+            var root = ((UIBinder)target).transform;
             string prefabName = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(root);
             prefabName = Path.GetFileNameWithoutExtension(prefabName);
             var outputDir = $"{Application.dataPath}/Script/Bussiness/UI/System/Binders/{prefabName}";
@@ -40,16 +40,16 @@ public class GameUIBinderEditor : Editor
         string prefabName = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(root);
         prefabName = Path.GetFileNameWithoutExtension(prefabName);
 
-        string binderPath = $"{outputDir}/Game{prefabName}Binder.cs";
+        string binderPath = $"{outputDir}/UI{prefabName}Binder.cs";
 
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.AppendLine("using UnityEngine;");
         codeBuilder.AppendLine();
-        codeBuilder.AppendLine($"public class Game{prefabName}Binder");
+        codeBuilder.AppendLine($"public class UI{prefabName}Binder");
         codeBuilder.AppendLine("{");
         codeBuilder.AppendLine("    public GameObject gameObject{ get; private set; }");
         codeBuilder.AppendLine();
-        codeBuilder.AppendLine($"    public Game{prefabName}Binder(GameObject gameObject)");
+        codeBuilder.AppendLine($"    public UI{prefabName}Binder(GameObject gameObject)");
         codeBuilder.AppendLine("    {");
         codeBuilder.AppendLine("        this.gameObject = gameObject;");
         codeBuilder.AppendLine("    }");
@@ -90,7 +90,7 @@ public class GameUIBinderEditor : Editor
             {
                 var typeName = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(child);
                 typeName = Path.GetFileNameWithoutExtension(typeName);
-                typeName = $"Game{typeName}Binder";
+                typeName = $"UI{typeName}Binder";
                 codeBuilder.AppendLine($"    public {typeName} {varName} => {varField} ?? ({varField} = new {typeName}(GameObject.Find(\"{varName}\")));");
                 codeBuilder.AppendLine($"    private {typeName} {varField};");
             }

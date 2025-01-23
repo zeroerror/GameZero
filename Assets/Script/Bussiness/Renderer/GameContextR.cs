@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameEventService delayRCEventService { get; private set; }
         public GameCmdBufferService cmdBufferService { get; private set; }
 
-        public GameUIDomainApi uiApi { get; private set; }
+        public UIDomainApi uiApi { get; private set; }
 
         public GameContextR()
         {
@@ -47,7 +47,7 @@ namespace GamePlay.Bussiness.Renderer
             this.cmdBufferService = new GameCmdBufferService();
         }
 
-        public void Inject(GameObject sceneRoot, GameDomainApi logicApi, GameUIDomainApi uiApi)
+        public void Inject(GameObject sceneRoot, GameDomainApi logicApi, UIDomainApi uiApi)
         {
             this.fieldContext.Inject(sceneRoot);
             this.logicApi = logicApi;

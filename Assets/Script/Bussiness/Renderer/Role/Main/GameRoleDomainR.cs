@@ -94,7 +94,7 @@ namespace GamePlay.Bussiness.Renderer
 
             var isEnemy = role.idCom.campId != this._roleContext.userRole.idCom.campId;
             var hpSlider = attributeBarCom.hpSlider.slider ?? this._roleContext.factory.LoadHPSlider(isEnemy);
-            this._context.uiApi.layerApi.AddToUIRoot(hpSlider.transform, GameUILayerType.Scene);
+            this._context.uiApi.layerApi.AddToUIRoot(hpSlider.transform, UILayerType.Scene);
             attributeBarCom.hpSlider.SetSlider(hpSlider, new Vector2(0, 150));
             attributeBarCom.hpSlider.SetSize(new Vector2(150, 20));
 
@@ -103,13 +103,13 @@ namespace GamePlay.Bussiness.Renderer
             if (hasMPSkill)
             {
                 var mpSlider = attributeBarCom.mpSlider.slider ?? this._roleContext.factory.LoadMPSlider();
-                this._context.uiApi.layerApi.AddToUIRoot(mpSlider.transform, GameUILayerType.Scene);
+                this._context.uiApi.layerApi.AddToUIRoot(mpSlider.transform, UILayerType.Scene);
                 attributeBarCom.mpSlider.SetSlider(mpSlider, new Vector2(0, 135));
                 attributeBarCom.mpSlider.SetSize(new Vector2(150, 15));
             }
 
             var shieldSlider = attributeBarCom.shieldSlider.slider ?? this._roleContext.factory.LoadShieldSlider();
-            this._context.uiApi.layerApi.AddToUIRoot(shieldSlider.transform, GameUILayerType.Scene);
+            this._context.uiApi.layerApi.AddToUIRoot(shieldSlider.transform, UILayerType.Scene);
             attributeBarCom.shieldSlider.SetSlider(shieldSlider, new Vector2(0, 120));
             attributeBarCom.shieldSlider.SetSize(new Vector2(150, 15));
 

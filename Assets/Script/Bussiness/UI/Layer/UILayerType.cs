@@ -1,6 +1,6 @@
 namespace GamePlay.Bussiness.UI
 {
-    public enum GameUILayerType
+    public enum UILayerType
     {
         None = 0,
         /// <summary> 场景UI </summary>

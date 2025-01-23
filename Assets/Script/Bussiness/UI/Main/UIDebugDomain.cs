@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUIDebugDomain
+    public class UIDebugDomain
     {
-        public GameUIContext context { get; private set; }
+        public UIContext context { get; private set; }
 
         private int _enterStage;// 0-无输入阶段 1-输入阶段
         private int _enterId;// 输入的buffId
 
-        public GameUIDebugDomain()
+        public UIDebugDomain()
         {
         }
 
@@ -19,7 +19,7 @@ namespace GamePlay.Bussiness.UI
         {
         }
 
-        public void Inject(GameUIContext context)
+        public void Inject(UIContext context)
         {
             this.context = context;
         }

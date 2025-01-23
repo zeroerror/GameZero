@@ -308,5 +308,33 @@
 			"",
 			"}"
 		]
+	},
+	"nsu":{
+		"prefix": "nsu",
+		"body": [
+			"using UnityEngine;",
+			"namespace GamePlay.Bussiness.UI",
+			"{",
+			"    public class $1",
+			"    {",
+			"    }",
+			"}",
+		]
+	},
+	"uiBase":{
+		"prefix": "uiBase",
+		"body": [
+			"using UnityEngine.UI;",
+			"namespace GamePlay.Bussiness.UI",
+			"{",
+			"    public class UI$1MainView : GameUIBase",
+			"    {",
+			"    public override GameUILayerType layerType => GameUILayerType.PopUp;",
+			"    public override string uiPkgUrl => \"UI/System/$1\";",
+			"    public override string uiName => \"UI$1MainView\";",
+			"    public UI$1MainViewBinder viewBinder;",
+			"    }",
+			"}",
+		]
 	}
 }

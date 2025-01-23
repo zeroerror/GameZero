@@ -25,7 +25,7 @@ namespace GamePlay.Bussiness.Renderer
             this._InitDomain();
         }
 
-        public void Inject(GameObject sceneRoot, GameDomainApi logicApi, GameUIDomainApi uiApi)
+        public void Inject(GameObject sceneRoot, GameDomainApi logicApi, UIDomainApi uiApi)
         {
             this._InitContext(sceneRoot, logicApi, uiApi);
             this._InjectContext();
@@ -46,7 +46,7 @@ namespace GamePlay.Bussiness.Renderer
             this.buffDomain = new GameBuffDomainR();
         }
 
-        private void _InitContext(GameObject sceneRoot, GameDomainApi logicApi, GameUIDomainApi uiApi)
+        private void _InitContext(GameObject sceneRoot, GameDomainApi logicApi, UIDomainApi uiApi)
         {
             this.context.Inject(sceneRoot, logicApi, uiApi);
             this.context.domainApi.SetDirectApi(this);

@@ -1,12 +1,12 @@
 namespace GamePlay.Bussiness.UI
 {
-    public interface GameUIDirectDomainApi
+    public interface UIDirectDomainApi
     {
         /// <summary>
         /// 打开UI
         /// <para>args: 传递参数</para>
         /// </summary>
-        public void OpenUI<T>(object args = null) where T : GameUIBase;
+        public void OpenUI<T>(object args = null) where T : UIBase;
 
         /// <summary>
         /// 关闭UI

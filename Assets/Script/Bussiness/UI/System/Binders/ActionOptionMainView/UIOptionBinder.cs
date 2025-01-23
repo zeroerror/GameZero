@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class GameOptionBinder
+public class UIOptionBinder
 {
     public GameObject gameObject{ get; private set; }
 
-    public GameOptionBinder(GameObject gameObject)
+    public UIOptionBinder(GameObject gameObject)
     {
         this.gameObject = gameObject;
     }

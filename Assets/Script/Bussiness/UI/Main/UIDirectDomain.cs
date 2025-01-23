@@ -7,28 +7,28 @@ using UnityEngine.UI;
 
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUIDirectDomain : GameUIDirectDomainApi
+    public class UIDirectDomain : UIDirectDomainApi
     {
-        public GameUIContext context { get; private set; }
-        public GameUIDebugDomain debugDomain { get; private set; }
-        public GameUIJumpTextDomain jumpTextDomain { get; private set; }
-        public GameUILayerDomain layerDomain { get; private set; }
+        public UIContext context { get; private set; }
+        public UIDebugDomain debugDomain { get; private set; }
+        public UIJumpTextDomain jumpTextDomain { get; private set; }
+        public UILayerDomain layerDomain { get; private set; }
 
-        public GameUIDirectDomain()
+        public UIDirectDomain()
         {
-            this.context = new GameUIContext();
+            this.context = new UIContext();
             this._InitDomain();
             // this.SetTimeout(1, () =>
             // {
-            //     this.OpenUI<GameUI_ActionOption>();
+            //     this.OpenUI<UI_ActionOption>();
             // });
         }
 
         private void _InitDomain()
         {
-            this.debugDomain = new GameUIDebugDomain();
-            this.jumpTextDomain = new GameUIJumpTextDomain();
-            this.layerDomain = new GameUILayerDomain();
+            this.debugDomain = new UIDebugDomain();
+            this.jumpTextDomain = new UIJumpTextDomain();
+            this.layerDomain = new UILayerDomain();
         }
 
         public void Inject(GameObject uiRoot, GameDomainApi logicApi, GameDomainApiR rendererApi)
@@ -112,7 +112,7 @@ namespace GamePlay.Bussiness.UI
             this.context.cmdBufferService.Remove(timerId);
         }
 
-        public void OpenUI<T>(object args = null) where T : GameUIBase
+        public void OpenUI<T>(object args = null) where T : UIBase
         {
             var inst = Activator.CreateInstance<T>();
             var uiName = inst.uiName;
@@ -135,7 +135,7 @@ namespace GamePlay.Bussiness.UI
             rootGO.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
 
             // 弹窗、window 默认添加一个灰色背景
-            if (uiBase.layerType == GameUILayerType.PopUp || uiBase.layerType == GameUILayerType.Window)
+            if (uiBase.layerType == UILayerType.PopUp || uiBase.layerType == UILayerType.Window)
             {
                 var maskImage = rootGO.GetComponent<Image>() ?? rootGO.AddComponent<Image>();
                 maskImage.color = new Color(0, 0, 0, 0.5f);
@@ -160,7 +160,7 @@ namespace GamePlay.Bussiness.UI
             this.context.uiDict.Remove(uiName);
         }
 
-        public void CloseUI<T>(T ui) where T : GameUIBase
+        public void CloseUI<T>(T ui) where T : UIBase
         {
             this.CloseUI(ui.uiName);
         }

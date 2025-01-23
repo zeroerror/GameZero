@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUIFactory
+    public class UIFactory
     {
         public GameObject LoadUI(string prefabUrl)
         {

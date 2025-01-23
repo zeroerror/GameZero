@@ -1,7 +1,7 @@
 using GamePlay.Bussiness.Logic;
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUIDirector
+    public class UIDirector
     {
         public GameDirectorTimelineComponent timeScaleCom { get; private set; } = new GameDirectorTimelineComponent();
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUIJumpTextEntity
+    public class UIJumpTextEntity
     {
         public void SetAnchorPosition(Vector3 screenPoint)
         {
@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.UI
         public string prefabName { get; private set; }
         public GamePlayableCom playCom { get; private set; }
 
-        public GameUIJumpTextEntity(GameObject rootNode, string prefabName)
+        public UIJumpTextEntity(GameObject rootNode, string prefabName)
         {
             this.rootNode = rootNode;
             this.prefabName = prefabName;

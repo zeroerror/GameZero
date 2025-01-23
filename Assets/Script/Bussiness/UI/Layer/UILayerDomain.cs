@@ -1,17 +1,16 @@
-using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUILayerDomain : GameUILayerDomainApi
+    public class UILayerDomain : UILayerDomainApi
     {
-        GameUIContext _context;
+        UIContext _context;
 
-        public GameUILayerDomain()
+        public UILayerDomain()
         {
         }
 
-        public void Inject(GameUIContext context)
+        public void Inject(UIContext context)
         {
             this._context = context;
             this._BindEvent();
@@ -34,7 +33,7 @@ namespace GamePlay.Bussiness.UI
         {
         }
 
-        public void AddToUIRoot(Transform transform, GameUILayerType layerType)
+        public void AddToUIRoot(Transform transform, UILayerType layerType)
         {
             var parent = this._context.layerDict[layerType].transform;
             transform.SetParent(parent, false);

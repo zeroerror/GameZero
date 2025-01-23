@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
 {
-    public interface GameUIJumpTextDomainApi
+    public interface UIJumpTextDomainApi
     {
         /// <summary>
         /// 伤害跳字

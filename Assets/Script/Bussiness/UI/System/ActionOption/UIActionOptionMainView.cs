@@ -4,19 +4,19 @@ using GamePlay.Core;
 using UnityEngine.UI;
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUI_ActionOption : GameUIBase
+    public class UIActionOptionMainView : UIBase
     {
-        public override GameUILayerType layerType => GameUILayerType.PopUp;
+        public override UILayerType layerType => UILayerType.PopUp;
         public override string uiPkgUrl => "UI/System/ActionOption";
-        public override string uiName => "ActionOptionMainView";
+        public override string uiName => "UIActionOptionMainView";
+        public UIActionOptionMainViewBinder viewBinder;
 
         private List<GameActionOptionModel> _optionModels;
 
-        public GameActionOptionMainViewBinder viewBinder;
 
         protected override void _OnInit()
         {
-            this.viewBinder = new GameActionOptionMainViewBinder(this.go);
+            this.viewBinder = new UIActionOptionMainViewBinder(this.go);
 
             this.domainApi.logicApi.directApi.SetTimeScale(0.01f);
             this.domainApi.rendererApi.directApi.SetTimeScale(0.01f);
@@ -51,6 +51,12 @@ namespace GamePlay.Bussiness.UI
         private void _OnClickOption(int index)
         {
             var option = this._optionModels[index];
+            var lv = UIActionOptionMgr.Instance.ChooseOption(option);
+            if (lv == 0)
+            {
+                return;
+            }
+
             var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
             this.domainApi.logicApi.actionApi.DoActionOption(option.typeId, playerCampId);
             this._Close();

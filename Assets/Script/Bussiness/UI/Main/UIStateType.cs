@@ -1,6 +1,6 @@
 namespace GamePlay.Bussiness.UI
 {
-    public enum GameUIStateType
+    public enum UIStateType
     {
         None = 0,
         /// <summary> 已初始化 </summary>

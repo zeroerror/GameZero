@@ -5,25 +5,25 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
 {
-    public abstract class GameUIBase
+    public abstract class UIBase
     {
         public GameObject go { get; private set; }
-        protected GameUIDomainApi domainApi;
+        protected UIDomainApi domainApi;
 
-        public abstract GameUILayerType layerType { get; }
+        public abstract UILayerType layerType { get; }
         public abstract string uiPkgUrl { get; }
         public abstract string uiName { get; }
         public string uiUrl => $"{uiPkgUrl}/{uiName}";
 
-        public GameUIStateType state { get; private set; }
+        public UIStateType state { get; private set; }
 
         protected object _inputArgs;
 
-        public GameUIBase()
+        public UIBase()
         {
         }
 
-        public void Inject(GameObject go, GameUIDomainApi domainApi)
+        public void Inject(GameObject go, UIDomainApi domainApi)
         {
             this.go = go;
             this.domainApi = domainApi;
@@ -36,7 +36,7 @@ namespace GamePlay.Bussiness.UI
         {
             this._inputArgs = inputArgs;
             _OnInit();
-            this.state = GameUIStateType.Inited;
+            this.state = UIStateType.Inited;
         }
         protected virtual void _OnInit() { }
 
@@ -51,31 +51,31 @@ namespace GamePlay.Bussiness.UI
             // 根据UI类型, 区分不同的显示方式
             switch (layerType)
             {
-                case GameUILayerType.Window:
+                case UILayerType.Window:
                     break;
-                case GameUILayerType.PopUp:
+                case UILayerType.PopUp:
                     break;
                 default:
                     break;
             }
-            this.state = GameUIStateType.Showed;
+            this.state = UIStateType.Showed;
         }
         protected virtual void _OnShow() { }
 
         public void Hide()
         {
-            if (this.state == GameUIStateType.Hided) return;
+            if (this.state == UIStateType.Hided) return;
             _OnHide();
-            this.state = GameUIStateType.Hided;
+            this.state = UIStateType.Hided;
         }
         protected virtual void _OnHide() { }
 
         public void Destroy()
         {
-            if (this.state == GameUIStateType.Destroyed) return;
+            if (this.state == UIStateType.Destroyed) return;
             this._RemoveAllTimer();
             _OnDestroy();
-            this.state = GameUIStateType.Destroyed;
+            this.state = UIStateType.Destroyed;
             GameObject.Destroy(this.go);
             this.go = null;
         }
@@ -102,7 +102,7 @@ namespace GamePlay.Bussiness.UI
 
         protected void _AddClick(GameObject go, Action callback)
         {
-            var clickCom = go.GetComponent<GameUIClickCom>() ?? go.AddComponent<GameUIClickCom>();
+            var clickCom = go.GetComponent<UIClickCom>() ?? go.AddComponent<UIClickCom>();
             clickCom.onClick = callback;
         }
 

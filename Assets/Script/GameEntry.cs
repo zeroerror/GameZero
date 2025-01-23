@@ -8,12 +8,12 @@ public class GameEntry : MonoBehaviour
 {
     public GameApp gameApp { get; private set; }
     public GameAppR gameAppR { get; private set; }
-    public GameUIApp gameUIApp { get; private set; }
+    public UIApp gameUIApp { get; private set; }
     void Start()
     {
         gameApp = new GameApp();
         gameAppR = new GameAppR();
-        gameUIApp = new GameUIApp();
+        gameUIApp = new UIApp();
 
         // GameLogger.logLevel = LogLevel.Error;
         var logicApi = gameApp.directDomain.context.domainApi;

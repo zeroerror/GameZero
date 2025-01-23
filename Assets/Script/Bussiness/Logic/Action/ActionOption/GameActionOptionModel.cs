@@ -13,13 +13,17 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 行为Id列表 </summary>
         public readonly int[] actionIds;
 
-        public GameActionOptionModel(int typeId, string desc, GameActionOptionQuality quality, int maxLv, int[] actionIds)
+        /// <summary> 升级金币消耗列表 </summary>
+        public int[] upgradeCosts;
+
+        public GameActionOptionModel(int typeId, string desc, GameActionOptionQuality quality, int maxLv, int[] actionIds, int[] upgradeCosts)
         {
             this.typeId = typeId;
             this.desc = desc;
             this.quality = quality;
             this.maxLv = maxLv;
             this.actionIds = actionIds;
+            this.upgradeCosts = upgradeCosts;
         }
     }
 }

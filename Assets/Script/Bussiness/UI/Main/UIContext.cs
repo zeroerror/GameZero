@@ -7,28 +7,28 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUIContext
+    public class UIContext
     {
         public GameDomainApi logicApi { get; private set; }
         public GameDomainApiR rendererApi { get; private set; }
 
-        public Dictionary<string, GameUIBase> uiDict { get; private set; }
-        public GameUIFactory factory { get; private set; }
+        public Dictionary<string, UIBase> uiDict { get; private set; }
+        public UIFactory factory { get; private set; }
 
-        public GameUIDirector director { get; private set; }
+        public UIDirector director { get; private set; }
         public GameObject uiRoot { get; private set; }
         public Camera uiCamera { get; private set; }
-        public GameUIDomainApi domainApi { get; private set; }
+        public UIDomainApi domainApi { get; private set; }
         public GameCmdBufferService cmdBufferService { get; private set; }
 
-        public Dictionary<GameUILayerType, GameObject> layerDict { get; private set; }
+        public Dictionary<UILayerType, GameObject> layerDict { get; private set; }
 
-        public GameUIContext()
+        public UIContext()
         {
-            this.director = new GameUIDirector();
-            this.uiDict = new Dictionary<string, GameUIBase>();
-            this.factory = new GameUIFactory();
-            this.domainApi = new GameUIDomainApi();
+            this.director = new UIDirector();
+            this.uiDict = new Dictionary<string, UIBase>();
+            this.factory = new UIFactory();
+            this.domainApi = new UIDomainApi();
             this.cmdBufferService = new GameCmdBufferService();
         }
 
@@ -52,9 +52,9 @@ namespace GamePlay.Bussiness.UI
                 }
             }
 
-            this.layerDict = new Dictionary<GameUILayerType, GameObject>();
-            var enumvalus = Enum.GetValues(typeof(GameUILayerType));
-            foreach (GameUILayerType type in enumvalus)
+            this.layerDict = new Dictionary<UILayerType, GameObject>();
+            var enumvalus = Enum.GetValues(typeof(UILayerType));
+            foreach (UILayerType type in enumvalus)
             {
                 var layerGO = new GameObject(type.ToString());
                 layerGO.transform.SetParent(uiRoot.transform, false);

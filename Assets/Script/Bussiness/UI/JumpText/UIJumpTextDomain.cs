@@ -5,19 +5,19 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUIJumpTextDomain : GameUIJumpTextDomainApi
+    public class UIJumpTextDomain : UIJumpTextDomainApi
     {
-        GameUIContext _uiContext;
-        private List<GameUIJumpTextEntity> _jumpTextEntityList;
-        private Dictionary<string, List<GameUIJumpTextEntity>> _jumpTextEntityPoolDict;
+        UIContext _uiContext;
+        private List<UIJumpTextEntity> _jumpTextEntityList;
+        private Dictionary<string, List<UIJumpTextEntity>> _jumpTextEntityPoolDict;
 
-        public GameUIJumpTextDomain()
+        public UIJumpTextDomain()
         {
-            this._jumpTextEntityList = new List<GameUIJumpTextEntity>();
-            this._jumpTextEntityPoolDict = new Dictionary<string, List<GameUIJumpTextEntity>>();
+            this._jumpTextEntityList = new List<UIJumpTextEntity>();
+            this._jumpTextEntityPoolDict = new Dictionary<string, List<UIJumpTextEntity>>();
         }
 
-        public void Inject(GameUIContext uiContext)
+        public void Inject(UIContext uiContext)
         {
             this._uiContext = uiContext;
             this._BindEvent();
@@ -63,7 +63,7 @@ namespace GamePlay.Bussiness.UI
                     {
                         entity.SetActive(false);
                         this._jumpTextEntityList.Remove(entity);
-                        var list = this._jumpTextEntityPoolDict.TryGetValue(entity.prefabName, out var entityList) ? entityList : new List<GameUIJumpTextEntity>();
+                        var list = this._jumpTextEntityPoolDict.TryGetValue(entity.prefabName, out var entityList) ? entityList : new List<UIJumpTextEntity>();
                         this._jumpTextEntityPoolDict[entity.prefabName] = list;
                         list.Add(entity);
                     });
@@ -71,7 +71,7 @@ namespace GamePlay.Bussiness.UI
             }
         }
 
-        private void _PlayAnim(GameUIJumpTextEntity entity, string prefabUrl, int style)
+        private void _PlayAnim(UIJumpTextEntity entity, string prefabUrl, int style)
         {
             entity.SetActive(true);
 
@@ -115,8 +115,8 @@ namespace GamePlay.Bussiness.UI
             else
             {
                 var txtObj = GameObject.Instantiate(prefab);
-                this._uiContext.domainApi.layerApi.AddToUIRoot(txtObj.transform, GameUILayerType.Scene);
-                entity = new GameUIJumpTextEntity(txtObj, prefabName);
+                this._uiContext.domainApi.layerApi.AddToUIRoot(txtObj.transform, UILayerType.Scene);
+                entity = new UIJumpTextEntity(txtObj, prefabName);
             }
 
             entity.text = txt;

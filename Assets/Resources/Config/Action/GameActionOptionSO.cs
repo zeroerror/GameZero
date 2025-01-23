@@ -18,6 +18,8 @@ namespace GamePlay.Config
         public int maxLv;
         [Header("行为列表")]
         public GameActionSO[] actionSOs;
+        [Header("升级金币消耗列表")]
+        public int[] upgradeCosts;
 
         public GameActionOptionModel ToModel()
         {
@@ -30,7 +32,8 @@ namespace GamePlay.Config
                 this.desc,
                 this.quality,
                 this.maxLv,
-                this.actionSOs.Map(so => so.typeId)
+                this.actionSOs.Map(so => so.typeId),
+                this.upgradeCosts
             );
             return model;
         }

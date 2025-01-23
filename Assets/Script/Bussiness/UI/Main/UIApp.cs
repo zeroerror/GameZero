@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUIApp
+    public class UIApp
     {
-        public GameUIDirectDomain directDomain { get; private set; }
+        public UIDirectDomain directDomain { get; private set; }
 
-        public GameUIApp()
+        public UIApp()
         {
-            this.directDomain = new GameUIDirectDomain();
+            this.directDomain = new UIDirectDomain();
             Application.quitting += this.Destroy;
         }
 

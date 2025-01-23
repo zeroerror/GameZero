@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Renderer
             Application.quitting += this.Destroy;
         }
 
-        public void Inject(GameObject sceneRoot, GameDomainApi logicApi, GameUIDomainApi uiApi)
+        public void Inject(GameObject sceneRoot, GameDomainApi logicApi, UIDomainApi uiApi)
         {
             this.directDomain.Inject(sceneRoot, logicApi, uiApi);
             Application.quitting += this.Destroy;

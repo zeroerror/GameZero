@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace GamePlay.Bussiness.UI
 {
-    public class GameUIClickCom : MonoBehaviour, IPointerClickHandler
+    public class UIClickCom : MonoBehaviour, IPointerClickHandler
     {
         public Action onClick;
         public void OnPointerClick(PointerEventData eventData)
