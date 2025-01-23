@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using UnityEngine;
 using UnityEngine.UI;
 namespace GamePlay.Bussiness.UI
 {
@@ -34,6 +35,22 @@ namespace GamePlay.Bussiness.UI
             this.domainApi.logicApi.directApi.SetTimeScale(0.01f);
             this.domainApi.rendererApi.directApi.SetTimeScale(0.01f);
             this._optionViewInput = (UIActionOptionMainViewInput)this._viewInput.customData;
+        }
+
+        protected override void _BindEvents()
+        {
+            base._BindEvents();
+            this.domainApi.directApi.BindKeyAction(KeyCode.Alpha1, () => this._OnClickOption(0));
+            this.domainApi.directApi.BindKeyAction(KeyCode.Alpha2, () => this._OnClickOption(1));
+            this.domainApi.directApi.BindKeyAction(KeyCode.Alpha3, () => this._OnClickOption(2));
+        }
+
+        protected override void _UnbindEvents()
+        {
+            base._UnbindEvents();
+            this.domainApi.directApi.UnbindKeyAction(KeyCode.Alpha1, () => this._OnClickOption(0));
+            this.domainApi.directApi.UnbindKeyAction(KeyCode.Alpha2, () => this._OnClickOption(1));
+            this.domainApi.directApi.UnbindKeyAction(KeyCode.Alpha3, () => this._OnClickOption(2));
         }
 
         protected override void _OnShow()

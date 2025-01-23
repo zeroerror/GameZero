@@ -92,9 +92,23 @@ namespace GamePlay.Bussiness.Logic
                 return;
             }
             this._fieldContext.curField = field;
-
+            this._fieldContext.repo.TryAdd(field);
             // 提交RC
             this._context.SubmitRC(GameFieldRCCollection.RC_GAME_FIELD_CREATE, new GameFieldRCArgs_Create { typeId = fieldId });
+        }
+
+        public void ClearField(GameFieldEntity field)
+        {
+            field.Clear();
+            // 提交RC
+            this._context.SubmitRC(GameFieldRCCollection.RC_GAME_FIELD_CLEAR, new GameFieldRCArgs_Clear { typeId = field.model.typeId });
+        }
+
+        public void DestroyField(GameFieldEntity field)
+        {
+            this._fieldContext.repo.TryRemove(field);
+            // 提交RC
+            this._context.SubmitRC(GameFieldRCCollection.RC_GAME_FIELD_DESTROY, new GameFieldRCArgs_Destroy { typeId = field.model.typeId });
         }
     }
 }

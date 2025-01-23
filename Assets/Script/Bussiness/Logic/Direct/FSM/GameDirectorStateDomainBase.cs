@@ -37,9 +37,9 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /** 判定进入条件 */
-        public abstract bool CheckEnter(GameDirectorEntity director);
+        public abstract bool CheckEnter(GameDirectorEntity director, object args = null);
         /** 进入. ps: 直接调用则会跳过了条件判定 */
-        public abstract void Enter(GameDirectorEntity director);
+        public abstract void Enter(GameDirectorEntity director, object args = null);
         /** 状态更新 */
         protected abstract void _Tick(GameDirectorEntity director, float frameTime);
         /** 判定退出条件 */

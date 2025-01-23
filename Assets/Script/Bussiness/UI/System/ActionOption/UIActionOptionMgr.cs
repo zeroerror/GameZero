@@ -21,11 +21,11 @@ namespace GamePlay.Bussiness.UI
             var upgradeCosts = option.upgradeCosts;
             if (!this.model.TryGetOption(option, out var selectModel))
             {
-                cost = upgradeCosts.Length > 0 ? upgradeCosts[0] : 0;
+                cost = upgradeCosts?.Length > 0 ? upgradeCosts[0] : 0;
             }
             else
             {
-                cost = upgradeCosts.Length > selectModel.lv ? upgradeCosts[selectModel.lv] : 0;
+                cost = upgradeCosts?.Length > selectModel.lv ? upgradeCosts[selectModel.lv] : 0;
             }
 
             // 检查金币是否足够

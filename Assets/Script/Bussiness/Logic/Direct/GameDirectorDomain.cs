@@ -77,11 +77,7 @@ namespace GamePlay.Bussiness.Logic
             this.physicsDomain.Inject(this.context);
             this.entitySelectDomain.Inject(this.context);
             this.entityCollectDomain.Inject(this.context);
-
-            // TEST
-            this.fieldDomain.LoadField(1);
-            this.roleDomain.CreatePlayerRole(101, new GameTransformArgs { position = new GameVec2(0, -5), scale = GameVec2.one, forward = GameVec2.right }, true);
-            this.fsmDomain.TryEnter(this.director, GameDirectorStateType.Fighting);
+            this.fsmDomain.TryEnter(this.director, GameDirectorStateType.Loading, 1);
         }
 
         public void Destroy()

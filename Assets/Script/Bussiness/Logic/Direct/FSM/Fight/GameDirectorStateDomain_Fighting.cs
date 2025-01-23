@@ -6,16 +6,12 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public override bool CheckEnter(GameDirectorEntity director)
+        public override bool CheckEnter(GameDirectorEntity director, object args = null)
         {
             return true;
         }
 
-        public void Destory()
-        {
-        }
-
-        public override void Enter(GameDirectorEntity director)
+        public override void Enter(GameDirectorEntity director, object args = null)
         {
             var fsmCom = director.fsmCom;
             fsmCom.EnterFighting();

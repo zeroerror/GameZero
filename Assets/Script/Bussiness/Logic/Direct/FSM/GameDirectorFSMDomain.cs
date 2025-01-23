@@ -5,14 +5,11 @@ namespace GamePlay.Bussiness.Logic
     public class GameDirectorFSMDomain : GameDirectorFSMDomainApi
     {
         private GameContext _context;
-        private GameDirectorEntity _director => this._context.director;
-        private GameDirectorDomain _directorDomain;
 
         private Dictionary<GameDirectorStateType, GameDirectorStateDomainBase> _stateDomainDict;
 
         public GameDirectorFSMDomain(GameDirectorDomain directorDomain)
         {
-            this._directorDomain = directorDomain;
             this._stateDomainDict = new Dictionary<GameDirectorStateType, GameDirectorStateDomainBase>
             {
                 { GameDirectorStateType.Loading, new GameDirectorStateDomain_Loading(directorDomain) },
@@ -47,14 +44,14 @@ namespace GamePlay.Bussiness.Logic
             stateDomain.Tick(director, dt);
         }
 
-        public bool TryEnter(GameDirectorEntity director, GameDirectorStateType toState)
+        public bool TryEnter(GameDirectorEntity director, GameDirectorStateType toState, object args = null)
         {
             if (!this._stateDomainDict.TryGetValue(toState, out var stateDomain)) return false;
-            var check = stateDomain.CheckEnter(director);
+            var check = stateDomain.CheckEnter(director, args);
             if (check)
             {
                 this._ExitToState(director, toState);
-                stateDomain.Enter(director);
+                stateDomain.Enter(director, args);
             }
             return check;
         }

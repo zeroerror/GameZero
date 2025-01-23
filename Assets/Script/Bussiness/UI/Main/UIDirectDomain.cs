@@ -116,6 +116,7 @@ namespace GamePlay.Bussiness.UI
 
         protected void _PreTick(float dt)
         {
+            this.context.inputService.Tick();
             this.context.delayRCEventService.Tick();
         }
 
@@ -196,5 +197,16 @@ namespace GamePlay.Bussiness.UI
         {
             this.CloseUI(ui.uiName);
         }
+
+        public void BindKeyAction(KeyCode keyCode, Action callback)
+        {
+            this.context.inputService.BindKeyAction(keyCode, callback);
+        }
+
+        public void UnbindKeyAction(KeyCode keyCode, Action callback)
+        {
+            this.context.inputService.UnbindKeyAction(keyCode, callback);
+        }
+
     }
 }

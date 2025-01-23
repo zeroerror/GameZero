@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using GamePlay.Core;
 using UnityEngine;
+using UnityEngine.Video;
 
 namespace GamePlay.Bussiness.UI
 {
@@ -37,6 +38,7 @@ namespace GamePlay.Bussiness.UI
             this._viewInput = viewInput;
             _OnInit();
             this.state = UIStateType.Inited;
+            this._BindEvents();
         }
         protected virtual void _OnInit() { }
 
@@ -79,8 +81,12 @@ namespace GamePlay.Bussiness.UI
             GameObject.Destroy(this.go);
             this.go = null;
             this._viewInput.closeAction?.Invoke();
+            this._UnbindEvents();
         }
         protected virtual void _OnDestroy() { }
+
+        protected virtual void _BindEvents() { }
+        protected virtual void _UnbindEvents() { }
 
         #region [Timer]
         private List<int> _timerIdList;

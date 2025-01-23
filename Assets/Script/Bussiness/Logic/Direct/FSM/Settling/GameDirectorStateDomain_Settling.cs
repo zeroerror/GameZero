@@ -1,5 +1,3 @@
-using UnityEngine.Analytics;
-
 namespace GamePlay.Bussiness.Logic
 {
     public class GameDirectorStateDomain_Settling : GameDirectorStateDomainBase
@@ -8,16 +6,12 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public override bool CheckEnter(GameDirectorEntity director)
+        public override bool CheckEnter(GameDirectorEntity director, object args = null)
         {
             return true;
         }
 
-        public void Destory()
-        {
-        }
-
-        public override void Enter(GameDirectorEntity director)
+        public override void Enter(GameDirectorEntity director, object args = null)
         {
             var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
             var enemyCampId = GameRoleCollection.ENEMY_ROLE_CAMP_ID;

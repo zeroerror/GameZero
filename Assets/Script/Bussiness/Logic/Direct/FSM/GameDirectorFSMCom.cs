@@ -23,9 +23,10 @@ namespace GamePlay.Bussiness.Logic
             this.settlingState = new GameDirectorState_Settling();
         }
 
-        public void EnterLoading()
+        public void EnterLoading(int loadFieldId)
         {
             this.SwitchToState(GameDirectorStateType.Loading);
+            this.loadingState.loadFieldId = loadFieldId;
         }
 
         public void EnterFightPreparing(List<GameActionOptionModel> options)

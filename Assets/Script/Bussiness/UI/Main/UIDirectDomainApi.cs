@@ -1,3 +1,4 @@
+using System;
 namespace GamePlay.Bussiness.UI
 {
     public interface UIDirectDomainApi
@@ -18,18 +19,32 @@ namespace GamePlay.Bussiness.UI
         /// <para>interval: 间隔时间(s)</para>
         /// <para>callback: 回调函数</para>
         /// </summary>
-        public int SetInterval(float interval, System.Action callback);
+        public int SetInterval(float interval, Action callback);
 
         /// <summary>
         /// 设置延迟器
         /// <para>delay: 延迟时间(s)</para>
         /// <para>callback: 回调函数</para>
         /// </summary>
-        public int SetTimeout(float delay, System.Action callback);
+        public int SetTimeout(float delay, Action callback);
 
         /// <summary>
         /// 移除定时器
         /// </summary>
         public void RemoveTimer(int timerId);
+
+        /// <summary>
+        /// 绑定按键事件
+        /// <para>keyCode: 按键</para>
+        /// <para>callback: 回调函数</para>
+        /// </summary>
+        public void BindKeyAction(UnityEngine.KeyCode keyCode, Action callback);
+
+        /// <summary>
+        /// 解绑按键事件
+        /// <para>keyCode: 按键</para>
+        /// <para>callback: 回调函数</para>
+        /// </summary>
+        public void UnbindKeyAction(UnityEngine.KeyCode keyCode, Action callback);
     }
 }

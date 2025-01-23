@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GamePlay.Bussiness.Core;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
 using GamePlay.Core;
@@ -21,6 +22,7 @@ namespace GamePlay.Bussiness.UI
         public Camera uiCamera { get; private set; }
         public UIDomainApi domainApi { get; private set; }
         public GameCmdBufferService cmdBufferService { get; private set; }
+        public GameInputService inputService { get; private set; }
 
         public Dictionary<UILayerType, GameObject> layerDict { get; private set; }
 
@@ -32,6 +34,7 @@ namespace GamePlay.Bussiness.UI
             this.factory = new UIFactory();
             this.domainApi = new UIDomainApi();
             this.cmdBufferService = new GameCmdBufferService();
+            this.inputService = new GameInputService();
         }
 
         public void Inject(GameObject uiRoot, GameDomainApi logicApi, GameDomainApiR rendererApi)

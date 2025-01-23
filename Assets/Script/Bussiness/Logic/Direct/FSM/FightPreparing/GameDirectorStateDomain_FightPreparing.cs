@@ -35,12 +35,12 @@ namespace GamePlay.Bussiness.Logic
             fightPreparingState.selectedOption = selectedOption;
         }
 
-        public override bool CheckEnter(GameDirectorEntity director)
+        public override bool CheckEnter(GameDirectorEntity director, object args = null)
         {
             return true;
         }
 
-        public override void Enter(GameDirectorEntity director)
+        public override void Enter(GameDirectorEntity director, object args = null)
         {
             var actionOptions = this._getRandomActionOptions(3);
             var fsmCom = director.fsmCom;

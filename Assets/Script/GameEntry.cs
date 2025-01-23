@@ -3,12 +3,14 @@ using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
 using GamePlay.Core;
 using GamePlay.Bussiness.UI;
+using GamePlay.Bussiness.Core;
 
 public class GameEntry : MonoBehaviour
 {
     public GameApp gameApp { get; private set; }
     public GameAppR gameAppR { get; private set; }
     public UIApp gameUIApp { get; private set; }
+
     void Start()
     {
         gameApp = new GameApp();
