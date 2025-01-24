@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Logic
@@ -16,7 +17,21 @@ namespace GamePlay.Bussiness.Logic
         public override void Enter(GameDirectorEntity director, object args = null)
         {
             var fsmCom = director.fsmCom;
-            fsmCom.EnterFighting();
+            var initEntityIdArgsList = new List<GameIdArgs>();
+            var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
+            this._context.roleContext.repo.ForeachEntities((role) =>
+            {
+                if (role.idCom.campId == playerCampId)
+                {
+                    initEntityIdArgsList.Add(new GameIdArgs(
+                        role.idCom.typeId,
+                        role.idCom.entityType,
+                        role.idCom.entityId,
+                        role.idCom.campId
+                    ));
+                }
+            });
+            fsmCom.EnterFighting(initEntityIdArgsList);
             GameLogger.DebugLog("导演 - 进入战斗状态");
             // 提交RC
             this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHTING, new GameDirectorRCArgs_StateEnterFighting
@@ -25,19 +40,20 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        protected override (GameDirectorStateType, object) _CheckExit(GameDirectorEntity director)
+        protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
         {
             var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
             var playerCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == playerCampId);
-            if (playerCount == 0) return (GameDirectorStateType.Settling, null);
+            if (playerCount == 0) return new GameDirectorExitStateArgs(GameDirectorStateType.Settling);
             var enemyCampId = GameRoleCollection.ENEMY_ROLE_CAMP_ID;
             var enemyCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == enemyCampId);
-            if (enemyCount == 0) return (GameDirectorStateType.Settling, null);
-            return (GameDirectorStateType.None, null);
+            if (enemyCount == 0) return new GameDirectorExitStateArgs(GameDirectorStateType.Settling);
+            return new GameDirectorExitStateArgs(GameDirectorStateType.None);
         }
 
         protected override void _Tick(GameDirectorEntity director, float frameTime)
         {
+            director.fsmCom.fightingState.stateTime += frameTime;
             if (director.timeScaleCom.timeScaleDirty)
             {
                 director.timeScaleCom.ClearTimeScaleDirty();

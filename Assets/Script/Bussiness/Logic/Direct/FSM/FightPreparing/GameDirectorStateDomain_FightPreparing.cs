@@ -76,15 +76,15 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        protected override (GameDirectorStateType, object) _CheckExit(GameDirectorEntity director)
+        protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
         {
             // 一直等待, 直到玩家选择了一个选项
             var fsmCom = director.fsmCom;
             if (fsmCom.fightPreparingState.selectedOption != null)
             {
-                return (GameDirectorStateType.Fighting, 1);
+                return new GameDirectorExitStateArgs(GameDirectorStateType.Fighting);
             }
-            return (GameDirectorStateType.None, null);
+            return new GameDirectorExitStateArgs(GameDirectorStateType.None);
         }
 
         private List<GameActionOptionModel> _getRandomActionOptions(int count)

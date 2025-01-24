@@ -35,9 +35,10 @@ namespace GamePlay.Bussiness.Logic
             this.fightPreparingState.options = options;
         }
 
-        public void EnterFighting()
+        public void EnterFighting(List<GameIdArgs> initEntityIdArgsList)
         {
             this.SwitchToState(GameDirectorStateType.Fighting);
+            this.fightingState.initEntityIdArgsList = initEntityIdArgsList;
         }
 
         public void EnterSettling(int playerCount, int enemyCount, bool isWin)

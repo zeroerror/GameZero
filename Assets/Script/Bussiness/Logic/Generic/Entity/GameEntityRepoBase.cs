@@ -130,7 +130,7 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
-        public virtual void ForeachAllEntities(Action<T> action)
+        public virtual void ForeachEntities_IncludePool(Action<T> action)
         {
             for (var i = 0; i < this._list.Count; i++)
             {

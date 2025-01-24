@@ -45,14 +45,14 @@ namespace GamePlay.Bussiness.Logic
             this._directorDomain.entityCollectDomain.Tick();
         }
 
-        protected override (GameDirectorStateType, object) _CheckExit(GameDirectorEntity director)
+        protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
         {
             var settlingState = director.fsmCom.settlingState;
             if (settlingState.stateTime >= 0.5 && settlingState.isWin)
             {
-                return (GameDirectorStateType.Loading, 1);
+                return new GameDirectorExitStateArgs(GameDirectorStateType.Loading, 1);
             }
-            return (GameDirectorStateType.None, null);
+            return new GameDirectorExitStateArgs(GameDirectorStateType.None);
         }
 
         public override void ExitTo(GameDirectorEntity director, GameDirectorStateType toState)
@@ -60,9 +60,31 @@ namespace GamePlay.Bussiness.Logic
             var isWin = director.fsmCom.settlingState.isWin;
             if (isWin)
             {
-                this._context.director.coins += 100;
-                this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, this._context.director.coins);
+                var gainCoins = this._SettleCoins(director);
+                this._context.director.coins += gainCoins;
+                var args = new GameDirectorRCArgs_CoinsChange
+                {
+                    coins = this._context.director.coins,
+                };
+                this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, args);
             }
+        }
+
+        /// <summary> 金币结算 </summary>
+        private int _SettleCoins(GameDirectorEntity director)
+        {
+            // 战斗时间 金币 = 100 - 战斗时间(s)[0-40]
+            var fightingState = director.fsmCom.fightingState;
+            var fightingTime = fightingState.stateTime;
+            var timeGainCoins = 100 - GameMath.Clamp((int)(fightingTime), 0, 40);
+            // 剩余主单位 金币 = 20 * 剩余主单位数量
+            var initEntityIdArgsList = fightingState.initEntityIdArgsList;
+            var remainUnitCount = this._context.roleContext.repo.GetEntityCount((role) => initEntityIdArgsList.FindIndex((args) => args.entityId == role.idCom.entityId) >= 0);
+            var unitGainCoins = 20 * remainUnitCount;
+            // 总金币
+            var totalGainCoins = timeGainCoins + unitGainCoins;
+            GameLogger.DebugLog($"导演 - 结算金币: 时间{timeGainCoins} - 单位{unitGainCoins} - 总计{totalGainCoins}");
+            return totalGainCoins;
         }
     }
 }

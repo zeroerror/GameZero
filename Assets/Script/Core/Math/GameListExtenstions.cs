@@ -109,6 +109,15 @@ namespace GamePlay.Core
             return default;
         }
 
+        public static int FindIndex<T>(this T[] list, Predicate<T> match)
+        {
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (match(list[i])) return i;
+            }
+            return -1;
+        }
+
         public static bool Contains<T>(this T[] list, Predicate<T> match)
         {
             for (int i = 0; i < list.Length; i++)

@@ -27,7 +27,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.fsmDomain.Destroy();
             this._UnbindEvents();
-            this._projectileContext.repo.ForeachAllEntities((entity) =>
+            this._projectileContext.repo.ForeachEntities_IncludePool((entity) =>
             {
                 entity.Destroy();
             });

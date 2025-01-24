@@ -43,15 +43,15 @@ namespace GamePlay.Bussiness.Logic
             this._directorDomain.TickDomain(frameTime);
         }
 
-        protected override (GameDirectorStateType, object) _CheckExit(GameDirectorEntity director)
+        protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
         {
             var curField = this._context.fieldContext.curField;
-            if (curField == null) return (GameDirectorStateType.None, null);
+            if (curField == null) return new GameDirectorExitStateArgs(GameDirectorStateType.None);
             if (curField.model.typeId == director.fsmCom.loadingState.loadFieldId)
             {
-                return (GameDirectorStateType.FightPreparing, null);
+                return new GameDirectorExitStateArgs(GameDirectorStateType.FightPreparing);
             }
-            return (GameDirectorStateType.None, null);
+            return new GameDirectorExitStateArgs(GameDirectorStateType.None);
         }
     }
 }

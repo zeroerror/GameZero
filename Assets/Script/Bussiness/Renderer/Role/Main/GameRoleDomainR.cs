@@ -32,7 +32,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             this._UnbindEvents();
             this.fsmDomain.Destroy();
-            this._roleContext.repo.ForeachAllEntities((entity) =>
+            this._roleContext.repo.ForeachEntities_IncludePool((entity) =>
             {
                 entity.Destroy();
             });

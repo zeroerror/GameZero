@@ -1,5 +1,16 @@
 namespace GamePlay.Bussiness.Logic
 {
+    public struct GameDirectorExitStateArgs
+    {
+        public GameDirectorStateType toState;
+        public object args;
+
+        public GameDirectorExitStateArgs(GameDirectorStateType toState, object args = null)
+        {
+            this.toState = toState;
+            this.args = args;
+        }
+    }
 
     public abstract class GameDirectorStateDomainBase
     {
@@ -29,10 +40,10 @@ namespace GamePlay.Bussiness.Logic
         public void Tick(GameDirectorEntity director, float frameTime)
         {
             this._Tick(director, frameTime);
-            var (toState, args) = this._CheckExit(director);
-            if (toState != GameDirectorStateType.None)
+            var exitArgs = this._CheckExit(director);
+            if (exitArgs.toState != GameDirectorStateType.None)
             {
-                this._context.domainApi.directApi.fsmApi.TryEnter(director, toState, args);
+                this._context.domainApi.directApi.fsmApi.TryEnter(director, exitArgs.toState, exitArgs.args);
             }
         }
 
@@ -43,7 +54,7 @@ namespace GamePlay.Bussiness.Logic
         /** 状态更新 */
         protected abstract void _Tick(GameDirectorEntity director, float frameTime);
         /** 判定退出条件 */
-        protected abstract (GameDirectorStateType, object) _CheckExit(GameDirectorEntity director);
+        protected abstract GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director);
         /** 退出状态 */
         public virtual void ExitTo(GameDirectorEntity director, GameDirectorStateType toState) { }
     }
