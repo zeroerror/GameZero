@@ -20,7 +20,7 @@ namespace GamePlay.Bussiness.UI
         public void Inject(UIContext uiContext)
         {
             this._uiContext = uiContext;
-            this._BindEvent();
+            this._BindEvents();
         }
 
         public void Destroy()
@@ -43,7 +43,7 @@ namespace GamePlay.Bussiness.UI
             this._jumpTextEntityPoolDict.Clear();
         }
 
-        private void _BindEvent()
+        private void _BindEvents()
         {
         }
 

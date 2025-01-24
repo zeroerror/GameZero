@@ -14,6 +14,13 @@ namespace GamePlay.Bussiness.UI
         public UIJumpTextDomain jumpTextDomain { get; private set; }
         public UILayerDomain layerDomain { get; private set; }
 
+        #region [系统]
+
+        public UIPlayerDomain playerDomain { get; private set; }
+        public UIActionOptionDomain actionOptionDomain { get; private set; }
+
+        #endregion
+
         public UIDirectDomain()
         {
             this.context = new UIContext();
@@ -25,6 +32,8 @@ namespace GamePlay.Bussiness.UI
             this.debugDomain = new UIDebugDomain();
             this.jumpTextDomain = new UIJumpTextDomain();
             this.layerDomain = new UILayerDomain();
+            this.playerDomain = new UIPlayerDomain();
+            this.actionOptionDomain = new UIActionOptionDomain();
         }
 
         public void Inject(GameObject uiRoot, GameDomainApi logicApi, GameDomainApiR rendererApi)
@@ -37,11 +46,15 @@ namespace GamePlay.Bussiness.UI
         {
             this.context.Inject(uiRoot, logicApi, rendererApi);
             var domainApi = this.context.domainApi;
-            domainApi.SetRendererApi(rendererApi);
-            domainApi.SetLogicApi(logicApi);
-            domainApi.SetDirectDomainApi(this);
-            domainApi.SetJumpTextDomainApi(this.jumpTextDomain);
-            domainApi.SetLayerApi(this.layerDomain);
+            domainApi.InjectApis(
+                logicApi,
+                rendererApi,
+                this,
+                this.jumpTextDomain,
+                this.layerDomain,
+                this.playerDomain,
+                this.actionOptionDomain
+            );
         }
 
         private void _InjectContext()
@@ -50,6 +63,8 @@ namespace GamePlay.Bussiness.UI
             this.debugDomain.Inject(this.context);
             this.jumpTextDomain.Inject(this.context);
             this.layerDomain.Inject(this.context);
+            this.playerDomain.Inject(this.context);
+            this.actionOptionDomain.Inject(this.context);
         }
 
         public void Destroy()
@@ -58,6 +73,8 @@ namespace GamePlay.Bussiness.UI
             this.debugDomain.Destroy();
             this.jumpTextDomain.Destroy();
             this.layerDomain.Destroy();
+            this.playerDomain.Destroy();
+            this.actionOptionDomain.Destroy();
         }
 
         protected void _TickDomain(float dt)
@@ -65,39 +82,22 @@ namespace GamePlay.Bussiness.UI
             this.debugDomain.Tick();
             this.jumpTextDomain.Tick(dt);
             this.layerDomain.Tick(dt);
+            this.playerDomain.Tick(dt);
+            this.actionOptionDomain.Tick(dt);
         }
 
         private void _BindEvents()
         {
             this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, this._OnStateEnterSettling);
-            this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
         }
 
         private void _UnbindEvents()
         {
-            this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, this._OnStateEnterSettling);
-            this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
+            this.context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, this._OnStateEnterSettling);
         }
 
         private void _OnStateEnterSettling(object args)
         {
-        }
-
-        private void _OnStateEnterFightPreparing(object args)
-        {
-            var evArgs = (GameDirectorRCArgs_StateEnterFightPreparing)args;
-            var actionOptions = evArgs.actionOptions;
-            // 2s后打开行为选项界面
-            this.context.cmdBufferService.AddDelayCmd(2, () =>
-            {
-                var onChooseOption = new Action<int>((optionId) =>
-                {
-                    var lcArgs = new GameLCArgs_ActionOptionSelected(optionId);
-                    this.context.logicApi.directApi.SubmitEvent(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, lcArgs);
-                });
-                var viewInput = new UIActionOptionMainViewInput(actionOptions, onChooseOption);
-                this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));
-            });
         }
 
         public void Update(float dt)

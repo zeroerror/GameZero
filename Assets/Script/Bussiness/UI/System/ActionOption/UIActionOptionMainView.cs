@@ -81,7 +81,8 @@ namespace GamePlay.Bussiness.UI
         private void _OnClickOption(int index)
         {
             var option = this._optionModels[index];
-            var lv = UIActionOptionMgr.Instance.ChooseOption(option);
+            var actionOptionApi = this.domainApi.actionOptionApi;
+            var lv = actionOptionApi.ChooseOption(option);
             if (lv == 0)
             {
                 return;

@@ -16,7 +16,7 @@ namespace GamePlay.Bussiness.Renderer
         public void Inject(GameContextR context)
         {
             this._context = context;
-            this._BindEvent();
+            this._BindEvents();
         }
 
         public void Destroy()
@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Renderer
             this._UnbindEvents();
         }
 
-        private void _BindEvent()
+        private void _BindEvents()
         {
             this._context.BindRC(GameSkillRCCollection.RC_GAMES_SKILL_CREATE, this._OnSkillCreate);
         }

@@ -166,15 +166,15 @@
 			"        public void Inject(GameContextR context)",
 			"        {",
 			"            this._context = context;",
-			"            this._BindEvent();",
+			"            this._BindEvents();",
 			"        }",
 			"",
-			"        public void Destory()",
+			"        public void Destroy()",
 			"        {",
 			"            this._UnbindEvents();",
 			"        }",
 			"",
-			"        private void _BindEvent()",
+			"        private void _BindEvents()",
 			"        {",
 			"        }",
 			"",
@@ -204,7 +204,7 @@
 			"            this._context = context;",
 			"        }",
 			"",
-			"        public void Destory()",
+			"        public void Destroy()",
 			"        {",
 			"        }",
 			"",
@@ -312,7 +312,6 @@
 	"nsu":{
 		"prefix": "nsu",
 		"body": [
-			"using UnityEngine;",
 			"namespace GamePlay.Bussiness.UI",
 			"{",
 			"    public class $1",
@@ -335,6 +334,32 @@
 			"    public UI$1MainViewBinder viewBinder;",
 			"    }",
 			"}",
+		]
+	},
+	"domain_u":{
+		"prefix": "domain_u",
+		"body": [
+			"namespace GamePlay.Bussiness.UI",
+			"{",
+			"    public class UI$1Domain : UISystemDomainBase, UI$1DomainApi",
+			"    {",
+			"        public UI$1Model model { get; private set; }",
+			"",
+			"        public UI$1Domain()",
+			"        {",
+			"        }",
+			"",
+			"        protected override void _BindEvents()",
+			"        {",
+			"        }",
+			"",
+			"        protected override void _UnbindEvents()",
+			"        {",
+			"        }",
+			"",
+			"",
+			"    }",
+			"}"
 		]
 	}
 }

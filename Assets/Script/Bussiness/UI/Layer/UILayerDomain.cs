@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.UI
         public void Inject(UIContext context)
         {
             this._context = context;
-            this._BindEvent();
+            this._BindEvents();
         }
 
         public void Destroy()
@@ -21,7 +21,7 @@ namespace GamePlay.Bussiness.UI
             this._UnbindEvents();
         }
 
-        private void _BindEvent()
+        private void _BindEvents()
         {
         }
 

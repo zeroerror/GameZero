@@ -61,6 +61,7 @@ namespace GamePlay.Bussiness.Logic
             if (isWin)
             {
                 this._context.director.coins += 100;
+                this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, this._context.director.coins);
             }
         }
     }

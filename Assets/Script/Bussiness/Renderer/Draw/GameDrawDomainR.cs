@@ -16,7 +16,7 @@ namespace GamePlay.Bussiness.Renderer
         public void Inject(GameContextR context)
         {
             this._context = context;
-            this._BindEvent();
+            this._BindEvents();
         }
 
         public void Destroy()
@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Renderer
             this._UnbindEvents();
         }
 
-        private void _BindEvent()
+        private void _BindEvents()
         {
             this._context.BindRC(GameDrawRCCollection.RC_DRAW_COLLIDER_MODEL, this._OnDrawColliderModel);
             this._context.BindRC(GameDrawRCCollection.RC_DRAW_COLLIDER, this._OnDrawCollider);

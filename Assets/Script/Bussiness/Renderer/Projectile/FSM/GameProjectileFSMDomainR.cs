@@ -27,7 +27,7 @@ namespace GamePlay.Bussiness.Renderer
             {
                 stateDomain.Inject(context);
             }
-            this._BindEvent();
+            this._BindEvents();
         }
 
         public void Destroy()
@@ -35,7 +35,7 @@ namespace GamePlay.Bussiness.Renderer
             this._UnbindEvents();
         }
 
-        private void _BindEvent()
+        private void _BindEvents()
         {
             foreach (var stateDomain in this._stateDomainDict.Values) stateDomain.BindEvents();
         }

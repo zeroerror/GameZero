@@ -20,7 +20,7 @@ namespace GamePlay.Bussiness.Renderer
         {
             this._context = context;
             this.fsmDomain.Inject(context);
-            this._BindEvent();
+            this._BindEvents();
         }
 
         public void Destroy()
@@ -42,7 +42,7 @@ namespace GamePlay.Bussiness.Renderer
             });
         }
 
-        private void _BindEvent()
+        private void _BindEvents()
         {
             this._context.BindRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_CREATE, this._OnProjectileCreate);
         }

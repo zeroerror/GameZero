@@ -12,6 +12,8 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_DIRECTOR_STATE_ENTER_SETTLING = "RC_GAME_DIRECTOR_STATE_ENTER_SETTLING";
         /// <summary> 导演 - 进入 战斗准备 </summary>
         public static readonly string RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING = "RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING";
+        /// <summary> 导演 - 金币变更 </summary>
+        public static readonly string RC_GAME_DIRECTOR_COINS_CHANGE = "RC_GAME_DIRECTOR_COINS_CHANGE";
     }
 
     public struct GameDirectorRCArgs_StateEnterFighting
@@ -31,5 +33,10 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameDirectorStateType fromStateType;
         public List<GameActionOptionModel> actionOptions;
+    }
+
+    public struct GameDirectorRCArgs_CoinsChange
+    {
+        public int coins;
     }
 }

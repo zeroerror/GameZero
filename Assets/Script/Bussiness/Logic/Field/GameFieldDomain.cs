@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Logic
         public void Inject(GameContext context)
         {
             this._context = context;
-            this._BindEvent();
+            this._BindEvents();
         }
 
         public void Destroy()
@@ -23,7 +23,7 @@ namespace GamePlay.Bussiness.Logic
             this._UnbindEvents();
         }
 
-        private void _BindEvent()
+        private void _BindEvents()
         {
         }
 

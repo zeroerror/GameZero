@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Renderer
         public void Inject(GameContextR context)
         {
             this._context = context;
-            this._BindEvent();
+            this._BindEvents();
         }
 
         public void Destroy()
@@ -21,7 +21,7 @@ namespace GamePlay.Bussiness.Renderer
             this._UnbindEvents();
         }
 
-        private void _BindEvent()
+        private void _BindEvents()
         {
             this._context.BindRC(GameAttributeRCCollection.RC_GAME_ATTRIBUTE_SYNC, this._OnAttributeSync);
             this._context.BindRC(GameAttributeRCCollection.RC_GAME_ATTRIBUTE_BASE_SYNC, this._OnAttributeBaseSync);
