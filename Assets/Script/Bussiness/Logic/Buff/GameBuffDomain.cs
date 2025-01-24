@@ -313,7 +313,7 @@ namespace GamePlay.Bussiness.Logic
                 afterLayer = GameMath.Min(afterLayer, maxLayer);
                 buff.layer = afterLayer;
                 this._refreshBuffAttribute(buff, buff.idCom.parent);
-                GameLogger.DebugLog($"{buff.owner.idCom} [{buff.model}] 层数叠加: {beforeLayer} -> {afterLayer}");
+                GameLogger.DebugLog($"Buff层数叠加: 角色{buff.owner.idCom.entityId} 类型{buff.model.typeId} 层数变化{beforeLayer} -> {afterLayer}\n{buff.model.desc}");
                 var attachLayer = afterLayer - beforeLayer;
                 return attachLayer;
             }

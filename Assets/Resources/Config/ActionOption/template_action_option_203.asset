@@ -18,4 +18,5 @@ MonoBehaviour:
   desc: "\u53EC\u5524\u6D41\u6D3E - \u80CC\u6C34\u4E00\u6218"
   maxLv: 10
   actionSOs:
-  - {fileID: 11400000, guid: 6d5bb83d54e8471409139e77cc94f137, type: 2}
+  - {fileID: 11400000, guid: 3300b5f322ab6cc41b1d4ed0512f1bb2, type: 2}
+  upgradeCosts: 

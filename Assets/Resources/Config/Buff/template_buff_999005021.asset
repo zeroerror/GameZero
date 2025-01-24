@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 999005021
   buffName: "\u884C\u4E3A\u9009\u9879502 - buff\u6548\u679C"
-  desc: "\u53CB\u519B\u83B7\u5F9710%\u653B\u51FB\u529B\u52A0\u6210"
+  desc: "\u83B7\u5F9710%\u653B\u51FB\u529B\u52A0\u6210"
   refreshFlag: 4
   maxLayer: 20
   actionParam: 100
-  actionSOs:
-  - {fileID: 11400000, guid: 5d4507eaeba2c8a4e8fe9a74ef64a49e, type: 2}
+  actionSOs: []
   actionCD: 0
   conditionSetEM_action:
     durationEM:
@@ -35,7 +34,7 @@ MonoBehaviour:
       actionCount: 1
       validWindowTime: 0
     whenRoleStateEnterEM:
-      isEnable: 1
+      isEnable: 0
       campType: 7
       stateType: 4
       skillType: 0
@@ -62,6 +61,55 @@ MonoBehaviour:
           radius: 0
           fanAngle: 0
       countCondition: 0
+    whenAttributeChangeEM:
+      isEnable: 0
+      valueA: 0
+      valueFormatA: 0
+      refTypeA: 0
+      selectorEM_A:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      valueB: 0
+      valueFormatB: 0
+      refTypeB: 0
+      selectorEM_B:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      compareType: 0
   conditionSetEM_remove:
     durationEM:
       isEnable: 0
@@ -103,6 +151,55 @@ MonoBehaviour:
           radius: 0
           fanAngle: 0
       countCondition: 0
+    whenAttributeChangeEM:
+      isEnable: 0
+      valueA: 0
+      valueFormatA: 0
+      refTypeA: 0
+      selectorEM_A:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      valueB: 0
+      valueFormatB: 0
+      refTypeB: 0
+      selectorEM_B:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      compareType: 0
   layerSelectorEnable: 0
   layerSelectorEM:
     selectAnchorType: 1
@@ -124,6 +221,11 @@ MonoBehaviour:
       angle: 0
       radius: 0
       fanAngle: 0
+  layerValueRefEnable: 0
+  layerValueRefEM:
+    value: 0
+    valueFormat: 0
+    refType: 0
   vfxPrefab: {fileID: 0}
   vfxPrefabUrl: 
   vfxLayerType: 1
