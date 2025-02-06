@@ -92,7 +92,7 @@ namespace GamePlay.Bussiness.Renderer
             var attributeBarCom = role.attributeBarCom;
             attributeBarCom.WorldToScreenPoint = this.WorldToScreenPoint;
 
-            var isEnemy = role.idCom.campId != this._roleContext.userRole.idCom.campId;
+            var isEnemy = role.idCom.campId != this._roleContext.userRole?.idCom.campId;
             var hpSlider = attributeBarCom.hpSlider.slider ?? this._roleContext.factory.LoadHPSlider(isEnemy);
             this._context.uiApi.layerApi.AddToUIRoot(hpSlider.transform, UILayerType.Scene);
             attributeBarCom.hpSlider.SetSlider(hpSlider, new Vector2(0, 150));

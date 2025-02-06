@@ -26,15 +26,28 @@ namespace GamePlay.Bussiness.Logic
                 curField = this._context.domainApi.fieldApi.LoadField(loadFieldId);
             }
 
+            // 记录加载下一场景前玩家棋子属性
+            var unitEntitys = director.unitEntitys;
+            unitEntitys?.ForEach((unitEntity) =>
+            {
+                var entityId = unitEntity.entityId;
+                if (entityId == 0) return;
+                var role = this._context.domainApi.roleApi.FindByEntityId(entityId);
+                if (role == null) return;
+                unitEntity.position = role.transformCom.position;
+                unitEntity.attributeArgs = role.attributeCom.ToArgs();
+                unitEntity.baseAttributeArgs = role.baseAttributeCom.ToArgs();
+            });
+
+            // 清理当前场景
             this._context.domainApi.fieldApi.ClearField(curField);
             fsmCom.EnterLoading(loadFieldId);
 
-            this._context.domainApi.roleApi.CreatePlayerRole(101, new GameTransformArgs
+            // 生成玩家棋子
+            unitEntitys?.ForEach((unitEntity) =>
             {
-                position = new GameVec2(0, -5),
-                scale = GameVec2.one,
-                forward = GameVec2.right
-            }, true);
+                this._context.domainApi.directApi.CreateUnit(unitEntity);
+            });
             GameLogger.DebugLog("导演 - 进入加载状态 " + loadFieldId);
         }
 

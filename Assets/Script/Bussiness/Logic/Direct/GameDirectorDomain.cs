@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using Assets.HeroEditor4D.Common.Scripts.Common;
+using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
@@ -149,6 +152,116 @@ namespace GamePlay.Bussiness.Logic
         {
             this.context.eventService.Submit(eventName, args);
         }
-    }
 
+        public void BuyUnit(int index)
+        {
+            var buyableUnits = this.director.buyableUnits;
+            if (index < 0 || index >= buyableUnits.Count)
+            {
+                GameLogger.DebugLog($"购买单位失败, 超出可购买单位列表索引范围! index: {index}");
+                return;
+            }
+            var unit = buyableUnits[index];
+            if (unit == null)
+            {
+                GameLogger.DebugLog($"购买单位失败, 不存在的单位! index: {index}");
+                return;
+            }
+            // 检查金币
+            if (this.director.coins < buyableUnits[index].costCoins)
+            {
+                GameLogger.DebugLog($"购买单位[{buyableUnits[index]}]失败, 金币不足! 当前持有金币: {this.director.coins}");
+                return;
+            }
+            // 扣除金币
+            this.director.coins -= buyableUnits[index].costCoins;
+            // 添加单位
+            var unitEntity = new GamePlayUnitEntity();
+            unitEntity.model = unit;
+            this.director.unitEntitys.Add(unitEntity);
+            // 直接添加到场地
+            this.CreateUnit(unitEntity);
+        }
+
+        public GameEntityBase CreateUnit(GamePlayUnitEntity unitEntity)
+        {
+            var model = unitEntity.model;
+            GameEntityBase entity = null;
+            switch (model.entityType)
+            {
+                case GameEntityType.Role:
+                    entity = this.context.domainApi.roleApi.CreatePlayerRole(model.typeId, new GameTransformArgs
+                    {
+                        position = unitEntity.position,
+                        scale = GameVec2.one,
+                        forward = GameVec2.right
+                    }, true);
+                    break;
+                default:
+                    GameLogger.LogError("导演 - 未知的单位实体类型 " + model.entityType);
+                    break;
+            }
+            if (entity == null) return null;
+            // 记录实体Id
+            unitEntity.entityId = entity.idCom.entityId;
+            // 设置属性
+            if (unitEntity.attributeArgs.attributes?.HasData() == true)
+            {
+                entity.attributeCom.SetByArgs(unitEntity.attributeArgs);
+            }
+            if (unitEntity.baseAttributeArgs.attributes?.HasData() == true)
+            {
+                entity.attributeCom.SetByArgs(unitEntity.baseAttributeArgs);
+            }
+            return entity;
+        }
+
+        public GamePlayUnitModel[] GetBuyableUnits()
+        {
+            return this.director.buyableUnits.ToArray();
+        }
+
+        public void ShuffleBuyableUnits()
+        {
+            // 把当前可购买单位列表放回到总单位列表
+            var buyableUnits = this.director.buyableUnits;
+            var unitPool = this.director.unitPool;
+            if (unitPool == null)
+            {
+                unitPool = this._InitUnitPool();
+                this.director.SetUnitPool(unitPool);
+            }
+
+            foreach (var unit in buyableUnits)
+            {
+                unitPool.Add(unit);
+            }
+            // 洗牌出5个单位
+            buyableUnits.Clear();
+            const int shffleCount = 5;
+            for (var i = 0; i < shffleCount; i++)
+            {
+                var unit = unitPool.Random();
+                if (unit == null) continue;
+                buyableUnits.Add(unit);
+                unitPool.Remove(unit);
+            }
+        }
+
+        private List<GamePlayUnitModel> _InitUnitPool()
+        {
+            var unitPool = new List<GamePlayUnitModel>();
+            // 角色模板
+            var roleTemplate = this.context.domainApi.roleApi.GetRoleTemplate();
+            roleTemplate.GetAll()?.Foreach((role) =>
+            {
+                var unit = new GamePlayUnitModel();
+                unit.entityType = GameEntityType.Role;
+                unit.typeId = role.typeId;
+                unit.costCoins = 0;
+                unitPool.Add(unit);
+            });
+            return unitPool;
+        }
+    }
 }

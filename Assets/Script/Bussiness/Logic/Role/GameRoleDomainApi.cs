@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace GamePlay.Bussiness.Logic
 {
     public interface GameRoleDomainApi
@@ -6,9 +8,26 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleAIDomainApi aiApi { get; }
 
         /// <summary>
+        /// 根据实体Id查找角色
+        /// <para>entityId: 实体Id</para>
+        /// </summary>
+        public GameRoleEntity FindByEntityId(int entityId);
+
+        /// <summary>
         /// 获取用户角色
         /// </summary>
         public GameRoleEntity GetUserRole();
+
+        /// <summary>
+        /// 获取指定阵营的所有角色
+        /// <para>campId: 阵营Id</para>
+        /// </summary>
+        public List<GameRoleEntity> GetCampRoles(int campId);
+
+        /// <summary>
+        /// 获取角色模板    
+        /// </summary>
+        public GameRoleTemplate GetRoleTemplate();
 
         /// <summary>
         /// 设置玩家输入参数

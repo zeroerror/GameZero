@@ -62,7 +62,6 @@ namespace GamePlay.Bussiness.Logic
 
         private void _DoAction(GameEntityBase actor, GameActionModelBase actionModel)
         {
-            // // 检查
             var entitySelectApi = this._context.domainApi.entitySelectApi;
             switch (actionModel)
             {

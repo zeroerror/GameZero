@@ -26,14 +26,26 @@ namespace GamePlay.Bussiness.UI
         private void _OnStateEnterFightPreparing(object args)
         {
             var evArgs = (GameDirectorRCArgs_StateEnterFightPreparing)args;
+
+            // 2s后
             var actionOptions = evArgs.actionOptions;
-            // 2s后打开行为选项界面
             this._context.cmdBufferService.AddDelayCmd(2, () =>
             {
+                // TODO 打开单位购买栏 
+                var ldirectApi = this._context.logicApi.directApi;
+                this._context.cmdBufferService.AddDelayCmd(10, () =>
+                {
+                    var buyableUnits = ldirectApi.GetBuyableUnits();
+                    ldirectApi.BuyUnit(0);
+                    var lcArgs = new GameLCArgs_PreparingConfirmStart();
+                    ldirectApi.SubmitEvent(GameLCCollection.LC_GAME_PREPARING_CONFIRM_START, lcArgs);
+                });
+
+                // 打开行为选项界面
                 var onChooseOption = new Action<int>((optionId) =>
                 {
                     var lcArgs = new GameLCArgs_ActionOptionSelected(optionId);
-                    this._context.logicApi.directApi.SubmitEvent(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, lcArgs);
+                    ldirectApi.SubmitEvent(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, lcArgs);
                 });
                 var viewInput = new UIActionOptionMainViewInput(actionOptions, onChooseOption);
                 this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));

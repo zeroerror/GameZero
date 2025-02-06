@@ -201,6 +201,16 @@ namespace GamePlay.Core
             return result;
         }
 
+        public static List<U> Map<T, U>(this List<T> list, Func<T, U> func)
+        {
+            List<U> result = new List<U>(list.Count);
+            for (int i = 0; i < list.Count; i++)
+            {
+                result.Add(func(list[i]));
+            }
+            return result;
+        }
+
         public static bool HasData<T>(this T[] list)
         {
             return list != null && list.Length > 0;

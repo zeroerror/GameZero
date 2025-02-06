@@ -12,11 +12,13 @@ namespace GamePlay.Bussiness.Logic
         protected override void _BindEvents()
         {
             this._context.eventService.Bind(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, this._onActionOptionSelected);
+            this._context.eventService.Bind(GameLCCollection.LC_GAME_PREPARING_CONFIRM_START, this._onPreparingConfirmStart);
         }
 
         protected override void _UnbindEvents()
         {
             this._context.eventService.Unbind(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, this._onActionOptionSelected);
+            this._context.eventService.Unbind(GameLCCollection.LC_GAME_PREPARING_CONFIRM_START, this._onPreparingConfirmStart);
         }
 
         private void _onActionOptionSelected(object args)
@@ -32,24 +34,12 @@ namespace GamePlay.Bussiness.Logic
                 return;
             }
             fightPreparingState.selectedOption = selectedOption;
+        }
 
-            // 执行所有选项的行为
-            var userRole = this._context.roleContext.userRole;
-            var playerCampId = userRole.idCom.campId;
-            var optionRepo = this._context.actionContext.optionRepo;
-            var option = optionRepo.FindOption(userRole.idCom.campId, optionId);
-            if (option)
-            {
-                option.AddLevel();
-            }
-            optionRepo.ForeachEntities((option) =>
-            {
-                this._context.domainApi.actionApi.DoActionOption(option.model.typeId, playerCampId);
-            });
-            if (!option)
-            {
-                this._context.domainApi.actionApi.DoActionOption(optionId, playerCampId);
-            }
+        private void _onPreparingConfirmStart(object args)
+        {
+            var fightPreparingState = this._context.director.fsmCom.fightPreparingState;
+            fightPreparingState.preparingFinished = true;
         }
 
         public override bool CheckEnter(GameDirectorEntity director, object args = null)
@@ -63,7 +53,8 @@ namespace GamePlay.Bussiness.Logic
             var fsmCom = director.fsmCom;
             fsmCom.EnterFightPreparing(actionOptions);
             GameLogger.DebugLog("导演 - 进入战斗准备状态");
-
+            // 洗牌可购买单位列表
+            this._context.domainApi.directApi.ShuffleBuyableUnits();
             // 提交RC
             this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, new GameDirectorRCArgs_StateEnterFightPreparing
             {
@@ -78,13 +69,32 @@ namespace GamePlay.Bussiness.Logic
 
         protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
         {
-            // 一直等待, 直到玩家选择了一个选项
-            var fsmCom = director.fsmCom;
-            if (fsmCom.fightPreparingState.selectedOption != null)
+            // 一直等待, 直到玩家选择了一个选项, 并且准备完成
+            var fightPreparingState = director.fsmCom.fightPreparingState;
+            var selectedOptionModel = fightPreparingState.selectedOption;
+            if (selectedOptionModel == null || !fightPreparingState.preparingFinished)
             {
-                return new GameDirectorExitStateArgs(GameDirectorStateType.Fighting);
+                return new GameDirectorExitStateArgs(GameDirectorStateType.None);
             }
-            return new GameDirectorExitStateArgs(GameDirectorStateType.None);
+
+            // 执行所有选项的行为
+            var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
+            var optionRepo = this._context.actionContext.optionRepo;
+            var optionId = selectedOptionModel.typeId;
+            var optionEntity = optionRepo.FindOption(playerCampId, optionId);
+            if (optionEntity)
+            {
+                optionEntity.AddLevel();
+            }
+            optionRepo.ForeachEntities((option) =>
+            {
+                this._context.domainApi.actionApi.DoActionOption(optionId, playerCampId);
+            });
+            if (!optionEntity)
+            {
+                this._context.domainApi.actionApi.DoActionOption(optionId, playerCampId);
+            }
+            return new GameDirectorExitStateArgs(GameDirectorStateType.Fighting);
         }
 
         private List<GameActionOptionModel> _getRandomActionOptions(int count)

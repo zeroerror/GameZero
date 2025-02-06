@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
@@ -35,9 +36,27 @@ namespace GamePlay.Bussiness.Logic
             this.fsmDomain.Destroy();
         }
 
+        public GameRoleTemplate GetRoleTemplate()
+        {
+            return this._roleContext.factory.template;
+        }
+
+        public GameRoleEntity FindByEntityId(int entityId)
+        {
+            return this._roleContext.repo.FindByEntityId(entityId);
+        }
+
         public GameRoleEntity GetUserRole()
         {
             return this._roleContext.userRole;
+        }
+
+        public List<GameRoleEntity> GetCampRoles(int campId)
+        {
+            return this._roleContext.repo.FindAll((entity) =>
+            {
+                return entity.idCom.campId == campId;
+            });
         }
 
         public bool TryGetPlayerInputArgs(int entityId, out GameRoleInputArgs inputArgs)

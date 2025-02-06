@@ -28,5 +28,27 @@ namespace GamePlay.Bussiness.Logic
         /// 解绑RC事件
         /// </summary>
         public void UnbindRC(string rcName, System.Action<object> callback);
+
+        /// <summary>
+        /// 购买单位
+        /// <para>index: 购买单位的索引</para>
+        /// </summary>
+        public void BuyUnit(int index);
+
+        /// <summary>
+        /// 创建单位
+        /// <para>unitEntity: 单位实体</para>
+        /// </summary>
+        public GameEntityBase CreateUnit(GamePlayUnitEntity unitEntity);
+
+        /// <summary>
+        /// 获取当前可购买单位列表  
+        /// </summary>
+        public GamePlayUnitModel[] GetBuyableUnits();
+
+        /// <summary>
+        /// 洗牌可购买单位列表
+        /// </summary>
+        public void ShuffleBuyableUnits();
     }
 }

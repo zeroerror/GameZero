@@ -6,8 +6,8 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleTemplate
     {
-        private Dictionary<int, GameRoleModel> _dict;
-        private Dictionary<int, GameRoleSO> _soDict;
+        private readonly Dictionary<int, GameRoleModel> _dict;
+        private readonly Dictionary<int, GameRoleSO> _soDict;
 
         public GameRoleTemplate()
         {
@@ -36,6 +36,16 @@ namespace GamePlay.Bussiness.Logic
             model = so.ToModel();
             _dict.Add(typeId, model);
             return true;
+        }
+
+        public List<GameRoleModel> GetAll()
+        {
+            var list = new List<GameRoleModel>();
+            foreach (var so in _soDict.Values)
+            {
+                list.Add(so.ToModel());
+            }
+            return list;
         }
     }
 }
