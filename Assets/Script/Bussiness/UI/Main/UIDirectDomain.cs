@@ -88,16 +88,12 @@ namespace GamePlay.Bussiness.UI
 
         private void _BindEvents()
         {
-            this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, this._OnStateEnterSettling);
+
         }
 
         private void _UnbindEvents()
         {
-            this.context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, this._OnStateEnterSettling);
-        }
 
-        private void _OnStateEnterSettling(object args)
-        {
         }
 
         public void Update(float dt)

@@ -161,8 +161,8 @@ namespace GamePlay.Bussiness.Logic
                 GameLogger.DebugLog($"购买单位失败, 超出可购买单位列表索引范围! index: {index}");
                 return;
             }
-            var unit = buyableUnits[index];
-            if (unit == null)
+            var unitModel = buyableUnits[index];
+            if (unitModel == null)
             {
                 GameLogger.DebugLog($"购买单位失败, 不存在的单位! index: {index}");
                 return;
@@ -177,10 +177,13 @@ namespace GamePlay.Bussiness.Logic
             this.director.coins -= buyableUnits[index].costCoins;
             // 添加单位
             var unitEntity = new GamePlayUnitEntity();
-            unitEntity.model = unit;
+            unitEntity.model = unitModel;
             this.director.unitEntitys.Add(unitEntity);
             // 直接添加到场地
             this.CreateUnit(unitEntity);
+            // 提交RC
+            var evArgs = new GameDirectorRCArgs_BuyUnit { modelArgs = unitModel.ToArgs() };
+            this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, evArgs);
         }
 
         public GameEntityBase CreateUnit(GamePlayUnitEntity unitEntity)
@@ -258,7 +261,7 @@ namespace GamePlay.Bussiness.Logic
                 var unit = new GamePlayUnitModel();
                 unit.entityType = GameEntityType.Role;
                 unit.typeId = role.typeId;
-                unit.costCoins = 0;
+                unit.costCoins = 10;
                 unitPool.Add(unit);
             });
             return unitPool;

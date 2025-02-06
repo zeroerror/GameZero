@@ -8,6 +8,22 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
+        protected override void _BindEvents()
+        {
+            this._context.eventService.Bind(GameLCCollection.LC_GAME_SETTLING_CONFIRM_EXIT, this._onSettlingConfirmExit);
+        }
+
+        protected override void _UnbindEvents()
+        {
+            this._context.eventService.Unbind(GameLCCollection.LC_GAME_SETTLING_CONFIRM_EXIT, this._onSettlingConfirmExit);
+        }
+
+        private void _onSettlingConfirmExit(object args)
+        {
+            var fsmCom = this._context.director.fsmCom;
+            fsmCom.settlingState.stateFinished = true;
+        }
+
         public override bool CheckEnter(GameDirectorEntity director, object args = null)
         {
             return true;
@@ -28,14 +44,19 @@ namespace GamePlay.Bussiness.Logic
             GameLogger.DebugLog("导演 - 进入结算状态");
             GameLogger.DebugLog($"导演 - 结算结果: 玩家{playerCount} - 敌人{enemyCount} - 结果{(isWin ? "胜利" : "失败")}");
 
-            // 提交RC
+            // 提交RC - 进入结算
+            var gainCoins = this._SettleCoins(director);
             this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, new GameDirectorRCArgs_StateEnterSettling
             {
                 fromStateType = fsmCom.lastStateType,
                 playerCount = playerCount,
                 enemyCount = enemyCount,
                 isWin = isWin,
+                ganiCoins = gainCoins,
             });
+
+            // 提交RC - 金币变更
+            this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, args);
         }
 
         protected override void _Tick(GameDirectorEntity director, float frameTime)
@@ -48,7 +69,12 @@ namespace GamePlay.Bussiness.Logic
         protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
         {
             var settlingState = director.fsmCom.settlingState;
-            if (settlingState.stateTime >= 0.5 && settlingState.isWin)
+            if (!settlingState.stateFinished)
+            {
+                return new GameDirectorExitStateArgs(GameDirectorStateType.None);
+            }
+
+            if (settlingState.isWin)
             {
                 return new GameDirectorExitStateArgs(GameDirectorStateType.Loading, 1);
             }
@@ -57,17 +83,6 @@ namespace GamePlay.Bussiness.Logic
 
         public override void ExitTo(GameDirectorEntity director, GameDirectorStateType toState)
         {
-            var isWin = director.fsmCom.settlingState.isWin;
-            if (isWin)
-            {
-                var gainCoins = this._SettleCoins(director);
-                this._context.director.coins += gainCoins;
-                var args = new GameDirectorRCArgs_CoinsChange
-                {
-                    coins = this._context.director.coins,
-                };
-                this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, args);
-            }
         }
 
         /// <summary> 金币结算 </summary>

@@ -16,11 +16,13 @@ namespace GamePlay.Bussiness.UI
         protected override void _BindEvents()
         {
             this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
+            this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, this._OnBuyUnit);
         }
 
         protected override void _UnbindEvents()
         {
             this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
+            this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, this._OnBuyUnit);
         }
 
         private void _OnStateEnterFightPreparing(object args)
@@ -37,8 +39,6 @@ namespace GamePlay.Bussiness.UI
                 {
                     var buyableUnits = ldirectApi.GetBuyableUnits();
                     ldirectApi.BuyUnit(0);
-                    var lcArgs = new GameLCArgs_PreparingConfirmStart();
-                    ldirectApi.SubmitEvent(GameLCCollection.LC_GAME_PREPARING_CONFIRM_START, lcArgs);
                 });
 
                 // 打开行为选项界面
@@ -50,6 +50,17 @@ namespace GamePlay.Bussiness.UI
                 var viewInput = new UIActionOptionMainViewInput(actionOptions, onChooseOption);
                 this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));
             });
+        }
+
+        private void _OnBuyUnit(object args)
+        {
+            var evArgs = (GameDirectorRCArgs_BuyUnit)args;
+            GameLogger.DebugLog($"TODO 刷新购买单位列表, 购买成功->{evArgs.modelArgs}");
+
+            // 确认开始
+            var lcArgs = new GameLCArgs_PreparingConfirmExit();
+            var ldirectApi = this._context.logicApi.directApi;
+            ldirectApi.SubmitEvent(GameLCCollection.LC_GAME_PREPARING_CONFIRM_EXIT, lcArgs);
         }
 
         /// <summary>

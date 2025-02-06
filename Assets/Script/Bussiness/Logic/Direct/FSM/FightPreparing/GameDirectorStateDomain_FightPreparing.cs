@@ -12,13 +12,13 @@ namespace GamePlay.Bussiness.Logic
         protected override void _BindEvents()
         {
             this._context.eventService.Bind(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, this._onActionOptionSelected);
-            this._context.eventService.Bind(GameLCCollection.LC_GAME_PREPARING_CONFIRM_START, this._onPreparingConfirmStart);
+            this._context.eventService.Bind(GameLCCollection.LC_GAME_PREPARING_CONFIRM_EXIT, this._onPreparingConfirmStart);
         }
 
         protected override void _UnbindEvents()
         {
             this._context.eventService.Unbind(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, this._onActionOptionSelected);
-            this._context.eventService.Unbind(GameLCCollection.LC_GAME_PREPARING_CONFIRM_START, this._onPreparingConfirmStart);
+            this._context.eventService.Unbind(GameLCCollection.LC_GAME_PREPARING_CONFIRM_EXIT, this._onPreparingConfirmStart);
         }
 
         private void _onActionOptionSelected(object args)
@@ -39,7 +39,7 @@ namespace GamePlay.Bussiness.Logic
         private void _onPreparingConfirmStart(object args)
         {
             var fightPreparingState = this._context.director.fsmCom.fightPreparingState;
-            fightPreparingState.preparingFinished = true;
+            fightPreparingState.stateFinished = true;
         }
 
         public override bool CheckEnter(GameDirectorEntity director, object args = null)
@@ -72,7 +72,7 @@ namespace GamePlay.Bussiness.Logic
             // 一直等待, 直到玩家选择了一个选项, 并且准备完成
             var fightPreparingState = director.fsmCom.fightPreparingState;
             var selectedOptionModel = fightPreparingState.selectedOption;
-            if (selectedOptionModel == null || !fightPreparingState.preparingFinished)
+            if (selectedOptionModel == null || !fightPreparingState.stateFinished)
             {
                 return new GameDirectorExitStateArgs(GameDirectorStateType.None);
             }

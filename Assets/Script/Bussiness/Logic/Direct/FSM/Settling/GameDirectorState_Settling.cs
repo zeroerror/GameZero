@@ -5,6 +5,7 @@ namespace GamePlay.Bussiness.Logic
         public int playerCount;
         public int enemyCount;
         public bool isWin;
+        public bool stateFinished;
 
         public GameDirectorState_Settling() { }
 
@@ -14,6 +15,7 @@ namespace GamePlay.Bussiness.Logic
             playerCount = 0;
             enemyCount = 0;
             isWin = false;
+            stateFinished = false;
         }
     }
 }

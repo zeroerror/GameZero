@@ -16,6 +16,7 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary> 拥有的金币 </summary>
         public int coins;
+
         /// <summary> 已选择的行动选项 </summary>
         public List<GameActionOptionModel> actionOptions;
         /// <summary> 拥有的单位实体 </summary>
@@ -27,7 +28,7 @@ namespace GamePlay.Bussiness.Logic
         {
             this.fsmCom = new GameDirectorFSMCom();
             this.timeScaleCom = new GameDirectorTimelineComponent();
-            this.coins = 0;
+            this.coins = 100;//初始金币
             this.actionOptions = new List<GameActionOptionModel>();
             this.unitEntitys = new List<GamePlayUnitEntity>();
             this.buyableUnits = new List<GamePlayUnitModel>();
@@ -66,6 +67,28 @@ namespace GamePlay.Bussiness.Logic
         public override string ToString()
         {
             return $"实体类型: {this.entityType} 类型Id: {this.typeId} 消耗金币: {this.costCoins}";
+        }
+
+        public GamePlayUnitModelArgs ToArgs()
+        {
+            return new GamePlayUnitModelArgs(this.entityType, this.typeId, this.costCoins);
+        }
+    }
+
+    public struct GamePlayUnitModelArgs
+    {
+        /// <summary> 实体类型 </summary>
+        public GameEntityType entityType;
+        /// <summary> 类型Id </summary>
+        public int typeId;
+        /// <summary> 消耗金币 </summary>
+        public int costCoins;
+
+        public GamePlayUnitModelArgs(GameEntityType entityType, int typeId, int costCoins)
+        {
+            this.entityType = entityType;
+            this.typeId = typeId;
+            this.costCoins = costCoins;
         }
     }
 }
