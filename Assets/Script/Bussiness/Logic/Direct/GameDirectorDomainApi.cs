@@ -39,12 +39,12 @@ namespace GamePlay.Bussiness.Logic
         /// 创建单位
         /// <para>unitEntity: 单位实体</para>
         /// </summary>
-        public GameEntityBase CreateUnit(GamePlayUnitEntity unitEntity);
+        public GameEntityBase CreateUnit(GameUnitItemEntity unitEntity);
 
         /// <summary>
-        /// 获取当前可购买单位列表  
+        /// 获取当前可购买单位列表
         /// </summary>
-        public GamePlayUnitModel[] GetBuyableUnits();
+        public GameUnitItemModel[] GetBuyableUnits();
 
         /// <summary>
         /// 洗牌可购买单位列表

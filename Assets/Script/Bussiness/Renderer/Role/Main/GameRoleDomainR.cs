@@ -243,5 +243,10 @@ namespace GamePlay.Bussiness.Renderer
                 this._PlayAnim(entity, upperAnimName, 2);
             }
         }
+
+        public GameRoleTemplateR GetRoleTemplate()
+        {
+            return this._context.roleContext.factory.template;
+        }
     }
 }

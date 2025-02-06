@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 2475287024860925822}
   - component: {fileID: 4067685933428729219}
   - component: {fileID: 2361942118436639396}
-  - component: {fileID: 7995527506746409066}
+  - component: {fileID: 77887073028049483}
   m_Layer: 5
   m_Name: UIActionOptionMainView
   m_TagString: Untagged
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7995527506746409066
+--- !u!114 &77887073028049483
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

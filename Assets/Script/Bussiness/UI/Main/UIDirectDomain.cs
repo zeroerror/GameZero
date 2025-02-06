@@ -18,6 +18,7 @@ namespace GamePlay.Bussiness.UI
 
         public UIPlayerDomain playerDomain { get; private set; }
         public UIActionOptionDomain actionOptionDomain { get; private set; }
+        public UIUnitShopDomain unitShopDomain { get; private set; }
 
         #endregion
 
@@ -34,6 +35,7 @@ namespace GamePlay.Bussiness.UI
             this.layerDomain = new UILayerDomain();
             this.playerDomain = new UIPlayerDomain();
             this.actionOptionDomain = new UIActionOptionDomain();
+            this.unitShopDomain = new UIUnitShopDomain();
         }
 
         public void Inject(GameObject uiRoot, GameDomainApi logicApi, GameDomainApiR rendererApi)
@@ -53,7 +55,8 @@ namespace GamePlay.Bussiness.UI
                 this.jumpTextDomain,
                 this.layerDomain,
                 this.playerDomain,
-                this.actionOptionDomain
+                this.actionOptionDomain,
+                this.unitShopDomain
             );
         }
 
@@ -65,6 +68,7 @@ namespace GamePlay.Bussiness.UI
             this.layerDomain.Inject(this.context);
             this.playerDomain.Inject(this.context);
             this.actionOptionDomain.Inject(this.context);
+            this.unitShopDomain.Inject(this.context);
         }
 
         public void Destroy()
@@ -75,6 +79,7 @@ namespace GamePlay.Bussiness.UI
             this.layerDomain.Destroy();
             this.playerDomain.Destroy();
             this.actionOptionDomain.Destroy();
+            this.unitShopDomain.Destroy();
         }
 
         protected void _TickDomain(float dt)
@@ -84,6 +89,7 @@ namespace GamePlay.Bussiness.UI
             this.layerDomain.Tick(dt);
             this.playerDomain.Tick(dt);
             this.actionOptionDomain.Tick(dt);
+            this.unitShopDomain.Tick(dt);
         }
 
         private void _BindEvents()

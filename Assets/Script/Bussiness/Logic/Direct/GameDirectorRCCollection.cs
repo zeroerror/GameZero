@@ -58,6 +58,6 @@ namespace GamePlay.Bussiness.Logic
     /// <summary> 参数 - 导演 - 购买单位 </summary>
     public struct GameDirectorRCArgs_BuyUnit
     {
-        public GamePlayUnitModelArgs modelArgs;
+        public GameUnitItemModel model;
     }
 }

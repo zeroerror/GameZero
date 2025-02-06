@@ -17,6 +17,7 @@ namespace GamePlay.Bussiness.UI
         public UIPlayerDomainApi playerApi { get; private set; }
 
         public UIActionOptionDomainApi actionOptionApi { get; private set; }
+        public UIUnitShopDomainApi unitShopApi { get; private set; }
 
         public void InjectApis(
             GameDomainApi logicApi,
@@ -25,7 +26,8 @@ namespace GamePlay.Bussiness.UI
             UIJumpTextDomainApi jumpTextApi,
             UILayerDomainApi layerApi,
             UIPlayerDomainApi playerApi,
-            UIActionOptionDomainApi actionOptionApi
+            UIActionOptionDomainApi actionOptionApi,
+            UIUnitShopDomainApi unitShopApi
         )
         {
             this.logicApi = logicApi;
@@ -35,6 +37,7 @@ namespace GamePlay.Bussiness.UI
             this.layerApi = layerApi;
             this.playerApi = playerApi;
             this.actionOptionApi = actionOptionApi;
+            this.unitShopApi = unitShopApi;
         }
     }
 }

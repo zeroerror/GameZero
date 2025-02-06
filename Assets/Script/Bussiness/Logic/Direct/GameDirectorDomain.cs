@@ -176,19 +176,19 @@ namespace GamePlay.Bussiness.Logic
             // 扣除金币
             this.director.coins -= buyableUnits[index].costCoins;
             // 添加单位
-            var unitEntity = new GamePlayUnitEntity();
-            unitEntity.model = unitModel;
+            var unitEntity = new GameUnitItemEntity();
+            unitEntity.itemModel = unitModel;
             this.director.unitEntitys.Add(unitEntity);
             // 直接添加到场地
             this.CreateUnit(unitEntity);
             // 提交RC
-            var evArgs = new GameDirectorRCArgs_BuyUnit { modelArgs = unitModel.ToArgs() };
+            var evArgs = new GameDirectorRCArgs_BuyUnit { model = unitModel.Clone() };
             this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, evArgs);
         }
 
-        public GameEntityBase CreateUnit(GamePlayUnitEntity unitEntity)
+        public GameEntityBase CreateUnit(GameUnitItemEntity unitEntity)
         {
-            var model = unitEntity.model;
+            var model = unitEntity.itemModel;
             GameEntityBase entity = null;
             switch (model.entityType)
             {
@@ -219,7 +219,7 @@ namespace GamePlay.Bussiness.Logic
             return entity;
         }
 
-        public GamePlayUnitModel[] GetBuyableUnits()
+        public GameUnitItemModel[] GetBuyableUnits()
         {
             return this.director.buyableUnits.ToArray();
         }
@@ -251,14 +251,14 @@ namespace GamePlay.Bussiness.Logic
             }
         }
 
-        private List<GamePlayUnitModel> _InitUnitPool()
+        private List<GameUnitItemModel> _InitUnitPool()
         {
-            var unitPool = new List<GamePlayUnitModel>();
+            var unitPool = new List<GameUnitItemModel>();
             // 角色模板
             var roleTemplate = this.context.domainApi.roleApi.GetRoleTemplate();
             roleTemplate.GetAll()?.Foreach((role) =>
             {
-                var unit = new GamePlayUnitModel();
+                var unit = new GameUnitItemModel();
                 unit.entityType = GameEntityType.Role;
                 unit.typeId = role.typeId;
                 unit.costCoins = 10;
