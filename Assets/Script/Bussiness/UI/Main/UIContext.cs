@@ -69,13 +69,13 @@ namespace GamePlay.Bussiness.UI
 
         public void BindRC(string rcName, System.Action<object> callback)
         {
-            this.logicApi.directApi.BindRC(rcName, callback);
+            this.logicApi.directorApi.BindRC(rcName, callback);
             this.delayRCEventService.Bind(rcName, callback);
         }
 
         public void UnbindRC(string rcName, System.Action<object> callback)
         {
-            this.logicApi.directApi.UnbindRC(rcName, callback);
+            this.logicApi.directorApi.UnbindRC(rcName, callback);
             this.delayRCEventService.Unbind(rcName, callback);
         }
 

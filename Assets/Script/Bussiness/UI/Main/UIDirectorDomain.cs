@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace GamePlay.Bussiness.UI
 {
-    public class UIDirectDomain : UIDirectDomainApi
+    public class UIDirectorDomain : UIDirectorDomainApi
     {
         public UIContext context { get; private set; }
         public UIDebugDomain debugDomain { get; private set; }
@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.UI
 
         #endregion
 
-        public UIDirectDomain()
+        public UIDirectorDomain()
         {
             this.context = new UIContext();
             this._InitDomain();

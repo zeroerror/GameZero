@@ -1,7 +1,7 @@
 using System;
 namespace GamePlay.Bussiness.UI
 {
-    public interface UIDirectDomainApi
+    public interface UIDirectorDomainApi
     {
         /// <summary>
         /// 打开UI

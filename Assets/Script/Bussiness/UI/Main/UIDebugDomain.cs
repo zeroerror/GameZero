@@ -36,16 +36,16 @@ namespace GamePlay.Bussiness.UI
             {
                 var timeScale = this.context.director.timeScaleCom.timeScale;
                 timeScale = timeScale == 1.0f ? 0.1f : timeScale == 0.1f ? 0.0f : 1.0f;
-                this.context.rendererApi.directApi.SetTimeScale(timeScale);
-                this.context.logicApi.directApi.SetTimeScale(timeScale);
+                this.context.rendererApi.directorApi.SetTimeScale(timeScale);
+                this.context.logicApi.directorApi.SetTimeScale(timeScale);
                 this.context.director.timeScaleCom.SetTimeScale(timeScale);
             }
             if (Input.GetKeyDown(KeyCode.F4))
             {
                 var timeScale = this.context.director.timeScaleCom.timeScale;
                 timeScale = timeScale == 1.0f ? 2.0f : timeScale == 2.0f ? 3.0f : 1.0f;
-                this.context.rendererApi.directApi.SetTimeScale(timeScale);
-                this.context.logicApi.directApi.SetTimeScale(timeScale);
+                this.context.rendererApi.directorApi.SetTimeScale(timeScale);
+                this.context.logicApi.directorApi.SetTimeScale(timeScale);
                 this.context.director.timeScaleCom.SetTimeScale(timeScale);
             }
         }

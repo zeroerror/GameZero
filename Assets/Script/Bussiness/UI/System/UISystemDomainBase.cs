@@ -27,7 +27,7 @@ namespace GamePlay.Bussiness.UI
 
         public void OpenUI<T>(UIViewInput input) where T : UIBase
         {
-            this._context.domainApi.directApi.OpenUI<T>(input);
+            this._context.domainApi.directorApi.OpenUI<T>(input);
         }
     }
 }

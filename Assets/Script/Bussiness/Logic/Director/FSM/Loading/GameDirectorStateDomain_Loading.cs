@@ -46,7 +46,7 @@ namespace GamePlay.Bussiness.Logic
             // 生成玩家棋子
             unitEntitys?.ForEach((unitEntity) =>
             {
-                this._context.domainApi.directApi.CreateUnit(unitEntity);
+                this._context.domainApi.directorApi.CreateUnit(unitEntity);
             });
             GameLogger.DebugLog("导演 - 进入加载状态 " + loadFieldId);
         }

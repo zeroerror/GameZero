@@ -6,33 +6,33 @@ namespace GamePlay.Bussiness.UI
 {
     public class UIApp
     {
-        public UIDirectDomain directDomain { get; private set; }
+        public UIDirectorDomain directorDomain { get; private set; }
 
         public UIApp()
         {
-            this.directDomain = new UIDirectDomain();
+            this.directorDomain = new UIDirectorDomain();
             Application.quitting += this.Destroy;
         }
 
         public void Inject(GameObject uiRoot, GameDomainApi logicApi, GameDomainApiR rendererApi)
         {
-            this.directDomain.Inject(uiRoot, logicApi, rendererApi);
+            this.directorDomain.Inject(uiRoot, logicApi, rendererApi);
             Application.quitting += this.Destroy;
         }
 
         public void Destroy()
         {
-            this.directDomain.Destroy();
+            this.directorDomain.Destroy();
         }
 
         public void Update(float dt)
         {
-            this.directDomain.Update(dt);
+            this.directorDomain.Update(dt);
         }
 
         public void LateUpdate(float dt)
         {
-            this.directDomain.LateUpdate(dt);
+            this.directorDomain.LateUpdate(dt);
         }
     }
 }

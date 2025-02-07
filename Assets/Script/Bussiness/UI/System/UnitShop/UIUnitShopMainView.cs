@@ -32,21 +32,21 @@ namespace GamePlay.Bussiness.UI
         protected override void _BindEvents()
         {
             base._BindEvents();
-            this._domainApi.directApi.BindKeyAction(KeyCode.G, () => this._OnClickItem(0));
-            this._domainApi.directApi.BindKeyAction(KeyCode.H, () => this._OnClickItem(1));
-            this._domainApi.directApi.BindKeyAction(KeyCode.J, () => this._OnClickItem(2));
-            this._domainApi.directApi.BindKeyAction(KeyCode.K, () => this._OnClickItem(3));
-            this._domainApi.directApi.BindKeyAction(KeyCode.L, () => this._OnClickItem(4));
+            this._uiApi.directorApi.BindKeyAction(KeyCode.G, () => this._OnClickItem(0));
+            this._uiApi.directorApi.BindKeyAction(KeyCode.H, () => this._OnClickItem(1));
+            this._uiApi.directorApi.BindKeyAction(KeyCode.J, () => this._OnClickItem(2));
+            this._uiApi.directorApi.BindKeyAction(KeyCode.K, () => this._OnClickItem(3));
+            this._uiApi.directorApi.BindKeyAction(KeyCode.L, () => this._OnClickItem(4));
         }
 
         protected override void _UnbindEvents()
         {
             base._UnbindEvents();
-            this._domainApi.directApi.UnbindKeyAction(KeyCode.G, () => this._OnClickItem(0));
-            this._domainApi.directApi.UnbindKeyAction(KeyCode.H, () => this._OnClickItem(1));
-            this._domainApi.directApi.UnbindKeyAction(KeyCode.J, () => this._OnClickItem(2));
-            this._domainApi.directApi.UnbindKeyAction(KeyCode.K, () => this._OnClickItem(3));
-            this._domainApi.directApi.UnbindKeyAction(KeyCode.L, () => this._OnClickItem(4));
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.G, () => this._OnClickItem(0));
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.H, () => this._OnClickItem(1));
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.J, () => this._OnClickItem(2));
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.K, () => this._OnClickItem(3));
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.L, () => this._OnClickItem(4));
         }
 
         protected override void _OnShow()
@@ -69,7 +69,7 @@ namespace GamePlay.Bussiness.UI
             switch (itemModel.entityType)
             {
                 case GameEntityType.Role:
-                    this._domainApi.rendererApi.roleApi.GetRoleTemplate().TryGet(itemModel.typeId, out var roleModel);
+                    this._uiApi.rendererApi.roleApi.GetRoleTemplate().TryGet(itemModel.typeId, out var roleModel);
                     return "角色" + roleModel.roleName;
                 case GameEntityType.Skill:
                     return "技能" + itemModel.typeId;
@@ -82,7 +82,7 @@ namespace GamePlay.Bussiness.UI
 
         private void _OnClickItem(int index)
         {
-            this._domainApi.logicApi.directApi.BuyUnit(index);
+            this._uiApi.logicApi.directorApi.BuyUnit(index);
         }
     }
 }

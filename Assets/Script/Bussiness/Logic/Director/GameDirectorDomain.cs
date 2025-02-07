@@ -52,7 +52,7 @@ namespace GamePlay.Bussiness.Logic
         private void _InitContext()
         {
             this.context = new GameContext();
-            this.context.domainApi.SetDirectApi(this);
+            this.context.domainApi.SetDirectorApi(this);
             this.context.domainApi.SetFieldApi(this.fieldDomain);
             this.context.domainApi.SetRoleApi(this.roleDomain);
             this.context.domainApi.SetSkillApi(this.skillDomain);

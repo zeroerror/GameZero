@@ -8,7 +8,7 @@ namespace GamePlay.Bussiness.UI
         public GameDomainApi logicApi { get; private set; }
         public GameDomainApiR rendererApi { get; private set; }
 
-        public UIDirectDomainApi directApi { get; private set; }
+        public UIDirectorDomainApi directorApi { get; private set; }
 
         public UIJumpTextDomainApi jumpTextApi { get; private set; }
 
@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.UI
         public void InjectApis(
             GameDomainApi logicApi,
             GameDomainApiR rendererApi,
-            UIDirectDomainApi directApi,
+            UIDirectorDomainApi directorApi,
             UIJumpTextDomainApi jumpTextApi,
             UILayerDomainApi layerApi,
             UIPlayerDomainApi playerApi,
@@ -32,7 +32,7 @@ namespace GamePlay.Bussiness.UI
         {
             this.logicApi = logicApi;
             this.rendererApi = rendererApi;
-            this.directApi = directApi;
+            this.directorApi = directorApi;
             this.jumpTextApi = jumpTextApi;
             this.layerApi = layerApi;
             this.playerApi = playerApi;

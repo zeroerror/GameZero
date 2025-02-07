@@ -2,8 +2,8 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameDomainApi
     {
-        public GameDirectorDomainApi directApi { get; private set; }
-        public void SetDirectApi(GameDirectorDomainApi directApi) => this.directApi = directApi;
+        public GameDirectorDomainApi directorApi { get; private set; }
+        public void SetDirectorApi(GameDirectorDomainApi directorApi) => this.directorApi = directorApi;
 
         public GameRoleDomainApi roleApi { get; private set; }
         public void SetRoleApi(GameRoleDomainApi roleApi) => this.roleApi = roleApi;

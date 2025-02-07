@@ -30,15 +30,15 @@ namespace GamePlay.Bussiness.UI
             this._context.cmdBufferService.AddDelayCmd(2, () =>
             {
                 var lcArgs = new GameLCArgs_PreparingConfirmExit { };
-                var ldirectApi = this._context.logicApi.directApi;
-                ldirectApi.SubmitEvent(GameLCCollection.LC_GAME_SETTLING_CONFIRM_EXIT, lcArgs);
+                var ldirectorApi = this._context.logicApi.directorApi;
+                ldirectorApi.SubmitEvent(GameLCCollection.LC_GAME_SETTLING_CONFIRM_EXIT, lcArgs);
             });
         }
 
         private void _OnStateExit_Settling(object args)
         {
             // TODO 结算状态正确关闭后, 关闭结算界面
-            // this._context.domainApi.directApi.CloseUI(XXXXXX);
+            // this._context.domainApi.directorApi.CloseUI(XXXXXX);
         }
     }
 }

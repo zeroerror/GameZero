@@ -3,7 +3,7 @@ using GamePlay.Bussiness.UI;
 using UnityEngine;
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameDirectDomainR : GameDirectorDomainApiR
+    public class GameDirectorDomainR : GameDirectorDomainApiR
     {
         public GameContextR context { get; private set; }
         public GameRoleDomainR roleDomain { get; private set; }
@@ -18,7 +18,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameEntityCollectDomainR entityCollectDomain { get; private set; }
         public GameBuffDomainR buffDomain { get; private set; }
 
-        public GameDirectDomainR()
+        public GameDirectorDomainR()
         {
             this.context = new GameContextR();
             this._InitDomain();
@@ -48,7 +48,7 @@ namespace GamePlay.Bussiness.Renderer
         private void _InitContext(GameObject sceneRoot, GameDomainApi logicApi, UIDomainApi uiApi)
         {
             this.context.Inject(sceneRoot, logicApi, uiApi);
-            this.context.domainApi.SetDirectApi(this);
+            this.context.domainApi.SetDirectorApi(this);
             this.context.domainApi.SetRoleApi(this.roleDomain);
             this.context.domainApi.SetSkillApi(this.skillDomain);
             this.context.domainApi.SetTransformApi(this.transformDomain);
@@ -144,7 +144,7 @@ namespace GamePlay.Bussiness.Renderer
             // 被上一帧延迟的RC事件, 需要在最开始处理
             this.context.delayRCEventService.Tick();
             // 触发本次逻辑的RC事件 ps: UI层无需再次触发 
-            this.context.logicApi.directApi.TickRCEvents();
+            this.context.logicApi.directorApi.TickRCEvents();
             // 触发内部的事件
             this.context.eventService.Tick();
         }

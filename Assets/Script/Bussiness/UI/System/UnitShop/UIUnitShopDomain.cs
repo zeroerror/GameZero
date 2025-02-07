@@ -25,7 +25,7 @@ namespace GamePlay.Bussiness.UI
         private void _OnStateEnterFightPreparing(object args)
         {
             var evArgs = (GameDirectorRCArgs_StateEnterFightPreparing)args;
-            var buyableUnits = this._context.logicApi.directApi.GetBuyableUnits();
+            var buyableUnits = this._context.logicApi.directorApi.GetBuyableUnits();
             var viewInput = new UIUnitShopMainViewInput { buyableUnits = buyableUnits };
             this.OpenUI<UIUnitShopMainView>(new UIViewInput(viewInput));
         }
@@ -36,8 +36,8 @@ namespace GamePlay.Bussiness.UI
             GameLogger.DebugLog($"刷新购买单位列表, 购买成功->{evArgs.model}, 金币->{evArgs.costGold}");
             // 确认开始
             var lcArgs = new GameLCArgs_PreparingConfirmExit();
-            var ldirectApi = this._context.logicApi.directApi;
-            ldirectApi.SubmitEvent(GameLCCollection.LC_GAME_PREPARING_CONFIRM_EXIT, lcArgs);
+            var ldirectorApi = this._context.logicApi.directorApi;
+            ldirectorApi.SubmitEvent(GameLCCollection.LC_GAME_PREPARING_CONFIRM_EXIT, lcArgs);
         }
     }
 }

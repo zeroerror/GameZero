@@ -9,7 +9,7 @@ namespace GamePlay.Bussiness.UI
     public abstract class UIBase
     {
         public GameObject go { get; private set; }
-        protected UIDomainApi _domainApi { get; private set; }
+        protected UIDomainApi _uiApi { get; private set; }
 
         public abstract UILayerType layerType { get; }
         public abstract string uiPkgUrl { get; }
@@ -27,7 +27,7 @@ namespace GamePlay.Bussiness.UI
         public void Inject(GameObject go, UIDomainApi domainApi)
         {
             this.go = go;
-            this._domainApi = domainApi;
+            this._uiApi = domainApi;
         }
 
         /// <summary>
@@ -107,11 +107,11 @@ namespace GamePlay.Bussiness.UI
         private List<int> _timerIdList;
         public void SetInterval(float interval, Action callback)
         {
-            _domainApi.directApi.SetInterval(interval, callback);
+            _uiApi.directorApi.SetInterval(interval, callback);
         }
         public void RemoveTimer(int timerId)
         {
-            _domainApi.directApi.RemoveTimer(timerId);
+            _uiApi.directorApi.RemoveTimer(timerId);
         }
         private void _RemoveAllTimer()
         {
@@ -131,7 +131,7 @@ namespace GamePlay.Bussiness.UI
 
         protected void _Close()
         {
-            _domainApi.directApi.CloseUI(this.uiName);
+            _uiApi.directorApi.CloseUI(this.uiName);
         }
         #endregion
     }
