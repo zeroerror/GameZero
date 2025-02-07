@@ -58,6 +58,7 @@ namespace GamePlay.Bussiness.Renderer
             var fillRect = this.slider.fillRect;
             this._easeSlider = fillRect.parent.transform.GetComponentInChildren<Slider>();
             this._easeRectTransform = this._easeSlider?.GetComponent<RectTransform>();
+            if (this._easeSlider) this._easeSlider.value = this.slider.value;
         }
 
         public void SetOffset(in Vector3 offset)
