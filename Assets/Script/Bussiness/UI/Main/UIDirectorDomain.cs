@@ -195,6 +195,12 @@ namespace GamePlay.Bussiness.UI
             this.context.uiDict.Remove(uiName);
         }
 
+        public void CloseUI<T>() where T : UIBase
+        {
+            var inst = Activator.CreateInstance<T>();
+            this.CloseUI(inst.uiName);
+        }
+
         public void CloseUI<T>(T ui) where T : UIBase
         {
             this.CloseUI(ui.uiName);

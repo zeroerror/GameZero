@@ -49,6 +49,6 @@ namespace GamePlay.Bussiness.Logic
         /// <summary>
         /// 洗牌可购买单位列表
         /// </summary>
-        public void ShuffleBuyableUnits();
+        public bool ShuffleBuyableUnits();
     }
 }

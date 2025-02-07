@@ -4,8 +4,8 @@ namespace GamePlay.Bussiness.Logic
     {
         /// <summary> 选择行为选项 </summary>
         public static readonly string LC_GAME_ACTION_OPTION_SELECTED = "LC_GAME_ACTION_OPTION_SELECTED";
-        /// <summary> 准备阶段 - 确认退出 </summary>
-        public static readonly string LC_GAME_PREPARING_CONFIRM_EXIT = "LC_GAME_PREPARING_CONFIRM_EXIT";
+        /// <summary> 准备阶段 - 确认战斗 </summary>
+        public static readonly string LC_GAME_PREPARING_CONFIRM_FIGHT = "LC_GAME_PREPARING_CONFIRM_FIGHT";
         /// <summary> 结算阶段 - 确认退出 </summary>
         public static readonly string LC_GAME_SETTLING_CONFIRM_EXIT = "LC_GAME_SETTLING_CONFIRM_EXIT";
     }
@@ -20,7 +20,7 @@ namespace GamePlay.Bussiness.Logic
         }
     }
 
-    public struct GameLCArgs_PreparingConfirmExit
+    public struct GameLCArgs_PreparingConfirmFight
     {
         // 确定本次战斗的内容如
         // 难度

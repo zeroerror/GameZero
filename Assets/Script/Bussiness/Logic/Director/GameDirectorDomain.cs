@@ -230,8 +230,18 @@ namespace GamePlay.Bussiness.Logic
             return this.director.buyableUnits.ToArray();
         }
 
-        public void ShuffleBuyableUnits()
+        public bool ShuffleBuyableUnits()
         {
+            // 检查是否可以洗牌
+            var gold = this.director.gold;
+            const int shuffleCost = 10;
+            if (gold < shuffleCost)
+            {
+                GameLogger.DebugLog($"洗牌失败, 金币不足! 需要金币: {shuffleCost}, 当前持有金币: {gold}");
+                return false;
+            }
+            // 扣除金币
+            this.director.gold -= shuffleCost;
             // 把当前可购买单位列表放回到总单位列表
             var buyableUnits = this.director.buyableUnits;
             var unitPool = this.director.unitPool;
@@ -255,6 +265,11 @@ namespace GamePlay.Bussiness.Logic
                 buyableUnits.Add(unit);
                 unitPool.Remove(unit);
             }
+            // 提交RC - 金币变更
+            GameDirectorRCArgs_GoldChange goldChangeArgs;
+            goldChangeArgs.gold = this.director.gold;
+            this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, goldChangeArgs);
+            return true;
         }
 
         private List<GameUnitItemModel> _InitUnitPool()

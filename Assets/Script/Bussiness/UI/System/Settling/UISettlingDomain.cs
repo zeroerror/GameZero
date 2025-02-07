@@ -29,7 +29,7 @@ namespace GamePlay.Bussiness.UI
             // 2s后自定请求退出结算
             this._context.cmdBufferService.AddDelayCmd(2, () =>
             {
-                var lcArgs = new GameLCArgs_PreparingConfirmExit { };
+                var lcArgs = new GameLCArgs_PreparingConfirmFight { };
                 var ldirectorApi = this._context.logicApi.directorApi;
                 ldirectorApi.SubmitEvent(GameLCCollection.LC_GAME_SETTLING_CONFIRM_EXIT, lcArgs);
             });

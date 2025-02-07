@@ -13,12 +13,14 @@ namespace GamePlay.Bussiness.UI
         protected override void _BindEvents()
         {
             this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
+            this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHTING, this._OnStateEnterFighting);
             this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, this._OnBuyUnit);
         }
 
         protected override void _UnbindEvents()
         {
             this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
+            this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHTING, this._OnStateEnterFighting);
             this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, this._OnBuyUnit);
         }
 
@@ -28,6 +30,11 @@ namespace GamePlay.Bussiness.UI
             var buyableUnits = this._context.logicApi.directorApi.GetBuyableUnits();
             var viewInput = new UIUnitShopMainViewInput { buyableUnits = buyableUnits };
             this.OpenUI<UIUnitShopMainView>(new UIViewInput(viewInput));
+        }
+
+        private void _OnStateEnterFighting(object args)
+        {
+            this.CloseUI<UIUnitShopMainView>();
         }
 
         private void _OnBuyUnit(object args)

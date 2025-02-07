@@ -15,6 +15,11 @@ namespace GamePlay.Bussiness.UI
         public void CloseUI(string uiName);
 
         /// <summary>
+        /// 关闭UI
+        /// </summary>
+        public void CloseUI<T>() where T : UIBase;
+
+        /// <summary>
         /// 设置定时器
         /// <para>interval: 间隔时间(s)</para>
         /// <para>callback: 回调函数</para>

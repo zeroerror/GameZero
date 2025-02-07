@@ -29,5 +29,10 @@ namespace GamePlay.Bussiness.UI
         {
             this._context.domainApi.directorApi.OpenUI<T>(input);
         }
+
+        public void CloseUI<T>() where T : UIBase
+        {
+            this._context.domainApi.directorApi.CloseUI<T>();
+        }
     }
 }

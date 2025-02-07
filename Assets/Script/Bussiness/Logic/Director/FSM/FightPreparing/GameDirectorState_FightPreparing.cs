@@ -6,7 +6,7 @@ namespace GamePlay.Bussiness.Logic
     {
         public List<GameActionOptionModel> options;
         public GameActionOptionModel selectedOption;
-        public bool stateFinished;
+        public bool confirmFight;
 
         public GameDirectorState_FightPreparing() { }
 
@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Logic
             base.Clear();
             this.options = null;
             this.selectedOption = null;
-            this.stateFinished = false;
+            this.confirmFight = false;
         }
     }
 }

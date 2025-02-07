@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Core;
 using UnityEngine;
 using UnityEngine.UI;
 namespace GamePlay.Bussiness.UI
@@ -37,6 +38,7 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.BindKeyAction(KeyCode.J, () => this._OnClickItem(2));
             this._uiApi.directorApi.BindKeyAction(KeyCode.K, () => this._OnClickItem(3));
             this._uiApi.directorApi.BindKeyAction(KeyCode.L, () => this._OnClickItem(4));
+            this._uiApi.directorApi.BindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
         }
 
         protected override void _UnbindEvents()
@@ -47,21 +49,44 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.J, () => this._OnClickItem(2));
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.K, () => this._OnClickItem(3));
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.L, () => this._OnClickItem(4));
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
         }
 
         protected override void _OnShow()
         {
-            var text1 = this.viewBinder.unitGroup_unit1.txt_name;
-            text1.GetComponent<Text>().text = this._GetItemName(this._itemModels[0]);
-            var text2 = this.viewBinder.unitGroup_unit2.txt_name;
-            text2.GetComponent<Text>().text = this._GetItemName(this._itemModels[1]);
-            var text3 = this.viewBinder.unitGroup_unit3.txt_name;
-            text3.GetComponent<Text>().text = this._GetItemName(this._itemModels[2]);
-            this._AddClick(this.viewBinder.unitGroup_unit1.gameObject, () => this._OnClickItem(0));
-            this._AddClick(this.viewBinder.unitGroup_unit2.gameObject, () => this._OnClickItem(1));
-            this._AddClick(this.viewBinder.unitGroup_unit3.gameObject, () => this._OnClickItem(2));
-            this._AddClick(this.viewBinder.unitGroup_unit3.gameObject, () => this._OnClickItem(3));
-            this._AddClick(this.viewBinder.unitGroup_unit3.gameObject, () => this._OnClickItem(4));
+            var itemCount = this._itemModels.Length;
+            for (var i = 0; i < 5; i++)
+            {
+                var unitBinder = this.viewBinder.GetField($"unitGroup_unit{i + 1}") as UIUnitItemBinder;
+                var isActive = i < itemCount;
+                unitBinder.gameObject.SetActive(isActive);
+                if (isActive)
+                {
+                    var text = unitBinder.txt_name.GetComponent<Text>();
+                    text.GetComponent<Text>().text = this._GetItemName(this._itemModels[i]);
+                    this._SetClick(unitBinder.gameObject, () => this._OnClickItem(i));
+                }
+            }
+
+            this._SetClick(this.viewBinder.btn_confirm, this._OnBtnConfirmClick);
+            this._SetClick(this.viewBinder.btn_refresh, this._OnBtnRefreshClick);
+        }
+
+        private void _OnClickItem(int index)
+        {
+            this._uiApi.logicApi.directorApi.BuyUnit(index);
+        }
+
+        private void _OnBtnConfirmClick()
+        {
+            // 提交LC, 通知逻辑层确认开始
+            this._uiApi.logicApi.directorApi.SubmitEvent(GameLCCollection.LC_GAME_PREPARING_CONFIRM_FIGHT, new GameLCArgs_PreparingConfirmFight());
+        }
+
+        private void _OnBtnRefreshClick()
+        {
+            if (!this._uiApi.logicApi.directorApi.ShuffleBuyableUnits()) return;
+            this._OnShow();
         }
 
         private string _GetItemName(GameUnitItemModel itemModel)
@@ -80,9 +105,5 @@ namespace GamePlay.Bussiness.UI
             }
         }
 
-        private void _OnClickItem(int index)
-        {
-            this._uiApi.logicApi.directorApi.BuyUnit(index);
-        }
     }
 }

@@ -72,16 +72,17 @@ public class UIBinderEditor : Editor
     {
         foreach (Transform child in parent)
         {
-            string varName = _GetVarName(child);
-            string varField = $"_{varName}";
+            string publicVarName = _GetVarName(child);
+            string privateVarName = $"_{publicVarName}";
+            string varPath = _GetVarPath(child);
             var isBinder = PrefabUtility.IsAnyPrefabInstanceRoot(child.gameObject);
             if (isBinder)
             {
                 var binderName = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(child.gameObject);
                 binderName = Path.GetFileNameWithoutExtension(binderName);
                 binderName = $"{binderName}Binder";
-                codeBuilder.AppendLine($"    public {binderName} {varName} => {varField} ?? ({varField} = new {binderName}(GameObject.Find(\"{varName}\")));");
-                codeBuilder.AppendLine($"    private {binderName} {varField};");
+                codeBuilder.AppendLine($"    public {binderName} {publicVarName} => {privateVarName} ?? ({privateVarName} = new {binderName}(this.gameObject.transform.Find(\"{varPath}\").gameObject));");
+                codeBuilder.AppendLine($"    private {binderName} {privateVarName};");
 
                 var hasBinder = this._binderDict.TryGetValue(binderName, out bool _);
                 if (!hasBinder)
@@ -93,8 +94,8 @@ public class UIBinderEditor : Editor
             }
 
             var typeName = "GameObject";
-            codeBuilder.AppendLine($"    public {typeName} {varName} => {varField} ?? ({varField} = this.gameObject.transform.Find(\"{varName}\").gameObject);");
-            codeBuilder.AppendLine($"    private {typeName} {varField};");
+            codeBuilder.AppendLine($"    public {typeName} {publicVarName} => {privateVarName} ?? ({privateVarName} = this.gameObject.transform.Find(\"{varPath}\").gameObject);");
+            codeBuilder.AppendLine($"    private {typeName} {privateVarName};");
 
             TraverseChildren(child, codeBuilder, outputDirPath, prefabName);
         }
@@ -116,6 +117,15 @@ public class UIBinderEditor : Editor
         return depth;
     }
 
+    private string _filter(string str)
+    {
+        int index = str.IndexOf(' ');
+        if (index != -1) str = str.Substring(0, index);
+        index = str.IndexOf('(');
+        if (index != -1) str = str.Substring(0, index);
+        return str;
+    }
+
     /// <summary> 获取变量名 </summary>
     private string _GetVarName(Transform tf)
     {
@@ -131,12 +141,19 @@ public class UIBinderEditor : Editor
         return name;
     }
 
-    private string _filter(string str)
+    /// <summary> 获取变量路径 </summary>
+    private string _GetVarPath(Transform tf)
     {
-        int index = str.IndexOf(' ');
-        if (index != -1) str = str.Substring(0, index);
-        index = str.IndexOf('(');
-        if (index != -1) str = str.Substring(0, index);
-        return str;
+        var depth = _GetPrefabDepth(tf);
+        var path = _filter(tf.name);
+        if (depth <= 2) return path;
+        while (depth > 2)
+        {
+            depth--;
+            tf = tf.parent;
+            path = $"{_filter(tf.name)}/{path}";
+        }
+        return path;
     }
+
 }

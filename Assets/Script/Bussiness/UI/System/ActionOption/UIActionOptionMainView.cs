@@ -62,9 +62,9 @@ namespace GamePlay.Bussiness.UI
             var text3 = this.viewBinder.option3.text;
             text3.GetComponent<Text>().text = this._GetOptionDesc(this._optionModels[2]);
 
-            this._AddClick(this.viewBinder.option1.gameObject, () => this._OnClickOption(0));
-            this._AddClick(this.viewBinder.option2.gameObject, () => this._OnClickOption(1));
-            this._AddClick(this.viewBinder.option3.gameObject, () => this._OnClickOption(2));
+            this._SetClick(this.viewBinder.option1.gameObject, () => this._OnClickOption(0));
+            this._SetClick(this.viewBinder.option2.gameObject, () => this._OnClickOption(1));
+            this._SetClick(this.viewBinder.option3.gameObject, () => this._OnClickOption(2));
         }
 
         private string _GetOptionDesc(GameActionOptionModel option)

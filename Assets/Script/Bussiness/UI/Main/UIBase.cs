@@ -122,7 +122,7 @@ namespace GamePlay.Bussiness.UI
         #endregion
 
         #region [通用]
-        protected void _AddClick(GameObject go, Action callback)
+        protected void _SetClick(GameObject go, Action callback)
         {
             var clickCom = go.GetComponent<UIClickCom>() ?? go.AddComponent<UIClickCom>();
             clickCom.onClick = callback;
