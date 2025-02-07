@@ -1,5 +1,4 @@
 using GamePlay.Core;
-using UnityEngine.Analytics;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -31,6 +30,15 @@ namespace GamePlay.Bussiness.Logic
             base.Clear();
             this.SetByModel(this.model);
             this.skillCom.Clear();
+        }
+
+        public override void SetInvalid()
+        {
+            base.SetInvalid();
+            this.skillCom.ForeachSkills((skill) =>
+            {
+                skill.SetInvalid();
+            });
         }
 
         public override bool IsAlive()

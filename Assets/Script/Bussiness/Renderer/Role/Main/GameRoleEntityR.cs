@@ -60,6 +60,15 @@ namespace GamePlay.Bussiness.Renderer
             this.skillCom.Clear();
         }
 
+        public override void SetInvalid()
+        {
+            base.SetInvalid();
+            this.skillCom.ForeachSkills((skill) =>
+            {
+                skill.SetInvalid();
+            });
+        }
+
         public override void Destroy()
         {
             this.animCom.Destroy();

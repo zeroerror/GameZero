@@ -111,11 +111,11 @@ namespace GamePlay.Bussiness.UI
             {
                 case GameEntityType.Role:
                     this._uiApi.rendererApi.roleApi.GetRoleTemplate().TryGet(itemModel.typeId, out var roleModel);
-                    return "角色" + roleModel.roleName;
+                    return roleModel.roleName;
                 case GameEntityType.Skill:
-                    return "技能" + itemModel.typeId;
+                    return itemModel.typeId.ToString();
                 case GameEntityType.Buff:
-                    return "Buff" + itemModel.typeId;
+                    return itemModel.typeId.ToString();
                 default:
                     return "未知";
             }

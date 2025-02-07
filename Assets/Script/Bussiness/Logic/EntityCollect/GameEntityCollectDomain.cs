@@ -32,6 +32,18 @@ namespace GamePlay.Bussiness.Logic
                 });
             }
             {
+                var repo = this._context.skillContext.repo;
+                repo.ForeachEntities((entity) =>
+                {
+                    if (entity.isValid) return;
+                    if (entity.HasReference()) return;
+                    this._context.cmdBufferService.AddDelayCmd(0, () =>
+                    {
+                        repo.Recycle(entity);
+                    });
+                });
+            }
+            {
                 var repo = this._context.projectileContext.repo;
                 repo.ForeachEntities((entity) =>
                 {

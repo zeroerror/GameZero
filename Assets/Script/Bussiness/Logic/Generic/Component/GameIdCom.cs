@@ -23,16 +23,19 @@ namespace GamePlay.Bussiness.Logic
 
         public void Clear()
         {
-            // 对parent解除引用
+            // 自己的parent的children中不在包含自己
             if (parent != null)
             {
-                parent.idCom.children.Remove(parent);
+                parent.idCom.children.Remove(entity);
                 parent = null;
             }
 
+            // 自己的children的parent不再指向自己
+            children.ForEach(child => child.idCom.parent = null);
+            children.Clear();
+
             entityId = 0;
             campId = 0;
-            children.Clear();
         }
 
         public override string ToString()

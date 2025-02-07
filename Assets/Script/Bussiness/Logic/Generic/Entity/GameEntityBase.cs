@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.Logic
 
         public bool isValid { get; private set; } = true;
         public void SetValid() => this.isValid = true;
-        public void SetInvalid()
+        public virtual void SetInvalid()
         {
             this.isValid = false;
         }

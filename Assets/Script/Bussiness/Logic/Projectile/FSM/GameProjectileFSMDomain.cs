@@ -49,7 +49,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var fsmCom = projectile.fsmCom;
             var stateType = fsmCom.stateType;
-            if (fsmCom.isInvalid) return;
+            if (stateType == GameProjectileStateType.None) return;
             // 状态逻辑
             this._anyStateDomain.Tick(projectile, dt);
             if (!this._stateDomainDict.TryGetValue(stateType, out var stateDomain)) return;

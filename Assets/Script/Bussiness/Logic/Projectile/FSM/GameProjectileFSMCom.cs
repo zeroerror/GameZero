@@ -6,7 +6,6 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameProjectileStateType stateType { get; private set; }
         public GameProjectileStateType lastStateType { get; private set; }
-        public bool isInvalid => stateType == GameProjectileStateType.None || stateType == GameProjectileStateType.Destroyed;
 
         public GameProjectileState_Any anyState { get; private set; }
         public GameProjectileState_Idle idleState { get; private set; }

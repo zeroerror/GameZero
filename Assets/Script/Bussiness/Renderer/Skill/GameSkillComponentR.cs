@@ -16,6 +16,11 @@ namespace GamePlay.Bussiness.Renderer
             _skillEntities.Clear();
         }
 
+        public void ForeachSkills(System.Action<GameSkillEntityR> action)
+        {
+            _skillEntities.ForEach(action);
+        }
+
         public void Add(GameSkillEntityR skill)
         {
             _skillEntities.Add(skill);
