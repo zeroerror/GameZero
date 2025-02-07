@@ -72,7 +72,7 @@ public class UIBinderEditor : Editor
     {
         foreach (Transform child in parent)
         {
-            string varName = _filter(child.name);
+            string varName = _GetVarName(child);
             string varField = $"_{varName}";
             var isBinder = PrefabUtility.IsAnyPrefabInstanceRoot(child.gameObject);
             if (isBinder)
@@ -95,8 +95,40 @@ public class UIBinderEditor : Editor
             var typeName = "GameObject";
             codeBuilder.AppendLine($"    public {typeName} {varName} => {varField} ?? ({varField} = this.gameObject.transform.Find(\"{varName}\").gameObject);");
             codeBuilder.AppendLine($"    private {typeName} {varField};");
+
             TraverseChildren(child, codeBuilder, outputDirPath, prefabName);
         }
+    }
+
+    /// <summary> 获取相对最近的一个预制体父节点的深度 </summary>
+    private int _GetPrefabDepth(Transform tf)
+    {
+        int depth = 0;
+        while (tf.parent != null)
+        {
+            depth++;
+            tf = tf.parent;
+            if (PrefabUtility.IsAnyPrefabInstanceRoot(tf.gameObject))
+            {
+                break;
+            }
+        }
+        return depth;
+    }
+
+    /// <summary> 获取变量名 </summary>
+    private string _GetVarName(Transform tf)
+    {
+        var depth = _GetPrefabDepth(tf);
+        var name = _filter(tf.name);
+        if (depth <= 2) return name;
+        while (depth > 2)
+        {
+            depth--;
+            tf = tf.parent;
+            name = $"{_filter(tf.name)}_{name}";
+        }
+        return name;
     }
 
     private string _filter(string str)

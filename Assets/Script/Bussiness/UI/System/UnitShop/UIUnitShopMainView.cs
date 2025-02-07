@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.UI
 
     public class UIUnitShopMainView : UIBase
     {
-        public override UILayerType layerType => UILayerType.PopUp;
+        public override UILayerType layerType => UILayerType.Main;
         public override string uiPkgUrl => "UI/System/UnitShop";
         public override string uiName => "UIUnitShopMainView";
         public UIUnitShopMainViewBinder viewBinder;
@@ -51,17 +51,17 @@ namespace GamePlay.Bussiness.UI
 
         protected override void _OnShow()
         {
-            var text1 = this.viewBinder.unit1.txt_name;
+            var text1 = this.viewBinder.unitGroup_unit1.txt_name;
             text1.GetComponent<Text>().text = this._GetItemName(this._itemModels[0]);
-            var text2 = this.viewBinder.unit2.txt_name;
+            var text2 = this.viewBinder.unitGroup_unit2.txt_name;
             text2.GetComponent<Text>().text = this._GetItemName(this._itemModels[1]);
-            var text3 = this.viewBinder.unit3.txt_name;
+            var text3 = this.viewBinder.unitGroup_unit3.txt_name;
             text3.GetComponent<Text>().text = this._GetItemName(this._itemModels[2]);
-            this._AddClick(this.viewBinder.unit1.gameObject, () => this._OnClickItem(0));
-            this._AddClick(this.viewBinder.unit2.gameObject, () => this._OnClickItem(1));
-            this._AddClick(this.viewBinder.unit3.gameObject, () => this._OnClickItem(2));
-            this._AddClick(this.viewBinder.unit3.gameObject, () => this._OnClickItem(3));
-            this._AddClick(this.viewBinder.unit3.gameObject, () => this._OnClickItem(4));
+            this._AddClick(this.viewBinder.unitGroup_unit1.gameObject, () => this._OnClickItem(0));
+            this._AddClick(this.viewBinder.unitGroup_unit2.gameObject, () => this._OnClickItem(1));
+            this._AddClick(this.viewBinder.unitGroup_unit3.gameObject, () => this._OnClickItem(2));
+            this._AddClick(this.viewBinder.unitGroup_unit3.gameObject, () => this._OnClickItem(3));
+            this._AddClick(this.viewBinder.unitGroup_unit3.gameObject, () => this._OnClickItem(4));
         }
 
         private string _GetItemName(GameUnitItemModel itemModel)
