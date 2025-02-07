@@ -23,22 +23,22 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnEnter(object args)
         {
-            var evArgs = (GameRoleRCArgs_StateEnterCast)args;
-            ref var idArgs = ref evArgs.idArgs;
+            var rcArgs = (GameRoleRCArgs_StateEnterCast)args;
+            ref var idArgs = ref rcArgs.idArgs;
             var role = this._roleContext.repo.FindByEntityId(idArgs.entityId);
             if (role == null)
             {
                 this._context.DelayRC(GAME_RC_EV_NAME, args);
                 return;
             }
-            role.skillCom.TryGet(evArgs.skillId, out var skill);
+            role.skillCom.TryGet(rcArgs.skillId, out var skill);
             if (skill.skillModel.effectByAttackSpeed)
             {
                 var attackSpeed = role.attributeCom.GetValue(GameAttributeType.AttackSpeed);
                 var timeScale = attackSpeed == 0 ? 1 : attackSpeed * skill.skillModel.clipLength;
                 role.animCom.timeScale = timeScale;
             }
-            this.TransitTo(role, GameRoleStateType.Cast, evArgs.skillId);
+            this.TransitTo(role, GameRoleStateType.Cast, rcArgs.skillId);
         }
 
         public override void Enter(GameRoleEntityR role, params object[] args)

@@ -2,7 +2,8 @@ namespace GamePlay.Bussiness.Logic
 {
     public interface GameDirectorDomainApi
     {
-        public GameDirectorFSMDomainApi fsmApi { get; }
+        /// <summary> 有限状态机接口 </summary>
+        public GameDirectorFSMDomainApi directorFSMApi { get; }
 
         /// <summary>
         /// 设置逻辑层的时间缩放

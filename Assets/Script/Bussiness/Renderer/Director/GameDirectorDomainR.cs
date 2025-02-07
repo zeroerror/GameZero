@@ -5,6 +5,11 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameDirectorDomainR : GameDirectorDomainApiR
     {
+        public GameDirectorEntityR director => this.context.director;
+
+        public GameDirectorFSMDomainR directorFSMDomain { get; private set; }
+        public GameDirectorFSMDomainApiR directorFSMApi => this.directorFSMDomain;
+
         public GameContextR context { get; private set; }
         public GameRoleDomainR roleDomain { get; private set; }
         public GameSkillDomainR skillDomain { get; private set; }
@@ -32,6 +37,7 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _InitDomain()
         {
+            this.directorFSMDomain = new GameDirectorFSMDomainR(this);
             this.roleDomain = new GameRoleDomainR();
             this.skillDomain = new GameSkillDomainR();
             this.transformDomain = new GameTransformDomainR();
@@ -65,6 +71,7 @@ namespace GamePlay.Bussiness.Renderer
         private void _InjectContext()
         {
             this._BindEvents();
+            this.directorFSMDomain.Inject(this.context);
             this.roleDomain.Inject(this.context);
             this.skillDomain.Inject(this.context);
             this.transformDomain.Inject(this.context);
@@ -81,6 +88,7 @@ namespace GamePlay.Bussiness.Renderer
         public void Destroy()
         {
             this._UnbindEvents();
+            this.directorFSMDomain.Destroy();
             this.roleDomain.Destroy();
             this.skillDomain.Destroy();
             this.transformDomain.Destroy();
@@ -110,7 +118,7 @@ namespace GamePlay.Bussiness.Renderer
             this.context.director.timeScaleCom.SetTimeScale(timeScale);
         }
 
-        protected virtual void _TickDomain(float dt)
+        private void _TickDomain(float dt)
         {
             if (this.context.fieldContext.curField == null) return;
             this.fieldDomain.Tick(dt);
@@ -128,35 +136,27 @@ namespace GamePlay.Bussiness.Renderer
             var director = this.context.director;
             director.Tick(dt);
             dt *= director.timeScaleCom.timeScale;
-            this._PreTick(dt);
-            this._Tick(dt);
-            this._LateTick(dt);
-        }
 
-        public void LateUpdate(float dt)
-        {
-            dt *= this.context.director.timeScaleCom.timeScale;
-            this.context.cameraEntity.Tick(dt);
-        }
-
-        protected void _PreTick(float dt)
-        {
             // 被上一帧延迟的RC事件, 需要在最开始处理
             this.context.delayRCEventService.Tick();
             // 触发本次逻辑的RC事件 ps: UI层无需再次触发 
             this.context.logicApi.directorApi.TickRCEvents();
             // 触发内部的事件
             this.context.eventService.Tick();
-        }
 
-        protected void _Tick(float dt)
-        {
+            // 导演状态机
+            this.directorFSMDomain.Tick(this.director, dt);
+            // 默认领域逻辑每帧更新
             this._TickDomain(dt);
+
+            // 指令处理
+            this.context.cmdBufferService.Tick();
         }
 
-        protected void _LateTick(float dt)
+        public void LateUpdate(float dt)
         {
-            this.context.cmdBufferService.Tick();
+            dt *= this.context.director.timeScaleCom.timeScale;
+            this.context.cameraEntity.Tick(dt);
         }
 
         public void SetTimeScale(float timeScale)

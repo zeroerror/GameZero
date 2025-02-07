@@ -96,12 +96,12 @@ namespace GamePlay.Bussiness.Logic
 
             // 提交RC - 行为执行
             var actAnchorPos = entitySelectApi.GetSelectorAnchorPosition(actor, actionModel.selector);
-            var evArgs = new GameActionRCArgs_Do(
+            var rcArgs = new GameActionRCArgs_Do(
                 actionModel.typeId,
                 actor.idCom.ToArgs(),
                 actAnchorPos
             );
-            this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO, evArgs);
+            this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DO, rcArgs);
         }
 
         public void DoActionOption(int optionId, int campId)
@@ -151,11 +151,11 @@ namespace GamePlay.Bussiness.Logic
                     // 记录
                     this._actionContext.dmgRecordList.Add(record);
                     // 提交RC
-                    var evArgs = new GameActionRCArgs_Dmg(
+                    var rcArgs = new GameActionRCArgs_Dmg(
                         action.typeId,
                         record
                     );
-                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DMG, evArgs);
+                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_DMG, rcArgs);
                 });
             });
         }
@@ -178,11 +178,11 @@ namespace GamePlay.Bussiness.Logic
                     // 记录
                     this._actionContext.healRecordList.Add(record);
                     // 提交RC
-                    var evArgs = new GameActionRCArgs_Heal(
+                    var rcArgs = new GameActionRCArgs_Heal(
                         action.typeId,
                         record
                     );
-                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, evArgs);
+                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, rcArgs);
                 });
             });
         }
@@ -233,11 +233,11 @@ namespace GamePlay.Bussiness.Logic
                     );
                     this._actionContext.launchProjectileRecordList.Add(record);
                     // 提交RC
-                    var evArgs = new GameActionRCArgs_LaunchProjectile(
+                    var rcArgs = new GameActionRCArgs_LaunchProjectile(
                         action.typeId,
                         record
                     );
-                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, evArgs);
+                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, rcArgs);
                 });
             });
         }
@@ -261,11 +261,11 @@ namespace GamePlay.Bussiness.Logic
                     // 记录
                     this._actionContext.knockBackRecordList.Add(record);
                     // 提交RC
-                    var evArgs = new GameActionRCArgs_KnockBack(
+                    var rcArgs = new GameActionRCArgs_KnockBack(
                         action.typeId,
                         record
                     );
-                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, evArgs);
+                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, rcArgs);
                 });
             });
         }
@@ -288,11 +288,11 @@ namespace GamePlay.Bussiness.Logic
                     // 记录
                     this._actionContext.attributeModifyRecordList.Add(record);
                     // 提交RC
-                    var evArgs = new GameActionRCArgs_AttributeModify(
+                    var rcArgs = new GameActionRCArgs_AttributeModify(
                         action.typeId,
                         record
                     );
-                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, evArgs);
+                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, rcArgs);
                 });
             });
         }
@@ -323,11 +323,11 @@ namespace GamePlay.Bussiness.Logic
                     );
                     this._actionContext.attachBuffRecordList.Add(record);
                     // 提交RC
-                    var evArgs = new GameActionRCArgs_AttachBuff(
+                    var rcArgs = new GameActionRCArgs_AttachBuff(
                         action.typeId,
                         record
                     );
-                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, evArgs);
+                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, rcArgs);
                 });
             });
         }
@@ -351,11 +351,11 @@ namespace GamePlay.Bussiness.Logic
                 );
                 this._actionContext.summonRolesRecordList.Add(record);
                 // 提交RC
-                var evArgs = new GameActionRCArgs_SummonRoles(
+                var rcArgs = new GameActionRCArgs_SummonRoles(
                     action.typeId,
                     record
                 );
-                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_SUMMON_ROLE, evArgs);
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_SUMMON_ROLE, rcArgs);
             });
         }
 
@@ -422,11 +422,11 @@ namespace GamePlay.Bussiness.Logic
                 // 记录
                 this._actionContext.transformRecordList.Add(record);
                 // 提交RC 
-                var evArgs = new GameActionRCArgs_CharacterTransform(
+                var rcArgs = new GameActionRCArgs_CharacterTransform(
                     action.typeId,
                     record
                 );
-                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_TRANSFORM, evArgs);
+                this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_TRANSFORM, rcArgs);
             });
         }
     }

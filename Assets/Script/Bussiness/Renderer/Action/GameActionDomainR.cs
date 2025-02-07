@@ -135,21 +135,21 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnAction_Do(object args)
         {
-            var evArgs = (GameActionRCArgs_Do)args;
-            ref var actorIdArgs = ref evArgs.actorIdArgs;
+            var rcArgs = (GameActionRCArgs_Do)args;
+            ref var actorIdArgs = ref rcArgs.actorIdArgs;
             var actor = this._context.FindEntity(actorIdArgs);
             if (actor == null)
             {
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_DO, args);
                 return;
             }
-            this._PlayActionEffect(evArgs.actionId, evArgs.actPos);
+            this._PlayActionEffect(rcArgs.actionId, rcArgs.actPos);
         }
 
         private void _OnAction_Dmg(object args)
         {
-            var evArgs = (GameActionRCArgs_Dmg)args;
-            ref var dmgRecord = ref evArgs.dmgRecord;
+            var rcArgs = (GameActionRCArgs_Dmg)args;
+            ref var dmgRecord = ref rcArgs.dmgRecord;
             ref var actorIdArgs = ref dmgRecord.actorIdArgs;
             var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref dmgRecord.targetIdArgs;
@@ -160,9 +160,9 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
 
-            if (evArgs.dmgRecord.value > 0)
+            if (rcArgs.dmgRecord.value > 0)
             {
-                this._PlayActionHitEffect(evArgs.actionId, target);
+                this._PlayActionHitEffect(rcArgs.actionId, target);
             }
 
             // 伤害跳字
@@ -183,8 +183,8 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnAction_Heal(object args)
         {
-            var evArgs = (GameActionRCArgs_Heal)args;
-            ref var healRecord = ref evArgs.healRecord;
+            var rcArgs = (GameActionRCArgs_Heal)args;
+            ref var healRecord = ref rcArgs.healRecord;
             ref var actorIdArgs = ref healRecord.actorIdArgs;
             var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref healRecord.targetIdArgs;
@@ -196,14 +196,14 @@ namespace GamePlay.Bussiness.Renderer
             }
             if (healRecord.value > 0)
             {
-                this._PlayActionHitEffect(evArgs.actionId, target);
+                this._PlayActionHitEffect(rcArgs.actionId, target);
             }
         }
 
         private void _OnAction_LaunchProjectile(object args)
         {
-            var evArgs = (GameActionRCArgs_LaunchProjectile)args;
-            ref var record = ref evArgs.record;
+            var rcArgs = (GameActionRCArgs_LaunchProjectile)args;
+            ref var record = ref rcArgs.record;
             ref var actorIdArgs = ref record.actorIdArgs;
             var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref record.targetIdArgs;
@@ -213,13 +213,13 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_LAUNCH_PROJECTILE, args);
                 return;
             }
-            this._PlayActionHitEffect(evArgs.actionId, target);
+            this._PlayActionHitEffect(rcArgs.actionId, target);
         }
 
         private void _OnAction_KnockBack(object args)
         {
-            var evArgs = (GameActionRCArgs_KnockBack)args;
-            ref var record = ref evArgs.record;
+            var rcArgs = (GameActionRCArgs_KnockBack)args;
+            ref var record = ref rcArgs.record;
             ref var actorIdArgs = ref record.actorIdArgs;
             var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref record.targetIdArgs;
@@ -229,13 +229,13 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_KNOCK_BACK, args);
                 return;
             }
-            this._PlayActionHitEffect(evArgs.actionId, target);
+            this._PlayActionHitEffect(rcArgs.actionId, target);
         }
 
         private void _OnAction_AttributeModify(object args)
         {
-            var evArgs = (GameActionRCArgs_AttributeModify)args;
-            ref var record = ref evArgs.record;
+            var rcArgs = (GameActionRCArgs_AttributeModify)args;
+            ref var record = ref rcArgs.record;
             ref var actorIdArgs = ref record.actorIdArgs;
             var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref record.targetIdArgs;
@@ -245,13 +245,13 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, args);
                 return;
             }
-            this._PlayActionHitEffect(evArgs.actionId, target);
+            this._PlayActionHitEffect(rcArgs.actionId, target);
         }
 
         private void _OnAction_AttachBuff(object args)
         {
-            var evArgs = (GameActionRCArgs_AttachBuff)args;
-            ref var record = ref evArgs.record;
+            var rcArgs = (GameActionRCArgs_AttachBuff)args;
+            ref var record = ref rcArgs.record;
             ref var actorIdArgs = ref record.actorIdArgs;
             var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref record.targetIdArgs;
@@ -261,13 +261,13 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, args);
                 return;
             }
-            this._PlayActionHitEffect(evArgs.actionId, target);
+            this._PlayActionHitEffect(rcArgs.actionId, target);
         }
 
         private void _OnAction_CharacterTransform(object args)
         {
-            var evArgs = (GameActionRCArgs_CharacterTransform)args;
-            ref var record = ref evArgs.record;
+            var rcArgs = (GameActionRCArgs_CharacterTransform)args;
+            ref var record = ref rcArgs.record;
             ref var actorIdArgs = ref record.actorIdArgs;
             var actor = this._context.FindEntity(actorIdArgs);
             ref var targetIdArgs = ref record.targetIdArgs;
@@ -277,7 +277,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_TRANSFORM, args);
                 return;
             }
-            this._PlayActionHitEffect(evArgs.actionId, target);
+            this._PlayActionHitEffect(rcArgs.actionId, target);
         }
     }
 }

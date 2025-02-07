@@ -182,6 +182,8 @@ namespace GamePlay.Bussiness.UI
             uiBase.Init(viewInput);
             uiBase.Show();
             this.context.uiDict[uiName] = uiBase;
+
+            GameLogger.DebugLog($"UI打开: {uiName}");
         }
 
         public void CloseUI(string uiName)
@@ -193,6 +195,7 @@ namespace GamePlay.Bussiness.UI
             }
             ui.Destroy();
             this.context.uiDict.Remove(uiName);
+            GameLogger.DebugLog($"UI关闭: {uiName}");
         }
 
         public void CloseUI<T>() where T : UIBase

@@ -13,18 +13,22 @@ namespace GamePlay.Bussiness.Logic
         {
             this._context.eventService.Bind(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, this._onActionOptionSelected);
             this._context.eventService.Bind(GameLCCollection.LC_GAME_PREPARING_CONFIRM_FIGHT, this._onPreparingConfirmFight);
+            this._context.eventService.Bind(GameLCCollection.LC_GAME_UNIT_POSITION_CHANGED, this._onUnitPositionChanged);
         }
 
         protected override void _UnbindEvents()
         {
             this._context.eventService.Unbind(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, this._onActionOptionSelected);
             this._context.eventService.Unbind(GameLCCollection.LC_GAME_PREPARING_CONFIRM_FIGHT, this._onPreparingConfirmFight);
+            this._context.eventService.Unbind(GameLCCollection.LC_GAME_UNIT_POSITION_CHANGED, this._onUnitPositionChanged);
         }
 
         private void _onActionOptionSelected(object args)
         {
-            var evArgs = (GameLCArgs_ActionOptionSelected)args;
-            var optionId = evArgs.optionId;
+            if (!this._CheckState()) return;
+
+            var rcArgs = (GameLCArgs_ActionOptionSelected)args;
+            var optionId = rcArgs.optionId;
             var fightPreparingState = this._context.director.fsmCom.fightPreparingState;
             var options = fightPreparingState.options;
             var selectedOption = options.Find((option) => option.typeId == optionId);
@@ -38,9 +42,46 @@ namespace GamePlay.Bussiness.Logic
 
         private void _onPreparingConfirmFight(object args)
         {
-            var evArgs = (GameLCArgs_PreparingConfirmFight)args;
+            if (!this._CheckState()) return;
+
+            var rcArgs = (GameLCArgs_PreparingConfirmFight)args;
             var fightPreparingState = this._context.director.fsmCom.fightPreparingState;
             fightPreparingState.confirmFight = true;
+        }
+
+        private void _onUnitPositionChanged(object args)
+        {
+            if (!this._CheckState()) return;
+            var rcArgs = (GameLCArgs_UnitPositionChanged)args;
+            var entityType = rcArgs.entityType;
+            var entityId = rcArgs.entityId;
+            switch (entityType)
+            {
+                case GameEntityType.Role:
+                    var role = this._context.domainApi.roleApi.FindByEntityId(entityId);
+                    if (!role)
+                    {
+                        GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onUnitPositionChanged: 未找到角色 " + entityId);
+                        break;
+                    }
+                    role.transformCom.position = rcArgs.newPosition;
+                    GameLogger.DebugLog($"单位位置改变 - 角色 {entityId} 移动到 {rcArgs.newPosition}");
+                    break;
+                default:
+                    GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onUnitPositionChanged: 未知的实体类型 " + entityType);
+                    break;
+            }
+        }
+
+        private bool _CheckState()
+        {
+            var stateType = this._context.director.fsmCom.stateType;
+            if (stateType != GameDirectorStateType.FightPreparing)
+            {
+                GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onActionOptionSelected: 当前状态不是战斗准备状态");
+                return false;
+            }
+            return true;
         }
 
         public override bool CheckEnter(GameDirectorEntity director, object args = null)

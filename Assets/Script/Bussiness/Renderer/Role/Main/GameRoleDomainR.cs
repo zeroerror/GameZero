@@ -59,8 +59,8 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, args);
                 return;
             }
-            var evArgs = (GameRoleRCArgs_Create)args;
-            this._CreateRole(evArgs.idArgs, evArgs.transArgs, evArgs.isUser);
+            var rcArgs = (GameRoleRCArgs_Create)args;
+            this._CreateRole(rcArgs.idArgs, rcArgs.transArgs, rcArgs.isUser);
         }
 
         private GameRoleEntityR _LoadRole(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
@@ -130,8 +130,8 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameRoleRCCollection.RC_GAME_ROLE_TRANSFORM, args);
                 return;
             }
-            var evArgs = (GameRoleRCArgs_CharacterTransform)args;
-            this._TransformRole(evArgs.idArgs);
+            var rcArgs = (GameRoleRCArgs_CharacterTransform)args;
+            this._TransformRole(rcArgs.idArgs);
         }
 
         private void _TransformRole(in GameIdArgs idArgs)

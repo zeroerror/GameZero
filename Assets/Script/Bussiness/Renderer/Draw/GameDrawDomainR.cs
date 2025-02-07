@@ -38,32 +38,32 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnDrawColliderModel(object args)
         {
-            var evArgs = (GameRCArgs_DrawColliderModel)args;
-            var colliderModel = evArgs.colliderModel;
-            var transformArgs = evArgs.transformArgs;
-            var color = evArgs.color;
+            var rcArgs = (GameRCArgs_DrawColliderModel)args;
+            var colliderModel = rcArgs.colliderModel;
+            var transformArgs = rcArgs.transformArgs;
+            var color = rcArgs.color;
             this._drawContext.tasks.Add(new GameDrawTask()
             {
                 drawAction = () =>
                 {
                     colliderModel.Draw(transformArgs, color);
                 },
-                maintainTime = evArgs.maintainTime,
+                maintainTime = rcArgs.maintainTime,
             });
         }
 
         private void _OnDrawCollider(object args)
         {
-            var evArgs = (GameRCArgs_DrawCollider)args;
-            var collider = evArgs.collider;
-            var color = evArgs.color;
+            var rcArgs = (GameRCArgs_DrawCollider)args;
+            var collider = rcArgs.collider;
+            var color = rcArgs.color;
             this._drawContext.tasks.Add(new GameDrawTask()
             {
                 drawAction = () =>
                 {
                     collider.Draw(color);
                 },
-                maintainTime = evArgs.maintainTime,
+                maintainTime = rcArgs.maintainTime,
             });
         }
 

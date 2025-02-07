@@ -34,28 +34,28 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnAttributeSync(object args)
         {
-            var evArgs = (GameAttributeRCArgs_Sync)args;
-            ref var idArgs = ref evArgs.idArgs;
+            var rcArgs = (GameAttributeRCArgs_Sync)args;
+            ref var idArgs = ref rcArgs.idArgs;
             GameEntityBase entity = this._context.FindEntity(idArgs);
             if (entity == null)
             {
                 this._context.DelayRC(GameAttributeRCCollection.RC_GAME_ATTRIBUTE_SYNC, args);
                 return;
             }
-            entity.attributeCom.SetByArgs(evArgs.attrAgrs);
+            entity.attributeCom.SetByArgs(rcArgs.attrAgrs);
         }
 
         private void _OnAttributeBaseSync(object args)
         {
-            var evArgs = (GameAttributeRCArgs_BaseSync)args;
-            ref var idArgs = ref evArgs.idArgs;
+            var rcArgs = (GameAttributeRCArgs_BaseSync)args;
+            ref var idArgs = ref rcArgs.idArgs;
             GameEntityBase entity = this._context.FindEntity(idArgs);
             if (entity == null)
             {
                 this._context.DelayRC(GameAttributeRCCollection.RC_GAME_ATTRIBUTE_BASE_SYNC, args);
                 return;
             }
-            entity.baseAttributeCom.SetByArgs(evArgs.attrAgrs);
+            entity.baseAttributeCom.SetByArgs(rcArgs.attrAgrs);
         }
     }
 }

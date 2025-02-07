@@ -54,15 +54,15 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnProjectileCreate(object args)
         {
-            var evArgs = (GameProjectileRCArgs_Create)args;
-            var creator = this._context.FindEntity(evArgs.creatorIdArgs);
+            var rcArgs = (GameProjectileRCArgs_Create)args;
+            var creator = this._context.FindEntity(rcArgs.creatorIdArgs);
             if (creator == null)
             {
                 this._context.DelayRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_CREATE, args);
                 return;
             }
 
-            this.CreateProjectile(evArgs.idArgs, creator, evArgs.transArgs);
+            this.CreateProjectile(rcArgs.idArgs, creator, rcArgs.transArgs);
         }
 
         private void CreateProjectile(in GameIdArgs idArgs, GameEntityBase creator, in GameTransformArgs transArgs)

@@ -19,8 +19,8 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnEnter(object args)
         {
-            var evArgs = (GameProjectileRCArgs_StateEnterDestroyed)args;
-            var projectile = this._projectileContext.repo.FindByEntityId(evArgs.idArgs.entityId);
+            var rcArgs = (GameProjectileRCArgs_StateEnterDestroyed)args;
+            var projectile = this._projectileContext.repo.FindByEntityId(rcArgs.idArgs.entityId);
             if (projectile == null)
             {
                 this._context.DelayRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_STATE_ENTER_DESTROYED, args);

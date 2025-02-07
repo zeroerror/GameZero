@@ -43,7 +43,7 @@ namespace GamePlay.Bussiness.Logic
             var exitArgs = this._CheckExit(director);
             if (exitArgs.toState != GameDirectorStateType.None)
             {
-                this._context.domainApi.directorApi.fsmApi.TryEnter(director, exitArgs.toState, exitArgs.args);
+                this._context.domainApi.directorApi.directorFSMApi.TryEnter(director, exitArgs.toState, exitArgs.args);
             }
         }
 

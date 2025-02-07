@@ -38,8 +38,8 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnSkillCreate(object args)
         {
-            var evArgs = (GameSkillRCArgs_Create)args;
-            var roleIdArgs = evArgs.roleIdArgs;
+            var rcArgs = (GameSkillRCArgs_Create)args;
+            var roleIdArgs = rcArgs.roleIdArgs;
             // 检查角色异步
             var role = this._context.roleContext.repo.FindByEntityId(roleIdArgs.entityId);
             if (role == null)
@@ -47,7 +47,7 @@ namespace GamePlay.Bussiness.Renderer
                 this._context.DelayRC(GameSkillRCCollection.RC_GAMES_SKILL_CREATE, args);
                 return;
             }
-            var skillIdArgs = evArgs.skillIdArgs;
+            var skillIdArgs = rcArgs.skillIdArgs;
             this.CreateSkill(role, skillIdArgs);
         }
 

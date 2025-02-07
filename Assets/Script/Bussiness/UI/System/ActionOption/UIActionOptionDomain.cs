@@ -25,10 +25,10 @@ namespace GamePlay.Bussiness.UI
 
         private void _OnStateEnterFightPreparing(object args)
         {
-            var evArgs = (GameDirectorRCArgs_StateEnterFightPreparing)args;
+            var rcArgs = (GameDirectorRCArgs_StateEnterFightPreparing)args;
 
             // 2s后打开行为选项界面
-            var actionOptions = evArgs.actionOptions;
+            var actionOptions = rcArgs.actionOptions;
             this._context.cmdBufferService.AddDelayCmd(2, () =>
             {
                 var ldirectorApi = this._context.logicApi.directorApi;

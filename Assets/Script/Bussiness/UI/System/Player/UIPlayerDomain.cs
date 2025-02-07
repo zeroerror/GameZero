@@ -23,8 +23,8 @@ namespace GamePlay.Bussiness.UI
 
         private void _OnCoinsChange(object args)
         {
-            var evArgs = (GameDirectorRCArgs_GoldChange)args;
-            this.model.gold = evArgs.gold;
+            var rcArgs = (GameDirectorRCArgs_GoldChange)args;
+            this.model.gold = rcArgs.gold;
         }
 
         /// <summary>

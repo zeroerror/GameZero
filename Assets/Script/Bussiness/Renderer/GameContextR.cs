@@ -6,10 +6,10 @@ namespace GamePlay.Bussiness.Renderer
 {
     public class GameContextR
     {
+        public GameDirectorEntityR director { get; private set; }
 
         public GameDomainApi logicApi { get; private set; }
         public GameCameraEntity cameraEntity { get; private set; }
-        public GameDirectorR director { get; private set; }
         public GameDomainApiR domainApi { get; private set; }
 
         public GameRoleContextR roleContext { get; private set; }
@@ -31,7 +31,7 @@ namespace GamePlay.Bussiness.Renderer
 
             var cam = GameObject.Find("Main Camera")?.GetComponent<Camera>();
             this.cameraEntity = new GameCameraEntity(cam);
-            this.director = new GameDirectorR();
+            this.director = new GameDirectorEntityR();
             this.domainApi = new GameDomainApiR();
 
             this.roleContext = new GameRoleContextR();

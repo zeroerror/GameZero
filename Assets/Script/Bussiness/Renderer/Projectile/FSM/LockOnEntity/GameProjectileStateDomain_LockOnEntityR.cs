@@ -18,7 +18,7 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnEnter(object args)
         {
-            var evArgs = (GameProjectileRCArgs_StateEnterLockOnEntity)args;
+            var rcArgs = (GameProjectileRCArgs_StateEnterLockOnEntity)args;
             GameLogger.Log("投射物状态进入 - 锁定实体");
         }
 

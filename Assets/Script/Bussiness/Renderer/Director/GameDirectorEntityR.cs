@@ -1,7 +1,7 @@
 using GamePlay.Bussiness.Logic;
 namespace GamePlay.Bussiness.Renderer
 {
-    public class GameDirectorR
+    public class GameDirectorEntityR
     {
         public GameDirectorFSMCom fsmCom { get; private set; } = new GameDirectorFSMCom();
         public GameDirectorTimelineComponent timeScaleCom { get; private set; } = new GameDirectorTimelineComponent();

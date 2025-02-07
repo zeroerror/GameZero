@@ -21,8 +21,8 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnEnter(object args)
         {
-            var evArgs = (GameRoleRCArgs_StateEnterMove)args;
-            ref var idArgs = ref evArgs.idArgs;
+            var rcArgs = (GameRoleRCArgs_StateEnterMove)args;
+            ref var idArgs = ref rcArgs.idArgs;
             var role = this._roleContext.repo.FindByEntityId(idArgs.entityId);
             if (role == null)
             {

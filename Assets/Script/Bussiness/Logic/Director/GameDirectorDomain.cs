@@ -10,8 +10,8 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameDirectorEntity director => this.context.director;
 
-        public GameDirectorFSMDomain fsmDomain { get; private set; }
-        public GameDirectorFSMDomainApi fsmApi => this.fsmDomain;
+        public GameDirectorFSMDomain directorFSMDomain { get; private set; }
+        public GameDirectorFSMDomainApi directorFSMApi => this.directorFSMDomain;
 
         public GameContext context { get; private set; }
         public GameFieldDomain fieldDomain { get; private set; }
@@ -35,6 +35,7 @@ namespace GamePlay.Bussiness.Logic
 
         private void _InitDomain()
         {
+            this.directorFSMDomain = new GameDirectorFSMDomain(this);
             this.fieldDomain = new GameFieldDomain();
             this.roleDomain = new GameRoleDomain();
             this.skillDomain = new GameSkillDomain();
@@ -46,7 +47,6 @@ namespace GamePlay.Bussiness.Logic
             this.physicsDomain = new GamePhysicsDomain();
             this.entitySelectDomain = new GameEntitySelectDomain();
             this.entityCollectDomain = new GameEntityCollectDomain();
-            this.fsmDomain = new GameDirectorFSMDomain(this);
         }
 
         private void _InitContext()
@@ -68,7 +68,7 @@ namespace GamePlay.Bussiness.Logic
 
         private void _InjectContext()
         {
-            this.fsmDomain.Inject(this.context);
+            this.directorFSMDomain.Inject(this.context);
             this.fieldDomain.Inject(this.context);
             this.roleDomain.Inject(this.context);
             this.skillDomain.Inject(this.context);
@@ -80,12 +80,12 @@ namespace GamePlay.Bussiness.Logic
             this.physicsDomain.Inject(this.context);
             this.entitySelectDomain.Inject(this.context);
             this.entityCollectDomain.Inject(this.context);
-            this.fsmDomain.TryEnter(this.director, GameDirectorStateType.Loading, 1);
+            this.directorFSMDomain.TryEnter(this.director, GameDirectorStateType.Loading, 1);
         }
 
         public void Destroy()
         {
-            this.fsmDomain.Destroy();
+            this.directorFSMDomain.Destroy();
             this.fieldDomain.Destroy();
             this.roleDomain.Destroy();
             this.skillDomain.Destroy();
@@ -123,7 +123,7 @@ namespace GamePlay.Bussiness.Logic
             for (var i = 0; i < tickCount; i++)
             {
                 this.context.eventService.Tick();
-                this.fsmDomain.Tick(this.director, frameTime);
+                this.directorFSMDomain.Tick(this.director, frameTime);
                 this.context.cmdBufferService.Tick();
             }
         }
@@ -182,10 +182,10 @@ namespace GamePlay.Bussiness.Logic
             // 直接添加到场地
             this.CreateUnit(unitEntity);
             // 提交RC - 购买单位
-            GameDirectorRCArgs_BuyUnit evArgs;
-            evArgs.model = unitModel;
-            evArgs.costGold = unitModel.costGold;
-            this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, evArgs);
+            GameDirectorRCArgs_BuyUnit rcArgs;
+            rcArgs.model = unitModel;
+            rcArgs.costGold = unitModel.costGold;
+            this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, rcArgs);
             // 提交RC - 金币变更
             GameDirectorRCArgs_GoldChange goldChangeArgs;
             goldChangeArgs.gold = this.director.gold;

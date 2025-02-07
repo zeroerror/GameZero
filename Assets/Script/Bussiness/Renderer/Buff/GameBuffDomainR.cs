@@ -38,8 +38,8 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnBuffAttach(object args)
         {
-            var evArgs = (GameBuffRCArgs_Attach)args;
-            var targetIdArgs = evArgs.targetIdArgs;
+            var rcArgs = (GameBuffRCArgs_Attach)args;
+            var targetIdArgs = rcArgs.targetIdArgs;
             // 检查角色异步
             var target = this._context.roleContext.repo.FindByEntityId(targetIdArgs.entityId);
             if (target == null)
@@ -48,13 +48,13 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
 
-            this.AttachBuff(evArgs.buffIdArgs, target, evArgs.layer);
+            this.AttachBuff(rcArgs.buffIdArgs, target, rcArgs.layer);
         }
 
         private void _OnBuffDeAttach(object args)
         {
-            var evArgs = (GameBuffRCArgs_Detach)args;
-            var targetIdArgs = evArgs.targetIdArgs;
+            var rcArgs = (GameBuffRCArgs_Detach)args;
+            var targetIdArgs = rcArgs.targetIdArgs;
             // 检查角色异步
             var target = this._context.roleContext.repo.FindByEntityId(targetIdArgs.entityId);
             if (target == null)
@@ -63,7 +63,7 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
 
-            this.DetachBuff(evArgs.buffId, target, evArgs.detachLayer);
+            this.DetachBuff(rcArgs.buffId, target, rcArgs.detachLayer);
         }
 
         public void Tick(float dt)

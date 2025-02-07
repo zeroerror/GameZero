@@ -18,9 +18,9 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnEnter(object args)
         {
-            var evArgs = (GameProjectileRCArgs_StateEnterFixedDirection)args;
-            var projectile = this._context.FindEntity<GameProjectileEntityR>(evArgs.idArgs);
-            projectile.FaceTo(evArgs.direction);
+            var rcArgs = (GameProjectileRCArgs_StateEnterFixedDirection)args;
+            var projectile = this._context.FindEntity<GameProjectileEntityR>(rcArgs.idArgs);
+            projectile.FaceTo(rcArgs.direction);
             GameLogger.Log("投射物状态进入 - 固定方向");
         }
 

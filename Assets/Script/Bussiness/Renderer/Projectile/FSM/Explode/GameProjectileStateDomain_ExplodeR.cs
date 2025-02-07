@@ -18,7 +18,7 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnEnter(object args)
         {
-            var evArgs = (GameProjectileRCArgs_StateEnterExplode)args;
+            var rcArgs = (GameProjectileRCArgs_StateEnterExplode)args;
             GameLogger.Log("投射物状态进入 - 爆炸");
         }
 

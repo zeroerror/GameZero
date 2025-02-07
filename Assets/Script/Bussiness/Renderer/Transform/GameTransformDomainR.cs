@@ -33,15 +33,15 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnTransformSync(object args)
         {
-            var evArgs = (GameTransformRCArgs_Sync)args;
-            ref var idArgs = ref evArgs.idArgs;
+            var rcArgs = (GameTransformRCArgs_Sync)args;
+            ref var idArgs = ref rcArgs.idArgs;
             GameEntityBase entity = this._context.FindEntity(idArgs);
             if (entity == null)
             {
                 this._context.DelayRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, args);
                 return;
             }
-            entity.transformCom.SetByArgs(evArgs.transArgs);
+            entity.transformCom.SetByArgs(rcArgs.transArgs);
         }
     }
 }

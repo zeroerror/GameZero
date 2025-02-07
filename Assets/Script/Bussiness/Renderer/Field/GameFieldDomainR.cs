@@ -59,8 +59,8 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _OnCreateField(object args)
         {
-            var evArgs = (GameFieldRCArgs_Create)args;
-            var fieldId = evArgs.typeId;
+            var rcArgs = (GameFieldRCArgs_Create)args;
+            var fieldId = rcArgs.typeId;
             this.LoadField(fieldId);
         }
 
