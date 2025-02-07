@@ -34,10 +34,9 @@ namespace GamePlay.Bussiness.Logic
             fsmCom.EnterFighting(initEntityIdArgsList);
             GameLogger.DebugLog("导演 - 进入战斗状态");
             // 提交RC
-            this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHTING, new GameDirectorRCArgs_StateEnterFighting
-            {
-                fromStateType = fsmCom.lastStateType,
-            });
+            GameDirectorRCArgs_StateEnterFighting rcArgs;
+            rcArgs.fromStateType = fsmCom.lastStateType;
+            this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHTING, rcArgs);
         }
 
         protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)

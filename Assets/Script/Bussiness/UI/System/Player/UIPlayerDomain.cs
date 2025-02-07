@@ -23,8 +23,8 @@ namespace GamePlay.Bussiness.UI
 
         private void _OnCoinsChange(object args)
         {
-            var evArgs = (GameDirectorRCArgs_CoinsChange)args;
-            this.model.coins = evArgs.coins;
+            var evArgs = (GameDirectorRCArgs_GoldChange)args;
+            this.model.gold = evArgs.gold;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace GamePlay.Bussiness.UI
         /// </summary>
         public bool IsGoldEnough(int gold)
         {
-            return this.model.coins >= gold;
+            return this.model.gold >= gold;
         }
     }
 }

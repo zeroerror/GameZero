@@ -56,11 +56,10 @@ namespace GamePlay.Bussiness.Logic
             // 洗牌可购买单位列表
             this._context.domainApi.directApi.ShuffleBuyableUnits();
             // 提交RC
-            this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, new GameDirectorRCArgs_StateEnterFightPreparing
-            {
-                fromStateType = fsmCom.lastStateType,
-                actionOptions = actionOptions,
-            });
+            GameDirectorRCArgs_StateEnterFightPreparing rcArgs;
+            rcArgs.fromStateType = fsmCom.lastStateType;
+            rcArgs.actionOptions = actionOptions;
+            this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, rcArgs);
         }
 
         protected override void _Tick(GameDirectorEntity director, float frameTime)

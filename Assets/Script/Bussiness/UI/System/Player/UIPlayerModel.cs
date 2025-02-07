@@ -3,7 +3,7 @@ namespace GamePlay.Bussiness.UI
     public class UIPlayerModel
     {
         /// <summary> 持有金币 </summary>
-        public int coins;
+        public int gold;
 
         public UIPlayerModel()
         {
@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.UI
 
         public void Clear()
         {
-            this.coins = 0;
+            this.gold = 0;
         }
     }
 }

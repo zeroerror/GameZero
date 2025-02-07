@@ -50,14 +50,15 @@ namespace GamePlay.Bussiness.Logic
     }
 
     /// <summary> 参数 - 导演 - 金币变更 </summary>
-    public struct GameDirectorRCArgs_CoinsChange
+    public struct GameDirectorRCArgs_GoldChange
     {
-        public int coins;
+        public int gold;
     }
 
     /// <summary> 参数 - 导演 - 购买单位 </summary>
     public struct GameDirectorRCArgs_BuyUnit
     {
         public GameUnitItemModel model;
+        public int costGold;
     }
 }

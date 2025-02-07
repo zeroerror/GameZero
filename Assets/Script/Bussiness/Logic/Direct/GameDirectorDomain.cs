@@ -168,22 +168,28 @@ namespace GamePlay.Bussiness.Logic
                 return;
             }
             // 检查金币
-            if (this.director.coins < buyableUnits[index].costCoins)
+            if (this.director.gold < buyableUnits[index].costGold)
             {
-                GameLogger.DebugLog($"购买单位[{buyableUnits[index]}]失败, 金币不足! 当前持有金币: {this.director.coins}");
+                GameLogger.DebugLog($"购买单位[{buyableUnits[index]}]失败, 金币不足! 当前持有金币: {this.director.gold}");
                 return;
             }
             // 扣除金币
-            this.director.coins -= buyableUnits[index].costCoins;
+            this.director.gold -= buyableUnits[index].costGold;
             // 添加单位
             var unitEntity = new GameUnitItemEntity();
             unitEntity.itemModel = unitModel;
             this.director.unitEntitys.Add(unitEntity);
             // 直接添加到场地
             this.CreateUnit(unitEntity);
-            // 提交RC
-            var evArgs = new GameDirectorRCArgs_BuyUnit { model = unitModel.Clone() };
+            // 提交RC - 购买单位
+            GameDirectorRCArgs_BuyUnit evArgs;
+            evArgs.model = unitModel;
+            evArgs.costGold = unitModel.costGold;
             this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, evArgs);
+            // 提交RC - 金币变更
+            GameDirectorRCArgs_GoldChange goldChangeArgs;
+            goldChangeArgs.gold = this.director.gold;
+            this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, goldChangeArgs);
         }
 
         public GameEntityBase CreateUnit(GameUnitItemEntity unitEntity)
@@ -261,7 +267,7 @@ namespace GamePlay.Bussiness.Logic
                 var unit = new GameUnitItemModel();
                 unit.entityType = GameEntityType.Role;
                 unit.typeId = role.typeId;
-                unit.costCoins = 10;
+                unit.costGold = 10;
                 unitPool.Add(unit);
             });
             return unitPool;

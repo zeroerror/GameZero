@@ -33,8 +33,7 @@ namespace GamePlay.Bussiness.UI
         private void _OnBuyUnit(object args)
         {
             var evArgs = (GameDirectorRCArgs_BuyUnit)args;
-            GameLogger.DebugLog($"TODO 刷新购买单位列表, 购买成功->{evArgs.model}");
-
+            GameLogger.DebugLog($"刷新购买单位列表, 购买成功->{evArgs.model}, 金币->{evArgs.costGold}");
             // 确认开始
             var lcArgs = new GameLCArgs_PreparingConfirmExit();
             var ldirectApi = this._context.logicApi.directApi;

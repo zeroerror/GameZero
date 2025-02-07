@@ -46,14 +46,13 @@ namespace GamePlay.Bussiness.Logic
 
             // 提交RC - 进入结算
             var gainCoins = this._SettleCoins(director);
-            this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, new GameDirectorRCArgs_StateEnterSettling
-            {
-                fromStateType = fsmCom.lastStateType,
-                playerCount = playerCount,
-                enemyCount = enemyCount,
-                isWin = isWin,
-                ganiCoins = gainCoins,
-            });
+            GameDirectorRCArgs_StateEnterSettling rcArgs;
+            rcArgs.fromStateType = fsmCom.lastStateType;
+            rcArgs.playerCount = playerCount;
+            rcArgs.enemyCount = enemyCount;
+            rcArgs.isWin = isWin;
+            rcArgs.ganiCoins = gainCoins;
+            this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, rcArgs);
 
             // 提交RC - 金币变更
             this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, args);
