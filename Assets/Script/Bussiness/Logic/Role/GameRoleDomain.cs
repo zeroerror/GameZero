@@ -116,6 +116,8 @@ namespace GamePlay.Bussiness.Logic
                 GameLogger.LogError("角色创建失败, 角色ID不存在：" + typeId);
                 return null;
             }
+
+            role.SetByModel(role.model);
             // 变换组件
             role.transformCom.SetByArgs(transArgs);
             if (transArgs.scale == GameVec2.zero)
