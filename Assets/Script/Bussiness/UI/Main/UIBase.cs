@@ -9,7 +9,7 @@ namespace GamePlay.Bussiness.UI
     public abstract class UIBase
     {
         public GameObject go { get; private set; }
-        protected UIDomainApi domainApi;
+        protected UIDomainApi _domainApi { get; private set; }
 
         public abstract UILayerType layerType { get; }
         public abstract string uiPkgUrl { get; }
@@ -18,16 +18,16 @@ namespace GamePlay.Bussiness.UI
 
         public UIStateType state { get; private set; }
 
-        protected UIViewInput _viewInput;
+        protected UIViewInput _uiInput;
 
-        public UIBase()
-        {
-        }
+        public UIBase() { }
+
+        #region [生命周期]
 
         public void Inject(GameObject go, UIDomainApi domainApi)
         {
             this.go = go;
-            this.domainApi = domainApi;
+            this._domainApi = domainApi;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace GamePlay.Bussiness.UI
         /// </summary>
         public void Init(UIViewInput viewInput)
         {
-            this._viewInput = viewInput;
+            this._uiInput = viewInput;
             _OnInit();
             this.state = UIStateType.Inited;
             this._BindEvents();
@@ -43,12 +43,38 @@ namespace GamePlay.Bussiness.UI
         protected virtual void _OnInit() { }
 
         /// <summary>
-        /// 显示
+        /// 销毁
+        /// </summary>
+        public void Destroy()
+        {
+            if (this.state == UIStateType.Destroyed) return;
+            this._RemoveAllTimer();
+            _OnDestroy();
+            this.state = UIStateType.Destroyed;
+            GameObject.Destroy(this.go);
+            this.go = null;
+            this._uiInput.closeAction?.Invoke();
+            this._UnbindEvents();
+        }
+        protected virtual void _OnDestroy() { }
+
+        /// <summary>
+        /// 绑定事件
+        /// </summary>
+        protected virtual void _BindEvents() { }
+
+        /// <summary>
+        /// 解绑事件
+        /// </summary>
+        protected virtual void _UnbindEvents() { }
+
+        /// <summary>
+        /// 显示UI
         /// <para>inputArgs: 输入参数</para>
         /// </summary>
         public void Show(UIViewInput viewInput = null)
         {
-            if (viewInput != null) this._viewInput = viewInput;
+            if (viewInput != null) this._uiInput = viewInput;
             _OnShow();
             // 根据UI类型, 区分不同的显示方式
             switch (layerType)
@@ -64,6 +90,9 @@ namespace GamePlay.Bussiness.UI
         }
         protected virtual void _OnShow() { }
 
+        /// <summary>
+        /// 隐藏UI
+        /// </summary>
         public void Hide()
         {
             if (this.state == UIStateType.Hided) return;
@@ -72,31 +101,17 @@ namespace GamePlay.Bussiness.UI
         }
         protected virtual void _OnHide() { }
 
-        public void Destroy()
-        {
-            if (this.state == UIStateType.Destroyed) return;
-            this._RemoveAllTimer();
-            _OnDestroy();
-            this.state = UIStateType.Destroyed;
-            GameObject.Destroy(this.go);
-            this.go = null;
-            this._viewInput.closeAction?.Invoke();
-            this._UnbindEvents();
-        }
-        protected virtual void _OnDestroy() { }
+        #endregion
 
-        protected virtual void _BindEvents() { }
-        protected virtual void _UnbindEvents() { }
-
-        #region [Timer]
+        #region [定时器]
         private List<int> _timerIdList;
         public void SetInterval(float interval, Action callback)
         {
-            domainApi.directApi.SetInterval(interval, callback);
+            _domainApi.directApi.SetInterval(interval, callback);
         }
         public void RemoveTimer(int timerId)
         {
-            domainApi.directApi.RemoveTimer(timerId);
+            _domainApi.directApi.RemoveTimer(timerId);
         }
         private void _RemoveAllTimer()
         {
@@ -107,6 +122,7 @@ namespace GamePlay.Bussiness.UI
         }
         #endregion
 
+        #region [通用]
         protected void _AddClick(GameObject go, Action callback)
         {
             var clickCom = go.GetComponent<UIClickCom>() ?? go.AddComponent<UIClickCom>();
@@ -115,7 +131,8 @@ namespace GamePlay.Bussiness.UI
 
         protected void _Close()
         {
-            domainApi.directApi.CloseUI(this.uiName);
+            _domainApi.directApi.CloseUI(this.uiName);
         }
+        #endregion
     }
 }

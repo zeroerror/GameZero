@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
-using GamePlay.Core;
 using UnityEngine;
 using UnityEngine.UI;
 namespace GamePlay.Bussiness.UI
@@ -23,33 +20,33 @@ namespace GamePlay.Bussiness.UI
         public override string uiName => "UIUnitShopMainView";
         public UIUnitShopMainViewBinder viewBinder;
 
-        private UIUnitShopMainViewInput _optionViewInput;
-        private GameUnitItemModel[] _itemModels => this._optionViewInput.buyableUnits;
+        private UIUnitShopMainViewInput _viewInput;
+        private GameUnitItemModel[] _itemModels => this._viewInput.buyableUnits;
 
         protected override void _OnInit()
         {
             this.viewBinder = new UIUnitShopMainViewBinder(this.go);
-            this._optionViewInput = (UIUnitShopMainViewInput)this._viewInput.customData;
+            this._viewInput = (UIUnitShopMainViewInput)this._uiInput.customData;
         }
 
         protected override void _BindEvents()
         {
             base._BindEvents();
-            this.domainApi.directApi.BindKeyAction(KeyCode.G, () => this._OnClickItem(0));
-            this.domainApi.directApi.BindKeyAction(KeyCode.H, () => this._OnClickItem(1));
-            this.domainApi.directApi.BindKeyAction(KeyCode.J, () => this._OnClickItem(2));
-            this.domainApi.directApi.BindKeyAction(KeyCode.K, () => this._OnClickItem(3));
-            this.domainApi.directApi.BindKeyAction(KeyCode.L, () => this._OnClickItem(4));
+            this._domainApi.directApi.BindKeyAction(KeyCode.G, () => this._OnClickItem(0));
+            this._domainApi.directApi.BindKeyAction(KeyCode.H, () => this._OnClickItem(1));
+            this._domainApi.directApi.BindKeyAction(KeyCode.J, () => this._OnClickItem(2));
+            this._domainApi.directApi.BindKeyAction(KeyCode.K, () => this._OnClickItem(3));
+            this._domainApi.directApi.BindKeyAction(KeyCode.L, () => this._OnClickItem(4));
         }
 
         protected override void _UnbindEvents()
         {
             base._UnbindEvents();
-            this.domainApi.directApi.UnbindKeyAction(KeyCode.G, () => this._OnClickItem(0));
-            this.domainApi.directApi.UnbindKeyAction(KeyCode.H, () => this._OnClickItem(1));
-            this.domainApi.directApi.UnbindKeyAction(KeyCode.J, () => this._OnClickItem(2));
-            this.domainApi.directApi.UnbindKeyAction(KeyCode.K, () => this._OnClickItem(3));
-            this.domainApi.directApi.UnbindKeyAction(KeyCode.L, () => this._OnClickItem(4));
+            this._domainApi.directApi.UnbindKeyAction(KeyCode.G, () => this._OnClickItem(0));
+            this._domainApi.directApi.UnbindKeyAction(KeyCode.H, () => this._OnClickItem(1));
+            this._domainApi.directApi.UnbindKeyAction(KeyCode.J, () => this._OnClickItem(2));
+            this._domainApi.directApi.UnbindKeyAction(KeyCode.K, () => this._OnClickItem(3));
+            this._domainApi.directApi.UnbindKeyAction(KeyCode.L, () => this._OnClickItem(4));
         }
 
         protected override void _OnShow()
@@ -72,7 +69,7 @@ namespace GamePlay.Bussiness.UI
             switch (itemModel.entityType)
             {
                 case GameEntityType.Role:
-                    this.domainApi.rendererApi.roleApi.GetRoleTemplate().TryGet(itemModel.typeId, out var roleModel);
+                    this._domainApi.rendererApi.roleApi.GetRoleTemplate().TryGet(itemModel.typeId, out var roleModel);
                     return "角色" + roleModel.roleName;
                 case GameEntityType.Skill:
                     return "技能" + itemModel.typeId;
@@ -85,7 +82,7 @@ namespace GamePlay.Bussiness.UI
 
         private void _OnClickItem(int index)
         {
-            this.domainApi.logicApi.directApi.BuyUnit(index);
+            this._domainApi.logicApi.directApi.BuyUnit(index);
         }
     }
 }

@@ -32,25 +32,25 @@ namespace GamePlay.Bussiness.UI
         {
             this.viewBinder = new UIActionOptionMainViewBinder(this.go);
 
-            this.domainApi.logicApi.directApi.SetTimeScale(0.01f);
-            this.domainApi.rendererApi.directApi.SetTimeScale(0.01f);
-            this._optionViewInput = (UIActionOptionMainViewInput)this._viewInput.customData;
+            this._domainApi.logicApi.directApi.SetTimeScale(0.01f);
+            this._domainApi.rendererApi.directApi.SetTimeScale(0.01f);
+            this._optionViewInput = (UIActionOptionMainViewInput)this._uiInput.customData;
         }
 
         protected override void _BindEvents()
         {
             base._BindEvents();
-            this.domainApi.directApi.BindKeyAction(KeyCode.Alpha1, () => this._OnClickOption(0));
-            this.domainApi.directApi.BindKeyAction(KeyCode.Alpha2, () => this._OnClickOption(1));
-            this.domainApi.directApi.BindKeyAction(KeyCode.Alpha3, () => this._OnClickOption(2));
+            this._domainApi.directApi.BindKeyAction(KeyCode.Alpha1, () => this._OnClickOption(0));
+            this._domainApi.directApi.BindKeyAction(KeyCode.Alpha2, () => this._OnClickOption(1));
+            this._domainApi.directApi.BindKeyAction(KeyCode.Alpha3, () => this._OnClickOption(2));
         }
 
         protected override void _UnbindEvents()
         {
             base._UnbindEvents();
-            this.domainApi.directApi.UnbindKeyAction(KeyCode.Alpha1, () => this._OnClickOption(0));
-            this.domainApi.directApi.UnbindKeyAction(KeyCode.Alpha2, () => this._OnClickOption(1));
-            this.domainApi.directApi.UnbindKeyAction(KeyCode.Alpha3, () => this._OnClickOption(2));
+            this._domainApi.directApi.UnbindKeyAction(KeyCode.Alpha1, () => this._OnClickOption(0));
+            this._domainApi.directApi.UnbindKeyAction(KeyCode.Alpha2, () => this._OnClickOption(1));
+            this._domainApi.directApi.UnbindKeyAction(KeyCode.Alpha3, () => this._OnClickOption(2));
         }
 
         protected override void _OnShow()
@@ -72,7 +72,7 @@ namespace GamePlay.Bussiness.UI
             var desc = option.desc + "\n";
             option.actionIds?.Foreach(actionId =>
             {
-                if (!this.domainApi.rendererApi.actionApi.TryGetModel(actionId, out var action)) return;
+                if (!this._domainApi.rendererApi.actionApi.TryGetModel(actionId, out var action)) return;
                 desc += action.desc;
             });
             return desc;
@@ -81,7 +81,7 @@ namespace GamePlay.Bussiness.UI
         private void _OnClickOption(int index)
         {
             var option = this._optionModels[index];
-            var actionOptionApi = this.domainApi.actionOptionApi;
+            var actionOptionApi = this._domainApi.actionOptionApi;
             var lv = actionOptionApi.ChooseOption(option);
             if (lv == 0)
             {
@@ -89,10 +89,10 @@ namespace GamePlay.Bussiness.UI
             }
 
             this._Close();
-            this.domainApi.logicApi.directApi.SetTimeScale(1);
-            this.domainApi.rendererApi.directApi.SetTimeScale(1);
+            this._domainApi.logicApi.directApi.SetTimeScale(1);
+            this._domainApi.rendererApi.directApi.SetTimeScale(1);
 
-            var input = (UIActionOptionMainViewInput)this._viewInput.customData;
+            var input = (UIActionOptionMainViewInput)this._uiInput.customData;
             input.onChooseOption?.Invoke(option.typeId);
         }
     }
