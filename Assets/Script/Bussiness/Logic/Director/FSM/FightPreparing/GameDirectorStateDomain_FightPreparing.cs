@@ -64,7 +64,7 @@ namespace GamePlay.Bussiness.Logic
                     if (!entity)
                     {
                         GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onUnitPositionChanged: 未找到角色 " + entityId);
-                        break;
+                        return;
                     }
                     break;
                 default:

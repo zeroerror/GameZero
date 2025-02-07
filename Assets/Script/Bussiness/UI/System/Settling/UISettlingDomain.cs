@@ -25,7 +25,6 @@ namespace GamePlay.Bussiness.UI
         private void _OnStateEnter_Settling(object args)
         {
             // TODO 弹出结算界面, 点击结算界面的关闭按钮, 退出结算状态
-
             // 2s后自定请求退出结算
             this._context.cmdBufferService.AddDelayCmd(2, () =>
             {

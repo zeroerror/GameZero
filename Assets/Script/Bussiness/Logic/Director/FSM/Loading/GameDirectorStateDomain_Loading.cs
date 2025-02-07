@@ -30,13 +30,10 @@ namespace GamePlay.Bussiness.Logic
             var unitEntitys = director.unitEntitys;
             unitEntitys?.ForEach((unitEntity) =>
             {
-                var entityId = unitEntity.entityId;
-                if (entityId == 0) return;
-                var role = this._context.domainApi.roleApi.FindByEntityId(entityId);
-                if (role == null) return;
-                unitEntity.position = role.transformCom.position;
-                unitEntity.attributeArgs = role.attributeCom.ToArgs();
-                unitEntity.baseAttributeArgs = role.baseAttributeCom.ToArgs();
+                var unit = this._context.domainApi.directorApi.FindUnit(unitEntity);
+                if (unit == null) return;
+                unitEntity.attributeArgs = unit.attributeCom.ToArgs();
+                unitEntity.baseAttributeArgs = unit.baseAttributeCom.ToArgs();
             });
 
             // 清理当前场景
@@ -46,7 +43,10 @@ namespace GamePlay.Bussiness.Logic
             // 生成玩家棋子
             unitEntitys?.ForEach((unitEntity) =>
             {
-                this._context.domainApi.directorApi.CreateUnit(unitEntity);
+                var unit = this._context.domainApi.directorApi.CreateUnit(unitEntity);
+                unit.attributeCom.SetByArgs(unitEntity.attributeArgs);
+                unit.baseAttributeCom.SetByArgs(unitEntity.baseAttributeArgs);
+                unit.transformCom.position = unitEntity.standPos;
             });
             GameLogger.DebugLog("导演 - 进入加载状态 " + loadFieldId);
         }

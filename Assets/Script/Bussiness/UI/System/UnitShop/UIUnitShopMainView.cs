@@ -73,7 +73,8 @@ namespace GamePlay.Bussiness.UI
                 {
                     var text = unitBinder.txt_name.GetComponent<Text>();
                     text.GetComponent<Text>().text = this._GetItemName(this._itemModels[i]).ToDevStr();
-                    this._SetClick(unitBinder.gameObject, () => this._OnClickItem(i));
+                    var idx = i;
+                    this._SetClick(unitBinder.gameObject, () => this._OnClickItem(idx));
                 }
             }
 

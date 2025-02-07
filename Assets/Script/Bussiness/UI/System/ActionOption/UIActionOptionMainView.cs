@@ -60,7 +60,8 @@ namespace GamePlay.Bussiness.UI
                 var optionBinder = this.uiBinder.GetField($"option{i + 1}") as UIOptionBinder;
                 var text = optionBinder.text;
                 text.GetComponent<Text>().text = this._GetOptionDesc(this._optionModels[i]).ToDevStr();
-                this._SetClick(optionBinder.gameObject, () => this._OnClickOption(i));
+                var optionIndex = i;
+                this._SetClick(optionBinder.gameObject, () => this._OnClickOption(optionIndex));
             }
         }
 

@@ -221,7 +221,7 @@ namespace GamePlay.Bussiness.Logic
                 case GameEntityType.Role:
                     entity = this.context.domainApi.roleApi.CreatePlayerRole(model.typeId, new GameTransformArgs
                     {
-                        position = unitEntity.position,
+                        position = unitEntity.standPos,
                         scale = GameVec2.one,
                         forward = GameVec2.right
                     }, true);
@@ -306,6 +306,18 @@ namespace GamePlay.Bussiness.Logic
                 unitPool.Add(unit);
             });
             return unitPool;
+        }
+
+        public GameEntityBase FindUnit(GameUnitItemEntity unitEntity)
+        {
+            switch (unitEntity.itemModel.entityType)
+            {
+                case GameEntityType.Role:
+                    return this.context.domainApi.roleApi.FindByEntityId(unitEntity.entityId);
+                default:
+                    GameLogger.LogError("导演 - 未知的单位实体类型 " + unitEntity.itemModel.entityType);
+                    return null;
+            }
         }
     }
 }

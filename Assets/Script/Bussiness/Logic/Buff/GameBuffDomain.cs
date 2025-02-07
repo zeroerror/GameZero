@@ -24,12 +24,12 @@ namespace GamePlay.Bussiness.Logic
 
         public void Tick(float dt)
         {
-            this._context.roleContext.repo.ForeachEntities_IncludePool(entity =>
+            this._context.roleContext.repo.ForeachEntities(entity =>
             {
                 if (!entity.IsAlive()) return;
                 this.TickBuff(entity, dt);
             });
-            this._context.actionContext.optionRepo.ForeachEntities_IncludePool(entity =>
+            this._context.actionContext.optionRepo.ForeachEntities(entity =>
             {
                 if (!entity.IsAlive()) return;
                 this.TickBuff(entity, dt);

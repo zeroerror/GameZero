@@ -62,8 +62,8 @@ namespace GamePlay.Bussiness.Logic
         public GameAttributeArgs attributeArgs;
         /// <summary> 基础属性参数 </summary>
         public GameAttributeArgs baseAttributeArgs;
-        /// <summary> 位置 </summary>
-        public GameVec2 position;
+        /// <summary> 站位 </summary>
+        public GameVec2 standPos;
     }
 
     public class GameUnitItemModel
