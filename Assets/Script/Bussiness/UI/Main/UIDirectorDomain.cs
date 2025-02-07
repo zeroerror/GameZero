@@ -62,7 +62,6 @@ namespace GamePlay.Bussiness.UI
 
         private void _InjectContext()
         {
-            this._BindEvents();
             this.debugDomain.Inject(this.context);
             this.jumpTextDomain.Inject(this.context);
             this.layerDomain.Inject(this.context);
@@ -73,7 +72,6 @@ namespace GamePlay.Bussiness.UI
 
         public void Destroy()
         {
-            this._UnbindEvents();
             this.debugDomain.Destroy();
             this.jumpTextDomain.Destroy();
             this.layerDomain.Destroy();
@@ -92,12 +90,12 @@ namespace GamePlay.Bussiness.UI
             this.unitShopDomain.Tick(dt);
         }
 
-        private void _BindEvents()
+        public void BindEvents()
         {
 
         }
 
-        private void _UnbindEvents()
+        public void UnbindEvents()
         {
 
         }

@@ -15,6 +15,8 @@ namespace GamePlay.Bussiness.Logic
 
         public GameContext context { get; private set; }
         public GameFieldDomain fieldDomain { get; private set; }
+        public GameRoleInputDomain roleInputDomain { get; private set; }
+        public GameRoleAIDomain roleAIDomain { get; private set; }
         public GameRoleDomain roleDomain { get; private set; }
         public GameSkillDomain skillDomain { get; private set; }
         public GameBuffDomain buffDomain { get; private set; }
@@ -37,6 +39,8 @@ namespace GamePlay.Bussiness.Logic
         {
             this.directorFSMDomain = new GameDirectorFSMDomain(this);
             this.fieldDomain = new GameFieldDomain();
+            this.roleInputDomain = new GameRoleInputDomain();
+            this.roleAIDomain = new GameRoleAIDomain();
             this.roleDomain = new GameRoleDomain();
             this.skillDomain = new GameSkillDomain();
             this.buffDomain = new GameBuffDomain();
@@ -54,6 +58,7 @@ namespace GamePlay.Bussiness.Logic
             this.context = new GameContext();
             this.context.domainApi.SetDirectorApi(this);
             this.context.domainApi.SetFieldApi(this.fieldDomain);
+            this.context.domainApi.SetRoleAIApi(this.roleAIDomain);
             this.context.domainApi.SetRoleApi(this.roleDomain);
             this.context.domainApi.SetSkillApi(this.skillDomain);
             this.context.domainApi.SetBuffApi(this.buffDomain);
@@ -70,6 +75,8 @@ namespace GamePlay.Bussiness.Logic
         {
             this.directorFSMDomain.Inject(this.context);
             this.fieldDomain.Inject(this.context);
+            this.roleInputDomain.Inject(this.context);
+            this.roleAIDomain.Inject(this.context);
             this.roleDomain.Inject(this.context);
             this.skillDomain.Inject(this.context);
             this.buffDomain.Inject(this.context);
@@ -87,6 +94,8 @@ namespace GamePlay.Bussiness.Logic
         {
             this.directorFSMDomain.Destroy();
             this.fieldDomain.Destroy();
+            this.roleInputDomain.Destroy();
+            this.roleAIDomain.Destroy();
             this.roleDomain.Destroy();
             this.skillDomain.Destroy();
             this.buffDomain.Destroy();
@@ -103,6 +112,8 @@ namespace GamePlay.Bussiness.Logic
         {
             this.fieldDomain.Tick(dt);
             if (this.context.fieldContext.curField == null) return;
+            this.roleInputDomain.Tick();
+            this.roleAIDomain.Tick(dt);
             this.roleDomain.Tick(dt);
             this.skillDomain.Tick(dt);
             this.buffDomain.Tick(dt);

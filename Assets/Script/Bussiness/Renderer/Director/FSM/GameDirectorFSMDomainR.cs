@@ -28,6 +28,22 @@ namespace GamePlay.Bussiness.Renderer
             }
         }
 
+        public void BindEvents()
+        {
+            foreach (var stateDomainR in this._stateDomainDict.Values)
+            {
+                stateDomainR.BindEvents();
+            }
+        }
+
+        public void UnbindEvents()
+        {
+            foreach (var stateDomainR in this._stateDomainDict.Values)
+            {
+                stateDomainR.UnbindEvents();
+            }
+        }
+
         public void Destroy()
         {
             foreach (var stateDomainR in this._stateDomainDict.Values)

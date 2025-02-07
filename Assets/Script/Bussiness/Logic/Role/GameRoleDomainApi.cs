@@ -5,7 +5,6 @@ namespace GamePlay.Bussiness.Logic
     public interface GameRoleDomainApi
     {
         public GameRoleFSMDomainApi fsmApi { get; }
-        public GameRoleAIDomainApi aiApi { get; }
 
         /// <summary>
         /// 根据实体Id查找角色

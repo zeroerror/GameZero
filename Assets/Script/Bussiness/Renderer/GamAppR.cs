@@ -20,9 +20,21 @@ namespace GamePlay.Bussiness.Renderer
             Application.quitting += this.Destroy;
         }
 
+        public void BindEvents()
+        {
+            this.directorDomain.BindEvents();
+        }
+
+        public void UnbindEvents()
+        {
+            this.directorDomain.UnbindEvents();
+        }
+
         public void Destroy()
         {
+            this.UnbindEvents();
             this.directorDomain.Destroy();
+            Application.quitting -= this.Destroy;
         }
 
         public void Update(float dt)

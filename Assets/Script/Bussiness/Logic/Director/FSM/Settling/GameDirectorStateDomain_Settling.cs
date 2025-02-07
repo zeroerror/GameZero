@@ -31,8 +31,8 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Enter(GameDirectorEntity director, object args = null)
         {
-            var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
-            var enemyCampId = GameRoleCollection.ENEMY_ROLE_CAMP_ID;
+            var playerCampId = GameCampCollection.PLAYER_CAMP_ID;
+            var enemyCampId = GameCampCollection.ENEMY_CAMP_ID;
             var playerCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == playerCampId);
             var enemyCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == enemyCampId);
             var isWin = playerCount > enemyCount;

@@ -70,7 +70,6 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _InjectContext()
         {
-            this._BindEvents();
             this.directorFSMDomain.Inject(this.context);
             this.roleDomain.Inject(this.context);
             this.skillDomain.Inject(this.context);
@@ -87,7 +86,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Destroy()
         {
-            this._UnbindEvents();
+            this.UnbindEvents();
             this.directorFSMDomain.Destroy();
             this.roleDomain.Destroy();
             this.skillDomain.Destroy();
@@ -102,14 +101,16 @@ namespace GamePlay.Bussiness.Renderer
             this.buffDomain.Destroy();
         }
 
-        private void _BindEvents()
+        public void BindEvents()
         {
             this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
+            this.directorFSMDomain.BindEvents();
         }
 
-        private void _UnbindEvents()
+        public void UnbindEvents()
         {
             this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
+            this.directorFSMDomain.UnbindEvents();
         }
 
         private void _OnTimeScaleChange(object args)

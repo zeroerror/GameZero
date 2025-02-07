@@ -18,7 +18,7 @@ namespace GamePlay.Bussiness.Logic
         {
             var fsmCom = director.fsmCom;
             var initEntityIdArgsList = new List<GameIdArgs>();
-            var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
+            var playerCampId = GameCampCollection.PLAYER_CAMP_ID;
             this._context.roleContext.repo.ForeachEntities((role) =>
             {
                 if (role.idCom.campId == playerCampId)
@@ -41,10 +41,10 @@ namespace GamePlay.Bussiness.Logic
 
         protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
         {
-            var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
+            var playerCampId = GameCampCollection.PLAYER_CAMP_ID;
             var playerCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == playerCampId);
             if (playerCount == 0) return new GameDirectorExitStateArgs(GameDirectorStateType.Settling);
-            var enemyCampId = GameRoleCollection.ENEMY_ROLE_CAMP_ID;
+            var enemyCampId = GameCampCollection.ENEMY_CAMP_ID;
             var enemyCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == enemyCampId);
             if (enemyCount == 0) return new GameDirectorExitStateArgs(GameDirectorStateType.Settling);
             return new GameDirectorExitStateArgs(GameDirectorStateType.None);

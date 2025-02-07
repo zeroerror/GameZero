@@ -9,30 +9,21 @@ namespace GamePlay.Bussiness.Logic
         GameRoleContext _roleContext => this._context.roleContext;
 
         public GameRoleFSMDomainApi fsmApi => this.fsmDomain;
-        public GameRoleAIDomainApi aiApi => this.roleAIDomain;
 
-        public GameRoleInputDomain roleInputDomain { get; private set; }
-        public GameRoleAIDomain roleAIDomain { get; private set; }
         public GameRoleFSMDomain fsmDomain { get; private set; }
         public GameRoleDomain()
         {
-            this.roleInputDomain = new GameRoleInputDomain();
-            this.roleAIDomain = new GameRoleAIDomain();
             this.fsmDomain = new GameRoleFSMDomain();
         }
 
         public void Inject(GameContext context)
         {
             this._context = context;
-            this.roleInputDomain.Inject(context);
-            this.roleAIDomain.Inject(context);
             this.fsmDomain.Inject(context);
         }
 
         public void Destroy()
         {
-            this.roleInputDomain.Destroy();
-            this.roleAIDomain.Destroy();
             this.fsmDomain.Destroy();
         }
 
@@ -83,14 +74,14 @@ namespace GamePlay.Bussiness.Logic
 
         public GameRoleEntity CreatePlayerRole(int typeId, in GameTransformArgs transArgs, bool isUser)
         {
-            var role = this.CreateRole(typeId, GameRoleCollection.PLAYER_ROLE_CAMP_ID, transArgs, isUser);
+            var role = this.CreateRole(typeId, GameCampCollection.PLAYER_CAMP_ID, transArgs, isUser);
             if (isUser && this._roleContext.userRole == null) this._roleContext.userRole = role;
             return role;
         }
 
         public GameRoleEntity CreateEnemyRole(int typeId, in GameTransformArgs transArgs)
         {
-            var role = this.CreateRole(typeId, GameRoleCollection.ENEMY_ROLE_CAMP_ID, transArgs, false);
+            var role = this.CreateRole(typeId, GameCampCollection.ENEMY_CAMP_ID, transArgs, false);
             return role;
         }
 
@@ -105,7 +96,7 @@ namespace GamePlay.Bussiness.Logic
                 idArgs = role.idCom.ToArgs(),
                 transArgs = role.transformCom.ToArgs(),
                 isUser = isUser,
-                isEnemy = campId != GameRoleCollection.PLAYER_ROLE_CAMP_ID
+                isEnemy = campId != GameCampCollection.PLAYER_CAMP_ID
             });
 
             // 其余领域的初始化逻辑
@@ -156,14 +147,12 @@ namespace GamePlay.Bussiness.Logic
             });
             // 默认进入待机
             this.fsmDomain.TryEnter(role, GameRoleStateType.Idle);
-            this.roleAIDomain.TryEnter(role, GameRoleAIStateType.Idle);
+            this._context.domainApi.roleAIApi.TryEnter(role, GameRoleAIStateType.Idle);
         }
 
         public void Tick(float dt)
         {
             this._roleContext.ClearRoleStateRecords();
-            this.roleInputDomain.Tick();
-            this.roleAIDomain.Tick(dt);
             var repo = this._roleContext.repo;
             repo.ForeachEntities((entity) =>
             {
@@ -204,8 +193,8 @@ namespace GamePlay.Bussiness.Logic
             // 判定阵营, 暂时适配玩家和怪物, 小于怪物阵营id的视为玩家角色的阵营Id
             var summonerCampId = summoner.idCom.campId;
             var campId = campType == GameCampType.Ally ?
-                summonerCampId : summonerCampId < GameRoleCollection.ENEMY_ROLE_CAMP_ID ?
-                GameRoleCollection.ENEMY_ROLE_CAMP_ID : GameRoleCollection.PLAYER_ROLE_CAMP_ID;
+                summonerCampId : summonerCampId < GameCampCollection.ENEMY_CAMP_ID ?
+                GameCampCollection.ENEMY_CAMP_ID : GameCampCollection.PLAYER_CAMP_ID;
 
             for (int i = 0; i < count; i++)
             {

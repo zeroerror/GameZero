@@ -8,11 +8,11 @@ namespace GamePlay.Bussiness.Renderer
         {
         }
 
-        protected override void _BindEvents()
+        public override void BindEvents()
         {
         }
 
-        protected override void _UnbindEvents()
+        public override void UnbindEvents()
         {
         }
 

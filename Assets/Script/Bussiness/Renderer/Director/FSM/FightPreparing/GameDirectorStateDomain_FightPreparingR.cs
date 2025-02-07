@@ -11,12 +11,12 @@ namespace GamePlay.Bussiness.Renderer
         {
         }
 
-        protected override void _BindEvents()
+        public override void BindEvents()
         {
             this._context.uiApi.directorApi.BindKeyAction(KeyCode.Mouse0, this._OnClickUnit);
         }
 
-        protected override void _UnbindEvents()
+        public override void UnbindEvents()
         {
             this._context.uiApi.directorApi.UnbindKeyAction(KeyCode.Mouse0, this._OnClickUnit);
         }
@@ -62,7 +62,7 @@ namespace GamePlay.Bussiness.Renderer
             const float width = 1.0f;
             const float height = 2.0f;
             var entityColliderModel = new GameBoxColliderModel(
-                GameVec2.zero,
+                new GameVec2(0, height / 2),
                 0,
                 width,
                 height
@@ -75,6 +75,16 @@ namespace GamePlay.Bussiness.Renderer
                 var isHit = mtv != GameVec2.zero;
                 return isHit;
             });
+            if (!clickUnit) return null;
+
+            // 检查阵营
+            var campId = clickUnit.idCom.campId;
+            if (campId != GameCampCollection.PLAYER_CAMP_ID)
+            {
+                GameLogger.LogWarning("点击单位不是玩家阵营");
+                return null;
+            }
+
             return clickUnit;
         }
 

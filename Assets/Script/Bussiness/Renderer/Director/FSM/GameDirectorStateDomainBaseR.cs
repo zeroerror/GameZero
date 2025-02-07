@@ -27,16 +27,15 @@ namespace GamePlay.Bussiness.Renderer
         public void Inject(GameContextR context)
         {
             this._context = context;
-            this._BindEvents();
         }
 
         public void Destroy()
         {
-            this._UnbindEvents();
+            this.UnbindEvents();
         }
 
-        protected virtual void _BindEvents() { }
-        protected virtual void _UnbindEvents() { }
+        public virtual void BindEvents() { }
+        public virtual void UnbindEvents() { }
 
         /** 状态更新 */
         public void Tick(GameDirectorEntityR director, float frameTime)

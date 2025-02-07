@@ -8,6 +8,9 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleDomainApi roleApi { get; private set; }
         public void SetRoleApi(GameRoleDomainApi roleApi) => this.roleApi = roleApi;
 
+        public GameRoleAIDomainApi roleAIApi { get; private set; }
+        public void SetRoleAIApi(GameRoleAIDomainApi roleAIApi) => this.roleAIApi = roleAIApi;
+
         public GameTransformDomainApi transformApi { get; private set; }
         public void SetTransformApi(GameTransformDomainApi transformApi) => this.transformApi = transformApi;
 

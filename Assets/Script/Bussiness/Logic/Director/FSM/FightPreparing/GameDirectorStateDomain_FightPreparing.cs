@@ -52,25 +52,36 @@ namespace GamePlay.Bussiness.Logic
         private void _onUnitPositionChanged(object args)
         {
             if (!this._CheckState()) return;
+
             var rcArgs = (GameLCArgs_UnitPositionChanged)args;
             var entityType = rcArgs.entityType;
             var entityId = rcArgs.entityId;
+            GameEntityBase entity;
             switch (entityType)
             {
                 case GameEntityType.Role:
-                    var role = this._context.domainApi.roleApi.FindByEntityId(entityId);
-                    if (!role)
+                    entity = this._context.domainApi.roleApi.FindByEntityId(entityId);
+                    if (!entity)
                     {
                         GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onUnitPositionChanged: 未找到角色 " + entityId);
                         break;
                     }
-                    role.transformCom.position = rcArgs.newPosition;
-                    GameLogger.DebugLog($"单位位置改变 - 角色 {entityId} 移动到 {rcArgs.newPosition}");
                     break;
                 default:
                     GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onUnitPositionChanged: 未知的实体类型 " + entityType);
-                    break;
+                    return;
             }
+
+            // 检查阵营
+            var campId = entity.idCom.campId;
+            if (campId != GameCampCollection.PLAYER_CAMP_ID)
+            {
+                GameLogger.LogWarning("点击单位不是玩家阵营");
+                return;
+            }
+
+            entity.transformCom.position = rcArgs.newPosition;
+            GameLogger.DebugLog($"单位位置改变 - 角色 {entityId} 移动到 {rcArgs.newPosition}");
         }
 
         private bool _CheckState()
@@ -104,8 +115,20 @@ namespace GamePlay.Bussiness.Logic
             this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, rcArgs);
         }
 
-        protected override void _Tick(GameDirectorEntity director, float frameTime)
+        protected override void _Tick(GameDirectorEntity director, float dt)
         {
+            this._directorDomain.fieldDomain.Tick(dt);
+            if (this._context.fieldContext.curField == null) return;
+            this._directorDomain.roleDomain.Tick(dt);
+            this._directorDomain.skillDomain.Tick(dt);
+            this._directorDomain.buffDomain.Tick(dt);
+            this._directorDomain.projectileDomain.Tick(dt);
+            this._directorDomain.actionDomain.Tick(dt);
+            this._directorDomain.transformDomain.Tick(dt);
+            this._directorDomain.attributeDomain.Tick(dt);
+            this._directorDomain.entitySelectDomain.Tick(dt);
+            this._directorDomain.entityCollectDomain.Tick();
+            this._directorDomain.physicsDomain.Tick();
         }
 
         protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
@@ -119,7 +142,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 执行所有选项的行为
-            var playerCampId = GameRoleCollection.PLAYER_ROLE_CAMP_ID;
+            var playerCampId = GameCampCollection.PLAYER_CAMP_ID;
             var optionRepo = this._context.actionContext.optionRepo;
             var optionId = selectedOptionModel.typeId;
             var optionEntity = optionRepo.FindOption(playerCampId, optionId);

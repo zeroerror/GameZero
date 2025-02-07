@@ -28,7 +28,7 @@ namespace GamePlay.Bussiness.Logic
             if (inputCom.HasInput())
             {
                 // 已有输入, 切换至攻击状态
-                this._context.domainApi.roleApi.aiApi.TryEnter(role, GameRoleAIStateType.Attack);
+                this._context.domainApi.roleAIApi.TryEnter(role, GameRoleAIStateType.Attack);
                 return;
             }
 
@@ -52,7 +52,7 @@ namespace GamePlay.Bussiness.Logic
                 {
                     // 距离足够近, 切换至待机状态
                     followState.farAwayDirty = false;
-                    this._context.domainApi.roleApi.aiApi.TryEnter(role, GameRoleAIStateType.Idle);
+                    this._context.domainApi.roleAIApi.TryEnter(role, GameRoleAIStateType.Idle);
                 }
             }
 

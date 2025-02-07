@@ -38,7 +38,7 @@ namespace GamePlay.Bussiness.Logic
             // 有激活跟随AI时, 远离时切换至跟随AI状态
             if (role.aiCom.followState.isFarAway())
             {
-                this._context.domainApi.roleApi.aiApi.TryEnter(role, GameRoleAIStateType.Follow);
+                this._context.domainApi.roleAIApi.TryEnter(role, GameRoleAIStateType.Follow);
                 return;
             }
 
