@@ -4,11 +4,14 @@ namespace GamePlay.Bussiness.UI
 {
     public class UIPlayerDomain : UISystemDomainBase, UIPlayerDomainApi
     {
-        public UIPlayerModel model { get; private set; }
+        private UIPlayerModel _model;
+
+        /// <summary> 当前金币 </summary>
+        public int curGold => this._model.gold;
 
         public UIPlayerDomain()
         {
-            this.model = new UIPlayerModel();
+            this._model = new UIPlayerModel();
         }
 
         protected override void _BindEvents()
@@ -24,7 +27,9 @@ namespace GamePlay.Bussiness.UI
         private void _OnCoinsChange(object args)
         {
             var rcArgs = (GameDirectorRCArgs_GoldChange)args;
-            this.model.gold = rcArgs.gold;
+            this._model.gold = rcArgs.gold;
+            // 提交金币变化事件
+            this._context.eventService.Submit(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, rcArgs);
         }
 
         /// <summary>
@@ -32,7 +37,8 @@ namespace GamePlay.Bussiness.UI
         /// </summary>
         public bool IsGoldEnough(int gold)
         {
-            return this.model.gold >= gold;
+            return this._model.gold >= gold;
         }
+
     }
 }

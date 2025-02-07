@@ -90,34 +90,21 @@ namespace GamePlay.Bussiness.UI
             this.unitShopDomain.Tick(dt);
         }
 
-        public void BindEvents()
-        {
-
-        }
-
-        public void UnbindEvents()
-        {
-
-        }
-
         public void Update(float dt)
         {
+            this.context.delayRCEventService.Tick();
+            this.context.eventService.Tick();
+            this.context.inputService.Tick();
+
             var director = this.context.director;
             director.Tick(dt);
             dt *= director.timeScaleCom.timeScale;
-            this._PreTick(dt);
             this._Tick(dt);
         }
 
         public void LateUpdate(float dt)
         {
             this._LateTick(dt);
-        }
-
-        protected void _PreTick(float dt)
-        {
-            this.context.inputService.Tick();
-            this.context.delayRCEventService.Tick();
         }
 
         protected void _Tick(float dt)
@@ -215,6 +202,16 @@ namespace GamePlay.Bussiness.UI
         public void UnbindKeyAction(KeyCode keyCode, Action callback)
         {
             this.context.inputService.UnbindKeyAction(keyCode, callback);
+        }
+
+        public void BindEvent(string eventName, Action<object> callback)
+        {
+            this.context.eventService.Bind(eventName, callback);
+        }
+
+        public void UnbindEvent(string eventName, Action<object> callback)
+        {
+            this.context.eventService.Unbind(eventName, callback);
         }
 
         public Vector3 GetPointerPosition()

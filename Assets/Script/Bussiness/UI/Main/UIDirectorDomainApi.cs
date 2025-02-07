@@ -54,6 +54,20 @@ namespace GamePlay.Bussiness.UI
         public void UnbindKeyAction(KeyCode keyCode, Action callback);
 
         /// <summary>
+        /// 绑定事件
+        /// <para>eventName: 事件名</para>
+        /// <para>callback: 回调函数</para>
+        /// </summary>
+        public void BindEvent(string eventName, Action<object> callback);
+
+        /// <summary>
+        /// 解绑事件
+        /// <para>eventName: 事件名</para>
+        /// <para>callback: 回调函数</para>
+        /// </summary>
+        public void UnbindEvent(string eventName, Action<object> callback);
+
+        /// <summary>
         /// 获取鼠标位置
         /// </summary>
         public Vector3 GetPointerPosition();

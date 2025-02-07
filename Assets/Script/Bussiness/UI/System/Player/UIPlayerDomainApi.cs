@@ -7,5 +7,10 @@ namespace GamePlay.Bussiness.UI
         /// <para>cost: 花费</para>
         /// </summary>
         public bool IsGoldEnough(int cost);
+
+        /// <summary>
+        /// 当前金币
+        /// </summary>
+        public int curGold { get; }
     }
 }

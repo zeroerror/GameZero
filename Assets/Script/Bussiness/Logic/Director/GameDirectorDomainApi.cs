@@ -49,7 +49,8 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary>
         /// 洗牌可购买单位列表
+        /// <para>isFree: 是否是免费洗牌</para>
         /// </summary>
-        public bool ShuffleBuyableUnits();
+        public bool ShuffleBuyableUnits(bool isFree);
     }
 }

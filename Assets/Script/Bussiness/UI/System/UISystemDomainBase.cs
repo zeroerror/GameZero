@@ -1,5 +1,3 @@
-using GamePlay.Bussiness.Logic;
-
 namespace GamePlay.Bussiness.UI
 {
     public abstract class UISystemDomainBase

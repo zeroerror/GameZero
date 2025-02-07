@@ -136,6 +136,19 @@ namespace GamePlay.Bussiness.Logic
                 this.context.eventService.Tick();
                 this.directorFSMDomain.Tick(this.director, frameTime);
                 this.context.cmdBufferService.Tick();
+                this._TickDirty();
+            }
+        }
+
+        private void _TickDirty()
+        {
+            // 提交RC - 金币变更
+            if (this.director.goldDirty)
+            {
+                this.director.goldDirty = false;
+                GameDirectorRCArgs_GoldChange goldChangeArgs;
+                goldChangeArgs.gold = this.director.gold;
+                this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, goldChangeArgs);
             }
         }
 
@@ -197,10 +210,6 @@ namespace GamePlay.Bussiness.Logic
             rcArgs.model = unitModel;
             rcArgs.costGold = unitModel.costGold;
             this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, rcArgs);
-            // 提交RC - 金币变更
-            GameDirectorRCArgs_GoldChange goldChangeArgs;
-            goldChangeArgs.gold = this.director.gold;
-            this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, goldChangeArgs);
         }
 
         public GameEntityBase CreateUnit(GameUnitItemEntity unitEntity)
@@ -241,18 +250,22 @@ namespace GamePlay.Bussiness.Logic
             return this.director.buyableUnits.ToArray();
         }
 
-        public bool ShuffleBuyableUnits()
+        public bool ShuffleBuyableUnits(bool isFree)
         {
             // 检查是否可以洗牌
-            var gold = this.director.gold;
-            const int shuffleCost = 10;
-            if (gold < shuffleCost)
+            if (!isFree)
             {
-                GameLogger.DebugLog($"洗牌失败, 金币不足! 需要金币: {shuffleCost}, 当前持有金币: {gold}");
-                return false;
+                var gold = this.director.gold;
+                const int shuffleCost = 10;
+                if (gold < shuffleCost)
+                {
+                    GameLogger.DebugLog($"洗牌失败, 金币不足! 需要金币: {shuffleCost}, 当前持有金币: {gold}");
+                    return false;
+                }
+                // 扣除金币
+                this.director.gold -= shuffleCost;
             }
-            // 扣除金币
-            this.director.gold -= shuffleCost;
+
             // 把当前可购买单位列表放回到总单位列表
             var buyableUnits = this.director.buyableUnits;
             var unitPool = this.director.unitPool;
@@ -276,10 +289,6 @@ namespace GamePlay.Bussiness.Logic
                 buyableUnits.Add(unit);
                 unitPool.Remove(unit);
             }
-            // 提交RC - 金币变更
-            GameDirectorRCArgs_GoldChange goldChangeArgs;
-            goldChangeArgs.gold = this.director.gold;
-            this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, goldChangeArgs);
             return true;
         }
 

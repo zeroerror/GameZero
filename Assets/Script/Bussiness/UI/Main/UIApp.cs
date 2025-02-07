@@ -20,19 +20,8 @@ namespace GamePlay.Bussiness.UI
             Application.quitting += this.Destroy;
         }
 
-        public void BindEvents()
-        {
-            this.directorDomain.BindEvents();
-        }
-
-        public void UnbindEvents()
-        {
-            this.directorDomain.UnbindEvents();
-        }
-
         public void Destroy()
         {
-            this.directorDomain.UnbindEvents();
             this.directorDomain.Destroy();
             Application.quitting -= this.Destroy;
         }

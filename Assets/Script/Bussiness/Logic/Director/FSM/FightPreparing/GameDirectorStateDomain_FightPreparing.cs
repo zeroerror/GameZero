@@ -107,7 +107,7 @@ namespace GamePlay.Bussiness.Logic
             fsmCom.EnterFightPreparing(actionOptions);
             GameLogger.DebugLog("导演 - 进入战斗准备状态");
             // 洗牌可购买单位列表
-            this._context.domainApi.directorApi.ShuffleBuyableUnits();
+            this._context.domainApi.directorApi.ShuffleBuyableUnits(true);
             // 提交RC
             GameDirectorRCArgs_StateEnterFightPreparing rcArgs;
             rcArgs.fromStateType = fsmCom.lastStateType;

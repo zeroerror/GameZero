@@ -28,7 +28,6 @@ public class GameEntry : MonoBehaviour
         gameUIApp.Inject(uiRoot, logicApi, rendererApi);
 
         gameAppR.BindEvents();
-        gameUIApp.BindEvents();
     }
 
     void Update()

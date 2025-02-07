@@ -23,14 +23,14 @@ namespace GamePlay.Bussiness.UI
         public override UILayerType layerType => UILayerType.PopUp;
         public override string uiPkgUrl => "UI/System/ActionOption";
         public override string uiName => "UIActionOptionMainView";
-        public UIActionOptionMainViewBinder viewBinder;
+        public UIActionOptionMainViewBinder uiBinder;
 
         private UIActionOptionMainViewInput _optionViewInput;
         private List<GameActionOptionModel> _optionModels => this._optionViewInput.optionModels;
 
         protected override void _OnInit()
         {
-            this.viewBinder = new UIActionOptionMainViewBinder(this.go);
+            this.uiBinder = new UIActionOptionMainViewBinder(this.go);
 
             this._uiApi.logicApi.directorApi.SetTimeScale(0.01f);
             this._uiApi.rendererApi.directorApi.SetTimeScale(0.01f);
@@ -55,16 +55,13 @@ namespace GamePlay.Bussiness.UI
 
         protected override void _OnShow()
         {
-            var text1 = this.viewBinder.option1.text;
-            text1.GetComponent<Text>().text = this._GetOptionDesc(this._optionModels[0]);
-            var text2 = this.viewBinder.option2.text;
-            text2.GetComponent<Text>().text = this._GetOptionDesc(this._optionModels[1]);
-            var text3 = this.viewBinder.option3.text;
-            text3.GetComponent<Text>().text = this._GetOptionDesc(this._optionModels[2]);
-
-            this._SetClick(this.viewBinder.option1.gameObject, () => this._OnClickOption(0));
-            this._SetClick(this.viewBinder.option2.gameObject, () => this._OnClickOption(1));
-            this._SetClick(this.viewBinder.option3.gameObject, () => this._OnClickOption(2));
+            for (var i = 0; i < this._optionModels.Count; i++)
+            {
+                var optionBinder = this.uiBinder.GetField($"option{i + 1}") as UIOptionBinder;
+                var text = optionBinder.text;
+                text.GetComponent<Text>().text = this._GetOptionDesc(this._optionModels[i]).ToDevStr();
+                this._SetClick(optionBinder.gameObject, () => this._OnClickOption(i));
+            }
         }
 
         private string _GetOptionDesc(GameActionOptionModel option)

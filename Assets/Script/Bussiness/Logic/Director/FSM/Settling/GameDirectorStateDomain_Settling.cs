@@ -53,9 +53,6 @@ namespace GamePlay.Bussiness.Logic
             rcArgs.isWin = isWin;
             rcArgs.ganiCoins = gainCoins;
             this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_SETTLING, rcArgs);
-
-            // 提交RC - 金币变更
-            this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_COINS_CHANGE, args);
         }
 
         protected override void _Tick(GameDirectorEntity director, float frameTime)

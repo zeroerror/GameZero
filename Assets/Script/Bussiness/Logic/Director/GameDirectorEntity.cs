@@ -15,7 +15,18 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /// <summary> 拥有的金币 </summary>
-        public int gold;
+        public int gold
+        {
+            get => this._gold;
+            set
+            {
+                if (value == this._gold) return;
+                this._gold = value;
+                this.goldDirty = true;
+            }
+        }
+        private int _gold;
+        public bool goldDirty;
 
         /// <summary> 已选择的行动选项 </summary>
         public List<GameActionOptionModel> actionOptions;

@@ -19,14 +19,14 @@ namespace GamePlay.Bussiness.UI
         public override UILayerType layerType => UILayerType.Main;
         public override string uiPkgUrl => "UI/System/UnitShop";
         public override string uiName => "UIUnitShopMainView";
-        public UIUnitShopMainViewBinder viewBinder;
+        public UIUnitShopMainViewBinder uiBinder;
 
         private UIUnitShopMainViewInput _viewInput;
         private GameUnitItemModel[] _itemModels => this._viewInput.buyableUnits;
 
         protected override void _OnInit()
         {
-            this.viewBinder = new UIUnitShopMainViewBinder(this.go);
+            this.uiBinder = new UIUnitShopMainViewBinder(this.go);
             this._viewInput = (UIUnitShopMainViewInput)this._uiInput.customData;
         }
 
@@ -39,6 +39,7 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.BindKeyAction(KeyCode.K, () => this._OnClickItem(3));
             this._uiApi.directorApi.BindKeyAction(KeyCode.L, () => this._OnClickItem(4));
             this._uiApi.directorApi.BindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
+            this._uiApi.directorApi.BindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
         }
 
         protected override void _UnbindEvents()
@@ -50,26 +51,40 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.K, () => this._OnClickItem(3));
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.L, () => this._OnClickItem(4));
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
+            this._uiApi.directorApi.UnbindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
+        }
+
+        private void _OnPlayerCoinsChange(object args)
+        {
+            this._refreshGold();
         }
 
         protected override void _OnShow()
         {
+            this._refreshGold();
+
             var itemCount = this._itemModels.Length;
             for (var i = 0; i < 5; i++)
             {
-                var unitBinder = this.viewBinder.GetField($"unitGroup_unit{i + 1}") as UIUnitItemBinder;
+                var unitBinder = this.uiBinder.GetField($"unitGroup_unit{i + 1}") as UIUnitItemBinder;
                 var isActive = i < itemCount;
                 unitBinder.gameObject.SetActive(isActive);
                 if (isActive)
                 {
                     var text = unitBinder.txt_name.GetComponent<Text>();
-                    text.GetComponent<Text>().text = this._GetItemName(this._itemModels[i]);
+                    text.GetComponent<Text>().text = this._GetItemName(this._itemModels[i]).ToDevStr();
                     this._SetClick(unitBinder.gameObject, () => this._OnClickItem(i));
                 }
             }
 
-            this._SetClick(this.viewBinder.btn_confirm, this._OnBtnConfirmClick);
-            this._SetClick(this.viewBinder.btn_refresh, this._OnBtnRefreshClick);
+            this._SetClick(this.uiBinder.btn_confirm, this._OnBtnConfirmClick);
+            this._SetClick(this.uiBinder.btn_refresh, this._OnBtnRefreshClick);
+        }
+
+        private void _refreshGold()
+        {
+            var curGold = this._uiApi.playerApi.curGold;
+            this.uiBinder.txt_gold.GetComponent<Text>().text = curGold.ToDevStr();
         }
 
         private void _OnClickItem(int index)
@@ -85,7 +100,7 @@ namespace GamePlay.Bussiness.UI
 
         private void _OnBtnRefreshClick()
         {
-            if (!this._uiApi.logicApi.directorApi.ShuffleBuyableUnits()) return;
+            if (!this._uiApi.logicApi.directorApi.ShuffleBuyableUnits(false)) return;
             this._OnShow();
         }
 
