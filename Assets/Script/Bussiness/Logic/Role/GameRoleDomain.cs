@@ -117,7 +117,6 @@ namespace GamePlay.Bussiness.Logic
                 return null;
             }
 
-            role.SetByModel(role.model);
             // 变换组件
             role.transformCom.SetByArgs(transArgs);
             if (transArgs.scale == GameVec2.zero)

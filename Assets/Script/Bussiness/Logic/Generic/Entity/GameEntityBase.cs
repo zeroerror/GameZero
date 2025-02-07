@@ -20,13 +20,11 @@ namespace GamePlay.Bussiness.Logic
 
         public GameIdCom idCom { get; private set; }
         public GameTransformCom transformCom { get; private set; }
-        public void BindTransformCom(GameTransformCom transformCom) => this.transformCom = transformCom;
+
         public GameActionTargeterCom actionTargeterCom { get; private set; }
         public GamePhysicsCom physicsCom { get; private set; }
         public GameAttributeCom attributeCom { get; private set; }
-        public void BindAttributeCom(GameAttributeCom attributeCom) => this.attributeCom = attributeCom;
         public GameAttributeCom baseAttributeCom { get; private set; }
-        public void BindBaseAttributeCom(GameAttributeCom baseAttributeCom) => this.baseAttributeCom = baseAttributeCom;
 
         public GameEntityBase(int typeId, GameEntityType entityType)
         {
@@ -41,11 +39,13 @@ namespace GamePlay.Bussiness.Logic
         public virtual void Clear()
         {
             idCom?.Clear();
-            transformCom?.Clear();
             actionTargeterCom?.Clear();
             physicsCom?.Clear();
-            attributeCom?.Clear();
-            baseAttributeCom?.Clear();
+
+            // 不对绑定组件重复清理
+            if (this._bindedTransformCom == null) transformCom?.Clear();
+            if (this._bindedAttributeCom == null) attributeCom?.Clear();
+            if (this._bindedBaseAttributeCom == null) baseAttributeCom?.Clear();
         }
 
         public bool IsEquals(GameEntityBase other)
@@ -125,5 +125,25 @@ namespace GamePlay.Bussiness.Logic
             return this.isValid;
         }
 
+        public void BindAttributeCom(GameAttributeCom attributeCom)
+        {
+            this.attributeCom = attributeCom;
+            this._bindedAttributeCom = attributeCom;
+        }
+        private GameAttributeCom _bindedAttributeCom;
+
+        public void BindBaseAttributeCom(GameAttributeCom baseAttributeCom)
+        {
+            this.baseAttributeCom = baseAttributeCom;
+            this._bindedBaseAttributeCom = baseAttributeCom;
+        }
+        private GameAttributeCom _bindedBaseAttributeCom;
+
+        public void BindTransformCom(GameTransformCom transformCom)
+        {
+            this.transformCom = transformCom;
+            this._bindedTransformCom = transformCom;
+        }
+        private GameTransformCom _bindedTransformCom;
     }
 }

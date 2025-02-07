@@ -17,6 +17,13 @@ namespace GamePlay.Bussiness.Logic
             this._attributes.Clear();
         }
 
+        public GameAttributeCom Clone()
+        {
+            var com = new GameAttributeCom();
+            com.CopyFrom(this);
+            return com;
+        }
+
         public void CopyFrom(GameAttributeCom com)
         {
             this._attributes = new List<GameAttribute>(com._attributes);
