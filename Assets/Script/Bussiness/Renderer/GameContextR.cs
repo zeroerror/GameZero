@@ -1,3 +1,4 @@
+using GamePlay.Bussiness.Core;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.UI;
 using GamePlay.Core;
@@ -25,7 +26,6 @@ namespace GamePlay.Bussiness.Renderer
         public GameCmdBufferService cmdBufferService { get; private set; }
 
         public UIDomainApi uiApi { get; private set; }
-
         public GameContextR()
         {
 

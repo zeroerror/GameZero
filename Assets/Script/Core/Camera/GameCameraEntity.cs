@@ -19,29 +19,13 @@ namespace GamePlay.Core
             this.zoomCom = new GameCameraZoomCom(camera);
         }
 
-        // void _Test()
-        // {
-        //     if (Input.GetKeyDown(KeyCode.Space))
-        //     {
-        //         // var randomAngle = Random.Range(0, 360);
-        //         // var randomAmplitude = Random.Range(0.5f, 2.5f);
-        //         // this.shakeCom.Shake(randomAngle, randomAmplitude, 10, 0.5f);
-
-        //         this.zoomCom.Zoom(5, 4, 1, GameEasingType.Linear, false, () =>
-        //         {
-        //             this.zoomCom.Zoom(4, 5, 0.5f, GameEasingType.Linear, false);
-        //         });
-        //     }
-        // }
-
         public void Tick(float dt)
         {
             this._TickComponent(dt);
             this._Apply();
-            // this._Test();
         }
 
-        void _TickComponent(float dt)
+        private void _TickComponent(float dt)
         {
             this.followCom.Tick(dt);
             this.confinerCom.Tick(dt);
@@ -49,12 +33,17 @@ namespace GamePlay.Core
             this.zoomCom.Tick(dt);
         }
 
-        void _Apply()
+        private void _Apply()
         {
             this.followCom.Apply();
             this.shakeCom.Apply();
             this.zoomCom.Apply();
             this.confinerCom.Apply();
+        }
+
+        public GameVec2 GetWorldPoint(GameVec2 screenPoint)
+        {
+            return this.camera.ScreenToWorldPoint(screenPoint);
         }
     }
 }

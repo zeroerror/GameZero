@@ -30,10 +30,10 @@ namespace GamePlay.Bussiness.Renderer
         {
             // 模板预制体
             var tmPrefab = Resources.Load<GameObject>("Role/Prefab/role");
-            var root = GameObject.Instantiate(tmPrefab);
-            root.transform.localPosition = new Vector3(0, 0, 0);
-            var body = root.transform.Find("body").gameObject;
-            var foot = root.transform.Find("foot").gameObject;
+            var tmRoot = GameObject.Instantiate(tmPrefab);
+            tmRoot.transform.localPosition = new Vector3(0, 0, 0);
+            var tmBody = tmRoot.transform.Find("body").gameObject;
+            var tmFoot = tmRoot.transform.Find("foot").gameObject;
 
             // 角色预制体
             var rolePrefab = Resources.Load<GameObject>(model.prefabUrl);
@@ -42,13 +42,13 @@ namespace GamePlay.Bussiness.Renderer
                 GameLogger.LogError($"角色工厂[渲染层]: 加载角色预制体失败 {model.prefabUrl}");
                 return null;
             }
-            var roleGO = GameObject.Instantiate(rolePrefab);
-            if (!roleGO.TryGetComponent<Animator>(out var animator)) animator = roleGO.AddComponent<Animator>();
-            if (!roleGO.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer = roleGO.AddComponent<SpriteRenderer>();
-            roleGO.transform.SetParent(body.transform);
+            var prefabBody = GameObject.Instantiate(rolePrefab);
+            if (!prefabBody.TryGetComponent<Animator>(out var animator)) animator = prefabBody.AddComponent<Animator>();
+            if (!prefabBody.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer = prefabBody.AddComponent<SpriteRenderer>();
+            prefabBody.transform.SetParent(tmBody.transform);
 
             // 角色挂点
-            var attachmentCom = roleGO.GetComponent<GameRoleAttachmentCom>();
+            var attachmentCom = prefabBody.GetComponent<GameRoleAttachmentCom>();
             // 测试代码, 默认设置弓箭挂点图片
             if (attachmentCom)
             {
@@ -61,7 +61,7 @@ namespace GamePlay.Bussiness.Renderer
                 attachmentCom.SetAttachmentSprite_Bow(bowHandleSprite, bowLimbSprite);
                 attachmentCom.SetAttachmentSprite_Visible(GameRoleAttachmentDirectionType.Left, true);
             }
-            var bodyCom = new GameRoleBodyCom(body, foot, roleGO, attachmentCom);
+            var bodyCom = new GameRoleBodyCom(tmRoot, tmFoot, prefabBody, attachmentCom);
             return bodyCom;
         }
 

@@ -25,7 +25,7 @@ namespace GamePlay.Bussiness.Renderer
 
         private GameEasing2DCom _posEaseCom;
         public GamePlayableCom animCom { get; private set; }
-        public Transform transform { get { return this.bodyCom.root.transform; } }
+        public Transform transform { get { return this.bodyCom.tmRoot.transform; } }
         public GameRoleFSMComR fsmCom { get; private set; }
         public GameSkillComR skillCom { get; private set; }
 
@@ -44,7 +44,7 @@ namespace GamePlay.Bussiness.Renderer
             this.skillCom = new GameSkillComR(this);
             this.buffCom = new GameBuffComR();
 
-            var animator = bodyCom.body.GetComponentInChildren<Animator>();
+            var animator = bodyCom.prefabGO.GetComponentInChildren<Animator>();
             this.animCom = new GamePlayableCom(animator);
 
             this._posEaseCom = new GameEasing2DCom();
@@ -102,7 +102,7 @@ namespace GamePlay.Bussiness.Renderer
 
         public void setActive(bool active)
         {
-            this.bodyCom.root.SetActive(active);
+            this.bodyCom.tmRoot.SetActive(active);
             this.bodyCom.shadow.SetActive(active);
             this.attributeBarCom.SetActive(active);
         }

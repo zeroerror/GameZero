@@ -74,12 +74,12 @@ namespace GamePlay.Bussiness.Renderer
                     GameLogger.LogError("GameRoleDomainR._Create: typeId not found: " + idArgs.typeId);
                     return null;
                 }
-                this._context.domainApi.fielApi.AddToLayer(role.bodyCom.root, GameFieldLayerType.Entity);
+                this._context.domainApi.fielApi.AddToLayer(role.bodyCom.tmRoot, GameFieldLayerType.Entity);
                 var orderOffset = GameFieldLayerCollection.EnvironmentLayerZ - GameFieldLayerCollection.GroundLayerZ;
                 this._context.domainApi.fielApi.AddToLayer(role.bodyCom.shadow, GameFieldLayerType.Ground, orderOffset);
             }
             role.idCom.SetByArgs(idArgs);
-            role.bodyCom.root.name = $"role_{idArgs.typeId}_{role.idCom.entityId}";
+            role.bodyCom.tmRoot.name = $"role_{idArgs.typeId}_{role.idCom.entityId}";
             role.transformCom.SetByArgs(transArgs);
             role.SyncTrans();
             role.setActive(true);

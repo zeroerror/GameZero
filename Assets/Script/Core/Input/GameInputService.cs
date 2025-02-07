@@ -8,6 +8,10 @@ namespace GamePlay.Bussiness.Core
     {
         public Dictionary<KeyCode, List<Action>> keyActions = new Dictionary<KeyCode, List<Action>>();
 
+        public GameInputService()
+        {
+        }
+
         public void BindKeyAction(KeyCode keyCode, Action action)
         {
             if (!keyActions.ContainsKey(keyCode))

@@ -112,6 +112,11 @@ namespace GamePlay.Bussiness.Logic
             return this._list.FindAll(predicate);
         }
 
+        public virtual T Find(Predicate<T> predicate)
+        {
+            return this._list.Find(predicate);
+        }
+
         public virtual bool TryFindByEntityId(int entityId, out T entity)
         {
             return this._dict.TryGetValue(entityId, out entity);

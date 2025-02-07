@@ -112,7 +112,7 @@ namespace GamePlay.Bussiness.Renderer
                 var args = new GameVFXPlayArgs
                 {
                     url = vfxUrl,
-                    attachNode = targetRole.bodyCom.root,
+                    attachNode = targetRole.bodyCom.tmRoot,
                     loopDuration = -1,
                     layerType = model.vfxLayerType,
                     scale = model.vfxScale,
@@ -171,7 +171,7 @@ namespace GamePlay.Bussiness.Renderer
                 var newPlayArgs = vfxEntity.playArgs;
                 if (newPlayArgs.attachNode)
                 {
-                    newPlayArgs.attachNode = targetRole.bodyCom.root;
+                    newPlayArgs.attachNode = targetRole.bodyCom.tmRoot;
                 }
                 vfxEntity.SetPlayArgs(newPlayArgs);
             });

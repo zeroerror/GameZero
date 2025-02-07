@@ -219,5 +219,10 @@ namespace GamePlay.Bussiness.UI
             this.context.inputService.UnbindKeyAction(keyCode, callback);
         }
 
+        public Vector3 GetPointerPosition()
+        {
+            var pointerPos = Input.mousePosition;
+            return pointerPos;
+        }
     }
 }

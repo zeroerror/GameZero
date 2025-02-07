@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
-using TMPro.EditorUtilities;
 using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Core

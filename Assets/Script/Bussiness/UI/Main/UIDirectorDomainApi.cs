@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 namespace GamePlay.Bussiness.UI
 {
     public interface UIDirectorDomainApi
@@ -43,13 +44,18 @@ namespace GamePlay.Bussiness.UI
         /// <para>keyCode: 按键</para>
         /// <para>callback: 回调函数</para>
         /// </summary>
-        public void BindKeyAction(UnityEngine.KeyCode keyCode, Action callback);
+        public void BindKeyAction(KeyCode keyCode, Action callback);
 
         /// <summary>
         /// 解绑按键事件
         /// <para>keyCode: 按键</para>
         /// <para>callback: 回调函数</para>
         /// </summary>
-        public void UnbindKeyAction(UnityEngine.KeyCode keyCode, Action callback);
+        public void UnbindKeyAction(KeyCode keyCode, Action callback);
+
+        /// <summary>
+        /// 获取鼠标位置
+        /// </summary>
+        public Vector3 GetPointerPosition();
     }
 }
