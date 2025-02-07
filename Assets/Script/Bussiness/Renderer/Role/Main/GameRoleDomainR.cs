@@ -75,8 +75,7 @@ namespace GamePlay.Bussiness.Renderer
                     return null;
                 }
                 this._context.domainApi.fielApi.AddToLayer(role.bodyCom.tmRoot, GameFieldLayerType.Entity);
-                var orderOffset = GameFieldLayerCollection.EnvironmentLayerZ - GameFieldLayerCollection.GroundLayerZ;
-                this._context.domainApi.fielApi.AddToLayer(role.bodyCom.shadow, GameFieldLayerType.Ground, orderOffset);
+                this._context.domainApi.fielApi.AddToLayer(role.bodyCom.shadow, GameFieldLayerType.Ground, 0);
             }
             role.idCom.SetByArgs(idArgs);
             role.bodyCom.tmRoot.name = $"role_{idArgs.typeId}_{role.idCom.entityId}";
@@ -86,7 +85,6 @@ namespace GamePlay.Bussiness.Renderer
             if (isUser)
             {
                 this._roleContext.userRole = role;
-                // this._context.cameraEntity.followCom.Set(role.bodyCom.root, Vector2.zero);
             }
 
             var attributeBarCom = role.attributeBarCom;
