@@ -70,12 +70,19 @@ namespace GamePlay.Bussiness.Core
             {
                 if (Input.GetKeyDown(keyAction.Key))
                 {
+                    // 使用临时列表，避免在遍历过程无法修改列表
+                    this._tempList.Clear();
                     foreach (var action in keyAction.Value)
+                    {
+                        this._tempList.Add(action);
+                    }
+                    foreach (var action in this._tempList)
                     {
                         action();
                     }
                 }
             }
         }
+        private List<Action> _tempList = new List<Action>();
     }
 }

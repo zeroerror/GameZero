@@ -34,11 +34,11 @@ namespace GamePlay.Bussiness.UI
         protected override void _BindEvents()
         {
             base._BindEvents();
-            this._uiApi.directorApi.BindKeyAction(KeyCode.G, () => this._OnClickItem(0));
-            this._uiApi.directorApi.BindKeyAction(KeyCode.H, () => this._OnClickItem(1));
-            this._uiApi.directorApi.BindKeyAction(KeyCode.J, () => this._OnClickItem(2));
-            this._uiApi.directorApi.BindKeyAction(KeyCode.K, () => this._OnClickItem(3));
-            this._uiApi.directorApi.BindKeyAction(KeyCode.L, () => this._OnClickItem(4));
+            this._uiApi.directorApi.BindKeyAction(KeyCode.G, this._OnClickItem0);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.H, this._OnClickItem1);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.J, this._OnClickItem2);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.K, this._OnClickItem3);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.L, this._OnClickItem4);
             this._uiApi.directorApi.BindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.BindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
         }
@@ -46,11 +46,11 @@ namespace GamePlay.Bussiness.UI
         protected override void _UnbindEvents()
         {
             base._UnbindEvents();
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.G, () => this._OnClickItem(0));
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.H, () => this._OnClickItem(1));
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.J, () => this._OnClickItem(2));
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.K, () => this._OnClickItem(3));
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.L, () => this._OnClickItem(4));
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.G, this._OnClickItem0);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.H, this._OnClickItem1);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.J, this._OnClickItem2);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.K, this._OnClickItem3);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.L, this._OnClickItem4);
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.UnbindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
         }
@@ -93,6 +93,11 @@ namespace GamePlay.Bussiness.UI
         {
             this._uiApi.logicApi.directorApi.BuyUnit(index);
         }
+        private void _OnClickItem0() => this._OnClickItem(0);
+        private void _OnClickItem1() => this._OnClickItem(1);
+        private void _OnClickItem2() => this._OnClickItem(2);
+        private void _OnClickItem3() => this._OnClickItem(3);
+        private void _OnClickItem4() => this._OnClickItem(4);
 
         private void _OnBtnConfirmClick()
         {

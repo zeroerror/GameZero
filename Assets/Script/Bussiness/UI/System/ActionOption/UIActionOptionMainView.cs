@@ -40,17 +40,17 @@ namespace GamePlay.Bussiness.UI
         protected override void _BindEvents()
         {
             base._BindEvents();
-            this._uiApi.directorApi.BindKeyAction(KeyCode.Alpha1, () => this._OnClickOption(0));
-            this._uiApi.directorApi.BindKeyAction(KeyCode.Alpha2, () => this._OnClickOption(1));
-            this._uiApi.directorApi.BindKeyAction(KeyCode.Alpha3, () => this._OnClickOption(2));
+            this._uiApi.directorApi.BindKeyAction(KeyCode.Alpha1, this._OnClickOption0);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.Alpha2, this._OnClickOption1);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.Alpha3, this._OnClickOption2);
         }
 
         protected override void _UnbindEvents()
         {
             base._UnbindEvents();
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.Alpha1, () => this._OnClickOption(0));
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.Alpha2, () => this._OnClickOption(1));
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.Alpha3, () => this._OnClickOption(2));
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.Alpha1, this._OnClickOption0);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.Alpha2, this._OnClickOption1);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.Alpha3, this._OnClickOption2);
         }
 
         protected override void _OnShow()
@@ -93,5 +93,8 @@ namespace GamePlay.Bussiness.UI
             var input = (UIActionOptionMainViewInput)this._uiInput.customData;
             input.onChooseOption?.Invoke(option.typeId);
         }
+        private void _OnClickOption0() => this._OnClickOption(0);
+        private void _OnClickOption1() => this._OnClickOption(1);
+        private void _OnClickOption2() => this._OnClickOption(2);
     }
 }
