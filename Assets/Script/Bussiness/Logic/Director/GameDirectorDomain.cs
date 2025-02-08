@@ -28,6 +28,8 @@ namespace GamePlay.Bussiness.Logic
         public GameEntitySelectDomain entitySelectDomain { get; private set; }
         public GameEntityCollectDomain entityCollectDomain { get; private set; }
 
+        public int curRound => this.director.curRound;
+
         public GameDirectorDomain()
         {
             this._InitDomain();
@@ -202,7 +204,7 @@ namespace GamePlay.Bussiness.Logic
             // 添加单位
             var unitEntity = new GameUnitItemEntity();
             unitEntity.itemModel = unitModel;
-            this.director.unitEntitys.Add(unitEntity);
+            this.director.unitItemEntitys.Add(unitEntity);
             // 直接添加到场地
             this.CreateUnit(unitEntity);
             // 提交RC - 购买单位
@@ -215,13 +217,14 @@ namespace GamePlay.Bussiness.Logic
         public GameEntityBase CreateUnit(GameUnitItemEntity unitEntity)
         {
             var model = unitEntity.itemModel;
+            var createPos = this.GetRoundAreaPosition() + unitEntity.standPos;
             GameEntityBase entity = null;
             switch (model.entityType)
             {
                 case GameEntityType.Role:
                     entity = this.context.domainApi.roleApi.CreatePlayerRole(model.typeId, new GameTransformArgs
                     {
-                        position = unitEntity.standPos,
+                        position = createPos,
                         scale = GameVec2.one,
                         forward = GameVec2.right
                     }, true);
@@ -308,16 +311,31 @@ namespace GamePlay.Bussiness.Logic
             return unitPool;
         }
 
-        public GameEntityBase FindUnit(GameUnitItemEntity unitEntity)
+        public GameEntityBase FindUnitEntity(GameUnitItemEntity itemEntity)
         {
-            switch (unitEntity.itemModel.entityType)
+            var isBought = this.director.unitItemEntitys.Contains(itemEntity);
+            if (!isBought) return null;
+            switch (itemEntity.itemModel.entityType)
             {
                 case GameEntityType.Role:
-                    return this.context.domainApi.roleApi.FindByEntityId(unitEntity.entityId);
+                    return this.context.domainApi.roleApi.FindByEntityId(itemEntity.entityId);
                 default:
-                    GameLogger.LogError("导演 - 未知的单位实体类型 " + unitEntity.itemModel.entityType);
+                    GameLogger.LogError("导演 - 未知的单位类型 " + itemEntity.itemModel.entityType);
                     return null;
             }
+        }
+
+        public GameEntityBase FindUnitEntity(GameEntityType entityType, int entityId)
+        {
+            var boughtUnit = this.director.unitItemEntitys.Find((item) => item.entityId == entityId && item.itemModel.entityType == entityType);
+            if (boughtUnit == null) return null;
+            return this.FindUnitEntity(boughtUnit);
+        }
+
+        public GameUnitItemEntity FindUnitItemEntity(GameEntityType entityType, int entityId)
+        {
+            var boughtUnit = this.director.unitItemEntitys.Find((item) => item.entityId == entityId && item.itemModel.entityType == entityType);
+            return boughtUnit;
         }
 
         public void CleanBattleField()

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Core;
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameDirectorStateDomain_Fighting : GameDirectorStateDomainBase
@@ -33,15 +33,6 @@ namespace GamePlay.Bussiness.Logic
             });
             fsmCom.EnterFighting(initEntityIdArgsList);
             GameLogger.DebugLog("导演 - 进入战斗状态");
-
-            // 记录站位
-            var unitEntitys = director.unitEntitys;
-            unitEntitys?.ForEach((unitEntity) =>
-            {
-                var unit = this._context.domainApi.directorApi.FindUnit(unitEntity);
-                if (unit == null) return;
-                unitEntity.standPos = unit.transformCom.position;
-            });
 
             // 提交RC
             GameDirectorRCArgs_StateEnterFighting rcArgs;

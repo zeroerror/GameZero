@@ -34,6 +34,7 @@ namespace GamePlay.Bussiness.Renderer
             {
                 stateDomainR.BindEvents();
             }
+            this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnStateExit);
         }
 
         public void UnbindEvents()
@@ -42,6 +43,14 @@ namespace GamePlay.Bussiness.Renderer
             {
                 stateDomainR.UnbindEvents();
             }
+            this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnStateExit);
+        }
+
+        private void _OnStateExit(object args)
+        {
+            var rcArgs = (GameDirectorRCArgs_StateExit)args;
+            var director = this._context.director;
+            this._ExitToState(director, rcArgs.exitStateType);
         }
 
         public void Destroy()
@@ -58,14 +67,6 @@ namespace GamePlay.Bussiness.Renderer
             var stateType = fsmCom.stateType;
             if (!this._stateDomainDict.TryGetValue(stateType, out var stateDomainR)) return;
             stateDomainR.Tick(director, dt);
-        }
-
-        public void Enter(GameDirectorEntityR director, GameDirectorStateType toState, object args = null)
-        {
-            if (!this._stateDomainDict.TryGetValue(toState, out var stateDomainR)) return;
-            this._ExitToState(director, toState);
-            stateDomainR.Enter(director, args);
-            return;
         }
 
         private void _ExitToState(GameDirectorEntityR director, GameDirectorStateType toState)

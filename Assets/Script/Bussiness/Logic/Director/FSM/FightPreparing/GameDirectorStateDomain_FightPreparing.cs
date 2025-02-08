@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters;
 using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 
@@ -58,32 +59,11 @@ namespace GamePlay.Bussiness.Logic
             var rcArgs = (GameLCArgs_UnitPositionChanged)args;
             var entityType = rcArgs.entityType;
             var entityId = rcArgs.entityId;
-            GameEntityBase entity;
-            switch (entityType)
-            {
-                case GameEntityType.Role:
-                    entity = this._context.domainApi.roleApi.FindByEntityId(entityId);
-                    if (!entity)
-                    {
-                        GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onUnitPositionChanged: 未找到角色 " + entityId);
-                        return;
-                    }
-                    break;
-                default:
-                    GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onUnitPositionChanged: 未知的实体类型 " + entityType);
-                    return;
-            }
-
-            // 检查阵营
-            var campId = entity.idCom.campId;
-            if (campId != GameCampCollection.PLAYER_CAMP_ID)
-            {
-                GameLogger.LogWarning("点击单位不是玩家阵营");
-                return;
-            }
-
-            entity.transformCom.position = rcArgs.newPosition;
-            GameLogger.DebugLog($"单位位置改变 - 角色 {entityId} 移动到 {rcArgs.newPosition}");
+            var unitEntity = this._context.domainApi.directorApi.FindUnitItemEntity(entityType, entityId);
+            unitEntity.standPos = rcArgs.newPosition;
+            // 设置所有单位是否就位为false, 使得单位重新移动到指定位置
+            this._context.director.fsmCom.fightPreparingState.isAllUnitPositioned = false;
+            GameLogger.DebugLog($"[{unitEntity.itemModel}]站位更新: {rcArgs.newPosition}");
         }
 
         private bool _CheckState()
@@ -113,10 +93,6 @@ namespace GamePlay.Bussiness.Logic
             // 洗牌可购买单位列表
             this._context.domainApi.directorApi.ShuffleBuyableUnits(true);
 
-            // 更新回合数
-            director.curRound++;
-            GameLogger.DebugLog("L 导演 - 进入第 " + director.curRound + " 回合");
-
             // 切换状态机组件状态
             var actionOptions = this._getRandomActionOptions(3);
             var fsmCom = director.fsmCom;
@@ -132,8 +108,9 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameDirectorEntity director, float dt)
         {
-            this._TryMoveUnits();
             // 业务逻辑
+            this._directorDomain.roleInputDomain.Tick();
+            this._TryMoveUnits();
             this._directorDomain.roleDomain.Tick(dt);
             this._directorDomain.attributeDomain.Tick(dt);
             this._directorDomain.transformDomain.Tick(dt);
@@ -145,15 +122,15 @@ namespace GamePlay.Bussiness.Logic
             var director = this._context.director;
             var fightPreparingState = director.fsmCom.fightPreparingState;
             if (fightPreparingState.isAllUnitPositioned) return;
-            var unitEntitys = director.unitEntitys;
+            var unitEntitys = director.unitItemEntitys;
             if (unitEntitys == null) return;
 
             bool isAllUnitPositioned = true;
             unitEntitys.ForEach((unitEntity) =>
             {
-                var unit = this._context.domainApi.directorApi.FindUnit(unitEntity);
+                var unit = this._context.domainApi.directorApi.FindUnitEntity(unitEntity);
                 if (unit == null) return;
-                var moveDstPos = this._context.domainApi.directorApi.GetRoundAreaPosition();
+                var moveDstPos = this._context.domainApi.directorApi.GetRoundAreaPosition() + unitEntity.standPos;
                 var isPositioned = moveDstPos == unit.transformCom.position;
                 if (isPositioned) return;
                 isAllUnitPositioned = false;
@@ -172,6 +149,11 @@ namespace GamePlay.Bussiness.Logic
                 }
             });
             fightPreparingState.isAllUnitPositioned = isAllUnitPositioned;
+            // 提交RC
+            if (isAllUnitPositioned)
+            {
+                this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED, null);
+            }
         }
 
         protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
@@ -222,6 +204,21 @@ namespace GamePlay.Bussiness.Logic
                 list[index] = null;
             }
             return result;
+        }
+
+        public override void ExitTo(GameDirectorEntity director, GameDirectorStateType toState)
+        {
+            base.ExitTo(director, toState);
+            // 更新单位的站位
+            var unitEntitys = director.unitItemEntitys;
+            unitEntitys?.ForEach((unitEntity) =>
+            {
+                var unit = this._context.domainApi.directorApi.FindUnitEntity(unitEntity);
+                if (unit == null) return;
+                var standPos = unit.transformCom.position - this._context.domainApi.directorApi.GetRoundAreaPosition();
+                unitEntity.standPos = standPos;
+                GameLogger.DebugLog($"{unit.idCom} 单位站位更新: {standPos}");
+            });
         }
     }
 }

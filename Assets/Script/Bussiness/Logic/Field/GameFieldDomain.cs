@@ -45,8 +45,10 @@ namespace GamePlay.Bussiness.Logic
 
         private bool _IsTimesUp(GameFieldMonsterAreaModel area)
         {
-            var gameTime = this._context.director.timeScaleCom.gameTime;
-            return gameTime >= area.spawnTime;
+            var fsmCom = this._context.director.fsmCom;
+            if (fsmCom.stateType != GameDirectorStateType.Fighting) return false;
+            var stateTime = fsmCom.fightingState.stateTime;
+            return stateTime >= area.spawnTime;
         }
 
         private void _SpawnAreaMonsters(GameFieldMonsterAreaModel area, int index)
@@ -56,6 +58,7 @@ namespace GamePlay.Bussiness.Logic
             curField.SetMonsterSpawned(index, true);
 
             var radius = area.radius;
+            var areaPos = area.position + this._context.domainApi.directorApi.GetRoundAreaPosition();
             area.monsterSpawnModels?.Foreach((spawnModel, idx) =>
             {
                 for (var i = 0; i < spawnModel.count; i++)
@@ -65,7 +68,7 @@ namespace GamePlay.Bussiness.Logic
                     var y = radius * GameMathF.Sin(angle);
                     this._context.domainApi.roleApi.CreateEnemyRole(spawnModel.typeId, new GameTransformArgs
                     {
-                        position = area.position + new GameVec2(x, y),
+                        position = areaPos + new GameVec2(x, y),
                         scale = GameVec2.one,
                     });
                 }

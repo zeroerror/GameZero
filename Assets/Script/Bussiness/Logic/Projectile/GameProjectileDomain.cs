@@ -1,3 +1,4 @@
+using System;
 using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 
@@ -146,6 +147,12 @@ namespace GamePlay.Bussiness.Logic
             {
                 this.fsmDomain.TryEnter(entity, GameProjectileStateType.Destroyed);
             });
+        }
+
+        public void ForeachAllProjectiles(Action<GameProjectileEntity> action)
+        {
+            var repo = this._projectileContext.repo;
+            repo.ForeachEntities(action);
         }
     }
 }

@@ -6,6 +6,11 @@ namespace GamePlay.Bussiness.Logic
     {
         /// <summary> 导演 - 时间缩放变更 </summary>
         public static readonly string RC_GAME_DIRECTOR_TIME_SCALE_CHANGE = "RC_GAME_DIRECTOR_TIME_SCALE_CHANGE";
+        /// <summary> 导演 - 状态退出 </summary>
+        public static readonly string RC_GAME_DIRECTOR_STATE_EXIT = "RC_GAME_DIRECTOR_STATE_EXIT";
+
+        /// <summary> 导演 - 进入 加载 </summary>
+        public static readonly string RC_GAME_DIRECTOR_STATE_ENTER_LOADING = "RC_GAME_DIRECTOR_STATE_ENTER_LOADING";
         /// <summary> 导演 - 进入 战斗 </summary>
         public static readonly string RC_GAME_DIRECTOR_STATE_ENTER_FIGHTING = "RC_GAME_DIRECTOR_STATE_ENTER_FIGHTING";
         /// <summary> 导演 - 进入 结算 </summary>
@@ -14,6 +19,8 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_DIRECTOR_STATE_EXIT_SETTLING = "RC_GAME_DIRECTOR_STATE_EXIT_SETTLING";
         /// <summary> 导演 - 进入 战斗准备 </summary>
         public static readonly string RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING = "RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING";
+        /// <summary> 导演 - 战斗准备全员就位 </summary>
+        public static readonly string RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED = "RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED";
         /// <summary> 导演 - 金币变更 </summary>
         public static readonly string RC_GAME_DIRECTOR_COINS_CHANGE = "RC_GAME_DIRECTOR_COINS_CHANGE";
         /// <summary> 导演 - 购买单位 </summary>
@@ -26,6 +33,18 @@ namespace GamePlay.Bussiness.Logic
     public struct GameDirectorRCArgs_StateEnterFighting
     {
         public GameDirectorStateType fromStateType;
+    }
+
+    /// <summary> 参数 - 导演 - 状态退出 </summary>
+    public struct GameDirectorRCArgs_StateExit
+    {
+        public GameDirectorStateType exitStateType;
+    }
+
+    /// <summary> 参数 - 导演 - 进入 加载 </summary>
+    public struct GameDirectorRCArgs_StateEnterLoading
+    {
+        public int fieldId;
     }
 
     /// <summary> 参数 - 导演 - 进入 结算 </summary>

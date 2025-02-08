@@ -39,9 +39,29 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary>
         /// 创建单位
-        /// <para>unitEntity: 单位实体</para>
+        /// <para>itemEntity: 单位实体</para>
         /// </summary>
-        public GameEntityBase CreateUnit(GameUnitItemEntity unitEntity);
+        public GameEntityBase CreateUnit(GameUnitItemEntity itemEntity);
+
+        /// <summary>
+        /// 获取单位物品对应的实体
+        /// <para>itemEntity: 单位实体</para>
+        /// </summary>
+        public GameEntityBase FindUnitEntity(GameUnitItemEntity itemEntity);
+
+        /// <summary>
+        /// 获取单位物品对应的实体
+        /// <para>entityType: 实体类型</para>
+        /// <para>entityId: 实体ID</para>
+        /// </summary>
+        public GameEntityBase FindUnitEntity(GameEntityType entityType, int entityId);
+
+        /// <summary>
+        /// 获取单位物品实体
+        /// <para>entityType: 实体类型</para>
+        /// <para>entityId: 实体ID</para>
+        /// </summary>
+        public GameUnitItemEntity FindUnitItemEntity(GameEntityType entityType, int entityId);
 
         /// <summary>
         /// 获取当前可购买单位列表
@@ -55,12 +75,6 @@ namespace GamePlay.Bussiness.Logic
         public bool ShuffleBuyableUnits(bool isFree);
 
         /// <summary>
-        /// 获取单位实体
-        /// <para>unitEntity: 单位实体</para>
-        /// </summary>
-        public GameEntityBase FindUnit(GameUnitItemEntity unitEntity);
-
-        /// <summary>
         /// 清理当前战场, 并移除当前所有单位
         /// </summary>
         public void CleanBattleField();
@@ -69,5 +83,10 @@ namespace GamePlay.Bussiness.Logic
         /// 获取当前回合的区域位置
         /// </summary>
         public GameVec2 GetRoundAreaPosition();
+
+        /// <summary>
+        /// 当前回合数
+        /// </summary>
+        public int curRound { get; }
     }
 }

@@ -1,9 +1,13 @@
+using System;
+
 namespace GamePlay.Bussiness.Logic
 {
     public interface GameProjectileDomainApi
     {
         /// <summary> 状态机API </summary>
         public GameProjectileFSMDomainApi fsmApi { get; }
+
+        public void ForeachAllProjectiles(Action<GameProjectileEntity> action);
 
         /// <summary> 清空所有投射物 </summary>
         public void RemoveAllProjectiles();

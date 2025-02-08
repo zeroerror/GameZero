@@ -31,6 +31,8 @@ namespace GamePlay.Bussiness.Logic
 
         public override void Enter(GameDirectorEntity director, object args = null)
         {
+            this._context.domainApi.roleApi.DetachAllRolesBuffs();
+
             var playerCampId = GameCampCollection.PLAYER_CAMP_ID;
             var enemyCampId = GameCampCollection.ENEMY_CAMP_ID;
             var playerCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == playerCampId);
@@ -38,9 +40,6 @@ namespace GamePlay.Bussiness.Logic
             var isWin = playerCount > enemyCount;
             var fsmCom = director.fsmCom;
             fsmCom.EnterSettling(playerCount, enemyCount, isWin);
-
-            this._context.domainApi.roleApi.DetachAllRolesBuffs();
-
             GameLogger.DebugLog("导演 - 进入结算状态");
             GameLogger.DebugLog($"导演 - 结算结果: 玩家{playerCount} - 敌人{enemyCount} - 结果{(isWin ? "胜利" : "失败")}");
 

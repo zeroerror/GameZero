@@ -14,12 +14,14 @@ namespace GamePlay.Bussiness.Renderer
         public override void BindEvents()
         {
             this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnter);
+            this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED, this._OnFightPreparingPositioned);
             this._context.uiApi.directorApi.BindKeyAction(KeyCode.Mouse0, this._OnClickUnit);
         }
 
         public override void UnbindEvents()
         {
             this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnter);
+            this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED, this._OnFightPreparingPositioned);
             this._context.uiApi.directorApi.UnbindKeyAction(KeyCode.Mouse0, this._OnClickUnit);
         }
 
@@ -64,6 +66,10 @@ namespace GamePlay.Bussiness.Renderer
             // 其它
         }
 
+        private void _OnFightPreparingPositioned(object args)
+        {
+        }
+
         private static GameEntityBase _GetClickUnit(GameVec2 clickWorldPos, GameRoleRepoR repo)
         {
             const float width = 1.0f;
@@ -97,12 +103,11 @@ namespace GamePlay.Bussiness.Renderer
 
         public override void Enter(GameDirectorEntityR director, object args = null)
         {
-            // 更新回合数
-            director.curRound++;
-            GameLogger.DebugLog("R 导演 - 进入第 " + director.curRound + " 回合");
-
             // 镜头看向当前回合的区域位置
             this._context.domainApi.directorApi.LookAtRoundArea();
+
+            director.fsmCom.EnterFightPreparing();
+            GameLogger.DebugLog("R 导演 - 进入战斗准备状态");
         }
 
         protected override void _Tick(GameDirectorEntityR director, float frameTime)

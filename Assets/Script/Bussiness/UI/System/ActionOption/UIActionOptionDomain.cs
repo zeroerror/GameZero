@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 
@@ -8,6 +8,8 @@ namespace GamePlay.Bussiness.UI
     {
         public UIActionOptionModel model { get; private set; }
 
+        private List<GameActionOptionModel> _actionOptions;
+
         public UIActionOptionDomain()
         {
             this.model = new UIActionOptionModel();
@@ -16,20 +18,32 @@ namespace GamePlay.Bussiness.UI
         protected override void _BindEvents()
         {
             this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
+            this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED, this._OnFightPreparingPositioned);
         }
 
         protected override void _UnbindEvents()
         {
             this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
+            this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED, this._OnFightPreparingPositioned);
         }
 
         private void _OnStateEnterFightPreparing(object args)
         {
             var rcArgs = (GameDirectorRCArgs_StateEnterFightPreparing)args;
+            this._actionOptions = rcArgs.actionOptions;
 
-            // 打开行为选项界面
-            var actionOptions = rcArgs.actionOptions;
-            var viewInput = new UIActionOptionMainViewInput(actionOptions);
+            var round = this._context.logicApi.directorApi.curRound;
+            if (round > 1) return;
+
+            var viewInput = new UIActionOptionMainViewInput(this._actionOptions);
+            this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));
+        }
+
+        private void _OnFightPreparingPositioned(object args)
+        {
+            var round = this._context.logicApi.directorApi.curRound;
+            if (round <= 1) return;
+            var viewInput = new UIActionOptionMainViewInput(this._actionOptions);
             this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));
         }
 

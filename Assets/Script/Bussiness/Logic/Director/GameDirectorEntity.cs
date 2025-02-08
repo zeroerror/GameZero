@@ -31,7 +31,7 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 已选择的行动选项 </summary>
         public List<GameActionOptionModel> actionOptions;
         /// <summary> 拥有的单位实体 </summary>
-        public List<GameUnitItemEntity> unitEntitys;
+        public List<GameUnitItemEntity> unitItemEntitys;
         /// <summary> 当前购买栏单位列表 </summary>
         public List<GameUnitItemModel> buyableUnits;
 
@@ -44,7 +44,7 @@ namespace GamePlay.Bussiness.Logic
             this.timeScaleCom = new GameDirectorTimelineComponent();
             this.gold = 100;//初始金币
             this.actionOptions = new List<GameActionOptionModel>();
-            this.unitEntitys = new List<GameUnitItemEntity>();
+            this.unitItemEntitys = new List<GameUnitItemEntity>();
             this.buyableUnits = new List<GameUnitItemModel>();
         }
 
@@ -67,6 +67,14 @@ namespace GamePlay.Bussiness.Logic
         public GameAttributeArgs baseAttributeArgs;
         /// <summary> 站位 </summary>
         public GameVec2 standPos;
+        public GameUnitItemEntity()
+        {
+            this.itemid = ++_autoItemId;
+        }
+
+        public int itemid { get; private set; }
+        private static int _autoItemId;
+
     }
 
     public class GameUnitItemModel
