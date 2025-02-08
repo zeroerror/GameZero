@@ -1,4 +1,5 @@
 using System;
+using GamePlay.Bussiness.Core;
 using UnityEngine;
 namespace GamePlay.Bussiness.UI
 {
@@ -43,15 +44,17 @@ namespace GamePlay.Bussiness.UI
         /// 绑定按键事件
         /// <para>keyCode: 按键</para>
         /// <para>callback: 回调函数</para>
+        /// <para>stateType: 按键状态</para>
         /// </summary>
-        public void BindKeyAction(KeyCode keyCode, Action callback);
+        public void BindKeyAction(KeyCode keyCode, Action callback, GameInputStateType stateType = GameInputStateType.KeyDown);
 
         /// <summary>
         /// 解绑按键事件
         /// <para>keyCode: 按键</para>
         /// <para>callback: 回调函数</para>
+        /// <para>stateType: 按键状态</para>
         /// </summary>
-        public void UnbindKeyAction(KeyCode keyCode, Action callback);
+        public void UnbindKeyAction(KeyCode keyCode, Action callback, GameInputStateType stateType = GameInputStateType.KeyDown);
 
         /// <summary>
         /// 绑定事件

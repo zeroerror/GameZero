@@ -1,4 +1,5 @@
 using System;
+using GamePlay.Bussiness.Core;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
 using GamePlay.Core;
@@ -200,14 +201,14 @@ namespace GamePlay.Bussiness.UI
             this.CloseUI(ui.uiName);
         }
 
-        public void BindKeyAction(KeyCode keyCode, Action callback)
+        public void BindKeyAction(KeyCode keyCode, Action callback, GameInputStateType stateType)
         {
-            this.context.inputService.BindKeyAction(keyCode, callback);
+            this.context.inputService.BindKeyAction(keyCode, callback, stateType);
         }
 
-        public void UnbindKeyAction(KeyCode keyCode, Action callback)
+        public void UnbindKeyAction(KeyCode keyCode, Action callback, GameInputStateType stateType)
         {
-            this.context.inputService.UnbindKeyAction(keyCode, callback);
+            this.context.inputService.UnbindKeyAction(keyCode, callback, stateType);
         }
 
         public void BindEvent(string eventName, Action<object> callback)
