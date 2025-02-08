@@ -47,9 +47,6 @@ namespace GamePlay.Bussiness.Logic
             var afterDmgHP = curHP - dmgValue;
             var realDmg = afterDmgHP < 0 ? curHP : dmgValue;
 
-            // 取2位小数
-            realDmg = GameMathF.ToFixed(realDmg, 2);
-
             var actorRoleIdArgs = actor.GetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_Dmg(
                 dmgModel.typeId,
@@ -87,7 +84,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 record.isKill = true;
             }
-            GameLogger.Log($"目标:{target.idCom} 受到伤害{dmgValue} ({curHP}=>{afterDmgHP})");
+            GameLogger.DebugLog($"目标:{target.idCom} 受到伤害{GameMathF.ToFixed(dmgValue, 4)} ({curHP}=>{afterDmgHP})");
             return true;
         }
     }
