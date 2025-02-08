@@ -28,6 +28,7 @@ namespace GamePlay.Bussiness.Logic
         public override void Clear()
         {
             base.Clear();
+            this.inputCom.Clear();
             this.SetByModel(this.model);
             this.skillCom.Clear();
         }
