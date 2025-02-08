@@ -50,7 +50,7 @@ namespace GamePlay.Bussiness.UI
         private void _InitContext(GameObject uiRoot, GameDomainApi logicApi, GameDomainApiR rendererApi)
         {
             this.context.Inject(uiRoot, logicApi, rendererApi);
-            var domainApi = this.context.domainApi;
+            var domainApi = this.context.uiApi;
             domainApi.InjectApis(
                 logicApi,
                 rendererApi,
@@ -170,7 +170,7 @@ namespace GamePlay.Bussiness.UI
             }
 
             // UI生命周期
-            uiBase.Inject(rootGO, this.context.domainApi);
+            uiBase.Inject(rootGO, this.context.uiApi);
             uiBase.Init(viewInput);
             uiBase.Show();
             this.context.uiDict[uiName] = uiBase;

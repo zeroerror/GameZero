@@ -40,7 +40,7 @@ namespace GamePlay.Bussiness.UI
         private void _OnBuyUnit(object args)
         {
             var rcArgs = (GameDirectorRCArgs_BuyUnit)args;
-            GameLogger.DebugLog($"刷新购买单位列表, 购买成功->{rcArgs.model}, 消耗金币->{rcArgs.costGold}");
+            GameLogger.DebugLog($"刷新购买单位列表, 购买成功->{rcArgs.model}, 消耗金币->{rcArgs.costGold} 当前金币->{this._context.uiApi.playerApi.curGold}");
         }
     }
 }

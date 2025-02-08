@@ -22,7 +22,7 @@ namespace GamePlay.Bussiness.UI
         public UIDirector director { get; private set; }
         public GameObject uiRoot { get; private set; }
         public Camera uiCamera { get; private set; }
-        public UIDomainApi domainApi { get; private set; }
+        public UIDomainApi uiApi { get; private set; }
         public GameCmdBufferService cmdBufferService { get; private set; }
         public GameInputService inputService { get; private set; }
 
@@ -35,7 +35,7 @@ namespace GamePlay.Bussiness.UI
             this.director = new UIDirector();
             this.uiDict = new Dictionary<string, UIBase>();
             this.factory = new UIFactory();
-            this.domainApi = new UIDomainApi();
+            this.uiApi = new UIDomainApi();
             this.cmdBufferService = new GameCmdBufferService();
             this.inputService = new GameInputService();
         }

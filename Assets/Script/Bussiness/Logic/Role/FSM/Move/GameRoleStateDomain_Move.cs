@@ -50,7 +50,7 @@ namespace GamePlay.Bussiness.Logic
 
             // 根据目的地移动
             var moveDst = inputArgs.moveDst;
-            if (moveDst != GameVec2.zero)
+            if (moveDst != GameVec2.zero && role.transformCom.position != moveDst)
             {
                 var moveSpeed = role.attributeCom.GetValue(GameAttributeType.MoveSpeed);
                 var moveVec = moveDst - new GameVec2(role.transformCom.position.x, role.transformCom.position.y);
@@ -61,7 +61,7 @@ namespace GamePlay.Bussiness.Logic
                     role.transformCom.position = new GameVec2(moveDst.x, moveDst.y);
                     return;
                 }
-                role.transformCom.position += new GameVec2(toDstDir.x, toDstDir.y) * moveSpeed * frameTime;
+                role.transformCom.position += toDstDir * moveSpeed * frameTime;
                 role.FaceTo(toDstDir);
                 return;
             }

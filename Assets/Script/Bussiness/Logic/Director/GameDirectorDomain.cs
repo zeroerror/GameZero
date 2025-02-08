@@ -330,5 +330,13 @@ namespace GamePlay.Bussiness.Logic
             // 提交RC
             this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_CLEAR_FIELD, new GameDirectorRCArgs_CleanBattleField { fieldId = curField.model.typeId });
         }
+
+        public GameVec2 GetRoundAreaPosition()
+        {
+            var director = this.director;
+            const int roundAreaHeight = 10;
+            var pos = new GameVec2(0, roundAreaHeight * (director.curRound - 1));
+            return pos;
+        }
     }
 }

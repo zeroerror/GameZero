@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Core;
+using GameVec2 = UnityEngine.Vector2;
 
 namespace GamePlay.Bussiness.Logic
 {
@@ -98,17 +99,30 @@ namespace GamePlay.Bussiness.Logic
 
         public override bool CheckEnter(GameDirectorEntity director, object args = null)
         {
+            var stateType = director.fsmCom.stateType;
+            if (stateType == GameDirectorStateType.FightPreparing)
+            {
+                GameLogger.LogError("GameDirectorStateDomain_FightPreparing.CheckEnter: 当前状态已经是战斗准备状态");
+                return false;
+            }
             return true;
         }
 
         public override void Enter(GameDirectorEntity director, object args = null)
         {
+            // 洗牌可购买单位列表
+            this._context.domainApi.directorApi.ShuffleBuyableUnits(true);
+
+            // 更新回合数
+            director.curRound++;
+            GameLogger.DebugLog("L 导演 - 进入第 " + director.curRound + " 回合");
+
+            // 切换状态机组件状态
             var actionOptions = this._getRandomActionOptions(3);
             var fsmCom = director.fsmCom;
             fsmCom.EnterFightPreparing(actionOptions);
             GameLogger.DebugLog("导演 - 进入战斗准备状态");
-            // 洗牌可购买单位列表
-            this._context.domainApi.directorApi.ShuffleBuyableUnits(true);
+
             // 提交RC
             GameDirectorRCArgs_StateEnterFightPreparing rcArgs;
             rcArgs.fromStateType = fsmCom.lastStateType;
@@ -118,18 +132,45 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameDirectorEntity director, float dt)
         {
-            this._directorDomain.fieldDomain.Tick(dt);
-            if (this._context.fieldContext.curField == null) return;
+            this._TryMoveUnits();
+            // 业务逻辑
             this._directorDomain.roleDomain.Tick(dt);
-            this._directorDomain.skillDomain.Tick(dt);
-            this._directorDomain.buffDomain.Tick(dt);
-            this._directorDomain.projectileDomain.Tick(dt);
-            this._directorDomain.actionDomain.Tick(dt);
-            this._directorDomain.transformDomain.Tick(dt);
             this._directorDomain.attributeDomain.Tick(dt);
-            this._directorDomain.entitySelectDomain.Tick(dt);
-            this._directorDomain.entityCollectDomain.Tick();
-            this._directorDomain.physicsDomain.Tick();
+            this._directorDomain.transformDomain.Tick(dt);
+        }
+
+        private void _TryMoveUnits()
+        {
+            var director = this._context.director;
+            var fightPreparingState = director.fsmCom.fightPreparingState;
+            if (fightPreparingState.isAllUnitPositioned) return;
+            var unitEntitys = director.unitEntitys;
+            if (unitEntitys == null) return;
+
+            bool isAllUnitPositioned = true;
+            unitEntitys.ForEach((unitEntity) =>
+            {
+                var unit = this._context.domainApi.directorApi.FindUnit(unitEntity);
+                if (unit == null) return;
+                var moveDstPos = this._context.domainApi.directorApi.GetRoundAreaPosition();
+                var isPositioned = moveDstPos == unit.transformCom.position;
+                if (isPositioned) return;
+                isAllUnitPositioned = false;
+                switch (unit.idCom.entityType)
+                {
+                    case GameEntityType.Role:
+                        // 角色移动输入
+                        var role = unit as GameRoleEntity;
+                        var inputArgs = new GameRoleInputArgs();
+                        inputArgs.moveDst = moveDstPos;
+                        role.inputCom.SetByArgs(inputArgs);
+                        break;
+                    default:
+                        GameLogger.LogError("GameDirectorStateDomain_FightPreparing._TryMoveUnits: 未知的实体类型 " + unit.idCom.entityType);
+                        break;
+                }
+            });
+            fightPreparingState.isAllUnitPositioned = isAllUnitPositioned;
         }
 
         protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
@@ -137,7 +178,7 @@ namespace GamePlay.Bussiness.Logic
             // 一直等待, 直到玩家选择了一个选项, 并且确认了开始战斗
             var fightPreparingState = director.fsmCom.fightPreparingState;
             var selectedOptionModel = fightPreparingState.selectedOption;
-            if (selectedOptionModel == null || !fightPreparingState.confirmFight)
+            if (selectedOptionModel == null || !fightPreparingState.confirmFight || !fightPreparingState.isAllUnitPositioned)
             {
                 return new GameDirectorExitStateArgs(GameDirectorStateType.None);
             }

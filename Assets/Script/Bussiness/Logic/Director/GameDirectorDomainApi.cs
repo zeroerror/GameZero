@@ -1,3 +1,4 @@
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public interface GameDirectorDomainApi
@@ -63,5 +64,10 @@ namespace GamePlay.Bussiness.Logic
         /// 清理当前战场, 并移除当前所有单位
         /// </summary>
         public void CleanBattleField();
+
+        /// <summary>
+        /// 获取当前回合的区域位置
+        /// </summary>
+        public GameVec2 GetRoundAreaPosition();
     }
 }

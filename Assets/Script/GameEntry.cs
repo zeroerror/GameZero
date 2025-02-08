@@ -20,7 +20,7 @@ public class GameEntry : MonoBehaviour
         // GameLogger.logLevel = LogLevel.Error;
         var logicApi = gameApp.directorDomain.context.domainApi;
         var rendererApi = gameAppR.directorDomain.context.domainApi;
-        var uiApi = gameUIApp.directorDomain.context.domainApi;
+        var uiApi = gameUIApp.directorDomain.context.uiApi;
         var sceneRoot = this.gameObject;
         var uiRoot = GameObject.Find("UIRoot");
 

@@ -5,6 +5,8 @@ namespace GamePlay.Core
     public class GameCameraEntity
     {
         public Camera camera { get; private set; }
+        public Vector2 position => this.camera.transform.position;
+
         public GameCameraFollowCom followCom { get; private set; }
         public GameCameraConfinerCom confinerCom { get; private set; }
         public GameCameraShakeCom shakeCom { get; private set; }

@@ -164,5 +164,30 @@ namespace GamePlay.Bussiness.Renderer
         {
             this.context.director.timeScaleCom.SetTimeScale(timeScale);
         }
+
+        public void LookAtRoundArea()
+        {
+            var roundPos = this.GetRoundAreaPosition();
+            var camPos = this.context.cameraEntity.position;
+            if (roundPos.Equals(camPos)) return;
+
+            var tempGO = new GameObject();
+            tempGO.transform.position = roundPos;
+            var followCom = this.context.cameraEntity.followCom;
+            followCom.Set(tempGO, Vector2.zero, 1.5f, GameEasingType.OutCubic);
+            followCom.SetOnComplete(() =>
+            {
+                followCom.Clear();
+                GameObject.Destroy(tempGO);
+            });
+        }
+
+        public Vector2 GetRoundAreaPosition()
+        {
+            var director = this.director;
+            const int roundAreaHeight = 10;
+            var pos = new Vector2(0, roundAreaHeight * (director.curRound - 1));
+            return pos;
+        }
     }
 }

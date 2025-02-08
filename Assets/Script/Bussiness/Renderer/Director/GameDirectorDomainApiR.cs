@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace GamePlay.Bussiness.Renderer
 {
     public interface GameDirectorDomainApiR
@@ -7,5 +9,15 @@ namespace GamePlay.Bussiness.Renderer
 
         /// <summary> 设置时间缩放 </summary>
         public void SetTimeScale(float timeScale);
+
+        /// <summary>
+        /// 镜头看向当前回合的区域位置
+        /// </summary>
+        public void LookAtRoundArea();
+
+        /// <summary>
+        /// 获取当前回合的区域位置
+        /// </summary>
+        public Vector2 GetRoundAreaPosition();
     }
 }

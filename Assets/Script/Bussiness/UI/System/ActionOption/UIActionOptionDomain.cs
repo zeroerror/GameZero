@@ -27,13 +27,10 @@ namespace GamePlay.Bussiness.UI
         {
             var rcArgs = (GameDirectorRCArgs_StateEnterFightPreparing)args;
 
-            // 2s后打开行为选项界面
+            // 打开行为选项界面
             var actionOptions = rcArgs.actionOptions;
-            this._context.cmdBufferService.AddDelayCmd(2, () =>
-            {
-                var viewInput = new UIActionOptionMainViewInput(actionOptions);
-                this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));
-            });
+            var viewInput = new UIActionOptionMainViewInput(actionOptions);
+            this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));
         }
 
         /// <summary>
@@ -53,7 +50,7 @@ namespace GamePlay.Bussiness.UI
             }
 
             // 检查金币是否足够
-            var playerApi = this._context.domainApi.playerApi;
+            var playerApi = this._context.uiApi.playerApi;
             if (!playerApi.IsGoldEnough(cost))
             {
                 GameLogger.DebugLog("金币不足");

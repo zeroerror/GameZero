@@ -35,6 +35,9 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 当前购买栏单位列表 </summary>
         public List<GameUnitItemModel> buyableUnits;
 
+        /// <summary> 当前回合 </summary>
+        public int curRound;
+
         public GameDirectorEntity()
         {
             this.fsmCom = new GameDirectorFSMCom();
