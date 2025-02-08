@@ -9,12 +9,6 @@ namespace GamePlay.Bussiness.Logic
         public GameFieldEntity LoadField(int fieldId);
 
         /// <summary>
-        /// 清理场景
-        /// <para>field: 场景实体</para>
-        /// </summary>
-        public void ClearField(GameFieldEntity field);
-
-        /// <summary>
         /// 销毁场景
         /// <para>field: 场景实体</para>
         /// </summary>

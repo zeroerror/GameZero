@@ -88,16 +88,6 @@ namespace GamePlay.Bussiness.Logic
             return field;
         }
 
-        public void ClearField(GameFieldEntity field)
-        {
-            if (!field) return;
-            field.Clear();
-            this._context.domainApi.roleApi.RemoveAllRoles();
-            this._context.domainApi.projectileApi.RemoveAllProjectiles();
-            // 提交RC
-            this._context.SubmitRC(GameFieldRCCollection.RC_GAME_FIELD_CLEAR, new GameFieldRCArgs_Clear { typeId = field.model.typeId });
-        }
-
         public void DestroyField(GameFieldEntity field)
         {
             if (!field) return;

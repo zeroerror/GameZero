@@ -37,10 +37,10 @@ namespace GamePlay.Bussiness.Logic
                 unitEntity.baseAttributeArgs = unit.baseAttributeCom.ToArgs();
             });
 
-            // 清理当前场景 或 清理存活单位身上的buff
+            // 清理当前战场 或 清理存活单位身上的buff
             if (needLoad)
             {
-                this._context.domainApi.fieldApi.ClearField(curField);
+                this._context.domainApi.directorApi.CleanBattleField();
             }
             else
             {
@@ -48,6 +48,8 @@ namespace GamePlay.Bussiness.Logic
                 {
                     this._context.domainApi.buffApi.DetachAllBuffs(role);
                 });
+                // 重置当前场景的怪物生成状态
+                curField.ResetMonsterSpawned();
             }
 
             // 生成玩家棋子

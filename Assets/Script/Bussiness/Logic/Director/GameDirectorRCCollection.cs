@@ -18,6 +18,8 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_DIRECTOR_COINS_CHANGE = "RC_GAME_DIRECTOR_COINS_CHANGE";
         /// <summary> 导演 - 购买单位 </summary>
         public static readonly string RC_GAME_DIRECTOR_BUY_UNIT = "RC_GAME_DIRECTOR_BUY_UNIT";
+        /// <summary> 导演 - 清空战场 </summary>
+        public static readonly string RC_GAME_DIRECTOR_CLEAR_FIELD = "RC_GAME_DIRECTOR_CLEAR_FIELD";
     }
 
     /// <summary> 参数 - 导演 - 时间缩放变更 </summary>
@@ -60,5 +62,11 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameUnitItemModel model;
         public int costGold;
+    }
+
+    /// <summary> 参数 - 导演 - 清空战场 </summary>
+    public struct GameDirectorRCArgs_CleanBattleField
+    {
+        public int fieldId;
     }
 }

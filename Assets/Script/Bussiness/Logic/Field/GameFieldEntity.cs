@@ -20,6 +20,14 @@ namespace GamePlay.Bussiness.Logic
         public override void Clear()
         {
             base.Clear();
+            this.ResetMonsterSpawned();
+        }
+
+        /// <summary>
+        /// 重置怪物生成状态
+        /// </summary>
+        public void ResetMonsterSpawned()
+        {
             this._monsterSpawnedDict.Clear();
         }
 

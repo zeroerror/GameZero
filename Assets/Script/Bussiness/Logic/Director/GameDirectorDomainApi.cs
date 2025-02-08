@@ -58,5 +58,10 @@ namespace GamePlay.Bussiness.Logic
         /// <para>unitEntity: 单位实体</para>
         /// </summary>
         public GameEntityBase FindUnit(GameUnitItemEntity unitEntity);
+
+        /// <summary>
+        /// 清理当前战场, 并移除当前所有单位
+        /// </summary>
+        public void CleanBattleField();
     }
 }

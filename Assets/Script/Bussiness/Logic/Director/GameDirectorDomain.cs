@@ -319,5 +319,16 @@ namespace GamePlay.Bussiness.Logic
                     return null;
             }
         }
+
+        public void CleanBattleField()
+        {
+            var curField = this.context.fieldContext.curField;
+            if (!curField) return;
+            curField.Clear();
+            this.context.domainApi.roleApi.RemoveAllRoles();
+            this.context.domainApi.projectileApi.RemoveAllProjectiles();
+            // 提交RC
+            this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_CLEAR_FIELD, new GameDirectorRCArgs_CleanBattleField { fieldId = curField.model.typeId });
+        }
     }
 }

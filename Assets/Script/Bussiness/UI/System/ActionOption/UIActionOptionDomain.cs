@@ -31,13 +31,7 @@ namespace GamePlay.Bussiness.UI
             var actionOptions = rcArgs.actionOptions;
             this._context.cmdBufferService.AddDelayCmd(2, () =>
             {
-                var ldirectorApi = this._context.logicApi.directorApi;
-                var onChooseOption = new Action<int>((optionId) =>
-                {
-                    var lcArgs = new GameLCArgs_ActionOptionSelected(optionId);
-                    ldirectorApi.SubmitEvent(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, lcArgs);
-                });
-                var viewInput = new UIActionOptionMainViewInput(actionOptions, onChooseOption);
+                var viewInput = new UIActionOptionMainViewInput(actionOptions);
                 this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));
             });
         }

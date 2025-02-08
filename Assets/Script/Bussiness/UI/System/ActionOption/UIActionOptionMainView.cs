@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
@@ -9,12 +8,10 @@ namespace GamePlay.Bussiness.UI
     public struct UIActionOptionMainViewInput
     {
         public List<GameActionOptionModel> optionModels;
-        public Action<int> onChooseOption;
 
-        public UIActionOptionMainViewInput(List<GameActionOptionModel> optionModels, Action<int> onChooseOption)
+        public UIActionOptionMainViewInput(List<GameActionOptionModel> optionModels)
         {
             this.optionModels = optionModels;
-            this.onChooseOption = onChooseOption;
         }
     }
 
@@ -32,8 +29,6 @@ namespace GamePlay.Bussiness.UI
         {
             this.uiBinder = new UIActionOptionMainViewBinder(this.go);
 
-            this._uiApi.logicApi.directorApi.SetTimeScale(0.01f);
-            this._uiApi.rendererApi.directorApi.SetTimeScale(0.01f);
             this._optionViewInput = (UIActionOptionMainViewInput)this._uiInput.customData;
         }
 
@@ -87,11 +82,13 @@ namespace GamePlay.Bussiness.UI
             }
 
             this._Close();
-            this._uiApi.logicApi.directorApi.SetTimeScale(1);
-            this._uiApi.rendererApi.directorApi.SetTimeScale(1);
 
-            var input = (UIActionOptionMainViewInput)this._uiInput.customData;
-            input.onChooseOption?.Invoke(option.typeId);
+            // 提交LC
+            var lcArgs = new GameLCArgs_ActionOptionSelected
+            {
+                optionId = option.typeId,
+            };
+            this._uiApi.logicApi.directorApi.SubmitEvent(GameLCCollection.LC_GAME_ACTION_OPTION_SELECTED, lcArgs);
         }
         private void _OnClickOption0() => this._OnClickOption(0);
         private void _OnClickOption1() => this._OnClickOption(1);

@@ -37,6 +37,7 @@ namespace GamePlay.Bussiness.Logic
                 GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onActionOptionSelected: 未找到选项 " + optionId);
                 return;
             }
+            GameLogger.DebugLog($"选中行为选项[{selectedOption.typeId}]: {selectedOption.desc}");
             fightPreparingState.selectedOption = selectedOption;
         }
 
