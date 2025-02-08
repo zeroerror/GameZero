@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
@@ -37,6 +38,11 @@ namespace GamePlay.Bussiness.Logic
             return this._roleContext.repo.FindByEntityId(entityId);
         }
 
+        public void ForeachAllRoles(Action<GameRoleEntity> action)
+        {
+            this._roleContext.repo.ForeachEntities(action);
+        }
+
         public GameRoleEntity GetUserRole()
         {
             return this._roleContext.userRole;
@@ -50,7 +56,7 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        public bool TryGetPlayerInputArgs(int entityId, out GameRoleInputArgs inputArgs)
+        public bool TryGetPlayerInput(int entityId, out GameRoleInputArgs inputArgs)
         {
             return this._roleContext.playerInputArgs.TryGetValue(entityId, out inputArgs);
         }
@@ -66,7 +72,7 @@ namespace GamePlay.Bussiness.Logic
             this._roleContext.playerInputArgs[entityId] = oldInputArgs;
         }
 
-        public void SetUserPlayerInputArgs(in GameRoleInputArgs inputArgs)
+        public void SetPlayerInput(in GameRoleInputArgs inputArgs)
         {
             var entityId = this._roleContext.userRole.idCom.entityId;
             this.SetPlayerInputArgs(entityId, inputArgs);

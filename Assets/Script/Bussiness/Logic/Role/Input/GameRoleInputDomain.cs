@@ -26,7 +26,7 @@ namespace GamePlay.Bussiness.Logic
             this._roleContext.repo.ForeachEntities((entity) =>
             {
                 entity.inputCom.Clear();
-                if (this._context.domainApi.roleApi.TryGetPlayerInputArgs(entity.idCom.entityId, out var inputArgs))
+                if (this._context.domainApi.roleApi.TryGetPlayerInput(entity.idCom.entityId, out var inputArgs))
                 {
                     this._ProcessAutoInput(entity, ref inputArgs);
                     entity.inputCom.SetByArgs(inputArgs);

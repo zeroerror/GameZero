@@ -20,7 +20,8 @@ namespace GamePlay.Bussiness.Logic
             var fsmCom = director.fsmCom;
             var loadingState = fsmCom.loadingState;
             loadingState.loadFieldId = loadFieldId;
-            if (!curField || curField.model.typeId != loadFieldId)
+            var needLoad = !curField || curField.model.typeId != loadFieldId;
+            if (needLoad)
             {
                 this._context.domainApi.fieldApi.DestroyField(curField);
                 curField = this._context.domainApi.fieldApi.LoadField(loadFieldId);
@@ -36,9 +37,18 @@ namespace GamePlay.Bussiness.Logic
                 unitEntity.baseAttributeArgs = unit.baseAttributeCom.ToArgs();
             });
 
-            // 清理当前场景
-            this._context.domainApi.fieldApi.ClearField(curField);
-            fsmCom.EnterLoading(loadFieldId);
+            // 清理当前场景 或 清理存活单位身上的buff
+            if (needLoad)
+            {
+                this._context.domainApi.fieldApi.ClearField(curField);
+            }
+            else
+            {
+                this._context.domainApi.roleApi.ForeachAllRoles((role) =>
+                {
+                    this._context.domainApi.buffApi.DetachAllBuffs(role);
+                });
+            }
 
             // 生成玩家棋子
             unitEntitys?.ForEach((unitEntity) =>
@@ -48,6 +58,9 @@ namespace GamePlay.Bussiness.Logic
                 unit.baseAttributeCom.SetByArgs(unitEntity.baseAttributeArgs);
                 unit.transformCom.position = unitEntity.standPos;
             });
+
+            // 切换状态机组件状态
+            fsmCom.EnterLoading(loadFieldId);
             GameLogger.DebugLog("导演 - 进入加载状态 " + loadFieldId);
         }
 

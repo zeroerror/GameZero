@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace GamePlay.Bussiness.Logic
@@ -7,31 +8,9 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleFSMDomainApi fsmApi { get; }
 
         /// <summary>
-        /// 根据实体Id查找角色
-        /// <para>entityId: 实体Id</para>
-        /// </summary>
-        public GameRoleEntity FindByEntityId(int entityId);
-
-        /// <summary>
-        /// 获取用户角色
-        /// </summary>
-        public GameRoleEntity GetUserRole();
-
-        /// <summary>
-        /// 获取指定阵营的所有角色
-        /// <para>campId: 阵营Id</para>
-        /// </summary>
-        public List<GameRoleEntity> GetCampRoles(int campId);
-
-        /// <summary>
         /// 获取角色模板    
         /// </summary>
         public GameRoleTemplate GetRoleTemplate();
-
-        /// <summary>
-        /// 设置玩家输入参数
-        /// </summary>
-        public void SetUserPlayerInputArgs(in GameRoleInputArgs inputArgs);
 
         /// <summary>
         /// 创建角色
@@ -58,10 +37,64 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleEntity CreateEnemyRole(int typeId, in GameTransformArgs transArgs);
 
         /// <summary>
+        /// 遍历所有角色
+        /// <para>action: 行为</para>
+        /// </summary>
+        public void ForeachAllRoles(Action<GameRoleEntity> action);
+
+        /// <summary>
+        /// 根据实体Id查找角色
+        /// <para>entityId: 实体Id</para>
+        /// </summary>
+        public GameRoleEntity FindByEntityId(int entityId);
+
+        /// <summary>
+        /// 移除所有角色
+        /// </summary>
+        public void RemoveAllRoles();
+
+        /// <summary>
         /// 获取最近的敌人
         /// <para>entity: 实体</para>
         /// </summary>
         public GameRoleEntity GetNearestEnemy(GameEntityBase entity);
+
+        /// <summary>
+        /// 获取用户角色
+        /// </summary>
+        public GameRoleEntity GetUserRole();
+
+        /// <summary>
+        /// 获取指定阵营的所有角色
+        /// <para>campId: 阵营Id</para>
+        /// </summary>
+        public List<GameRoleEntity> GetCampRoles(int campId);
+
+        /// <summary>
+        /// 获取角色输入
+        /// <para>entityId: 实体Id</para>
+        /// <para>input: 输入</para>
+        /// </summary>
+        public bool TryGetPlayerInput(int entityId, out GameRoleInputArgs input);
+
+        /// <summary>
+        /// 设置玩家输入
+        /// <para>input: 输入</para>
+        /// </summary>
+        public void SetPlayerInput(in GameRoleInputArgs input);
+
+        /// <summary>
+        /// 变换角色
+        /// <para>role: 角色</para>
+        /// <para>transRoleId: 变换角色Id</para>
+        /// <para>record: 变换记录</para>
+        /// </summary>
+        public void TransformRole(GameRoleEntity role, int transRoleId, in GameActionRecord_CharacterTransform record);
+
+        /// <summary>
+        /// 移除所有角色的Buff
+        /// </summary>
+        public void DetachAllRolesBuffs();
 
         /// <summary>
         /// 召唤角色
@@ -86,30 +119,5 @@ namespace GamePlay.Bussiness.Logic
             int count,
             in GameTransformArgs transArgs
         );
-
-        /// <summary>
-        /// 获取角色输入参数
-        /// <para>entityId: 实体Id</para>
-        /// <para>inputArgs: 输入参数</para>
-        /// </summary>
-        public bool TryGetPlayerInputArgs(int entityId, out GameRoleInputArgs inputArgs);
-
-        /// <summary>
-        /// 变换角色
-        /// <para>role: 角色</para>
-        /// <para>transRoleId: 变换角色Id</para>
-        /// <para>record: 变换记录</para>
-        /// </summary>
-        public void TransformRole(GameRoleEntity role, int transRoleId, in GameActionRecord_CharacterTransform record);
-
-        /// <summary>
-        /// 移除所有角色
-        /// </summary>
-        public void RemoveAllRoles();
-
-        /// <summary>
-        /// 移除所有角色的Buff
-        /// </summary>
-        public void DetachAllRolesBuffs();
     }
 }
