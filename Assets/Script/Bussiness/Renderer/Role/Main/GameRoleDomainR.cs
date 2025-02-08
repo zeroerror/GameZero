@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.UI;
 using GamePlay.Core;
@@ -87,15 +85,20 @@ namespace GamePlay.Bussiness.Renderer
                 this._roleContext.userRole = role;
             }
 
+            // 注入世界坐标转屏幕坐标的接口, 供组件内部调用更新属性条位置
             var attributeBarCom = role.attributeBarCom;
             attributeBarCom.WorldToScreenPoint = this.WorldToScreenPoint;
 
+            // 将旧的血条则销毁, 根据当前阵营信息加载新的血条
+            var existSlider = attributeBarCom.hpSlider.slider;
+            if (existSlider) GameObject.Destroy(existSlider.gameObject);
             var isEnemy = role.idCom.campId != this._roleContext.userRole?.idCom.campId;
-            var hpSlider = attributeBarCom.hpSlider.slider ?? this._roleContext.factory.LoadHPSlider(isEnemy);
+            var hpSlider = this._roleContext.factory.LoadHPSlider(isEnemy);
             this._context.uiApi.layerApi.AddToUIRoot(hpSlider.transform, UILayerType.Scene);
             attributeBarCom.hpSlider.SetSlider(hpSlider, new Vector2(0, 150));
             attributeBarCom.hpSlider.SetSize(new Vector2(150, 20));
 
+            // 判断是否有魔法攻击技能, 有则加载魔法条
             this._roleContext.factory.template.TryGet(role.idCom.typeId, out var model);
             var hasMPSkill = model.skillSOs.Find((skill) => skill.skillType == GameSkillType.MagicAttack) != null;
             if (hasMPSkill)
@@ -106,6 +109,7 @@ namespace GamePlay.Bussiness.Renderer
                 attributeBarCom.mpSlider.SetSize(new Vector2(150, 15));
             }
 
+            // 护盾条不分敌我, 加载或使用旧的护盾条
             var shieldSlider = attributeBarCom.shieldSlider.slider ?? this._roleContext.factory.LoadShieldSlider();
             this._context.uiApi.layerApi.AddToUIRoot(shieldSlider.transform, UILayerType.Scene);
             attributeBarCom.shieldSlider.SetSlider(shieldSlider, new Vector2(0, 120));

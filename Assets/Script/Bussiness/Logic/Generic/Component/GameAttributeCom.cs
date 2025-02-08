@@ -48,6 +48,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void SetByArgs(in GameAttributeArgs args)
         {
+            if (args.attributes == null) return;
             this._attributes = new List<GameAttribute>(args.attributes);
         }
 
