@@ -137,6 +137,7 @@ namespace GamePlay.Bussiness.Logic
             this._directorDomain.roleDomain.Tick(dt);
             this._directorDomain.attributeDomain.Tick(dt);
             this._directorDomain.transformDomain.Tick(dt);
+            this._directorDomain.physicsDomain.Tick();
         }
 
         private void _TryMoveUnits()

@@ -45,6 +45,7 @@ namespace GamePlay.Bussiness.Logic
                 var moveVec = new GameVec2(moveDir.x, moveDir.y) * moveSpeed * frameTime;
                 role.transformCom.position += moveVec;
                 role.FaceTo(moveDir);
+                stateModel.stateMoveDir = moveDir;
                 return;
             }
 
@@ -63,6 +64,7 @@ namespace GamePlay.Bussiness.Logic
                 }
                 role.transformCom.position += toDstDir * moveSpeed * frameTime;
                 role.FaceTo(toDstDir);
+                stateModel.stateMoveDir = toDstDir;
                 return;
             }
         }
