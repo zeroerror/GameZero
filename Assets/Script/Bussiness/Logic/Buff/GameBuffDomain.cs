@@ -384,18 +384,18 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /// <summary> 执行移除层数 </summary>
-        private int _DetachLayer(GameBuffEntity buff, int layer)
+        private int _DetachLayer(GameBuffEntity buff, int removeLayer)
         {
-            layer = layer == 0 ? buff.model.maxLayer : layer;
             var beforeLayer = buff.layer;
-            var afterLayer = beforeLayer - layer;
+            removeLayer = removeLayer == 0 ? beforeLayer : removeLayer;// 0表示移除全部层数
+            var afterLayer = beforeLayer - removeLayer;
             afterLayer = GameMath.Max(afterLayer, 0);
             buff.layer = afterLayer;
 
             var actor = buff.idCom.parent;
             this._refreshBuffAttribute(buff, actor);
 
-            GameLogger.DebugLog($"{buff.owner.idCom} [{buff.model}] 层数移除: {beforeLayer} -> {afterLayer}");
+            GameLogger.DebugLog($"{buff.owner.idCom} [{buff.model}] 移除层数{removeLayer}: {beforeLayer} -> {afterLayer}");
 
             if (afterLayer <= 0 && buff.model.NeedRemoveAtZeroLayer())
             {
