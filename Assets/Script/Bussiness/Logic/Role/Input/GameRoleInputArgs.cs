@@ -5,12 +5,14 @@ namespace GamePlay.Bussiness.Logic
     public struct GameRoleInputArgs
     {
         public GameVec2 moveDir;
+        public GameVec2 moveDst;
         public int skillId;
         public List<GameActionTargeterArgs> targeterArgsList;
 
         public bool HasInput()
         {
             if (moveDir != GameVec2.zero) return true;
+            if (moveDst != GameVec2.zero) return true;
             if (skillId > 0) return true;
             if (targeterArgsList != null && targeterArgsList.Count > 0) return true;
             return false;
@@ -19,6 +21,7 @@ namespace GamePlay.Bussiness.Logic
         public void Update(in GameRoleInputArgs inputArgs)
         {
             this.moveDir = inputArgs.moveDir == GameVec2.zero ? this.moveDir : inputArgs.moveDir;
+            this.moveDst = inputArgs.moveDst == GameVec2.zero ? this.moveDst : inputArgs.moveDst;
             this.skillId = inputArgs.skillId == 0 ? this.skillId : inputArgs.skillId;
             this.targeterArgsList = inputArgs.targeterArgsList == null ? this.targeterArgsList : inputArgs.targeterArgsList;
         }

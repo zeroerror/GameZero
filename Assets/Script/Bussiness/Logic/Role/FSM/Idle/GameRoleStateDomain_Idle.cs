@@ -33,7 +33,12 @@ namespace GamePlay.Bussiness.Logic
             if (inputCom.TryGetInputArgs(out var inputArgs))
             {
                 if (inputArgs.skillId != 0) return GameRoleStateType.Cast;
-                if (inputArgs.moveDir != GameVec2.zero) return GameRoleStateType.Move;
+                if (inputArgs.moveDir != GameVec2.zero ||
+                    inputArgs.moveDst != GameVec2.zero
+                )
+                {
+                    return GameRoleStateType.Move;
+                }
                 // todo 根据技能输入的目标选取器 判断是否进入对应状态
             }
             return GameRoleStateType.None;

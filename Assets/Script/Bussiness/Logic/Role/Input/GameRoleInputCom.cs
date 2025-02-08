@@ -7,6 +7,7 @@ namespace GamePlay.Bussiness.Logic
     {
         public bool enable { get; set; }
         public GameVec2 moveDir { get; set; }
+        public GameVec2 moveDst { get; set; }
         public int skillId { get; set; }
         public List<GameActionTargeterArgs> targeterArgsList { get; private set; }
 
@@ -19,6 +20,7 @@ namespace GamePlay.Bussiness.Logic
         public void Clear()
         {
             this.moveDir = GameVec2.zero;
+            this.moveDst = GameVec2.zero;
             this.targeterArgsList.Clear();
             this.skillId = 0;
         }
@@ -28,6 +30,7 @@ namespace GamePlay.Bussiness.Logic
             return new GameRoleInputArgs
             {
                 moveDir = this.moveDir,
+                moveDst = this.moveDst,
                 skillId = this.skillId,
                 targeterArgsList = this.targeterArgsList.ToList(),
             };
@@ -36,6 +39,7 @@ namespace GamePlay.Bussiness.Logic
         public void SetByArgs(in GameRoleInputArgs args)
         {
             this.moveDir = args.moveDir;
+            this.moveDst = args.moveDst;
             this.targeterArgsList.Clear();
             var targeterList = args.targeterArgsList;
             if (targeterList != null && targeterList.Count > 0) this.targeterArgsList.AddRange(targeterList);
@@ -45,7 +49,10 @@ namespace GamePlay.Bussiness.Logic
         public bool TryGetInputArgs(out GameRoleInputArgs inputArgs)
         {
             var hasInput =
-            this.moveDir != GameVec2.zero || this.skillId != 0 || this.targeterArgsList.Count > 0;
+            this.moveDir != GameVec2.zero ||
+            this.moveDst != GameVec2.zero ||
+            this.skillId != 0 ||
+            this.targeterArgsList.Count > 0;
             if (!hasInput)
             {
                 inputArgs = default;
@@ -54,6 +61,7 @@ namespace GamePlay.Bussiness.Logic
             inputArgs = new GameRoleInputArgs
             {
                 moveDir = this.moveDir,
+                moveDst = this.moveDst,
                 skillId = this.skillId,
                 targeterArgsList = this.targeterArgsList.ToList(),
             };
@@ -62,7 +70,10 @@ namespace GamePlay.Bussiness.Logic
 
         public bool HasInput()
         {
-            return this.moveDir != GameVec2.zero || this.skillId != 0 || this.targeterArgsList.Count > 0;
+            return this.moveDir != GameVec2.zero ||
+            this.moveDst != GameVec2.zero ||
+            this.skillId != 0 ||
+            this.targeterArgsList.Count > 0;
         }
     }
 }

@@ -77,6 +77,7 @@ namespace GamePlay.Bussiness.UI
                     var idx = i;
                     this._SetClick(unitBinder.gameObject, () => this._OnClickItem(idx));
                 }
+                GameLogger.DebugLog($"单位{i + 1}: {this._GetItemName(this._itemModels[i])}");
             }
 
             this._SetClick(this.uiBinder.btn_confirm, this._OnBtnConfirmClick);

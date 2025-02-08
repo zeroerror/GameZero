@@ -36,11 +36,35 @@ namespace GamePlay.Bussiness.Logic
                 stateModel.inputArgs = inputArgs;
             }
             inputArgs = stateModel.inputArgs;
+
+            // 根据方向移动
             var moveDir = inputArgs.moveDir;
-            var moveSpeed = role.attributeCom.GetValue(GameAttributeType.MoveSpeed);
-            var moveVec = new GameVec2(moveDir.x, moveDir.y) * moveSpeed * frameTime;
-            role.transformCom.position += moveVec;
-            role.FaceTo(moveDir);
+            if (moveDir != GameVec2.zero)
+            {
+                var moveSpeed = role.attributeCom.GetValue(GameAttributeType.MoveSpeed);
+                var moveVec = new GameVec2(moveDir.x, moveDir.y) * moveSpeed * frameTime;
+                role.transformCom.position += moveVec;
+                role.FaceTo(moveDir);
+                return;
+            }
+
+            // 根据目的地移动
+            var moveDst = inputArgs.moveDst;
+            if (moveDst != GameVec2.zero)
+            {
+                var moveSpeed = role.attributeCom.GetValue(GameAttributeType.MoveSpeed);
+                var moveVec = moveDst - new GameVec2(role.transformCom.position.x, role.transformCom.position.y);
+                var toDstDir = moveVec.normalized;
+                var moveDis = moveVec.magnitude;
+                if (moveDis < moveSpeed * frameTime)
+                {
+                    role.transformCom.position = new GameVec2(moveDst.x, moveDst.y);
+                    return;
+                }
+                role.transformCom.position += new GameVec2(toDstDir.x, toDstDir.y) * moveSpeed * frameTime;
+                role.FaceTo(toDstDir);
+                return;
+            }
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)
