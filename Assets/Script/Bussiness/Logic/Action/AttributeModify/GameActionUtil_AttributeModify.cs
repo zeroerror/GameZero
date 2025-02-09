@@ -52,7 +52,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 取2位小数
-            realAttributeModify = GameMathF.ToFixed(realAttributeModify, 2);
+            realAttributeModify = GameMathF.GetFixed(realAttributeModify, 2);
 
             var record = new GameActionRecord_AttributeModify(
                 actionId,

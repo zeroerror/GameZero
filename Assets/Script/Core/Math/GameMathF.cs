@@ -51,7 +51,12 @@ namespace GamePlay.Core
             return UnityEngine.Random.value;
         }
 
-        public static float ToFixed(float value, int digits)
+        public static float GetFixed(float value, int digits)
+        {
+            return System.MathF.Round(value, digits);
+        }
+
+        public static float ToFixed(this float value, int digits)
         {
             return System.MathF.Round(value, digits);
         }

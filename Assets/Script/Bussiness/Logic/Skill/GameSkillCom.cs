@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GamePlay.Core;
 
@@ -7,6 +8,8 @@ namespace GamePlay.Bussiness.Logic
     {
         private GameRoleEntity _role;
         private List<GameSkillEntity> _skillEntities;
+
+        public int Count => _skillEntities.Count;
 
         public GameSkillCom(GameRoleEntity role)
         {
@@ -58,15 +61,25 @@ namespace GamePlay.Bussiness.Logic
             return skill != null;
         }
 
-        public void ForeachSkills(System.Action<GameSkillEntity> action)
+        public void ForeachSkills(Action<GameSkillEntity> action)
         {
             _skillEntities.Foreach(action);
+        }
+
+        public void ForeachSkills(Action<GameSkillEntity, int> action)
+        {
+            _skillEntities.Foreach(action);
+        }
+
+        public GameSkillEntity GetSkillByIndex(int index)
+        {
+            return _skillEntities[index];
         }
 
         /// <summary>
         /// 普通查找
         /// </summary>
-        public GameSkillEntity Find(System.Predicate<GameSkillEntity> predicate)
+        public GameSkillEntity Find(Predicate<GameSkillEntity> predicate)
         {
             return _skillEntities.Find(predicate);
         }
@@ -74,7 +87,7 @@ namespace GamePlay.Bussiness.Logic
         /// <summary>
         /// 优先查找, 比如法力攻击优先于普通攻击
         /// </summary>
-        public GameSkillEntity FindWithPriority(System.Predicate<GameSkillEntity> predicate)
+        public GameSkillEntity FindWithPriority(Predicate<GameSkillEntity> predicate)
         {
             for (int i = _skillEntities.Count - 1; i >= 0; i--)
             {

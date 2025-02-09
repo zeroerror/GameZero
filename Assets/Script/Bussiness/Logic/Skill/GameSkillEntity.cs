@@ -1,3 +1,5 @@
+using GamePlay.Core;
+
 namespace GamePlay.Bussiness.Logic
 {
     public class GameSkillEntity : GameEntityBase
@@ -22,6 +24,7 @@ namespace GamePlay.Bussiness.Logic
         public override void Tick(float dt)
         {
             this.cdElapsed -= dt;
+            this.cdElapsed = this.cdElapsed < 0 ? 0 : this.cdElapsed;
         }
 
         public override void Destroy()

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Renderer;
 using GamePlay.Core;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,9 +45,9 @@ namespace GamePlay.Bussiness.UI
             var attributes = entity?.attributeCom.ToArgs().attributes;
             var baseAttributes = entity?.baseAttributeCom.ToArgs().attributes;
 
-            attributes?.Remove(attr => attr.type == GameAttributeType.MaxHP || attr.type == GameAttributeType.MaxMP);
+            attributes = attributes?.Remove(attr => attr.type == GameAttributeType.MaxHP || attr.type == GameAttributeType.MaxMP);
             attributes?.Sort((a, b) => a.type.CompareTo(b.type));
-            baseAttributes?.Remove(attr => attr.type == GameAttributeType.MaxHP || attr.type == GameAttributeType.MaxMP);
+            baseAttributes = baseAttributes?.Remove(attr => attr.type == GameAttributeType.MaxHP || attr.type == GameAttributeType.MaxMP);
             baseAttributes?.Sort((a, b) => a.type.CompareTo(b.type));
             // 属性列表
             attributes?.Foreach((attr, idx) =>
@@ -90,6 +91,32 @@ namespace GamePlay.Bussiness.UI
                 item.gameObject.SetActive(false);
             }
             // 技能列表
+            if (entity is GameRoleEntity role)
+            {
+                this._binder.skillGroup.gameObject.SetActive(true);
+                role.skillCom.ForeachSkills((skill, idx) =>
+                {
+                    var skillItem = this._binder.GetField("skillGroup_item" + (idx + 1)) as UISkillItemBinder;
+                    skillItem.gameObject.SetActive(true);
+                    // CD
+                    var cdTime = skill.skillModel.conditionModel.cdTime;
+                    var cdElapsed = skill.cdElapsed;
+                    var textCom = skillItem.cd_txt.GetComponent<TextMeshProUGUI>();
+                    textCom.text = cdElapsed.ToFixed(1).ToString();
+                    skillItem.cd.SetActive(cdElapsed > 0);
+                    // 技能图标
+                    skillItem.img_icon.GetComponent<Image>().sprite = Resources.Load<Sprite>(UIPathUtil.GetSkillIcon(skill.skillModel.typeId));
+                });
+                for (int i = role.skillCom.Count; i < 3; i++)
+                {
+                    var skillItem = this._binder.GetField("skillGroup_item" + (i + 1)) as UISkillItemBinder;
+                    skillItem.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                this._binder.skillGroup.gameObject.SetActive(false);
+            }
         }
     }
 }

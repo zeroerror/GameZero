@@ -84,7 +84,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 record.isKill = true;
             }
-            GameLogger.DebugLog($"目标:{target.idCom} 受到伤害{GameMathF.ToFixed(dmgValue, 4)} ({curHP}=>{afterDmgHP})");
+            GameLogger.DebugLog($"目标:{target.idCom} 受到伤害{GameMathF.GetFixed(dmgValue, 4)} ({curHP}=>{afterDmgHP})");
             return true;
         }
     }

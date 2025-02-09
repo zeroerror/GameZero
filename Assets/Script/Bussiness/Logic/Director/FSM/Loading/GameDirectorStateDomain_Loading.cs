@@ -72,13 +72,22 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 生成玩家棋子
-            unitEntitys?.ForEach((unitEntity) =>
+            var unitCount = unitEntitys?.Count ?? 0;
+            for (int i = 0; i < unitCount; i++)
             {
+                var unitEntity = unitEntitys[i];
                 var directorApi = this._context.domainApi.directorApi;
                 var unit = needLoad ? directorApi.CreateUnit(unitEntity) : directorApi.FindUnitEntity(unitEntity);
+                if (!unit)
+                {
+                    // 移除已经被销毁的棋子
+                    unitEntitys.RemoveAt(i);
+                    i--;
+                    continue;
+                }
                 unit.attributeCom.SetByArgs(unitEntity.attributeArgs);
                 unit.baseAttributeCom.SetByArgs(unitEntity.baseAttributeArgs);
-            });
+            }
 
             // 切换状态机组件状态
             fsmCom.EnterLoading(loadFieldId);

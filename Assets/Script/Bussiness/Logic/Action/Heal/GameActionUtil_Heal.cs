@@ -30,7 +30,7 @@ namespace GamePlay.Bussiness.Logic
             var realHeal = afterHP > maxHP ? maxHP - curHP : healValue;
 
             // 取2位小数
-            realHeal = GameMathF.ToFixed(realHeal, 2);
+            realHeal = GameMathF.GetFixed(realHeal, 2);
 
             var actorRoleIdArgs = actor.GetLinkParent<GameRoleEntity>()?.idCom.ToArgs() ?? default;
             var record = new GameActionRecord_Heal(

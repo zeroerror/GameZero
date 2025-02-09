@@ -21,5 +21,14 @@ namespace GamePlay.Bussiness.UI
         {
             return "UI/System/Common/Image/Attribute/" + type;
         }
+
+        /// <summary>
+        /// 获取技能图标路径
+        /// <para>typeId: 技能类型ID</para>
+        /// </summary>
+        public static string GetSkillIcon(int typeId)
+        {
+            return "UI/System/Common/Image/Skill/" + typeId;
+        }
     }
 }
