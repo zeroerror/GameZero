@@ -1,4 +1,3 @@
-using System.Numerics;
 using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 using GameVec3 = UnityEngine.Vector3;

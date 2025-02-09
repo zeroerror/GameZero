@@ -80,11 +80,18 @@ namespace GamePlay.Bussiness.Logic
     public class GameUnitItemModel
     {
         /// <summary> 实体类型 </summary>
-        public GameEntityType entityType;
+        public readonly GameEntityType entityType;
         /// <summary> 类型Id </summary>
-        public int typeId;
+        public readonly int typeId;
         /// <summary> 消耗金币 </summary>
-        public int costGold;
+        public readonly int costGold;
+
+        public GameUnitItemModel(GameEntityType entityType, int typeId, int costGold)
+        {
+            this.entityType = entityType;
+            this.typeId = typeId;
+            this.costGold = costGold;
+        }
 
         public override string ToString()
         {
@@ -93,12 +100,11 @@ namespace GamePlay.Bussiness.Logic
 
         public GameUnitItemModel Clone()
         {
-            return new GameUnitItemModel
-            {
-                entityType = this.entityType,
-                typeId = this.typeId,
-                costGold = this.costGold
-            };
+            return new GameUnitItemModel(
+                this.entityType,
+                this.typeId,
+                this.costGold
+            );
         }
     }
 }

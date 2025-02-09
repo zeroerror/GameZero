@@ -170,7 +170,7 @@ namespace GamePlay.Bussiness.Renderer
             var randomStyle = GameMath.RandomRange(1, 5);//1-4
             var jumpPos = this.WorldToScreenPoint(target.transformCom.position);
             jumpPos.y += 50;
-            jumpTextApi.JumpText_Dmg(jumpPos, dmgRecord.dmgType, randomStyle, dmgRecord.value.ToString(), 0.5f);
+            jumpTextApi.JumpText_Dmg(jumpPos, dmgRecord.dmgType, randomStyle, GameMath.Floor(dmgRecord.value).ToString(), 0.5f);
         }
 
         public Vector3 WorldToScreenPoint(in Vector3 v)

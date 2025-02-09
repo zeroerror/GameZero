@@ -413,6 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roleSO: {fileID: 11400000, guid: 100aa464a86e55d48b21dabb01f81bef, type: 2}
+  spriteAtlas: {fileID: 2800000, guid: f037d5f097755ae4583066e9671b0b34, type: 3}
 --- !u!1 &2069015975566648525
 GameObject:
   m_ObjectHideFlags: 0

@@ -131,8 +131,8 @@ public class UIBinderEditor : Editor
     {
         var depth = _GetPrefabDepth(tf);
         var name = _filter(tf.name);
-        if (depth <= 2) return name;
-        while (depth > 2)
+        if (depth <= 1) return name;
+        while (depth > 1)
         {
             depth--;
             tf = tf.parent;
@@ -146,8 +146,8 @@ public class UIBinderEditor : Editor
     {
         var depth = _GetPrefabDepth(tf);
         var path = _filter(tf.name);
-        if (depth <= 2) return path;
-        while (depth > 2)
+        if (depth <= 1) return path;
+        while (depth > 1)
         {
             depth--;
             tf = tf.parent;

@@ -1,5 +1,6 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.UI;
+using GamePlay.Core;
 using UnityEngine;
 namespace GamePlay.Bussiness.Renderer
 {
@@ -188,6 +189,30 @@ namespace GamePlay.Bussiness.Renderer
             const int roundAreaHeight = 10;
             var pos = new Vector2(0, roundAreaHeight * (director.curRound - 1));
             return pos;
+        }
+
+        public GameEntityBase GetClickEntity(in Vector2 clickWorldPos)
+        {
+            const float width = 2.0f;
+            const float height = 2.0f;
+            var entityColliderModel = new GameBoxColliderModel(
+                new Vector2(0, height / 2),
+                0,
+                width,
+                height
+            );
+            var clickEntity = this._GetClickEntity(this.context.roleContext.repo, entityColliderModel, clickWorldPos);
+            return clickEntity;
+        }
+        private GameEntityBase _GetClickEntity<T>(GameEntityRepoBase<T> repo, GameBoxColliderModel colliderModel, Vector2 clickWorldPos) where T : GameEntityBase
+        {
+            var clickEntity = repo.Find((entity) =>
+            {
+                var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(colliderModel, entity.transformCom.ToArgs(), clickWorldPos);
+                var isHit = mtv != Vector2.zero;
+                return isHit;
+            });
+            return clickEntity;
         }
     }
 }

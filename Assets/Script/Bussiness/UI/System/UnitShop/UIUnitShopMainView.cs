@@ -1,4 +1,3 @@
-using GamePlay.Bussiness.Core;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine;
@@ -75,13 +74,13 @@ namespace GamePlay.Bussiness.UI
                     var text = unitBinder.txt_name.GetComponent<Text>();
                     text.GetComponent<Text>().text = this._GetItemName(this._itemModels[i]).ToDevStr();
                     var idx = i;
-                    this._SetClick(unitBinder.gameObject, () => this._OnClickItem(idx));
+                    this.SetClick(unitBinder.gameObject, () => this._OnClickItem(idx));
                 }
                 GameLogger.DebugLog($"单位{i + 1}: {this._GetItemName(this._itemModels[i])}");
             }
 
-            this._SetClick(this.uiBinder.btn_confirm, this._OnBtnConfirmClick);
-            this._SetClick(this.uiBinder.btn_refresh, this._OnBtnRefreshClick);
+            this.SetClick(this.uiBinder.btn_confirm, this._OnBtnConfirmClick);
+            this.SetClick(this.uiBinder.btn_refresh, this._OnBtnRefreshClick);
         }
 
         private void _refreshGold()

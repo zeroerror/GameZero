@@ -220,5 +220,20 @@ namespace GamePlay.Core
         {
             return System.Array.IndexOf(array, value);
         }
+
+        public static T Remove<T>(this T[] arr, Predicate<T> match)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (match(arr[i]))
+                {
+                    T result = arr[i];
+                    arr[i] = arr[arr.Length - 1];
+                    Array.Resize(ref arr, arr.Length - 1);
+                    return result;
+                }
+            }
+            return default;
+        }
     }
 }

@@ -167,6 +167,8 @@ namespace GamePlay.Bussiness.UI
                 var maskImage = rootGO.GetComponent<Image>() ?? rootGO.AddComponent<Image>();
                 maskImage.color = new Color(0, 0, 0, 0.5f);
                 maskImage.raycastTarget = true;
+                // 点击背景关闭
+                uiBase.SetClick(maskImage.gameObject, () => this.CloseUI(uiName));
             }
 
             // UI生命周期

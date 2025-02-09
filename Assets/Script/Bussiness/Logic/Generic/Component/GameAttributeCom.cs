@@ -106,10 +106,7 @@ namespace GamePlay.Bussiness.Logic
         public string GetValueStr(GameAttributeType type)
         {
             var value = this.GetValue(type);
-            if (value >= 100000000) return $"{value / 100000000f:F1}kw";
-            if (value >= 10000) return $"{value / 10000f:F1}w";
-            if (value >= 1000) return $"{value / 1000f:F1}k";
-            return value.ToString();
+            return value.GetFormatNumStr();
         }
 
         public void Foreach(System.Action<GameAttribute> action)

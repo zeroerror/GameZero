@@ -64,6 +64,12 @@ namespace GamePlay.Bussiness.Logic
         public GameUnitItemEntity FindUnitItemEntity(GameEntityType entityType, int entityId);
 
         /// <summary>
+        /// 根据Id参数获取实体
+        /// <para>idArgs: 实体ID参数</para>
+        /// </summary>
+        public GameEntityBase FindEntity(in GameIdArgs idArgs);
+
+        /// <summary>
         /// 获取当前可购买单位列表
         /// </summary>
         public GameUnitItemModel[] GetBuyableUnits();

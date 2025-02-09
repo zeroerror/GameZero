@@ -1,3 +1,4 @@
+using GamePlay.Bussiness.Logic;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
@@ -19,5 +20,12 @@ namespace GamePlay.Bussiness.Renderer
         /// 获取当前回合的区域位置
         /// </summary>
         public Vector2 GetRoundAreaPosition();
+
+        /// <summary>
+        /// 获取点击单位实体
+        /// <para>clickWorldPos: 点击的世界坐标</para>
+        /// 
+        /// </summary>
+        public GameEntityBase GetClickEntity(in Vector2 clickWorldPos);
     }
 }

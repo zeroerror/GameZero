@@ -106,7 +106,9 @@ namespace GamePlay.Bussiness.UI
         private List<int> _timerIdList;
         public void SetInterval(float interval, Action callback)
         {
-            _uiApi.directorApi.SetInterval(interval, callback);
+            var id = _uiApi.directorApi.SetInterval(interval, callback);
+            _timerIdList = _timerIdList ?? new List<int>();
+            _timerIdList.Add(id);
         }
         public void RemoveTimer(int timerId)
         {
@@ -122,7 +124,7 @@ namespace GamePlay.Bussiness.UI
         #endregion
 
         #region [通用]
-        protected void _SetClick(GameObject go, Action callback)
+        public void SetClick(GameObject go, Action callback)
         {
             var clickCom = go.GetComponent<UIClickCom>() ?? go.AddComponent<UIClickCom>();
             clickCom.onClick = callback;

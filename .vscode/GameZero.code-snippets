@@ -309,7 +309,7 @@
 			"}"
 		]
 	},
-	"nsu":{
+	"nsu": {
 		"prefix": "nsu",
 		"body": [
 			"namespace GamePlay.Bussiness.UI",
@@ -320,27 +320,28 @@
 			"}",
 		]
 	},
-	"uiBase":{
+	"uiBase": {
 		"prefix": "uiBase",
 		"body": [
 			"using UnityEngine.UI;",
 			"namespace GamePlay.Bussiness.UI",
 			"{",
-			"    public struct UI$1ViewInput",
+			"    public struct UI$2ViewInput",
 			"    {",
 			"    }",
-			"    public class UI$1View : UIBase",
+			"",
+			"    public class UI$2View : UIBase",
 			"    {",
 			"        public override UILayerType layerType => UILayerType.PopUp;",
 			"        public override string uiPkgUrl => \"UI/System/$1\";",
-			"        public override string uiName => \"UI$1View\";",
-			"        public UI$1ViewBinder viewBinder;",
-			"        private UI$1ViewInput _viewInput;",
+			"        public override string uiName => \"UI$2View\";",
+			"        public UI$2ViewBinder viewBinder;",
+			"        private UI$2ViewInput _viewInput;",
 			"",
 			"        protected override void _OnInit()",
 			"        {",
-			"            this.viewBinder = new UI$1ViewBinder(this.go);",
-			"            this._viewInput = (UI$1ViewInput)this._uiInput.customData;",
+			"            this.viewBinder = new UI$2ViewBinder(this.go);",
+			"            this._viewInput = (UI$2ViewInput)this._uiInput.customData;",
 			"        }",
 			"",
 			"        protected override void _BindEvents()",
@@ -366,7 +367,7 @@
 			"}",
 		]
 	},
-	"domain_u":{
+	"domain_u": {
 		"prefix": "domain_u",
 		"body": [
 			"namespace GamePlay.Bussiness.UI",

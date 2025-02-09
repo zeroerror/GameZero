@@ -302,10 +302,11 @@ namespace GamePlay.Bussiness.Logic
             var roleTemplate = this.context.domainApi.roleApi.GetRoleTemplate();
             roleTemplate.GetAll()?.Foreach((role) =>
             {
-                var unit = new GameUnitItemModel();
-                unit.entityType = GameEntityType.Role;
-                unit.typeId = role.typeId;
-                unit.costGold = 10;
+                var unit = new GameUnitItemModel(
+                    GameEntityType.Role,
+                    role.typeId,
+                    10
+                );
                 unitPool.Add(unit);
             });
             return unitPool;
@@ -355,6 +356,18 @@ namespace GamePlay.Bussiness.Logic
             const int roundAreaHeight = 10;
             var pos = new GameVec2(0, roundAreaHeight * (director.curRound - 1));
             return pos;
+        }
+
+        public GameEntityBase FindEntity(in GameIdArgs idArgs)
+        {
+            switch (idArgs.entityType)
+            {
+                case GameEntityType.Role:
+                    return this.context.domainApi.roleApi.FindByEntityId(idArgs.entityId);
+                default:
+                    GameLogger.LogError("导演 - 获取实体失败, 未知的实体类型 " + idArgs.entityType);
+                    return null;
+            }
         }
     }
 }

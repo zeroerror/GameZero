@@ -53,52 +53,18 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
 
-            // 角色
-            {
-                var repo = this._context.roleContext.repo;
-                var clickRole = _GetClickUnit(clickWorldPos, repo);
-                if (clickRole != null)
-                {
-                    fightingState.chooseEntity = clickRole;
-                    return;
-                }
-            }
-            // 其它
+            var clickUnit = this._context.domainApi.directorApi.GetClickEntity(clickWorldPos);
+            if (!clickUnit) return;
+
+            // 检查阵营
+            var campId = clickUnit.idCom.campId;
+            if (campId != GameCampCollection.PLAYER_CAMP_ID) return;
+
+            fightingState.chooseEntity = clickUnit;
         }
 
         private void _OnFightPreparingPositioned(object args)
         {
-        }
-
-        private static GameEntityBase _GetClickUnit(GameVec2 clickWorldPos, GameRoleRepoR repo)
-        {
-            const float width = 1.0f;
-            const float height = 2.0f;
-            var entityColliderModel = new GameBoxColliderModel(
-                new GameVec2(0, height / 2),
-                0,
-                width,
-                height
-            );
-            var boxCollider = new GameBoxCollider(null, entityColliderModel, -1);
-            var clickUnit = repo.Find((role) =>
-            {
-                boxCollider.UpdateTRS(role.transformCom.ToArgs());
-                var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(entityColliderModel, role.transformCom.ToArgs(), clickWorldPos);
-                var isHit = mtv != GameVec2.zero;
-                return isHit;
-            });
-            if (!clickUnit) return null;
-
-            // 检查阵营
-            var campId = clickUnit.idCom.campId;
-            if (campId != GameCampCollection.PLAYER_CAMP_ID)
-            {
-                GameLogger.LogWarning("点击单位不是玩家阵营");
-                return null;
-            }
-
-            return clickUnit;
         }
 
         public override void Enter(GameDirectorEntityR director, object args = null)
@@ -112,6 +78,12 @@ namespace GamePlay.Bussiness.Renderer
 
         protected override void _Tick(GameDirectorEntityR director, float frameTime)
         {
+        }
+
+        public override void ExitTo(GameDirectorEntityR director, GameDirectorStateType toState)
+        {
+            base.ExitTo(director, toState);
+            this._context.uiApi.directorApi.UnbindKeyAction(KeyCode.Mouse0, this._OnClickUnit);
         }
 
     }

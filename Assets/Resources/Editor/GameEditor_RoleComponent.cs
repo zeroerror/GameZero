@@ -1,5 +1,4 @@
 using GamePlay.Config;
-using GamePlay.Core;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,7 +20,6 @@ public class GameEditor_RoleComponent : Editor
         this._serializedObject.Update();
 
         var roleSO = roleSO_p.DrawProperty<GameRoleSO>("角色模板");
-
         var skillSOs = roleSO?.skills;
         if (skillSOs != null)
         {
@@ -32,8 +30,7 @@ public class GameEditor_RoleComponent : Editor
                 EditorGUILayout.ObjectField(skillSO, typeof(GameSkillSO), false);
             }
         }
-
-        // 添加一个按钮
+        // 保存按钮
         if (GUILayout.Button("保存"))
         {
             var roleComponent = target as GameRoleComponent;
