@@ -39,8 +39,8 @@ namespace GamePlay.Bussiness.Renderer
                 return;
             }
             var input = new UIUnitDetailMainViewInput();
-            input.clickEntity = clickEntity;
-            if (!clickEntity) return;
+            input.entityType = clickEntity.idCom.entityType;
+            input.entityId = clickEntity.idCom.entityId;
             this._context.uiApi.directorApi.OpenUI<UIUnitDetailMainView>(new UIViewInput(input));
         }
 

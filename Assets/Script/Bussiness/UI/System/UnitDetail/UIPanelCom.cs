@@ -11,19 +11,26 @@ namespace GamePlay.Bussiness.UI
     public class UIPanelCom
     {
         private UIPanelComBinder _binder;
-        private GameEntityBase _entity;
+        private GameDomainApi _logicApi => this._uiApi.logicApi;
+        private GameDomainApiR _rendererApi => this._uiApi.rendererApi;
+        private UIDomainApi _uiApi;
 
-        public UIPanelCom(UIPanelComBinder binder, GameEntityBase entity)
+        public UIPanelCom(UIPanelComBinder binder, UIDomainApi uiApi)
         {
             this._binder = binder;
-            this._entity = entity;
+            this._uiApi = uiApi;
+        }
 
+        public void RefreshHead(GameEntityType entityType, int entityId)
+        {
+            var entity = this._rendererApi.directorApi.FindEntity(entityType, entityId);
             string name = "未知";
-            string headUrl = UIPathUtil.GetRoleHead(0);
-            if (this._entity is GameRoleEntityR role)
+            string headUrl = "";
+            if (entity is GameRoleEntityR role)
             {
-                name = role.model.roleName;
-                headUrl = UIPathUtil.GetRoleHead(role.model.typeId);
+                var model = role.model;
+                name = model.roleName;
+                headUrl = UIPathUtil.GetRoleHead(model.typeId);
             }
             // 头像
             this._binder.img_head.GetComponent<Image>().sprite = Resources.Load<Sprite>(headUrl);
@@ -31,8 +38,12 @@ namespace GamePlay.Bussiness.UI
             this._binder.txt_name.GetComponent<Text>().text = name;
         }
 
-        public void Refersh(GameAttribute[] attributes, GameAttribute[] baseAttributes)
+        public void Refersh(GameEntityType entityType, int entityId)
         {
+            var entity = this._logicApi.directorApi.FindEntity(entityType, entityId);
+            var attributes = entity?.attributeCom.ToArgs().attributes;
+            var baseAttributes = entity?.baseAttributeCom.ToArgs().attributes;
+
             attributes?.Remove(attr => attr.type == GameAttributeType.MaxHP || attr.type == GameAttributeType.MaxMP);
             attributes?.Sort((a, b) => a.type.CompareTo(b.type));
             baseAttributes?.Remove(attr => attr.type == GameAttributeType.MaxHP || attr.type == GameAttributeType.MaxMP);
@@ -78,6 +89,7 @@ namespace GamePlay.Bussiness.UI
                 }
                 item.gameObject.SetActive(false);
             }
+            // 技能列表
         }
     }
 }

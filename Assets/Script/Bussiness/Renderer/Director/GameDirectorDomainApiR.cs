@@ -27,5 +27,12 @@ namespace GamePlay.Bussiness.Renderer
         /// 
         /// </summary>
         public GameEntityBase GetClickEntity(in Vector2 clickWorldPos);
+
+        /// <summary>
+        /// 根据Id参数获取实体
+        /// <para>entityType: 实体类型</para>
+        /// <para>entityId: 实体ID</para>
+        /// </summary>
+        public GameEntityBase FindEntity(GameEntityType entityType, int entityId);
     }
 }

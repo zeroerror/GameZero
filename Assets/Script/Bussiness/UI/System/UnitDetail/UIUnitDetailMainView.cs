@@ -6,7 +6,8 @@ namespace GamePlay.Bussiness.UI
 {
     public struct UIUnitDetailMainViewInput
     {
-        public GameEntityBase clickEntity;
+        public GameEntityType entityType;
+        public int entityId;
     }
 
     public class UIUnitDetailMainView : UIBase
@@ -23,7 +24,7 @@ namespace GamePlay.Bussiness.UI
         {
             this.viewBinder = new UIUnitDetailMainViewBinder(this.go);
             this._viewInput = (UIUnitDetailMainViewInput)this._uiInput.customData;
-            this._uiPanelCom = new UIPanelCom(this.viewBinder.panelCom, this._viewInput.clickEntity);
+            this._uiPanelCom = new UIPanelCom(this.viewBinder.panelCom, this._uiApi);
         }
 
         protected override void _BindEvents()
@@ -39,19 +40,12 @@ namespace GamePlay.Bussiness.UI
         protected override void _OnShow()
         {
             base._OnShow();
-            this._RefreshPanelCom();
+            this._uiPanelCom.RefreshHead(this._viewInput.entityType, this._viewInput.entityId);
+            this._uiPanelCom.Refersh(this._viewInput.entityType, this._viewInput.entityId);
             this.SetInterval(0.1f, () =>
             {
-                this._RefreshPanelCom();
+                this._uiPanelCom.Refersh(this._viewInput.entityType, this._viewInput.entityId);
             });
-        }
-
-        private void _RefreshPanelCom()
-        {
-            var entity = this._uiApi.logicApi.directorApi.FindEntity(this._viewInput.clickEntity.idCom.ToArgs());
-            var attributes = entity?.attributeCom.ToArgs().attributes;
-            var baseAttributes = entity?.baseAttributeCom.ToArgs().attributes;
-            this._uiPanelCom.Refersh(attributes, baseAttributes);
         }
 
         protected override void _OnHide()

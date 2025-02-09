@@ -250,5 +250,11 @@ namespace GamePlay.Bussiness.Renderer
         {
             return this._context.roleContext.factory.template;
         }
+
+        public GameRoleEntityR FindByEntityId(int entityId)
+        {
+            return this._roleContext.repo.FindByEntityId(entityId);
+        }
+
     }
 }

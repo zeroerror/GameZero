@@ -214,5 +214,17 @@ namespace GamePlay.Bussiness.Renderer
             });
             return clickEntity;
         }
+
+        public GameEntityBase FindEntity(GameEntityType entityType, int entityId)
+        {
+            switch (entityType)
+            {
+                case GameEntityType.Role:
+                    return this.context.domainApi.roleApi.FindByEntityId(entityId);
+                default:
+                    GameLogger.LogError("导演 - 获取实体失败, 未知的实体类型 " + entityType);
+                    return null;
+            }
+        }
     }
 }
