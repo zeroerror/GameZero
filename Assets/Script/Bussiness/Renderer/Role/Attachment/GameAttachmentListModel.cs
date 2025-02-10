@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
 {
+    /// <summary>
+    /// 附件列表
+    /// </summary>
     [System.Serializable]
     public struct GameAttachmentListModel
     {

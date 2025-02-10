@@ -131,6 +131,7 @@ namespace GamePlay.Bussiness.Renderer
             this.projectileDomain.Tick(dt);
             this.entityCollectDomain.Tick(dt);
             this.buffDomain.Tick(dt);
+            this.transformDomain.Tick(dt);
         }
 
         public void Update(float dt)

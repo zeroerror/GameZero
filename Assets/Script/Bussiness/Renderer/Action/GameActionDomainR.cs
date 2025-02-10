@@ -29,7 +29,6 @@ namespace GamePlay.Bussiness.Renderer
 
         private void _BindEvents()
         {
-
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DO, this._OnAction_Do);
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DMG, this._OnAction_Dmg);
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_HEAL, this._OnAction_Heal);
@@ -171,6 +170,16 @@ namespace GamePlay.Bussiness.Renderer
             var jumpPos = this.WorldToScreenPoint(target.transformCom.position);
             jumpPos.y += 50;
             jumpTextApi.JumpText_Dmg(jumpPos, dmgRecord.dmgType, randomStyle, GameMath.Floor(dmgRecord.value).ToString(), 0.5f);
+
+            // 骨骼抖动
+            if (target is GameRoleEntityR targetRole)
+            {
+                var angle = 0;
+                var amplitude = 0.1f;
+                var frequency = 10;
+                var duration = 0.2f;
+                this._context.domainApi.transformApi.Shake(targetRole.bodyCom.prefabGO.transform, angle, amplitude, frequency, duration);
+            }
         }
 
         public Vector3 WorldToScreenPoint(in Vector3 v)

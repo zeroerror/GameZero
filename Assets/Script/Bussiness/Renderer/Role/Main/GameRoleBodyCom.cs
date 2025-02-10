@@ -31,4 +31,5 @@ namespace GamePlay.Bussiness.Renderer
             this.shadow.SetActive(active);
         }
     }
+
 }
