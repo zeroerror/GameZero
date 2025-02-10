@@ -1,15 +1,16 @@
-using System.Reflection;
 using UnityEngine;
 
 public class UIUnitShopMainViewBinder
 {
-    public GameObject gameObject { get; private set; }
+    public GameObject gameObject{ get; private set; }
 
     public UIUnitShopMainViewBinder(GameObject gameObject)
     {
         this.gameObject = gameObject;
     }
 
+    public GameObject mask => _mask ?? (_mask = this.gameObject.transform.Find("mask").gameObject);
+    private GameObject _mask;
     public GameObject unitGroup => _unitGroup ?? (_unitGroup = this.gameObject.transform.Find("unitGroup").gameObject);
     private GameObject _unitGroup;
     public UIUnitItemBinder unitGroup_unit1 => _unitGroup_unit1 ?? (_unitGroup_unit1 = new UIUnitItemBinder(this.gameObject.transform.Find("unitGroup/unit1").gameObject));

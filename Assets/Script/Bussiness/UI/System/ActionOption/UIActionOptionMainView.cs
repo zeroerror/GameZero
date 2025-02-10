@@ -52,7 +52,7 @@ namespace GamePlay.Bussiness.UI
         {
             for (var i = 0; i < this._optionModels.Count; i++)
             {
-                var optionBinder = this.uiBinder.GetField($"option{i + 1}") as UIOptionBinder;
+                var optionBinder = this.uiBinder.GetField($"optionGroup_option{i + 1}") as UIOptionBinder;
                 var text = optionBinder.text;
                 text.GetComponent<Text>().text = this._GetOptionDesc(this._optionModels[i]).ToDevStr();
                 var optionIndex = i;

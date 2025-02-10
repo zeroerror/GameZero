@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UIUnitDetailMainViewBinder
 {
-    public GameObject gameObject { get; private set; }
+    public GameObject gameObject{ get; private set; }
 
     public UIUnitDetailMainViewBinder(GameObject gameObject)
     {

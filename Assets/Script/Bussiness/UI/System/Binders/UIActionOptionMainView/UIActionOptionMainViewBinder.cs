@@ -11,10 +11,10 @@ public class UIActionOptionMainViewBinder
 
     public GameObject optionGroup => _optionGroup ?? (_optionGroup = this.gameObject.transform.Find("optionGroup").gameObject);
     private GameObject _optionGroup;
-    public UIOptionBinder option1 => _option1 ?? (_option1 = new UIOptionBinder(GameObject.Find("option1")));
-    private UIOptionBinder _option1;
-    public UIOptionBinder option2 => _option2 ?? (_option2 = new UIOptionBinder(GameObject.Find("option2")));
-    private UIOptionBinder _option2;
-    public UIOptionBinder option3 => _option3 ?? (_option3 = new UIOptionBinder(GameObject.Find("option3")));
-    private UIOptionBinder _option3;
+    public UIOptionBinder optionGroup_option1 => _optionGroup_option1 ?? (_optionGroup_option1 = new UIOptionBinder(this.gameObject.transform.Find("optionGroup/option1").gameObject));
+    private UIOptionBinder _optionGroup_option1;
+    public UIOptionBinder optionGroup_option2 => _optionGroup_option2 ?? (_optionGroup_option2 = new UIOptionBinder(this.gameObject.transform.Find("optionGroup/option2").gameObject));
+    private UIOptionBinder _optionGroup_option2;
+    public UIOptionBinder optionGroup_option3 => _optionGroup_option3 ?? (_optionGroup_option3 = new UIOptionBinder(this.gameObject.transform.Find("optionGroup/option3").gameObject));
+    private UIOptionBinder _optionGroup_option3;
 }

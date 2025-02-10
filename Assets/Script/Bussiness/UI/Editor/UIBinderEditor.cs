@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using System.Collections.Generic;
 using System;
+using UnityEditor.SceneManagement;
 
 [CustomEditor(typeof(UIBinder))]
 public class UIBinderEditor : Editor
@@ -24,7 +25,7 @@ public class UIBinderEditor : Editor
             {
                 Directory.Delete(outputDir, true);
             }
-            GenerateBinder(root, prefabName + "Binder", outputDir);
+            GenerateBinder(root, prefabName + "Binder", outputDir, 0);
             this._binderDict.Clear();
         }
 
@@ -35,7 +36,7 @@ public class UIBinderEditor : Editor
         }
     }
 
-    private void GenerateBinder(Transform root, string binderName, string outputDir)
+    private void GenerateBinder(Transform root, string binderName, string outputDir, int traverseDepth)
     {
         string binderPath = $"{outputDir}/{binderName}.cs";
 
@@ -52,7 +53,7 @@ public class UIBinderEditor : Editor
         codeBuilder.AppendLine("    }");
         codeBuilder.AppendLine();
 
-        TraverseChildren(root, codeBuilder, outputDir, binderName);
+        TraverseChildren(root, codeBuilder, outputDir, binderName, traverseDepth);
 
         codeBuilder.AppendLine("}");
 
@@ -68,14 +69,16 @@ public class UIBinderEditor : Editor
         Debug.Log("代码已生成并保存到: " + binderPath);
     }
 
-    private void TraverseChildren(Transform parent, StringBuilder codeBuilder, string outputDirPath, string prefabName)
+    private void TraverseChildren(Transform parent, StringBuilder codeBuilder, string outputDirPath, string prefabName, int traverseDepth)
     {
+        traverseDepth++;
         foreach (Transform child in parent)
         {
-            string publicVarName = _GetVarName(child);
+            var depth = traverseDepth;
+            string publicVarName = _GetVarName(child, depth);
+            string varPath = _GetVarPath(child, depth);
             string privateVarName = $"_{publicVarName}";
-            string varPath = _GetVarPath(child);
-            var isBinder = PrefabUtility.IsAnyPrefabInstanceRoot(child.gameObject);
+            var isBinder = this._IsBinder(child);
             if (isBinder)
             {
                 var binderName = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(child.gameObject);
@@ -88,7 +91,7 @@ public class UIBinderEditor : Editor
                 if (!hasBinder)
                 {
                     // 为预制体再生成一个绑定类
-                    GenerateBinder(child, binderName, outputDirPath);
+                    GenerateBinder(child, binderName, outputDirPath, 0);
                 }
                 continue;
             }
@@ -97,24 +100,42 @@ public class UIBinderEditor : Editor
             codeBuilder.AppendLine($"    public {typeName} {publicVarName} => {privateVarName} ?? ({privateVarName} = this.gameObject.transform.Find(\"{varPath}\").gameObject);");
             codeBuilder.AppendLine($"    private {typeName} {privateVarName};");
 
-            TraverseChildren(child, codeBuilder, outputDirPath, prefabName);
+            TraverseChildren(child, codeBuilder, outputDirPath, prefabName, traverseDepth);
         }
     }
 
-    /// <summary> 获取相对最近的一个预制体父节点的深度 </summary>
-    private int _GetPrefabDepth(Transform tf)
+    /// <summary> 获取相对最近的一个预制体父节点的深度, 即路径遍历深度 </summary>
+    private int _GetVarDepth(Transform tf)
     {
         int depth = 0;
-        while (tf.parent != null)
+        var cur = tf;
+        while (cur != null)
         {
-            depth++;
-            tf = tf.parent;
-            if (PrefabUtility.IsAnyPrefabInstanceRoot(tf.gameObject))
+            if (this._IsBinder(cur))
             {
                 break;
             }
+            depth++;
+            cur = cur.parent;
         }
         return depth;
+    }
+
+    private bool _IsBinder(Transform tf)
+    {
+        // 判定是否是预制体
+        if (PrefabUtility.IsAnyPrefabInstanceRoot(tf.gameObject))
+        {
+            return true;
+        }
+
+        // 兼容 Prefab 编辑模式下, 无法正确判定是否是预制体的问题
+        var prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+        if (prefabStage != null && prefabStage.prefabContentsRoot == tf.gameObject)
+        {
+            return true;
+        }
+        return false;
     }
 
     private string _filter(string str)
@@ -127,9 +148,8 @@ public class UIBinderEditor : Editor
     }
 
     /// <summary> 获取变量名 </summary>
-    private string _GetVarName(Transform tf)
+    private string _GetVarName(Transform tf, int depth)
     {
-        var depth = _GetPrefabDepth(tf);
         var name = _filter(tf.name);
         if (depth <= 1) return name;
         while (depth > 1)
@@ -142,9 +162,8 @@ public class UIBinderEditor : Editor
     }
 
     /// <summary> 获取变量路径 </summary>
-    private string _GetVarPath(Transform tf)
+    private string _GetVarPath(Transform tf, int depth)
     {
-        var depth = _GetPrefabDepth(tf);
         var path = _filter(tf.name);
         if (depth <= 1) return path;
         while (depth > 1)
