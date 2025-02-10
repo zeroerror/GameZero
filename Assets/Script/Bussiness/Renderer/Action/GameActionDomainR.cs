@@ -176,8 +176,8 @@ namespace GamePlay.Bussiness.Renderer
             {
                 var angle = 0;
                 var amplitude = 0.1f;
-                var frequency = 10;
-                var duration = 0.2f;
+                var frequency = 50;
+                var duration = 0.1f;
                 this._context.domainApi.transformApi.Shake(targetRole.bodyCom.prefabGO.transform, angle, amplitude, frequency, duration);
             }
         }

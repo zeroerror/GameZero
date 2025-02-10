@@ -1,3 +1,4 @@
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.Renderer
@@ -49,16 +50,19 @@ namespace GamePlay.Bussiness.Renderer
 
         public void Tick(float dt)
         {
+            if (this.duration <= 0) return;
             this.elapsedTime += dt;
-            if (this.elapsedTime >= this.duration)
+            var ratio = GameMathF.Min(this.elapsedTime / this.duration, 1);
+            var amp = this.amplitude * GameMathF.Sin(this.frequency * ratio * 2 * Mathf.PI);
+            Vector2 shake = this._shakeDir * amp * (1 - ratio);
+            Vector2 offset = shake - this._lastShake;
+            this._lastShake = shake;
+            this.transform.position += new Vector3(offset.x, offset.y, 0);
+
+            if (ratio >= 1)
             {
                 this.Reset();
-                return;
             }
-            Vector2 shake = this._shakeDir * Mathf.Sin(this.elapsedTime * this.frequency) * this.amplitude;
-            Vector2 offset = shake - this._lastShake;
-            this.transform.position += new Vector3(offset.x, offset.y, 0);
-            this._lastShake = shake;
         }
     }
 }
