@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class UIUnitItemBinder
 {
@@ -9,6 +11,6 @@ public class UIUnitItemBinder
         this.gameObject = gameObject;
     }
 
-    public GameObject txt_name => _txt_name ?? (_txt_name = this.gameObject.transform.Find("txt_name").gameObject);
-    private GameObject _txt_name;
+    public Text txt_name => _txt_name ?? (_txt_name = this.gameObject.transform.Find("txt_name").GetComponent<Text>());
+    private Text _txt_name;
 }

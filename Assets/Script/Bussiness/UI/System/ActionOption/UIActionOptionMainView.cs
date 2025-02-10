@@ -54,7 +54,7 @@ namespace GamePlay.Bussiness.UI
             {
                 var optionBinder = this.uiBinder.GetField($"optionGroup_option{i + 1}") as UIOptionBinder;
                 var text = optionBinder.text;
-                text.GetComponent<Text>().text = this._GetOptionDesc(this._optionModels[i]).ToDevStr();
+                text.text = this._GetOptionDesc(this._optionModels[i]).ToDevStr();
                 var optionIndex = i;
                 this.SetClick(optionBinder.gameObject, () => this._OnClickOption(optionIndex));
                 GameLogger.DebugLog($"选项{i + 1}: {this._GetOptionDesc(this._optionModels[i])}");

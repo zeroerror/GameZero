@@ -71,22 +71,22 @@ namespace GamePlay.Bussiness.UI
                 unitBinder.gameObject.SetActive(isActive);
                 if (isActive)
                 {
-                    var text = unitBinder.txt_name.GetComponent<Text>();
-                    text.GetComponent<Text>().text = this._GetItemName(this._itemModels[i]).ToDevStr();
+                    var text = unitBinder.txt_name;
+                    text.text = this._GetItemName(this._itemModels[i]).ToDevStr();
                     var idx = i;
                     this.SetClick(unitBinder.gameObject, () => this._OnClickItem(idx));
                 }
                 GameLogger.DebugLog($"单位{i + 1}: {this._GetItemName(this._itemModels[i])}");
             }
 
-            this.SetClick(this.uiBinder.btn_confirm, this._OnBtnConfirmClick);
-            this.SetClick(this.uiBinder.btn_refresh, this._OnBtnRefreshClick);
+            this.SetClick(this.uiBinder.btn_confirm.gameObject, this._OnBtnConfirmClick);
+            this.SetClick(this.uiBinder.btn_refresh.gameObject, this._OnBtnRefreshClick);
         }
 
         private void _refreshGold()
         {
             var curGold = this._uiApi.playerApi.curGold;
-            this.uiBinder.txt_gold.GetComponent<Text>().text = curGold.ToDevStr();
+            this.uiBinder.txt_gold.text = curGold.ToDevStr();
         }
 
         private void _OnClickItem(int index)

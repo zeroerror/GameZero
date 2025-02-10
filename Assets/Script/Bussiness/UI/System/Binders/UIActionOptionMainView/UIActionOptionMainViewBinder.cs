@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class UIActionOptionMainViewBinder
 {
@@ -9,7 +11,7 @@ public class UIActionOptionMainViewBinder
         this.gameObject = gameObject;
     }
 
-    public GameObject optionGroup => _optionGroup ?? (_optionGroup = this.gameObject.transform.Find("optionGroup").gameObject);
+    public GameObject optionGroup => _optionGroup ?? (_optionGroup = this.gameObject.transform.Find("optionGroup").GetComponent<GameObject>());
     private GameObject _optionGroup;
     public UIOptionBinder optionGroup_option1 => _optionGroup_option1 ?? (_optionGroup_option1 = new UIOptionBinder(this.gameObject.transform.Find("optionGroup/option1").gameObject));
     private UIOptionBinder _optionGroup_option1;

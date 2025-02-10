@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class UIUnitShopMainViewBinder
 {
@@ -9,9 +11,9 @@ public class UIUnitShopMainViewBinder
         this.gameObject = gameObject;
     }
 
-    public GameObject mask => _mask ?? (_mask = this.gameObject.transform.Find("mask").gameObject);
-    private GameObject _mask;
-    public GameObject unitGroup => _unitGroup ?? (_unitGroup = this.gameObject.transform.Find("unitGroup").gameObject);
+    public Image mask => _mask ?? (_mask = this.gameObject.transform.Find("mask").GetComponent<Image>());
+    private Image _mask;
+    public GameObject unitGroup => _unitGroup ?? (_unitGroup = this.gameObject.transform.Find("unitGroup").GetComponent<GameObject>());
     private GameObject _unitGroup;
     public UIUnitItemBinder unitGroup_unit1 => _unitGroup_unit1 ?? (_unitGroup_unit1 = new UIUnitItemBinder(this.gameObject.transform.Find("unitGroup/unit1").gameObject));
     private UIUnitItemBinder _unitGroup_unit1;
@@ -23,14 +25,14 @@ public class UIUnitShopMainViewBinder
     private UIUnitItemBinder _unitGroup_unit4;
     public UIUnitItemBinder unitGroup_unit5 => _unitGroup_unit5 ?? (_unitGroup_unit5 = new UIUnitItemBinder(this.gameObject.transform.Find("unitGroup/unit5").gameObject));
     private UIUnitItemBinder _unitGroup_unit5;
-    public GameObject btn_confirm => _btn_confirm ?? (_btn_confirm = this.gameObject.transform.Find("btn_confirm").gameObject);
-    private GameObject _btn_confirm;
-    public GameObject btn_confirm_txt => _btn_confirm_txt ?? (_btn_confirm_txt = this.gameObject.transform.Find("btn_confirm/txt").gameObject);
-    private GameObject _btn_confirm_txt;
-    public GameObject btn_refresh => _btn_refresh ?? (_btn_refresh = this.gameObject.transform.Find("btn_refresh").gameObject);
-    private GameObject _btn_refresh;
-    public GameObject btn_refresh_txt => _btn_refresh_txt ?? (_btn_refresh_txt = this.gameObject.transform.Find("btn_refresh/txt").gameObject);
-    private GameObject _btn_refresh_txt;
-    public GameObject txt_gold => _txt_gold ?? (_txt_gold = this.gameObject.transform.Find("txt_gold").gameObject);
-    private GameObject _txt_gold;
+    public Image btn_confirm => _btn_confirm ?? (_btn_confirm = this.gameObject.transform.Find("btn_confirm").GetComponent<Image>());
+    private Image _btn_confirm;
+    public Text btn_confirm_txt => _btn_confirm_txt ?? (_btn_confirm_txt = this.gameObject.transform.Find("btn_confirm/txt").GetComponent<Text>());
+    private Text _btn_confirm_txt;
+    public Image btn_refresh => _btn_refresh ?? (_btn_refresh = this.gameObject.transform.Find("btn_refresh").GetComponent<Image>());
+    private Image _btn_refresh;
+    public Text btn_refresh_txt => _btn_refresh_txt ?? (_btn_refresh_txt = this.gameObject.transform.Find("btn_refresh/txt").GetComponent<Text>());
+    private Text _btn_refresh_txt;
+    public Text txt_gold => _txt_gold ?? (_txt_gold = this.gameObject.transform.Find("txt_gold").GetComponent<Text>());
+    private Text _txt_gold;
 }

@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class UIOptionBinder
 {
@@ -9,6 +11,6 @@ public class UIOptionBinder
         this.gameObject = gameObject;
     }
 
-    public GameObject text => _text ?? (_text = this.gameObject.transform.Find("text").gameObject);
-    private GameObject _text;
+    public Text text => _text ?? (_text = this.gameObject.transform.Find("text").GetComponent<Text>());
+    private Text _text;
 }

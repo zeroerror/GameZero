@@ -34,9 +34,9 @@ namespace GamePlay.Bussiness.UI
                 headUrl = UIPathUtil.GetRoleHead(model.typeId);
             }
             // 头像
-            this._binder.img_head.GetComponent<Image>().sprite = Resources.Load<Sprite>(headUrl);
+            this._binder.img_head.sprite = Resources.Load<Sprite>(headUrl);
             // 名称
-            this._binder.txt_name.GetComponent<Text>().text = name;
+            this._binder.txt_name.text = name;
         }
 
         public void Refersh(GameEntityType entityType, int entityId)
@@ -61,13 +61,13 @@ namespace GamePlay.Bussiness.UI
                 }
                 item.gameObject.SetActive(true);
                 // 属性图标
-                item.group_img_icon.GetComponent<Image>().sprite = Resources.Load<Sprite>(UIPathUtil.GetAttributeIcon(attr.type));
+                item.group_img_icon.sprite = Resources.Load<Sprite>(UIPathUtil.GetAttributeIcon(attr.type));
                 // 属性值
-                item.group_txt_value.GetComponent<TextMeshProUGUI>().text = attr.value.ToString();
+                item.group_txt_value.text = attr.value.ToString();
                 // 加成
                 var baseAttr = baseAttributes.Find(b => b.type == attr.type);
                 var additionV = baseAttr.type != GameAttributeType.None ? (attr.value - baseAttr.value) : 0;
-                var textCom = item.group_txt_addition.GetComponent<TextMeshProUGUI>();
+                var textCom = item.group_txt_addition;
                 if (additionV == 0)
                 {
                     textCom.text = string.Empty;
@@ -101,11 +101,11 @@ namespace GamePlay.Bussiness.UI
                     // CD
                     var cdTime = skill.skillModel.conditionModel.cdTime;
                     var cdElapsed = skill.cdElapsed;
-                    var textCom = skillItem.cd_txt.GetComponent<TextMeshProUGUI>();
+                    var textCom = skillItem.cd_txt;
                     textCom.text = cdElapsed.ToFixed(1).ToString();
                     skillItem.cd.gameObject.SetActive(cdElapsed > 0);
                     // 技能图标
-                    skillItem.img_icon.GetComponent<Image>().sprite = Resources.Load<Sprite>(UIPathUtil.GetSkillIcon(skill.skillModel.typeId));
+                    skillItem.img_icon.sprite = Resources.Load<Sprite>(UIPathUtil.GetSkillIcon(skill.skillModel.typeId));
                 });
                 for (int i = role.skillCom.Count; i < 3; i++)
                 {
