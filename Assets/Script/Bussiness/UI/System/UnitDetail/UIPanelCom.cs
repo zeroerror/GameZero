@@ -103,7 +103,7 @@ namespace GamePlay.Bussiness.UI
                     var cdElapsed = skill.cdElapsed;
                     var textCom = skillItem.cd_txt.GetComponent<TextMeshProUGUI>();
                     textCom.text = cdElapsed.ToFixed(1).ToString();
-                    skillItem.cd.SetActive(cdElapsed > 0);
+                    skillItem.cd.gameObject.SetActive(cdElapsed > 0);
                     // 技能图标
                     skillItem.img_icon.GetComponent<Image>().sprite = Resources.Load<Sprite>(UIPathUtil.GetSkillIcon(skill.skillModel.typeId));
                 });

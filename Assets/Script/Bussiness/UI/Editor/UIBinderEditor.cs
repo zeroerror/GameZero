@@ -3,8 +3,8 @@ using UnityEditor;
 using System.Text;
 using System.IO;
 using System.Collections.Generic;
-using System;
 using UnityEditor.SceneManagement;
+using System.Runtime.InteropServices;
 
 [CustomEditor(typeof(UIBinder))]
 public class UIBinderEditor : Editor
@@ -42,6 +42,8 @@ public class UIBinderEditor : Editor
 
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.AppendLine("using UnityEngine;");
+        codeBuilder.AppendLine("using UnityEngine.UI;");
+        codeBuilder.AppendLine("using TMPro;");
         codeBuilder.AppendLine();
         codeBuilder.AppendLine($"public class {binderName}");
         codeBuilder.AppendLine("{");
@@ -96,29 +98,19 @@ public class UIBinderEditor : Editor
                 continue;
             }
 
-            var typeName = "GameObject";
-            codeBuilder.AppendLine($"    public {typeName} {publicVarName} => {privateVarName} ?? ({privateVarName} = this.gameObject.transform.Find(\"{varPath}\").gameObject);");
+            var typeName = this._GetUIComTypeName(child);
+            codeBuilder.AppendLine($"    public {typeName} {publicVarName} => {privateVarName} ?? ({privateVarName} = this.gameObject.transform.Find(\"{varPath}\").GetComponent<{typeName}>());");
             codeBuilder.AppendLine($"    private {typeName} {privateVarName};");
 
             TraverseChildren(child, codeBuilder, outputDirPath, prefabName, traverseDepth);
         }
     }
 
-    /// <summary> 获取相对最近的一个预制体父节点的深度, 即路径遍历深度 </summary>
-    private int _GetVarDepth(Transform tf)
+    private string _GetUIComTypeName(Transform tf)
     {
-        int depth = 0;
-        var cur = tf;
-        while (cur != null)
-        {
-            if (this._IsBinder(cur))
-            {
-                break;
-            }
-            depth++;
-            cur = cur.parent;
-        }
-        return depth;
+        var uiCom = tf.GetComponent<UnityEngine.UI.Graphic>();
+        var typeName = uiCom != null ? uiCom.GetType().Name : "GameObject";
+        return typeName;
     }
 
     private bool _IsBinder(Transform tf)
