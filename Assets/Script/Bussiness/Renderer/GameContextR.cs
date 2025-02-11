@@ -1,9 +1,8 @@
-using GamePlay.Bussiness.Core;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.UI;
 using GamePlay.Core;
 using UnityEngine;
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameContextR
     {
@@ -20,6 +19,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameProjectileContextR projectileContext { get; private set; }
         public GameFieldContextR fieldContext { get; private set; }
         public GameBuffContextR buffContext { get; private set; }
+        public GameShaderEffectContext shaderEffectContext { get; private set; }
 
         public GameEventService eventService { get; private set; }
         public GameEventService delayRCEventService { get; private set; }
@@ -41,6 +41,7 @@ namespace GamePlay.Bussiness.Renderer
             this.projectileContext = new GameProjectileContextR();
             this.fieldContext = new GameFieldContextR();
             this.buffContext = new GameBuffContextR();
+            this.shaderEffectContext = new GameShaderEffectContext();
 
             this.eventService = new GameEventService();
             this.delayRCEventService = new GameEventService();

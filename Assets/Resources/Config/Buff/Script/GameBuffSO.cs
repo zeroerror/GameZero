@@ -1,6 +1,6 @@
 using GamePlay.Bussiness.Config;
 using GamePlay.Bussiness.Logic;
-using GamePlay.Bussiness.Renderer;
+using GamePlay.Bussiness.Render;
 using GamePlay.Core;
 using UnityEngine;
 

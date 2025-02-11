@@ -1,6 +1,6 @@
 using System.Linq;
 using GamePlay.Bussiness.Logic;
-using GamePlay.Bussiness.Renderer;
+using GamePlay.Bussiness.Render;
 using UnityEngine;
 
 namespace GamePlay.Config

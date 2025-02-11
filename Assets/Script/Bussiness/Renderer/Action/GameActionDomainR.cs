@@ -5,7 +5,7 @@ using GamePlay.Core;
 using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameActionDomainR : GameActionDomainApiR
     {
@@ -171,14 +171,18 @@ namespace GamePlay.Bussiness.Renderer
             jumpPos.y += 50;
             jumpTextApi.JumpText_Dmg(jumpPos, dmgRecord.dmgType, randomStyle, GameMath.Floor(dmgRecord.value).ToString(), 0.5f);
 
-            // 骨骼抖动
             if (target is GameRoleEntityR targetRole)
             {
+                // 骨骼抖动
                 var angle = 0;
                 var amplitude = 0.1f;
                 var frequency = 50;
                 var duration = 0.1f;
                 this._context.domainApi.transformApi.Shake(targetRole.bodyCom.prefabGO.transform, angle, amplitude, frequency, duration);
+                // 受击闪烁
+                var typeId = GameShaderEffectCollection.SHADER_EFFECT_HIT_FLASH;
+                var renderers = targetRole.bodyCom.renderers;
+                this._context.domainApi.shaderEffectApi.PlayShaderEffect(typeId, renderers);
             }
         }
 

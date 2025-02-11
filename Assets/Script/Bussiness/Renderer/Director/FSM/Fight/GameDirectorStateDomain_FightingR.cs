@@ -4,7 +4,7 @@ using GamePlay.Bussiness.UI;
 using GamePlay.Core;
 using UnityEngine;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameDirectorStateDomain_FightingR : GameDirectorStateDomainBaseR
     {

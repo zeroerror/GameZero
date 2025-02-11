@@ -2,7 +2,7 @@ using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.UI;
 using GamePlay.Core;
 using UnityEngine;
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameRoleDomainR : GameRoleDomainApiR
     {
@@ -155,9 +155,9 @@ namespace GamePlay.Bussiness.Renderer
 
             // 将新角色替换就旧的角色, 若未处于变身状态, 将oldRole记录在变身角色仓库
             var oldRole = this._roleContext.repo.Replace(newRole);
-            if (!this._roleContext.transfromRepo.TryFindByEntityId(role.idCom.entityId, out var _))
+            if (!this._roleContext.transformRepo.TryFindByEntityId(role.idCom.entityId, out var _))
             {
-                this._roleContext.transfromRepo.TryAdd(oldRole);
+                this._roleContext.transformRepo.TryAdd(oldRole);
             }
 
             // 转移buff

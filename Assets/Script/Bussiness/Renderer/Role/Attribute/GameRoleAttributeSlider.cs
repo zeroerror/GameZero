@@ -2,7 +2,7 @@ using GamePlay.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameRoleAttributeSlider
     {

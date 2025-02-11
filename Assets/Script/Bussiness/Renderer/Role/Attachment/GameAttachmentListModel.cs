@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     /// <summary>
     /// 附件列表

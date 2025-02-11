@@ -19,6 +19,7 @@ namespace GamePlay.Bussiness.Logic
         {
             this._dict.Clear();
             this._list.Clear();
+            this._poolDict.Clear();
         }
 
         public virtual bool TryAdd(T entity)

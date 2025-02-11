@@ -1,4 +1,4 @@
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameRoleState_IdleR : GameRoleStateBaseR
     {

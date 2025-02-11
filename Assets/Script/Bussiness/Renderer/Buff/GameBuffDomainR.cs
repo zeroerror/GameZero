@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameBuffDomainR : GameBuffDomainApiR
     {

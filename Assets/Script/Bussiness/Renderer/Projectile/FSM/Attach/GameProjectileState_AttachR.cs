@@ -1,6 +1,6 @@
 using GamePlay.Bussiness.Logic;
 using GameVec2 = UnityEngine.Vector2;
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameProjectileState_Attach : GameProjectileStateBase
     {

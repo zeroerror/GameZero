@@ -49,7 +49,7 @@ namespace GamePlay.Bussiness.Logic
 
         public void ToPosition(GameTransformCom transCom, in GameVec2 toPos, float duration, GameEasingType easingType)
         {
-            var action = new GameTransfromPosAction(
+            var action = new GameTransformPosAction(
                 transCom,
                 toPos,
                 duration,

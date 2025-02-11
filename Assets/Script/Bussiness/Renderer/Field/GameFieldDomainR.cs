@@ -3,7 +3,7 @@ using GamePlay.Core;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameFieldDomainR : GameFieldDomainApiR
     {

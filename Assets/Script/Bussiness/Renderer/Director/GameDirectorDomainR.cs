@@ -2,7 +2,7 @@ using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.UI;
 using GamePlay.Core;
 using UnityEngine;
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameDirectorDomainR : GameDirectorDomainApiR
     {
@@ -23,6 +23,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameFieldDomainR fieldDomain { get; private set; }
         public GameEntityCollectDomainR entityCollectDomain { get; private set; }
         public GameBuffDomainR buffDomain { get; private set; }
+        public GameShaderEffectDomain shaderEffectDomain { get; private set; }
 
         public GameDirectorDomainR()
         {
@@ -50,6 +51,7 @@ namespace GamePlay.Bussiness.Renderer
             this.fieldDomain = new GameFieldDomainR();
             this.entityCollectDomain = new GameEntityCollectDomainR();
             this.buffDomain = new GameBuffDomainR();
+            this.shaderEffectDomain = new GameShaderEffectDomain();
         }
 
         private void _InitContext(GameObject sceneRoot, GameDomainApi logicApi, UIDomainApi uiApi)
@@ -67,6 +69,7 @@ namespace GamePlay.Bussiness.Renderer
             this.context.domainApi.SetFieldApi(this.fieldDomain);
             this.context.domainApi.SetEntityCollectApi(this.entityCollectDomain);
             this.context.domainApi.SetBuffApi(this.buffDomain);
+            this.context.domainApi.SetShaderEffectApi(this.shaderEffectDomain);
         }
 
         private void _InjectContext()
@@ -83,6 +86,7 @@ namespace GamePlay.Bussiness.Renderer
             this.fieldDomain.Inject(this.context);
             this.entityCollectDomain.Inject(this.context);
             this.buffDomain.Inject(this.context);
+            this.shaderEffectDomain.Inject(this.context);
         }
 
         public void Destroy()
@@ -100,6 +104,7 @@ namespace GamePlay.Bussiness.Renderer
             this.fieldDomain.Destroy();
             this.entityCollectDomain.Destroy();
             this.buffDomain.Destroy();
+            this.shaderEffectDomain.Destroy();
         }
 
         public void BindEvents()
@@ -132,6 +137,7 @@ namespace GamePlay.Bussiness.Renderer
             this.entityCollectDomain.Tick(dt);
             this.buffDomain.Tick(dt);
             this.transformDomain.Tick(dt);
+            this.shaderEffectDomain.Tick(dt);
         }
 
         public void Update(float dt)

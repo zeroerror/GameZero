@@ -2,7 +2,7 @@ using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
-    public class GameTransfromPosAction
+    public class GameTransformPosAction
     {
         public GameTransformCom transCom;
         public GameVec2 position;
@@ -12,7 +12,7 @@ namespace GamePlay.Bussiness.Logic
         public float elapsedTime;
         public GameEasing2DCom posEasingCom;
 
-        public GameTransfromPosAction(
+        public GameTransformPosAction(
             GameTransformCom transCom,
             in GameVec2 position,
             float duration,

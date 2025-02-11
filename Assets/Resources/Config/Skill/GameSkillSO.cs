@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using System.Runtime.Serialization.Formatters;
 using GamePlay.Bussiness.Logic;
-using GamePlay.Bussiness.Renderer;
+using GamePlay.Bussiness.Render;
 using GamePlay.Core;
 using UnityEditor;
 #endif

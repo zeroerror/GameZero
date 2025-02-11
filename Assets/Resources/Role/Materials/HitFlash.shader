@@ -1,4 +1,4 @@
-Shader "Custom/HitFlash"
+Shader "GamePlay/HitFlash"
 {
     Properties
     {

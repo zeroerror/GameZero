@@ -1,7 +1,7 @@
 using GamePlay.Core;
 using UnityEngine;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameTransformShake
     {

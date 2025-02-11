@@ -3,7 +3,7 @@ using GamePlay.Core;
 using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
 using GameVec3 = UnityEngine.Vector3;
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameRoleEntityR : GameEntityBase
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Core;
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameBuffComR
     {

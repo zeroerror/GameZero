@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameSkillDomainR : GameSkillDomainApiR
     {

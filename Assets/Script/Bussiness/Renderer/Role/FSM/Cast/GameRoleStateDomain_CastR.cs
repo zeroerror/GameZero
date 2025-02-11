@@ -2,7 +2,7 @@ using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine.UIElements;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameRoleStateDomain_CastR : GameRoleStateDomainBaseR
     {

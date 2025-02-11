@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameRoleBodyCom
     {
@@ -9,6 +9,7 @@ namespace GamePlay.Bussiness.Renderer
         public readonly GameObject prefabGO;
         public readonly GameObject shadow;
         public GameRoleAttachmentCom attachmentCom { get; private set; }
+        public Renderer[] renderers { get; private set; }
 
         public GameRoleBodyCom(GameObject tmRoot, GameObject tmFoot, GameObject prefabGO, GameRoleAttachmentCom attachmentCom)
         {
@@ -18,6 +19,7 @@ namespace GamePlay.Bussiness.Renderer
             this.shadow = tmFoot.transform.Find("shadow")?.gameObject;
             Debug.Assert(this.shadow != null, "shadow is null");
             this.attachmentCom = attachmentCom;
+            this.renderers = this.tmRoot.GetComponentsInChildren<Renderer>();
         }
 
         public void Destroy()
@@ -31,5 +33,4 @@ namespace GamePlay.Bussiness.Renderer
             this.shadow.SetActive(active);
         }
     }
-
 }

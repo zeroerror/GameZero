@@ -1,6 +1,6 @@
 using GamePlay.Config;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameRoleModelR
     {

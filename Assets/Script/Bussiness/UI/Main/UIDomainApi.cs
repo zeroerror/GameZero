@@ -1,5 +1,5 @@
 using GamePlay.Bussiness.Logic;
-using GamePlay.Bussiness.Renderer;
+using GamePlay.Bussiness.Render;
 
 namespace GamePlay.Bussiness.UI
 {

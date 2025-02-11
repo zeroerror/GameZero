@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Bussiness.Logic;
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameProjectileFSMCom
     {

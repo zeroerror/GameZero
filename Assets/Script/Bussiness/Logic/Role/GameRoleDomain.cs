@@ -234,9 +234,9 @@ namespace GamePlay.Bussiness.Logic
 
             // 将新角色替换就旧的角色, 若未处于变身状态, 将oldRole记录在变身角色仓库
             var oldRole = this._roleContext.repo.Replace(newRole);
-            if (!this._roleContext.transfromRepo.TryFindByEntityId(role.idCom.entityId, out var _))
+            if (!this._roleContext.transformRepo.TryFindByEntityId(role.idCom.entityId, out var _))
             {
-                this._roleContext.transfromRepo.TryAdd(oldRole);
+                this._roleContext.transformRepo.TryAdd(oldRole);
             }
 
             // 提交RC事件

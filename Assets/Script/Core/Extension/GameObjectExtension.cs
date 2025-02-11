@@ -164,5 +164,16 @@ namespace GamePlay.Core
             }
             return url;
         }
+
+        public static string GetResRelativeUrl(this UnityEngine.Object obj, bool withExtension = false)
+        {
+            var url = UnityEditor.AssetDatabase.GetAssetPath(obj);
+            url = System.Text.RegularExpressions.Regex.Replace(url, @"Assets/Resources/", "");
+            if (!withExtension)
+            {
+                url = url.Substring(0, url.LastIndexOf('.'));
+            }
+            return url;
+        }
     }
 }

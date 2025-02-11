@@ -3,7 +3,7 @@ using GamePlay.Core;
 using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameDirectorStateDomain_FightPreparingR : GameDirectorStateDomainBaseR
     {

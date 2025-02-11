@@ -1,4 +1,4 @@
-using GamePlay.Bussiness.Renderer;
+using GamePlay.Bussiness.Render;
 using GamePlay.Core;
 using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;

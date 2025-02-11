@@ -2,7 +2,7 @@ using GamePlay.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameRoleFactoryR
     {
@@ -23,13 +23,6 @@ namespace GamePlay.Bussiness.Renderer
             }
             var bodyCom = GetBodyCom(model);
             var e = new GameRoleEntityR(model, bodyCom);
-            // 挂载受击闪烁shader
-            var hitFlashMat = LoadHitFlashMaterial();
-            var renderers = e.bodyCom.prefabGO.GetComponentsInChildren<UnityEngine.Renderer>();
-            foreach (var renderer in renderers)
-            {
-                renderer.material = hitFlashMat;
-            }
             return e;
         }
 
@@ -126,19 +119,6 @@ namespace GamePlay.Bussiness.Renderer
             var slider = go.GetComponentInChildren<Slider>();
             Debug.Assert(slider != null, "角色工厂[渲染层]: 加载属性条失败, 未找到Slider组件");
             return slider;
-        }
-
-        /// <summary> 加载受击闪烁材质 </summary>
-        public Material LoadHitFlashMaterial()
-        {
-            const string url = "Role/Materials/HitFlash";
-            var mat = Resources.Load<Shader>(url);
-            if (!mat)
-            {
-                GameLogger.LogError("角色工厂[渲染层]: 加载受击闪烁材质失败 " + url);
-                return null;
-            }
-            return new Material(mat);
         }
     }
 }

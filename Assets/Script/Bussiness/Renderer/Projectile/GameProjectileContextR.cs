@@ -1,6 +1,6 @@
 using GamePlay.Core;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameProjectileContextR
     {

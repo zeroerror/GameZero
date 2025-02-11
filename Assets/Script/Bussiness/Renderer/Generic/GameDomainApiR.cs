@@ -1,4 +1,4 @@
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameDomainApiR
     {
@@ -38,5 +38,7 @@ namespace GamePlay.Bussiness.Renderer
         public GameBuffDomainApiR buffApi { get; private set; }
         public void SetBuffApi(GameBuffDomainApiR buffApi) => this.buffApi = buffApi;
 
+        public GameShaderEffectDomainApi shaderEffectApi { get; private set; }
+        public void SetShaderEffectApi(GameShaderEffectDomainApi shaderEffectApi) => this.shaderEffectApi = shaderEffectApi;
     }
 }

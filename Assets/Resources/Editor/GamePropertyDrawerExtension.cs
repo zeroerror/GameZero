@@ -38,6 +38,14 @@ namespace GamePlay.Config
             return property.floatValue;
         }
 
+        public static float DrawFloat(this float value, string label, float height = 4, bool isReadOnly = false)
+        {
+            if (isReadOnly) EditorGUILayout.FloatField(label, value);
+            else value = EditorGUILayout.FloatField(label, value);
+            _AdjustLayout(height);
+            return value;
+        }
+
         public static Vector2 DrawProperty_Vector2(this SerializedProperty property, string label, float height = 4, bool isReadOnly = false)
         {
             if (isReadOnly) EditorGUILayout.Vector2Field(label, property.vector2Value);
@@ -109,6 +117,20 @@ namespace GamePlay.Config
             return currentEnumValue;
         }
 
+        public static string DrawPopup(this string[] options, ref int selectedIndex, string label)
+        {
+            if (options == null || options.Length == 0)
+            {
+                return string.Empty;
+            }
+            EditorGUILayout.LabelField(label);
+            var position = EditorGUILayout.GetControlRect();
+            selectedIndex = EditorGUI.Popup(position, selectedIndex, options);
+            selectedIndex = Mathf.Clamp(selectedIndex, 0, options.Length - 1);
+            _AdjustLayout(4);
+            return options[selectedIndex];
+        }
+
         public static bool DrawProperty_Bool(this SerializedProperty property, string label, float height = 4, bool isReadOnly = false)
         {
             if (isReadOnly) EditorGUILayout.Toggle(label, property.boolValue);
@@ -123,6 +145,14 @@ namespace GamePlay.Config
             else property.stringValue = EditorGUILayout.TextField(label, property.stringValue);
             _AdjustLayout(height);
             return property.stringValue;
+        }
+
+        public static string DrawStr(this string value, float height = 4, bool isReadOnly = false)
+        {
+            if (isReadOnly) EditorGUILayout.TextField(value, value);
+            else EditorGUILayout.TextField(value, value);
+            _AdjustLayout(height);
+            return value;
         }
 
         public static void DrawProperty_Array(this SerializedProperty property, string label, float height = 4)
@@ -168,6 +198,13 @@ namespace GamePlay.Config
                 property.InsertArrayElementAtIndex(count);
             }, Color.green, 100);
             _AdjustLayout(height);
+        }
+
+        public static AnimationCurve DrawProperty_AnimationCurve(this SerializedProperty property, string label, float height = 4)
+        {
+            property.animationCurveValue = EditorGUILayout.CurveField(label, property.animationCurveValue);
+            _AdjustLayout(height);
+            return property.animationCurveValue;
         }
     }
 }

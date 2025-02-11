@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public interface GameBuffDomainApiR
     {

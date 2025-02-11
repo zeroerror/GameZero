@@ -1,4 +1,4 @@
-namespace GamePlay.Bussiness.Renderer
+namespace GamePlay.Bussiness.Render
 {
     public class GameDirectorState_LoadingR : GameDirectorStateBaseR
     {
