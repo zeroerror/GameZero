@@ -61,7 +61,8 @@ namespace GamePlay.Bussiness.Logic
 
         private bool _BasicCheck(in GameIdArgs actorIdArgs)
         {
-            // 行为实体必须是Buff挂载的角色
+            // 行为实体必须是Buff挂载的角色 
+            // TODO 分情况, 如果是当被执行行为时, 则targetIdArgs为Buff挂载的角色
             var actorEntity = this.FindEntity(actorIdArgs.entityType, actorIdArgs.entityId);
             if (!actorEntity) return false;
             var actorRoleEntity = actorEntity.GetLinkParent<GameRoleEntity>();
