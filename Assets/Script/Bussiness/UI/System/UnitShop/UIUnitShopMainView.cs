@@ -1,7 +1,6 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine;
-using UnityEngine.UI;
 namespace GamePlay.Bussiness.UI
 {
     public struct UIUnitShopMainViewInput

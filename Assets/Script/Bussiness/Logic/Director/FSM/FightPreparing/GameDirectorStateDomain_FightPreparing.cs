@@ -158,10 +158,10 @@ namespace GamePlay.Bussiness.Logic
 
         protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
         {
-            // 一直等待, 直到玩家选择了一个选项, 并且确认了开始战斗
+            // 等待玩家确认开始战斗
             var fightPreparingState = director.fsmCom.fightPreparingState;
             var selectedOptionModel = fightPreparingState.selectedOption;
-            if (selectedOptionModel == null || !fightPreparingState.confirmFight || !fightPreparingState.isAllUnitPositioned)
+            if (!fightPreparingState.confirmFight)
             {
                 return new GameDirectorExitStateArgs(GameDirectorStateType.None);
             }

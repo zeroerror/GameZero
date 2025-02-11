@@ -34,7 +34,7 @@ namespace GamePlay.Bussiness.UI
 
         private void _OnStateEnterFighting(object args)
         {
-            this.CloseUI<UIUnitShopMainView>();
+            // this.CloseUI<UIUnitShopMainView>();
         }
 
         private void _OnBuyUnit(object args)

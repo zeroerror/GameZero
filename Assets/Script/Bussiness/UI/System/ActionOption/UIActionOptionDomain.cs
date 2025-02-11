@@ -31,20 +31,12 @@ namespace GamePlay.Bussiness.UI
         {
             var rcArgs = (GameDirectorRCArgs_StateEnterFightPreparing)args;
             this._actionOptions = rcArgs.actionOptions;
-
-            var round = this._context.logicApi.directorApi.curRound;
-            if (round > 1) return;
-
             var viewInput = new UIActionOptionMainViewInput(this._actionOptions);
             this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));
         }
 
         private void _OnFightPreparingPositioned(object args)
         {
-            var round = this._context.logicApi.directorApi.curRound;
-            if (round <= 1) return;
-            var viewInput = new UIActionOptionMainViewInput(this._actionOptions);
-            this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));
         }
 
         /// <summary>
