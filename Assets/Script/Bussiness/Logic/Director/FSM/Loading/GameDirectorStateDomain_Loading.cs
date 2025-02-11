@@ -8,14 +8,14 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public override bool CheckEnter(GameDirectorEntity director, object args = null)
+        public override bool CheckEnter(GameDirectorEntity director, params object[] args)
         {
             return true;
         }
 
-        public override void Enter(GameDirectorEntity director, object args = null)
+        public override void Enter(GameDirectorEntity director, params object[] args)
         {
-            var loadFieldId = (int)args;
+            var loadFieldId = (int)args[0];
             var curField = this._context.fieldContext.curField;
             var fsmCom = director.fsmCom;
             var loadingState = fsmCom.loadingState;

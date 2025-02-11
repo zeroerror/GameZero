@@ -77,7 +77,7 @@ namespace GamePlay.Bussiness.Logic
             return true;
         }
 
-        public override bool CheckEnter(GameDirectorEntity director, object args = null)
+        public override bool CheckEnter(GameDirectorEntity director, params object[] args)
         {
             var stateType = director.fsmCom.stateType;
             if (stateType == GameDirectorStateType.FightPreparing)
@@ -88,7 +88,7 @@ namespace GamePlay.Bussiness.Logic
             return true;
         }
 
-        public override void Enter(GameDirectorEntity director, object args = null)
+        public override void Enter(GameDirectorEntity director, params object[] args)
         {
             // 洗牌可购买单位列表
             this._context.domainApi.directorApi.ShuffleBuyableUnits(true);

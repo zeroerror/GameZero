@@ -9,12 +9,12 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public override bool CheckEnter(GameDirectorEntity director, object args = null)
+        public override bool CheckEnter(GameDirectorEntity director, params object[] args)
         {
             return true;
         }
 
-        public override void Enter(GameDirectorEntity director, object args = null)
+        public override void Enter(GameDirectorEntity director, params object[] args)
         {
             var fsmCom = director.fsmCom;
             var initEntityIdArgsList = new List<GameIdArgs>();
@@ -42,12 +42,24 @@ namespace GamePlay.Bussiness.Logic
 
         protected override GameDirectorExitStateArgs _CheckExit(GameDirectorEntity director)
         {
-            var playerCampId = GameCampCollection.PLAYER_CAMP_ID;
-            var playerCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == playerCampId);
-            if (playerCount == 0) return new GameDirectorExitStateArgs(GameDirectorStateType.Settling);
             var enemyCampId = GameCampCollection.ENEMY_CAMP_ID;
             var enemyCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == enemyCampId);
-            if (enemyCount == 0) return new GameDirectorExitStateArgs(GameDirectorStateType.Settling);
+            var playerCampId = GameCampCollection.PLAYER_CAMP_ID;
+            var playerCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == playerCampId);
+            // 胜利条件: 敌人全部生成完毕且死亡
+            var hasSpawnedAllEnemyUnits = this._context.domainApi.fieldApi.HasSpawnedAllEnemyUnits();
+            if (hasSpawnedAllEnemyUnits && enemyCount == 0)
+            {
+                return new GameDirectorExitStateArgs(GameDirectorStateType.Settling, playerCount, enemyCount, true);
+            }
+
+            // 失败条件: 金币为0 且 玩家角色全部死亡
+            var gold = this._context.director.gold;
+            if (gold <= 0 && playerCount == 0)
+            {
+                return new GameDirectorExitStateArgs(GameDirectorStateType.Settling, playerCount, enemyCount, false);
+            }
+
             return new GameDirectorExitStateArgs(GameDirectorStateType.None);
         }
 

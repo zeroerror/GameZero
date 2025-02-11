@@ -3,9 +3,9 @@ namespace GamePlay.Bussiness.Logic
     public struct GameDirectorExitStateArgs
     {
         public GameDirectorStateType toState;
-        public object args;
+        public object[] args;
 
-        public GameDirectorExitStateArgs(GameDirectorStateType toState, object args = null)
+        public GameDirectorExitStateArgs(GameDirectorStateType toState, params object[] args)
         {
             this.toState = toState;
             this.args = args;
@@ -48,9 +48,9 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /** 判定进入条件 */
-        public abstract bool CheckEnter(GameDirectorEntity director, object args = null);
+        public abstract bool CheckEnter(GameDirectorEntity director, params object[] args);
         /** 进入. ps: 直接调用则会跳过了条件判定 */
-        public abstract void Enter(GameDirectorEntity director, object args = null);
+        public abstract void Enter(GameDirectorEntity director, params object[] args);
         /** 状态更新 */
         protected abstract void _Tick(GameDirectorEntity director, float frameTime);
         /** 判定退出条件 */

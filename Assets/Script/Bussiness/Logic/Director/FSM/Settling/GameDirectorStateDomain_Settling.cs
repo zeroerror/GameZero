@@ -24,20 +24,18 @@ namespace GamePlay.Bussiness.Logic
             fsmCom.settlingState.stateFinished = true;
         }
 
-        public override bool CheckEnter(GameDirectorEntity director, object args = null)
+        public override bool CheckEnter(GameDirectorEntity director, params object[] args)
         {
             return true;
         }
 
-        public override void Enter(GameDirectorEntity director, object args = null)
+        public override void Enter(GameDirectorEntity director, params object[] args)
         {
             this._context.domainApi.roleApi.DetachAllRolesBuffs();
+            var playerCount = (int)args[0];
+            var enemyCount = (int)args[1];
+            var isWin = (bool)args[2];
 
-            var playerCampId = GameCampCollection.PLAYER_CAMP_ID;
-            var enemyCampId = GameCampCollection.ENEMY_CAMP_ID;
-            var playerCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == playerCampId);
-            var enemyCount = this._context.roleContext.repo.GetEntityCount((role) => role.idCom.campId == enemyCampId);
-            var isWin = playerCount > enemyCount;
             var fsmCom = director.fsmCom;
             fsmCom.EnterSettling(playerCount, enemyCount, isWin);
             GameLogger.DebugLog("导演 - 进入结算状态");

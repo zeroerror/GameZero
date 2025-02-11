@@ -13,5 +13,10 @@ namespace GamePlay.Bussiness.Logic
         /// <para>field: 场景实体</para>
         /// </summary>
         public void DestroyField(GameFieldEntity field);
+
+        /// <summary>
+        /// 所有敌人单位是否全部生成完毕
+        /// </summary>
+        public bool HasSpawnedAllEnemyUnits();
     }
 }

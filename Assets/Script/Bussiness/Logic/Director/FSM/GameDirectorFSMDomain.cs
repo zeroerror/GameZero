@@ -44,7 +44,7 @@ namespace GamePlay.Bussiness.Logic
             stateDomain.Tick(director, dt);
         }
 
-        public bool TryEnter(GameDirectorEntity director, GameDirectorStateType toState, object args = null)
+        public bool TryEnter(GameDirectorEntity director, GameDirectorStateType toState, params object[] args)
         {
             if (!this._stateDomainDict.TryGetValue(toState, out var stateDomain)) return false;
             var check = stateDomain.CheckEnter(director, args);
