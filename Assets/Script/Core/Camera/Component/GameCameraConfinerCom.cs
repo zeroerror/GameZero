@@ -12,6 +12,7 @@ namespace GamePlay.Core
         public GameCameraConfinerCom(Camera camera)
         {
             this.camera = camera;
+            this.cameraPos = camera.transform.position;
         }
 
         protected override void _Tick(float dt)

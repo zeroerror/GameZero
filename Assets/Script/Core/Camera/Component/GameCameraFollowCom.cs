@@ -18,6 +18,7 @@ namespace GamePlay.Core
         public GameCameraFollowCom(Camera camera)
         {
             this.camera = camera;
+            this.cameraPos = camera.transform.position;
         }
 
         public void Clear()

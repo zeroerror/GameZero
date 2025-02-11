@@ -75,7 +75,6 @@ namespace GamePlay.Bussiness.Render
                         // 使用 MaterialPropertyBlock 来设置参数，避免内存泄漏
                         propertyBlock.SetFloat(timeline.propName, value);
                         renderer.SetPropertyBlock(propertyBlock); // 将属性块应用到渲染器
-                        GameLogger.DebugLog($"ShaderEffectEntity.Tick: {timeline.propName} = {value}");
                         return;
                     }
 

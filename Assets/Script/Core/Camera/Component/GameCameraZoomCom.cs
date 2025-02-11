@@ -18,7 +18,6 @@ namespace GamePlay.Core
         public float time;
         public float value;
 
-
         public GameCameraZoomData(float from, float to, float duration, GameEasingType easingType, bool needReset, Action onComplete = null)
         {
             this.from = from;
