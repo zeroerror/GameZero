@@ -19,7 +19,7 @@ namespace GamePlay.Bussiness.Render
             this.shadow = tmFoot.transform.Find("shadow")?.gameObject;
             Debug.Assert(this.shadow != null, "shadow is null");
             this.attachmentCom = attachmentCom;
-            this.renderers = this.tmRoot.GetComponentsInChildren<Renderer>();
+            this.renderers = this.prefabGO.GetComponentsInChildren<Renderer>();
         }
 
         public void Destroy()

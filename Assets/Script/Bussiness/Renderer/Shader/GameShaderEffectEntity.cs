@@ -30,6 +30,7 @@ namespace GamePlay.Bussiness.Render
 
             // .material = xxx 会创建新的材质实例导致内存泄漏, 因此采取sharedMaterial和MaterialPropertyBlock搭配使用
             renderer.sharedMaterial = this.material;
+            renderer.GetPropertyBlock(propertyBlock); // 获取属性块
 
             this.renderer = renderer;
             this.elapsedTime = startTime;

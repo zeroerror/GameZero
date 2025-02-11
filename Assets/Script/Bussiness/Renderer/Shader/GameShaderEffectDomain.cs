@@ -54,19 +54,15 @@ namespace GamePlay.Bussiness.Render
                 return;
             }
             shaderEffectEntity.Play(renderer);
+            this._shaderEffectContext.repo.Add(shaderEffectEntity);
         }
+
         public void PlayShaderEffect(int shaderEffectId, Renderer[] renderers)
         {
-            var shaderEffectEntity = this._GetShaderEffectEntity(shaderEffectId);
-            if (shaderEffectEntity == null)
-            {
-                return;
-            }
             renderers?.Foreach((renderer) =>
             {
-                shaderEffectEntity.Play(renderer);
+                this.PlayShaderEffect(shaderEffectId, renderer);
             });
-            this._shaderEffectContext.repo.Add(shaderEffectEntity);
         }
 
         private GameShaderEffectEntity _GetShaderEffectEntity(int shaderEffectId)
