@@ -206,5 +206,12 @@ namespace GamePlay.Config
             _AdjustLayout(height);
             return property.animationCurveValue;
         }
+
+        public static Color DrawProperty_Color(this SerializedProperty property, string label, float height = 4)
+        {
+            property.colorValue = EditorGUILayout.ColorField(label, property.colorValue);
+            _AdjustLayout(height);
+            return property.colorValue;
+        }
     }
 }

@@ -56,6 +56,10 @@ namespace GamePlay.Config
                     property.FindPropertyRelative("toValue_float").DrawProperty_Float("结束值");
                     property.FindPropertyRelative("curve_float").DrawProperty_AnimationCurve("曲线");
                     break;
+                case ShaderPropertyType.Color:
+                    property.FindPropertyRelative("fromValue_color").DrawProperty_Color("起始值");
+                    property.FindPropertyRelative("toValue_color").DrawProperty_Color("结束值");
+                    break;
                 default:
                     EditorGUILayout.HelpBox($"不支持的参数类型: {propType}", MessageType.Warning);
                     break;
@@ -65,15 +69,16 @@ namespace GamePlay.Config
         private Dictionary<string, object> _GetShaderPropDict(SerializedProperty property)
         {
             var propDict = new Dictionary<string, object>();
-            var shader_p = property.FindPropertyRelative("shader");
-            if (shader_p.objectReferenceValue)
+            var material_p = property.FindPropertyRelative("material");
+            if (material_p.objectReferenceValue)
             {
-                var shader = shader_p.objectReferenceValue as Shader;
-                var count = ShaderUtil.GetPropertyCount(shader);
+                var material = material_p.objectReferenceValue as Material;
+                var shader = material.shader;
+                var count = GetPropertyCount(shader);
                 for (int i = 0; i < count; i++)
                 {
-                    var propName = ShaderUtil.GetPropertyName(shader, i);
-                    var propType = ShaderUtil.GetPropertyType(shader, i);
+                    var propName = GetPropertyName(shader, i);
+                    var propType = GetPropertyType(shader, i);
                     propDict[propName] = propType;
                 }
             }

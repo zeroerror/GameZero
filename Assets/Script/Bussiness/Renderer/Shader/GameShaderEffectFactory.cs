@@ -24,22 +24,6 @@ namespace GamePlay.Bussiness.Render
             return entity;
         }
 
-        public Shader LoadShader(int typeId)
-        {
-            if (!template.TryGet(typeId, out var model))
-            {
-                GameLogger.LogError("GameShaderEffectFactoryR.LoadShader: typeId not found: " + typeId);
-                return null;
-            }
-            var url = model.shaderUrl;
-            var shader = Resources.Load<Shader>(url);
-            if (shader == null)
-            {
-                GameLogger.LogError("GameShaderEffectFactoryR.LoadShader: shader not found: " + url);
-            }
-            return shader;
-        }
-
         public Material LoadMaterial(int typeId)
         {
             if (!template.TryGet(typeId, out var model))
@@ -47,7 +31,7 @@ namespace GamePlay.Bussiness.Render
                 GameLogger.LogError("GameShaderEffectFactoryR.LoadMaterial: typeId not found: " + typeId);
                 return null;
             }
-            var url = model.shaderUrl;
+            var url = model.materialUrl;
             var mat = Resources.Load<Material>(url);
             if (mat == null)
             {

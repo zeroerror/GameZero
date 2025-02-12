@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c184efdd7ff2bd42981f9fad0554656, type: 3}
-  m_Name: template_shaderEffect_1
+  m_Name: template_shaderEffect_3
   m_EditorClassIdentifier: 
-  typeId: 1
-  desc: "\u53D7\u51FB\u95EA\u70C1"
-  material: {fileID: 2100000, guid: 691a56194f079ad4aaffc4dc0c4285c2, type: 2}
-  loopCount: 1
+  typeId: 3
+  desc: "\u9690\u8EAB"
+  material: {fileID: 2100000, guid: 42a62e0ee8a2be249964fcfbe776e777, type: 2}
+  loopCount: 0
   propTimeLines:
-  - material: {fileID: 2100000, guid: 691a56194f079ad4aaffc4dc0c4285c2, type: 2}
-    propName: _FlashAmount
+  - material: {fileID: 2100000, guid: 42a62e0ee8a2be249964fcfbe776e777, type: 2}
+    propName: _PreviewAmount
     startTime: 0
-    endTime: 0.3
-    fromValue_float: 0
-    toValue_float: 1
+    endTime: 2
+    fromValue_float: 0.1
+    toValue_float: 0.2
     curve_float:
       serializedVersion: 2
       m_Curve:
@@ -56,3 +56,5 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    fromValue_color: {r: 0, g: 0, b: 0, a: 0}
+    toValue_color: {r: 0, g: 0, b: 0, a: 0}

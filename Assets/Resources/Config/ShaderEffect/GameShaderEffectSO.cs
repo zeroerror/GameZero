@@ -9,8 +9,8 @@ namespace GamePlay.Config
     {
         /// <summary> 描述 </summary>
         public string desc;
-        /// <summary> shader </summary>
-        public Shader shader;
+        /// <summary> 材质 </summary>
+        public Material material;
         /// <summary> 循环次数(0表示无限循环) </summary>
         public int loopCount;
         /// <summary> 参数时间轴 </summary>
@@ -18,11 +18,16 @@ namespace GamePlay.Config
 
         public GameShaderEffectModel ToModel()
         {
-            var shaderUrl = shader.GetResRelativeUrl();
+            if (!material)
+            {
+                GameLogger.LogError("GameShaderEffectSO.ToModel: material is null. typeId: " + typeId);
+                return null;
+            }
+            var materialUrl = material.GetResRelativeUrl();
             var model = new GameShaderEffectModel(
                 typeId,
                 desc,
-                shaderUrl,
+                materialUrl,
                 loopCount,
                 propTimeLines.ToModels()
             );

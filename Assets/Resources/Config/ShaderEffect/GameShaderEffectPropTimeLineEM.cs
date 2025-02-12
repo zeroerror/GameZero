@@ -9,8 +9,8 @@ namespace GamePlay.Config
     [System.Serializable]
     public struct GameShaderEffectPropTimeLineEM
     {
-        /// <summary> Shader </summary>
-        public Shader shader;
+        /// <summary> 材质 </summary>
+        public Material material;
 
         /// <summary> 属性名称 </summary>
         public string propName;
@@ -18,12 +18,18 @@ namespace GamePlay.Config
         public float startTime;
         /// <summary> 结束时间 </summary>
         public float endTime;
+
         /// <summary> 起始值(float) </summary>
         public float fromValue_float;
         /// <summary> 结束值(float) </summary>
         public float toValue_float;
         /// <summary> 曲线(float) </summary>
         public AnimationCurve curve_float;
+
+        /// <summary> 起始值(Color) </summary>
+        public Color fromValue_color;
+        /// <summary> 结束值(Color) </summary>
+        public Color toValue_color;
 
         public GameShaderEffectPropTimeLineModel ToModel()
         {

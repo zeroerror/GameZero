@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UnitPreview
+  m_Name: mat_unit_preview
   m_Shader: {fileID: 4800000, guid: 9193004bf60f8be45a2ca92673b5adb6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -41,6 +41,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _FlashColor: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _PreviewColor: {r: 0.1549929, g: 0.5061302, b: 0.764151, a: 0.50980395}
+    - _PreviewColor: {r: 0.6467604, g: 0.7412499, b: 0.8113208, a: 0.50980395}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

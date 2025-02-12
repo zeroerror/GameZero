@@ -5,6 +5,7 @@ namespace GamePlay.Bussiness.Render
 {
     public interface GameShaderEffectDomainApi
     {
+
         /// <summary>
         /// 在Renderer播放Shader特效
         /// <para>shaderEffectId: 特效 ID</para>
@@ -15,7 +16,7 @@ namespace GamePlay.Bussiness.Render
         /// <summary>
         /// 在所有Renderer播放Shader特效
         /// <para>shaderEffectId: 特效 ID</para>
-        /// <para>renderer: 渲染器数组</para>
+        /// <para>renderers: 渲染器数组</para>
         /// </summary>
         public void PlayShaderEffect(int shaderEffectId, Renderer[] renderers);
 
@@ -25,6 +26,8 @@ namespace GamePlay.Bussiness.Render
         /// <para>entity: 实体</para>
         /// </summary>
         public void PlayShaderEffect(int shaderEffectId, GameEntityBase entity);
+
+
 
         /// <summary>
         /// 停止Renderer的Shader特效

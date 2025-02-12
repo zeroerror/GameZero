@@ -4,7 +4,7 @@ namespace GamePlay.Bussiness.Render
     {
         public readonly int typeId;
         public readonly string desc;
-        public readonly string shaderUrl;
+        public readonly string materialUrl;
         public readonly int loopCount;
         public readonly GameShaderEffectPropTimeLineModel[] propTimeLines;
 
@@ -13,14 +13,14 @@ namespace GamePlay.Bussiness.Render
         public GameShaderEffectModel(
             int typeId,
             string desc,
-            string shaderUrl,
+            string materialUrl,
             int loopCount,
             GameShaderEffectPropTimeLineModel[] propTimeLines
         )
         {
             this.typeId = typeId;
             this.desc = desc;
-            this.shaderUrl = shaderUrl;
+            this.materialUrl = materialUrl;
             this.loopCount = loopCount == 0 ? int.MaxValue : loopCount;
             this.propTimeLines = propTimeLines;
 
@@ -35,7 +35,7 @@ namespace GamePlay.Bussiness.Render
 
         public override string ToString()
         {
-            return $"GameShaderEffectModel: 描述={desc}, shader路径={shaderUrl}, 循环次数={loopCount}, 参数时间轴={propTimeLines}";
+            return $"GameShaderEffectModel: 描述={desc}, material路径={materialUrl}, 循环次数={loopCount}, 参数时间轴={propTimeLines}";
         }
     }
 }

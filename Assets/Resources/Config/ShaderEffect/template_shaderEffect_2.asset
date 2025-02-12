@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 2
   desc: "\u9884\u89C8\u95EA\u70C1"
-  shader: {fileID: 4800000, guid: 9193004bf60f8be45a2ca92673b5adb6, type: 3}
+  material: {fileID: 2100000, guid: e096388250e62004f95fd049808e9056, type: 2}
   loopCount: 0
   propTimeLines:
-  - shader: {fileID: 4800000, guid: 9193004bf60f8be45a2ca92673b5adb6, type: 3}
+  - material: {fileID: 2100000, guid: e096388250e62004f95fd049808e9056, type: 2}
     propName: _PreviewAmount
     startTime: 0
     endTime: 0.5

@@ -34,6 +34,8 @@ namespace GamePlay.Bussiness.Render
 
         public override void Enter(GameRoleEntityR role, params object[] args)
         {
+            // 停止所有shader特效
+            this._context.domainApi.shaderEffectApi.StopShaderEffects(role);
             GameLogger.Log($"角色状态 - 进入销毁状态");
             role.SetInvalid();// 标记无效, 等待自动实体回收
             role.fsmCom.EnterDestroyed();
