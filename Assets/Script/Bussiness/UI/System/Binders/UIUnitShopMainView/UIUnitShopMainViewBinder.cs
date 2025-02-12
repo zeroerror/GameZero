@@ -33,6 +33,10 @@ public class UIUnitShopMainViewBinder
     private Image _btn_refresh;
     public Text btn_refresh_txt => _btn_refresh_txt ?? (_btn_refresh_txt = this.gameObject.transform.Find("btn_refresh/txt").GetComponent<Text>());
     private Text _btn_refresh_txt;
+    public Image btn_cancel => _btn_cancel ?? (_btn_cancel = this.gameObject.transform.Find("btn_cancel").GetComponent<Image>());
+    private Image _btn_cancel;
+    public Text btn_cancel_txt => _btn_cancel_txt ?? (_btn_cancel_txt = this.gameObject.transform.Find("btn_cancel/txt").GetComponent<Text>());
+    private Text _btn_cancel_txt;
     public Text txt_gold => _txt_gold ?? (_txt_gold = this.gameObject.transform.Find("txt_gold").GetComponent<Text>());
     private Text _txt_gold;
 }

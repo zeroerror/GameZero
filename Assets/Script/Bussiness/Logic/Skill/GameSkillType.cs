@@ -7,5 +7,7 @@ namespace GamePlay.Bussiness.Logic
         NormalAttack = 1,
         /// <summary> 法力攻击 </summary>
         MagicAttack = 2,
+        /// <summary> 被动 </summary>
+        Passive = 100,
     }
 }

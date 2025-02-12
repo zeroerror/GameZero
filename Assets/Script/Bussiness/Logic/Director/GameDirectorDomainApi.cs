@@ -94,11 +94,6 @@ namespace GamePlay.Bussiness.Logic
         public void CleanBattleField();
 
         /// <summary>
-        /// 获取当前回合的区域位置
-        /// </summary>
-        public GameVec2 GetRoundAreaPosition();
-
-        /// <summary>
         /// 当前回合数
         /// </summary>
         public int curRound { get; }

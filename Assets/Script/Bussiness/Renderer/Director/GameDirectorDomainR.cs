@@ -173,23 +173,6 @@ namespace GamePlay.Bussiness.Render
             this.context.director.timeScaleCom.SetTimeScale(timeScale);
         }
 
-        public void LookAtRoundArea()
-        {
-            var roundPos = this.GetRoundAreaPosition();
-            var camPos = this.context.cameraEntity.position;
-            if (roundPos.Equals(camPos)) return;
-
-            var tempGO = new GameObject();
-            tempGO.transform.position = roundPos;
-            var followCom = this.context.cameraEntity.followCom;
-            followCom.Set(tempGO, Vector2.zero, 1.5f, GameEasingType.OutCubic);
-            followCom.SetOnComplete(() =>
-            {
-                followCom.Clear();
-                GameObject.Destroy(tempGO);
-            });
-        }
-
         public Vector2 GetRoundAreaPosition()
         {
             var director = this.director;
@@ -251,7 +234,9 @@ namespace GamePlay.Bussiness.Render
             switch (unitModel.entityType)
             {
                 case GameEntityType.Role:
-                    return this.roleDomain.CreateRole(idArgs, transArgs);
+                    var role = this.roleDomain.CreateRole(idArgs, transArgs);
+                    role.attributeBarCom.SetActive(false);
+                    return role;
                 default:
                     GameLogger.LogError("导演 - 创建预览单位失败, 未知的实体类型 " + unitModel.entityType);
                     return null;

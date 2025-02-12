@@ -191,5 +191,34 @@ namespace GamePlay.Bussiness.Logic
                 return this.CheckSkillCondition(role, skill, target, ignoreDistanceCondition);
             });
         }
+
+        public void DoPassiveSkill(GameRoleEntity role)
+        {
+            var skillIds = role.model.skillIds;
+            if (skillIds == null) return;
+            skillIds.Foreach((skillId) =>
+            {
+                if (!this._skillContext.factory.template.TryGet(skillId, out var skillModel))
+                {
+                    GameLogger.LogError("被动技能执行失败，技能ID不存在：" + skillId);
+                    return;
+                }
+                if (skillModel.skillType != GameSkillType.Passive) return;
+                var passiveSkill = role.skillCom.Find((s) => s.skillModel.typeId == skillId);
+                if (!passiveSkill)
+                {
+                    GameLogger.LogError("被动技能执行失败，技能未找到：" + skillId);
+                    return;
+                }
+                // 直接执行被动技能的所有action
+                skillModel.timelineEvModels?.Foreach((evModel, index) =>
+                {
+                    evModel.actionIds?.Foreach((actionId) =>
+                    {
+                        this._context.domainApi.actionApi.DoAction(actionId, passiveSkill);
+                    });
+                });
+            });
+        }
     }
 }

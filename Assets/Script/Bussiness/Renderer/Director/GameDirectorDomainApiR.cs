@@ -12,11 +12,6 @@ namespace GamePlay.Bussiness.Render
         public void SetTimeScale(float timeScale);
 
         /// <summary>
-        /// 镜头看向当前回合的区域位置
-        /// </summary>
-        public void LookAtRoundArea();
-
-        /// <summary>
         /// 获取当前回合的区域位置
         /// </summary>
         public Vector2 GetRoundAreaPosition();

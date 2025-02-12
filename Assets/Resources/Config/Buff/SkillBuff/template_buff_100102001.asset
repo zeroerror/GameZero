@@ -32,12 +32,85 @@ MonoBehaviour:
       isEnable: 1
       targetAction: {fileID: 11400000, guid: 0fe48bb3e653ecd4e9ce1174c39d2c4b, type: 2}
       targetActionType: 0
-      actionCount: 2
+      actionCount: 1
       validWindowTime: 0
     whenRoleStateEnterEM:
       isEnable: 0
       campType: 0
       stateType: 0
+      skillType: 0
+    whenUnitCountChangeEM:
+      isEnable: 0
+      selectorEM:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      countCondition: 0
+    whenAttributeChangeEM:
+      isEnable: 0
+      valueA: 0
+      valueFormatA: 0
+      refTypeA: 0
+      selectorEM_A:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      valueB: 0
+      valueFormatB: 0
+      refTypeB: 0
+      selectorEM_B:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      compareType: 0
   conditionSetEM_remove:
     durationEM:
       isEnable: 1
@@ -55,6 +128,105 @@ MonoBehaviour:
       isEnable: 0
       campType: 0
       stateType: 0
+      skillType: 0
+    whenUnitCountChangeEM:
+      isEnable: 0
+      selectorEM:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      countCondition: 0
+    whenAttributeChangeEM:
+      isEnable: 0
+      valueA: 0
+      valueFormatA: 0
+      refTypeA: 0
+      selectorEM_A:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      valueB: 0
+      valueFormatB: 0
+      refTypeB: 0
+      selectorEM_B:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+      compareType: 0
+  layerSelectorEnable: 0
+  layerSelectorEM:
+    selectAnchorType: 0
+    campType: 0
+    entityType: 0
+    onlySelectDead: 0
+    selColliderType: 0
+    boxColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      width: 0
+      height: 0
+    circleColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+    fanColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+      fanAngle: 0
+  layerValueRefEnable: 0
+  layerValueRefEM:
+    value: 0
+    valueFormat: 0
+    refType: 0
   vfxPrefab: {fileID: 4763262428129407028, guid: e045502fe65e47041b4e843cee83f6b9, type: 3}
   vfxPrefabUrl: VFX/vfx_fire_ring
   vfxLayerType: 1

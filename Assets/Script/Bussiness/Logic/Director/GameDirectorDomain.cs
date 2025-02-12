@@ -218,7 +218,7 @@ namespace GamePlay.Bussiness.Logic
         public GameEntityBase CreateUnit(GameItemUnitEntity unitEntity)
         {
             var model = unitEntity.unitModel;
-            var createPos = this.GetRoundAreaPosition() + unitEntity.standPos;
+            var createPos = unitEntity.standPos;
             GameEntityBase entity = null;
             switch (model.entityType)
             {
@@ -349,14 +349,6 @@ namespace GamePlay.Bussiness.Logic
             this.context.domainApi.projectileApi.RemoveAllProjectiles();
             // 提交RC
             this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_CLEAR_FIELD, new GameDirectorRCArgs_CleanBattleField { fieldId = curField.model.typeId });
-        }
-
-        public GameVec2 GetRoundAreaPosition()
-        {
-            var director = this.director;
-            const int roundAreaHeight = 10;
-            var pos = new GameVec2(0, roundAreaHeight * (director.curRound - 1));
-            return pos;
         }
 
         public GameEntityBase FindEntity(in GameIdArgs idArgs)

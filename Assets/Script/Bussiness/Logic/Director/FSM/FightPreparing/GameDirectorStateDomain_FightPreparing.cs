@@ -130,7 +130,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 var unit = this._context.domainApi.directorApi.FindUnitEntity(unitEntity);
                 if (unit == null) return;
-                var moveDstPos = this._context.domainApi.directorApi.GetRoundAreaPosition() + unitEntity.standPos;
+                var moveDstPos = unitEntity.standPos;
                 var isPositioned = moveDstPos == unit.transformCom.position;
                 if (isPositioned) return;
                 isAllUnitPositioned = false;
@@ -209,16 +209,6 @@ namespace GamePlay.Bussiness.Logic
         public override void ExitTo(GameDirectorEntity director, GameDirectorStateType toState)
         {
             base.ExitTo(director, toState);
-            // 更新单位的站位
-            var unitEntitys = director.itemUnitEntitys;
-            unitEntitys?.ForEach((unitEntity) =>
-            {
-                var unit = this._context.domainApi.directorApi.FindUnitEntity(unitEntity);
-                if (unit == null) return;
-                var standPos = unit.transformCom.position - this._context.domainApi.directorApi.GetRoundAreaPosition();
-                unitEntity.standPos = standPos;
-                GameLogger.DebugLog($"{unit.idCom} 单位站位更新: {standPos}");
-            });
         }
     }
 }

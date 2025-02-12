@@ -69,9 +69,6 @@ namespace GamePlay.Bussiness.Render
 
         public override void Enter(GameDirectorEntityR director, object args = null)
         {
-            // 镜头看向当前回合的区域位置
-            this._context.domainApi.directorApi.LookAtRoundArea();
-
             director.fsmCom.EnterFightPreparing();
             GameLogger.DebugLog("R 导演 - 进入战斗准备状态");
         }

@@ -46,6 +46,10 @@ namespace GamePlay.Bussiness.Render
             }
         }
 
+        protected override void _Tick(GameRoleEntityR role, float frameTime)
+        {
+        }
+
         public override void ExitTo(GameRoleEntityR role, GameRoleStateType toState)
         {
             base.ExitTo(role, toState);

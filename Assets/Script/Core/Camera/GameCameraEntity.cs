@@ -6,6 +6,7 @@ namespace GamePlay.Core
     {
         public Camera camera { get; private set; }
         public Vector2 position => this.camera.transform.position;
+        public void SetPosZ(float z) => this.camera.transform.position = new Vector3(this.position.x, this.position.y, z);
 
         public GameCameraFollowCom followCom { get; private set; }
         public GameCameraConfinerCom confinerCom { get; private set; }

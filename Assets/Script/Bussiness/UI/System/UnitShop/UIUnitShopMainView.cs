@@ -40,10 +40,12 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.BindKeyAction(KeyCode.L, this._OnClickItemDown4);
             this._uiApi.directorApi.BindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.BindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
+            this._uiApi.logicApi.directorApi.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnDirectorStateExit);
 
             this.SetClick(this.uiBinder.btn_confirm.gameObject, this._OnBtnConfirmClick);
             this.SetClick(this.uiBinder.btn_refresh.gameObject, this._OnBtnRefreshClick);
             this.SetClick(this.uiBinder.mask.gameObject, this._OnClickMask);
+            this.SetClick(this.uiBinder.btn_cancel.gameObject, this._OnClickBtnCancel);
         }
 
         protected override void _UnbindEvents()
@@ -56,17 +58,31 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.L, this._OnClickItemDown4);
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.UnbindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
+            this._uiApi.logicApi.directorApi.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnDirectorStateExit);
         }
 
         private void _OnPlayerCoinsChange(object args)
         {
-            this._refreshGold();
+            this._RefreshGold();
+        }
+
+        private void _OnDirectorStateExit(object args)
+        {
+            var rcArgs = (GameDirectorRCArgs_StateExit)args;
+            if (rcArgs.exitStateType == GameDirectorStateType.FightPreparing)
+            {
+                this.uiBinder.btn_confirm.gameObject.SetActive(false);
+            }
         }
 
         protected override void _OnShow()
         {
-            this._refreshGold();
-
+            // 刷新金币显示
+            this._RefreshGold();
+            // 刷新按钮显示
+            this.uiBinder.btn_confirm.gameObject.SetActive(true);
+            this._OnClickBtnCancel();
+            // 刷新购买单位列表
             var itemCount = this._unitModels.Length;
             for (var i = 0; i < 5; i++)
             {
@@ -82,9 +98,10 @@ namespace GamePlay.Bussiness.UI
                 }
                 GameLogger.DebugLog($"单位{i + 1}: {this._GetItemName(this._unitModels[i])}");
             }
+
         }
 
-        private void _refreshGold()
+        private void _RefreshGold()
         {
             var curGold = this._uiApi.playerApi.curGold;
             this.uiBinder.txt_gold.text = curGold.ToDevStr();
@@ -125,6 +142,9 @@ namespace GamePlay.Bussiness.UI
                 this._previewUnit.SetPosition(worldPos);
             });
             this._selectedItemIndex = index;
+
+            // 显示取消按钮
+            this.uiBinder.btn_cancel.gameObject.SetActive(true);
         }
         private GameEntityBase _previewUnit;
         private int _timerId;
@@ -154,11 +174,22 @@ namespace GamePlay.Bussiness.UI
             {
                 this._uiApi.logicApi.directorApi.BuyUnit(this._selectedItemIndex, this._previewUnit.GetPosition());
                 this._uiApi.rendererApi.shaderEffectApi.StopShaderEffects(this._previewUnit);
-                this._uiApi.rendererApi.directorApi.DestroyPreviewUnit(this._previewUnit);
+            }
+        }
+
+        private void _OnClickBtnCancel()
+        {
+            if (this._timerId != 0)
+            {
                 this.RemoveTimer(this._timerId);
                 this._timerId = 0;
+            }
+            if (this._previewUnit)
+            {
+                this._uiApi.rendererApi.directorApi.DestroyPreviewUnit(this._previewUnit);
                 this._previewUnit = null;
             }
+            this.uiBinder.btn_cancel.gameObject.SetActive(false);
         }
 
         private string _GetItemName(GameItemUnitModel unitModel)

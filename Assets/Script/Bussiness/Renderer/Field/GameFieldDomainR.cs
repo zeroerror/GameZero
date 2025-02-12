@@ -74,9 +74,8 @@ namespace GamePlay.Bussiness.Render
                 return;
             }
             this._fieldContext.curField = field;
-            var cam = this._context.cameraEntity.camera;
-            cam.transform.position = new Vector3(0, 0, GameFieldLayerCollection.CAMERA_Z);
-            cam.transform.eulerAngles = new Vector3(0, 0, 0);
+            var cameraEntity = this._context.cameraEntity;
+            cameraEntity.SetPosZ(GameFieldLayerCollection.CAMERA_Z);
         }
 
         public void AddToLayer(GameObject go, GameFieldLayerType layerType, int orderOffset = 0)

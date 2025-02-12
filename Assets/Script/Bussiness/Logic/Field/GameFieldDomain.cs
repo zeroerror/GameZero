@@ -58,7 +58,7 @@ namespace GamePlay.Bussiness.Logic
             curField.SetMonsterSpawned(index, true);
 
             var radius = area.radius;
-            var areaPos = area.position + this._context.domainApi.directorApi.GetRoundAreaPosition();
+            var areaPos = area.position;
             area.monsterSpawnModels?.Foreach((spawnModel, idx) =>
             {
                 for (var i = 0; i < spawnModel.count; i++)

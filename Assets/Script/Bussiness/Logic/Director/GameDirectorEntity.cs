@@ -42,7 +42,7 @@ namespace GamePlay.Bussiness.Logic
         {
             this.fsmCom = new GameDirectorFSMCom();
             this.timeScaleCom = new GameDirectorTimelineComponent();
-            this.gold = 100;//初始金币
+            this.gold = 10000;//初始金币
             this.actionOptions = new List<GameActionOptionModel>();
             this.itemUnitEntitys = new List<GameItemUnitEntity>();
             this.buyableUnits = new List<GameItemUnitModel>();

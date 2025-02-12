@@ -39,5 +39,11 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 施放技能 </summary>
         public void CastSkill(GameRoleEntity role, GameSkillEntity skill);
 
+        /// <summary>
+        /// 执行角色的被动技能
+        /// </summary>
+        /// <param name="role"></param>
+        public void DoPassiveSkill(GameRoleEntity role);
+
     }
 }

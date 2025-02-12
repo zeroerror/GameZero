@@ -107,11 +107,6 @@ namespace GamePlay.Bussiness.Logic
 
             // 其余领域的初始化逻辑
             this._InitByOtherDomains(role);
-
-            this._context.cmdBufferService.AddDelayCmd(3f, () =>
-            {
-                this._context.domainApi.actionApi.DoAction(901, role);
-            });
             return role;
         }
 
@@ -157,6 +152,8 @@ namespace GamePlay.Bussiness.Logic
             {
                 this._context.domainApi.skillApi.CreateSkill(role, skillId);
             });
+            // 被动技能在角色生成时的自动释放
+            this._context.domainApi.skillApi.DoPassiveSkill(role);
             // 默认进入待机
             this.fsmDomain.TryEnter(role, GameRoleStateType.Idle);
             this._context.domainApi.roleAIApi.TryEnter(role, GameRoleAIStateType.Idle);
