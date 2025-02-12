@@ -70,10 +70,22 @@ namespace GamePlay.Bussiness.Logic
 
         public bool HasInput()
         {
-            return this.moveDir != GameVec2.zero ||
-            this.moveDst != GameVec2.zero ||
-            this.skillId != 0 ||
-            this.targeterArgsList.Count > 0;
+            if (this.HasMoveInput()) return true;
+            if (this.HasSkillInput()) return true;
+            if (targeterArgsList != null && targeterArgsList.Count > 0) return true;
+            return false;
+        }
+
+        public bool HasSkillInput()
+        {
+            return skillId > 0;
+        }
+
+        public bool HasMoveInput()
+        {
+            if (moveDir != GameVec2.zero) return true;
+            if (moveDst != GameVec2.zero) return true;
+            return false;
         }
     }
 }

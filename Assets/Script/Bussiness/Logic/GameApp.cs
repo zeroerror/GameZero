@@ -12,8 +12,19 @@ namespace GamePlay.Bussiness.Logic
             Application.quitting += this.Destroy;
         }
 
+        public void BindEvents()
+        {
+            this.directorDomain.BindEvents();
+        }
+
+        public void UnbindEvents()
+        {
+            this.directorDomain.UnbindEvents();
+        }
+
         public void Destroy()
         {
+            this.UnbindEvents();
             this.directorDomain.Destroy();
         }
 

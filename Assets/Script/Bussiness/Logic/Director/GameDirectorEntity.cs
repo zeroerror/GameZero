@@ -66,7 +66,20 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 基础属性参数 </summary>
         public GameAttributeArgs baseAttributeArgs;
         /// <summary> 站位 </summary>
-        public GameVec2 standPos;
+        public GameVec2 standPos
+        {
+            get => this._standPos;
+            set
+            {
+                if (value == this._standPos) return;
+                this._standPos = value;
+                this.needPlaceBack = true;
+            }
+        }
+        private GameVec2 _standPos;
+        /// <summary> 是否需要归位 </summary>
+        public bool needPlaceBack;
+
         public GameItemUnitEntity()
         {
             this.itemid = ++_autoItemId;

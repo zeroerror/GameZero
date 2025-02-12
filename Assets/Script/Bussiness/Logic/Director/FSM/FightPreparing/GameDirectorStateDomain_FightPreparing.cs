@@ -27,8 +27,6 @@ namespace GamePlay.Bussiness.Logic
 
         private void _onActionOptionSelected(object args)
         {
-            if (!this._CheckState()) return;
-
             var rcArgs = (GameLCArgs_ActionOptionSelected)args;
             var optionId = rcArgs.optionId;
             var fightPreparingState = this._context.director.fsmCom.fightPreparingState;
@@ -40,22 +38,24 @@ namespace GamePlay.Bussiness.Logic
                 return;
             }
             GameLogger.DebugLog($"选中行为选项[{selectedOption.typeId}]: {selectedOption.desc}");
-            fightPreparingState.selectedOption = selectedOption;
+            fightPreparingState.selectedOptionList.Add(selectedOption);
         }
 
         private void _onPreparingConfirmFight(object args)
         {
-            if (!this._CheckState()) return;
-
+            var fsmCom = this._context.director.fsmCom;
+            if (fsmCom.stateType != GameDirectorStateType.FightPreparing)
+            {
+                GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onPreparingConfirmFight: 当前状态不是战斗准备状态");
+                return;
+            }
+            var fightPreparingState = fsmCom.fightPreparingState;
             var rcArgs = (GameLCArgs_PreparingConfirmFight)args;
-            var fightPreparingState = this._context.director.fsmCom.fightPreparingState;
             fightPreparingState.confirmFight = true;
         }
 
         private void _onUnitPositionChanged(object args)
         {
-            if (!this._CheckState()) return;
-
             var rcArgs = (GameLCArgs_UnitPositionChanged)args;
             var entityType = rcArgs.entityType;
             var entityId = rcArgs.entityId;
@@ -64,17 +64,6 @@ namespace GamePlay.Bussiness.Logic
             // 设置所有单位是否就位为false, 使得单位重新移动到指定位置
             this._context.director.fsmCom.fightPreparingState.isAllUnitPositioned = false;
             GameLogger.DebugLog($"[{unitEntity.unitModel}]站位更新: {rcArgs.newPosition}");
-        }
-
-        private bool _CheckState()
-        {
-            var stateType = this._context.director.fsmCom.stateType;
-            if (stateType != GameDirectorStateType.FightPreparing)
-            {
-                GameLogger.LogError("GameDirectorStateDomain_FightPreparing._onActionOptionSelected: 当前状态不是战斗准备状态");
-                return false;
-            }
-            return true;
         }
 
         public override bool CheckEnter(GameDirectorEntity director, params object[] args)
@@ -108,9 +97,9 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameDirectorEntity director, float dt)
         {
+            this._TryMoveUnits();
             // 业务逻辑
             this._directorDomain.roleInputDomain.Tick();
-            this._TryMoveUnits();
             this._directorDomain.roleDomain.Tick(dt);
             this._directorDomain.attributeDomain.Tick(dt);
             this._directorDomain.transformDomain.Tick(dt);
@@ -141,7 +130,7 @@ namespace GamePlay.Bussiness.Logic
                         var role = unit as GameRoleEntity;
                         var inputArgs = new GameRoleInputArgs();
                         inputArgs.moveDst = moveDstPos;
-                        role.inputCom.SetByArgs(inputArgs);
+                        this._context.domainApi.roleApi.SetRoleInput(unit.idCom.entityId, inputArgs);
                         break;
                     default:
                         GameLogger.LogError("GameDirectorStateDomain_FightPreparing._TryMoveUnits: 未知的实体类型 " + unit.idCom.entityType);
@@ -160,7 +149,6 @@ namespace GamePlay.Bussiness.Logic
         {
             // 等待玩家确认开始战斗
             var fightPreparingState = director.fsmCom.fightPreparingState;
-            var selectedOptionModel = fightPreparingState.selectedOption;
             if (!fightPreparingState.confirmFight)
             {
                 return new GameDirectorExitStateArgs(GameDirectorStateType.None);
@@ -169,20 +157,24 @@ namespace GamePlay.Bussiness.Logic
             // 执行所有选项的行为
             var playerCampId = GameCampCollection.PLAYER_CAMP_ID;
             var optionRepo = this._context.actionContext.optionRepo;
-            var optionId = selectedOptionModel?.typeId ?? 0;
-            var optionEntity = optionRepo.FindOption(playerCampId, optionId);
-            if (optionEntity)
+            var selectedOptionList = fightPreparingState.selectedOptionList;
+            selectedOptionList?.ForEach((option) =>
             {
-                optionEntity.AddLevel();
-            }
-            optionRepo.ForeachEntities((option) =>
-            {
-                this._context.domainApi.actionApi.DoActionOption(optionId, playerCampId);
+                var optionId = option?.typeId ?? 0;
+                var optionEntity = optionRepo.FindOption(playerCampId, optionId);
+                if (optionEntity)
+                {
+                    optionEntity.AddLevel();
+                }
+                optionRepo.ForeachEntities((option) =>
+                {
+                    this._context.domainApi.actionApi.DoActionOption(optionId, playerCampId);
+                });
+                if (!optionEntity)
+                {
+                    this._context.domainApi.actionApi.DoActionOption(optionId, playerCampId);
+                }
             });
-            if (!optionEntity)
-            {
-                this._context.domainApi.actionApi.DoActionOption(optionId, playerCampId);
-            }
             return new GameDirectorExitStateArgs(GameDirectorStateType.Fighting);
         }
 

@@ -111,13 +111,49 @@ namespace GamePlay.Bussiness.Render
         {
             this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
             this.directorFSMDomain.BindEvents();
+            this.context.uiApi.directorApi.BindKeyAction(KeyCode.Mouse0, this._OnClickUnit);
         }
 
         public void UnbindEvents()
         {
             this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
             this.directorFSMDomain.UnbindEvents();
+            this.context.uiApi.directorApi.UnbindKeyAction(KeyCode.Mouse0, this._OnClickUnit);
         }
+
+        private void _OnClickUnit()
+        {
+            var pointerPos = this.context.uiApi.directorApi.GetPointerPosition();
+            var clickWorldPos = this.context.cameraEntity.GetWorldPoint(pointerPos);
+
+            // 存在选择的单位, 再次点击将单位放置到当前点击位置
+            var fightingState = this.context.director.fsmCom.fightingState;
+            var chooseEntity = fightingState.chooseEntity;
+            if (chooseEntity)
+            {
+                // 清空选择
+                fightingState.chooseEntity = null;
+                // 提交LC
+                var ldirectorApi = this.context.logicApi.directorApi;
+                ldirectorApi.SubmitEvent(GameLCCollection.LC_GAME_UNIT_POSITION_CHANGED, new GameLCArgs_UnitPositionChanged
+                {
+                    entityType = chooseEntity.idCom.entityType,
+                    entityId = chooseEntity.idCom.entityId,
+                    newPosition = clickWorldPos
+                });
+                return;
+            }
+
+            var clickUnit = this.context.domainApi.directorApi.GetClickEntity(clickWorldPos);
+            if (!clickUnit) return;
+
+            // 检查阵营
+            var campId = clickUnit.idCom.campId;
+            if (campId != GameCampCollection.PLAYER_CAMP_ID) return;
+
+            fightingState.chooseEntity = clickUnit;
+        }
+
 
         private void _OnTimeScaleChange(object args)
         {

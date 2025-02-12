@@ -78,10 +78,16 @@ namespace GamePlay.Bussiness.Logic
         public bool TryGetPlayerInput(int entityId, out GameRoleInputArgs input);
 
         /// <summary>
-        /// 设置玩家输入
+        /// 设置玩家角色输入
         /// <para>input: 输入</para>
         /// </summary>
-        public void SetPlayerInput(in GameRoleInputArgs input);
+        public void SetUserRoleInput(in GameRoleInputArgs input);
+
+        /// <summary>
+        /// 设置角色输入
+        /// <para>input: 输入</para>
+        /// </summary>
+        public void SetRoleInput(int entityId, in GameRoleInputArgs input);
 
         /// <summary>
         /// 变换角色

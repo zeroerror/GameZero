@@ -128,6 +128,26 @@ namespace GamePlay.Bussiness.Logic
             this.physicsDomain.Tick();
         }
 
+        public void BindEvents()
+        {
+            this.context.eventService.Bind(GameLCCollection.LC_GAME_UNIT_POSITION_CHANGED, this._onUnitPositionChanged);
+        }
+
+        public void UnbindEvents()
+        {
+            this.context.eventService.Unbind(GameLCCollection.LC_GAME_UNIT_POSITION_CHANGED, this._onUnitPositionChanged);
+        }
+
+        private void _onUnitPositionChanged(object args)
+        {
+            var rcArgs = (GameLCArgs_UnitPositionChanged)args;
+            var entityType = rcArgs.entityType;
+            var entityId = rcArgs.entityId;
+            var unitEntity = this.context.domainApi.directorApi.FindUnitItemEntity(entityType, entityId);
+            unitEntity.standPos = rcArgs.newPosition;
+            GameLogger.DebugLog($"[{unitEntity.unitModel}]站位更新: {rcArgs.newPosition}");
+        }
+
         public void Update(float dt)
         {
             var tickCount = this.director.Tick(dt);
@@ -201,12 +221,12 @@ namespace GamePlay.Bussiness.Logic
             }
             // 扣除金币
             this.director.gold -= buyableUnits[index].costGold;
-            // 添加单位
+            // 添加物件单位实体
             var unitEntity = new GameItemUnitEntity();
             unitEntity.unitModel = unitModel;
             unitEntity.standPos = initPos;
             this.director.itemUnitEntitys.Add(unitEntity);
-            // 直接添加到场地
+            // 创建游戏单位
             var unit = this.CreateUnit(unitEntity);
             // 提交RC - 购买单位
             GameDirectorRCArgs_BuyUnit rcArgs;

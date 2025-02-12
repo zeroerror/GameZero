@@ -1,11 +1,19 @@
 using System.Collections.Generic;
 using GamePlay.Core;
-using GameVec2 = UnityEngine.Vector2;
+using UnityEngine.UIElements;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameDirectorStateDomain_Fighting : GameDirectorStateDomainBase
     {
         public GameDirectorStateDomain_Fighting(GameDirectorDomain directorDomain) : base(directorDomain)
+        {
+        }
+
+        protected override void _BindEvents()
+        {
+        }
+
+        protected override void _UnbindEvents()
         {
         }
 
@@ -71,8 +79,35 @@ namespace GamePlay.Bussiness.Logic
                 director.timeScaleCom.ClearTimeScaleDirty();
                 this._context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_TIME_SCALE_CHANGE, director.timeScaleCom.timeScale);
             }
+            this._TryMoveUnits();
             this._directorDomain.TickDomain(frameTime);
         }
 
+        private void _TryMoveUnits()
+        {
+            var director = this._context.director;
+            var unitEntitys = director.itemUnitEntitys;
+            unitEntitys?.ForEach((unitEntity) =>
+            {
+                var unit = this._context.domainApi.directorApi.FindUnitEntity(unitEntity);
+                if (unit == null) return;
+                var moveDstPos = unitEntity.standPos;
+                if (moveDstPos == unit.transformCom.position) unitEntity.needPlaceBack = false;
+                if (!unitEntity.needPlaceBack) return;
+                switch (unit.idCom.entityType)
+                {
+                    case GameEntityType.Role:
+                        // 控制角色移动
+                        var role = unit as GameRoleEntity;
+                        var inputArgs = new GameRoleInputArgs();
+                        inputArgs.moveDst = moveDstPos;
+                        this._context.domainApi.roleApi.SetRoleInput(unit.idCom.entityId, inputArgs);
+                        break;
+                    default:
+                        GameLogger.LogError("GameDirectorStateDomain_FightPreparing._TryMoveUnits: 未知的实体类型 " + unit.idCom.entityType);
+                        break;
+                }
+            });
+        }
     }
 }

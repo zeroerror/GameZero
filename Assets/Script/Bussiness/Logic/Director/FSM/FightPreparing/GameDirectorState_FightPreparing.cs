@@ -5,7 +5,7 @@ namespace GamePlay.Bussiness.Logic
     public class GameDirectorState_FightPreparing : GameDirectorStateBase
     {
         public List<GameActionOptionModel> options;
-        public GameActionOptionModel selectedOption;
+        public List<GameActionOptionModel> selectedOptionList = new List<GameActionOptionModel>();
         public bool confirmFight;
         public bool isAllUnitPositioned;
         public GameDirectorState_FightPreparing() { }
@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Logic
         {
             base.Clear();
             this.options = null;
-            this.selectedOption = null;
+            this.selectedOptionList.Clear();
             this.confirmFight = false;
             this.isAllUnitPositioned = false;
         }

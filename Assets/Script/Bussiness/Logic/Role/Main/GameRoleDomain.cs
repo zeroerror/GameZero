@@ -61,7 +61,7 @@ namespace GamePlay.Bussiness.Logic
             return this._roleContext.playerInputArgs.TryGetValue(entityId, out inputArgs);
         }
 
-        public void SetPlayerInputArgs(int entityId, in GameRoleInputArgs inputArgs)
+        public void SetRoleInput(int entityId, in GameRoleInputArgs inputArgs)
         {
             if (!this._roleContext.playerInputArgs.TryGetValue(entityId, out var oldInputArgs))
             {
@@ -72,10 +72,10 @@ namespace GamePlay.Bussiness.Logic
             this._roleContext.playerInputArgs[entityId] = oldInputArgs;
         }
 
-        public void SetPlayerInput(in GameRoleInputArgs inputArgs)
+        public void SetUserRoleInput(in GameRoleInputArgs inputArgs)
         {
             var entityId = this._roleContext.userRole.idCom.entityId;
-            this.SetPlayerInputArgs(entityId, inputArgs);
+            this.SetRoleInput(entityId, inputArgs);
         }
 
         public GameRoleEntity CreatePlayerRole(int typeId, in GameTransformArgs transArgs, bool isUser)
