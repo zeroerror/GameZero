@@ -8,8 +8,8 @@ namespace GamePlay.Bussiness.Logic
         public GameDirectorTimelineComponent timeScaleCom { get; private set; }
 
         /// <summary> 单位牌库 </summary>
-        public List<GameUnitItemModel> unitPool { get; private set; }
-        public void SetUnitPool(List<GameUnitItemModel> unitPool)
+        public List<GameItemUnitModel> unitPool { get; private set; }
+        public void SetUnitPool(List<GameItemUnitModel> unitPool)
         {
             this.unitPool = unitPool;
         }
@@ -31,9 +31,9 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 已选择的行动选项 </summary>
         public List<GameActionOptionModel> actionOptions;
         /// <summary> 拥有的单位实体 </summary>
-        public List<GameUnitItemEntity> unitItemEntitys;
+        public List<GameItemUnitEntity> itemUnitEntitys;
         /// <summary> 当前购买栏单位列表 </summary>
-        public List<GameUnitItemModel> buyableUnits;
+        public List<GameItemUnitModel> buyableUnits;
 
         /// <summary> 当前回合 </summary>
         public int curRound;
@@ -44,8 +44,8 @@ namespace GamePlay.Bussiness.Logic
             this.timeScaleCom = new GameDirectorTimelineComponent();
             this.gold = 100;//初始金币
             this.actionOptions = new List<GameActionOptionModel>();
-            this.unitItemEntitys = new List<GameUnitItemEntity>();
-            this.buyableUnits = new List<GameUnitItemModel>();
+            this.itemUnitEntitys = new List<GameItemUnitEntity>();
+            this.buyableUnits = new List<GameItemUnitModel>();
         }
 
         public int Tick(float dt)
@@ -55,10 +55,10 @@ namespace GamePlay.Bussiness.Logic
         }
     }
 
-    public class GameUnitItemEntity
+    public class GameItemUnitEntity
     {
         /// <summary> 单位物品模型 </summary>
-        public GameUnitItemModel itemModel;
+        public GameItemUnitModel unitModel;
         /// <summary> 实体Id </summary>
         public int entityId;
         /// <summary> 属性参数 </summary>
@@ -67,7 +67,7 @@ namespace GamePlay.Bussiness.Logic
         public GameAttributeArgs baseAttributeArgs;
         /// <summary> 站位 </summary>
         public GameVec2 standPos;
-        public GameUnitItemEntity()
+        public GameItemUnitEntity()
         {
             this.itemid = ++_autoItemId;
         }
@@ -77,7 +77,7 @@ namespace GamePlay.Bussiness.Logic
 
     }
 
-    public class GameUnitItemModel
+    public class GameItemUnitModel
     {
         /// <summary> 实体类型 </summary>
         public readonly GameEntityType entityType;
@@ -86,7 +86,7 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 消耗金币 </summary>
         public readonly int costGold;
 
-        public GameUnitItemModel(GameEntityType entityType, int typeId, int costGold)
+        public GameItemUnitModel(GameEntityType entityType, int typeId, int costGold)
         {
             this.entityType = entityType;
             this.typeId = typeId;
@@ -98,9 +98,9 @@ namespace GamePlay.Bussiness.Logic
             return $"实体类型: {this.entityType} 类型Id: {this.typeId} 消耗金币: {this.costGold}";
         }
 
-        public GameUnitItemModel Clone()
+        public GameItemUnitModel Clone()
         {
-            return new GameUnitItemModel(
+            return new GameItemUnitModel(
                 this.entityType,
                 this.typeId,
                 this.costGold

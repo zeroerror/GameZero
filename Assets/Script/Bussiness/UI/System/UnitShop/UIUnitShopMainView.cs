@@ -5,11 +5,11 @@ namespace GamePlay.Bussiness.UI
 {
     public struct UIUnitShopMainViewInput
     {
-        public GameUnitItemModel[] buyableUnits;
+        public GameItemUnitModel[] buyableUnits;
 
-        public UIUnitShopMainViewInput(GameUnitItemModel[] itemModels)
+        public UIUnitShopMainViewInput(GameItemUnitModel[] unitModels)
         {
-            this.buyableUnits = itemModels;
+            this.buyableUnits = unitModels;
         }
     }
 
@@ -21,7 +21,7 @@ namespace GamePlay.Bussiness.UI
         public UIUnitShopMainViewBinder uiBinder;
 
         private UIUnitShopMainViewInput _viewInput;
-        private GameUnitItemModel[] _itemModels => this._viewInput.buyableUnits;
+        private GameItemUnitModel[] _unitModels => this._viewInput.buyableUnits;
 
         protected override void _OnInit()
         {
@@ -32,23 +32,27 @@ namespace GamePlay.Bussiness.UI
         protected override void _BindEvents()
         {
             base._BindEvents();
-            this._uiApi.directorApi.BindKeyAction(KeyCode.G, this._OnClickItem0);
-            this._uiApi.directorApi.BindKeyAction(KeyCode.H, this._OnClickItem1);
-            this._uiApi.directorApi.BindKeyAction(KeyCode.J, this._OnClickItem2);
-            this._uiApi.directorApi.BindKeyAction(KeyCode.K, this._OnClickItem3);
-            this._uiApi.directorApi.BindKeyAction(KeyCode.L, this._OnClickItem4);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.G, this._OnClickItemDown0);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.H, this._OnClickItemDown1);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.J, this._OnClickItemDown2);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.K, this._OnClickItemDown3);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.L, this._OnClickItemDown4);
             this._uiApi.directorApi.BindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.BindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
+
+            this.SetClick(this.uiBinder.btn_confirm.gameObject, this._OnBtnConfirmClick);
+            this.SetClick(this.uiBinder.btn_refresh.gameObject, this._OnBtnRefreshClick);
+            this.SetClick(this.uiBinder.mask.gameObject, this._OnClickMask);
         }
 
         protected override void _UnbindEvents()
         {
             base._UnbindEvents();
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.G, this._OnClickItem0);
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.H, this._OnClickItem1);
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.J, this._OnClickItem2);
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.K, this._OnClickItem3);
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.L, this._OnClickItem4);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.G, this._OnClickItemDown0);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.H, this._OnClickItemDown1);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.J, this._OnClickItemDown2);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.K, this._OnClickItemDown3);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.L, this._OnClickItemDown4);
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.UnbindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
         }
@@ -62,7 +66,7 @@ namespace GamePlay.Bussiness.UI
         {
             this._refreshGold();
 
-            var itemCount = this._itemModels.Length;
+            var itemCount = this._unitModels.Length;
             for (var i = 0; i < 5; i++)
             {
                 var unitBinder = this.uiBinder.GetField($"unitGroup_unit{i + 1}") as UIUnitItemBinder;
@@ -71,15 +75,12 @@ namespace GamePlay.Bussiness.UI
                 if (isActive)
                 {
                     var text = unitBinder.txt_name;
-                    text.text = this._GetItemName(this._itemModels[i]).ToDevStr();
+                    text.text = this._GetItemName(this._unitModels[i]).ToDevStr();
                     var idx = i;
-                    this.SetClick(unitBinder.gameObject, () => this._OnClickItem(idx));
+                    this.SetClick(unitBinder.gameObject, () => this._OnClickItemDown(idx));
                 }
-                GameLogger.DebugLog($"单位{i + 1}: {this._GetItemName(this._itemModels[i])}");
+                GameLogger.DebugLog($"单位{i + 1}: {this._GetItemName(this._unitModels[i])}");
             }
-
-            this.SetClick(this.uiBinder.btn_confirm.gameObject, this._OnBtnConfirmClick);
-            this.SetClick(this.uiBinder.btn_refresh.gameObject, this._OnBtnRefreshClick);
         }
 
         private void _refreshGold()
@@ -88,15 +89,40 @@ namespace GamePlay.Bussiness.UI
             this.uiBinder.txt_gold.text = curGold.ToDevStr();
         }
 
-        private void _OnClickItem(int index)
+        private void _OnClickItemDown(int index)
         {
-            this._uiApi.logicApi.directorApi.BuyUnit(index);
+            // 生成虚拟单位用于预览
+            if (this._previewUnit)
+            {
+                this._uiApi.rendererApi.directorApi.DestroyPreviewUnit(this._previewUnit);
+                this.RemoveTimer(this._timerId);
+                this._timerId = 0;
+                this._previewUnit = null;
+            }
+            this._previewUnit = this._uiApi.rendererApi.directorApi.CreatePreviewUnit(this._unitModels[index]);
+            this._timerId = this.SetInterval(0.02f, () =>
+            {
+                if (!this._previewUnit)
+                {
+                    this.RemoveTimer(this._timerId);
+                    return;
+                }
+                // 根据鼠标位置更新单位位置
+                var pos = this._uiApi.directorApi.GetPointerPosition();
+                var worldPos = this._uiApi.rendererApi.directorApi.ScreenToWorldPos(pos);
+                this._previewUnit.SetPosition(worldPos);
+            });
+            this._selectedItemIndex = index;
         }
-        private void _OnClickItem0() => this._OnClickItem(0);
-        private void _OnClickItem1() => this._OnClickItem(1);
-        private void _OnClickItem2() => this._OnClickItem(2);
-        private void _OnClickItem3() => this._OnClickItem(3);
-        private void _OnClickItem4() => this._OnClickItem(4);
+        private GameEntityBase _previewUnit;
+        private int _timerId;
+        private int _selectedItemIndex;
+
+        private void _OnClickItemDown0() => this._OnClickItemDown(0);
+        private void _OnClickItemDown1() => this._OnClickItemDown(1);
+        private void _OnClickItemDown2() => this._OnClickItemDown(2);
+        private void _OnClickItemDown3() => this._OnClickItemDown(3);
+        private void _OnClickItemDown4() => this._OnClickItemDown(4);
 
         private void _OnBtnConfirmClick()
         {
@@ -110,17 +136,29 @@ namespace GamePlay.Bussiness.UI
             this._OnShow();
         }
 
-        private string _GetItemName(GameUnitItemModel itemModel)
+        private void _OnClickMask()
         {
-            switch (itemModel.entityType)
+            if (this._previewUnit)
+            {
+                this._uiApi.logicApi.directorApi.BuyUnit(this._selectedItemIndex, this._previewUnit.GetPosition());
+                this._uiApi.rendererApi.directorApi.DestroyPreviewUnit(this._previewUnit);
+                this.RemoveTimer(this._timerId);
+                this._timerId = 0;
+                this._previewUnit = null;
+            }
+        }
+
+        private string _GetItemName(GameItemUnitModel unitModel)
+        {
+            switch (unitModel.entityType)
             {
                 case GameEntityType.Role:
-                    this._uiApi.rendererApi.roleApi.GetRoleTemplate().TryGet(itemModel.typeId, out var roleModel);
+                    this._uiApi.rendererApi.roleApi.GetRoleTemplate().TryGet(unitModel.typeId, out var roleModel);
                     return roleModel.roleName;
                 case GameEntityType.Skill:
-                    return itemModel.typeId.ToString();
+                    return unitModel.typeId.ToString();
                 case GameEntityType.Buff:
-                    return itemModel.typeId.ToString();
+                    return unitModel.typeId.ToString();
                 default:
                     return "未知";
             }

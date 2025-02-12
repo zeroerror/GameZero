@@ -104,11 +104,12 @@ namespace GamePlay.Bussiness.UI
 
         #region [定时器]
         private List<int> _timerIdList;
-        public void SetInterval(float interval, Action callback)
+        public int SetInterval(float interval, Action callback)
         {
             var id = _uiApi.directorApi.SetInterval(interval, callback);
             _timerIdList = _timerIdList ?? new List<int>();
             _timerIdList.Add(id);
+            return id;
         }
         public void RemoveTimer(int timerId)
         {

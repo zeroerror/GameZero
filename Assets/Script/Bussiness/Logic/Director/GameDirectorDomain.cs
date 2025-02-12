@@ -179,7 +179,7 @@ namespace GamePlay.Bussiness.Logic
             this.context.eventService.Submit(eventName, args);
         }
 
-        public void BuyUnit(int index)
+        public void BuyUnit(int index, in GameVec2 initPos)
         {
             var buyableUnits = this.director.buyableUnits;
             if (index < 0 || index >= buyableUnits.Count)
@@ -202,11 +202,12 @@ namespace GamePlay.Bussiness.Logic
             // 扣除金币
             this.director.gold -= buyableUnits[index].costGold;
             // 添加单位
-            var unitEntity = new GameUnitItemEntity();
-            unitEntity.itemModel = unitModel;
-            this.director.unitItemEntitys.Add(unitEntity);
+            var unitEntity = new GameItemUnitEntity();
+            unitEntity.unitModel = unitModel;
+            unitEntity.standPos = initPos;
+            this.director.itemUnitEntitys.Add(unitEntity);
             // 直接添加到场地
-            this.CreateUnit(unitEntity);
+            var unit = this.CreateUnit(unitEntity);
             // 提交RC - 购买单位
             GameDirectorRCArgs_BuyUnit rcArgs;
             rcArgs.model = unitModel;
@@ -214,9 +215,9 @@ namespace GamePlay.Bussiness.Logic
             this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, rcArgs);
         }
 
-        public GameEntityBase CreateUnit(GameUnitItemEntity unitEntity)
+        public GameEntityBase CreateUnit(GameItemUnitEntity unitEntity)
         {
-            var model = unitEntity.itemModel;
+            var model = unitEntity.unitModel;
             var createPos = this.GetRoundAreaPosition() + unitEntity.standPos;
             GameEntityBase entity = null;
             switch (model.entityType)
@@ -248,7 +249,7 @@ namespace GamePlay.Bussiness.Logic
             return entity;
         }
 
-        public GameUnitItemModel[] GetBuyableUnits()
+        public GameItemUnitModel[] GetBuyableUnits()
         {
             return this.director.buyableUnits.ToArray();
         }
@@ -295,14 +296,14 @@ namespace GamePlay.Bussiness.Logic
             return true;
         }
 
-        private List<GameUnitItemModel> _InitUnitPool()
+        private List<GameItemUnitModel> _InitUnitPool()
         {
-            var unitPool = new List<GameUnitItemModel>();
+            var unitPool = new List<GameItemUnitModel>();
             // 角色模板
             var roleTemplate = this.context.domainApi.roleApi.GetRoleTemplate();
             roleTemplate.GetAll()?.Foreach((role) =>
             {
-                var unit = new GameUnitItemModel(
+                var unit = new GameItemUnitModel(
                     GameEntityType.Role,
                     role.typeId,
                     10
@@ -312,30 +313,30 @@ namespace GamePlay.Bussiness.Logic
             return unitPool;
         }
 
-        public GameEntityBase FindUnitEntity(GameUnitItemEntity itemEntity)
+        public GameEntityBase FindUnitEntity(GameItemUnitEntity itemEntity)
         {
-            var isBought = this.director.unitItemEntitys.Contains(itemEntity);
+            var isBought = this.director.itemUnitEntitys.Contains(itemEntity);
             if (!isBought) return null;
-            switch (itemEntity.itemModel.entityType)
+            switch (itemEntity.unitModel.entityType)
             {
                 case GameEntityType.Role:
                     return this.context.domainApi.roleApi.FindByEntityId(itemEntity.entityId);
                 default:
-                    GameLogger.LogError("导演 - 未知的单位类型 " + itemEntity.itemModel.entityType);
+                    GameLogger.LogError("导演 - 未知的单位类型 " + itemEntity.unitModel.entityType);
                     return null;
             }
         }
 
         public GameEntityBase FindUnitEntity(GameEntityType entityType, int entityId)
         {
-            var boughtUnit = this.director.unitItemEntitys.Find((item) => item.entityId == entityId && item.itemModel.entityType == entityType);
+            var boughtUnit = this.director.itemUnitEntitys.Find((item) => item.entityId == entityId && item.unitModel.entityType == entityType);
             if (boughtUnit == null) return null;
             return this.FindUnitEntity(boughtUnit);
         }
 
-        public GameUnitItemEntity FindUnitItemEntity(GameEntityType entityType, int entityId)
+        public GameItemUnitEntity FindUnitItemEntity(GameEntityType entityType, int entityId)
         {
-            var boughtUnit = this.director.unitItemEntitys.Find((item) => item.entityId == entityId && item.itemModel.entityType == entityType);
+            var boughtUnit = this.director.itemUnitEntitys.Find((item) => item.entityId == entityId && item.unitModel.entityType == entityType);
             return boughtUnit;
         }
 

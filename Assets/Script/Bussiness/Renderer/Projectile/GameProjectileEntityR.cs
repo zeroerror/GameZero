@@ -13,6 +13,12 @@ namespace GamePlay.Bussiness.Render
         public readonly GameParticlePlayCom psPlayCom;
         public Transform transform { get { return this.root.transform; } }
         public GameVec2 position { get { return transform.position; } set { transform.position = new GameVec3(value.x, value.y, transform.position.z); } }
+        public override GameVec2 GetPosition() => this.position;
+        public override void SetPosition(in GameVec2 pos)
+        {
+            base.SetPosition(pos);
+            this.position = pos;
+        }
         public float angle { get { return transform.eulerAngles.z; } set { transform.eulerAngles = new GameVec3(0, 0, value); } }
         public GameVec2 scale { get { return transform.localScale; } set { transform.localScale = value; } }
         private GameEasing2DCom _posEaseCom;

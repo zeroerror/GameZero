@@ -198,6 +198,12 @@ namespace GamePlay.Bussiness.Render
             return pos;
         }
 
+        public Vector2 ScreenToWorldPos(in Vector2 screenPos)
+        {
+            var worldPos = this.context.cameraEntity.camera.ScreenToWorldPoint(screenPos);
+            return worldPos;
+        }
+
         public GameEntityBase GetClickEntity(in Vector2 clickWorldPos)
         {
             const float width = 2.0f;
@@ -211,6 +217,7 @@ namespace GamePlay.Bussiness.Render
             var clickEntity = this._GetClickEntity(this.context.roleContext.repo, entityColliderModel, clickWorldPos);
             return clickEntity;
         }
+
         private GameEntityBase _GetClickEntity<T>(GameEntityRepoBase<T> repo, GameBoxColliderModel colliderModel, Vector2 clickWorldPos) where T : GameEntityBase
         {
             var clickEntity = repo.Find((entity) =>
@@ -232,6 +239,34 @@ namespace GamePlay.Bussiness.Render
                     GameLogger.LogError("导演 - 获取实体失败, 未知的实体类型 " + entityType);
                     return null;
             }
+        }
+
+        public GameEntityBase CreatePreviewUnit(GameItemUnitModel unitModel)
+        {
+            var idArgs = new GameIdArgs();
+            idArgs.entityType = unitModel.entityType;
+            idArgs.typeId = unitModel.typeId;
+            var transArgs = new GameTransformArgs();
+            transArgs.scale = new Vector2(1, 1);
+            switch (unitModel.entityType)
+            {
+                case GameEntityType.Role:
+                    return this.roleDomain.CreateRole(idArgs, transArgs);
+                default:
+                    GameLogger.LogError("导演 - 创建预览单位失败, 未知的实体类型 " + unitModel.entityType);
+                    return null;
+            }
+        }
+
+        public void DestroyPreviewUnit(GameEntityBase entity)
+        {
+            if (!entity) return;
+            if (entity is GameRoleEntityR role)
+            {
+                this.context.domainApi.roleApi.fsmApi.Enter(role, GameRoleStateType.Destroyed);
+                return;
+            }
+            GameLogger.LogError("导演 - 销毁预览单位失败, 未知的实体类型 " + entity.idCom.entityType);
         }
     }
 }

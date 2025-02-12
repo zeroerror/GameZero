@@ -9,7 +9,7 @@ namespace GamePlay.Bussiness.UI
         /// 打开UI
         /// <para>viewInput: 界面传参</para>
         /// </summary>
-        public void OpenUI<T>(UIViewInput viewInput = null) where T : UIBase;
+        public UIBase OpenUI<T>(UIViewInput viewInput = null) where T : UIBase;
 
         /// <summary>
         /// 关闭UI

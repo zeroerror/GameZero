@@ -139,45 +139,52 @@ namespace GamePlay.Bussiness.UI
             this.context.cmdBufferService.Remove(timerId);
         }
 
-        public void OpenUI<T>(UIViewInput viewInput = null) where T : UIBase
+        public UIBase OpenUI<T>(UIViewInput viewInput = null) where T : UIBase
         {
             var inst = Activator.CreateInstance<T>();
             var uiName = inst.uiName;
-            if (this.context.uiDict.ContainsKey(uiName))
+            if (this.context.uiDict.TryGetValue(uiName, out var uiBase))
             {
-                GameLogger.LogWarning($"UI已经打开: {uiName}");
-                return;
+                GameLogger.DebugLog($"UI刷新: {uiName}");
+                this._ExecuteUILifeCycle(uiBase, uiBase.go, viewInput);
+                return uiBase;
             }
+
             // 加载UI资源
-            var uiBase = inst;
+            uiBase = inst;
             var uiUrl = uiBase.uiUrl;
-            var rootGO = this.context.factory.LoadUI(uiUrl);
-            if (rootGO == null) return;
+            var uiGO = this.context.factory.LoadUI(uiUrl);
+            if (uiGO == null) return null;
 
             // 设置对应层级
             var layerType = uiBase.layerType;
             var layer = this.context.layerDict[layerType];
-            rootGO.transform.SetParent(layer.transform, false);
+            uiGO.transform.SetParent(layer.transform, false);
             // 根据分辨率设置rootgo的recttransform
-            rootGO.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
+            uiGO.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
 
-            // 弹窗、window 默认添加一个灰色背景
-            if (uiBase.layerType == UILayerType.PopUp || uiBase.layerType == UILayerType.Window)
+            // window 默认添加一个灰色背景
+            if (uiBase.layerType == UILayerType.Window)
             {
-                var maskImage = rootGO.GetComponent<Image>() ?? rootGO.AddComponent<Image>();
+                var maskImage = uiGO.GetComponent<Image>() ?? uiGO.AddComponent<Image>();
                 maskImage.color = new Color(0, 0, 0, 0.5f);
                 maskImage.raycastTarget = true;
                 // 点击背景关闭
                 uiBase.SetClick(maskImage.gameObject, () => this.CloseUI(uiName));
             }
 
-            // UI生命周期
-            uiBase.Inject(rootGO, this.context.uiApi);
+            this._ExecuteUILifeCycle(uiBase, uiGO, viewInput);
+            this.context.uiDict[uiName] = uiBase;
+            GameLogger.DebugLog($"UI打开: {uiName}");
+            return uiBase;
+        }
+
+        /// <summary> UI生命周期 </summary>
+        private void _ExecuteUILifeCycle(UIBase uiBase, GameObject uiGO, UIViewInput viewInput)
+        {
+            uiBase.Inject(uiGO, this.context.uiApi);
             uiBase.Init(viewInput);
             uiBase.Show();
-            this.context.uiDict[uiName] = uiBase;
-
-            GameLogger.DebugLog($"UI打开: {uiName}");
         }
 
         public void CloseUI(string uiName)

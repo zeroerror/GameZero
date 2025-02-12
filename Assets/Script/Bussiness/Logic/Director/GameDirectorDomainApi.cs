@@ -34,20 +34,21 @@ namespace GamePlay.Bussiness.Logic
         /// <summary>
         /// 购买单位
         /// <para>index: 购买单位的索引</para>
+        /// <para>initPos: 初始位置</para>
         /// </summary>
-        public void BuyUnit(int index);
+        public void BuyUnit(int index, in GameVec2 initPos);
 
         /// <summary>
         /// 创建单位
         /// <para>itemEntity: 单位实体</para>
         /// </summary>
-        public GameEntityBase CreateUnit(GameUnitItemEntity itemEntity);
+        public GameEntityBase CreateUnit(GameItemUnitEntity itemEntity);
 
         /// <summary>
         /// 获取单位物品对应的实体
         /// <para>itemEntity: 单位实体</para>
         /// </summary>
-        public GameEntityBase FindUnitEntity(GameUnitItemEntity itemEntity);
+        public GameEntityBase FindUnitEntity(GameItemUnitEntity itemEntity);
 
         /// <summary>
         /// 获取单位物品对应的实体
@@ -61,7 +62,7 @@ namespace GamePlay.Bussiness.Logic
         /// <para>entityType: 实体类型</para>
         /// <para>entityId: 实体ID</para>
         /// </summary>
-        public GameUnitItemEntity FindUnitItemEntity(GameEntityType entityType, int entityId);
+        public GameItemUnitEntity FindUnitItemEntity(GameEntityType entityType, int entityId);
 
         /// <summary>
         /// 根据Id参数获取实体
@@ -79,7 +80,7 @@ namespace GamePlay.Bussiness.Logic
         /// <summary>
         /// 获取当前可购买单位列表
         /// </summary>
-        public GameUnitItemModel[] GetBuyableUnits();
+        public GameItemUnitModel[] GetBuyableUnits();
 
         /// <summary>
         /// 洗牌可购买单位列表

@@ -3,7 +3,7 @@ using GamePlay.Core;
 namespace GamePlay.Bussiness.Render
 {
 
-    public class GameRoleFSMDomainR
+    public class GameRoleFSMDomainR : GameRoleFSMDomainApiR
     {
         private GameContextR _context;
         private Dictionary<GameRoleStateType, GameRoleStateDomainBaseR> _stateDomainDict = new Dictionary<GameRoleStateType, GameRoleStateDomainBaseR>();
@@ -11,11 +11,11 @@ namespace GamePlay.Bussiness.Render
         public GameRoleFSMDomainR()
         {
             this._stateDomainDict = new Dictionary<GameRoleStateType, GameRoleStateDomainBaseR>(){
-                {GameRoleStateType.Idle, new GameRoleStateDomain_IdleR(this.TransitTo)},
-                {GameRoleStateType.Move, new GameRoleStateDomain_MoveR(this.TransitTo)},
-                {GameRoleStateType.Cast, new GameRoleStateDomain_CastR(this.TransitTo)},
-                {GameRoleStateType.Dead, new GameRoleStateDomain_DeadR(this.TransitTo)},
-                {GameRoleStateType.Destroyed, new GameRoleStateDomain_DestroyedR(this.TransitTo)}
+                {GameRoleStateType.Idle, new GameRoleStateDomain_IdleR(this._Enter)},
+                {GameRoleStateType.Move, new GameRoleStateDomain_MoveR(this._Enter)},
+                {GameRoleStateType.Cast, new GameRoleStateDomain_CastR(this._Enter)},
+                {GameRoleStateType.Dead, new GameRoleStateDomain_DeadR(this._Enter)},
+                {GameRoleStateType.Destroyed, new GameRoleStateDomain_DestroyedR(this._Enter)}
             };
         }
 
@@ -58,7 +58,7 @@ namespace GamePlay.Bussiness.Render
             stateDomain.Tick(role, dt);
         }
 
-        public void TransitTo(GameRoleEntityR role, GameRoleStateType toState, params object[] args)
+        private void _Enter(GameRoleEntityR role, GameRoleStateType toState, params object[] args)
         {
             if (!this._stateDomainDict.TryGetValue(toState, out var toStateDomain)) return;
             this._ExitToState(role, toState);
@@ -71,6 +71,11 @@ namespace GamePlay.Bussiness.Render
             var curStateType = fsmCom.stateType;
             if (!this._stateDomainDict.TryGetValue(curStateType, out var curStateDomain)) return;
             curStateDomain.ExitTo(role, toState);
+        }
+
+        public void Enter(GameRoleEntityR role, GameRoleStateType toState, params object[] args)
+        {
+            this._Enter(role, toState, args);
         }
     }
 

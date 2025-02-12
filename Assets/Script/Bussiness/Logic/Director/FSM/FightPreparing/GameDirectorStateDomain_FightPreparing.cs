@@ -63,7 +63,7 @@ namespace GamePlay.Bussiness.Logic
             unitEntity.standPos = rcArgs.newPosition;
             // 设置所有单位是否就位为false, 使得单位重新移动到指定位置
             this._context.director.fsmCom.fightPreparingState.isAllUnitPositioned = false;
-            GameLogger.DebugLog($"[{unitEntity.itemModel}]站位更新: {rcArgs.newPosition}");
+            GameLogger.DebugLog($"[{unitEntity.unitModel}]站位更新: {rcArgs.newPosition}");
         }
 
         private bool _CheckState()
@@ -122,7 +122,7 @@ namespace GamePlay.Bussiness.Logic
             var director = this._context.director;
             var fightPreparingState = director.fsmCom.fightPreparingState;
             if (fightPreparingState.isAllUnitPositioned) return;
-            var unitEntitys = director.unitItemEntitys;
+            var unitEntitys = director.itemUnitEntitys;
             if (unitEntitys == null) return;
 
             bool isAllUnitPositioned = true;
@@ -210,7 +210,7 @@ namespace GamePlay.Bussiness.Logic
         {
             base.ExitTo(director, toState);
             // 更新单位的站位
-            var unitEntitys = director.unitItemEntitys;
+            var unitEntitys = director.itemUnitEntitys;
             unitEntitys?.ForEach((unitEntity) =>
             {
                 var unit = this._context.domainApi.directorApi.FindUnitEntity(unitEntity);

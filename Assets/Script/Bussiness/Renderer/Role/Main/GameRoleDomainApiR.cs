@@ -1,9 +1,8 @@
-using UnityEngine;
-
 namespace GamePlay.Bussiness.Render
 {
     public interface GameRoleDomainApiR
     {
+        public GameRoleFSMDomainApiR fsmApi { get; }
         public void PlayAnim(GameRoleEntityR entity, string animName);
         public GameRoleTemplateR GetRoleTemplate();
 
@@ -12,7 +11,6 @@ namespace GamePlay.Bussiness.Render
         /// <para>entityId: 实体Id</para>
         /// </summary>
         public GameRoleEntityR FindByEntityId(int entityId);
-
     }
 
 }

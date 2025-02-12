@@ -20,6 +20,8 @@ namespace GamePlay.Bussiness.Logic
 
         public GameIdCom idCom { get; private set; }
         public GameTransformCom transformCom { get; private set; }
+        public virtual GameVec2 GetPosition() => this.transformCom.position;
+        public virtual void SetPosition(in GameVec2 pos) => this.transformCom.position = pos;
 
         public GameActionTargeterCom actionTargeterCom { get; private set; }
         public GamePhysicsCom physicsCom { get; private set; }

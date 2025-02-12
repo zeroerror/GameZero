@@ -11,6 +11,7 @@ namespace GamePlay.Bussiness.Render
 
         public GameRoleInputDomainR inputDomain { get; private set; }
         public GameRoleFSMDomainR fsmDomain { get; private set; }
+        public GameRoleFSMDomainApiR fsmApi => this.fsmDomain;
 
         public GameRoleDomainR()
         {
@@ -58,7 +59,7 @@ namespace GamePlay.Bussiness.Render
                 return;
             }
             var rcArgs = (GameRoleRCArgs_Create)args;
-            this._CreateRole(rcArgs.idArgs, rcArgs.transArgs, rcArgs.isUser);
+            this.CreateRole(rcArgs.idArgs, rcArgs.transArgs, rcArgs.isUser);
         }
 
         private GameRoleEntityR _LoadRole(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
@@ -118,7 +119,7 @@ namespace GamePlay.Bussiness.Render
             return role;
         }
 
-        private GameRoleEntityR _CreateRole(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
+        public GameRoleEntityR CreateRole(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
         {
             var role = this._LoadRole(idArgs, transArgs, isUser);
             this._roleContext.repo.TryAdd(role);

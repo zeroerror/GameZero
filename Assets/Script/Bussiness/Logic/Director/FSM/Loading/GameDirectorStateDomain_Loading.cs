@@ -28,7 +28,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 记录加载下一场景前玩家棋子属性
-            var unitEntitys = director.unitItemEntitys;
+            var unitEntitys = director.itemUnitEntitys;
             unitEntitys?.ForEach((unitEntity) =>
             {
                 var unit = this._context.domainApi.directorApi.FindUnitEntity(unitEntity);
@@ -46,7 +46,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 this._context.domainApi.roleApi.ForeachAllRoles((role) =>
                 {
-                    var isBoughtRole = unitEntitys.Exists((unitEntity) => unitEntity.itemModel.entityType == GameEntityType.Role && unitEntity.entityId == role.idCom.entityId);
+                    var isBoughtRole = unitEntitys.Exists((unitEntity) => unitEntity.unitModel.entityType == GameEntityType.Role && unitEntity.entityId == role.idCom.entityId);
                     if (isBoughtRole)
                     {
                         // 移除购买的存活角色身上的buff
@@ -60,7 +60,7 @@ namespace GamePlay.Bussiness.Logic
                 });
                 this._context.domainApi.projectileApi.ForeachAllProjectiles((projectile) =>
                 {
-                    var isBoughtProjectile = unitEntitys.Exists((unitEntity) => unitEntity.itemModel.entityType == GameEntityType.Projectile && unitEntity.entityId == projectile.idCom.entityId);
+                    var isBoughtProjectile = unitEntitys.Exists((unitEntity) => unitEntity.unitModel.entityType == GameEntityType.Projectile && unitEntity.entityId == projectile.idCom.entityId);
                     if (!isBoughtProjectile)
                     {
                         // 摧毁非购买的投射物, 不包括比如购买的陷阱等

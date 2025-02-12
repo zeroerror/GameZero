@@ -1,6 +1,4 @@
 using GamePlay.Bussiness.Logic;
-using GamePlay.Bussiness.Render;
-using UnityEngine.UIElements;
 
 namespace GamePlay.Bussiness.UI
 {
@@ -40,13 +38,24 @@ namespace GamePlay.Bussiness.UI
         protected override void _OnShow()
         {
             base._OnShow();
-            this._uiPanelCom.RefreshHead(this._viewInput.entityType, this._viewInput.entityId);
-            this._uiPanelCom.Refersh(this._viewInput.entityType, this._viewInput.entityId);
-            this.SetInterval(0.1f, () =>
+            this.Refresh(this._viewInput);
+        }
+
+        public void Refresh(UIUnitDetailMainViewInput viewInput)
+        {
+            this._uiPanelCom.RefreshHead(viewInput.entityType, viewInput.entityId);
+            this._uiPanelCom.Refersh(viewInput.entityType, viewInput.entityId);
+            if (this._timerId != 0)
             {
-                this._uiPanelCom.Refersh(this._viewInput.entityType, this._viewInput.entityId);
+                this.RemoveTimer(this._timerId);
+                this._timerId = 0;
+            }
+            this._timerId = this.SetInterval(0.1f, () =>
+            {
+                this._uiPanelCom.Refersh(viewInput.entityType, viewInput.entityId);
             });
         }
+        private int _timerId;
 
         protected override void _OnHide()
         {

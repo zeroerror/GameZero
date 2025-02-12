@@ -19,6 +19,12 @@ namespace GamePlay.Bussiness.Render
                 if (this.bodyCom.shadow) this.bodyCom.shadow.transform.position = transform.position;
             }
         }
+        public override GameVec2 GetPosition() => this.position;
+        public override void SetPosition(in GameVec2 pos)
+        {
+            base.SetPosition(pos);
+            this.position = pos;
+        }
 
         public float angle { get { return transform.eulerAngles.z; } set { transform.eulerAngles = new GameVec3(0, 0, value); } }
         public GameVec2 scale { get { return transform.localScale; } set { transform.localScale = value; } }
