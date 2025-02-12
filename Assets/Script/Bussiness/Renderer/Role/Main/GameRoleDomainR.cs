@@ -121,8 +121,6 @@ namespace GamePlay.Bussiness.Render
             {
                 renderer.material = this._roleContext.factory.GetDefaultMaterial();
             });
-
-            this._context.domainApi.shaderEffectApi.PlayShaderEffect((int)GameShaderEffectType.Stealth, role);
             return role;
         }
 

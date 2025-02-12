@@ -1,5 +1,5 @@
 using GamePlay.Core;
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleRepo : GameEntityRepoBase<GameRoleEntity>
@@ -15,6 +15,26 @@ namespace GamePlay.Bussiness.Logic
             this._dict[newRole.idCom.entityId] = newRole;
             this._list[this._list.IndexOf(oldRole)] = newRole;
             return oldRole;
+        }
+
+        public GameRoleEntity GetNearestEnemy(GameRoleEntity role)
+        {
+            if (!role) return null;
+            var nearestDis = float.MaxValue;
+            GameRoleEntity nearestRole = null;
+            var pos = role.transformCom.position;
+            this._list.Foreach((enemy) =>
+            {
+                if (enemy == role) return;
+                if (!enemy.idCom.CheckCampType(role.idCom, GameCampType.Enemy)) return;
+                var dis = (pos - enemy.transformCom.position).sqrMagnitude;
+                if (dis < nearestDis)
+                {
+                    nearestDis = dis;
+                    nearestRole = enemy;
+                }
+            });
+            return nearestRole;
         }
     }
 }

@@ -104,7 +104,32 @@ namespace GamePlay.Bussiness.Logic
             var target = actor.actionTargeterCom.targetEntity;
             if (isSingleSelect)
             {
-                return selectAnchorType == GameEntitySelectAnchorType.Actor ? actor.transformCom.position : target.transformCom.position;
+                switch (selectAnchorType)
+                {
+                    case GameEntitySelectAnchorType.Actor:
+                        return actor.transformCom.position;
+                    case GameEntitySelectAnchorType.ActorRole:
+                        var actorRole = actor.GetLinkParent<GameRoleEntity>();
+                        if (!actorRole)
+                        {
+                            GameLogger.LogError($"选择器锚点类型为ActorRole时, 未找到角色实体: {actor.idCom}");
+                            return default;
+                        }
+                        return actorRole.transformCom.position;
+                    case GameEntitySelectAnchorType.ActTarget:
+                        return target.transformCom.position;
+                    case GameEntitySelectAnchorType.NearestEnemy:
+                        var enemy = this._context.roleContext.repo.GetNearestEnemy(actor.GetLinkParent<GameRoleEntity>());
+                        if (!enemy)
+                        {
+                            GameLogger.LogError($"选择器锚点类型为NearestEnemy时, 未找到敌方实体: {actor.idCom}");
+                            return default;
+                        }
+                        return enemy.transformCom.position;
+                    default:
+                        GameLogger.LogError($"未处理的选择器锚点类型: {selectAnchorType}");
+                        return default;
+                }
             }
             var anchorTrans = this._GetRangeSelectAnchorTrans(actor, target, selectAnchorType);
             return anchorTrans.position;

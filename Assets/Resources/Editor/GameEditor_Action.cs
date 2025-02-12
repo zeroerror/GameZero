@@ -21,6 +21,7 @@ namespace GamePlay.Config
         private SerializedProperty detachBuffActionEM_p;
         private SerializedProperty summonRolesActionEM_p;
         private SerializedProperty characterTransformActionEM_p;
+        private SerializedProperty stealthActionEM_p;
 
         private SerializedProperty actionEMR_p;
 
@@ -38,6 +39,7 @@ namespace GamePlay.Config
             this.detachBuffActionEM_p = _serializedObject.FindProperty("detachBuffActionEM");
             this.summonRolesActionEM_p = _serializedObject.FindProperty("summonRolesActionEM");
             this.characterTransformActionEM_p = _serializedObject.FindProperty("characterTransformActionEM");
+            this.stealthActionEM_p = _serializedObject.FindProperty("stealthActionEM");
 
             this.actionEMR_p = _serializedObject.FindProperty("actionEMR");
         }
@@ -118,6 +120,10 @@ namespace GamePlay.Config
                 case GameActionType.CharacterTransform:
                     EditorGUILayout.LabelField(" -------- 角色变身 --------", EditorStyles.boldLabel);
                     characterTransformActionEM_p.DrawProperty();
+                    break;
+                case GameActionType.Stealth:
+                    EditorGUILayout.LabelField(" -------- 隐身 --------", EditorStyles.boldLabel);
+                    stealthActionEM_p.DrawProperty();
                     break;
                 default:
                     EditorGUILayout.HelpBox($"未知的行为类型：{so.actionType}", MessageType.Warning);

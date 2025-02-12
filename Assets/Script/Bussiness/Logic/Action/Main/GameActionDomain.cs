@@ -89,6 +89,9 @@ namespace GamePlay.Bussiness.Logic
                 case GameActionModel_CharacterTransform characterTransformAction:
                     this.DoAction_CharacterTransform(characterTransformAction, actor);
                     break;
+                case GameActionModel_Stealth stealthAction:
+                    this.DoAction_Stealth(stealthAction, actor);
+                    break;
                 default:
                     GameLogger.LogError($"未处理的行为类型：{actionModel.GetType().Name}");
                     break;
@@ -422,11 +425,35 @@ namespace GamePlay.Bussiness.Logic
                 // 记录
                 this._actionContext.transformRecordList.Add(record);
                 // 提交RC 
-                var rcArgs = new GameActionRCArgs_CharacterTransform(
-                    action.typeId,
-                    record
-                );
+                GameActionRCArgs_CharacterTransform rcArgs;
+                rcArgs.actionId = action.typeId;
+                rcArgs.record = record;
                 this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_TRANSFORM, rcArgs);
+            });
+        }
+
+        public void DoAction_Stealth(GameActionModel_Stealth action, GameEntityBase actor)
+        {
+            var entitySelectApi = this._context.domainApi.entitySelectApi;
+            var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
+            selectedEntities?.Foreach((selectedEntity) =>
+            {
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
+                // 帧末执行
+                this._context.cmdBufferService.AddDelayCmd(0, () =>
+                {
+                    // 执行
+                    var record = GameActionUtil_Stealth.CalcStealth(actor, selectedEntity, action);
+                    GameActionUtil_Stealth.DoStealth(selectedEntity, record, this._context.domainApi);
+                    // 记录
+                    this._actionContext.stealthRecordList.Add(record);
+                    // 提交RC
+                    var rcArgs = new GameActionRCArgs_Stealth(
+                        action.typeId,
+                        record
+                    );
+                    this._context.SubmitRC(GameActionRCCollection.RC_GAME_ACTION_STEALTH, rcArgs);
+                });
             });
         }
     }

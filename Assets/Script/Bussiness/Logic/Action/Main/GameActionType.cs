@@ -22,6 +22,8 @@ namespace GamePlay.Bussiness.Logic
         SummonRoles = 8,
         /// <summary> 角色变身 </summary>
         CharacterTransform = 9,
+        /// <summary> 隐身 </summary>
+        Stealth = 10,
 
         /// <summary> 击杀 </summary>
         Kill = 999,

@@ -21,6 +21,8 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_ACTION_SUMMON_ROLE = "RC_GAME_ACTION_SUMMON_ROLE";
         /** 行为执行 - 变身 */
         public static readonly string RC_GAME_ACTION_TRANSFORM = "RC_GAME_ACTION_TRANSFORM";
+        /** 行为执行 - 隐身 */
+        public static readonly string RC_GAME_ACTION_STEALTH = "RC_GAME_ACTION_STEALTH";
     }
 
     public struct GameActionRCArgs_Do
@@ -117,7 +119,13 @@ namespace GamePlay.Bussiness.Logic
     {
         public int actionId;
         public GameActionRecord_CharacterTransform record;
-        public GameActionRCArgs_CharacterTransform(int actionId, in GameActionRecord_CharacterTransform record)
+    }
+
+    public struct GameActionRCArgs_Stealth
+    {
+        public int actionId;
+        public GameActionRecord_Stealth record;
+        public GameActionRCArgs_Stealth(int actionId, in GameActionRecord_Stealth record)
         {
             this.actionId = actionId;
             this.record = record;

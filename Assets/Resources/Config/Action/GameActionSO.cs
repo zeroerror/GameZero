@@ -18,6 +18,7 @@ namespace GamePlay.Config
         public GameActionEM_DetachBuff detachBuffActionEM;
         public GameActionEM_SummonRoles summonRolesActionEM;
         public GameActionEM_CharacterTransform characterTransformActionEM;
+        public GameActionEM_Stealth stealthActionEM;
 
         public GameActionEMR actionEMR;
 
@@ -60,6 +61,9 @@ namespace GamePlay.Config
                 case GameActionType.CharacterTransform:
                     actionModel = characterTransformActionEM.ToModel();
                     break;
+                case GameActionType.Stealth:
+                    actionModel = stealthActionEM.ToModel();
+                    break;
                 default:
                     GameLogger.LogError("GameActionSO: GetAction: invalid actionType: " + actionType);
                     return null;
@@ -90,6 +94,8 @@ namespace GamePlay.Config
                     return this.summonRolesActionEM.selectorEM;
                 case GameActionType.CharacterTransform:
                     return this.characterTransformActionEM.selectorEM;
+                case GameActionType.Stealth:
+                    return this.stealthActionEM.selectorEM;
                 default:
                     GameLogger.LogError("未处理的行为类型: " + actionType);
                     return null;

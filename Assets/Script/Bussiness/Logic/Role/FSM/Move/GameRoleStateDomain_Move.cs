@@ -1,5 +1,3 @@
-using GamePlay.Core;
-using UnityEditor.MPE;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
@@ -27,46 +25,12 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        protected override void _Tick(GameRoleEntity role, float frameTime)
+        protected override void _Tick(GameRoleEntity role, float dt)
         {
             var stateModel = role.fsmCom.moveState;
-            var inputCom = role.inputCom;
-            if (inputCom.TryGetInputArgs(out var inputArgs))
-            {
-                stateModel.inputArgs = inputArgs;
-            }
-            inputArgs = stateModel.inputArgs;
-
-            // 根据方向移动
-            var moveDir = inputArgs.moveDir;
-            if (moveDir != GameVec2.zero)
-            {
-                var moveSpeed = role.attributeCom.GetValue(GameAttributeType.MoveSpeed);
-                var moveVec = new GameVec2(moveDir.x, moveDir.y) * moveSpeed * frameTime;
-                role.transformCom.position += moveVec;
-                role.FaceTo(moveDir);
-                stateModel.stateMoveDir = moveDir;
-                return;
-            }
-
-            // 根据目的地移动
-            var moveDst = inputArgs.moveDst;
-            if (moveDst != GameVec2.zero && role.transformCom.position != moveDst)
-            {
-                var moveSpeed = role.attributeCom.GetValue(GameAttributeType.MoveSpeed);
-                var moveVec = moveDst - new GameVec2(role.transformCom.position.x, role.transformCom.position.y);
-                var toDstDir = moveVec.normalized;
-                var moveDis = moveVec.magnitude;
-                if (moveDis < moveSpeed * frameTime)
-                {
-                    role.transformCom.position = new GameVec2(moveDst.x, moveDst.y);
-                    return;
-                }
-                role.transformCom.position += toDstDir * moveSpeed * frameTime;
-                role.FaceTo(toDstDir);
-                stateModel.stateMoveDir = toDstDir;
-                return;
-            }
+            stateModel.stateTime += dt;
+            GameRoleMoveUtil.TickMove(role, dt, out var moveDir);
+            stateModel.stateMoveDir = moveDir;
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)

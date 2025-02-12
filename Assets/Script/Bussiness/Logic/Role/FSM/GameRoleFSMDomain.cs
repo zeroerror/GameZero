@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GamePlay.Core;
 namespace GamePlay.Bussiness.Logic
 {
 
@@ -20,6 +21,7 @@ namespace GamePlay.Bussiness.Logic
                 { GameRoleStateType.Move, new GameRoleStateDomain_Move() },
                 { GameRoleStateType.Cast, new GameRoleStateDomain_Cast() },
                 { GameRoleStateType.Dead, new GameRoleStateDomain_Dead() },
+                { GameRoleStateType.Stealth, new GameRoleStateDomain_Stealth() },
                 { GameRoleStateType.Destroyed, new GameRoleStateDomain_Destroyed() }
             };
         }
@@ -50,14 +52,18 @@ namespace GamePlay.Bussiness.Logic
             stateDomain.Tick(role, dt);
         }
 
-        public bool TryEnter(GameRoleEntity role, GameRoleStateType toState)
+        public bool TryEnter(GameRoleEntity role, GameRoleStateType toState, params object[] args)
         {
-            if (!this._stateDomainDict.TryGetValue(toState, out var stateDomain)) return false;
-            var check = stateDomain.CheckEnter(role);
+            if (!this._stateDomainDict.TryGetValue(toState, out var stateDomain))
+            {
+                GameLogger.LogError($"TryEnter: 无法找到状态域{toState}");
+                return false;
+            }
+            var check = stateDomain.CheckEnter(role, args);
             if (check)
             {
                 this._ExitToState(role, toState);
-                stateDomain.Enter(role);
+                stateDomain.Enter(role, args);
 
                 var stateType = role.fsmCom.stateType;
                 var skillType = stateType == GameRoleStateType.Cast ? role.fsmCom.castState.skill.skillModel.skillType : GameSkillType.None;

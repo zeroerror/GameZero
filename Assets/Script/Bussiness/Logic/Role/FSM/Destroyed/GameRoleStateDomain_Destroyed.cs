@@ -34,7 +34,7 @@ namespace GamePlay.Bussiness.Logic
             return GameRoleStateType.None;
         }
 
-        protected override void _Tick(GameRoleEntity role, float frameTime)
+        protected override void _Tick(GameRoleEntity role, float dt)
         {
         }
     }

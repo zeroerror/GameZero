@@ -35,12 +35,13 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        protected override void _Tick(GameRoleEntity entity, float frameTime)
+        protected override void _Tick(GameRoleEntity entity, float dt)
         {
             var stateModel = entity.fsmCom.castState;
-            var skill = stateModel.skill;
+            stateModel.stateTime += dt;
 
             // 技能时间轴
+            var skill = stateModel.skill;
             float timeScale = 1;
             var timelineCom = skill.timelineCom;
             // 普攻受到攻速的机制
@@ -51,7 +52,7 @@ namespace GamePlay.Bussiness.Logic
                 var length = timelineCom.length;
                 timeScale = attackSpeed == 0 ? 1 : attackSpeed * length;
             }
-            timelineCom.Tick(frameTime * timeScale);
+            timelineCom.Tick(dt * timeScale);
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)

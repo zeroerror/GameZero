@@ -22,9 +22,9 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /** 状态更新 */
-        public void Tick(GameRoleEntity role, float frameTime)
+        public void Tick(GameRoleEntity role, float dt)
         {
-            this._Tick(role, frameTime);
+            this._Tick(role, dt);
             var toState = this._CheckExit(role);
             if (toState != GameRoleStateType.None)
             {
@@ -37,7 +37,7 @@ namespace GamePlay.Bussiness.Logic
         /** 进入. ps: 直接调用则会跳过了条件判定 */
         public abstract void Enter(GameRoleEntity role, params object[] args);
         /** 状态更新 */
-        protected abstract void _Tick(GameRoleEntity role, float frameTime);
+        protected abstract void _Tick(GameRoleEntity role, float dt);
         /** 判定退出条件 */
         protected abstract GameRoleStateType _CheckExit(GameRoleEntity role);
         /** 退出状态 */

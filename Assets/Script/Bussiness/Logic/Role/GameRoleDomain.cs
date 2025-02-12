@@ -107,6 +107,11 @@ namespace GamePlay.Bussiness.Logic
 
             // 其余领域的初始化逻辑
             this._InitByOtherDomains(role);
+
+            this._context.cmdBufferService.AddDelayCmd(3f, () =>
+            {
+                this._context.domainApi.actionApi.DoAction(901, role);
+            });
             return role;
         }
 

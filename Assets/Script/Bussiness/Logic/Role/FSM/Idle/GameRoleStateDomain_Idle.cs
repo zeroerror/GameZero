@@ -23,8 +23,10 @@ namespace GamePlay.Bussiness.Logic
             });
         }
 
-        protected override void _Tick(GameRoleEntity role, float frameTime)
+        protected override void _Tick(GameRoleEntity role, float dt)
         {
+            var stateModel = role.fsmCom.idleState;
+            stateModel.stateTime += dt;
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)
@@ -32,13 +34,8 @@ namespace GamePlay.Bussiness.Logic
             var inputCom = role.inputCom;
             if (inputCom.TryGetInputArgs(out var inputArgs))
             {
-                if (inputArgs.skillId != 0) return GameRoleStateType.Cast;
-                if (inputArgs.moveDir != GameVec2.zero ||
-                    inputArgs.moveDst != GameVec2.zero
-                )
-                {
-                    return GameRoleStateType.Move;
-                }
+                if (inputArgs.HasSkillInput()) return GameRoleStateType.Cast;
+                if (inputArgs.HasMoveInput()) return GameRoleStateType.Move;
             }
             return GameRoleStateType.None;
         }

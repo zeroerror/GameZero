@@ -37,6 +37,7 @@ namespace GamePlay.Bussiness.Render
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, this._OnAction_AttributeModify);
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, this._OnAction_AttachBuff);
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_TRANSFORM, this._OnAction_CharacterTransform);
+            this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_STEALTH, this._OnAction_Stealth);
         }
 
         private void _UnbindEvents()
@@ -49,6 +50,7 @@ namespace GamePlay.Bussiness.Render
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_ATTRIBUTE_MODIFY, this._OnAction_AttributeModify);
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_ATTACH_BUFF, this._OnAction_AttachBuff);
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_TRANSFORM, this._OnAction_CharacterTransform);
+            this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_STEALTH, this._OnAction_Stealth);
         }
 
         public bool TryGetModel(int actionId, out GameActionModelR model)
@@ -288,6 +290,22 @@ namespace GamePlay.Bussiness.Render
             if (actor == null || target == null)
             {
                 this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_TRANSFORM, args);
+                return;
+            }
+            this._PlayActionHitEffect(rcArgs.actionId, target);
+        }
+
+        private void _OnAction_Stealth(object args)
+        {
+            var rcArgs = (GameActionRCArgs_Stealth)args;
+            ref var record = ref rcArgs.record;
+            ref var actorIdArgs = ref record.actorIdArgs;
+            var actor = this._context.FindEntity(actorIdArgs);
+            ref var targetIdArgs = ref record.targetIdArgs;
+            var target = this._context.FindEntity(targetIdArgs);
+            if (actor == null || target == null)
+            {
+                this._context.DelayRC(GameActionRCCollection.RC_GAME_ACTION_STEALTH, args);
                 return;
             }
             this._PlayActionHitEffect(rcArgs.actionId, target);
