@@ -49,8 +49,11 @@ namespace GamePlay.Core
             {
                 var submit = _submitList[i];
                 if (!_listeners.ContainsKey(submit.name)) continue;
-                foreach (var listener in _listeners[submit.name])
+                var listeners = _listeners[submit.name];
+                var listenerCount = listeners.Count;
+                for (int j = 0; j < listenerCount; j++)
                 {
+                    var listener = listeners[j];
                     listener(submit.args);
                 }
             }

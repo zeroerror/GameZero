@@ -105,7 +105,8 @@ namespace GamePlay.Bussiness.UI
                     textCom.text = cdElapsed.ToFixed(1).ToString();
                     skillItem.cd.gameObject.SetActive(cdElapsed > 0);
                     // 技能图标
-                    skillItem.img_icon.sprite = Resources.Load<Sprite>(UIPathUtil.GetSkillIcon(skill.skillModel.typeId));
+                    var url = UIPathUtil.GetSkillIcon(skill.skillModel.typeId);
+                    skillItem.img_icon.sprite = Resources.Load<Sprite>(url);
                 });
                 for (int i = role.skillCom.Count; i < 3; i++)
                 {

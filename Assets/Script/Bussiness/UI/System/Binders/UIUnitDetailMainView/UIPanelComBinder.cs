@@ -21,6 +21,8 @@ public class UIPanelComBinder
     private UISkillItemBinder _skillGroup_item2;
     public UISkillItemBinder skillGroup_item3 => _skillGroup_item3 ?? (_skillGroup_item3 = new UISkillItemBinder(this.gameObject.transform.Find("skillGroup/item3").gameObject));
     private UISkillItemBinder _skillGroup_item3;
+    public UISkillItemBinder skillGroup_item4 => _skillGroup_item4 ?? (_skillGroup_item4 = new UISkillItemBinder(this.gameObject.transform.Find("skillGroup/item4").gameObject));
+    private UISkillItemBinder _skillGroup_item4;
     public Image attributeList => _attributeList ?? (_attributeList = this.gameObject.transform.Find("attributeList").GetComponent<Image>());
     private Image _attributeList;
     public Image attributeList_Viewport => _attributeList_Viewport ?? (_attributeList_Viewport = this.gameObject.transform.Find("attributeList/Viewport").GetComponent<Image>());

@@ -69,20 +69,23 @@ namespace GamePlay.Bussiness.Logic
             skill.BindTransformCom(role.transformCom);
             skill.BindAttributeCom(role.attributeCom);
             skill.BindBaseAttributeCom(role.baseAttributeCom);
-            // 添加时间轴事件
+            // 为主动技能添加时间轴事件
             var skillModel = skill.skillModel;
-            var timelineEvModels = skillModel.timelineEvModels;
-            var actionApi = this._context.domainApi.actionApi;
-            timelineEvModels?.Foreach((evModel, index) =>
+            if (skillModel.skillType != GameSkillType.Passive)
             {
-                skill.timelineCom.AddEventByFrame(evModel.frame, () =>
+                var timelineEvModels = skillModel.timelineEvModels;
+                var actionApi = this._context.domainApi.actionApi;
+                timelineEvModels?.Foreach((evModel, index) =>
                 {
-                    evModel.actionIds?.Foreach((actionId) =>
+                    skill.timelineCom.AddEventByFrame(evModel.frame, () =>
                     {
-                        actionApi.DoAction(actionId, skill);
+                        evModel.actionIds?.Foreach((actionId) =>
+                        {
+                            actionApi.DoAction(actionId, skill);
+                        });
                     });
                 });
-            });
+            }
             skillCom.Add(skill);
             repo.TryAdd(skill);
             return skill;

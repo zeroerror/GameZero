@@ -7,11 +7,6 @@ namespace GamePlay.Bussiness.UI
     public struct UIUnitShopMainViewInput
     {
         public GameItemUnitModel[] buyableUnits;
-
-        public UIUnitShopMainViewInput(GameItemUnitModel[] unitModels)
-        {
-            this.buyableUnits = unitModels;
-        }
     }
 
     public class UIUnitShopMainView : UIBase
@@ -41,6 +36,7 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.BindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.BindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
             this._uiApi.logicApi.directorApi.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnDirectorStateExit);
+            this._uiApi.logicApi.directorApi.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnDirectorStateEnterFightPreparing);
 
             this.SetClick(this.uiBinder.btn_confirm.gameObject, this._OnBtnConfirmClick);
             this.SetClick(this.uiBinder.btn_refresh.gameObject, this._OnBtnRefreshClick);
@@ -59,6 +55,8 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.UnbindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
             this._uiApi.logicApi.directorApi.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnDirectorStateExit);
+            this._uiApi.logicApi.directorApi.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnDirectorStateEnterFightPreparing);
+
         }
 
         private void _OnPlayerCoinsChange(object args)
@@ -75,12 +73,16 @@ namespace GamePlay.Bussiness.UI
             }
         }
 
+        private void _OnDirectorStateEnterFightPreparing(object args)
+        {
+            this.uiBinder.btn_confirm.gameObject.SetActive(true);
+        }
+
         protected override void _OnShow()
         {
             // 刷新金币显示
             this._RefreshGold();
             // 刷新按钮显示
-            this.uiBinder.btn_confirm.gameObject.SetActive(true);
             this._OnClickBtnCancel();
             // 刷新购买单位列表
             var itemCount = this._unitModels.Length;
@@ -165,6 +167,7 @@ namespace GamePlay.Bussiness.UI
         private void _OnBtnRefreshClick()
         {
             if (!this._uiApi.logicApi.directorApi.ShuffleBuyableUnits(false)) return;
+            this._viewInput.buyableUnits = this._uiApi.logicApi.directorApi.GetBuyableUnits();
             this._OnShow();
         }
 

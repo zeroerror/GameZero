@@ -234,5 +234,21 @@ namespace GamePlay.Core
             }
             return arr;
         }
+
+        public static T[] Contact<T>(this T[] arr, T value)
+        {
+            Array.Resize(ref arr, arr.Length + 1);
+            arr[arr.Length - 1] = value;
+            return arr;
+        }
+        public static T[] Contact<T>(this T[] arr, T[] value)
+        {
+            Array.Resize(ref arr, arr.Length + value.Length);
+            for (int i = 0; i < value.Length; i++)
+            {
+                arr[arr.Length - value.Length + i] = value[i];
+            }
+            return arr;
+        }
     }
 }

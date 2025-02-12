@@ -169,7 +169,7 @@ namespace GamePlay.Bussiness.Logic
             // 执行所有选项的行为
             var playerCampId = GameCampCollection.PLAYER_CAMP_ID;
             var optionRepo = this._context.actionContext.optionRepo;
-            var optionId = selectedOptionModel.typeId;
+            var optionId = selectedOptionModel?.typeId ?? 0;
             var optionEntity = optionRepo.FindOption(playerCampId, optionId);
             if (optionEntity)
             {

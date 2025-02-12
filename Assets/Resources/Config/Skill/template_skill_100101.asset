@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: template_skill_100101
   m_EditorClassIdentifier: 
   typeId: 100101
-  desc: "\u68D5\u718A\u653B\u51FB"
-  skillType: 1
-  animClip: {fileID: 7400000, guid: 28801a507187c0d4a89d16674c86cfa4, type: 2}
-  animName: attack
-  animLength: 0.51666665
+  desc: "\u5F13\u7BAD\u624B - \u5C04\u7BAD"
+  skillType: 2
+  animClip: {fileID: 7400000, guid: 03733f2ae9d7fd04b9a5d8c06bb144e4, type: 2}
+  animName: attack_shot_arrow
+  animLength: 0.73333335
   timelineEvents:
-  - time: 0.26666668
-    frame: 16
+  - time: 0.6166667
+    frame: 37
     actions:
-    - {fileID: 11400000, guid: 680b2c7bee2a5ab4c9924678c6ef65cc, type: 2}
+    - {fileID: 11400000, guid: 0fe48bb3e653ecd4e9ce1174c39d2c4b, type: 2}
   conditionEM:
     targeterType: 2
     cdTime: 0
@@ -31,6 +31,7 @@ MonoBehaviour:
       selectAnchorType: 1
       campType: 1
       entityType: 1
+      onlySelectDead: 0
       selColliderType: 2
       boxColliderModel:
         offset: {x: 0, y: 0}
@@ -40,7 +41,7 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 2
+        radius: 10
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0

@@ -1,3 +1,4 @@
+using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEditor;
 using UnityEngine;
@@ -15,11 +16,13 @@ namespace GamePlay.Config
         private SerializedProperty skills_p;
         private SerializedProperty attributes_p;
         private SerializedProperty prefabUrl_p;
+        private SerializedProperty careerType_p;
 
         private void OnEnable()
         {
             this._serializedObject = new SerializedObject(target);
             this.typeId_p = _serializedObject.FindProperty("typeId");
+            this.careerType_p = _serializedObject.FindProperty("careerType");
             this.roleName_p = _serializedObject.FindProperty("roleName");
             this.desc_p = _serializedObject.FindProperty("desc");
             this.prefab_p = _serializedObject.FindProperty("prefab");
@@ -33,6 +36,7 @@ namespace GamePlay.Config
             this._serializedObject.Update();
 
             this.typeId_p.DrawProperty_Int("类型ID");
+            this.careerType_p.DrawProperty_EnumPopup<GameRoleCareerType>("职业类型");
             this.roleName_p.DrawProperty_Str("名称");
             this.desc_p.DrawProperty_Str("描述");
             var prefab = this.prefab_p.DrawProperty<GameObject>("预制体");
