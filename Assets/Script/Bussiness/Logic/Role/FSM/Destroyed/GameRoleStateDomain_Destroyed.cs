@@ -6,14 +6,14 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateDomain_Destroyed() : base() { }
 
-        public override bool CheckEnter(GameRoleEntity role)
+        public override bool CheckEnter(GameRoleEntity role, params object[] args)
         {
             var curStateType = role.fsmCom.stateType;
             if (curStateType == GameRoleStateType.Destroyed) return false;
             return true;
         }
 
-        public override void Enter(GameRoleEntity role)
+        public override void Enter(GameRoleEntity role, params object[] args)
         {
             role.fsmCom.EnterDestroyed();
 

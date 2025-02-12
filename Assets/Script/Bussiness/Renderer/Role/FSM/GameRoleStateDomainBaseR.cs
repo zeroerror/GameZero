@@ -8,12 +8,6 @@ namespace GamePlay.Bussiness.Render
 
         /// <summary> 切换状态接口 </summary>
         public delegate void TransitToDelegate(GameRoleEntityR role, GameRoleStateType state, params object[] args);
-        protected readonly TransitToDelegate TransitTo;
-
-        public GameRoleStateDomainBaseR(TransitToDelegate transitToDelegate)
-        {
-            this.TransitTo = transitToDelegate;
-        }
 
         public void Inject(GameContextR context)
         {
@@ -33,7 +27,7 @@ namespace GamePlay.Bussiness.Render
         /** 进入. ps: 直接调用则会跳过了条件判定 */
         public abstract void Enter(GameRoleEntityR role, params object[] args);
         /** 状态更新 */
-        protected abstract void _Tick(GameRoleEntityR role, float frameTime);
+        protected virtual void _Tick(GameRoleEntityR role, float frameTime) { }
         /** 退出状态 */
         public virtual void ExitTo(GameRoleEntityR role, GameRoleStateType toState) { }
     }

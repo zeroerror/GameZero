@@ -76,6 +76,12 @@ namespace GamePlay.Bussiness.Logic
             var stateType = fsmCom.stateType;
             if (!this._stateDomainDict.TryGetValue(stateType, out var stateDomain)) return;
             stateDomain.ExitTo(role, toState);
+            // 提交RC
+            this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_EXIT, new GameRoleRCArgs_StateExit
+            {
+                exitStateType = stateType,
+                idArgs = role.idCom.ToArgs(),
+            });
         }
     }
 

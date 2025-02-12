@@ -7,7 +7,6 @@ namespace GamePlay.Bussiness.Render
     public class GameRoleStateDomain_CastR : GameRoleStateDomainBaseR
     {
         private static readonly string GAME_RC_EV_NAME = GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_CAST;
-        public GameRoleStateDomain_CastR(TransitToDelegate transitToDelegate) : base(transitToDelegate) { }
 
         public override void BindEvents()
         {
@@ -38,7 +37,7 @@ namespace GamePlay.Bussiness.Render
                 var timeScale = attackSpeed == 0 ? 1 : attackSpeed * skill.skillModel.clipLength;
                 role.animCom.timeScale = timeScale;
             }
-            this.TransitTo(role, GameRoleStateType.Cast, rcArgs.skillId);
+            this._context.domainApi.roleApi.fsmApi.Enter(role, GameRoleStateType.Cast, rcArgs.skillId);
         }
 
         public override void Enter(GameRoleEntityR role, params object[] args)

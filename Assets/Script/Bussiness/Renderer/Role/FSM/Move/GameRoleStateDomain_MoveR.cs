@@ -5,7 +5,6 @@ namespace GamePlay.Bussiness.Render
     public class GameRoleStateDomain_MoveR : GameRoleStateDomainBaseR
     {
         private static readonly string GAME_RC_EV_NAME = GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE;
-        public GameRoleStateDomain_MoveR(TransitToDelegate transitToDelegate) : base(transitToDelegate) { }
 
         public override void BindEvents()
         {
@@ -29,7 +28,7 @@ namespace GamePlay.Bussiness.Render
                 this._context.DelayRC(GAME_RC_EV_NAME, args);
                 return;
             }
-            this.TransitTo(role, GameRoleStateType.Move, args);
+            this._context.domainApi.roleApi.fsmApi.Enter(role, GameRoleStateType.Move, rcArgs);
         }
 
         public override void Enter(GameRoleEntityR role, params object[] args)

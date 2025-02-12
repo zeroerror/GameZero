@@ -4,12 +4,12 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleStateDomain_Any : GameRoleStateDomainBase
     {
-        public override bool CheckEnter(GameRoleEntity role)
+        public override bool CheckEnter(GameRoleEntity role, params object[] args)
         {
             return true;
         }
 
-        public override void Enter(GameRoleEntity role)
+        public override void Enter(GameRoleEntity role, params object[] args)
         {
         }
 

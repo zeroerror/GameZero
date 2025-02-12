@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using GamePlay.Core;
 namespace GamePlay.Bussiness.Render
 {
 
@@ -11,11 +10,12 @@ namespace GamePlay.Bussiness.Render
         public GameRoleFSMDomainR()
         {
             this._stateDomainDict = new Dictionary<GameRoleStateType, GameRoleStateDomainBaseR>(){
-                {GameRoleStateType.Idle, new GameRoleStateDomain_IdleR(this._Enter)},
-                {GameRoleStateType.Move, new GameRoleStateDomain_MoveR(this._Enter)},
-                {GameRoleStateType.Cast, new GameRoleStateDomain_CastR(this._Enter)},
-                {GameRoleStateType.Dead, new GameRoleStateDomain_DeadR(this._Enter)},
-                {GameRoleStateType.Destroyed, new GameRoleStateDomain_DestroyedR(this._Enter)}
+                {GameRoleStateType.Idle, new GameRoleStateDomain_IdleR()},
+                {GameRoleStateType.Move, new GameRoleStateDomain_MoveR()},
+                {GameRoleStateType.Cast, new GameRoleStateDomain_CastR()},
+                {GameRoleStateType.Dead, new GameRoleStateDomain_DeadR()},
+                {GameRoleStateType.Stealth, new GameRoleStateDomain_StealthR()},
+                {GameRoleStateType.Destroyed, new GameRoleStateDomain_DestroyedR()}
             };
         }
 

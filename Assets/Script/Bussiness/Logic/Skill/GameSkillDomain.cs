@@ -35,6 +35,17 @@ namespace GamePlay.Bussiness.Logic
             return this._skillContext.factory.template.TryGet(typeId, out model);
         }
 
+        public GameSkillEntity CreateSkill(GameRoleEntity role, int typeId)
+        {
+            var skillCom = role.skillCom;
+            var skill = this._CreateSkill(role, typeId, skillCom);
+            // 提交RC
+            this._context.SubmitRC(GameSkillRCCollection.RC_GAMES_SKILL_CREATE,
+                new GameSkillRCArgs_Create { roleIdArgs = role.idCom.ToArgs(), skillIdArgs = skill.idCom.ToArgs() }
+            );
+            return skill;
+        }
+
         private GameSkillEntity _CreateSkill(GameRoleEntity role, int typeId, GameSkillCom skillCom)
         {
             if (skillCom.TryGet(typeId, out var _))
@@ -77,32 +88,6 @@ namespace GamePlay.Bussiness.Logic
             return skill;
         }
 
-        public GameSkillEntity CreateSkill(GameRoleEntity role, int typeId)
-        {
-            var skillCom = role.skillCom;
-            var skill = this._CreateSkill(role, typeId, skillCom);
-            // 提交RC
-            this._context.SubmitRC(GameSkillRCCollection.RC_GAMES_SKILL_CREATE,
-                new GameSkillRCArgs_Create { roleIdArgs = role.idCom.ToArgs(), skillIdArgs = skill.idCom.ToArgs() }
-            );
-            return skill;
-        }
-
-        public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target, bool ignoreDistanceCondition = false)
-        {
-            var conditionModel = skill.skillModel.conditionModel;
-            if (conditionModel == null) return true;
-            // 检查 - 范围
-            if (!ignoreDistanceCondition && !GamePhysicsResolvingUtil.CheckOverlap(conditionModel.selector.colliderModel, skill.transformCom.ToArgs(), target.transformCom.position)) return false;
-            // 检查 - CD
-            if (skill.cdElapsed > 0) return false;
-            // 检查 - 属性消耗
-            if (role.attributeCom.GetValue(GameAttributeType.MP) < conditionModel.mpCost) return false;
-            // 检查 - 选择器
-            if (!conditionModel.selector.CheckSelect(skill, role) && !conditionModel.selector.CheckSelect(skill, target)) return false;
-            return true;
-        }
-
         public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistanceCondition = false)
         {
             var fsmCom = role.fsmCom;
@@ -142,9 +127,14 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 技能条件检测
-            if (!this.CheckSkillCondition(role, skill, inputArgs.targeterArgsList?[0].targetEntity)) return false;
+            var firstTarget = inputArgs.targeterArgsList?[0].targetEntity;
+            if (!this.CheckSkillCondition(role, skill, firstTarget)) return false;
 
-            // 人物状态检测
+            // 目标为隐身状态的敌对阵营角色
+            if (firstTarget is GameRoleEntity targetRole)
+            {
+                if (targetRole.idCom.CheckCampType(role.idCom, GameCampType.Enemy) && targetRole.fsmCom.stateType == GameRoleStateType.Stealth) return false;
+            }
 
             return true;
         }
@@ -155,6 +145,21 @@ namespace GamePlay.Bussiness.Logic
             var check = this.CheckCastCondition(role, skill, in inputArgs);
             if (!check) GameLogger.LogWarning($"技能施法条件检测失败：{skill.idCom}");
             return check;
+        }
+
+        public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target, bool ignoreDistanceCondition = false)
+        {
+            var conditionModel = skill.skillModel.conditionModel;
+            if (conditionModel == null) return true;
+            // 检查 - 范围
+            if (!ignoreDistanceCondition && !GamePhysicsResolvingUtil.CheckOverlap(conditionModel.selector.colliderModel, skill.transformCom.ToArgs(), target.transformCom.position)) return false;
+            // 检查 - CD
+            if (skill.cdElapsed > 0) return false;
+            // 检查 - 属性消耗
+            if (role.attributeCom.GetValue(GameAttributeType.MP) < conditionModel.mpCost) return false;
+            // 检查 - 选择器
+            if (!conditionModel.selector.CheckSelect(skill, role) && !conditionModel.selector.CheckSelect(skill, target)) return false;
+            return true;
         }
 
         public void CastSkill(GameRoleEntity role, GameSkillEntity skill)

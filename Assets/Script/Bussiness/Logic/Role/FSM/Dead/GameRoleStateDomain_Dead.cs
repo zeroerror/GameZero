@@ -4,14 +4,14 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateDomain_Dead() : base() { }
 
-        public override bool CheckEnter(GameRoleEntity role)
+        public override bool CheckEnter(GameRoleEntity role, params object[] args)
         {
             var stateType = role.fsmCom.stateType;
             if (stateType == GameRoleStateType.Dead) return false;
             return true;
         }
 
-        public override void Enter(GameRoleEntity role)
+        public override void Enter(GameRoleEntity role, params object[] args)
         {
             role.fsmCom.EnterDead();
             role.physicsCom.collider.isEnable = false;

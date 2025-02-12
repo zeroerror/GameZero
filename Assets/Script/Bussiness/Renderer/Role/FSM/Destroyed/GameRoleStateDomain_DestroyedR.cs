@@ -6,7 +6,6 @@ namespace GamePlay.Bussiness.Render
     public class GameRoleStateDomain_DestroyedR : GameRoleStateDomainBaseR
     {
         private static readonly string GAME_RC_EV_NAME = GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_DESTROYED;
-        public GameRoleStateDomain_DestroyedR(TransitToDelegate transitToDelegate) : base(transitToDelegate) { }
 
         public override void BindEvents()
         {
@@ -30,7 +29,7 @@ namespace GamePlay.Bussiness.Render
                 this._context.DelayRC(GAME_RC_EV_NAME, args);
                 return;
             }
-            this.TransitTo(role, GameRoleStateType.Destroyed, args);
+            this._context.domainApi.roleApi.fsmApi.Enter(role, GameRoleStateType.Destroyed, rcArgs);
         }
 
         public override void Enter(GameRoleEntityR role, params object[] args)

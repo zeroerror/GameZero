@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /** 尝试进入状态 */
-        public bool TryEnter(GameRoleEntity role)
+        public bool TryEnter(GameRoleEntity role, params object[] args)
         {
             if (!this.CheckEnter(role)) return false;
             this.Enter(role);
@@ -33,9 +33,9 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /** 判定进入条件 */
-        public abstract bool CheckEnter(GameRoleEntity role);
+        public abstract bool CheckEnter(GameRoleEntity role, params object[] args);
         /** 进入. ps: 直接调用则会跳过了条件判定 */
-        public abstract void Enter(GameRoleEntity role);
+        public abstract void Enter(GameRoleEntity role, params object[] args);
         /** 状态更新 */
         protected abstract void _Tick(GameRoleEntity role, float frameTime);
         /** 判定退出条件 */

@@ -14,6 +14,7 @@ namespace GamePlay.Bussiness.Logic
         public GameRoleState_Move moveState { get; private set; }
         public GameRoleState_Cast castState { get; private set; }
         public GameRoleState_Dead deadState { get; private set; }
+        public GameRoleState_Stealth stealthState { get; private set; }
         public GameRoleState_Destroyed destroyedState { get; private set; }
 
         public GameRoleFSMCom()
@@ -23,6 +24,7 @@ namespace GamePlay.Bussiness.Logic
             moveState = new GameRoleState_Move();
             castState = new GameRoleState_Cast();
             deadState = new GameRoleState_Dead();
+            stealthState = new GameRoleState_Stealth();
             destroyedState = new GameRoleState_Destroyed();
         }
 
@@ -47,6 +49,12 @@ namespace GamePlay.Bussiness.Logic
             this.SwitchToState(GameRoleStateType.Dead);
         }
 
+        public void EnterStealth(float duration)
+        {
+            this.SwitchToState(GameRoleStateType.Stealth);
+            this.stealthState.duration = duration;
+        }
+
         public void EnterDestroyed()
         {
             this.SwitchToState(GameRoleStateType.Destroyed);
@@ -69,6 +77,9 @@ namespace GamePlay.Bussiness.Logic
                     break;
                 case GameRoleStateType.Dead:
                     deadState.Clear();
+                    break;
+                case GameRoleStateType.Stealth:
+                    stealthState.Clear();
                     break;
                 case GameRoleStateType.Destroyed:
                     destroyedState.Clear();

@@ -10,6 +10,7 @@ namespace GamePlay.Bussiness.Render
         public GameRoleState_MoveR moveState { get; private set; }
         public GameRoleState_CastR castState { get; private set; }
         public GameRoleState_DeadR deadState { get; private set; }
+        public GameRoleState_StealthR stealthState { get; private set; }
         public GameRoleState_DestroyedR destroyedState { get; private set; }
 
         public Dictionary<GameRoleStateType, GameRoleStateBaseR> stateModelDict;
@@ -19,6 +20,7 @@ namespace GamePlay.Bussiness.Render
             moveState = new GameRoleState_MoveR();
             castState = new GameRoleState_CastR();
             deadState = new GameRoleState_DeadR();
+            stealthState = new GameRoleState_StealthR();
             destroyedState = new GameRoleState_DestroyedR();
         }
 
@@ -41,6 +43,11 @@ namespace GamePlay.Bussiness.Render
         public void EnterDead()
         {
             this.SwitchToState(GameRoleStateType.Dead);
+        }
+
+        public void EnterStealth()
+        {
+            this.SwitchToState(GameRoleStateType.Stealth);
         }
 
         public void EnterDestroyed()

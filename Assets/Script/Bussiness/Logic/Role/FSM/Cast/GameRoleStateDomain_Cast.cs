@@ -6,7 +6,7 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateDomain_Cast() : base() { }
 
-        public override bool CheckEnter(GameRoleEntity entity)
+        public override bool CheckEnter(GameRoleEntity entity, params object[] args)
         {
             var skillId = entity.inputCom.skillId;
             if (skillId == 0) return false;
@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Logic
             return skillApi.CheckCastCondition(entity, skill);
         }
 
-        public override void Enter(GameRoleEntity role)
+        public override void Enter(GameRoleEntity role, params object[] args)
         {
             var skillId = role.inputCom.skillId;
             role.skillCom.TryGet(skillId, out var skill);

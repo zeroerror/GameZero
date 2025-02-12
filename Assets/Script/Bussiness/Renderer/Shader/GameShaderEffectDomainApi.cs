@@ -42,6 +42,6 @@ namespace GamePlay.Bussiness.Render
         /// 停止实体的所有Shader特效
         /// <para>entity: 实体</para>
         /// </summary>
-        public void StopAllShaderEffects(GameEntityBase entity);
+        public void StopShaderEffects(GameEntityBase entity);
     }
 }

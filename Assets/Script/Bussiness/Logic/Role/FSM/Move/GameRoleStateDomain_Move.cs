@@ -7,14 +7,14 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateDomain_Move() : base() { }
 
-        public override bool CheckEnter(GameRoleEntity role)
+        public override bool CheckEnter(GameRoleEntity role, params object[] args)
         {
             var curStateType = role.fsmCom.stateType;
             if (curStateType == GameRoleStateType.Move) return false;
             return true;
         }
 
-        public override void Enter(GameRoleEntity role)
+        public override void Enter(GameRoleEntity role, params object[] args)
         {
             role.fsmCom.EnterMove();
             role.physicsCom.collider.isTrigger = true;

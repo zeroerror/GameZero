@@ -115,7 +115,7 @@ namespace GamePlay.Bussiness.Render
             });
         }
 
-        public void StopAllShaderEffects(GameEntityBase entity)
+        public void StopShaderEffects(GameEntityBase entity)
         {
             Renderer[] renderers;
             if (entity is GameRoleEntityR role)
