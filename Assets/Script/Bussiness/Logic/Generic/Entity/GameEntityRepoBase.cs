@@ -36,7 +36,7 @@ namespace GamePlay.Bussiness.Logic
             var key = this._GetKey(entity);
             if (this._dict.ContainsKey(key))
             {
-                GameLogger.LogError($"实体仓库 添加失败: {entity.idCom}");
+                GameLogger.LogError($"实体仓库 添加失败: {entity.idCom} 已存在");
                 return false;
             }
             this._dict.Add(key, entity);

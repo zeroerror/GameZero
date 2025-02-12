@@ -1,3 +1,4 @@
+using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using UnityEngine;
 
@@ -77,6 +78,59 @@ namespace GamePlay.Bussiness.Render
                 return null;
             }
             return entity;
+        }
+
+        public void PlayShaderEffect(int shaderEffectId, GameEntityBase entity)
+        {
+            Renderer[] renderers;
+            if (entity is GameRoleEntityR role)
+            {
+                renderers = role.bodyCom.renderers;
+            }
+            else
+            {
+                GameLogger.LogError($"PlayShaderEffect: 不支持的实体类型: {entity.idCom.entityType}");
+                return;
+            }
+            this.PlayShaderEffect(shaderEffectId, renderers);
+        }
+
+        public void StopShaderEffect(Renderer renderer)
+        {
+            this._shaderEffectContext.repo.Foreach((shaderEffectEntity) =>
+            {
+                if (shaderEffectEntity.renderer == renderer)
+                {
+                    shaderEffectEntity.Stop();
+                    this._shaderEffectContext.repo.Recycle(shaderEffectEntity);
+                }
+            });
+        }
+
+        public void StopShaderEffects(Renderer[] renderers)
+        {
+            renderers?.Foreach((renderer) =>
+            {
+                this.StopShaderEffect(renderer);
+            });
+        }
+
+        public void StopAllShaderEffects(GameEntityBase entity)
+        {
+            Renderer[] renderers;
+            if (entity is GameRoleEntityR role)
+            {
+                renderers = role.bodyCom.renderers;
+            }
+            else
+            {
+                GameLogger.LogError($"StopShaderEffect: 不支持的实体类型: {entity.idCom.entityType}");
+                return;
+            }
+            renderers?.Foreach((renderer) =>
+            {
+                this.StopShaderEffect(renderer);
+            });
         }
     }
 }

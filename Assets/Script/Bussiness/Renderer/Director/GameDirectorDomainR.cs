@@ -264,6 +264,7 @@ namespace GamePlay.Bussiness.Render
             if (entity is GameRoleEntityR role)
             {
                 this.context.domainApi.roleApi.fsmApi.Enter(role, GameRoleStateType.Destroyed);
+                this.context.domainApi.entityCollectApi.CollectEntity(role);
                 return;
             }
             GameLogger.LogError("导演 - 销毁预览单位失败, 未知的实体类型 " + entity.idCom.entityType);

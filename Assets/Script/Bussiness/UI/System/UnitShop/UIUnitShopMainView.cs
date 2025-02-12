@@ -1,4 +1,5 @@
 using GamePlay.Bussiness.Logic;
+using GamePlay.Bussiness.Render;
 using GamePlay.Core;
 using UnityEngine;
 namespace GamePlay.Bussiness.UI
@@ -91,7 +92,15 @@ namespace GamePlay.Bussiness.UI
 
         private void _OnClickItemDown(int index)
         {
-            // 生成虚拟单位用于预览
+            // 预览单位相同则不重新生成
+            var previewIdCom = this._previewUnit?.idCom;
+            var unitModel = this._unitModels[index];
+            if (previewIdCom?.entityType == unitModel.entityType && previewIdCom?.typeId == unitModel.typeId)
+            {
+                return;
+            }
+
+            // 销毁之前的预览单位
             if (this._previewUnit)
             {
                 this._uiApi.rendererApi.directorApi.DestroyPreviewUnit(this._previewUnit);
@@ -99,7 +108,10 @@ namespace GamePlay.Bussiness.UI
                 this._timerId = 0;
                 this._previewUnit = null;
             }
+
+            // 生成新的虚拟单位
             this._previewUnit = this._uiApi.rendererApi.directorApi.CreatePreviewUnit(this._unitModels[index]);
+            this._uiApi.rendererApi.shaderEffectApi.PlayShaderEffect((int)GameShaderEffectType.PreviewFlash, this._previewUnit);
             this._timerId = this.SetInterval(0.02f, () =>
             {
                 if (!this._previewUnit)
@@ -141,6 +153,7 @@ namespace GamePlay.Bussiness.UI
             if (this._previewUnit)
             {
                 this._uiApi.logicApi.directorApi.BuyUnit(this._selectedItemIndex, this._previewUnit.GetPosition());
+                this._uiApi.rendererApi.shaderEffectApi.StopAllShaderEffects(this._previewUnit);
                 this._uiApi.rendererApi.directorApi.DestroyPreviewUnit(this._previewUnit);
                 this.RemoveTimer(this._timerId);
                 this._timerId = 0;

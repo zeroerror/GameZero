@@ -180,7 +180,7 @@ namespace GamePlay.Bussiness.Render
                 var duration = 0.1f;
                 this._context.domainApi.transformApi.Shake(targetRole.bodyCom.prefabGO.transform, angle, amplitude, frequency, duration);
                 // 受击闪烁
-                var typeId = GameShaderEffectCollection.SHADER_EFFECT_HIT_FLASH;
+                var typeId = (int)GameShaderEffectType.HitFlash;
                 var renderers = targetRole.bodyCom.renderers;
                 this._context.domainApi.shaderEffectApi.PlayShaderEffect(typeId, renderers);
             }

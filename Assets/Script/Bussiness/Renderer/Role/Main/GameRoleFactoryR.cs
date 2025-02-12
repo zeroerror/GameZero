@@ -120,5 +120,13 @@ namespace GamePlay.Bussiness.Render
             Debug.Assert(slider != null, "角色工厂[渲染层]: 加载属性条失败, 未找到Slider组件");
             return slider;
         }
+
+        public Material GetDefaultMaterial()
+        {
+            if (this._defaultMaterial) return this._defaultMaterial;
+            this._defaultMaterial = new Material(Shader.Find("Sprites/Default"));
+            return this._defaultMaterial;
+        }
+        private Material _defaultMaterial;
     }
 }

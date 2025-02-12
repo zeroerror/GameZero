@@ -116,6 +116,11 @@ namespace GamePlay.Bussiness.Render
             attributeBarCom.shieldSlider.SetSlider(shieldSlider, new Vector2(0, 120));
             attributeBarCom.shieldSlider.SetSize(new Vector2(150, 15));
 
+            // 初始化默认材质
+            role.bodyCom.renderers?.Foreach((renderer) =>
+            {
+                renderer.material = this._roleContext.factory.GetDefaultMaterial();
+            });
             return role;
         }
 

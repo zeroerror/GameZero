@@ -19,9 +19,7 @@ namespace GamePlay.Bussiness.Render
                 GameLogger.LogError("GameShaderEffectFactoryR.Load: typeId not found: " + typeId);
                 return null;
             }
-            var shader = this.LoadShader(typeId);
             var mat = this.LoadMaterial(typeId);
-            mat.shader = shader;
             var entity = new GameShaderEffectEntity(model, mat);
             return entity;
         }
