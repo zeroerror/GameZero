@@ -144,8 +144,8 @@ namespace GamePlay.Config
             var actionId = actionSO.typeId;
 
             var skillSOs = Resources.LoadAll<GameSkillSO>(GameConfigCollection.SKILL_CONFIG_DIR_PATH);
-            skillSOs = skillSOs.Filter(skillSO => skillSO.timelineEvents.Contains(ev => ev.actions?.Find(a => a.typeId == actionId) != null));
-            if (skillSOs.Length > 0)
+            skillSOs = skillSOs?.Filter(skillSO => skillSO.timelineEvents.Contains(ev => ev.actions?.Find(a => a.typeId == actionId) != null));
+            if (skillSOs?.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被以下技能使用 --------", EditorStyles.boldLabel);
                 for (int i = 0; i < skillSOs.Length; i++)
@@ -156,9 +156,9 @@ namespace GamePlay.Config
             }
 
             var projectileSOs = Resources.LoadAll<GameProjectileSO>(GameConfigCollection.PROJECTILE_CONFIG_DIR_PATH);
-            projectileSOs = projectileSOs.Filter((pjSO) =>
+            projectileSOs = projectileSOs?.Filter((pjSO) =>
             {
-                if (pjSO.timelineEvents != null && pjSO.timelineEvents.Contains(e => e.actions.Contains(a => a.typeId == actionId)))
+                if (pjSO.timelineEvents != null && pjSO.timelineEvents.Contains(e => e.actions?.Contains(a => a.typeId == actionId) == true))
                 {
                     return true;
                 }
@@ -169,7 +169,7 @@ namespace GamePlay.Config
                 return false;
             }
             );
-            if (projectileSOs.Length > 0)
+            if (projectileSOs?.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被以下投射物使用 --------", EditorStyles.boldLabel);
                 for (int i = 0; i < projectileSOs.Length; i++)
@@ -180,8 +180,8 @@ namespace GamePlay.Config
             }
 
             var buffSOs = Resources.LoadAll<GameBuffSO>(GameConfigCollection.BUFF_CONFIG_DIR_PATH);
-            buffSOs = buffSOs.Filter(buffSO => buffSO.actionSOs?.Contains(a => a.typeId == actionId) == true);
-            if (buffSOs.Length > 0)
+            buffSOs = buffSOs?.Filter(buffSO => buffSO.actionSOs?.Contains(a => a?.typeId == actionId) == true);
+            if (buffSOs?.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被以下Buff使用 --------", EditorStyles.boldLabel);
                 for (int i = 0; i < buffSOs.Length; i++)
@@ -192,8 +192,8 @@ namespace GamePlay.Config
             }
 
             var actionOptionSOs = Resources.LoadAll<GameActionOptionSO>(GameConfigCollection.ACTION_OPTION_CONFIG_DIR_PATH);
-            actionOptionSOs = actionOptionSOs.Filter(actionOptionSO => actionOptionSO.actionSOs?.Contains(a => a.typeId == actionId) == true);
-            if (actionOptionSOs.Length > 0)
+            actionOptionSOs = actionOptionSOs?.Filter(actionOptionSO => actionOptionSO.actionSOs?.Contains(a => a?.typeId == actionId) == true);
+            if (actionOptionSOs?.Length > 0)
             {
                 EditorGUILayout.LabelField(" -------- 被以下ActionOption使用 --------", EditorStyles.boldLabel);
                 for (int i = 0; i < actionOptionSOs.Length; i++)

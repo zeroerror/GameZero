@@ -106,13 +106,6 @@ namespace GamePlay.Config
                     this.vfxOrderOffset_p.DrawProperty_Int("层级偏移");
 
                     var vfxScale = this.vfxScale_p.DrawProperty_Vector2("缩放");
-                    if (vfxScale.x <= 0 || vfxScale.y <= 0)
-                    {
-                        vfxScale = Vector2.one;
-                        this.vfxScale_p.vector2Value = vfxScale;
-                        EditorGUILayout.HelpBox("缩放参数错误, 使用默认值(1,1)", MessageType.Warning);
-                    }
-
                     this.vfxOffset_p.DrawProperty_Vector2("坐标偏移");
                 }
                 else
@@ -149,31 +142,47 @@ namespace GamePlay.Config
                 var layerValueRefEnable = this.layerValueRefEnable_p.DrawProperty_Bool("层数选择器[属性数值]");
                 if (layerValueRefEnable) this.layerValueRefEM_p.DrawProperty();
             });
-            this._DrawActionSORefs();
+            this._ShowActionSORefs();
 
-            this._serializedObject.ApplyModifiedProperties();
+            if (this._serializedObject.hasModifiedProperties)
+            {
+                this._serializedObject.ApplyModifiedProperties();
+            }
         }
 
-        private void _DrawActionSORefs()
+        private void _ShowActionSORefs()
         {
             var color = GUI.color;
             GUI.color = Color.green;
             var actionSOs = Resources.LoadAll<GameActionSO>(GameConfigCollection.ACTION_CONFIG_DIR_PATH);
-            actionSOs = actionSOs.Filter(actionSO => actionSO.actionType == GameActionType.AttachBuff && actionSO.attachBuffActionEM?.buffSO?.typeId == this.typeId_p.intValue);
-            if (actionSOs.Length == 0) return;
-
-            GameEditorGUILayout.DrawBoxItem(() =>
             {
+                actionSOs = actionSOs.Filter(aso => aso?.actionType == GameActionType.AttachBuff && aso.attachBuffActionEM?.buffSO?.typeId == this.typeId_p.intValue);
+                if (actionSOs.Length > 0)
                 {
-                    EditorGUILayout.LabelField(" -------- 被以下行为使用 --------", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField(" -------- 被以下行为用于挂载 --------", EditorStyles.boldLabel);
                     for (int i = 0; i < actionSOs.Length; i++)
                     {
                         var actionSO = actionSOs[i];
-                        EditorGUILayout.ObjectField(actionSO.actionEMR.desc.ToString(), actionSO, typeof(GameActionSO), false);
+                        var tips = $"行为[{actionSO.typeId}]: {actionSO.actionEMR.desc}";
+                        EditorGUILayout.ObjectField(tips, actionSO, typeof(GameActionSO), false);
                     }
                 }
-                GUI.color = color;
-            });
+            }
+            {
+                actionSOs = actionSOs.Filter(aso => aso?.actionType == GameActionType.DetachBuff && aso.attachBuffActionEM?.buffSO?.typeId == this.typeId_p.intValue);
+                if (actionSOs.Length > 0)
+                {
+                    EditorGUILayout.LabelField(" -------- 被以下行为用于移除 --------", EditorStyles.boldLabel);
+                    for (int i = 0; i < actionSOs.Length; i++)
+                    {
+                        var actionSO = actionSOs[i];
+                        var tips = $"行为[{actionSO.typeId}]: {actionSO.actionEMR.desc}";
+                        EditorGUILayout.ObjectField(tips, actionSO, typeof(GameActionSO), false);
+                    }
+                }
+            }
+
+            GUI.color = color;
         }
     }
 }

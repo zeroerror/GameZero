@@ -16,7 +16,7 @@ namespace GamePlay.Config
             if (isEnable)
             {
                 var campType_p = property.FindPropertyRelative("campType");
-                campType_p.DrawProperty("筛选阵营类型");
+                campType_p.DrawProperty("筛选阵营类型(None代表自己)");
                 var stateType_p = property.FindPropertyRelative("stateType");
                 var stateType = stateType_p.DrawProperty_EnumPopup<GameRoleStateType>("角色进入的状态类型");
                 if (stateType == GameRoleStateType.Cast)

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_4000103
+  m_Name: template_action_400010101
   m_EditorClassIdentifier: 
-  typeId: 4000103
-  actionType: 6
+  typeId: 400010101
+  actionType: 10
   dmgActionEM:
     dmgType: 1
     value: 100
@@ -44,6 +44,9 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   healActionEM:
     healType: 0
@@ -75,6 +78,9 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   attributeModifyActionEM:
     modifyType: 0
@@ -106,6 +112,9 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   launchProjectileActionEM:
     projectileId: 200
@@ -145,6 +154,9 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   knockBackActionEM:
     knockBackDirType: 0
@@ -176,12 +188,15 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
-    buffSO: {fileID: 11400000, guid: 1160c0733417e8141a393b053008fac2, type: 2}
-    layer: 1
+    buffSO: {fileID: 0}
+    layer: 0
     selectorEM:
-      selectAnchorType: 3
+      selectAnchorType: 0
       campType: 0
       entityType: 0
       onlySelectDead: 0
@@ -205,6 +220,9 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   detachBuffActionEM:
     buffSO: {fileID: 0}
@@ -234,6 +252,9 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   summonRolesActionEM:
     roleSO: {fileID: 0}
@@ -264,6 +285,9 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   characterTransformActionEM:
     selectorEM:
@@ -291,6 +315,9 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
     roleSO: {fileID: 0}
     attributeList: []
@@ -320,13 +347,16 @@ MonoBehaviour:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
     duration: 5
   actionEMR:
     typeId: 0
-    desc: "\u6F5C\u884C\u8005 \u6302\u8F7Dbuff - \u51FB\u6740\u540E\u4E0B\u4E00\u6B21\u666E\u653B\u4E00\u5B9A\u66B4\u51FB"
-    actEffectPrefab: {fileID: 0}
-    actVFXScale: {x: 0, y: 0}
+    desc: "\u6F5C\u884C\u8005 \u9690\u8EAB5s"
+    actEffectPrefab: {fileID: 2430205674200673227, guid: 37797759b9834924eae8798d76ccdabc, type: 3}
+    actVFXScale: {x: 0.5, y: 0.5}
     actVFXOffset: {x: 0, y: 0}
     actCamShakeModel:
       angle: 0

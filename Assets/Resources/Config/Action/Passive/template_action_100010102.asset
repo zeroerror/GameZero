@@ -10,30 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_4000101
+  m_Name: template_action_100010102
   m_EditorClassIdentifier: 
-  typeId: 4000101
-  actionType: 10
+  typeId: 100010102
+  actionType: 6
   dmgActionEM:
-    dmgType: 1
-    value: 100
-    valueFormat: 2
-    refType: 2
+    dmgType: 0
+    value: 0
+    valueFormat: 0
+    refType: 0
     selectorEM:
-      selectAnchorType: 2
-      campType: 1
-      entityType: 1
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
       onlySelectDead: 0
       selColliderType: 0
       boxColliderModel:
-        offset: {x: 1, y: 1}
+        offset: {x: 0, y: 0}
         angle: 0
-        width: 2
-        height: 2
+        width: 0
+        height: 0
       circleColliderModel:
-        offset: {x: 0.2, y: 0}
+        offset: {x: 0, y: 0}
         angle: 0
-        radius: 0.5
+        radius: 0
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -117,18 +117,16 @@ MonoBehaviour:
         probability: 0
     randomValueOffset: {x: 0, y: 0}
   launchProjectileActionEM:
-    projectileId: 200
+    projectileId: 0
     launchOffset: {x: 0, y: 0}
-    launchProjectileSO: {fileID: 11400000, guid: 9cf0845552672f744927287d2249c9ab, type: 2}
-    barrageType: 1
+    launchProjectileSO: {fileID: 0}
+    barrageType: 0
     customLaunchOffsetEM:
-      count: 2
-      launchOffsets:
-      - {x: 0, y: 1}
-      - {x: -1, y: 0.5}
+      count: 0
+      launchOffsets: []
     spreadEM:
-      count: 14
-      spreadAngle: 30
+      count: 0
+      spreadAngle: 0
     selectorEM:
       selectAnchorType: 0
       campType: 0
@@ -160,41 +158,9 @@ MonoBehaviour:
     randomValueOffset: {x: 0, y: 0}
   knockBackActionEM:
     knockBackDirType: 0
-    distance: 0.3
-    duration: 0.1
+    distance: 0
+    duration: 0
     easingType: 0
-    selectorEM:
-      selectAnchorType: 1
-      campType: 2
-      entityType: 1
-      onlySelectDead: 0
-      selColliderType: 0
-      boxColliderModel:
-        offset: {x: 0, y: 0}
-        angle: 0
-        width: 0
-        height: 0
-      circleColliderModel:
-        offset: {x: 0, y: 0}
-        angle: 0
-        radius: 0
-      fanColliderModel:
-        offset: {x: 0, y: 0}
-        angle: 0
-        radius: 0
-        fanAngle: 0
-    preconditionSetEM:
-      buffConditionEM:
-        enable: 0
-        buffSO: {fileID: 0}
-        layer: 0
-      probabilityConditionEM:
-        enable: 0
-        probability: 0
-    randomValueOffset: {x: 0, y: 0}
-  attachBuffActionEM:
-    buffSO: {fileID: 0}
-    layer: 0
     selectorEM:
       selectAnchorType: 0
       campType: 0
@@ -223,6 +189,38 @@ MonoBehaviour:
       probabilityConditionEM:
         enable: 0
         probability: 0
+    randomValueOffset: {x: 0, y: 0}
+  attachBuffActionEM:
+    buffSO: {fileID: 11400000, guid: 2f594be319f2bbc41abcc219d528f53c, type: 2}
+    layer: 1
+    selectorEM:
+      selectAnchorType: 3
+      campType: 0
+      entityType: 0
+      onlySelectDead: 0
+      selColliderType: 0
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 0
+        height: 0
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+    preconditionSetEM:
+      buffConditionEM:
+        enable: 0
+        buffSO: {fileID: 0}
+        layer: 0
+      probabilityConditionEM:
+        enable: 1
+        probability: 0.3
     randomValueOffset: {x: 0, y: 0}
   detachBuffActionEM:
     buffSO: {fileID: 0}
@@ -323,7 +321,7 @@ MonoBehaviour:
     attributeList: []
   stealthActionEM:
     selectorEM:
-      selectAnchorType: 3
+      selectAnchorType: 0
       campType: 0
       entityType: 0
       onlySelectDead: 0
@@ -351,12 +349,12 @@ MonoBehaviour:
         enable: 0
         probability: 0
     randomValueOffset: {x: 0, y: 0}
-    duration: 5
+    duration: 0
   actionEMR:
     typeId: 0
-    desc: "\u6F5C\u884C\u8005 \u9690\u8EAB5s"
-    actEffectPrefab: {fileID: 2430205674200673227, guid: 37797759b9834924eae8798d76ccdabc, type: 3}
-    actVFXScale: {x: 0.5, y: 0.5}
+    desc: "\u6302\u8F7Dbuff - 100%\u7684\u653B\u901F\u52A0\u6210"
+    actEffectPrefab: {fileID: 0}
+    actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}
     actCamShakeModel:
       angle: 0
@@ -364,11 +362,11 @@ MonoBehaviour:
       frequency: 0
       duration: 0
     hitEffectPrefab: {fileID: 0}
-    hitVFXScale: {x: 0, y: 0}
+    hitVFXScale: {x: 1, y: 1}
     hitVFXOffset: {x: 0, y: 0}
     hitCamShakeModel:
       angle: 0
       amplitude: 0
-      frequency: 6
+      frequency: 0
       duration: 0
   skillSORefs: []

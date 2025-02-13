@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_100102001
+  m_Name: template_buff_100010102
   m_EditorClassIdentifier: 
-  typeId: 100102001
-  buffName: "\u5F13\u7BAD\u624B - \u5206\u88C2\u7BAD\u672F"
-  desc: "\u6BCF\u6B21\u53D1\u5C04\u5F13\u7BAD\u65F6\uFF0C\u4F1A\u989D\u5916\u53D1\u5C04"
-  refreshFlag: 5
-  maxLayer: 3
-  actionParam: 300
-  actionSOs:
-  - {fileID: 11400000, guid: 34ec54d23d64b1648a3f2e8a631baabe, type: 2}
+  typeId: 100010102
+  buffName: "\u6E38\u4FA0\u88AB\u52A81\u6548\u679C1"
+  desc: "100%\u7684\u653B\u901F\u52A0\u6210"
+  refreshFlag: 1
+  maxLayer: 1
+  actionParam: 0
+  actionSOs: []
   actionCD: 0
   conditionSetEM_action:
     durationEM:
@@ -29,10 +28,10 @@ MonoBehaviour:
       isEnable: 0
       timeInterval: 0
     whenDoActionEM:
-      isEnable: 1
-      targetAction: {fileID: 11400000, guid: 0fe48bb3e653ecd4e9ce1174c39d2c4b, type: 2}
+      isEnable: 0
+      targetAction: {fileID: 0}
       targetActionType: 0
-      actionCount: 1
+      actionCount: 0
       validWindowTime: 0
     whenRoleStateEnterEM:
       isEnable: 0
@@ -114,7 +113,7 @@ MonoBehaviour:
   conditionSetEM_remove:
     durationEM:
       isEnable: 1
-      duration: 8
+      duration: 1
     timeIntervalEM:
       isEnable: 0
       timeInterval: 0
@@ -227,10 +226,14 @@ MonoBehaviour:
     value: 0
     valueFormat: 0
     refType: 0
-  vfxPrefab: {fileID: 4763262428129407028, guid: e045502fe65e47041b4e843cee83f6b9, type: 3}
-  vfxPrefabUrl: VFX/vfx_fire_ring
-  vfxLayerType: 1
-  vfxScale: {x: 1, y: 1}
-  vfxOffset: {x: 0, y: 0}
+  vfxPrefab: {fileID: 1558332597376287026, guid: 969e7cb4ce441084e9e1aa0fadfed26b, type: 3}
+  vfxPrefabUrl: VFX/vfx_ready_attack
+  vfxLayerType: 5
+  vfxScale: {x: 0.5, y: 0.5}
+  vfxOffset: {x: 0, y: 1}
   vfxOrderOffset: 0
-  attributeEMs: []
+  attributeEMs:
+  - attributeType: 6
+    value: 100
+    valueFormat: 2
+    refType: 13
