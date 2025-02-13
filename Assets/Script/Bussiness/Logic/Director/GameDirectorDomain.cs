@@ -290,8 +290,6 @@ namespace GamePlay.Bussiness.Logic
                 this.director.gold -= shuffleCost;
             }
 
-            // 把当前可购买单位列表放回到总单位列表
-            var buyableUnits = this.director.buyableUnits;
             var unitPool = this.director.unitPool;
             if (unitPool == null)
             {
@@ -299,13 +297,16 @@ namespace GamePlay.Bussiness.Logic
                 this.director.SetUnitPool(unitPool);
             }
 
+            // 把当前可购买单位列表放回到总单位列表
+            var buyableUnits = this.director.buyableUnits;
             foreach (var unit in buyableUnits)
             {
                 unitPool.Add(unit);
             }
-            // 洗牌出5个单位
+
+            // 洗牌出最多5个单位
             buyableUnits.Clear();
-            const int shffleCount = 5;
+            int shffleCount = GameMath.Min(5, unitPool.Count);
             for (var i = 0; i < shffleCount; i++)
             {
                 var unit = this.context.randomService.GetRandom(unitPool);

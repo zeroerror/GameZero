@@ -10,6 +10,8 @@ namespace GamePlay.Config
         {
             var buffConditionEM_p = property.FindPropertyRelative("buffConditionEM");
             buffConditionEM_p.DrawProperty();
+            var probabilityConditionEM_p = property.FindPropertyRelative("probabilityConditionEM");
+            probabilityConditionEM_p.DrawProperty();
         }
     }
 }

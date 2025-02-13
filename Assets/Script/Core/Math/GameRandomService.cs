@@ -58,7 +58,7 @@ namespace GamePlay.Bussiness.Core
                 return min;
             }
             int seed = this._GetSeed();
-            int random = seed % (max - min);
+            int random = min + seed % (max - min);
             return random;
         }
 
@@ -73,8 +73,9 @@ namespace GamePlay.Bussiness.Core
             {
                 return min;
             }
-            int seed = this._GetSeed();
-            float random = seed % (max - min);
+            int seedi = this._GetSeed();
+            float decimalPart = seedi % 1000 / 1000f;
+            float random = min + decimalPart * (max - min);
             return random;
         }
 

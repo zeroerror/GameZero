@@ -97,8 +97,8 @@ namespace GamePlay.Bussiness.UI
                     text.text = this._GetItemName(this._unitModels[i]).ToDevStr();
                     var idx = i;
                     this.SetClick(unitBinder.gameObject, () => this._OnClickItemDown(idx));
+                    GameLogger.DebugLog($"单位{i + 1}: {this._GetItemName(this._unitModels[i])}");
                 }
-                GameLogger.DebugLog($"单位{i + 1}: {this._GetItemName(this._unitModels[i])}");
             }
 
         }
