@@ -1,3 +1,4 @@
+using GamePlay.Bussiness.Core;
 using GamePlay.Core;
 namespace GamePlay.Bussiness.Logic
 {
@@ -5,10 +6,14 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameDirectorEntity director { get; private set; }
 
+        #region [轻量级服务]
         public GameEventService eventService { get; private set; }
         public GameEventService rcEventService { get; private set; }
         public GameCmdBufferService cmdBufferService { get; private set; }
+        public GameRandomService randomService { get; private set; }
+        #endregion
 
+        #region [领域API及上下文]
         public GameDomainApi domainApi { get; private set; }
         public GameRoleContext roleContext { get; private set; }
         public GameSkillContext skillContext { get; private set; }
@@ -18,6 +23,7 @@ namespace GamePlay.Bussiness.Logic
         public GameFieldContext fieldContext { get; private set; }
         public GameTransformContext transformContext { get; private set; }
         public GameBuffContext buffContext { get; private set; }
+        #endregion
 
         public GameContext()
         {
@@ -26,6 +32,7 @@ namespace GamePlay.Bussiness.Logic
             this.eventService = new GameEventService();
             this.rcEventService = new GameEventService();
             this.cmdBufferService = new GameCmdBufferService();
+            this.randomService = new GameRandomService();
 
             this.domainApi = new GameDomainApi();
             this.roleContext = new GameRoleContext();

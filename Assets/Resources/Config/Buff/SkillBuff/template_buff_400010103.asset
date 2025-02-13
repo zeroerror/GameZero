@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
-  m_Name: template_buff_999004010
+  m_Name: template_buff_400010103
   m_EditorClassIdentifier: 
-  typeId: 999004010
-  buffName: "\u884C\u4E3A\u9009\u9879401 - buff\u6761\u4EF6"
-  desc: "\u6BCF\u6B21\u53CB\u519B\u91CA\u653E\u6280\u80FD\u90FD\u4F1A\u83B7\u5F9710%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE"
-  refreshFlag: 4
-  maxLayer: 10
-  actionParam: 100
-  actionSOs:
-  - {fileID: 11400000, guid: 453dfdc0f17c3ee47b9f43470529ad54, type: 2}
-  actionCD: 0
+  typeId: 400010103
+  buffName: "\u6F5C\u884C\u8005\u88AB\u52A81\u6548\u679C2"
+  desc: "\u4E0B\u4E00\u6B21\u666E\u653B\u5FC5\u5B9A\u66B4\u51FB"
+  refreshFlag: 0
+  maxLayer: 1
+  actionParam: 0
+  actionSOs: []
+  actionCD: 1e+14
   conditionSetEM_action:
     durationEM:
       isEnable: 0
@@ -31,14 +30,14 @@ MonoBehaviour:
     whenDoActionEM:
       isEnable: 0
       targetAction: {fileID: 0}
-      targetActionType: 1000
+      targetActionType: 0
       actionCount: 1
       validWindowTime: 0
     whenRoleStateEnterEM:
-      isEnable: 1
+      isEnable: 0
       campType: 0
-      stateType: 3
-      skillType: 1
+      stateType: 0
+      skillType: 0
     whenUnitCountChangeEM:
       isEnable: 0
       selectorEM:
@@ -119,10 +118,10 @@ MonoBehaviour:
       isEnable: 0
       timeInterval: 0
     whenDoActionEM:
-      isEnable: 0
+      isEnable: 1
       targetAction: {fileID: 0}
-      targetActionType: 0
-      actionCount: 0
+      targetActionType: 1001
+      actionCount: 1
       validWindowTime: 0
     whenRoleStateEnterEM:
       isEnable: 0
@@ -227,10 +226,14 @@ MonoBehaviour:
     value: 0
     valueFormat: 0
     refType: 0
-  vfxPrefab: {fileID: 0}
-  vfxPrefabUrl: 
+  vfxPrefab: {fileID: 1558332597376287026, guid: 969e7cb4ce441084e9e1aa0fadfed26b, type: 3}
+  vfxPrefabUrl: VFX/vfx_ready_attack
   vfxLayerType: 1
   vfxScale: {x: 1, y: 1}
-  vfxOffset: {x: 0, y: 0}
+  vfxOffset: {x: 0, y: 1}
   vfxOrderOffset: 0
-  attributeEMs: []
+  attributeEMs:
+  - attributeType: 8
+    value: 100
+    valueFormat: 2
+    refType: 1

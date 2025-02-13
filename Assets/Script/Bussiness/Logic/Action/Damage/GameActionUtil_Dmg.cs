@@ -1,3 +1,4 @@
+using GamePlay.Bussiness.Core;
 using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Logic
@@ -10,16 +11,15 @@ namespace GamePlay.Bussiness.Logic
         /// <para name="actor"> 行为者 </para>
         /// <para name="target"> 目标 </para>
         /// <para name="dmgModel"> 伤害模型 </para>
-        public static GameActionRecord_Dmg CalcDmg(GameEntityBase actor, GameEntityBase target, GameActionModel_Dmg dmgModel)
+        public static GameActionRecord_Dmg CalcDmg(GameEntityBase actor, GameEntityBase target, GameActionModel_Dmg dmgModel, GameRandomService randomService)
         {
             // 数值格式化
             var modelValue = (float)dmgModel.value;
-            var randomOffset = GameMathF.RandomRange(dmgModel.randomValueOffset);
+            var randomOffset = randomService.GetRandom(dmgModel.randomValueOffset);
             modelValue += randomOffset;
             var formatValue = dmgModel.valueFormat.FormatValue(modelValue);
             // 参考属性值
             float refAttrValue = dmgModel.refType.GetRefAttributeValue(actor, target);
-
 
             // 减伤
             var dmgValue = refAttrValue * formatValue;
@@ -35,6 +35,15 @@ namespace GamePlay.Bussiness.Logic
                 default:
                     GameLogger.LogError("未处理的伤害类型");
                     break;
+            }
+
+            // 暴击
+            var critRate = actor.attributeCom.GetValue(GameAttributeType.CritRate);
+            var isCrit = randomService.GetRandom(0f, 1f) < critRate;
+            if (isCrit)
+            {
+                var critDmgAddition = actor.attributeCom.GetValue(GameAttributeType.CritDmgAddition);
+                dmgValue = dmgValue * (1 + critDmgAddition);
             }
 
             // 增伤
@@ -55,7 +64,8 @@ namespace GamePlay.Bussiness.Logic
                 target.idCom.ToArgs(),
                 actor.actionTargeterCom.getCurTargeterAsRecord(),
                 dmgModel.dmgType,
-                realDmg
+                realDmg,
+                isCrit
             );
             return record;
         }

@@ -6,29 +6,26 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameBuffConditionSetEntity
     {
-        public GameBuffConditionEntity_Duration durationEntity { get; private set; }
-        public GameBuffConditionEntity_TimeInterval timeIntervalEntity { get; private set; }
-        public GameBuffConditionEntity_WhenDoAction whenDoActionEntity { get; private set; }
-
         private List<GameBuffConditionEntityBase> _entityList;
+        private GameBuffConditionEntity_Duration durationEntity => this._entityList.Find(entity => entity is GameBuffConditionEntity_Duration) as GameBuffConditionEntity_Duration;
 
         public GameBuffConditionSetEntity(GameBuffEntity buff, GameBuffConditionSetModel model)
         {
             this._entityList = new List<GameBuffConditionEntityBase>();
             if (model.durationModel != null)
             {
-                this.durationEntity = new GameBuffConditionEntity_Duration(buff, model.durationModel);
-                this._entityList.Add(this.durationEntity);
+                var durationEntity = new GameBuffConditionEntity_Duration(buff, model.durationModel);
+                this._entityList.Add(durationEntity);
             }
             if (model.timeIntervalModel != null)
             {
-                this.timeIntervalEntity = new GameBuffConditionEntity_TimeInterval(buff, model.timeIntervalModel);
-                this._entityList.Add(this.timeIntervalEntity);
+                var timeIntervalEntity = new GameBuffConditionEntity_TimeInterval(buff, model.timeIntervalModel);
+                this._entityList.Add(timeIntervalEntity);
             }
             if (model.whenDoActionModel != null)
             {
-                this.whenDoActionEntity = new GameBuffConditionEntity_WhenDoAction(buff, model.whenDoActionModel);
-                this._entityList.Add(this.whenDoActionEntity);
+                var whenDoActionEntity = new GameBuffConditionEntity_WhenDoAction(buff, model.whenDoActionModel);
+                this._entityList.Add(whenDoActionEntity);
             }
             if (model.whenRoleStateEnterModel != null)
             {
@@ -101,14 +98,16 @@ namespace GamePlay.Bussiness.Logic
 
         public void RefreshTime()
         {
-            if (!this.durationEntity) return;
-            this.durationEntity.Clear();
+            var durationEntity = this.durationEntity;
+            if (!durationEntity) return;
+            durationEntity.Clear();
         }
 
         public void StackTime()
         {
-            if (!this.durationEntity) return;
-            this.durationEntity.stackCount_extra += 1;
+            var durationEntity = this.durationEntity;
+            if (!durationEntity) return;
+            durationEntity.stackCount_extra += 1;
         }
     }
 }

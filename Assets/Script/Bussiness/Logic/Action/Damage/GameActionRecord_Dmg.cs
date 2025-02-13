@@ -17,6 +17,9 @@ namespace GamePlay.Bussiness.Logic
         public GameActionDmgType dmgType;
         /// <summary> 伤害数值 </summary>
         public float value;
+
+        /// <summary> 是否为暴击 </summary>
+        public bool isCrit;
         /// <summary> 是否为击杀 </summary>
         public bool isKill;
 
@@ -28,6 +31,7 @@ namespace GamePlay.Bussiness.Logic
             in GameActionTargeterArgsRecord actionTargeter,
             GameActionDmgType dmgType,
             float value,
+            bool isCrit,
             bool isKill = false)
         {
             this.actionId = actionId;
@@ -37,6 +41,7 @@ namespace GamePlay.Bussiness.Logic
             this.actionTargeter = actionTargeter;
             this.dmgType = dmgType;
             this.value = value;
+            this.isCrit = isCrit;
             this.isKill = isKill;
         }
     }

@@ -63,7 +63,7 @@ namespace GamePlay.Bussiness.Logic
             {
                 for (var i = 0; i < spawnModel.count; i++)
                 {
-                    var angle = GameMathF.Random(0, 360);
+                    var angle = this._context.randomService.GetRandom(0f, 360f);
                     var x = radius * GameMathF.Cos(angle);
                     var y = radius * GameMathF.Sin(angle);
                     this._context.domainApi.roleApi.CreateEnemyRole(spawnModel.typeId, new GameTransformArgs

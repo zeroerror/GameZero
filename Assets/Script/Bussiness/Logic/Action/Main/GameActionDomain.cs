@@ -145,7 +145,7 @@ namespace GamePlay.Bussiness.Logic
                 if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
                 // 立即计算
-                var record = GameActionUtil_Dmg.CalcDmg(actor, selectedEntity, action);
+                var record = GameActionUtil_Dmg.CalcDmg(actor, selectedEntity, action, this._context.randomService);
                 // 帧末执行
                 this._context.cmdBufferService.AddDelayCmd(0, () =>
                 {

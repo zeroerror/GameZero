@@ -10,5 +10,7 @@ namespace GamePlay.Bussiness.Logic
         StackTime = 1 << 1,
         /// <summary> 叠加层数 </summary>
         StackLayer = 1 << 2,
+        /// <summary> 刷新行为冷却 </summary>
+        RefreshActionCD = 1 << 3,
     }
 }

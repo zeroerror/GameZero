@@ -12,8 +12,10 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary> buff已挂载时间 </summary>
         public float elapsedTime { get; private set; }
-        /** 行为冷却时间 */
+        /// <summary> 行为冷却时间 </summary>
         public float ationCDTime { get; private set; }
+        /// <summary> 执行过的行为次数 </summary>
+        public int actionedCount { get; private set; }
         /// <summary> buff已挂载层数 </summary>
         public int layer;
 
@@ -37,6 +39,8 @@ namespace GamePlay.Bussiness.Logic
         public override void Clear()
         {
             this.BindTransformCom(null);
+            this.ationCDTime = 0;
+            this.actionedCount = 0;
             this.elapsedTime = 0;
             this.layer = 0;
             this.conditionSetEntity_action.Clear();
@@ -65,10 +69,18 @@ namespace GamePlay.Bussiness.Logic
             this.conditionSetEntity_remove.Tick(dt);
         }
 
-        public void StartCD()
+        /// <summary> 开始行为冷却 </summary>
+        public void StartActionCD()
         {
+            this.actionedCount++;
             this.ationCDTime = this.model.actionCD;
             this.conditionSetEntity_action.Clear();
+        }
+
+        /// <summary> 结束行为冷却 </summary>
+        public void EndActionCD()
+        {
+            this.ationCDTime = 0;
         }
 
         public float GetActionParam()

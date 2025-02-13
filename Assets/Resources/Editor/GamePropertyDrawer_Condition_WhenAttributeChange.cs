@@ -11,7 +11,6 @@ namespace GamePlay.Config
             var isEnable_p = property.FindPropertyRelative("isEnable");
             var labelTxt = "条件 - 当属性变化时";
             var isEnable = isEnable_p.DrawProperty_Bool(labelTxt);
-
             EditorGUI.indentLevel += 1;
             if (isEnable)
             {

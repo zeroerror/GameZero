@@ -26,6 +26,16 @@ namespace GamePlay.Bussiness.Logic
         Stealth = 10,
 
         /// <summary> 击杀 </summary>
-        Kill = 999,
+        Kill = 1000,
+        /// <summary> 暴击 </summary>
+        Crit = 1001,
+    }
+    public static class GameActionTypeExt
+    {
+        /// <summary> 是否为特殊行为 </summary>
+        public static bool IsSpecialAction(this GameActionType actionType)
+        {
+            return (int)actionType >= 1000;
+        }
     }
 }

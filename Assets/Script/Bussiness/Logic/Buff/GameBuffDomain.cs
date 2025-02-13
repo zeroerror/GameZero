@@ -64,7 +64,7 @@ namespace GamePlay.Bussiness.Logic
                 var isSatisfied_action = !buff.conditionSetEntity_action.IsValid() || buff.conditionSetEntity_action.CheckSatisfied();
                 if (isSatisfied_action)
                 {
-                    buff.StartCD();
+                    buff.StartActionCD();
                     buff.model.actionIds?.Foreach((Action<int>)(actionId =>
                     {
                         buff.physicsCom.ClearCollided();
@@ -299,6 +299,12 @@ namespace GamePlay.Bussiness.Logic
                 buff.conditionSetEntity_remove.RefreshTime();
             }
 
+            // 行为冷却刷新
+            if (refreshFlag.HasFlag(GameBuffRefreshFlag.RefreshActionCD))
+            {
+                buff.EndActionCD();
+            }
+
             // 时间叠加
             if (refreshFlag.HasFlag(GameBuffRefreshFlag.StackTime))
             {
@@ -308,8 +314,10 @@ namespace GamePlay.Bussiness.Logic
             // 层数叠加
             if (refreshFlag.HasFlag(GameBuffRefreshFlag.StackLayer) || beforeLayer == 0)
             {
-                var afterLayer = beforeLayer + layer;
                 var maxLayer = buffModel.maxLayer == 0 ? int.MaxValue : buffModel.maxLayer;// 0表示最大层数不限制
+                layer = layer == 0 ? maxLayer : layer;// 0表示挂载至最大层数
+
+                var afterLayer = beforeLayer + layer;
                 afterLayer = GameMath.Min(afterLayer, maxLayer);
                 buff.layer = afterLayer;
                 this._refreshBuffAttribute(buff, buff.idCom.parent);
@@ -438,7 +446,7 @@ namespace GamePlay.Bussiness.Logic
                 var roleNewValue = buff.owner.attributeCom.GetValue(attrType);
                 GameLogger.DebugLog($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
             });
-            buff.actionTargeterCom.UpdateTargeter();
+            buff.actionTargeterCom.UpdateTargeter(this._context.randomService);
         }
 
         public void TranserBuffCom(GameBuffCom refBuffCom, GameRoleEntity targetRole)

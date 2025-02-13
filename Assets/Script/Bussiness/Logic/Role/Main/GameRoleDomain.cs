@@ -208,7 +208,8 @@ namespace GamePlay.Bussiness.Logic
             for (int i = 0; i < count; i++)
             {
                 var role = this.CreateRole(typeId, campId, transArgs, false);
-                role.transformCom.position = pos + GameVectorUtil.GetXYRandomDirection() * 1f;
+                var randomDir = this._context.randomService.GetRandomDir2D();
+                role.transformCom.position = pos + randomDir * 1f;
                 role.idCom.SetParent(summoner);
                 role.aiCom.followState.followEntity = summoner;// 设定AI跟随目标
                 roles[i] = role;

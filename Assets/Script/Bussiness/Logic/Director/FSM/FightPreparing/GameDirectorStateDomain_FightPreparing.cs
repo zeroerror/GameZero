@@ -185,7 +185,7 @@ namespace GamePlay.Bussiness.Logic
             var result = new List<GameActionOptionModel>();
             for (int i = 0; i < count; i++)
             {
-                var index = GameMath.RandomRange(0, list.Count);
+                var index = this._context.randomService.GetRandom(0, list.Count);
                 var model = list[index];
                 if (model == null)
                 {

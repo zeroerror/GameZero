@@ -30,7 +30,7 @@ MonoBehaviour:
     whenDoActionEM:
       isEnable: 0
       targetAction: {fileID: 0}
-      targetActionType: 999
+      targetActionType: 1000
       actionCount: 1
       validWindowTime: 0
     whenRoleStateEnterEM:

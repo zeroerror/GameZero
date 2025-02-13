@@ -8,7 +8,7 @@ namespace GamePlay.Config
     {
         protected override void _OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUILayout.LabelField("视觉效果等表现参数", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("表现层参数", EditorStyles.boldLabel);
 
             var desc_p = property.FindPropertyRelative("desc");
             desc_p.DrawProperty_Str("描述");

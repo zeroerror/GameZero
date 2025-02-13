@@ -77,7 +77,7 @@ namespace GamePlay.Bussiness.Logic
             attackState.castSkill = null;
 
             // 如果当前目标有效, 判定对当前目标是否存在可施法技能, 如果存在则直接返回
-            if (!!oldCastTarget && oldCastTarget.IsAlive())
+            if (!!oldCastTarget && this._IsValidTarget(role, oldCastTarget))
             {
                 var castSkill = this._FindCastableSkill(role, oldCastTarget);
                 if (castSkill)
@@ -93,7 +93,7 @@ namespace GamePlay.Bussiness.Logic
             var minDisSqr = float.MaxValue;
             repo.ForeachEntities((castTarget) =>
             {
-                if (!castTarget.IsAlive()) return;
+                if (!this._IsValidTarget(role, castTarget)) return;
 
                 // 对当前目标不存在可施法技能, 跳过
                 var castSkill = this._FindCastableSkill(role, castTarget);
@@ -108,6 +108,19 @@ namespace GamePlay.Bussiness.Logic
                     attackState.castSkill = castSkill;
                 }
             });
+        }
+
+        private bool _IsValidTarget(GameEntityBase self, GameEntityBase target)
+        {
+            // 目标为隐身状态的敌对阵营角色
+            if (target is GameRoleEntity targetRole)
+            {
+                var isStealthEnemy = targetRole.idCom.CheckCampType(self.idCom, GameCampType.Enemy) && targetRole.fsmCom.stateType == GameRoleStateType.Stealth;
+                if (isStealthEnemy) return false;
+            }
+            // 目标已死亡
+            if (!target.IsAlive()) return false;
+            return true;
         }
 
         private GameSkillEntity _FindCastableSkill(GameRoleEntity role, GameEntityBase target)

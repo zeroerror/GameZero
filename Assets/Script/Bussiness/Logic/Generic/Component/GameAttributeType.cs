@@ -17,6 +17,10 @@ namespace GamePlay.Bussiness.Logic
         AttackSpeed = 6,
         /// <summary> 移动速度 </summary>
         MoveSpeed = 7,
+        /// <summary> 暴击率 </summary>
+        CritRate = 8,
+        /// <summary> 暴击伤害加成 </summary>
+        CritDmgAddition = 9,
 
         /// <summary> 普通伤害抗性 </summary>
         NormalDmgResist = 101,

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GamePlay.Bussiness.Core;
 using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 
@@ -37,7 +38,7 @@ namespace GamePlay.Bussiness.Logic
             _curTargeterIndex = 0;
         }
 
-        public void UpdateTargeter()
+        public void UpdateTargeter(GameRandomService randomService)
         {
             if (_targeterList?.Count == 0) return;
             _targeterList.RemoveAll(targeter =>
@@ -56,7 +57,7 @@ namespace GamePlay.Bussiness.Logic
                     _curTargeterIndex = (_curTargeterIndex - 1 + _targeterList.Count) % _targeterList.Count;
                     break;
                 case GameForeachType.Random:
-                    _curTargeterIndex = new Random().Next(0, _targeterList.Count);
+                    _curTargeterIndex = randomService.GetRandom(0, _targeterList.Count);
                     break;
             }
         }

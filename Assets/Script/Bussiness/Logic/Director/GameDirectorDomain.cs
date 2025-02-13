@@ -308,7 +308,7 @@ namespace GamePlay.Bussiness.Logic
             const int shffleCount = 5;
             for (var i = 0; i < shffleCount; i++)
             {
-                var unit = unitPool.Random();
+                var unit = this.context.randomService.GetRandom(unitPool);
                 if (unit == null) continue;
                 buyableUnits.Add(unit);
                 unitPool.Remove(unit);

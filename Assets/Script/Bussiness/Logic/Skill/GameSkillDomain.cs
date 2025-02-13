@@ -93,9 +93,15 @@ namespace GamePlay.Bussiness.Logic
 
         public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistanceCondition = false)
         {
+            var errCode = this._CheckCastCondition(role, skill, in inputArgs, ignoreDistanceCondition);
+            return errCode == 0;
+        }
+
+        private int _CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistanceCondition = false)
+        {
             var fsmCom = role.fsmCom;
             var stateType = fsmCom.stateType;
-            if (stateType == GameRoleStateType.Cast) return false;
+            if (stateType == GameRoleStateType.Cast) return 1;
 
             // 输入检测
             var skillModel = skill.skillModel;
@@ -105,49 +111,53 @@ namespace GamePlay.Bussiness.Logic
                     var index = inputArgs.targeterArgsList.FindIndex((args) => args.targetEntity != null && args.targetEntity.idCom.campId != role.idCom.campId);
                     if (index == -1)
                     {
-                        return false;
+                        return 2;
                     }
                     break;
                 case GameSkillTargterType.Direction:
                     var index_d = inputArgs.targeterArgsList.FindIndex((args) => args.targetDirection != GameVec2.zero);
                     if (index_d == -1)
                     {
-                        return false;
+                        return 3;
                     }
                     break;
                 case GameSkillTargterType.Position:
                     var index_p = inputArgs.targeterArgsList.FindIndex((args) => args.targetPosition != GameVec2.zero);
                     if (index_p == -1)
                     {
-                        return false;
+                        return 4;
                     }
                     break;
                 case GameSkillTargterType.Actor:
                     break;
                 default:
                     GameLogger.LogError("未知的技能目标类型");
-                    return false;
+                    return 5;
             }
 
             // 技能条件检测
             var firstTarget = inputArgs.targeterArgsList?[0].targetEntity;
-            if (!this.CheckSkillCondition(role, skill, firstTarget)) return false;
+            if (!this.CheckSkillCondition(role, skill, firstTarget)) return 6;
 
             // 目标为隐身状态的敌对阵营角色
             if (firstTarget is GameRoleEntity targetRole)
             {
-                if (targetRole.idCom.CheckCampType(role.idCom, GameCampType.Enemy) && targetRole.fsmCom.stateType == GameRoleStateType.Stealth) return false;
+                if (targetRole.idCom.CheckCampType(role.idCom, GameCampType.Enemy) && targetRole.fsmCom.stateType == GameRoleStateType.Stealth) return 7;
             }
 
-            return true;
+            return 0;
         }
 
         public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill)
         {
             var inputArgs = role.inputCom.ToArgs();
-            var check = this.CheckCastCondition(role, skill, in inputArgs);
-            if (!check) GameLogger.LogWarning($"技能施法条件检测失败：{skill.idCom}");
-            return check;
+            var errCode = this._CheckCastCondition(role, skill, in inputArgs);
+            if (errCode != 0)
+            {
+                GameLogger.LogWarning($"技能施法条件检测失败：{skill.idCom} 错误码：{errCode}");
+                return false;
+            }
+            return true;
         }
 
         public bool CheckSkillCondition(GameRoleEntity role, GameSkillEntity skill, GameEntityBase target, bool ignoreDistanceCondition = false)

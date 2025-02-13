@@ -38,25 +38,68 @@ namespace GamePlay.Bussiness.Logic
             // 遍历 - 伤害记录
             this.ForeachActionRecord_Dmg((actionRecord) =>
             {
-                isSatisfied = _MainCheck(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Dmg);
-                if (!isSatisfied) isSatisfied = this._ExtraCheckDmg(actionRecord.actorIdArgs, actionRecord, actionRecord.targetIdArgs);
+                isSatisfied = _NormalCheck(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Dmg);
+                if (!isSatisfied) isSatisfied = this._CheckSpecialActionType(actionRecord.actorIdArgs, actionRecord, actionRecord.targetIdArgs);
             });
             if (isSatisfied) return true;
 
             // 遍历 - 治疗记录
             this.ForeachActionRecord_Heal((actionRecord) =>
             {
-                isSatisfied = _MainCheck(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Heal);
+                isSatisfied = _NormalCheck(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Heal);
             });
             if (isSatisfied) return true;
 
             // 遍历 - 发射投射物记录
             this.ForeachActionRecord_LaunchProjectile((actionRecord) =>
             {
-                isSatisfied = _MainCheck(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.LaunchProjectile);
+                isSatisfied = _NormalCheck(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.LaunchProjectile);
             });
 
             return isSatisfied;
+        }
+
+        /// <summary> 正常检查 </summary>
+        private bool _NormalCheck(in GameIdArgs actorIdArgs, in GameActionTargeterArgsRecord actionTargeterRecord, in GameIdArgs targetIdArgs, int actionId, GameActionType actionType)
+        {
+            // 基础检查
+            if (!_BasicCheck(actorIdArgs)) return false;
+            // 指定行为Id
+            if (actionId == model.targetActionId)
+            {
+                this._actionCount++;
+            }
+            // 指定行为类型
+            if (actionType == model.targetActionType)
+            {
+                this._actionCount++;
+            }
+            return this._CheckWindowTimeAndActionCount(actionTargeterRecord, targetIdArgs);
+        }
+
+        /// <summary> 检查特殊行为如击杀、暴击...... </summary>
+        private bool _CheckSpecialActionType(in GameIdArgs actorIdArgs, GameActionRecord_Dmg record, in GameIdArgs targetIdArgs)
+        {
+            var targetActionType = this.model.targetActionType;
+            if (!targetActionType.IsSpecialAction()) return false;
+            // 基础检查
+            if (!this._BasicCheck(actorIdArgs)) return false;
+            // 检查是否为特殊行为
+            var isSatisfied = false;
+            switch (targetActionType)
+            {
+                case GameActionType.Kill:
+                    isSatisfied = record.isKill;
+                    break;
+                case GameActionType.Crit:
+                    isSatisfied = record.isCrit;
+                    break;
+            }
+            if (!isSatisfied) return false;
+            this._actionCount++;
+
+            // 检查窗口时间和行为次数
+            return this._CheckWindowTimeAndActionCount(record.actionTargeter, targetIdArgs);
         }
 
         private bool _BasicCheck(in GameIdArgs actorIdArgs)
@@ -75,38 +118,7 @@ namespace GamePlay.Bussiness.Logic
             return true;
         }
 
-        private bool _MainCheck(in GameIdArgs actorIdArgs, in GameActionTargeterArgsRecord actionTargeterRecord, in GameIdArgs targetIdArgs, int actionId, GameActionType actionType)
-        {
-            // 基础检查
-            if (!_BasicCheck(actorIdArgs)) return false;
-            // 指定行为Id
-            if (actionId == model.targetActionId)
-            {
-                this._actionCount++;
-            }
-            // 指定行为类型
-            if (actionType == model.targetActionType)
-            {
-                this._actionCount++;
-            }
-            return this._CheckSatisfy(actionTargeterRecord, targetIdArgs);
-        }
-
-        private bool _ExtraCheckDmg(in GameIdArgs actorIdArgs, GameActionRecord_Dmg record, in GameIdArgs targetIdArgs)
-        {
-            // 基础检查
-            if (!this._BasicCheck(actorIdArgs)) return false;
-            // 非击杀行为, 不做判定
-            if (this.model.targetActionType != GameActionType.Kill) return false;
-            // 跳过非击杀行为
-            if (!record.isKill) return false;
-            // 判定为击杀行为, 计数
-            this._actionCount++;
-            // 检查满足条件
-            return this._CheckSatisfy(record.actionTargeter, targetIdArgs);
-        }
-
-        private bool _CheckSatisfy(in GameActionTargeterArgsRecord actionTargeterRecord, in GameIdArgs targetIdArgs)
+        private bool _CheckWindowTimeAndActionCount(in GameActionTargeterArgsRecord actionTargeterRecord, in GameIdArgs targetIdArgs)
         {
             // 窗口期时间开始
             if (this._actionCount == 1)

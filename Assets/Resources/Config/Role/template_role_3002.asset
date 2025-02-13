@@ -28,6 +28,6 @@ MonoBehaviour:
     value: 1.5
   - type: 6
     value: 1
-  - type: 8
+  - type: 103
     value: 0.7
   careerType: 3
