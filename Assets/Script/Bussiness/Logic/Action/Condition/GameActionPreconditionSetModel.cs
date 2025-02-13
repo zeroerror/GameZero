@@ -15,10 +15,10 @@ namespace GamePlay.Bussiness.Logic
             this.probabilityConditionModel = probabilityConditionModel;
         }
 
-        public bool CheckSatisfied(GameEntityBase target, GameRandomService randomService)
+        public bool CheckSatisfied(GameEntityBase target)
         {
             if (buffConditionModel != null && !buffConditionModel.CheckSatisfied(target)) return false;
-            if (probabilityConditionModel != null && !probabilityConditionModel.CheckSatisfied(randomService)) return false;
+            if (probabilityConditionModel != null && !probabilityConditionModel.CheckSatisfied()) return false;
             return true;
         }
     }

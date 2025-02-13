@@ -14,9 +14,9 @@ namespace GamePlay.Bussiness.Logic
             this.probability = probability;
         }
 
-        public bool CheckSatisfied(GameRandomService randomService)
+        public bool CheckSatisfied()
         {
-            var random = randomService.GetRandom(0f, 1f);
+            var random = GameRandomService.GetRandom(0f, 1f);
             return random <= this.probability;
         }
     }

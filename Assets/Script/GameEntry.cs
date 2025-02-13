@@ -1,7 +1,6 @@
 using UnityEngine;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Render;
-using GamePlay.Core;
 using GamePlay.Bussiness.UI;
 using GamePlay.Bussiness.Core;
 
@@ -13,6 +12,7 @@ public class GameEntry : MonoBehaviour
 
     void Start()
     {
+        GameRandomService.DefaultInitSeeds();
         gameApp = new GameApp();
         gameAppR = new GameAppR();
         gameUIApp = new UIApp();

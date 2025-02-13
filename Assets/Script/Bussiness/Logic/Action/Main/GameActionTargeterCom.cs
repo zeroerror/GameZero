@@ -38,7 +38,7 @@ namespace GamePlay.Bussiness.Logic
             _curTargeterIndex = 0;
         }
 
-        public void UpdateTargeter(GameRandomService randomService)
+        public void UpdateTargeter()
         {
             if (_targeterList?.Count == 0) return;
             _targeterList.RemoveAll(targeter =>
@@ -57,7 +57,7 @@ namespace GamePlay.Bussiness.Logic
                     _curTargeterIndex = (_curTargeterIndex - 1 + _targeterList.Count) % _targeterList.Count;
                     break;
                 case GameForeachType.Random:
-                    _curTargeterIndex = randomService.GetRandom(0, _targeterList.Count);
+                    _curTargeterIndex = GameRandomService.GetRandom(0, _targeterList.Count);
                     break;
             }
         }

@@ -11,11 +11,11 @@ namespace GamePlay.Bussiness.Logic
         /// <para name="actor"> 行为者 </para>
         /// <para name="target"> 目标 </para>
         /// <para name="dmgModel"> 伤害模型 </para>
-        public static GameActionRecord_Dmg CalcDmg(GameEntityBase actor, GameEntityBase target, GameActionModel_Dmg dmgModel, GameRandomService randomService)
+        public static GameActionRecord_Dmg CalcDmg(GameEntityBase actor, GameEntityBase target, GameActionModel_Dmg dmgModel)
         {
             // 数值格式化
             var modelValue = (float)dmgModel.value;
-            var randomOffset = randomService.GetRandom(dmgModel.randomValueOffset);
+            var randomOffset = GameRandomService.GetRandom(dmgModel.randomValueOffset);
             modelValue += randomOffset;
             var formatValue = dmgModel.valueFormat.FormatValue(modelValue);
             // 参考属性值
@@ -39,7 +39,7 @@ namespace GamePlay.Bussiness.Logic
 
             // 暴击
             var critRate = actor.attributeCom.GetValue(GameAttributeType.CritRate);
-            var isCrit = randomService.GetRandom(0f, 1f) < critRate;
+            var isCrit = GameRandomService.GetRandom(0f, 1f) < critRate;
             if (isCrit)
             {
                 var critDmgAddition = actor.attributeCom.GetValue(GameAttributeType.CritDmgAddition);

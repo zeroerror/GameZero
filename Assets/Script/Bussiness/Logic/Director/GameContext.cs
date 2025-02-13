@@ -10,7 +10,6 @@ namespace GamePlay.Bussiness.Logic
         public GameEventService eventService { get; private set; }
         public GameEventService rcEventService { get; private set; }
         public GameCmdBufferService cmdBufferService { get; private set; }
-        public GameRandomService randomService { get; private set; }
         #endregion
 
         #region [领域API及上下文]
@@ -32,7 +31,6 @@ namespace GamePlay.Bussiness.Logic
             this.eventService = new GameEventService();
             this.rcEventService = new GameEventService();
             this.cmdBufferService = new GameCmdBufferService();
-            this.randomService = new GameRandomService();
 
             this.domainApi = new GameDomainApi();
             this.roleContext = new GameRoleContext();

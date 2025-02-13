@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GamePlay.Bussiness.Core;
 using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
@@ -208,7 +209,7 @@ namespace GamePlay.Bussiness.Logic
             for (int i = 0; i < count; i++)
             {
                 var role = this.CreateRole(typeId, campId, transArgs, false);
-                var randomDir = this._context.randomService.GetRandomDir2D();
+                var randomDir = GameRandomService.GetRandomDir2D();
                 role.transformCom.position = pos + randomDir * 1f;
                 role.idCom.SetParent(summoner);
                 role.aiCom.followState.followEntity = summoner;// 设定AI跟随目标

@@ -142,10 +142,10 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.Foreach((selectedEntity) =>
             {
-                if (!action.preconditionSet.CheckSatisfied(selectedEntity, this._context.randomService)) return;
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
                 // 立即计算
-                var record = GameActionUtil_Dmg.CalcDmg(actor, selectedEntity, action, this._context.randomService);
+                var record = GameActionUtil_Dmg.CalcDmg(actor, selectedEntity, action);
                 // 帧末执行
                 this._context.cmdBufferService.AddDelayCmd(0, () =>
                 {
@@ -169,7 +169,7 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.Foreach((selectedEntity) =>
             {
-                if (!action.preconditionSet.CheckSatisfied(selectedEntity, this._context.randomService)) return;
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
                 // 立即计算
                 var record = GameActionHealUtil.CalcHeal(actor, selectedEntity, action);
@@ -198,7 +198,7 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.Foreach((selectedEntity) =>
             {
-                if (!action.preconditionSet.CheckSatisfied(selectedEntity, this._context.randomService)) return;
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
                 var targeter = actor.actionTargeterCom.getCurTargeter();
                 // 帧末执行
@@ -251,7 +251,7 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.Foreach((selectedEntity) =>
             {
-                if (!action.preconditionSet.CheckSatisfied(selectedEntity, this._context.randomService)) return;
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
                 // 立即计算
                 var record = GameActionKnockBackUtil.CalcKnockBack(actor, selectedEntity, action);
@@ -279,7 +279,7 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.Foreach((selectedEntity) =>
             {
-                if (!action.preconditionSet.CheckSatisfied(selectedEntity, this._context.randomService)) return;
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
                 // 立即计算
                 var record = GameActionUtil_AttributeModify.CalcAttributeModify(actor, selectedEntity, action);
@@ -306,7 +306,7 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.Foreach((selectedEntity) =>
             {
-                if (!action.preconditionSet.CheckSatisfied(selectedEntity, this._context.randomService)) return;
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
 
                 // 帧末执行
                 this._context.cmdBufferService.AddDelayCmd(0, () =>
@@ -408,7 +408,7 @@ namespace GamePlay.Bussiness.Logic
             GameEntityBase beTransTarget,
             int transToRoleId)
         {
-            if (!action.preconditionSet.CheckSatisfied(beTransTarget, this._context.randomService)) return;
+            if (!action.preconditionSet.CheckSatisfied(beTransTarget)) return;
             if (!(beTransTarget is GameRoleEntity transTargetRole))
             {
                 GameLogger.LogError($"变身目标不是角色实体：{beTransTarget.idCom}, 暂不支持");
@@ -438,7 +438,7 @@ namespace GamePlay.Bussiness.Logic
             var selectedEntities = entitySelectApi.SelectEntities(action.selector, actor);
             selectedEntities?.Foreach((selectedEntity) =>
             {
-                if (!action.preconditionSet.CheckSatisfied(selectedEntity, this._context.randomService)) return;
+                if (!action.preconditionSet.CheckSatisfied(selectedEntity)) return;
                 // 帧末执行
                 this._context.cmdBufferService.AddDelayCmd(0, () =>
                 {

@@ -446,7 +446,7 @@ namespace GamePlay.Bussiness.Logic
                 var roleNewValue = buff.owner.attributeCom.GetValue(attrType);
                 GameLogger.DebugLog($"Buff属性效果: {attrType} {roleOldValue} -> {roleNewValue}");
             });
-            buff.actionTargeterCom.UpdateTargeter(this._context.randomService);
+            buff.actionTargeterCom.UpdateTargeter();
         }
 
         public void TranserBuffCom(GameBuffCom refBuffCom, GameRoleEntity targetRole)

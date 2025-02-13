@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.HeroEditor4D.Common.Scripts.Common;
+using GamePlay.Bussiness.Core;
 using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
 
@@ -309,7 +310,7 @@ namespace GamePlay.Bussiness.Logic
             int shffleCount = GameMath.Min(5, unitPool.Count);
             for (var i = 0; i < shffleCount; i++)
             {
-                var unit = this.context.randomService.GetRandom(unitPool);
+                var unit = GameRandomService.GetRandom(unitPool);
                 if (unit == null) continue;
                 buyableUnits.Add(unit);
                 unitPool.Remove(unit);
