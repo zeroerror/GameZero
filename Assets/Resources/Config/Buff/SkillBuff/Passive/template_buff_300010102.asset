@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 300010102
   buffName: "\u5766\u514B\u88AB\u52A81\u6548\u679C1"
-  desc: "\u83B7\u5F972%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE, \u6301\u7EED5\u79D2"
-  refreshFlag: 0
+  desc: "\u83B7\u5F975%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE, \u6301\u7EED5\u79D2"
+  refreshFlag: 4
   maxLayer: 0
   actionParam: 0
   actionSOs: []
@@ -234,6 +234,6 @@ MonoBehaviour:
   vfxOrderOffset: 0
   attributeEMs:
   - attributeType: 201
-    value: 2
+    value: 5
     valueFormat: 2
     refType: 8

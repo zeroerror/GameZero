@@ -96,8 +96,12 @@ namespace GamePlay.Bussiness.Render
             var isEnemy = role.idCom.campId != this._roleContext.userRole?.idCom.campId;
             var hpSlider = this._roleContext.factory.LoadHPSlider(isEnemy);
             this._context.uiApi.layerApi.AddToUIRoot(hpSlider.transform, UILayerType.Scene);
-            attributeBarCom.hpSlider.SetSlider(hpSlider, new Vector2(0, 150));
-            attributeBarCom.hpSlider.SetSize(new Vector2(150, 20));
+
+            var hpSliderOffset = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_HP_OFFSET;
+            attributeBarCom.hpSlider.SetSlider(hpSlider, hpSliderOffset);
+            Vector2 hpSliderSize = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_HP_SIZE;
+            attributeBarCom.hpSlider.SetSize(hpSliderSize);
+            attributeBarCom.hpSlider.SetSlitLine(2);
 
             // 判断是否有魔法攻击技能, 有则加载魔法条
             this._roleContext.factory.template.TryGet(role.idCom.typeId, out var model);
@@ -106,15 +110,19 @@ namespace GamePlay.Bussiness.Render
             {
                 var mpSlider = attributeBarCom.mpSlider.slider ?? this._roleContext.factory.LoadMPSlider();
                 this._context.uiApi.layerApi.AddToUIRoot(mpSlider.transform, UILayerType.Scene);
-                attributeBarCom.mpSlider.SetSlider(mpSlider, new Vector2(0, 135));
-                attributeBarCom.mpSlider.SetSize(new Vector2(150, 15));
+                var mpSliderOffset = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_MP_OFFSET;
+                attributeBarCom.mpSlider.SetSlider(mpSlider, mpSliderOffset);
+                var mpSliderSize = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_MP_SIZE;
+                attributeBarCom.mpSlider.SetSize(mpSliderSize);
             }
 
             // 护盾条不分敌我, 加载或使用旧的护盾条
             var shieldSlider = attributeBarCom.shieldSlider.slider ?? this._roleContext.factory.LoadShieldSlider();
             this._context.uiApi.layerApi.AddToUIRoot(shieldSlider.transform, UILayerType.Scene);
-            attributeBarCom.shieldSlider.SetSlider(shieldSlider, new Vector2(0, 120));
-            attributeBarCom.shieldSlider.SetSize(new Vector2(150, 15));
+            var shieldSliderOffset = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_SHIELD_OFFSET;
+            attributeBarCom.shieldSlider.SetSlider(shieldSlider, shieldSliderOffset);
+            var shieldSliderSize = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_SHIELD_SIZE;
+            attributeBarCom.shieldSlider.SetSize(shieldSliderSize);
 
             // 初始化默认材质
             role.bodyCom.renderers?.Foreach((renderer) =>

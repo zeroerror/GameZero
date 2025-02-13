@@ -48,7 +48,7 @@ namespace GamePlay.Bussiness.Logic
 
             // 增伤
             var dmgAddition = actor.attributeCom.GetValue(GameAttributeType.DmgAddition);
-            dmgValue = dmgValue * (1 + dmgAddition);
+            dmgValue = dmgValue * (1.5f + dmgAddition);
 
             // 伤害结算
             var targetAttrCom = target.attributeCom;

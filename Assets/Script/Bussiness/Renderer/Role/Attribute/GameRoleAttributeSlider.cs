@@ -59,7 +59,35 @@ namespace GamePlay.Bussiness.Render
             this._easeSlider = fillRect.parent.transform.GetComponentInChildren<Slider>();
             this._easeRectTransform = this._easeSlider?.GetComponent<RectTransform>();
             if (this._easeSlider) this._easeSlider.value = this.slider.value;
+            if (!this._slitLineTransparentBg)
+            {
+                // 初始化一个透明背景
+                var go = new GameObject("slitLineTransparentBg");
+                this._slitLineTransparentBg = go.AddComponent<Image>();
+                // 设置为和fillRect大小一样 且同一个父物体
+                var rectTf = this._slitLineTransparentBg.rectTransform;
+                rectTf.SetParent(fillRect.parent);
+                rectTf.localScale = Vector3.one;
+                go.SetPosZ(0);
+                var fillWidth = fillRect.rect.width * (slider.maxValue / slider.value);
+                var fillHeight = fillRect.rect.height;
+                rectTf.sizeDelta = new Vector2(fillWidth, fillHeight);
+                // 设置为unity默认的uisprite
+                this._slitLineTransparentBg.sprite = Resources.Load<Sprite>("UI/Sprites/UISprite");
+                this._slitLineTransparentBg.color = new Color(0, 0, 0, 0);
+            }
         }
+        private Image _slitLineTransparentBg;
+
+        public void SetSlitLine(int count)
+        {
+            // 加载材质球
+            var m = this.mat ?? Resources.Load<Material>("UI/Materials/SplitLine/mat_split_line");
+            this.mat = m;
+            this._slitLineTransparentBg.material = this.mat;
+            this._slitLineTransparentBg.material.SetFloat("_LineCount", count);
+        }
+        private Material mat;
 
         public void SetOffset(in Vector3 offset)
         {

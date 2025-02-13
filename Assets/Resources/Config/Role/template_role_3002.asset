@@ -21,11 +21,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: acea1a519c038e94cbe6c1221f4bded9, type: 2}
   attributes:
   - type: 5
-    value: 20
+    value: 12
   - type: 2
     value: 200
   - type: 7
-    value: 1.5
+    value: 1
   - type: 6
     value: 1
   - type: 103

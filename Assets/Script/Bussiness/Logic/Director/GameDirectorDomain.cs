@@ -303,7 +303,7 @@ namespace GamePlay.Bussiness.Logic
                 unitPool.Add(unit);
             }
 
-            // 洗牌出最多5个单位
+            // 洗牌最多5个单位
             buyableUnits.Clear();
             int shffleCount = GameMath.Min(5, unitPool.Count);
             for (var i = 0; i < shffleCount; i++)

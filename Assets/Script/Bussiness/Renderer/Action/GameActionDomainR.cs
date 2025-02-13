@@ -177,8 +177,8 @@ namespace GamePlay.Bussiness.Render
             {
                 // 骨骼抖动
                 var angle = 0;
-                var amplitude = 0.1f;
-                var frequency = 50;
+                var amplitude = 0.08f;
+                var frequency = 30;
                 var duration = 0.1f;
                 this._context.domainApi.transformApi.Shake(targetRole.bodyCom.prefabGO.transform, angle, amplitude, frequency, duration);
                 // 受击闪烁

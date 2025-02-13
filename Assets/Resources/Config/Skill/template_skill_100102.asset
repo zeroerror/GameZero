@@ -28,11 +28,11 @@ MonoBehaviour:
     cdTime: 0
     mpCost: 20
     selectorEM:
-      selectAnchorType: 1
+      selectAnchorType: 3
       campType: 1
       entityType: 1
       onlySelectDead: 0
-      selColliderType: 2
+      selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 10
+        radius: 7
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0

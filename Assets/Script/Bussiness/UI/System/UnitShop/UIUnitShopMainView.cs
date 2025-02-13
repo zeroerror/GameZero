@@ -173,7 +173,6 @@ namespace GamePlay.Bussiness.UI
             if (this._previewUnit)
             {
                 this._uiApi.logicApi.directorApi.BuyUnit(this._selectedItemIndex, this._previewUnit.GetPosition());
-                this._uiApi.rendererApi.shaderEffectApi.StopShaderEffects(this._previewUnit);
             }
         }
 
@@ -186,6 +185,7 @@ namespace GamePlay.Bussiness.UI
             }
             if (this._previewUnit)
             {
+                this._uiApi.rendererApi.shaderEffectApi.StopShaderEffects(this._previewUnit);
                 this._uiApi.rendererApi.directorApi.DestroyPreviewUnit(this._previewUnit);
                 this._previewUnit = null;
             }

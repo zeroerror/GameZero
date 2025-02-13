@@ -351,8 +351,8 @@ MonoBehaviour:
     randomValueOffset: {x: 0, y: 0}
     duration: 0
   actionEMR:
-    typeId: 0
-    desc: "\u6302\u8F7Dbuff - \u83B7\u5F972%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE,
+    typeId: 300010102
+    desc: "\u6302\u8F7Dbuff - \u83B7\u5F975%\u6700\u5927\u751F\u547D\u503C\u7684\u62A4\u76FE,
       \u6301\u7EED5\u79D2"
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}

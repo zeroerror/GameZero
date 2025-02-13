@@ -20,7 +20,7 @@ MonoBehaviour:
   - material: {fileID: 2100000, guid: 691a56194f079ad4aaffc4dc0c4285c2, type: 2}
     propName: _FlashAmount
     startTime: 0
-    endTime: 0.3
+    endTime: 0.15
     fromValue_float: 0
     toValue_float: 1
     curve_float:
@@ -56,3 +56,5 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    fromValue_color: {r: 0, g: 0, b: 0, a: 0}
+    toValue_color: {r: 0, g: 0, b: 0, a: 0}
