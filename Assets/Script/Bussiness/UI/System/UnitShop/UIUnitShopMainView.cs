@@ -36,7 +36,6 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.BindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.BindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
             this._uiApi.logicApi.directorApi.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnDirectorStateExit);
-            this._uiApi.logicApi.directorApi.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnDirectorStateEnterFightPreparing);
 
             this.SetClick(this.uiBinder.btn_confirm.gameObject, this._OnBtnConfirmClick);
             this.SetClick(this.uiBinder.btn_refresh.gameObject, this._OnBtnRefreshClick);
@@ -55,7 +54,6 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.UnbindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
             this._uiApi.logicApi.directorApi.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnDirectorStateExit);
-            this._uiApi.logicApi.directorApi.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnDirectorStateEnterFightPreparing);
 
         }
 
@@ -73,17 +71,15 @@ namespace GamePlay.Bussiness.UI
             }
         }
 
-        private void _OnDirectorStateEnterFightPreparing(object args)
-        {
-            this.uiBinder.btn_confirm.gameObject.SetActive(true);
-        }
-
         protected override void _OnShow()
         {
             // 刷新金币显示
             this._RefreshGold();
-            // 刷新按钮显示
+            // 刷新取消按钮显示
             this._OnClickBtnCancel();
+            // 刷新确认按钮显示
+            var isFightPreparing = this._uiApi.logicApi.directorApi.GetDirectorState() == GameDirectorStateType.FightPreparing;
+            this.uiBinder.btn_confirm.gameObject.SetActive(isFightPreparing);
             // 刷新购买单位列表
             var itemCount = this._unitModels.Length;
             for (var i = 0; i < 5; i++)
@@ -160,6 +156,7 @@ namespace GamePlay.Bussiness.UI
 
         private void _OnBtnConfirmClick()
         {
+            if (this._uiApi.logicApi.directorApi.GetDirectorState() != GameDirectorStateType.FightPreparing) return;
             // 提交LC, 通知逻辑层确认开始
             this._uiApi.logicApi.directorApi.SubmitEvent(GameLCCollection.LC_GAME_PREPARING_CONFIRM_FIGHT, new GameLCArgs_PreparingConfirmFight());
         }

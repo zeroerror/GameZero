@@ -29,8 +29,6 @@ namespace GamePlay.Bussiness.Logic
         public GameEntitySelectDomain entitySelectDomain { get; private set; }
         public GameEntityCollectDomain entityCollectDomain { get; private set; }
 
-        public int curRound => this.director.curRound;
-
         public GameDirectorDomain()
         {
             this._InitDomain();
@@ -395,6 +393,16 @@ namespace GamePlay.Bussiness.Logic
                     GameLogger.LogError("导演 - 获取实体失败, 未知的实体类型 " + entityType);
                     return null;
             }
+        }
+
+        public int GetCurRound()
+        {
+            return this.director.curRound;
+        }
+
+        public GameDirectorStateType GetDirectorState()
+        {
+            return this.context.director.fsmCom.stateType;
         }
     }
 }

@@ -22,7 +22,7 @@ MonoBehaviour:
   - time: 0
     frame: 0
     actions:
-    - {fileID: 11400000, guid: f07b7ca2a97c87b4ea3197e21bee2226, type: 2}
+    - {fileID: 11400000, guid: be68761d2b200c64e8cc11f304c1e77b, type: 2}
   conditionEM:
     targeterType: 0
     cdTime: 0

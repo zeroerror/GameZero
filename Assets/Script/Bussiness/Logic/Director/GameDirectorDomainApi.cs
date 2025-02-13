@@ -96,6 +96,11 @@ namespace GamePlay.Bussiness.Logic
         /// <summary>
         /// 当前回合数
         /// </summary>
-        public int curRound { get; }
+        public int GetCurRound();
+
+        /// <summary>
+        /// 当前导演状态
+        /// </summary>
+        public GameDirectorStateType GetDirectorState();
     }
 }

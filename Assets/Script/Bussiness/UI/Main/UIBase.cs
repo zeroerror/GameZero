@@ -130,6 +130,14 @@ namespace GamePlay.Bussiness.UI
             var clickCom = go.GetComponent<UIClickCom>() ?? go.AddComponent<UIClickCom>();
             clickCom.onClick = callback;
         }
+        public void RemoveClick(GameObject go)
+        {
+            var clickCom = go.GetComponent<UIClickCom>();
+            if (clickCom != null)
+            {
+                GameObject.Destroy(clickCom);
+            }
+        }
 
         protected void _Close()
         {
