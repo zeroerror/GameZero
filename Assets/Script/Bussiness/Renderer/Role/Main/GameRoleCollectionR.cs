@@ -21,5 +21,7 @@ namespace GamePlay.Bussiness.Render
         public static readonly Vector2 ROLE_ATTRIBUTE_SLIDER_SHIELD_OFFSET = new Vector2(0, 75);
         /// <summary> 护盾条大小 </summary>
         public static readonly Vector2 ROLE_ATTRIBUTE_SLIDER_SHIELD_SIZE = new Vector2(75, 10);
+        /// <summary> 分割线数值 </summary>
+        public static readonly int ROLE_ATTRIBUTE_SLIDER_DIVISION = 100;
     }
 }

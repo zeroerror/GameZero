@@ -128,5 +128,17 @@ namespace GamePlay.Bussiness.Render
             return this._defaultMaterial;
         }
         private Material _defaultMaterial;
+
+        /// <summary> 获取分割线材质的实例 </summary>
+        public Material CreateSplitLineMaterialInst()
+        {
+            var mat = Resources.Load<Material>("UI/Materials/SplitLine/mat_split_line");
+            if (!mat)
+            {
+                GameLogger.LogError("角色工厂[渲染层]: 加载分割线材质失败");
+                return null;
+            }
+            return new Material(mat);
+        }
     }
 }

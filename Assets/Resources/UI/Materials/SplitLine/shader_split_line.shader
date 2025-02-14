@@ -10,7 +10,7 @@ Shader "GamePlay/UI/SplitLine"
     SubShader
     {
         Tags {
-            "Queue" = "Overlay" 
+            "Queue" = "Transparent" 
         }
         Pass
         {
@@ -36,7 +36,7 @@ Shader "GamePlay/UI/SplitLine"
             float4 _MainTex_ST;
             float _LineWidth;
             float4 _LineColor;
-            float _LineCount; // Change to float
+            float _LineCount;
 
             v2f vert (appdata v)
             {
@@ -63,6 +63,7 @@ Shader "GamePlay/UI/SplitLine"
                         }
                     }
                 }
+
                 return texColor;
             }
             ENDCG

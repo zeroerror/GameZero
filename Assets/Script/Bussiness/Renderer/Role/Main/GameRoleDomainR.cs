@@ -94,35 +94,39 @@ namespace GamePlay.Bussiness.Render
             var existSlider = attributeBarCom.hpSlider.slider;
             if (existSlider) GameObject.Destroy(existSlider.gameObject);
             var isEnemy = role.idCom.campId != this._roleContext.userRole?.idCom.campId;
-            var hpSlider = this._roleContext.factory.LoadHPSlider(isEnemy);
-            this._context.uiApi.layerApi.AddToUIRoot(hpSlider.transform, UILayerType.Scene);
+            var uiHPSlider = this._roleContext.factory.LoadHPSlider(isEnemy);
+            this._context.uiApi.layerApi.AddToUIRoot(uiHPSlider.transform, UILayerType.Scene);
 
+            var hpSlider = attributeBarCom.hpSlider;
             var hpSliderOffset = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_HP_OFFSET;
-            attributeBarCom.hpSlider.SetSlider(hpSlider, hpSliderOffset);
+            hpSlider.SetSlider(uiHPSlider, hpSliderOffset);
             Vector2 hpSliderSize = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_HP_SIZE;
-            attributeBarCom.hpSlider.SetSize(hpSliderSize);
-            attributeBarCom.hpSlider.SetSlitLine(2);
+            hpSlider.SetSize(hpSliderSize);
+            hpSlider.SetSlitLineMat(this._roleContext.factory.CreateSplitLineMaterialInst());
 
             // 判断是否有魔法攻击技能, 有则加载魔法条
             this._roleContext.factory.template.TryGet(role.idCom.typeId, out var model);
             var hasMPSkill = model.skillSOs.Find((skill) => skill.skillType == GameSkillType.MagicAttack) != null;
             if (hasMPSkill)
             {
-                var mpSlider = attributeBarCom.mpSlider.slider ?? this._roleContext.factory.LoadMPSlider();
-                this._context.uiApi.layerApi.AddToUIRoot(mpSlider.transform, UILayerType.Scene);
+                var mpSlider = attributeBarCom.mpSlider;
+                var uiMPSlider = mpSlider.slider ?? this._roleContext.factory.LoadMPSlider();
+                this._context.uiApi.layerApi.AddToUIRoot(uiMPSlider.transform, UILayerType.Scene);
                 var mpSliderOffset = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_MP_OFFSET;
-                attributeBarCom.mpSlider.SetSlider(mpSlider, mpSliderOffset);
+                mpSlider.SetSlider(uiMPSlider, mpSliderOffset);
                 var mpSliderSize = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_MP_SIZE;
-                attributeBarCom.mpSlider.SetSize(mpSliderSize);
+                mpSlider.SetSize(mpSliderSize);
             }
 
             // 护盾条不分敌我, 加载或使用旧的护盾条
-            var shieldSlider = attributeBarCom.shieldSlider.slider ?? this._roleContext.factory.LoadShieldSlider();
-            this._context.uiApi.layerApi.AddToUIRoot(shieldSlider.transform, UILayerType.Scene);
+            var shieldSlider = attributeBarCom.shieldSlider;
+            var uiShieldSlider = shieldSlider.slider ?? this._roleContext.factory.LoadShieldSlider();
+            this._context.uiApi.layerApi.AddToUIRoot(uiShieldSlider.transform, UILayerType.Scene);
             var shieldSliderOffset = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_SHIELD_OFFSET;
-            attributeBarCom.shieldSlider.SetSlider(shieldSlider, shieldSliderOffset);
+            shieldSlider.SetSlider(uiShieldSlider, shieldSliderOffset);
             var shieldSliderSize = GameRoleCollectionR.ROLE_ATTRIBUTE_SLIDER_SHIELD_SIZE;
-            attributeBarCom.shieldSlider.SetSize(shieldSliderSize);
+            shieldSlider.SetSize(shieldSliderSize);
+            shieldSlider.SetSlitLineMat(this._roleContext.factory.CreateSplitLineMaterialInst());
 
             // 初始化默认材质
             role.bodyCom.renderers?.Foreach((renderer) =>

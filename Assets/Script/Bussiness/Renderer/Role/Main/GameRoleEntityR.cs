@@ -82,37 +82,15 @@ namespace GamePlay.Bussiness.Render
 
         public override void Tick(float dt)
         {
+            // 动画
             this.animCom.Tick(dt);
+            // 坐标
             var pos = this._posEaseCom.Tick(this.position, this.transformCom.position, dt);
             this.position = pos;
+            // 朝向
             this._FaceToByScale(this.transformCom.scale);
-            this.attributeBarCom.Tick(dt);
-
-            var hp = this.attributeCom.GetValue(GameAttributeType.HP);
-            var maxHP = this.attributeCom.GetValue(GameAttributeType.MaxHP);
-            var hpRatio = hp / maxHP;
-            this.attributeBarCom.hpSlider.SetRatio(hpRatio);
-            var hpStr = this.attributeCom.GetValueStr(GameAttributeType.HP);
-            var maxHPStr = this.attributeCom.GetValueStr(GameAttributeType.MaxHP);
-            this.attributeBarCom.hpSlider.SetText($"{hpStr}/{maxHPStr}");
-
-            var mpRatio = this.attributeCom.GetValue(GameAttributeType.MP) / this.attributeCom.GetValue(GameAttributeType.MaxMP);
-            this.attributeBarCom.mpSlider.SetRatio(mpRatio);
-            var mpStr = this.attributeCom.GetValueStr(GameAttributeType.MP);
-            var maxMPStr = this.attributeCom.GetValueStr(GameAttributeType.MaxMP);
-            this.attributeBarCom.mpSlider.SetText($"{mpStr}/{maxMPStr}");
-
-            var shieldRatio = this.attributeCom.GetValue(GameAttributeType.Shield) / this.attributeCom.GetValue(GameAttributeType.MaxHP);
-            this.attributeBarCom.shieldSlider.SetRatio(shieldRatio);
-            if (shieldRatio == 0)
-            {
-                this.attributeBarCom.shieldSlider.SetText("");
-            }
-            else
-            {
-                var shieldStr = this.attributeCom.GetValueStr(GameAttributeType.Shield);
-                this.attributeBarCom.shieldSlider.SetText($"{shieldStr}");
-            }
+            // 属性条
+            this.attributeBarCom.Tick(this.attributeCom, dt);
         }
 
         public void setActive(bool active)
