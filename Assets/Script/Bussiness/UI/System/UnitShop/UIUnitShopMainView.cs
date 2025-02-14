@@ -33,6 +33,7 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.BindKeyAction(KeyCode.J, this._OnClickItemDown2);
             this._uiApi.directorApi.BindKeyAction(KeyCode.K, this._OnClickItemDown3);
             this._uiApi.directorApi.BindKeyAction(KeyCode.L, this._OnClickItemDown4);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.Escape, this._OnClickBtnCancel);
             this._uiApi.directorApi.BindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.BindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
             this._uiApi.logicApi.directorApi.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnDirectorStateExit);
@@ -51,6 +52,7 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.J, this._OnClickItemDown2);
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.K, this._OnClickItemDown3);
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.L, this._OnClickItemDown4);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.Escape, this._OnClickBtnCancel);
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
             this._uiApi.directorApi.UnbindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
             this._uiApi.logicApi.directorApi.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnDirectorStateExit);
@@ -107,6 +109,7 @@ namespace GamePlay.Bussiness.UI
 
         private void _OnClickItemDown(int index)
         {
+            if (!GameMath.IsInRange(index, 0, this._unitModels.Length - 1)) return;
             // 预览单位相同则不重新生成
             var previewIdCom = this._previewUnit?.idCom;
             var unitModel = this._unitModels[index];

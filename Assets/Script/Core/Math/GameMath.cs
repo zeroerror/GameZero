@@ -39,5 +39,7 @@ namespace GamePlay.Core
 
         public static int Clamp(this int value, int min, int max) => value < min ? min : value > max ? max : value;
         public static int Floor(float value) => (int)System.Math.Floor(value);
+
+        public static bool IsInRange(int value, int min, int max) => value >= min && value <= max;
     }
 }

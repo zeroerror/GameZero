@@ -41,16 +41,14 @@ namespace GamePlay.Bussiness.UI
 
         public void Refersh(GameEntityType entityType, int entityId)
         {
-            var entity = this._logicApi.directorApi.FindEntity(entityType, entityId);
-            var attributes = entity?.attributeCom.ToArgs().attributes;
-            var baseAttributes = entity?.baseAttributeCom.ToArgs().attributes;
+            var entityl = this._logicApi.directorApi.FindEntity(entityType, entityId);
+            var attributes = entityl?.attributeCom.ToArgs().attributes;
+            var baseAttributes = entityl?.baseAttributeCom.ToArgs().attributes;
 
-            attributes = attributes?.Remove(attr => attr.type == GameAttributeType.MaxHP || attr.type == GameAttributeType.MaxMP);
-            attributes?.Sort((a, b) => a.type.CompareTo(b.type));
-            baseAttributes = baseAttributes?.Remove(attr => attr.type == GameAttributeType.MaxHP || attr.type == GameAttributeType.MaxMP);
-            baseAttributes?.Sort((a, b) => a.type.CompareTo(b.type));
-            // 属性列表
-            attributes?.Foreach((attr, idx) =>
+            // 用于展示的属性列表
+            var attributes_display = attributes?.Remove(attr => attr.type == GameAttributeType.MaxHP || attr.type == GameAttributeType.MaxMP);
+            attributes_display?.Sort((a, b) => a.type.CompareTo(b.type));
+            attributes_display?.Foreach((attr, idx) =>
             {
                 var fieldName = "attributeList_Viewport_Content_item" + (idx + 1);
                 var item = this._binder.GetField(fieldName) as UIAttributeItemBinder;
@@ -63,7 +61,17 @@ namespace GamePlay.Bussiness.UI
                 // 属性图标
                 item.group_img_icon.sprite = Resources.Load<Sprite>(UIPathUtil.GetAttributeIcon(attr.type));
                 // 属性值
-                item.group_txt_value.text = attr.value.ToString();
+                if (attr.type == GameAttributeType.HP || attr.type == GameAttributeType.MP)
+                {
+                    var valueStr = attr.value.GetFormatNumStr();
+                    var maxValue = attributes.Find(a => a.type == attr.type + 1).value;
+                    var maxValueStr = maxValue != 0 ? maxValue.GetFormatNumStr() : valueStr;
+                    item.group_txt_value.text = $"{valueStr}/{maxValueStr}".ToDevStr();
+                }
+                else
+                {
+                    item.group_txt_value.text = attr.value.ToString();
+                }
                 // 加成
                 var baseAttr = baseAttributes.Find(b => b.type == attr.type);
                 var additionV = baseAttr.type != GameAttributeType.None ? (attr.value - baseAttr.value) : 0;
@@ -74,7 +82,9 @@ namespace GamePlay.Bussiness.UI
                 }
                 else
                 {
-                    textCom.text = $"<color=#23FF00>(+{additionV.GetFormatNumStr()})</color>\n<color=#ffffff>{baseAttr.value.GetFormatNumStr()}</color>";
+                    var additionVStr = additionV.GetFormatNumStr();
+                    var baseAttrStr = baseAttr.value.GetFormatNumStr();
+                    textCom.text = $"<color=#23FF00>(+{additionVStr})</color>\n<color=#ffffff>{baseAttrStr}</color>".ToDevStr();
                 }
                 // <color=#23FF00>(+166)</color>\n<color=#ffffff>500</color>
             });
@@ -91,7 +101,7 @@ namespace GamePlay.Bussiness.UI
                 item.gameObject.SetActive(false);
             }
             // 技能列表
-            if (entity is GameRoleEntity role)
+            if (entityl is GameRoleEntity role)
             {
                 this._binder.skillGroup.gameObject.SetActive(true);
                 role.skillCom.ForeachSkills((skill, idx) =>

@@ -221,6 +221,11 @@ namespace GamePlay.Core
             return System.Array.IndexOf(array, value);
         }
 
+        /// <summary> 
+        /// 移除数组中的元素,旧的数组不会被改变
+        /// <para>match: 匹配条件</para>
+        /// <returns>返回新数组</returns>
+        /// </summary>
         public static T[] Remove<T>(this T[] arr, Predicate<T> match)
         {
             for (int i = 0; i < arr.Length; i++)
