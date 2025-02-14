@@ -63,7 +63,7 @@ namespace GamePlay.Bussiness.Logic
         private bool _NormalCheck(in GameIdArgs actorIdArgs, in GameActionTargeterArgsRecord actionTargeterRecord, in GameIdArgs targetIdArgs, int actionId, GameActionType actionType)
         {
             // 基础检查
-            if (!_BasicCheck(actorIdArgs)) return false;
+            if (!_BasicCheck(actorIdArgs, targetIdArgs)) return false;
             // 指定行为Id
             if (actionId == model.targetActionId)
             {
@@ -83,7 +83,7 @@ namespace GamePlay.Bussiness.Logic
             var targetActionType = this.model.targetActionType;
             if (!targetActionType.IsSpecialAction()) return false;
             // 基础检查
-            if (!this._BasicCheck(actorIdArgs)) return false;
+            if (!this._BasicCheck(actorIdArgs, targetIdArgs)) return false;
             // 检查是否为特殊行为
             var isSatisfied = false;
             switch (targetActionType)
@@ -102,16 +102,28 @@ namespace GamePlay.Bussiness.Logic
             return this._CheckWindowTimeAndActionCount(record.actionTargeter, targetIdArgs);
         }
 
-        private bool _BasicCheck(in GameIdArgs actorIdArgs)
+        private bool _BasicCheck(in GameIdArgs actorIdArgs, in GameIdArgs targetIdArgs)
         {
-            // 行为实体必须是Buff挂载的角色 
-            // TODO 分情况, 如果是当被执行行为时, 则targetIdArgs为Buff挂载的角色
-            var actorEntity = this.FindEntity(actorIdArgs.entityType, actorIdArgs.entityId);
-            if (!actorEntity) return false;
-            var actorRoleEntity = actorEntity.GetLinkParent<GameRoleEntity>();
-            if (!actorRoleEntity) return false;
-            var isBuffTargetAct = actorRoleEntity.idCom.entityId == _buff.owner.idCom.entityId;
-            if (!isBuffTargetAct) return false;
+            var actor = this.FindEntity(actorIdArgs.entityType, actorIdArgs.entityId);
+            if (!actor) return false;
+            var actorRole = actor.GetLinkParent<GameRoleEntity>();
+            if (!actorRole) return false;
+
+            // 判定buff持有者在本次行为是行为方还是目标方
+            if (this.model.isBuffOwnerAsTarget)
+            {
+                // 行为目标实体要求是buff持有者
+                var targetRole = this.FindEntity(targetIdArgs.entityType, targetIdArgs.entityId).GetLinkParent<GameRoleEntity>();
+                var isBuffOwnerTarget = targetRole.idCom.entityId == _buff.owner.idCom.entityId;
+                if (!isBuffOwnerTarget) return false;
+            }
+            else
+            {
+                // 行为实体要求是buff持有者
+                var isBuffOwnerAct = actorRole.idCom.entityId == _buff.owner.idCom.entityId;
+                if (!isBuffOwnerAct) return false;
+            }
+
             // buff自身触发的行为不计数, 防止死循环
             var isBuffAct = this._buff.idCom.IsEquals(actorIdArgs);
             if (isBuffAct) return false;

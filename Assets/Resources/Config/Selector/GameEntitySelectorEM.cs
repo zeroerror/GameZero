@@ -1,6 +1,5 @@
 using GamePlay.Core;
 using GamePlay.Bussiness.Logic;
-using UnityEngine;
 namespace GamePlay.Config
 {
     [System.Serializable]
@@ -15,6 +14,8 @@ namespace GamePlay.Config
         public GameBoxColliderModel boxColliderModel;
         public GameCircleColliderModel circleColliderModel;
         public GameFanColliderModel fanColliderModel;
+        public int rangeSelectLimitCount;
+        public GameEntitySelectSortType rangeSelectSortType;
 
         public GameEntitySelector ToModel()
         {
@@ -23,25 +24,30 @@ namespace GamePlay.Config
             selector.campType = this.campType;
             selector.entityType = this.entityType;
             selector.onlySelectDead = this.onlySelectDead;
+
+            // 范围选取相关
             switch (this.selColliderType)
             {
                 case GameColliderType.None:
-                    selector.colliderModel = null;
+                    selector.rangeSelectModel = null;
                     break;
                 case GameColliderType.Box:
-                    selector.colliderModel = this.boxColliderModel;
+                    selector.rangeSelectModel = this.boxColliderModel;
                     break;
                 case GameColliderType.Circle:
-                    selector.colliderModel = this.circleColliderModel;
+                    selector.rangeSelectModel = this.circleColliderModel;
                     break;
                 case GameColliderType.Fan:
-                    selector.colliderModel = this.fanColliderModel;
+                    selector.rangeSelectModel = this.fanColliderModel;
                     break;
                 default:
-                    selector.colliderModel = null;
+                    selector.rangeSelectModel = null;
                     GameLogger.LogError("编辑时实体选择模型，未处理的碰撞模型类型: " + this.selColliderType);
                     break;
             }
+            selector.rangeSelectLimitCount = this.rangeSelectLimitCount;
+            selector.rangeSelectSortType = this.rangeSelectSortType;
+
             return selector;
         }
     }

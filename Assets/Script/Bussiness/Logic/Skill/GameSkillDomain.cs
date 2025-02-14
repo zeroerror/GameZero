@@ -165,7 +165,7 @@ namespace GamePlay.Bussiness.Logic
             var conditionModel = skill.skillModel.conditionModel;
             if (conditionModel == null) return true;
             // 检查 - 范围
-            if (!ignoreDistanceCondition && !GamePhysicsResolvingUtil.CheckOverlap(conditionModel.selector.colliderModel, skill.transformCom.ToArgs(), target.transformCom.position)) return false;
+            if (!ignoreDistanceCondition && !GamePhysicsResolvingUtil.CheckOverlap(conditionModel.selector.rangeSelectModel, skill.transformCom.ToArgs(), target.transformCom.position)) return false;
             // 检查 - CD
             if (skill.cdElapsed > 0) return false;
             // 检查 - 属性消耗

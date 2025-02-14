@@ -54,7 +54,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 抵达施法距离, 设置施法输入 ps: 类似操控角色到达施法距离后输入施法指令
-            var colliderModel = castSkill.skillModel.conditionModel.selector.colliderModel;
+            var colliderModel = castSkill.skillModel.conditionModel.selector.rangeSelectModel;
             if (GamePhysicsResolvingUtil.CheckOverlap(colliderModel, role.transformCom.ToArgs(), castTarget.transformCom.position))
             {
                 this._SetInput_Cast(role, castSkill, castTarget);
@@ -149,7 +149,7 @@ namespace GamePlay.Bussiness.Logic
 
         private void _SetInput_Move(GameRoleEntity role, GameSkillEntity castSkill, GameEntityBase castTarget)
         {
-            var colliderModel = castSkill.skillModel.conditionModel.selector.colliderModel;
+            var colliderModel = castSkill.skillModel.conditionModel.selector.rangeSelectModel;
             var contactMTV = GamePhysicsResolvingUtil.GetContactMTV(colliderModel, castSkill.transformCom.ToArgs(), castTarget.transformCom.position);
             var moveDir = contactMTV.normalized.Neg();
             role.inputCom.moveDir = moveDir;

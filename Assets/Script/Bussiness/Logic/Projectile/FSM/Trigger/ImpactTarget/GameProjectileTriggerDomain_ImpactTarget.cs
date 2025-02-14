@@ -28,7 +28,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             var triggerModel = trigger.model;
-            var selColliderModel = triggerModel.detectEntitySelector.colliderModel;
+            var selColliderModel = triggerModel.detectEntitySelector.rangeSelectModel;
             if (isLockOnEntityState)
             {
                 var lockOnEntity = projectile.fsmCom.lockOnEntityState.lockOnEntity;

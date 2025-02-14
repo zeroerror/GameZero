@@ -365,7 +365,7 @@ namespace GamePlay.Bussiness.Logic
         public void DoAction_CharacterTransform(GameActionModel_CharacterTransform action, GameEntityBase actor)
         {
             var selector = action.selector;
-            if (selector.selectAnchorType == GameEntitySelectAnchorType.Actor && !selector.isRangeSelect)
+            if (selector.selectAnchorType == GameEntitySelectAnchorType.Actor && !selector.IsRangeSelect())
             {
                 // 锚点选中自己且为单选, 则代表将自身变身为自身当前选取的目标
                 var targeter = actor.actionTargeterCom.getCurTargeter();

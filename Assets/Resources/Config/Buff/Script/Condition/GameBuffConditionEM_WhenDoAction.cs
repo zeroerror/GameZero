@@ -8,8 +8,10 @@ namespace GamePlay.Config
         public bool isEnable;
         public GameActionSO targetAction;
         public GameActionType targetActionType;
+
         public int actionCount;
         public float validWindowTime;
+        public bool isBuffOwnerAsTarget;
 
         public GameBuffConditionModel_WhenDoAction ToModel()
         {
@@ -22,7 +24,8 @@ namespace GamePlay.Config
                 this.targetAction?.typeId ?? 0,
                 this.targetActionType,
                 this.actionCount,
-                this.validWindowTime
+                this.validWindowTime,
+                this.isBuffOwnerAsTarget
             );
         }
     }

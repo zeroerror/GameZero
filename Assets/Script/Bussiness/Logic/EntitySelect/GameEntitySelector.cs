@@ -1,4 +1,3 @@
-using System.Runtime.Serialization.Formatters;
 using GamePlay.Core;
 namespace GamePlay.Bussiness.Logic
 {
@@ -11,13 +10,15 @@ namespace GamePlay.Bussiness.Logic
         public GameCampType campType;
         /// <summary> 实体类型 </summary>
         public GameEntityType entityType;
-        /// <summary> 是否仅选择死亡单位 </summary>
+        /// <summary> 是否仅选择死亡单位 TODO 改成角色状态条件</summary>
         public bool onlySelectDead;
-        /// <summary> 碰撞模型 </summary>
-        public GameColliderModelBase colliderModel;
 
-        /// <summary> 是否是范围选择 </summary>
-        public bool isRangeSelect => this.colliderModel != null;
+        /// <summary> 范围选取模型 </summary>
+        public GameColliderModelBase rangeSelectModel;
+        /// <summary> 范围选取限制数量(0代表不限制) </summary>
+        public int rangeSelectLimitCount;
+        /// <summary> 范围选取排序方式 </summary>
+        public GameEntitySelectSortType rangeSelectSortType;
 
         /// <summary>
         /// 判定单个实体是否满足选择
@@ -32,7 +33,7 @@ namespace GamePlay.Bussiness.Logic
             // 判定实体类型 ps: none默认通过
             if (this.entityType != GameEntityType.None && entityB.idCom.entityType != this.entityType) return false;
             // 判定锚点类型
-            if (this.colliderModel == null)
+            if (this.rangeSelectModel == null)
             {
                 var isSelf = entityA.idCom.IsEquals(entityB.idCom);
                 if (isSelf && !this.selectAnchorType.HasFlag(GameEntitySelectAnchorType.Actor)) return false;
@@ -43,6 +44,7 @@ namespace GamePlay.Bussiness.Logic
             return true;
         }
 
-
+        /// <summary> 是否是范围选择 </summary>
+        public bool IsRangeSelect() => this.rangeSelectModel != null;
     }
 }

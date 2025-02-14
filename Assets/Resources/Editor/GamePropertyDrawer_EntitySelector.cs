@@ -54,6 +54,12 @@ namespace GamePlay.Config
                 campType_p.DrawProperty_EnumPopup<GameCampType>("阵营类型");
                 var entityType_p = property.FindPropertyRelative("entityType");
                 entityType_p.DrawProperty_EnumPopup<GameEntityType>("实体类型");
+
+                var rangeSelectLimitCount_p = property.FindPropertyRelative("rangeSelectLimitCount");
+                rangeSelectLimitCount_p.DrawProperty("范围选取限制数量(0代表不限制)");
+
+                var rangeSelectSortType_p = property.FindPropertyRelative("rangeSelectSortType");
+                rangeSelectSortType_p.DrawProperty_EnumPopup<GameEntitySelectSortType>("范围选取排序方式");
             }
         }
 

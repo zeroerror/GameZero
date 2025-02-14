@@ -24,10 +24,10 @@ namespace GamePlay.Bussiness.Logic
         {
         }
 
-        public List<GameEntityBase> SelectEntities(GameEntitySelector selector, GameEntityBase actEntity, bool ignoreRepeatCollision = true)
+        public List<GameEntityBase> SelectEntities(GameEntitySelector selector, GameEntityBase actEntity, bool avoidRepeatRangeSelect = true)
         {
             var physicsApi = this._context.domainApi.physicsApi;
-            var selColliderModel = selector.colliderModel;
+            var selColliderModel = selector.rangeSelectModel;
             var isSingleSelect = selColliderModel == null;
             var targetEntity = actEntity.actionTargeterCom.targetEntity;
             var selectAnchorType = selector.selectAnchorType;
@@ -41,24 +41,57 @@ namespace GamePlay.Bussiness.Logic
                 return new List<GameEntityBase> { selectedEntity };
             }
 
-            // 范围选择 - 锚点
+            // 范围选取锚点
             GameTransformArgs anchorTransformArgs = this._GetRangeSelectAnchorTrans(actEntity, targetEntity, selectAnchorType);
-
+            // 范围选取
             var list = physicsApi.GetOverlapEntities(selColliderModel, anchorTransformArgs);
             list = list?.Filter((entity) =>
             {
-                if (entity is GameRoleEntity role)
-                {
-                    var isDead = role.fsmCom.stateType == GameRoleStateType.Dead;
-                    if (isDead) return false;
-                }
+                // 死亡单位过滤
                 if (!selector.onlySelectDead && !entity.IsAlive()) return false;
-                var checkCollided = actEntity.physicsCom.CheckCollided(entity.idCom.ToArgs());
-                if (checkCollided) return false;
+                if (selector.onlySelectDead && entity.IsAlive()) return false;
+
+                // 被重复选取的需要过滤
+                var checkRepeatSelect = actEntity.physicsCom.CheckCollided(entity.idCom.ToArgs());
+                if (checkRepeatSelect) return false;
+
+                // 选中时记录
                 var checkSelect = selector.CheckSelect(actEntity, entity);
-                if (ignoreRepeatCollision && checkSelect) actEntity.physicsCom.AddCollided(entity.idCom.ToArgs());
+                if (avoidRepeatRangeSelect && checkSelect) actEntity.physicsCom.AddCollided(entity.idCom.ToArgs());
+
                 return checkSelect;
             });
+            // 单位列表排序
+            switch (selector.rangeSelectSortType)
+            {
+                case GameEntitySelectSortType.None:
+                    break;
+                case GameEntitySelectSortType.HPAsc:
+                    list.Sort((a, b) =>
+                    {
+                        var va = a.attributeCom.GetValue(GameAttributeType.HP);
+                        var vb = b.attributeCom.GetValue(GameAttributeType.HP);
+                        return va.CompareTo(vb);
+                    });
+                    break;
+                case GameEntitySelectSortType.HPDesc:
+                    list.Sort((a, b) =>
+                    {
+                        var va = a.attributeCom.GetValue(GameAttributeType.HP);
+                        var vb = b.attributeCom.GetValue(GameAttributeType.HP);
+                        return vb.CompareTo(va);
+                    });
+                    break;
+                default:
+                    GameLogger.LogError($"未处理的选择器排序类型: {selector.rangeSelectSortType}");
+                    break;
+            }
+            // 单位数量限制
+            var unitCount = list?.Count ?? 0;
+            if (unitCount > selector.rangeSelectLimitCount)
+            {
+                list = list.GetRange(0, selector.rangeSelectLimitCount);
+            }
             return list;
         }
 
@@ -100,7 +133,7 @@ namespace GamePlay.Bussiness.Logic
         public GameVec2 GetSelectorAnchorPosition(GameEntityBase actor, GameEntitySelector selector)
         {
             var selectAnchorType = selector.selectAnchorType;
-            var isSingleSelect = selector.colliderModel == null;
+            var isSingleSelect = selector.rangeSelectModel == null;
             var target = actor.actionTargeterCom.targetEntity;
             if (isSingleSelect)
             {
@@ -141,7 +174,7 @@ namespace GamePlay.Bussiness.Logic
             if (selector == null) return false;
 
             var selectAnchorType = selector.selectAnchorType;
-            var isSingleSelect = selector.colliderModel == null;
+            var isSingleSelect = selector.rangeSelectModel == null;
             var target = actor.actionTargeterCom.targetEntity;
             if (isSingleSelect)
             {

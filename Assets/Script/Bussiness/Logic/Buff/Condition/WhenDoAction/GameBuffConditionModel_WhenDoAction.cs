@@ -4,26 +4,29 @@ namespace GamePlay.Bussiness.Logic
 {
     /// <summary>
     /// buff条件模型 - 当执行行为时
-    /// <para>充分必要条件如下---------------------</para>
-    /// <para># 行为次数</para>
-    /// <para># 有效窗口时间(0表示无限制)</para>
-    /// <para>充分不必要条件如下---------------------</para>
-    /// <para># 执行某id的行为</para>
-    /// <para># 执行某类型的行为</para>
     /// </summary>
     public class GameBuffConditionModel_WhenDoAction
     {
+        // --------------------- 充分不必要条件 ---------------------
+        /// <summary> 目标行为Id </summary>
         public readonly int targetActionId;
+        /// <summary> 目标行为类型 </summary>
         public readonly GameActionType targetActionType = GameActionType.None;
+
+        // --------------------- 充分必要条件 ---------------------
+        /// <summary> 行为次数 </summary>
         public readonly int actionCount;
+        /// <summary> 有效窗口时间 </summary>
         public readonly float validWindowTime;
+        /// <summary> buff持有者是否作为行为目标 </summary>
+        public readonly bool isBuffOwnerAsTarget;
 
         public GameBuffConditionModel_WhenDoAction(
             int targetActionId,
             GameActionType targetActionType,
             int actionCount,
-            float validWindowTime
-        )
+            float validWindowTime,
+            bool isBuffOwnerAsTarget)
         {
             this.targetActionId = targetActionId;
             this.targetActionType = targetActionType;
@@ -36,6 +39,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             this.validWindowTime = validWindowTime;
+            this.isBuffOwnerAsTarget = isBuffOwnerAsTarget;
         }
     }
 }

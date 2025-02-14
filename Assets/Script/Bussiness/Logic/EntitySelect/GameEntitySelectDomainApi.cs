@@ -8,9 +8,9 @@ namespace GamePlay.Bussiness.Logic
         /// 选择实体 
         /// <para>selector 选择器</para>
         /// <para>actorEntity 执行者</para>
-        /// <para>ignoreRepeatCollision 是否忽略重复碰撞</para>
+        /// <para>avoidRepeatRangeSelect 是否避免重复被范围选取</para>
         /// </summary>
-        public List<GameEntityBase> SelectEntities(GameEntitySelector selector, GameEntityBase actor, bool ignoreRepeatCollision = true);
+        public List<GameEntityBase> SelectEntities(GameEntitySelector selector, GameEntityBase actor, bool avoidRepeatRangeSelect = true);
 
         /// <summary>
         /// 获取选择器锚点位置
