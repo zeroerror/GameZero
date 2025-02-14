@@ -1,0 +1,254 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9acba046be00344a09257d703829a6, type: 3}
+  m_Name: template_buff_500010101
+  m_EditorClassIdentifier: 
+  typeId: 500010101
+  buffName: "\u7267\u5E08\u88AB\u52A81\u6548\u679C1 - \u6761\u4EF6"
+  desc: "\u6BCF\u6B21\u53D7\u5230\u4F24\u5BB3, \u4F1A\u5BF9\u5468\u56F4\u8840\u91CF\u6700\u4F4E\u7684\u961F\u53CB\u8FDB\u884C\u7B49\u91CF\u6CBB\u7597"
+  refreshFlag: 0
+  maxLayer: 1
+  actionParam: 0
+  actionSOs:
+  - {fileID: 11400000, guid: ed51c24c7e634e3419c1562876af0dc5, type: 2}
+  actionCD: 1e+14
+  conditionSetEM_action:
+    durationEM:
+      isEnable: 0
+      duration: 0
+    timeIntervalEM:
+      isEnable: 0
+      timeInterval: 0
+    whenDoActionEM:
+      isEnable: 1
+      targetAction: {fileID: 0}
+      targetActionType: 1
+      actionCount: 1
+      validWindowTime: 0
+      isAsActionTarget: 1
+      isNeedCaptureActionParam: 1
+    whenRoleStateEnterEM:
+      isEnable: 0
+      campType: 0
+      stateType: 0
+      skillType: 0
+    whenUnitCountChangeEM:
+      isEnable: 0
+      selectorEM:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
+      countCondition: 0
+    whenAttributeChangeEM:
+      isEnable: 0
+      valueA: 0
+      valueFormatA: 0
+      refTypeA: 0
+      selectorEM_A:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
+      valueB: 0
+      valueFormatB: 0
+      refTypeB: 0
+      selectorEM_B:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
+      compareType: 0
+  conditionSetEM_remove:
+    durationEM:
+      isEnable: 0
+      duration: 8
+    timeIntervalEM:
+      isEnable: 0
+      timeInterval: 0
+    whenDoActionEM:
+      isEnable: 0
+      targetAction: {fileID: 0}
+      targetActionType: 0
+      actionCount: 0
+      validWindowTime: 0
+      isAsActionTarget: 0
+      isNeedCaptureActionParam: 0
+    whenRoleStateEnterEM:
+      isEnable: 0
+      campType: 0
+      stateType: 0
+      skillType: 0
+    whenUnitCountChangeEM:
+      isEnable: 0
+      selectorEM:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
+      countCondition: 0
+    whenAttributeChangeEM:
+      isEnable: 0
+      valueA: 0
+      valueFormatA: 0
+      refTypeA: 0
+      selectorEM_A:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
+      valueB: 0
+      valueFormatB: 0
+      refTypeB: 0
+      selectorEM_B:
+        selectAnchorType: 0
+        campType: 0
+        entityType: 0
+        onlySelectDead: 0
+        selColliderType: 0
+        boxColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          width: 0
+          height: 0
+        circleColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+        fanColliderModel:
+          offset: {x: 0, y: 0}
+          angle: 0
+          radius: 0
+          fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
+      compareType: 0
+  layerSelectorEnable: 0
+  layerSelectorEM:
+    selectAnchorType: 0
+    campType: 0
+    entityType: 0
+    onlySelectDead: 0
+    selColliderType: 0
+    boxColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      width: 0
+      height: 0
+    circleColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+    fanColliderModel:
+      offset: {x: 0, y: 0}
+      angle: 0
+      radius: 0
+      fanAngle: 0
+    rangeSelectLimitCount: 0
+    rangeSelectSortType: 0
+  layerValueRefEnable: 0
+  layerValueRefEM:
+    value: 0
+    valueFormat: 0
+    refType: 0
+  vfxPrefab: {fileID: 0}
+  vfxPrefabUrl: 
+  vfxLayerType: 1
+  vfxScale: {x: 1, y: 1}
+  vfxOffset: {x: 0, y: 0}
+  vfxOrderOffset: 0
+  attributeEMs: []

@@ -39,7 +39,19 @@ namespace GamePlay.Bussiness.Logic
             this.ForeachActionRecord_Dmg((actionRecord) =>
             {
                 isSatisfied = _NormalCheck(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Dmg);
-                if (!isSatisfied) isSatisfied = this._CheckSpecialActionType(actionRecord.actorIdArgs, actionRecord, actionRecord.targetIdArgs);
+
+                if (isSatisfied)
+                {
+                    // 尝试捕获伤害值作为行为参数
+                    if (this.model.needCaptureActionParam)
+                    {
+                        this._buff.conditionActionParam += actionRecord.value;
+                    }
+                }
+                else
+                {
+                    isSatisfied = this._CheckSpecialActionType(actionRecord.actorIdArgs, actionRecord, actionRecord.targetIdArgs);
+                }
             });
             if (isSatisfied) return true;
 
@@ -47,6 +59,14 @@ namespace GamePlay.Bussiness.Logic
             this.ForeachActionRecord_Heal((actionRecord) =>
             {
                 isSatisfied = _NormalCheck(actionRecord.actorIdArgs, actionRecord.actionTargeter, actionRecord.targetIdArgs, actionRecord.actionId, GameActionType.Heal);
+                if (isSatisfied)
+                {
+                    // 尝试捕获治疗值作为行为参数
+                    if (this.model.needCaptureActionParam)
+                    {
+                        this._buff.conditionActionParam += actionRecord.value;
+                    }
+                }
             });
             if (isSatisfied) return true;
 
@@ -110,7 +130,7 @@ namespace GamePlay.Bussiness.Logic
             if (!actorRole) return false;
 
             // 判定buff持有者在本次行为是行为方还是目标方
-            if (this.model.isBuffOwnerAsTarget)
+            if (this.model.isAsActionTarget)
             {
                 // 行为目标实体要求是buff持有者
                 var targetRole = this.FindEntity(targetIdArgs.entityType, targetIdArgs.entityId).GetLinkParent<GameRoleEntity>();

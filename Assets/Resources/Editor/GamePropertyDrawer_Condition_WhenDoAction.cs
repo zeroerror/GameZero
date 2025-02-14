@@ -30,6 +30,12 @@ namespace GamePlay.Config
 
                 var validWindowTime_p = property.FindPropertyRelative("validWindowTime");
                 validWindowTime_p.DrawProperty_Float("有效窗口时间(秒, 0代表无限制)");
+
+                var isAsActionTarget_p = property.FindPropertyRelative("isAsActionTarget");
+                isAsActionTarget_p.DrawProperty_Bool("是否为行为目标方");
+
+                var isNeedCaptureActionParam_p = property.FindPropertyRelative("isNeedCaptureActionParam");
+                isNeedCaptureActionParam_p.DrawProperty_Bool("是否需要捕获行为参数");
             }
             EditorGUI.indentLevel -= 1;
         }

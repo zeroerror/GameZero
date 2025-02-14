@@ -11,7 +11,9 @@ namespace GamePlay.Config
 
         public int actionCount;
         public float validWindowTime;
-        public bool isBuffOwnerAsTarget;
+        public bool isAsActionTarget;
+
+        public bool isNeedCaptureActionParam;
 
         public GameBuffConditionModel_WhenDoAction ToModel()
         {
@@ -25,7 +27,8 @@ namespace GamePlay.Config
                 this.targetActionType,
                 this.actionCount,
                 this.validWindowTime,
-                this.isBuffOwnerAsTarget
+                this.isAsActionTarget,
+                this.isNeedCaptureActionParam
             );
         }
     }

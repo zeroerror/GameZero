@@ -45,6 +45,7 @@ namespace GamePlay.Bussiness.Logic
             this.layer = 0;
             this.conditionSetEntity_action.Clear();
             this.conditionSetEntity_remove.Clear();
+            this.conditionActionParam = 0;
             base.Clear();
         }
 
@@ -75,6 +76,7 @@ namespace GamePlay.Bussiness.Logic
             this.actionedCount++;
             this.ationCDTime = this.model.actionCD;
             this.conditionSetEntity_action.Clear();
+            this.conditionActionParam = 0;
         }
 
         /// <summary> 结束行为冷却 </summary>
@@ -83,9 +85,14 @@ namespace GamePlay.Bussiness.Logic
             this.ationCDTime = 0;
         }
 
+        /// <summary> 被条件捕获的行为参数 </summary>
+        public float conditionActionParam;
         public float GetActionParam()
         {
-            return this.model.actionParam * this.layer;
+            var modelParam = this.model.actionParam * this.layer;
+            var conditionParam = this.conditionActionParam * this.layer;
+            var actionParam = modelParam + conditionParam;
+            return actionParam;
         }
     }
 }

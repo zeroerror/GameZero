@@ -39,7 +39,7 @@ namespace GamePlay.Bussiness.Logic
                 actor.idCom.ToArgs(),
                 target.idCom.ToArgs(),
                 actor.actionTargeterCom.getCurTargeterAsRecord(),
-                GameActionHealType.Real,
+                GameActionHealType.Normal,
                 realHeal
             );
             return record;

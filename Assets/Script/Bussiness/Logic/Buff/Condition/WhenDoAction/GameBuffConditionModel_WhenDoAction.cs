@@ -18,15 +18,20 @@ namespace GamePlay.Bussiness.Logic
         public readonly int actionCount;
         /// <summary> 有效窗口时间 </summary>
         public readonly float validWindowTime;
-        /// <summary> buff持有者是否作为行为目标 </summary>
-        public readonly bool isBuffOwnerAsTarget;
+        /// <summary> 是否为行为目标方 </summary>
+        public readonly bool isAsActionTarget;
+
+        /// <summary> 是否需要捕获行为参数 </summary>
+        public readonly bool needCaptureActionParam;
 
         public GameBuffConditionModel_WhenDoAction(
             int targetActionId,
             GameActionType targetActionType,
             int actionCount,
             float validWindowTime,
-            bool isBuffOwnerAsTarget)
+            bool isAsActionTarget,
+            bool needCaptureActionParam
+        )
         {
             this.targetActionId = targetActionId;
             this.targetActionType = targetActionType;
@@ -39,7 +44,8 @@ namespace GamePlay.Bussiness.Logic
             }
 
             this.validWindowTime = validWindowTime;
-            this.isBuffOwnerAsTarget = isBuffOwnerAsTarget;
+            this.isAsActionTarget = isAsActionTarget;
+            this.needCaptureActionParam = needCaptureActionParam;
         }
     }
 }

@@ -22,7 +22,7 @@ MonoBehaviour:
   - time: 0
     frame: 0
     actions:
-    - {fileID: 11400000, guid: f07b7ca2a97c87b4ea3197e21bee2226, type: 2}
+    - {fileID: 11400000, guid: 3ed870fe0e4190944ba6027a13072d6d, type: 2}
   conditionEM:
     targeterType: 0
     cdTime: 0
@@ -47,3 +47,5 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0

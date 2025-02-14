@@ -64,7 +64,7 @@ namespace GamePlay.Bussiness.Logic
                 var isSatisfied_action = !buff.conditionSetEntity_action.IsValid() || buff.conditionSetEntity_action.CheckSatisfied();
                 if (isSatisfied_action)
                 {
-                    buff.StartActionCD();
+                    // 1 执行行为
                     buff.model.actionIds?.Foreach((Action<int>)(actionId =>
                     {
                         buff.physicsCom.ClearCollided();
@@ -72,6 +72,8 @@ namespace GamePlay.Bussiness.Logic
                         buff.baseAttributeCom.CopyFrom(buff.idCom.parent.baseAttributeCom);
                         this._context.domainApi.actionApi.DoAction(actionId, buff, buff.GetActionParam());
                     }));
+                    // 2 行为冷却
+                    buff.StartActionCD();
                 }
                 // 移除条件 ps: 没有有效条件时默认为不满足, 也就是默认
                 var isSatisfied_remove = buff.conditionSetEntity_remove.IsValid() && buff.conditionSetEntity_remove.CheckSatisfied();
