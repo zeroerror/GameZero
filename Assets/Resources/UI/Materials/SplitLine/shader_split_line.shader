@@ -57,11 +57,21 @@ Shader "GamePlay/UI/SplitLine"
                     bool isOverlapX = abs(i.uv.x - line_uvx) < _LineWidth_Half;
                     if (isOverlapX)
                     {
-                        bool isOverlapY = abs(i.uv.y - 0.5) < 0.48;
-                        if(isOverlapY){
-                            return _LineColor;
-                        }
+                        // 线条颜色自上而下颜色变浅
+                        float strength = i.uv.y;
+                        float4 finalColor = lerp(texColor, _LineColor, strength);
+                        return finalColor;
                     }
+                }
+
+                // 给血条的上方边缘增加一个反光效果
+                float heightv = 0.5;
+                if (i.uv.y > heightv && texColor.a > 0.1)
+                {
+                    float4 lightColor = float4(0.8, 0.8, 0.8, 1);
+                    float lightStrength = (i.uv.y - heightv) * 2;
+                    float4 finalColor = lerp(texColor, lightColor, lightStrength);
+                    return finalColor;
                 }
 
                 return texColor;

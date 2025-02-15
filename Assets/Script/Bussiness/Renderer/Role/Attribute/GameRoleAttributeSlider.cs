@@ -122,7 +122,11 @@ namespace GamePlay.Bussiness.Render
         /// <summary> 设置分割线材质 </summary>
         public void SetSlitLineMat(Material mat)
         {
+            if (!this.slider) return;
             this._splitLineMat = mat;
+            var fillRect = this.slider.fillRect;
+            var fillImage = fillRect.GetComponent<Image>();
+            fillImage.material = mat;
         }
         private Material _splitLineMat;
     }

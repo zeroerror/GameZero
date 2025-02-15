@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Render
         /// <summary> 血条大小 </summary>
         public static readonly Vector2 ROLE_ATTRIBUTE_SLIDER_HP_SIZE = new Vector2(75, 10);
         /// <summary> 蓝条偏移 </summary>
-        public static readonly Vector2 ROLE_ATTRIBUTE_SLIDER_MP_OFFSET = new Vector2(0, 65);
+        public static readonly Vector2 ROLE_ATTRIBUTE_SLIDER_MP_OFFSET = new Vector2(0, 68);
         /// <summary> 蓝条大小 </summary>
         public static readonly Vector2 ROLE_ATTRIBUTE_SLIDER_MP_SIZE = new Vector2(75, 10);
         /// <summary> 护盾条偏移 </summary>
