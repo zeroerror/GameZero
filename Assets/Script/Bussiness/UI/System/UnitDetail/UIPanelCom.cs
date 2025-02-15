@@ -42,13 +42,14 @@ namespace GamePlay.Bussiness.UI
         public void Refersh(GameEntityType entityType, int entityId)
         {
             var entityl = this._logicApi.directorApi.FindEntity(entityType, entityId);
-            var attributes = entityl?.attributeCom.ToArgs().attributes;
-            var baseAttributes = entityl?.baseAttributeCom.ToArgs().attributes;
+            if (!entityl) return;
+            var attributes = entityl.attributeCom.ToArgs().attributes;
+            var baseAttributes = entityl.baseAttributeCom.ToArgs().attributes;
 
             // 用于展示的属性列表
-            var attributes_display = attributes?.Remove(attr => attr.type == GameAttributeType.MaxHP || attr.type == GameAttributeType.MaxMP);
-            attributes_display?.Sort((a, b) => a.type.CompareTo(b.type));
-            attributes_display?.Foreach((attr, idx) =>
+            var displayAttributes = attributes?.Remove(attr => attr.type == GameAttributeType.MaxHP || attr.type == GameAttributeType.MaxMP);
+            displayAttributes?.Sort((a, b) => a.type.CompareTo(b.type));
+            displayAttributes?.Foreach((attr, idx) =>
             {
                 var fieldName = "attributeList_Viewport_Content_item" + (idx + 1);
                 var item = this._binder.GetField(fieldName) as UIAttributeItemBinder;
@@ -88,7 +89,7 @@ namespace GamePlay.Bussiness.UI
                 }
                 // <color=#23FF00>(+166)</color>\n<color=#ffffff>500</color>
             });
-            var count = attributes?.Length ?? 0;
+            var count = displayAttributes?.Length ?? 0;
             for (int i = count; i < 7; i++)
             {
                 var fieldName = "attributeList_Viewport_Content_item" + (i + 1);
@@ -118,7 +119,7 @@ namespace GamePlay.Bussiness.UI
                     var url = UIPathUtil.GetSkillIcon(skill.skillModel.typeId);
                     skillItem.img_icon.sprite = Resources.Load<Sprite>(url);
                 });
-                for (int i = role.skillCom.Count; i < 3; i++)
+                for (int i = role.skillCom.Count; i < 4; i++)
                 {
                     var skillItem = this._binder.GetField("skillGroup_item" + (i + 1)) as UISkillItemBinder;
                     skillItem.gameObject.SetActive(false);

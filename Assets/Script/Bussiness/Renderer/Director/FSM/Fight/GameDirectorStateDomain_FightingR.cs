@@ -37,10 +37,14 @@ namespace GamePlay.Bussiness.Render
             {
                 return;
             }
-            var input = new UIUnitDetailMainViewInput();
-            input.entityType = clickEntity.idCom.entityType;
-            input.entityId = clickEntity.idCom.entityId;
-            this._context.uiApi.directorApi.OpenUI<UIUnitDetailMainView>(new UIViewInput(input));
+            var idCom = clickEntity.idCom;
+            if (idCom.entityId > 0)
+            {
+                var input = new UIUnitDetailMainViewInput();
+                input.entityType = idCom.entityType;
+                input.entityId = idCom.entityId;
+                this._context.uiApi.directorApi.OpenUI<UIUnitDetailMainView>(new UIViewInput(input));
+            }
         }
 
         public override void Enter(GameDirectorEntityR director, object args = null)

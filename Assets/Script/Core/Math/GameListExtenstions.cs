@@ -222,7 +222,7 @@ namespace GamePlay.Core
         }
 
         /// <summary> 
-        /// 移除数组中的元素,旧的数组不会被改变
+        /// 移除数组中所有符合条件的元素,旧的数组不会被改变
         /// <para>match: 匹配条件</para>
         /// <returns>返回新数组</returns>
         /// </summary>
@@ -234,7 +234,7 @@ namespace GamePlay.Core
                 {
                     arr[i] = arr[arr.Length - 1];
                     Array.Resize(ref arr, arr.Length - 1);
-                    break;
+                    i--;
                 }
             }
             return arr;
