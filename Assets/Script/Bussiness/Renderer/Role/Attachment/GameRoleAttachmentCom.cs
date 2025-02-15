@@ -18,14 +18,26 @@ namespace GamePlay.Bussiness.Render
 
         private void _SetAttachmentSprite(GameAttachmentListModel list, Sprite handleSprite, Sprite limbSprite)
         {
-            var bowHandle_sr = list.bow_handle.GetComponent<SpriteRenderer>();
-            bowHandle_sr.sprite = handleSprite;
+            var bow_handle = list.bow_handle;
+            if (bow_handle)
+            {
+                var bowHandle_sr = bow_handle.GetComponent<SpriteRenderer>();
+                bowHandle_sr.sprite = handleSprite;
+            }
 
-            var bowLimb_u_sr = list.bow_limb_u.GetComponent<SpriteRenderer>();
-            bowLimb_u_sr.sprite = limbSprite;
+            var bowLimb_u = list.bow_limb_u;
+            if (bowLimb_u)
+            {
+                var bowLimb_u_sr = bowLimb_u.GetComponent<SpriteRenderer>();
+                bowLimb_u_sr.sprite = limbSprite;
+            }
 
-            var bowLimb_l_sr = list.bow_limb_l.GetComponent<SpriteRenderer>();
-            bowLimb_l_sr.sprite = limbSprite;
+            var bowLimb_l = list.bow_limb_l;
+            if (bowLimb_l)
+            {
+                var bowLimb_l_sr = bowLimb_l.GetComponent<SpriteRenderer>();
+                bowLimb_l_sr.sprite = limbSprite;
+            }
         }
 
         public void SetAttachmentSprite_Visible(GameRoleAttachmentDirectionType dirType, bool isVisible)

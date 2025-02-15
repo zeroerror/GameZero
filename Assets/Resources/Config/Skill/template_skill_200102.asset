@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e2773b92ea25be478bb283b0be92309, type: 3}
+  m_Name: template_skill_200102
+  m_EditorClassIdentifier: 
+  typeId: 200102
+  desc: "\u9AB7\u9AC5\u5175 - \u5927\u62DB"
+  skillType: 3
+  animClip: {fileID: 7400000, guid: a168baf3269d82f4b845c18fe2e44af1, type: 2}
+  animName: skill_triple_stab
+  animLength: 0.6666667
+  timelineEvents:
+  - time: 0.28333333
+    frame: 16
+    actions:
+    - {fileID: 11400000, guid: 03c906e5d8c09454299bbb22d48468f7, type: 2}
+  - time: 0.41666666
+    frame: 24
+    actions:
+    - {fileID: 11400000, guid: 03c906e5d8c09454299bbb22d48468f7, type: 2}
+  - time: 0.55
+    frame: 33
+    actions:
+    - {fileID: 11400000, guid: 31c911193fca9074db4f4a8242dd3903, type: 2}
+  conditionEM:
+    targeterType: 2
+    cdTime: 0
+    mpCost: 5
+    selectorEM:
+      selectAnchorType: 1
+      campType: 1
+      entityType: 1
+      onlySelectDead: 0
+      selColliderType: 2
+      boxColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        width: 1
+        height: 1
+      circleColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 1
+      fanColliderModel:
+        offset: {x: 0, y: 0}
+        angle: 0
+        radius: 0
+        fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0

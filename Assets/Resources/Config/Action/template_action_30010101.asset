@@ -39,11 +39,16 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   healActionEM:
     healType: 0
@@ -70,11 +75,16 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   attributeModifyActionEM:
     modifyType: 0
@@ -101,11 +111,16 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   launchProjectileActionEM:
     projectileId: 200
@@ -140,11 +155,16 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   knockBackActionEM:
     knockBackDirType: 0
@@ -171,11 +191,16 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
     buffSO: {fileID: 0}
@@ -200,11 +225,16 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   detachBuffActionEM:
     buffSO: {fileID: 0}
@@ -229,11 +259,16 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   summonRolesActionEM:
     roleSO: {fileID: 0}
@@ -259,11 +294,16 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   characterTransformActionEM:
     selectorEM:
@@ -286,11 +326,16 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
     roleSO: {fileID: 0}
     attributeList: []
@@ -315,16 +360,21 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
+      probabilityConditionEM:
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
     duration: 0
   actionEMR:
     typeId: 0
-    desc: "\u53D1\u5C04\u5206\u88C2\u7BAD"
+    desc: 
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}

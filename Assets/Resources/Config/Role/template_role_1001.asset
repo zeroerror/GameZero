@@ -22,13 +22,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1522ba66d1721704e8b89e4b44541fbd, type: 2}
   attributes:
   - type: 5
-    value: 5
+    value: 10
   - type: 2
     value: 150
-  - type: 3
-    value: 0
-  - type: 4
-    value: 0
   - type: 7
     value: 1.5
   - type: 6

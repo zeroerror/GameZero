@@ -47,9 +47,8 @@ namespace GamePlay.Bussiness.Render
             if (!prefabBody.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer = prefabBody.AddComponent<SpriteRenderer>();
             prefabBody.transform.SetParent(tmBody.transform);
 
-            // 角色挂点
-            var attachmentCom = prefabBody.GetComponent<GameRoleAttachmentCom>();
             // 测试代码, 默认设置弓箭挂点图片
+            var attachmentCom = prefabBody.GetComponent<GameRoleAttachmentCom>();
             if (attachmentCom)
             {
                 // 加载所有弓箭的精灵

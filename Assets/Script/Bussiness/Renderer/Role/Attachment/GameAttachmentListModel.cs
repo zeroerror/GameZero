@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.Render
@@ -19,9 +20,9 @@ namespace GamePlay.Bussiness.Render
 
         public void SetSprite_Visible(bool isVisible)
         {
-            this.bow_handle.GetComponent<SpriteRenderer>().enabled = isVisible;
-            this.bow_limb_u.GetComponent<SpriteRenderer>().enabled = isVisible;
-            this.bow_limb_l.GetComponent<SpriteRenderer>().enabled = isVisible;
+            if (this.bow_handle) this.bow_handle.GetComponent<SpriteRenderer>().enabled = isVisible;
+            if (this.bow_limb_u) this.bow_limb_u.GetComponent<SpriteRenderer>().enabled = isVisible;
+            if (this.bow_limb_l) this.bow_limb_l.GetComponent<SpriteRenderer>().enabled = isVisible;
         }
     }
 }
