@@ -1,5 +1,3 @@
-using GamePlay.Core;
-
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleStateDomain_Destroyed : GameRoleStateDomainBase

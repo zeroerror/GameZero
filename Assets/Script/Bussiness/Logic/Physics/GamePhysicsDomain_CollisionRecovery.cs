@@ -93,8 +93,8 @@ namespace GamePlay.Bussiness.Logic
             else
             {
                 // 2个角色都在移动状态, 移动方向非同一边 或者 移动方向在同一边但速度差足够大, 不进行碰撞恢复
-                var stateMoveDir1 = role1.fsmCom.moveState.moveDir;
-                var stateMoveDir2 = role2.fsmCom.moveState.moveDir;
+                var stateMoveDir1 = role1.fsmCom.moveState.inputMoveDir;
+                var stateMoveDir2 = role2.fsmCom.moveState.inputMoveDir;
                 var isSameSideDir = GameVec2.Dot(stateMoveDir1, stateMoveDir2) > 0;
                 var isSpeedDiffEnough = Math.Abs(role1.attributeCom.GetValue(GameAttributeType.MoveSpeed) - role2.attributeCom.GetValue(GameAttributeType.MoveSpeed)) > 0.5f;
                 if (!isSameSideDir || (isSameSideDir && isSpeedDiffEnough))

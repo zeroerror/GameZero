@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Logic
         public override void Enter(GameRoleEntity role, params object[] args)
         {
             role.fsmCom.EnterDead();
-            role.physicsCom.collider.isEnable = false;
+            role.SetPhysicsEnable(false);
             role.transformCom.isEnable = false;
 
             // 去除buff

@@ -16,6 +16,7 @@ namespace GamePlay.Config
         public GameSkillSO[] skills;
         public GameAttribute[] attributes;
         public GameRoleCareerType careerType;
+        public bool isMultyAnimationLayer;
 
         public GameRoleModel ToModel()
         {
@@ -26,7 +27,6 @@ namespace GamePlay.Config
 
         public GameRoleModelR ToModelR()
         {
-            var isMultyAnimationLayer = this.typeId < 1000;
             var model = new GameRoleModelR(this.typeId, roleName, desc, prefabUrl, skills, isMultyAnimationLayer);
             return model;
         }

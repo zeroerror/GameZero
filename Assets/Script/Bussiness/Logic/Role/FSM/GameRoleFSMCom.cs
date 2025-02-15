@@ -38,10 +38,10 @@ namespace GamePlay.Bussiness.Logic
         {
             this.SwitchToState(GameRoleStateType.Move);
         }
-        public void EnterMove(in GameVec2 moveDstPos)
+        public void EnterMove(in GameVec2 moveDst)
         {
             this.SwitchToState(GameRoleStateType.Move);
-            this.moveState.moveDst = moveDstPos;
+            this.moveState.moveDst = moveDst;
         }
 
         public void EnterCast(GameSkillEntity skill)

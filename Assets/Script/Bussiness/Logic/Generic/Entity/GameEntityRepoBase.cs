@@ -24,8 +24,6 @@ namespace GamePlay.Bussiness.Logic
 
         public virtual bool TryAdd(T entity)
         {
-            var collider = entity.physicsCom.collider;
-            if (collider != null) collider.isEnable = true;
             entity.SetValid();
             GameLogger.Log($"实体仓库 添加: {entity.idCom}");
             return this._TryAddData(entity);
@@ -52,8 +50,6 @@ namespace GamePlay.Bussiness.Logic
         /// <summary> 将实体从仓库永久移除 </summary>
         public virtual bool TryRemove(T entity)
         {
-            var collider = entity.physicsCom.collider;
-            if (collider != null) collider.isEnable = false;
             if (this._TryRemoveData(entity))
             {
                 entity.Destroy();
@@ -76,8 +72,6 @@ namespace GamePlay.Bussiness.Logic
         {
             if (!this._TryRemoveData(entity)) return;
             GameLogger.Log($"实体仓库 回收: {entity.idCom}");
-            var collider = entity.physicsCom.collider;
-            if (collider != null) collider.isEnable = false;
 
             var typeId = entity.idCom.typeId;
             if (!this._poolDict.TryGetValue(typeId, out List<T> entityPool))

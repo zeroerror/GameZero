@@ -43,6 +43,21 @@ namespace GamePlay.Bussiness.Logic
             {
                 skill.SetInvalid();
             });
+            this.SetPhysicsEnable(false);
+        }
+
+        public override void SetValid()
+        {
+            base.SetValid();
+            this.SetPhysicsEnable(true);
+        }
+
+        public void SetPhysicsEnable(bool enable)
+        {
+            var collider = this.physicsCom.collider;
+            if (collider != null) collider.isEnable = enable;
+            var collider2 = this.colliderPhysicsCom.collider;
+            if (collider2 != null) collider2.isEnable = enable;
         }
 
         public override bool IsAlive()

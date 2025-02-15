@@ -54,7 +54,6 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 抵达了技能选取的范围, 设置施法输入
-            var skillApi = this._context.domainApi.skillApi;
             var conditionModel = castSkill.skillModel.conditionModel;
             var selector = conditionModel.selector;
             if (
@@ -150,8 +149,9 @@ namespace GamePlay.Bussiness.Logic
         {
             var colliderModel = castSkill.skillModel.conditionModel.selector.rangeSelectModel;
             var contactMTV = GamePhysicsResolvingUtil.GetContactMTV(colliderModel, castSkill.transformCom.ToArgs(), castTarget.transformCom.position);
-            var moveDir = contactMTV.normalized.Neg();
-            role.inputCom.moveDir = moveDir;
+            contactMTV += contactMTV.normalized * 0.01f;
+            var moveDst = role.logicBottomPos - contactMTV;
+            role.inputCom.moveDst = moveDst;
         }
 
     }

@@ -5,6 +5,20 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateDomain_Move() : base() { }
 
+        public override bool CheckEnter(GameRoleEntity role, params object[] args)
+        {
+            var curStateType = role.fsmCom.stateType;
+            if (curStateType == GameRoleStateType.Move) return false;
+            var inputCom = role.inputCom;
+            if (inputCom.HasMoveInput()) return true;
+            if ((args?.Length ?? 0) > 0)
+            {
+                var dstPos = (GameVec2)args[0];
+                return dstPos != role.transformCom.position;
+            }
+            return false;
+        }
+
         public override void Enter(GameRoleEntity role, params object[] args)
         {
             if ((args?.Length ?? 0) > 0)
@@ -31,13 +45,12 @@ namespace GamePlay.Bussiness.Logic
             var state = role.fsmCom.moveState;
             state.stateTime += dt;
             var inputCom = role.inputCom;
-            if (inputCom.TryGetInputArgs(out var inputArgs))
-            {
-                if (inputArgs.moveDir != GameVec2.zero) state.moveDir = inputArgs.moveDir;
-                if (inputArgs.moveDst != GameVec2.zero) state.moveDst = inputArgs.moveDst;
-            }
+            if (inputCom.moveDir != GameVec2.zero) state.inputMoveDir = inputCom.moveDir;
+            if (inputCom.moveDst != GameVec2.zero) state.inputMoveDst = inputCom.moveDst;
+            var moveDst = state.inputMoveDst;
+            if (moveDst == GameVec2.zero) moveDst = state.moveDst;
 
-            state.isMoving = GameRoleMoveUtil.TickMove(role, state.moveDir, state.moveDst, dt);
+            state.isMoving = GameRoleMoveUtil.TickMove(role, state.inputMoveDir, moveDst, dt);
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)

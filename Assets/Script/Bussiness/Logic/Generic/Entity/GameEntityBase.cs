@@ -10,7 +10,7 @@ namespace GamePlay.Bussiness.Logic
         public static bool operator false(GameEntityBase entity) => entity == null;
 
         public bool isValid { get; private set; } = true;
-        public void SetValid() => this.isValid = true;
+        public virtual void SetValid() => this.isValid = true;
         public virtual void SetInvalid()
         {
             this.isValid = false;

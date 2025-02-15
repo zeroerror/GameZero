@@ -43,12 +43,9 @@ namespace GamePlay.Bussiness.Logic
         public void Tick(GameRoleEntity role, float dt)
         {
             var fsmCom = role.fsmCom;
-            var stateType = fsmCom.stateType;
             if (fsmCom.isInvalid) return;
-
             this._anyStateDomain.Tick(role, dt);
-
-            if (!this._stateDomainDict.TryGetValue(stateType, out var stateDomain)) return;
+            if (!this._stateDomainDict.TryGetValue(fsmCom.stateType, out var stateDomain)) return;
             stateDomain.Tick(role, dt);
         }
 

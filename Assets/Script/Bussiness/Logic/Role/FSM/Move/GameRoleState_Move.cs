@@ -4,7 +4,8 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleState_Move : GameRoleStateBase
     {
-        public GameVec2 moveDir;
+        public GameVec2 inputMoveDir;
+        public GameVec2 inputMoveDst;
         public GameVec2 moveDst;
 
         public bool isMoving;
@@ -14,7 +15,8 @@ namespace GamePlay.Bussiness.Logic
         public override void Clear()
         {
             base.Clear();
-            this.moveDir = GameVec2.zero;
+            this.inputMoveDir = GameVec2.zero;
+            this.inputMoveDst = default;
             this.moveDst = default;
             this.isMoving = false;
         }

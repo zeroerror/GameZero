@@ -181,10 +181,13 @@ namespace GamePlay.Bussiness.Render
                 var frequency = 30;
                 var duration = 0.1f;
                 this._context.domainApi.transformApi.Shake(targetRole.bodyCom.prefabGO.transform, angle, amplitude, frequency, duration);
-                // 受击闪烁
-                var typeId = (int)GameShaderEffectType.HitFlash;
-                var renderers = targetRole.bodyCom.renderers;
-                this._context.domainApi.shaderEffectApi.PlayShaderEffect(typeId, renderers);
+                // 受击闪烁(非潜行状态)
+                if (targetRole.fsmCom.stateType != GameRoleStateType.Stealth)
+                {
+                    var typeId = (int)GameShaderEffectType.HitFlash;
+                    var renderers = targetRole.bodyCom.renderers;
+                    this._context.domainApi.shaderEffectApi.PlayShaderEffect(typeId, renderers);
+                }
             }
         }
 

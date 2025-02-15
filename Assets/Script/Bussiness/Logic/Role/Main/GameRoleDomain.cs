@@ -271,8 +271,6 @@ namespace GamePlay.Bussiness.Logic
 
             // 新旧角色的状态变化
             oldRole.SetInvalid();
-            var collider = oldRole.physicsCom.collider;
-            if (collider != null) collider.isEnable = false;
         }
 
         public void RemoveAllRoles()

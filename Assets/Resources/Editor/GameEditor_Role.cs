@@ -17,6 +17,7 @@ namespace GamePlay.Config
         private SerializedProperty attributes_p;
         private SerializedProperty prefabUrl_p;
         private SerializedProperty careerType_p;
+        private SerializedProperty isMultyAnimationLayer_p;
 
         private void OnEnable()
         {
@@ -29,6 +30,7 @@ namespace GamePlay.Config
             this.skills_p = _serializedObject.FindProperty("skills");
             this.attributes_p = _serializedObject.FindProperty("attributes");
             this.prefabUrl_p = _serializedObject.FindProperty("prefabUrl");
+            this.isMultyAnimationLayer_p = _serializedObject.FindProperty("isMultyAnimationLayer");
         }
 
         public override void OnInspectorGUI()
@@ -52,6 +54,7 @@ namespace GamePlay.Config
                 this.prefabUrl_p.stringValue = "";
             }
 
+            this.isMultyAnimationLayer_p.DrawProperty_Bool("是否为多层级动画");
             this._serializedObject.ApplyModifiedProperties();
         }
 
