@@ -32,7 +32,17 @@ namespace GamePlay.Bussiness.Logic
             var inputCom = role.inputCom;
             if (inputCom.TryGetInputArgs(out var inputArgs))
             {
-                GameRoleMoveUtil.TickMove(role, inputArgs.moveDir, inputArgs.moveDst, dt);
+                stealthState.isMoving = GameRoleMoveUtil.TickMove(role, inputArgs.moveDir, inputArgs.moveDst, dt);
+            }
+            if (stealthState.isMovingDirty)
+            {
+                stealthState.isMovingDirty = false;
+                // 提交RC
+                this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_STEALTH_MOVE, new GameRoleRCArgs_StateStealthMove
+                {
+                    idArgs = role.idCom.ToArgs(),
+                    isMoving = stealthState.isMoving,
+                });
             }
         }
 

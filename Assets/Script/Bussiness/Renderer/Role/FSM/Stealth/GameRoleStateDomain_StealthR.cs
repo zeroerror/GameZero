@@ -9,12 +9,35 @@ namespace GamePlay.Bussiness.Render
         {
             base.BindEvents();
             this._context.BindRC(GAME_RC_EV_NAME, this._OnEnter);
+            this._context.BindRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_STEALTH_MOVE, this._OnStealthMove);
         }
 
         public override void UnbindEvents()
         {
             base.UnbindEvents();
             this._context.UnbindRC(GAME_RC_EV_NAME, this._OnEnter);
+            this._context.UnbindRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_STEALTH_MOVE, this._OnStealthMove);
+        }
+
+        private void _OnStealthMove(object args)
+        {
+            var rcArgs = (GameRoleRCArgs_StateStealthMove)args;
+            ref var idArgs = ref rcArgs.idArgs;
+            var role = this._roleContext.repo.FindByEntityId(idArgs.entityId);
+            if (role == null)
+            {
+                this._context.DelayRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_STEALTH_MOVE, args);
+                return;
+            }
+            var isMoving = rcArgs.isMoving;
+            if (isMoving)
+            {
+                this._context.domainApi.roleApi.PlayAnim(role, "move");
+            }
+            else
+            {
+                this._context.domainApi.roleApi.PlayAnim(role, "idle");
+            }
         }
 
         private void _OnEnter(object args)
@@ -33,17 +56,8 @@ namespace GamePlay.Bussiness.Render
         public override void Enter(GameRoleEntityR role, params object[] args)
         {
             role.fsmCom.EnterStealth();
-            var isEnemy = role.idCom.campId != this._roleContext.userRole?.idCom.campId;
-            if (isEnemy)
-            {
-                // 对于敌对阵营, 隐藏模型
-                role.bodyCom.tmFoot.SetActive(false);
-            }
-            else
-            {
-                // 对于友方阵营, 播放隐身特效
-                this._context.domainApi.shaderEffectApi.PlayShaderEffect((int)GameShaderEffectType.Stealth, role);
-            }
+            // 播放隐身特效
+            this._context.domainApi.shaderEffectApi.PlayShaderEffect((int)GameShaderEffectType.Stealth, role);
         }
 
         protected override void _Tick(GameRoleEntityR role, float frameTime)
@@ -53,18 +67,8 @@ namespace GamePlay.Bussiness.Render
         public override void ExitTo(GameRoleEntityR role, GameRoleStateType toState)
         {
             base.ExitTo(role, toState);
-            role.bodyCom.tmFoot.SetActive(true);
-            var isEnemy = role.idCom.campId != this._roleContext.userRole?.idCom.campId;
-            if (isEnemy)
-            {
-                // 对于敌对阵营, 显示模型
-                role.bodyCom.tmFoot.SetActive(true);
-            }
-            else
-            {
-                // 对于友方阵营, 停止隐身特效
-                this._context.domainApi.shaderEffectApi.StopShaderEffects(role);
-            }
+            // 停止隐身特效
+            this._context.domainApi.shaderEffectApi.StopShaderEffects(role);
         }
     }
 }

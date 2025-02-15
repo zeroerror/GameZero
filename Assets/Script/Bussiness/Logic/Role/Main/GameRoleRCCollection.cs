@@ -18,6 +18,8 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_ROLE_STATE_ENTER_DEAD = "RC_GAME_ROLE_STATE_ENTER_DEAD";
         /// <summary> 角色 - 进入 隐身 </summary>
         public static readonly string RC_GAME_ROLE_STATE_ENTER_STEALTH = "RC_GAME_ROLE_STATE_ENTER_STEALTH";
+        /// <summary> 角色 - 隐身 - 移动 </summary>
+        public static readonly string RC_GAME_ROLE_STATE_STEALTH_MOVE = "RC_GAME_ROLE_STATE_STEALTH_MOVE";
         /// <summary> 角色 - 进入 摧毁 </summary>
         public static readonly string RC_GAME_ROLE_STATE_ENTER_DESTROYED = "RC_GAME_ROLE_STATE_ENTER_DESTROYED";
     }
@@ -78,6 +80,13 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateType fromStateType;
         public GameIdArgs idArgs;
+    }
+
+    /// <summary> 参数 - 角色 - 隐身 - 移动 </summary>
+    public struct GameRoleRCArgs_StateStealthMove
+    {
+        public GameIdArgs idArgs;
+        public bool isMoving;
     }
 
     /// <summary> 参数 - 角色 - 进入 已销毁 </summary>
