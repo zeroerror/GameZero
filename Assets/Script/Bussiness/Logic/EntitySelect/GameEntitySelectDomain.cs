@@ -87,10 +87,10 @@ namespace GamePlay.Bussiness.Logic
                     break;
             }
             // 单位数量限制
-            var unitCount = list?.Count ?? 0;
-            if (unitCount > selector.rangeSelectLimitCount)
+            var rangeSelectLimitCount = selector.rangeSelectLimitCount;
+            if (rangeSelectLimitCount != 0 && (list?.Count ?? 0) > rangeSelectLimitCount)
             {
-                list = list.GetRange(0, selector.rangeSelectLimitCount);
+                list = list.GetRange(0, rangeSelectLimitCount);
             }
             return list;
         }
