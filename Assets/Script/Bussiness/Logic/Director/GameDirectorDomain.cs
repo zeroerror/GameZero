@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Assets.HeroEditor4D.Common.Scripts.Common;
 using GamePlay.Bussiness.Core;
 using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
@@ -143,8 +142,13 @@ namespace GamePlay.Bussiness.Logic
             var entityType = rcArgs.entityType;
             var entityId = rcArgs.entityId;
             var unitEntity = this.context.domainApi.directorApi.FindUnitItemEntity(entityType, entityId);
-            unitEntity.standPos = rcArgs.newPosition;
-            GameLogger.DebugLog($"[{unitEntity.unitModel}]站位更新: {rcArgs.newPosition}");
+
+            var entity = this.context.domainApi.directorApi.FindUnitEntity(unitEntity);
+            if (entity is GameRoleEntity role)
+            {
+                this.context.domainApi.roleApi.fsmApi.TryEnter(role, GameRoleStateType.Move, rcArgs.newPosition);
+                GameLogger.DebugLog($"角色[{role.idCom.entityId}]移动到新位置: {rcArgs.newPosition}");
+            }
         }
 
         public void Update(float dt)
@@ -223,10 +227,9 @@ namespace GamePlay.Bussiness.Logic
             // 添加物件单位实体
             var unitEntity = new GameItemUnitEntity();
             unitEntity.unitModel = unitModel;
-            unitEntity.standPos = initPos;
             this.director.itemUnitEntitys.Add(unitEntity);
             // 创建游戏单位
-            var unit = this.CreateUnit(unitEntity);
+            var unit = this.CreateUnit(unitEntity, initPos);
             // 提交RC - 购买单位
             GameDirectorRCArgs_BuyUnit rcArgs;
             rcArgs.model = unitModel;
@@ -234,10 +237,9 @@ namespace GamePlay.Bussiness.Logic
             this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, rcArgs);
         }
 
-        public GameEntityBase CreateUnit(GameItemUnitEntity unitEntity)
+        public GameEntityBase CreateUnit(GameItemUnitEntity unitEntity, in GameVec2 createPos)
         {
             var model = unitEntity.unitModel;
-            var createPos = unitEntity.standPos;
             GameEntityBase entity = null;
             switch (model.entityType)
             {

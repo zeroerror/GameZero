@@ -85,6 +85,7 @@ namespace GamePlay.Core
                 if (dis >= radiusSum) return GameVec2.zero;
             }
             var dir = line.normalized;
+            if (dir == GameVec2.zero) dir = GameVec2.right;
             var mtv = dir * (radiusSum - dis);
             return mtv;
         }

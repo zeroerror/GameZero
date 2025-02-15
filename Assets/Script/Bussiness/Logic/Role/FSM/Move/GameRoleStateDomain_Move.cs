@@ -5,17 +5,18 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameRoleStateDomain_Move() : base() { }
 
-        public override bool CheckEnter(GameRoleEntity role, params object[] args)
-        {
-            var curStateType = role.fsmCom.stateType;
-            if (curStateType == GameRoleStateType.Move) return false;
-            return true;
-        }
-
         public override void Enter(GameRoleEntity role, params object[] args)
         {
-            role.fsmCom.EnterMove();
-            role.physicsCom.collider.isTrigger = true;
+            if ((args?.Length ?? 0) > 0)
+            {
+                var dstPos = (GameVec2)args[0];
+                role.fsmCom.EnterMove(dstPos);
+            }
+            else
+            {
+                role.fsmCom.EnterMove();
+            }
+            role.colliderPhysicsCom.collider.isTrigger = true;
 
             // 提交RC
             this._context.SubmitRC(GameRoleRCCollection.RC_GAME_ROLE_STATE_ENTER_MOVE, new GameRoleRCArgs_StateEnterMove
@@ -27,30 +28,29 @@ namespace GamePlay.Bussiness.Logic
 
         protected override void _Tick(GameRoleEntity role, float dt)
         {
-            var stateModel = role.fsmCom.moveState;
-            stateModel.stateTime += dt;
-            GameRoleMoveUtil.TickMove(role, dt, out var moveDir);
-            stateModel.stateMoveDir = moveDir;
+            var state = role.fsmCom.moveState;
+            state.stateTime += dt;
+            var inputCom = role.inputCom;
+            if (inputCom.TryGetInputArgs(out var inputArgs))
+            {
+                if (inputArgs.moveDir != GameVec2.zero) state.moveDir = inputArgs.moveDir;
+                if (inputArgs.moveDst != GameVec2.zero) state.moveDst = inputArgs.moveDst;
+            }
+
+            state.isMoving = GameRoleMoveUtil.TickMove(role, state.moveDir, state.moveDst, dt);
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)
         {
             var inputCom = role.inputCom;
-            var hasNoInput = !inputCom.TryGetInputArgs(out var inputArgs);
-            if (hasNoInput)
-            {
-                return GameRoleStateType.Idle;
-            }
-            if (inputArgs.skillId != 0)
-            {
-                return GameRoleStateType.Cast;
-            }
-            return GameRoleStateType.None;
+            if (inputCom.skillId != 0) return GameRoleStateType.Cast;
+            if (role.fsmCom.moveState.isMoving) return GameRoleStateType.None;
+            return GameRoleStateType.Idle;
         }
 
         public override void ExitTo(GameRoleEntity role, GameRoleStateType toState)
         {
-            role.physicsCom.collider.isTrigger = false;
+            role.colliderPhysicsCom.collider.isTrigger = false;
         }
 
     }

@@ -23,7 +23,7 @@ namespace GamePlay.Bussiness.Logic
         /// <para> inputArgs: 输入参数 </para>
         /// <para> ignoreDistanceCondition: 是否忽略距离 </para>
         /// </summary>
-        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistanceCondition = false);
+        public bool CheckRoleCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistanceCondition = false);
 
         /// <summary> 根据技能的目标选取组件, 检查施法条件, 包括角色状态条件和技能条件 </summary>
         public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill);

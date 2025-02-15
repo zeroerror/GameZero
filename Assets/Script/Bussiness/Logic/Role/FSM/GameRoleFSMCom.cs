@@ -1,3 +1,4 @@
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleFSMCom
@@ -36,6 +37,11 @@ namespace GamePlay.Bussiness.Logic
         public void EnterMove()
         {
             this.SwitchToState(GameRoleStateType.Move);
+        }
+        public void EnterMove(in GameVec2 moveDstPos)
+        {
+            this.SwitchToState(GameRoleStateType.Move);
+            this.moveState.moveDst = moveDstPos;
         }
 
         public void EnterCast(GameSkillEntity skill)

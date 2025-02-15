@@ -4,8 +4,6 @@ using Random = UnityEngine.Random;
 
 public static class GameVectorUtil
 {
-    private static readonly GameVec2 VECTOR_RIGHT = GameVec2.right; // 使用 Unity 的 GameVec2.right
-
     // 计算某一方向到目标方向之间的角度(绝对值范围0-180)
     public static float GetAngleBetweenDirs(GameVec2 dstDir, GameVec2 baseDir = default)
     {

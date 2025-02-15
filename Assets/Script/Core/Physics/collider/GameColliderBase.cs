@@ -7,7 +7,6 @@ namespace GamePlay.Core
     {
         public bool isEnable;
         public int id;
-        public GameEntityBase binder;
         public bool isTrigger = true;
         public GameVec2 worldPos;
         public GameVec2 worldCenterPos;
@@ -21,6 +20,9 @@ namespace GamePlay.Core
         public bool lockPosition;
         public bool lockRotation;
         public bool lockScale;
+
+        public GameEntityBase binder;
+        public GameColliderTag tag;
 
         public GameColliderModelBase colliderModel { get; private set; }
 

@@ -31,8 +31,8 @@ namespace GamePlay.Bussiness.Logic
 
         public void Update(in GameRoleInputArgs inputArgs)
         {
-            this.moveDir = inputArgs.moveDir == GameVec2.zero ? this.moveDir : inputArgs.moveDir;
-            this.moveDst = inputArgs.moveDst == GameVec2.zero ? this.moveDst : inputArgs.moveDst;
+            if (inputArgs.moveDir != GameVec2.zero) this.moveDir = inputArgs.moveDir;
+            if (inputArgs.moveDst != GameVec2.zero) this.moveDst = inputArgs.moveDst;
             this.skillId = inputArgs.skillId == 0 ? this.skillId : inputArgs.skillId;
             this.targeterArgsList = inputArgs.targeterArgsList == null ? this.targeterArgsList : inputArgs.targeterArgsList;
         }

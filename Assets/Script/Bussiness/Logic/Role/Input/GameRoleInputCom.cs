@@ -15,6 +15,7 @@ namespace GamePlay.Bussiness.Logic
         {
             this.enable = true;
             this.targeterArgsList = new List<GameActionTargeterArgs>();
+            this.Clear();
         }
 
         public void Clear()

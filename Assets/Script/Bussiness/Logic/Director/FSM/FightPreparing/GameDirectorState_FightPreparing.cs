@@ -7,7 +7,6 @@ namespace GamePlay.Bussiness.Logic
         public List<GameActionOptionModel> options;
         public List<GameActionOptionModel> selectedOptionList = new List<GameActionOptionModel>();
         public bool confirmFight;
-        public bool isAllUnitPositioned;
         public GameDirectorState_FightPreparing() { }
 
         public override void Clear()
@@ -16,7 +15,6 @@ namespace GamePlay.Bussiness.Logic
             this.options = null;
             this.selectedOptionList.Clear();
             this.confirmFight = false;
-            this.isAllUnitPositioned = false;
         }
     }
 }

@@ -14,6 +14,8 @@ namespace GamePlay.Bussiness.Logic
 
         public GameBuffCom buffCom { get; private set; }
 
+        public GamePhysicsCom colliderPhysicsCom { get; private set; }
+
         public GameRoleEntity(GameRoleModel model) : base(model.typeId, GameEntityType.Role)
         {
             this.model = model;
@@ -23,6 +25,7 @@ namespace GamePlay.Bussiness.Logic
             this.fsmCom = new GameRoleFSMCom();
             this.skillCom = new GameSkillCom(this);
             this.buffCom = new GameBuffCom();
+            this.colliderPhysicsCom = new GamePhysicsCom();
         }
 
         public override void Clear()

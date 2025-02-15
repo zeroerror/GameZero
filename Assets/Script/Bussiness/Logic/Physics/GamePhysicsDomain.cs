@@ -45,8 +45,12 @@ namespace GamePlay.Bussiness.Logic
 
         public void CreatePhysics(GameEntityBase entity, GameColliderModelBase colliderModel, bool isTrigger)
         {
-            var physicsCom = entity.physicsCom;
-            if (physicsCom.collider != null)
+            this.CreatePhysics(entity, entity.physicsCom, colliderModel, isTrigger);
+        }
+
+        public void CreatePhysics(GameEntityBase entity, GamePhysicsCom physicsCom, GameColliderModelBase colliderModel, bool isTrigger)
+        {
+            if (physicsCom?.collider != null)
             {
                 return;
             }
@@ -76,7 +80,14 @@ namespace GamePlay.Bussiness.Logic
 
         public void RemovePhysics(GameEntityBase entity)
         {
-            var physicsCom = entity.physicsCom;
+            this._RemovePhysics(entity.physicsCom);
+            if (entity is GameRoleEntity roleEntity)
+            {
+                this._RemovePhysics(roleEntity.colliderPhysicsCom);
+            }
+        }
+        private void _RemovePhysics(GamePhysicsCom physicsCom)
+        {
             var collider = physicsCom.collider;
             if (collider != null)
             {

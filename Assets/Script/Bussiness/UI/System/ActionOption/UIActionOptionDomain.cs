@@ -18,13 +18,11 @@ namespace GamePlay.Bussiness.UI
         protected override void _BindEvents()
         {
             this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
-            this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED, this._OnFightPreparingPositioned);
         }
 
         protected override void _UnbindEvents()
         {
             this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnterFightPreparing);
-            this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED, this._OnFightPreparingPositioned);
         }
 
         private void _OnStateEnterFightPreparing(object args)
@@ -33,10 +31,6 @@ namespace GamePlay.Bussiness.UI
             this._actionOptions = rcArgs.actionOptions;
             var viewInput = new UIActionOptionMainViewInput(this._actionOptions);
             this.OpenUI<UIActionOptionMainView>(new UIViewInput(viewInput));
-        }
-
-        private void _OnFightPreparingPositioned(object args)
-        {
         }
 
         /// <summary>

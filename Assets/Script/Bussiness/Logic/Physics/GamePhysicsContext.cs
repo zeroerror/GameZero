@@ -5,16 +5,11 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GamePhysicsContext
     {
-        public GameIdService idService { get; private set; }
-        public List<GamePhysicsCom> physicsComs { get; private set; }
-        public List<GamePhysicsCom> physicsComs_notTrigger { get; private set; }
+        public GameIdService idService { get; private set; } = new GameIdService();
+        public List<GamePhysicsCom> physicsComs { get; private set; } = new List<GamePhysicsCom>();
+        public List<GamePhysicsCom> physicsComs_notTrigger { get; private set; } = new List<GamePhysicsCom>();
 
-        public GamePhysicsContext()
-        {
-            this.idService = new GameIdService();
-            this.physicsComs = new List<GamePhysicsCom>();
-            this.physicsComs_notTrigger = new List<GamePhysicsCom>();
-        }
+        public GamePhysicsContext() { }
 
         public void ForeachAll(System.Action<GamePhysicsCom> action)
         {

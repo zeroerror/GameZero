@@ -6,6 +6,21 @@ namespace GamePlay.Core
 {
     public class GamePhysicsResolvingUtil
     {
+        public static GameVec2 GetResolvingMTV(GameColliderBase colliderA, GameColliderBase colliderB)
+        {
+            GameVec2 mtv = GameVec2.zero;
+            if (colliderA is GameBoxCollider boxCollider)
+                mtv = GetResolvingMTV_Box_Collider(boxCollider, colliderB);
+            else if (colliderA is GameCircleCollider circleCollider)
+                mtv = GetResolvingMTV_Circle_Collider(circleCollider, colliderB);
+            else if (colliderA is GameFanCollider fanCollider)
+                mtv = GetResolvingMTV_Fan_Collider(fanCollider, colliderB);
+            else
+                GameLogger.LogError("GamePhysicsRestoreUtil.GetResolvingMTV: colliderA is not a valid collider");
+
+            return mtv;
+        }
+
         public static GameVec2 GetResolvingMTV(GameColliderModelBase colliderModelA, in GameTransformArgs transformArgs, in GameVec2 point)
         {
             switch (colliderModelA)
@@ -53,21 +68,6 @@ namespace GamePlay.Core
                     GameLogger.LogError("GamePhysicsResolvingUtil.GetResolvingMTV: unknown colliderModelB");
                     return GameVec2.zero;
             }
-        }
-
-        public static GameVec2 GetResolvingMTV(GameColliderBase colliderA, GameColliderBase colliderB)
-        {
-            GameVec2 mtv = GameVec2.zero;
-            if (colliderA is GameBoxCollider boxCollider)
-                mtv = GetResolvingMTV_Box_Collider(boxCollider, colliderB);
-            else if (colliderA is GameCircleCollider circleCollider)
-                mtv = GetResolvingMTV_Circle_Collider(circleCollider, colliderB);
-            else if (colliderA is GameFanCollider fanCollider)
-                mtv = GetResolvingMTV_Fan_Collider(fanCollider, colliderB);
-            else
-                GameLogger.LogError("GamePhysicsRestoreUtil.GetResolvingMTV: colliderA is not a valid collider");
-
-            return mtv;
         }
 
         private static GameVec2 GetResolvingMTV_Box_Collider(GameBoxCollider boxCollider, GameColliderBase colliderB)
@@ -396,7 +396,7 @@ namespace GamePlay.Core
                     fanCollider.UpdateTRS(transArgs);
                     return fanCollider.CheckOverlap(point);
                 default:
-                    GameLogger.LogError("GamePhysicsResolvingUtil.CheckOverlap: 未处理的碰撞体模型");
+                    GameLogger.LogError("GamePhysicsResolvingUtil.CheckOverlap: 未处理的碰撞体模型 " + model);
                     return false;
             }
         }

@@ -14,22 +14,16 @@ namespace GamePlay.Bussiness.Render
         public override void BindEvents()
         {
             this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnter);
-            this._context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED, this._OnFightPreparingPositioned);
         }
 
         public override void UnbindEvents()
         {
             this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING, this._OnStateEnter);
-            this._context.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED, this._OnFightPreparingPositioned);
         }
 
         private void _OnStateEnter(object args)
         {
             this.Enter(this._context.director, args);
-        }
-
-        private void _OnFightPreparingPositioned(object args)
-        {
         }
 
         public override void Enter(GameDirectorEntityR director, object args = null)

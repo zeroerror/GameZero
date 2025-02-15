@@ -30,11 +30,13 @@ namespace GamePlay.Bussiness.Logic
                 var physicsCom1 = physicsComs_notTrigger[i];
                 var collider1 = physicsCom1.collider;
                 if (collider1 == null || !collider1.isEnable) continue;
+
                 for (int j = i + 1; j < physicsComs_notTrigger.Count; j++)
                 {
                     var physicsCom2 = physicsComs_notTrigger[j];
                     var collider2 = physicsCom2.collider;
                     if (collider2 == null || !collider2.isEnable) continue;
+
                     var isRole1 = collider1.binder.idCom.entityType == GameEntityType.Role;
                     var isRole2 = collider2.binder.idCom.entityType == GameEntityType.Role;
                     if (isRole1 && isRole2)
@@ -91,8 +93,8 @@ namespace GamePlay.Bussiness.Logic
             else
             {
                 // 2个角色都在移动状态, 移动方向非同一边 或者 移动方向在同一边但速度差足够大, 不进行碰撞恢复
-                var stateMoveDir1 = role1.fsmCom.moveState.stateMoveDir;
-                var stateMoveDir2 = role2.fsmCom.moveState.stateMoveDir;
+                var stateMoveDir1 = role1.fsmCom.moveState.moveDir;
+                var stateMoveDir2 = role2.fsmCom.moveState.moveDir;
                 var isSameSideDir = GameVec2.Dot(stateMoveDir1, stateMoveDir2) > 0;
                 var isSpeedDiffEnough = Math.Abs(role1.attributeCom.GetValue(GameAttributeType.MoveSpeed) - role2.attributeCom.GetValue(GameAttributeType.MoveSpeed)) > 0.5f;
                 if (!isSameSideDir || (isSameSideDir && isSpeedDiffEnough))

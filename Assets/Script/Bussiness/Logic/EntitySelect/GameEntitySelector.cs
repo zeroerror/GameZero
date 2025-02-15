@@ -22,29 +22,39 @@ namespace GamePlay.Bussiness.Logic
 
         /// <summary>
         /// 判定单个实体是否满足选择
-        /// entityA: 实体A，主动选择方
-        /// entityB: 实体B，被选择方
+        /// <para> actor: 行为者 </para>
+        /// <para> target: 目标 </para>
         /// </summary>
-        public bool CheckSelect(GameEntityBase entityA, GameEntityBase entityB)
+        public bool CheckSelect(GameEntityBase actor, GameEntityBase target)
         {
-            if (!entityA || !entityB) return false;
+            if (!actor || !target) return false;
             // 判定阵营
-            if (!entityA.idCom.CheckCampType(entityB.idCom, campType)) return false;
+            if (!actor.idCom.CheckCampType(target.idCom, campType)) return false;
             // 判定实体类型 ps: none默认通过
-            if (this.entityType != GameEntityType.None && entityB.idCom.entityType != this.entityType) return false;
+            if (this.entityType != GameEntityType.None && target.idCom.entityType != this.entityType) return false;
             // 判定锚点类型
-            if (this.rangeSelectModel == null)
+            var isSingleSelect = this.rangeSelectModel == null;
+            if (isSingleSelect)
             {
-                var isSelf = entityA.idCom.IsEquals(entityB.idCom);
-                if (isSelf && !this.selectAnchorType.HasFlag(GameEntitySelectAnchorType.Actor)) return false;
-                if (!isSelf && !this.selectAnchorType.HasFlag(GameEntitySelectAnchorType.ActTarget)) return false;
+                switch (this.selectAnchorType)
+                {
+                    case GameEntitySelectAnchorType.Actor:
+                        if (!actor.idCom.IsEquals(target.idCom)) return false;
+                        break;
+                    case GameEntitySelectAnchorType.ActTarget:
+                        var actTarget = actor.actionTargeterCom.targetEntity;
+                        if (!actTarget || !actTarget.idCom.IsEquals(target.idCom)) return false;
+                        break;
+                    case GameEntitySelectAnchorType.ActorRole:
+                        var actorRole = actor.GetLinkParent<GameRoleEntity>();
+                        if (!actorRole || !actorRole.idCom.IsEquals(target.idCom)) return false;
+                        break;
+                }
             }
             // 判断是否仅选择死亡单位
-            if (this.onlySelectDead && entityB.IsAlive()) return false;
+            if (this.onlySelectDead && target.IsAlive()) return false;
             return true;
         }
 
-        /// <summary> 是否是范围选择 </summary>
-        public bool IsRangeSelect() => this.rangeSelectModel != null;
     }
 }

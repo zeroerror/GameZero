@@ -41,8 +41,9 @@ namespace GamePlay.Bussiness.Logic
         /// <summary>
         /// 创建单位
         /// <para>itemEntity: 单位实体</para>
+        /// <para>initPos: 初始位置</para>
         /// </summary>
-        public GameEntityBase CreateUnit(GameItemUnitEntity itemEntity);
+        public GameEntityBase CreateUnit(GameItemUnitEntity itemEntity, in GameVec2 initPos);
 
         /// <summary>
         /// 获取单位物品对应的实体

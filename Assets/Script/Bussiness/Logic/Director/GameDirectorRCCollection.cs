@@ -19,8 +19,6 @@ namespace GamePlay.Bussiness.Logic
         public static readonly string RC_GAME_DIRECTOR_STATE_EXIT_SETTLING = "RC_GAME_DIRECTOR_STATE_EXIT_SETTLING";
         /// <summary> 导演 - 进入 战斗准备 </summary>
         public static readonly string RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING = "RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING";
-        /// <summary> 导演 - 战斗准备全员就位 </summary>
-        public static readonly string RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED = "RC_GAME_DIRECTOR_STATE_ENTER_FIGHT_PREPARING_POSITIONED";
         /// <summary> 导演 - 金币变更 </summary>
         public static readonly string RC_GAME_DIRECTOR_COINS_CHANGE = "RC_GAME_DIRECTOR_COINS_CHANGE";
         /// <summary> 导演 - 购买单位 </summary>

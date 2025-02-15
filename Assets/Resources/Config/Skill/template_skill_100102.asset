@@ -24,13 +24,13 @@ MonoBehaviour:
     actions:
     - {fileID: 11400000, guid: f07b7ca2a97c87b4ea3197e21bee2226, type: 2}
   conditionEM:
-    targeterType: 2
+    targeterType: 4
     cdTime: 0
     mpCost: 20
     selectorEM:
-      selectAnchorType: 3
-      campType: 1
-      entityType: 1
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
       onlySelectDead: 0
       selColliderType: 0
       boxColliderModel:
@@ -41,9 +41,11 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 7
+        radius: 0
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0

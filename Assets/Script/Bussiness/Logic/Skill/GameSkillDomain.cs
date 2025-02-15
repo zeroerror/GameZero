@@ -91,13 +91,13 @@ namespace GamePlay.Bussiness.Logic
             return skill;
         }
 
-        public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistanceCondition = false)
+        public bool CheckRoleCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistanceCondition = false)
         {
-            var errCode = this._CheckCastCondition(role, skill, in inputArgs, ignoreDistanceCondition);
+            var errCode = this._CheckRoleCastCondition(role, skill, in inputArgs, ignoreDistanceCondition);
             return errCode == 0;
         }
 
-        private int _CheckCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistanceCondition = false)
+        private int _CheckRoleCastCondition(GameRoleEntity role, GameSkillEntity skill, in GameRoleInputArgs inputArgs, bool ignoreDistanceCondition = false)
         {
             var fsmCom = role.fsmCom;
             var stateType = fsmCom.stateType;
@@ -137,7 +137,7 @@ namespace GamePlay.Bussiness.Logic
 
             // 技能条件检测
             var firstTarget = inputArgs.targeterArgsList?[0].targetEntity;
-            if (!this.CheckSkillCondition(role, skill, firstTarget)) return 6;
+            if (!this.CheckSkillCondition(role, skill, firstTarget, ignoreDistanceCondition)) return 6;
 
             // 目标为隐身状态的敌对阵营角色
             if (firstTarget is GameRoleEntity targetRole)
@@ -151,7 +151,7 @@ namespace GamePlay.Bussiness.Logic
         public bool CheckCastCondition(GameRoleEntity role, GameSkillEntity skill)
         {
             var inputArgs = role.inputCom.ToArgs();
-            var errCode = this._CheckCastCondition(role, skill, in inputArgs);
+            var errCode = this._CheckRoleCastCondition(role, skill, in inputArgs);
             if (errCode != 0)
             {
                 GameLogger.LogWarning($"技能施法条件检测失败：{skill.idCom} 错误码：{errCode}");
@@ -164,14 +164,22 @@ namespace GamePlay.Bussiness.Logic
         {
             var conditionModel = skill.skillModel.conditionModel;
             if (conditionModel == null) return true;
-            // 检查 - 范围
-            if (!ignoreDistanceCondition && !GamePhysicsResolvingUtil.CheckOverlap(conditionModel.selector.rangeSelectModel, skill.transformCom.ToArgs(), target.transformCom.position)) return false;
             // 检查 - CD
             if (skill.cdElapsed > 0) return false;
             // 检查 - 属性消耗
             if (role.attributeCom.GetValue(GameAttributeType.MP) < conditionModel.mpCost) return false;
             // 检查 - 选择器
-            if (!conditionModel.selector.CheckSelect(skill, role) && !conditionModel.selector.CheckSelect(skill, target)) return false;
+            var selector = conditionModel.selector;
+            if (!selector.CheckSelect(skill, target)) return false;
+            // 检查 - 范围
+            if (
+                !ignoreDistanceCondition &&
+                conditionModel.targeterType != GameSkillTargterType.Actor &&
+                !GamePhysicsResolvingUtil.CheckOverlap(selector.rangeSelectModel, skill.transformCom.ToArgs(), target.logicBottomPos)
+            )
+            {
+                return false;
+            }
             return true;
         }
 
@@ -201,6 +209,7 @@ namespace GamePlay.Bussiness.Logic
             if (!target.IsAlive()) return null;// 非存活目标, 不可施法 TODO： 除非是复活类技能
             return role.skillCom.FindWithPriority((skill) =>
             {
+                if (skill.skillModel.skillType == GameSkillType.Passive) return false;
                 return this.CheckSkillCondition(role, skill, target, ignoreDistanceCondition);
             });
         }

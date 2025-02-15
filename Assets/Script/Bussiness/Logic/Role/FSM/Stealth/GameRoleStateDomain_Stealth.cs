@@ -1,5 +1,5 @@
 using GamePlay.Core;
-
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameRoleStateDomain_Stealth : GameRoleStateDomainBase
@@ -29,8 +29,11 @@ namespace GamePlay.Bussiness.Logic
         {
             var stealthState = role.fsmCom.stealthState;
             stealthState.stateTime += dt;
-            GameRoleMoveUtil.TickMove(role, dt, out var moveDir);
-            stealthState.stateMoveDir = moveDir;
+            var inputCom = role.inputCom;
+            if (inputCom.TryGetInputArgs(out var inputArgs))
+            {
+                GameRoleMoveUtil.TickMove(role, inputArgs.moveDir, inputArgs.moveDst, dt);
+            }
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)

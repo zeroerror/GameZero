@@ -33,7 +33,7 @@ namespace GamePlay.Bussiness.Logic
         }
 
         /** 判定进入条件 */
-        public abstract bool CheckEnter(GameRoleEntity role, params object[] args);
+        public virtual bool CheckEnter(GameRoleEntity role, params object[] args) { return true; }
         /** 进入. ps: 直接调用则会跳过了条件判定 */
         public abstract void Enter(GameRoleEntity role, params object[] args);
         /** 状态更新 */
