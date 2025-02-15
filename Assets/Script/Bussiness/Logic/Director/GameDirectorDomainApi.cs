@@ -36,14 +36,14 @@ namespace GamePlay.Bussiness.Logic
         /// <para>index: 购买单位的索引</para>
         /// <para>initPos: 初始位置</para>
         /// </summary>
-        public void BuyUnit(int index, in GameVec2 initPos);
+        public void BuyUnit(int index, in GameVec2 initPos, GameCampType campType = GameCampType.Ally);
 
         /// <summary>
         /// 创建单位
         /// <para>itemEntity: 单位实体</para>
         /// <para>initPos: 初始位置</para>
         /// </summary>
-        public GameEntityBase CreateUnit(GameItemUnitEntity itemEntity, in GameVec2 initPos);
+        public GameEntityBase CreateUnit(GameItemUnitEntity itemEntity, in GameVec2 initPos, GameCampType campType = GameCampType.Ally);
 
         /// <summary>
         /// 获取单位物品对应的实体

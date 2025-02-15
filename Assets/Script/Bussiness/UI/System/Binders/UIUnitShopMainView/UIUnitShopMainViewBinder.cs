@@ -37,6 +37,10 @@ public class UIUnitShopMainViewBinder
     private Image _btn_cancel;
     public Text btn_cancel_txt => _btn_cancel_txt ?? (_btn_cancel_txt = this.gameObject.transform.Find("btn_cancel/txt").GetComponent<Text>());
     private Text _btn_cancel_txt;
+    public Image btn_camp => _btn_camp ?? (_btn_camp = this.gameObject.transform.Find("btn_camp").GetComponent<Image>());
+    private Image _btn_camp;
+    public Text btn_camp_txt => _btn_camp_txt ?? (_btn_camp_txt = this.gameObject.transform.Find("btn_camp/txt").GetComponent<Text>());
+    private Text _btn_camp_txt;
     public Text txt_gold => _txt_gold ?? (_txt_gold = this.gameObject.transform.Find("txt_gold").GetComponent<Text>());
     private Text _txt_gold;
 }

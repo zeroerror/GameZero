@@ -202,7 +202,7 @@ namespace GamePlay.Bussiness.Logic
             this.context.eventService.Submit(eventName, args);
         }
 
-        public void BuyUnit(int index, in GameVec2 initPos)
+        public void BuyUnit(int index, in GameVec2 initPos, GameCampType campType)
         {
             var buyableUnits = this.director.buyableUnits;
             if (index < 0 || index >= buyableUnits.Count)
@@ -229,7 +229,7 @@ namespace GamePlay.Bussiness.Logic
             unitEntity.unitModel = unitModel;
             this.director.itemUnitEntitys.Add(unitEntity);
             // 创建游戏单位
-            var unit = this.CreateUnit(unitEntity, initPos);
+            var unit = this.CreateUnit(unitEntity, initPos, campType);
             // 提交RC - 购买单位
             GameDirectorRCArgs_BuyUnit rcArgs;
             rcArgs.model = unitModel;
@@ -237,19 +237,26 @@ namespace GamePlay.Bussiness.Logic
             this.context.SubmitRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_BUY_UNIT, rcArgs);
         }
 
-        public GameEntityBase CreateUnit(GameItemUnitEntity unitEntity, in GameVec2 createPos)
+        public GameEntityBase CreateUnit(GameItemUnitEntity unitEntity, in GameVec2 createPos, GameCampType campType)
         {
             var model = unitEntity.unitModel;
             GameEntityBase entity = null;
             switch (model.entityType)
             {
                 case GameEntityType.Role:
-                    entity = this.context.domainApi.roleApi.CreatePlayerRole(model.typeId, new GameTransformArgs
+                    entity = campType == GameCampType.Ally ?
+                    this.context.domainApi.roleApi.CreatePlayerRole(model.typeId, new GameTransformArgs
                     {
                         position = createPos,
                         scale = GameVec2.one,
                         forward = GameVec2.right
-                    }, true);
+                    }, true) :
+                    this.context.domainApi.roleApi.CreateEnemyRole(model.typeId, new GameTransformArgs
+                    {
+                        position = createPos,
+                        scale = GameVec2.one,
+                        forward = GameVec2.left
+                    });
                     break;
                 default:
                     GameLogger.LogError("导演 - 未知的单位实体类型 " + model.entityType);

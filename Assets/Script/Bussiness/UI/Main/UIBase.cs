@@ -130,6 +130,11 @@ namespace GamePlay.Bussiness.UI
             var clickCom = go.GetComponent<UIClickCom>() ?? go.AddComponent<UIClickCom>();
             clickCom.onClick = callback;
         }
+        public void SetClick(Component com, Action callback)
+        {
+            var clickCom = com.GetComponent<UIClickCom>() ?? com.gameObject.AddComponent<UIClickCom>();
+            clickCom.onClick = callback;
+        }
         public void RemoveClick(GameObject go)
         {
             var clickCom = go.GetComponent<UIClickCom>();

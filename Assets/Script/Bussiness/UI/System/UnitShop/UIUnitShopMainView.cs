@@ -34,14 +34,15 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.BindKeyAction(KeyCode.K, this._OnClickItemDown3);
             this._uiApi.directorApi.BindKeyAction(KeyCode.L, this._OnClickItemDown4);
             this._uiApi.directorApi.BindKeyAction(KeyCode.Escape, this._OnClickBtnCancel);
-            this._uiApi.directorApi.BindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
+            this._uiApi.directorApi.BindKeyAction(KeyCode.Return, this._OnClickBtnConfirm);
             this._uiApi.directorApi.BindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
             this._uiApi.logicApi.directorApi.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnDirectorStateExit);
 
-            this.SetClick(this.uiBinder.btn_confirm.gameObject, this._OnBtnConfirmClick);
-            this.SetClick(this.uiBinder.btn_refresh.gameObject, this._OnBtnRefreshClick);
-            this.SetClick(this.uiBinder.mask.gameObject, this._OnClickMask);
-            this.SetClick(this.uiBinder.btn_cancel.gameObject, this._OnClickBtnCancel);
+            this.SetClick(this.uiBinder.btn_confirm, this._OnClickBtnConfirm);
+            this.SetClick(this.uiBinder.btn_refresh, this._OnClickBtnRefresh);
+            this.SetClick(this.uiBinder.btn_camp, this._OnClickBtnCamp);
+            this.SetClick(this.uiBinder.btn_cancel, this._OnClickBtnCancel);
+            this.SetClick(this.uiBinder.mask, this._OnClickMask);
         }
 
         protected override void _UnbindEvents()
@@ -53,7 +54,7 @@ namespace GamePlay.Bussiness.UI
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.K, this._OnClickItemDown3);
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.L, this._OnClickItemDown4);
             this._uiApi.directorApi.UnbindKeyAction(KeyCode.Escape, this._OnClickBtnCancel);
-            this._uiApi.directorApi.UnbindKeyAction(KeyCode.Return, this._OnBtnConfirmClick);
+            this._uiApi.directorApi.UnbindKeyAction(KeyCode.Return, this._OnClickBtnConfirm);
             this._uiApi.directorApi.UnbindEvent(UIPlayerEventCollection.UI_PLAYER_COINS_CHANGE, this._OnPlayerCoinsChange);
             this._uiApi.logicApi.directorApi.UnbindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_STATE_EXIT, this._OnDirectorStateExit);
 
@@ -157,25 +158,40 @@ namespace GamePlay.Bussiness.UI
         private void _OnClickItemDown3() => this._OnClickItemDown(3);
         private void _OnClickItemDown4() => this._OnClickItemDown(4);
 
-        private void _OnBtnConfirmClick()
+        private void _OnClickBtnConfirm()
         {
             if (this._uiApi.logicApi.directorApi.GetDirectorState() != GameDirectorStateType.FightPreparing) return;
             // 提交LC, 通知逻辑层确认开始
             this._uiApi.logicApi.directorApi.SubmitEvent(GameLCCollection.LC_GAME_PREPARING_CONFIRM_FIGHT, new GameLCArgs_PreparingConfirmFight());
         }
 
-        private void _OnBtnRefreshClick()
+        private void _OnClickBtnRefresh()
         {
             if (!this._uiApi.logicApi.directorApi.ShuffleBuyableUnits(false)) return;
             this._viewInput.buyableUnits = this._uiApi.logicApi.directorApi.GetBuyableUnits();
             this._OnShow();
         }
 
+        private void _OnClickBtnCamp()
+        {
+            if (this.campType == GameCampType.Ally)
+            {
+                this.campType = GameCampType.Enemy;
+                this.uiBinder.btn_camp_txt.text = "召唤敌方";
+            }
+            else
+            {
+                this.campType = GameCampType.Ally;
+                this.uiBinder.btn_camp_txt.text = "召唤友军";
+            }
+        }
+        private GameCampType campType = GameCampType.Ally;
+
         private void _OnClickMask()
         {
             if (this._previewUnit)
             {
-                this._uiApi.logicApi.directorApi.BuyUnit(this._selectedItemIndex, this._previewUnit.GetPosition());
+                this._uiApi.logicApi.directorApi.BuyUnit(this._selectedItemIndex, this._previewUnit.GetPosition(), this.campType);
             }
         }
 
