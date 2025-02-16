@@ -11,6 +11,8 @@ public class UIActionOptionMainViewBinder
         this.gameObject = gameObject;
     }
 
+    public Image mask => _mask ?? (_mask = this.gameObject.transform.Find("mask").GetComponent<Image>());
+    private Image _mask;
     public GameObject optionGroup => _optionGroup ?? (_optionGroup = this.gameObject.transform.Find("optionGroup").GetComponent<GameObject>());
     private GameObject _optionGroup;
     public UIOptionBinder optionGroup_option1 => _optionGroup_option1 ?? (_optionGroup_option1 = new UIOptionBinder(this.gameObject.transform.Find("optionGroup/option1").gameObject));

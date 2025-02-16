@@ -52,21 +52,23 @@ namespace GamePlay.Bussiness.UI
             for (var i = 0; i < this._optionModels.Count; i++)
             {
                 var optionBinder = this.uiBinder.GetField($"optionGroup_option{i + 1}") as UIOptionBinder;
-                var text = optionBinder.text;
-                text.text = this._GetOptionDesc(this._optionModels[i]).ToDevStr();
+                optionBinder.txt_content.text = this._GetOptionContent(this._optionModels[i]).ToDevStr();
+                optionBinder.txt_title.text = this._optionModels[i].desc.ToDevStr();
+
                 var optionIndex = i;
                 this.SetClick(optionBinder.gameObject, () => this._OnClickOption(optionIndex));
-                GameLogger.DebugLog($"选项{i + 1}: {this._GetOptionDesc(this._optionModels[i])}");
+                GameLogger.DebugLog($"选项{i + 1}: {this._GetOptionContent(this._optionModels[i])}");
             }
         }
 
-        private string _GetOptionDesc(GameActionOptionModel option)
+        private string _GetOptionContent(GameActionOptionModel option)
         {
-            var desc = option.desc + "\n";
+            var desc = "";
             option.actionIds?.Foreach(actionId =>
             {
                 if (!this._uiApi.rendererApi.actionApi.TryGetModel(actionId, out var action)) return;
                 desc += action.desc;
+                desc += "\n";
             });
             return desc;
         }
