@@ -30,7 +30,7 @@ MonoBehaviour:
   - time: 0.55
     frame: 33
     actions:
-    - {fileID: 11400000, guid: 31c911193fca9074db4f4a8242dd3903, type: 2}
+    - {fileID: 11400000, guid: 03c906e5d8c09454299bbb22d48468f7, type: 2}
   conditionEM:
     targeterType: 2
     cdTime: 0

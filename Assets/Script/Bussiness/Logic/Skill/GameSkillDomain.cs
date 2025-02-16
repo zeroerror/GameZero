@@ -79,6 +79,7 @@ namespace GamePlay.Bussiness.Logic
                 {
                     skill.timelineCom.AddEventByFrame(evModel.frame, () =>
                     {
+                        skill.physicsCom.ClearCollided();
                         evModel.actionIds?.Foreach((actionId) =>
                         {
                             actionApi.DoAction(actionId, skill);
@@ -188,7 +189,6 @@ namespace GamePlay.Bussiness.Logic
             this._calcSkillCost(role, skill);
             skill.timelineCom.Play();
             skill.actionTargeterCom.SetTargeterList(role.inputCom.targeterArgsList);
-            skill.physicsCom.ClearCollided();
         }
 
         private void _calcSkillCost(GameRoleEntity role, GameSkillEntity skill)
