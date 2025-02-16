@@ -31,11 +31,6 @@ namespace GamePlay.Bussiness.UI
             this.playCom = new GamePlayableCom(animator);
         }
 
-        public void SetActive(bool active)
-        {
-            this.rootNode.SetActive(active);
-        }
-
         public void Tick(float dt)
         {
             this.playCom.Tick(dt);
@@ -44,6 +39,16 @@ namespace GamePlay.Bussiness.UI
         public void Destroy()
         {
             this.playCom.Destroy();
+        }
+
+        public void SetActive(bool active)
+        {
+            this.rootNode.SetActive(active);
+        }
+
+        public void SetScale(float scale)
+        {
+            this.rootNode.transform.localScale = Vector3.one * scale;
         }
     }
 }

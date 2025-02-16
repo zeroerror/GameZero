@@ -121,6 +121,7 @@ namespace GamePlay.Bussiness.UI
 
             entity.text = txt;
             entity.SetAnchorPosition(screenPos);
+            entity.SetScale(scale);
             this._PlayAnim(entity, url, style);
             this._jumpTextEntityList.Add(entity);
         }
