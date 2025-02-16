@@ -59,10 +59,10 @@ namespace GamePlay.Bussiness.Render
                 return;
             }
             var rcArgs = (GameRoleRCArgs_Create)args;
-            this.CreateRole(rcArgs.idArgs, rcArgs.transArgs, rcArgs.isUser);
+            this.CreateRole(rcArgs.idArgs, rcArgs.transArgs);
         }
 
-        private GameRoleEntityR _LoadRole(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
+        private GameRoleEntityR _LoadRole(in GameIdArgs idArgs, in GameTransformArgs transArgs)
         {
             var repo = this._roleContext.repo;
             if (!repo.TryFetch(idArgs.typeId, out var role))
@@ -81,10 +81,6 @@ namespace GamePlay.Bussiness.Render
             role.transformCom.SetByArgs(transArgs);
             role.SyncTrans();
             role.setActive(true);
-            if (isUser)
-            {
-                this._roleContext.userRole = role;
-            }
 
             // 注入世界坐标转屏幕坐标的接口, 供组件内部调用更新属性条位置
             var attributeBarCom = role.attributeBarCom;
@@ -93,7 +89,7 @@ namespace GamePlay.Bussiness.Render
             // 将旧的血条则销毁, 根据当前阵营信息加载新的血条
             var existSlider = attributeBarCom.hpSlider.slider;
             if (existSlider) GameObject.Destroy(existSlider.gameObject);
-            var isEnemy = role.idCom.campId != this._roleContext.userRole?.idCom.campId;
+            var isEnemy = role.idCom.campId != GameCampCollection.PLAYER_CAMP_ID;
             var uiHPSlider = this._roleContext.factory.LoadHPSlider(isEnemy);
             this._context.uiApi.layerApi.AddToUIRoot(uiHPSlider.transform, UILayerType.Scene);
 
@@ -136,9 +132,9 @@ namespace GamePlay.Bussiness.Render
             return role;
         }
 
-        public GameRoleEntityR CreateRole(in GameIdArgs idArgs, in GameTransformArgs transArgs, bool isUser = false)
+        public GameRoleEntityR CreateRole(in GameIdArgs idArgs, in GameTransformArgs transArgs)
         {
-            var role = this._LoadRole(idArgs, transArgs, isUser);
+            var role = this._LoadRole(idArgs, transArgs);
             this._roleContext.repo.TryAdd(role);
             return role;
         }
@@ -168,8 +164,7 @@ namespace GamePlay.Bussiness.Render
                 GameLogger.LogError("变身失败, 模板不存在: " + transToRoleId);
             }
 
-            var isUser = role == this._roleContext.userRole;
-            var newRole = this._LoadRole(idArgs, role.transformCom.ToArgs(), isUser);
+            var newRole = this._LoadRole(idArgs, role.transformCom.ToArgs());
 
             // 将新角色替换就旧的角色, 若未处于变身状态, 将oldRole记录在变身角色仓库
             var oldRole = this._roleContext.repo.Replace(newRole);

@@ -9,8 +9,6 @@ namespace GamePlay.Bussiness.Render
         public GameRoleFactoryR factory => this._factory;
         GameRoleFactoryR _factory;
 
-        public GameRoleEntityR userRole;
-
         public GameRoleContextR()
         {
             this.repo = new GameRoleRepoR();

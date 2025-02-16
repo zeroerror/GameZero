@@ -29,7 +29,6 @@ namespace GamePlay.Bussiness.Logic
     {
         public GameIdArgs idArgs;
         public GameTransformArgs transArgs;
-        public bool isUser;
         public bool isEnemy;
     }
 

@@ -102,7 +102,6 @@ namespace GamePlay.Bussiness.Logic
             {
                 idArgs = role.idCom.ToArgs(),
                 transArgs = role.transformCom.ToArgs(),
-                isUser = isUser,
                 isEnemy = campId != GameCampCollection.PLAYER_CAMP_ID
             });
 
