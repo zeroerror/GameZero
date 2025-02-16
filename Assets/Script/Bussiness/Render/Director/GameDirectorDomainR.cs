@@ -111,6 +111,19 @@ namespace GamePlay.Bussiness.Render
         {
             this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
             this.directorFSMDomain.BindEvents();
+            this.roleDomain.BindEvents();
+            this.skillDomain.BindEvents();
+            this.transformDomain.BindEvents();
+            this.attributeDomain.BindEvents();
+            this.vfxDomain.BindEvents();
+            this.actionDomain.BindEvents();
+            this.drawDomain.BindEvents();
+            this.projectileDomain.BindEvents();
+            this.fieldDomain.BindEvents();
+            this.entityCollectDomain.BindEvents();
+            this.buffDomain.BindEvents();
+            this.shaderEffectDomain.BindEvents();
+
             this.context.uiApi.directorApi.BindKeyAction(KeyCode.Mouse0, this._OnClickUnit);
         }
 
@@ -118,6 +131,19 @@ namespace GamePlay.Bussiness.Render
         {
             this.context.BindRC(GameDirectorRCCollection.RC_GAME_DIRECTOR_TIME_SCALE_CHANGE, this._OnTimeScaleChange);
             this.directorFSMDomain.UnbindEvents();
+            this.roleDomain.UnbindEvents();
+            this.skillDomain.UnbindEvents();
+            this.transformDomain.UnbindEvents();
+            this.attributeDomain.UnbindEvents();
+            this.vfxDomain.UnbindEvents();
+            this.actionDomain.UnbindEvents();
+            this.drawDomain.UnbindEvents();
+            this.projectileDomain.UnbindEvents();
+            this.fieldDomain.UnbindEvents();
+            this.entityCollectDomain.UnbindEvents();
+            this.buffDomain.UnbindEvents();
+            this.shaderEffectDomain.UnbindEvents();
+
             this.context.uiApi.directorApi.UnbindKeyAction(KeyCode.Mouse0, this._OnClickUnit);
         }
 

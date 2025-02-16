@@ -174,7 +174,7 @@ namespace GamePlay.Core
             if (cross_1 > 0 && cross_2 < 0)
             {
                 //-距离大于半径 MTV = 扇形原点到点向量 - 半径模长
-                var isFar = toPOffset.sqrMagnitude > this.worldRadius * this.worldRadius;
+                var isFar = toPOffset.sqrMagnitude >= this.worldRadius * this.worldRadius;
                 if (isFar)
                 {
                     if (onlyDetectPenetration) return GameVec2.zero;

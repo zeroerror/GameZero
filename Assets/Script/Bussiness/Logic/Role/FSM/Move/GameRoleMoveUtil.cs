@@ -6,7 +6,7 @@ namespace GamePlay.Bussiness.Logic
         public static bool TickMove(GameRoleEntity role, in GameVec2 moveDir, in GameVec2 moveDst, float dt)
         {
             // 根据方向移动
-            if (moveDir != GameVec2.zero)
+            if (!moveDir.Equals(GameVec2.zero))
             {
                 var moveSpeed = role.attributeCom.GetValue(GameAttributeType.MoveSpeed);
                 var moveVec = new GameVec2(moveDir.x, moveDir.y) * moveSpeed * dt;
@@ -16,7 +16,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 根据目的地移动
-            if (moveDst != GameVec2.zero && role.transformCom.position != moveDst)
+            if (!moveDst.Equals(GameVec2.zero) && !role.transformCom.position.Equals(moveDst))
             {
                 var moveSpeed = role.attributeCom.GetValue(GameAttributeType.MoveSpeed);
                 var moveVec = moveDst - new GameVec2(role.transformCom.position.x, role.transformCom.position.y);

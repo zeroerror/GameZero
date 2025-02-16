@@ -16,21 +16,19 @@ namespace GamePlay.Bussiness.Render
         public void Inject(GameContextR context)
         {
             this._context = context;
-            this._BindEvents();
         }
 
         public void Destroy()
         {
-            this._UnbindEvents();
         }
 
-        private void _BindEvents()
+        public void BindEvents()
         {
             this._context.BindRC(GameBuffRCCollection.RC_GAME_BUFF_ATTACH, this._OnBuffAttach);
             this._context.BindRC(GameBuffRCCollection.RC_GAME_BUFF_DETACH, this._OnBuffDeAttach);
         }
 
-        private void _UnbindEvents()
+        public void UnbindEvents()
         {
             this._context.UnbindRC(GameBuffRCCollection.RC_GAME_BUFF_ATTACH, this._OnBuffAttach);
             this._context.UnbindRC(GameBuffRCCollection.RC_GAME_BUFF_DETACH, this._OnBuffDeAttach);

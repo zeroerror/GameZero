@@ -105,8 +105,7 @@ namespace GamePlay.Core
 
         public override bool CheckOverlap(in GameVec2 point)
         {
-            var distance = (point - this.worldCenterPos).sqrMagnitude;
-            return distance <= this.worldRadius * this.worldRadius;
+            return (point - this.worldCenterPos).magnitude < this.worldRadius;
         }
     }
 }

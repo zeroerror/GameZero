@@ -20,6 +20,14 @@ namespace GamePlay.Bussiness.Render
         {
         }
 
+        public void BindEvents()
+        {
+        }
+
+        public void UnbindEvents()
+        {
+        }
+
         public void Tick(float dt)
         {
             {

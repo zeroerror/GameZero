@@ -1,5 +1,6 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using UnityEngine;
 
 namespace GamePlay.Bussiness.Render
 {
@@ -16,28 +17,29 @@ namespace GamePlay.Bussiness.Render
         public void Inject(GameContextR context)
         {
             this._context = context;
-            this._BindEvents();
         }
 
         public void Destroy()
         {
-            this._UnbindEvents();
         }
 
-        private void _BindEvents()
+        public void BindEvents()
         {
             this._context.BindRC(GameDrawRCCollection.RC_DRAW_COLLIDER_MODEL, this._OnDrawColliderModel);
             this._context.BindRC(GameDrawRCCollection.RC_DRAW_COLLIDER, this._OnDrawCollider);
+            this._context.uiApi.directorApi.BindKeyAction(KeyCode.F, this._OnKeyAction_F);
         }
 
-        private void _UnbindEvents()
+        public void UnbindEvents()
         {
             this._context.UnbindRC(GameDrawRCCollection.RC_DRAW_COLLIDER_MODEL, this._OnDrawColliderModel);
             this._context.UnbindRC(GameDrawRCCollection.RC_DRAW_COLLIDER, this._OnDrawCollider);
+            this._context.uiApi.directorApi.UnbindKeyAction(KeyCode.F, this._OnKeyAction_F);
         }
 
         private void _OnDrawColliderModel(object args)
         {
+            if (!this._drawEnable) return;
             var rcArgs = (GameRCArgs_DrawColliderModel)args;
             var colliderModel = rcArgs.colliderModel;
             var transformArgs = rcArgs.transformArgs;
@@ -54,6 +56,7 @@ namespace GamePlay.Bussiness.Render
 
         private void _OnDrawCollider(object args)
         {
+            if (!this._drawEnable) return;
             var rcArgs = (GameRCArgs_DrawCollider)args;
             var collider = rcArgs.collider;
             var color = rcArgs.color;
@@ -66,6 +69,12 @@ namespace GamePlay.Bussiness.Render
                 maintainTime = rcArgs.maintainTime,
             });
         }
+
+        private void _OnKeyAction_F()
+        {
+            this._drawEnable = !this._drawEnable;
+        }
+        private bool _drawEnable = false;
 
         public void Tick(float dt)
         {

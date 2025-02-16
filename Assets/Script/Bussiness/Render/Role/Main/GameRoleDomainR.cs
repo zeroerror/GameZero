@@ -24,12 +24,10 @@ namespace GamePlay.Bussiness.Render
             this._context = context;
             this.inputDomain.Inject(context);
             this.fsmDomain.Inject(context);
-            this._BindEvents();
         }
 
         public void Destroy()
         {
-            this._UnbindEvents();
             this.fsmDomain.Destroy();
             this._roleContext.repo.ForeachEntities_IncludePool((entity) =>
             {
@@ -37,14 +35,14 @@ namespace GamePlay.Bussiness.Render
             });
         }
 
-        private void _BindEvents()
+        public void BindEvents()
         {
             this._context.BindRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
             this._context.BindRC(GameRoleRCCollection.RC_GAME_ROLE_TRANSFORM, this._OnTransformRole);
             this.fsmDomain.BindEvents();
         }
 
-        private void _UnbindEvents()
+        public void UnbindEvents()
         {
             this._context.UnbindRC(GameRoleRCCollection.RC_GAME_ROLE_CREATE, this._OnRoleCreate);
             this._context.UnbindRC(GameRoleRCCollection.RC_GAME_ROLE_TRANSFORM, this._OnTransformRole);

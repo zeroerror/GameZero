@@ -17,21 +17,19 @@ namespace GamePlay.Bussiness.Render
         public void Inject(GameContextR context)
         {
             this._context = context;
-            this._BindEvents();
             context.cmdBufferService.AddIntervalCmd(0.1f, this._UpdateLayerOrder);
         }
 
         public void Destroy()
         {
-            this._UnbindEvents();
         }
 
-        private void _BindEvents()
+        public void BindEvents()
         {
             this._context.BindRC(GameFieldRCCollection.RC_GAME_FIELD_CREATE, this._OnCreateField);
         }
 
-        private void _UnbindEvents()
+        public void UnbindEvents()
         {
         }
 

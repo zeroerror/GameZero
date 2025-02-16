@@ -27,20 +27,18 @@ namespace GamePlay.Bussiness.Render
             {
                 stateDomain.Inject(context);
             }
-            this._BindEvents();
         }
 
         public void Destroy()
         {
-            this._UnbindEvents();
         }
 
-        private void _BindEvents()
+        public void BindEvents()
         {
             foreach (var stateDomain in this._stateDomainDict.Values) stateDomain.BindEvents();
         }
 
-        private void _UnbindEvents()
+        public void UnbindEvents()
         {
             foreach (var stateDomain in this._stateDomainDict.Values) stateDomain.UnbindEvents();
         }

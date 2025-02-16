@@ -1,5 +1,4 @@
 using GamePlay.Core;
-using UnityEngine;
 
 namespace GamePlay.Bussiness.Render
 {
@@ -15,6 +14,14 @@ namespace GamePlay.Bussiness.Render
         public void Inject(GameContextR context)
         {
             this._context = context;
+        }
+
+        public void BindEvents()
+        {
+        }
+
+        public void UnbindEvents()
+        {
         }
 
         public void Destroy()

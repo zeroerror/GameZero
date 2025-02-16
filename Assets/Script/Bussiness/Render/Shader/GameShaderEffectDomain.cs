@@ -16,19 +16,17 @@ namespace GamePlay.Bussiness.Render
         public void Inject(GameContextR context)
         {
             this._context = context;
-            this._BindEvents();
         }
 
         public void Destroy()
         {
-            this._UnbindEvents();
         }
 
-        private void _BindEvents()
+        public void BindEvents()
         {
         }
 
-        private void _UnbindEvents()
+        public void UnbindEvents()
         {
         }
 

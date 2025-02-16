@@ -20,13 +20,11 @@ namespace GamePlay.Bussiness.Render
         {
             this._context = context;
             this.fsmDomain.Inject(context);
-            this._BindEvents();
         }
 
         public void Destroy()
         {
             this.fsmDomain.Destroy();
-            this._UnbindEvents();
             this._projectileContext.repo.ForeachEntities_IncludePool((entity) =>
             {
                 entity.Destroy();
@@ -42,12 +40,12 @@ namespace GamePlay.Bussiness.Render
             });
         }
 
-        private void _BindEvents()
+        public void BindEvents()
         {
             this._context.BindRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_CREATE, this._OnProjectileCreate);
         }
 
-        private void _UnbindEvents()
+        public void UnbindEvents()
         {
             this._context.UnbindRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_CREATE, this._OnProjectileCreate);
         }

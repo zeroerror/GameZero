@@ -303,13 +303,13 @@ namespace GamePlay.Core
                        point.y >= _worldMinPos.y && point.y <= _worldMaxPos.y;
             }
 
-            GameVec2 localPos = GameVectorUtil.RotateOnAxisZ(point - (worldCenterPos), -angleZ);
+            GameVec2 localPos = GameVectorUtil.RotateOnAxisZ(point - this.worldCenterPos, -angleZ);
             float halfWidth = worldWidth / 2;
             float halfLength = worldHeight / 2;
             GameVec2 minPos = new GameVec2(-halfWidth, -halfLength);
             GameVec2 maxPos = new GameVec2(halfWidth, halfLength);
-            return localPos.x >= minPos.x && localPos.x <= maxPos.x &&
-                   localPos.y >= minPos.y && localPos.y <= maxPos.y;
+            return localPos.x > minPos.x && localPos.x < maxPos.x &&
+                   localPos.y > minPos.y && localPos.y < maxPos.y;
         }
 
         public override GameVec2 GetResolvingMTV(in GameVec2 point, bool onlyDetectPenetration = true)
@@ -324,8 +324,8 @@ namespace GamePlay.Core
             GameVec2 maxPos = _worldMaxPos;
             if (onlyDetectPenetration)
             {
-                if (point.x < minPos.x || point.x > maxPos.x) return GameVec2.zero;
-                if (point.y < minPos.y || point.y > maxPos.y) return GameVec2.zero;
+                if (point.x <= minPos.x || point.x >= maxPos.x) return GameVec2.zero;
+                if (point.y <= minPos.y || point.y >= maxPos.y) return GameVec2.zero;
             }
             float mtvx;
             float mtvy;
@@ -347,8 +347,8 @@ namespace GamePlay.Core
             var halfH = worldHeight / 2;
             if (onlyDetectPenetration)
             {
-                if (pjx < -halfW || pjx > halfW) return GameVec2.zero;
-                if (pjy < -halfH || pjy > halfH) return GameVec2.zero;
+                if (pjx <= -halfW || pjx >= halfW) return GameVec2.zero;
+                if (pjy <= -halfH || pjy >= halfH) return GameVec2.zero;
             }
             var offsetx1 = -halfW - pjx;
             var offsetx2 = halfW - pjx;

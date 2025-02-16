@@ -36,7 +36,13 @@ namespace GamePlay.Bussiness.Logic
                 if (collider != null && collider.isEnable)
                 {
                     collider.UpdateTRS();
-                    collider.Draw(Color.green);
+                    this._context.SubmitRC(GameDrawRCCollection.RC_DRAW_COLLIDER_MODEL, new GameRCArgs_DrawColliderModel
+                    {
+                        colliderModel = collider.colliderModel,
+                        transformArgs = collider.binder.transformCom.ToArgs(),
+                        color = Color.green,
+                        maintainTime = GameTimeCollection.frameTime,
+                    });
                 }
             });
 
@@ -98,7 +104,7 @@ namespace GamePlay.Bussiness.Logic
 
         public List<GameEntityBase> GetOverlapEntities(GameColliderModelBase colliderModel, GameTransformArgs transformArgs)
         {
-            this._context.SubmitRC(GameDrawRCCollection.RC_DRAW_COLLIDER_MODEL, new GameRCArgs_DrawColliderModel()
+            this._context.SubmitRC(GameDrawRCCollection.RC_DRAW_COLLIDER_MODEL, new GameRCArgs_DrawColliderModel
             {
                 colliderModel = colliderModel,
                 transformArgs = transformArgs,
@@ -113,14 +119,12 @@ namespace GamePlay.Bussiness.Logic
                 var collider = physicsCom.collider;
                 if (collider == null || !collider.isEnable) return;
                 var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(collider, colliderModel, transformArgs);
-                var isOverlap = mtv != GameVec2.zero;
+                var isOverlap = !mtv.Equals(GameVec2.zero);
                 if (isOverlap)
                 {
                     if (overlapEntities == null) overlapEntities = new List<GameEntityBase>();
                     overlapEntities.Add(entity);
-                    colliderModel.Draw(transformArgs, Color.red);
-                    collider.Draw(Color.red);
-                    this._context.SubmitRC(GameDrawRCCollection.RC_DRAW_COLLIDER_MODEL, new GameRCArgs_DrawColliderModel()
+                    this._context.SubmitRC(GameDrawRCCollection.RC_DRAW_COLLIDER_MODEL, new GameRCArgs_DrawColliderModel
                     {
                         colliderModel = colliderModel,
                         transformArgs = transformArgs,

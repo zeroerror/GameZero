@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Core;
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Bussiness.Logic
 {
     /// <summary>
@@ -148,9 +149,15 @@ namespace GamePlay.Bussiness.Logic
         private void _SetInput_Move(GameRoleEntity role, GameSkillEntity castSkill, GameEntityBase castTarget)
         {
             var colliderModel = castSkill.skillModel.conditionModel.selector.rangeSelectModel;
-            var contactMTV = GamePhysicsResolvingUtil.GetContactMTV(colliderModel, castSkill.transformCom.ToArgs(), castTarget.transformCom.position);
-            contactMTV += contactMTV.normalized * 0.01f;
-            var moveDst = role.logicBottomPos - contactMTV;
+            var selfPos = role.logicBottomPos;
+            var targetPos = castTarget.logicBottomPos;
+            var contactMTV = -GamePhysicsResolvingUtil.GetContactMTV(colliderModel, castSkill.transformCom.ToArgs(), targetPos);
+            var moveDst = selfPos + contactMTV;
+            if (moveDst.Equals(selfPos))
+            {
+                // 边界情况, 默认往目标方向移动一点
+                moveDst = selfPos + (targetPos - selfPos).normalized * 0.01f;
+            }
             role.inputCom.moveDst = moveDst;
         }
 

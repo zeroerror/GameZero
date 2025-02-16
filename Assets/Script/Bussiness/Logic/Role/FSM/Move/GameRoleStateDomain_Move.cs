@@ -45,8 +45,8 @@ namespace GamePlay.Bussiness.Logic
             var state = role.fsmCom.moveState;
             state.stateTime += dt;
             var inputCom = role.inputCom;
-            if (inputCom.moveDir != GameVec2.zero) state.inputMoveDir = inputCom.moveDir;
-            if (inputCom.moveDst != GameVec2.zero) state.inputMoveDst = inputCom.moveDst;
+            if (!inputCom.moveDir.Equals(GameVec2.zero)) state.inputMoveDir = inputCom.moveDir;
+            if (!inputCom.moveDst.Equals(GameVec2.zero)) state.inputMoveDst = inputCom.moveDst;
             var moveDst = state.inputMoveDst;
             if (moveDst == GameVec2.zero) moveDst = state.moveDst;
 

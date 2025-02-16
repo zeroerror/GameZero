@@ -37,7 +37,7 @@ namespace GamePlay.Bussiness.Logic
                 // 2. 检测目标实体的碰撞体是否与碰撞体相交
                 var lockOnCollider = lockOnEntity.physicsCom.collider;
                 var mtv = GamePhysicsResolvingUtil.GetResolvingMTV(lockOnCollider, selColliderModel, projectile.transformCom.ToArgs());
-                var isImpact = mtv != GameVec2.zero;
+                var isImpact = !mtv.Equals(GameVec2.zero);
                 return isImpact;
             }
 

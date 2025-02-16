@@ -19,15 +19,13 @@ namespace GamePlay.Bussiness.Render
         public void Inject(GameContextR context)
         {
             this._context = context;
-            this._BindEvents();
         }
 
         public void Destroy()
         {
-            this._UnbindEvents();
         }
 
-        private void _BindEvents()
+        public void BindEvents()
         {
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DO, this._OnAction_Do);
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_DMG, this._OnAction_Dmg);
@@ -40,7 +38,7 @@ namespace GamePlay.Bussiness.Render
             this._context.BindRC(GameActionRCCollection.RC_GAME_ACTION_STEALTH, this._OnAction_Stealth);
         }
 
-        private void _UnbindEvents()
+        public void UnbindEvents()
         {
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DO, this._OnAction_Do);
             this._context.UnbindRC(GameActionRCCollection.RC_GAME_ACTION_DMG, this._OnAction_Dmg);

@@ -50,8 +50,8 @@ namespace GamePlay.Bussiness.Logic
         public bool TryGetInputArgs(out GameRoleInputArgs inputArgs)
         {
             var hasInput =
-            this.moveDir != GameVec2.zero ||
-            this.moveDst != GameVec2.zero ||
+            !this.moveDir.Equals(GameVec2.zero) ||
+            !this.moveDst.Equals(GameVec2.zero) ||
             this.skillId != 0 ||
             this.targeterArgsList.Count > 0;
             if (!hasInput)
@@ -84,8 +84,8 @@ namespace GamePlay.Bussiness.Logic
 
         public bool HasMoveInput()
         {
-            if (moveDir != GameVec2.zero) return true;
-            if (moveDst != GameVec2.zero) return true;
+            if (!moveDir.Equals(GameVec2.zero)) return true;
+            if (!moveDst.Equals(GameVec2.zero)) return true;
             return false;
         }
     }

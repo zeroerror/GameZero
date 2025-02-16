@@ -115,14 +115,14 @@ namespace GamePlay.Bussiness.Logic
                     }
                     break;
                 case GameSkillTargterType.Direction:
-                    var index_d = inputArgs.targeterArgsList.FindIndex((args) => args.targetDirection != GameVec2.zero);
+                    var index_d = inputArgs.targeterArgsList.FindIndex((args) => !args.targetDirection.Equals(GameVec2.zero));
                     if (index_d == -1)
                     {
                         return 3;
                     }
                     break;
                 case GameSkillTargterType.Position:
-                    var index_p = inputArgs.targeterArgsList.FindIndex((args) => args.targetPosition != GameVec2.zero);
+                    var index_p = inputArgs.targeterArgsList.FindIndex((args) => !args.targetPosition.Equals(GameVec2.zero));
                     if (index_p == -1)
                     {
                         return 4;

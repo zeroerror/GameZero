@@ -24,15 +24,15 @@ namespace GamePlay.Bussiness.Logic
 
         public bool HasMoveInput()
         {
-            if (moveDir != GameVec2.zero) return true;
-            if (moveDst != GameVec2.zero) return true;
+            if (!moveDir.Equals(GameVec2.zero)) return true;
+            if (!moveDst.Equals(GameVec2.zero)) return true;
             return false;
         }
 
         public void Update(in GameRoleInputArgs inputArgs)
         {
-            if (inputArgs.moveDir != GameVec2.zero) this.moveDir = inputArgs.moveDir;
-            if (inputArgs.moveDst != GameVec2.zero) this.moveDst = inputArgs.moveDst;
+            if (!inputArgs.moveDir.Equals(GameVec2.zero)) this.moveDir = inputArgs.moveDir;
+            if (!inputArgs.moveDst.Equals(GameVec2.zero)) this.moveDst = inputArgs.moveDst;
             this.skillId = inputArgs.skillId == 0 ? this.skillId : inputArgs.skillId;
             this.targeterArgsList = inputArgs.targeterArgsList == null ? this.targeterArgsList : inputArgs.targeterArgsList;
         }
@@ -50,18 +50,18 @@ namespace GamePlay.Bussiness.Logic
         {
             targetPosition = GameVec2.zero;
             if (targeterArgsList == null || targeterArgsList.Count == 0) return false;
-            var targeter = targeterArgsList.Find((targeter) => targeter.targetPosition != GameVec2.zero);
+            var targeter = targeterArgsList.Find((targeter) => !targeter.targetPosition.Equals(GameVec2.zero));
             targetPosition = targeter.targetPosition;
-            return targetPosition != GameVec2.zero;
+            return !targetPosition.Equals(GameVec2.zero);
         }
 
         public bool TryGetTargetDirection(out GameVec2 targetDirection)
         {
             targetDirection = GameVec2.zero;
             if (targeterArgsList == null || targeterArgsList.Count == 0) return false;
-            var targeter = targeterArgsList.Find((targeter) => targeter.targetDirection != GameVec2.zero);
+            var targeter = targeterArgsList.Find((targeter) => !targeter.targetDirection.Equals(GameVec2.zero));
             targetDirection = targeter.targetDirection;
-            return targetDirection != GameVec2.zero;
+            return !targetDirection.Equals(GameVec2.zero);
         }
     }
 }

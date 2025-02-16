@@ -66,7 +66,7 @@ namespace GamePlay.Bussiness.Logic
             var inputCom = role.inputCom;
             if (inputCom.TryGetInputArgs(out var inputArgs))
             {
-                if (inputArgs.moveDir != GameVec2.zero)
+                if (!inputArgs.moveDir.Equals(GameVec2.zero))
                 {
                     return GameRoleStateType.Move;
                 }
