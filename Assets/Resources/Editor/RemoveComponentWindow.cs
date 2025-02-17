@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using System.Collections.Generic;
-using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
 
 namespace GamePlay.Config
 {
@@ -56,11 +55,8 @@ namespace GamePlay.Config
                 GameObject instance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
                 if (instance == null) continue;
 
-                // SpriteMapping
-                Type type = typeof(SpriteMapping);
-
                 // 遍历所有子物体删除组件
-                RemoveComponentRecursively(instance.transform, type);
+                RemoveComponentRecursively(instance.transform);
 
                 // 应用修改到预制体
                 PrefabUtility.SaveAsPrefabAsset(instance, AssetDatabase.GetAssetPath(prefab));
@@ -70,19 +66,25 @@ namespace GamePlay.Config
             AssetDatabase.Refresh();
         }
 
-        private void RemoveComponentRecursively(Transform obj, Type type)
+        private void RemoveComponentRecursively(Transform obj)
         {
-            Component component = obj.GetComponent(type);
-            if (component != null)
+            var coms = obj.GetComponents<Component>();
+            foreach (var com in coms)
             {
-                Undo.DestroyObjectImmediate(component);
-                Debug.Log($"已移除组件 {type.Name} from {obj.name}");
+                if (com == null) continue;
+                if (Array.Exists(keepTypes, t => t == com.GetType())) continue;
+                DestroyImmediate(com);
             }
 
             foreach (Transform child in obj)
             {
-                RemoveComponentRecursively(child, type);
+                RemoveComponentRecursively(child);
             }
         }
+        /// <summary> 保留的组件类型 </summary>
+        private Type[] keepTypes = new Type[]
+        {
+            typeof(SpriteRenderer),
+        };
     }
 }
