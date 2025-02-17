@@ -40,19 +40,22 @@ namespace GamePlay.Bussiness.Logic
             var stateModel = entity.fsmCom.castState;
             stateModel.stateTime += dt;
 
-            // 技能时间轴
             var skill = stateModel.skill;
-            float timeScale = 1;
-            var timelineCom = skill.timelineCom;
-            // 普攻受到攻速的机制
-            if (skill.skillModel.effectByAttackSpeed)
+            var canTickTimeline = skill.CanTickTimeline();
+            if (canTickTimeline)
             {
-                var attackSpeed = entity.attributeCom.GetValue(GameAttributeType.AttackSpeed);
-                attackSpeed = GameMathF.Min(attackSpeed, 5);
-                var length = timelineCom.length;
-                timeScale = attackSpeed == 0 ? 1 : attackSpeed * length;
+                float timeScale = 1;
+                var timelineCom = skill.timelineCom;
+                // 普攻受到攻速的机制
+                if (skill.skillModel.effectByAttackSpeed)
+                {
+                    var attackSpeed = entity.attributeCom.GetValue(GameAttributeType.AttackSpeed);
+                    attackSpeed = GameMathF.Min(attackSpeed, 5);
+                    var length = timelineCom.length;
+                    timeScale = attackSpeed == 0 ? 1 : attackSpeed * length;
+                }
+                timelineCom.Tick(dt * timeScale);
             }
-            timelineCom.Tick(dt * timeScale);
         }
 
         protected override GameRoleStateType _CheckExit(GameRoleEntity role)

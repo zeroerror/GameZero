@@ -69,6 +69,7 @@ namespace GamePlay.Bussiness.Logic
             skill.BindTransformCom(role.transformCom);
             skill.BindAttributeCom(role.attributeCom);
             skill.BindBaseAttributeCom(role.baseAttributeCom);
+
             // 为主动技能添加时间轴事件
             var skillModel = skill.skillModel;
             if (skillModel.skillType != GameSkillType.Passive)
@@ -87,6 +88,23 @@ namespace GamePlay.Bussiness.Logic
                     });
                 });
             }
+
+            // 为技能位移添加时间轴事件
+            var dashSpeedModels = skillModel.movementModel.dashSpeedModels;
+            var modelCount = dashSpeedModels?.Length ?? 0;
+            for (int i = 0; i < modelCount - 1; i++)
+            {
+                var dash = dashSpeedModels[i];
+                var nextDash = dashSpeedModels[i + 1];
+                for (int dashFrame = dash.frame; dashFrame < nextDash.frame; dashFrame++)
+                {
+                    skill.timelineCom.AddEventByFrame(dashFrame, () =>
+                    {
+                        GameSkillMovementUtil.DoDash(skill);
+                    });
+                }
+            }
+
             skillCom.Add(skill);
             repo.TryAdd(skill);
             return skill;
@@ -186,12 +204,13 @@ namespace GamePlay.Bussiness.Logic
 
         public void CastSkill(GameRoleEntity role, GameSkillEntity skill)
         {
-            this._calcSkillCost(role, skill);
+            this._CalcSkillCost(role, skill);
+            skill.dashCom.Clear();
             skill.timelineCom.Play();
             skill.actionTargeterCom.SetTargeterList(role.inputCom.targeterArgsList);
         }
 
-        private void _calcSkillCost(GameRoleEntity role, GameSkillEntity skill)
+        private void _CalcSkillCost(GameRoleEntity role, GameSkillEntity skill)
         {
             var conditionModel = skill.skillModel.conditionModel;
             // CD

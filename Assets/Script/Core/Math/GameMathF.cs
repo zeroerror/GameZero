@@ -1,3 +1,4 @@
+using GameVec2 = UnityEngine.Vector2;
 namespace GamePlay.Core
 {
     public static class GameMathF
@@ -66,6 +67,11 @@ namespace GamePlay.Core
         /// </summary>
         /// <returns></returns>
         public static float RandomRange(float min, float max) => UnityEngine.Random.Range(min, max);
-        public static float RandomRange(in UnityEngine.Vector2 range) => RandomRange(range.x, range.y);
+        public static float RandomRange(in GameVec2 range) => RandomRange(range.x, range.y);
+
+        public static GameVec2 Lerp(in GameVec2 a, in GameVec2 b, float t)
+        {
+            return new GameVec2(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t);
+        }
     }
 }

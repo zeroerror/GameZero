@@ -41,9 +41,25 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 0.5
+        radius: 3
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
+  movementEM:
+    movementType: 2
+    pauseTimeline: 0
+    clip: {fileID: 7400000, guid: 9363281745c4cde468ffbbc1eeae1db3, type: 2}
+    startTime: 0
+    speedEMs:
+    - frame: 0
+      speed: 0
+    - frame: 10
+      speed: 5.7
+    - frame: 20
+      speed: -5.7000003
+    - frame: 30
+      speed: 0

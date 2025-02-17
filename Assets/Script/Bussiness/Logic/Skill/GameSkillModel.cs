@@ -7,9 +7,10 @@ namespace GamePlay.Bussiness.Logic
         public readonly string animName;
         public readonly float length;
         public readonly int frameLength;
-        public readonly GameTimelineEventModel[] timelineEvModels;
 
+        public readonly GameTimelineEventModel[] timelineEvModels;
         public readonly GameSkillConditionModel conditionModel;
+        public readonly GameSkillMovementModel movementModel;
 
         public GameSkillModel(
             int typeId,
@@ -17,7 +18,8 @@ namespace GamePlay.Bussiness.Logic
             string animName,
             float length,
             GameTimelineEventModel[] timelineModels,
-            GameSkillConditionModel conditionModel
+            GameSkillConditionModel conditionModel,
+            GameSkillMovementModel movementModel
         )
         {
             this.typeId = typeId;
@@ -27,6 +29,7 @@ namespace GamePlay.Bussiness.Logic
             this.frameLength = (int)(length * GameTimeCollection.frameRate);
             this.timelineEvModels = timelineModels;
             this.conditionModel = conditionModel;
+            this.movementModel = movementModel;
         }
 
         /// <summary> 是否受到攻速的影响 </summary>

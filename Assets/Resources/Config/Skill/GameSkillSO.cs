@@ -17,9 +17,10 @@ namespace GamePlay.Config
         public AnimationClip animClip;
         public string animName;
         public float animLength;
-        public GameTimelineEventEM[] timelineEvents;
 
+        public GameTimelineEventEM[] timelineEvents;
         public GameSkillConditionEM conditionEM;
+        public GameSkillMovementEM movementEM;
 
         public void Save()
         {
@@ -66,7 +67,9 @@ namespace GamePlay.Config
                 animName,
                 animLength,
                 timelineEvents.ToModels(),
-                conditionEM.ToModel());
+                conditionEM.ToModel(),
+                movementEM.ToModel()
+            );
             return model;
         }
 

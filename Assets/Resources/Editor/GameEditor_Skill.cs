@@ -18,6 +18,7 @@ namespace GamePlay.Config
         private SerializedProperty animLength_p;
         private SerializedProperty timelineEvents_p;
         private SerializedProperty conditionEM_p;
+        private SerializedProperty movementEM_p;
         private void OnEnable()
         {
             this._serializedObject = new SerializedObject(target);
@@ -29,6 +30,7 @@ namespace GamePlay.Config
             this.animLength_p = _serializedObject.FindProperty("animLength");
             this.timelineEvents_p = _serializedObject.FindProperty("timelineEvents");
             this.conditionEM_p = _serializedObject.FindProperty("conditionEM");
+            this.movementEM_p = _serializedObject.FindProperty("movementEM");
         }
 
         public override void OnInspectorGUI()
@@ -39,6 +41,21 @@ namespace GamePlay.Config
 
             EditorGUILayout.BeginVertical("box");
             this._ShowBasicData(so);
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.BeginVertical("box");
+            this._ShowTimeline();
+            EditorGUILayout.EndVertical();
+
+            // 释放条件
+            EditorGUILayout.BeginVertical("box");
+            this.conditionEM_p.DrawProperty();
+            EditorGUILayout.EndVertical();
+
+            // 技能位移
+            EditorGUILayout.BeginVertical("box");
+            this.movementEM_p.FindPropertyRelative("clip").objectReferenceValue = this.animClip_p.objectReferenceValue;
+            this.movementEM_p.DrawProperty();
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical("box");
@@ -57,9 +74,11 @@ namespace GamePlay.Config
             this.animClip_p.DrawProperty("动画文件");
             this.animName_p.DrawProperty("动画名称");
             this.animLength_p.DrawProperty("动画时长(s)");
-            this.timelineEvents_p.DrawProperty();
-            this.conditionEM_p.DrawProperty();
+        }
 
+        private void _ShowTimeline()
+        {
+            this.timelineEvents_p.DrawProperty("时间轴事件");
             var clip = this.animClip_p.objectReferenceValue as AnimationClip;
             if (clip && GUI.changed)
             {
