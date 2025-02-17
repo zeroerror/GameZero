@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_40010101
+  m_Name: template_action_40010102
   m_EditorClassIdentifier: 
-  typeId: 40010101
+  typeId: 40010102
   actionType: 1
   dmgActionEM:
-    dmgType: 2
-    value: 100
+    dmgType: 1
+    value: 200
     valueFormat: 2
     refType: 2
     selectorEM:
@@ -374,7 +374,7 @@ MonoBehaviour:
     duration: 0
   actionEMR:
     typeId: 0
-    desc: "\u72C2\u66B4\u8001\u9F20\u6495\u54AC"
+    desc: 
     actEffectPrefab: {fileID: 0}
     actVFXScale: {x: 0, y: 0}
     actVFXOffset: {x: 0, y: 0}
@@ -383,7 +383,7 @@ MonoBehaviour:
       amplitude: 0
       frequency: 0
       duration: 0
-    hitEffectPrefab: {fileID: 6927947509564487783, guid: ce33e8716848a2542b26d97976a509fb, type: 3}
+    hitEffectPrefab: {fileID: 6927947509564487783, guid: 75dc273d0dc18eb4bb2c2398b3a758f7, type: 3}
     hitVFXScale: {x: 0.3, y: 0.3}
     hitVFXOffset: {x: 0, y: 1}
     hitCamShakeModel:

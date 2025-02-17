@@ -7,15 +7,15 @@ namespace GamePlay.Config
     {
         public float time;
         public int frame;
-        public float speed;
-        public bool isVariablePoint;
+        public float x;
+        public float distanceRatio;
     }
 
     public static class GameSKillDashSpeedEMExt
     {
         public static GameSKillDashSpeedModel ToModel(this GameSKillDashSpeedEM em)
         {
-            return new GameSKillDashSpeedModel(em.frame, em.speed, em.isVariablePoint);
+            return new GameSKillDashSpeedModel(em.frame, em.distanceRatio);
         }
 
         public static GameSKillDashSpeedModel[] ToModels(this GameSKillDashSpeedEM[] ems)

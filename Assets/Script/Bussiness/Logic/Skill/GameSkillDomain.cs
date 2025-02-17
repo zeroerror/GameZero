@@ -70,7 +70,7 @@ namespace GamePlay.Bussiness.Logic
             skill.BindAttributeCom(role.attributeCom);
             skill.BindBaseAttributeCom(role.baseAttributeCom);
 
-            // 为主动技能添加时间轴事件
+            // 时间轴事件 - 技能行为
             var skillModel = skill.skillModel;
             if (skillModel.skillType != GameSkillType.Passive)
             {
@@ -89,19 +89,38 @@ namespace GamePlay.Bussiness.Logic
                 });
             }
 
-            // 为技能位移添加时间轴事件
-            var dashSpeedModels = skillModel.movementModel.dashSpeedModels;
-            var modelCount = dashSpeedModels?.Length ?? 0;
-            for (int i = 0; i < modelCount - 1; i++)
+            var isBlink = skillModel.movementModel.movementType == GameSkillMovementType.Blink;
+            if (isBlink)
             {
-                var dash = dashSpeedModels[i];
-                var nextDash = dashSpeedModels[i + 1];
-                for (int dashFrame = dash.frame; dashFrame < nextDash.frame; dashFrame++)
+                // 时间轴事件 - 技能闪现
+                skill.timelineCom.AddEventByFrame(0, () =>
                 {
-                    skill.timelineCom.AddEventByFrame(dashFrame, () =>
+                    skill.transformCom.position = skill.actionTargeterCom.targetPos;
+                    // 提交RC - 立即同步位置
+                    var rcArgs = new GameTransformRCArgs_SyncImmediate
                     {
-                        GameSkillMovementUtil.DoDash(skill);
-                    });
+                        idArgs = skill.idCom.parent.idCom.ToArgs(),
+                        transArgs = skill.transformCom.ToArgs()
+                    };
+                    this._context.SubmitRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC_IMMEDIATE, rcArgs);
+                });
+            }
+            else
+            {
+                // 时间轴事件 - 技能冲刺
+                var dashSpeedModels = skillModel.movementModel.dashSpeedModels;
+                var modelCount = dashSpeedModels?.Length ?? 0;
+                for (int i = 0; i < modelCount - 1; i++)
+                {
+                    var dash = dashSpeedModels[i];
+                    var nextDash = dashSpeedModels[i + 1];
+                    for (int dashFrame = dash.frame; dashFrame < nextDash.frame; dashFrame++)
+                    {
+                        skill.timelineCom.AddEventByFrame(dashFrame, () =>
+                        {
+                            GameSkillDashUtil.DoDash(skill);
+                        });
+                    }
                 }
             }
 

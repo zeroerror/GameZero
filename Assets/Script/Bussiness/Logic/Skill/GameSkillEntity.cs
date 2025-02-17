@@ -50,13 +50,18 @@ namespace GamePlay.Bussiness.Logic
                 return true;
             }
 
-            var curFrame = this.timelineCom.frame;
-            var isDashing = this.dashCom.dashBeginFrame <= curFrame && curFrame < this.dashCom.dashEndFrame;
+            var isDashing = this.IsDashing();
             if (!isDashing)
             {
                 return true;
             }
-            return movementModel.pauseTimeline;
+            return !movementModel.pauseTimeline;
+        }
+
+        public bool IsDashing()
+        {
+            var curFrame = this.timelineCom.frame;
+            return this.dashCom.dashBeginFrame <= curFrame && curFrame < this.dashCom.dashEndFrame;
         }
     }
 }

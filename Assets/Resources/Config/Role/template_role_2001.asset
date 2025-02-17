@@ -26,7 +26,7 @@ MonoBehaviour:
   - type: 2
     value: 300
   - type: 7
-    value: 2
+    value: 0
   - type: 6
     value: 1.5
   careerType: 2

@@ -51,7 +51,7 @@ namespace GamePlay.Config
                             {
                                 time = keys[i].time.ToFixed(2),
                                 frame = keys[i].time.ToFrame(),
-                                speed = 0
+                                x = key.value,
                             });
                             break;
                         }
@@ -67,14 +67,8 @@ namespace GamePlay.Config
                         {
                             time = keys[i].time.ToFixed(2),
                             frame = frame,
-                            speed = speed
+                            x = key.value,
                         });
-                    }
-
-                    // 变量点设置
-                    if (maxPositiveDisIdx != -1)
-                    {
-                        speedEMList[maxPositiveDisIdx].isVariablePoint = true;
                     }
                 });
             }
@@ -85,12 +79,15 @@ namespace GamePlay.Config
                 speedEMs_p.arraySize = speedEMList.Count;
                 for (int i = 0; i < speedEMList.Count; i++)
                 {
-                    var em_p = speedEMs_p.GetArrayElementAtIndex(i);
                     var em = speedEMList[i];
+                    em.distanceRatio = em.x / maxPositiveDis;
+
+                    var em_p = speedEMs_p.GetArrayElementAtIndex(i);
                     em_p.FindPropertyRelative("time").floatValue = em.time;
                     em_p.FindPropertyRelative("frame").intValue = em.frame;
-                    em_p.FindPropertyRelative("speed").floatValue = em.speed;
-                    EditorGUILayout.LabelField($"{em.time}秒({em.frame}帧): 速度{em.speed}");
+                    em_p.FindPropertyRelative("x").floatValue = em.x;
+                    em_p.FindPropertyRelative("distanceRatio").floatValue = em.distanceRatio;
+                    EditorGUILayout.LabelField($"{em.time}秒({em.frame}帧): 距离比例{em.distanceRatio}");
                 }
                 // 冲刺距离
                 var dashDistance_p = property.FindPropertyRelative("dashDistance");

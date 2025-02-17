@@ -19,6 +19,7 @@ MonoBehaviour:
   prefabUrl: Role/4001/role_prefab_4001
   skills:
   - {fileID: 11400000, guid: 3fce710b6cdaa9e418b2d816263732f6, type: 2}
+  - {fileID: 11400000, guid: 359ca9915bc9a8049b4bc63907e57c7b, type: 2}
   attributes:
   - type: 5
     value: 8
@@ -29,3 +30,4 @@ MonoBehaviour:
   - type: 6
     value: 1.5
   careerType: 4
+  isMultyAnimationLayer: 0

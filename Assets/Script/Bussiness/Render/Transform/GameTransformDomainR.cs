@@ -29,10 +29,12 @@ namespace GamePlay.Bussiness.Render
         public void BindEvents()
         {
             this._context.BindRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, this._OnTransformSync);
+            this._context.BindRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC_IMMEDIATE, this._OnTransformSyncImmediate);
         }
         public void UnbindEvents()
         {
             this._context.UnbindRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC, this._OnTransformSync);
+            this._context.UnbindRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC_IMMEDIATE, this._OnTransformSyncImmediate);
         }
 
         private void _OnTransformSync(object args)
@@ -46,6 +48,20 @@ namespace GamePlay.Bussiness.Render
                 return;
             }
             entity.transformCom.SetByArgs(rcArgs.transArgs);
+        }
+
+        private void _OnTransformSyncImmediate(object args)
+        {
+            var rcArgs = (GameTransformRCArgs_SyncImmediate)args;
+            ref var idArgs = ref rcArgs.idArgs;
+            GameEntityBase entity = this._context.FindEntity(idArgs);
+            if (entity == null)
+            {
+                this._context.DelayRC(GameTransformRCCollection.RC_GAME_TRANSFORMN_SYNC_IMMEDIATE, args);
+                return;
+            }
+            entity.transformCom.SetByArgs(rcArgs.transArgs);
+            entity.SetPosition(entity.transformCom.position);
         }
 
         public void Tick(float dt)

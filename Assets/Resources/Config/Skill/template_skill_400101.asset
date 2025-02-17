@@ -22,9 +22,10 @@ MonoBehaviour:
   - time: 0.33333334
     frame: 20
     actions:
+    - {fileID: 11400000, guid: e3a1513436f46da4294f1f7aef1e403e, type: 2}
     - {fileID: 11400000, guid: b297016468182cb438c3568ff871d6f7, type: 2}
   conditionEM:
-    targeterType: 2
+    targeterType: 1
     cdTime: 0
     mpCost: 0
     selectorEM:
@@ -41,7 +42,7 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 3
+        radius: 10
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -50,16 +51,24 @@ MonoBehaviour:
       rangeSelectLimitCount: 0
       rangeSelectSortType: 0
   movementEM:
-    movementType: 2
+    movementType: 0
     pauseTimeline: 0
     clip: {fileID: 7400000, guid: 9363281745c4cde468ffbbc1eeae1db3, type: 2}
-    startTime: 0
     speedEMs:
-    - frame: 0
-      speed: 0
-    - frame: 10
-      speed: 5.7
-    - frame: 20
-      speed: -5.7000003
-    - frame: 30
-      speed: 0
+    - time: 0
+      frame: 0
+      x: 0
+      distanceRatio: 0
+    - time: 0.17
+      frame: 10
+      x: 0
+      distanceRatio: 0
+    - time: 0.33
+      frame: 20
+      x: 0
+      distanceRatio: 0
+    - time: 0.5
+      frame: 30
+      x: 0
+      distanceRatio: 0
+    dashDistance: 1

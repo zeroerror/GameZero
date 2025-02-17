@@ -18,7 +18,7 @@ namespace GamePlay.Config
         {
             return new GameSkillMovementModel(
                 movementType,
-                speedEMs.ToModels(),
+                movementType != GameSkillMovementType.None ? speedEMs?.ToModels() : null,
                 dashDistance,
                 pauseTimeline
             );

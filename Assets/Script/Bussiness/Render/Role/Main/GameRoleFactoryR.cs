@@ -66,13 +66,19 @@ namespace GamePlay.Bussiness.Render
 
         public AnimationClip LoadAnimationClip(int typeId, string clipName)
         {
-            var animClip = Resources.Load<AnimationClip>($"Role/{typeId}/{clipName}");
-            if (!animClip)
+            var originClip = Resources.Load<AnimationClip>($"Role/{typeId}/{clipName}");
+            if (!originClip)
             {
                 GameLogger.LogError($"角色工厂[渲染层]: 加载动画失败 {typeId} {clipName}");
             }
-            animClip.events = null;// 动画事件忽略
-            return animClip;
+            var clip = Object.Instantiate(originClip);
+            // 动画事件忽略
+            clip.events = null;
+            // 移除动画Body/Right在X轴的位移
+            var relativePath = "Body";
+            clip.SetCurve(relativePath, typeof(Transform), "m_LocalPosition", null);
+
+            return clip;
         }
 
         public Slider LoadHPSlider(bool isEnemy)

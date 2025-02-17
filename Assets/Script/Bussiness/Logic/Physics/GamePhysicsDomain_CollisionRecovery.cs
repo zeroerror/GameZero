@@ -77,10 +77,18 @@ namespace GamePlay.Bussiness.Logic
             float mtvCoef1 = 0.5f, mtvCoef2 = 0.5f;
             var isMoving1 = stateType1 == GameRoleStateType.Move;
             var isMoving2 = stateType2 == GameRoleStateType.Move;
+            var isSkillDashing1 = stateType1 == GameRoleStateType.Cast && role1.fsmCom.castState.skill.IsDashing();
+            var isSkillDashing2 = stateType2 == GameRoleStateType.Cast && role2.fsmCom.castState.skill.IsDashing();
 
             if (isMoving1 ^ isMoving2)
             {
                 // 仅有1个角色不在移动状态, 不进行碰撞恢复
+                mtvCoef1 = 0;
+                mtvCoef2 = 0;
+            }
+            else if (isSkillDashing1 || isSkillDashing2)
+            {
+                // 存在1个角色在技能冲刺状态, 不进行碰撞恢复
                 mtvCoef1 = 0;
                 mtvCoef2 = 0;
             }

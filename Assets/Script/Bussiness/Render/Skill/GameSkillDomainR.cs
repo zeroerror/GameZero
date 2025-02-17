@@ -1,6 +1,6 @@
-using System.Runtime.CompilerServices;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using UnityEngine;
 
 namespace GamePlay.Bussiness.Render
 {
@@ -68,8 +68,10 @@ namespace GamePlay.Bussiness.Render
 
             skill.idCom.SetByArgs(skillIdArgs);
             skillCom.Add(skill);
+
             // 绑定TransformCom为角色TransformCom
             skill.BindTransformCom(role.transformCom);
+
             repo.TryAdd(skill);
             return skill;
         }
