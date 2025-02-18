@@ -61,7 +61,7 @@ namespace GamePlay.Bussiness.Render
             var repo = this._skillContext.repo;
             if (!repo.TryFetch(skillIdArgs.entityId, out var skill))
             {
-                skill = this._skillContext.factory.Load(typeId);
+                skill = this._skillContext.factory.Load(typeId, role.model.isMultyAnimationLayer);
             }
             if (skill == null)
             {
