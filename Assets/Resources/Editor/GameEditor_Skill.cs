@@ -44,7 +44,8 @@ namespace GamePlay.Config
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical("box");
-            this._ShowTimeline();
+            this.RefreshClipInfo();
+            this.timelineEvents_p.DrawProperty("时间轴事件");
             EditorGUILayout.EndVertical();
 
             // 释放条件
@@ -76,36 +77,34 @@ namespace GamePlay.Config
             this.animLength_p.DrawProperty("动画时长(s)");
         }
 
-        private void _ShowTimeline()
+        public void RefreshClipInfo(bool needApply = false)
         {
-            this.timelineEvents_p.DrawProperty("时间轴事件");
             var clip = this.animClip_p.objectReferenceValue as AnimationClip;
-            if (clip && GUI.changed)
+            if (!clip) return;
+            // 同步动画名称和时长
+            var clipUrl = AssetDatabase.GetAssetPath(clip);
+            clipUrl = clipUrl.Substring(17);
+            clipUrl = clipUrl.Substring(0, clipUrl.Length - 5);
+            this.clipUrl_p.stringValue = clipUrl;
+            this.animLength_p.floatValue = clip.length;
+            // 同步时间轴事件
+            var events = AnimationUtility.GetAnimationEvents(clip);
+            this.timelineEvents_p.arraySize = events?.Length ?? 0;
+            for (int i = 0; i < this.timelineEvents_p.arraySize; i++)
             {
-                // 同步动画名称和时长
-                var clipUrl = AssetDatabase.GetAssetPath(clip);
-                clipUrl = clipUrl.Substring(17);
-                clipUrl = clipUrl.Substring(0, clipUrl.Length - 5);
-                this.clipUrl_p.stringValue = clipUrl;
-                this.animLength_p.floatValue = clip.length;
-                // 同步时间轴事件
-                var events = AnimationUtility.GetAnimationEvents(clip);
-                this.timelineEvents_p.arraySize = events?.Length ?? 0;
-                for (int i = 0; i < this.timelineEvents_p.arraySize; i++)
+                var e = events[i];
+                var time = e.time;
+                var frame = (int)(e.time * GameTimeCollection.frameRate);
+                var element = this.timelineEvents_p.GetArrayElementAtIndex(i);
+                if (element == null)
                 {
-                    var e = events[i];
-                    var time = e.time;
-                    var frame = (int)(e.time * GameTimeCollection.frameRate);
-                    var element = this.timelineEvents_p.GetArrayElementAtIndex(i);
-                    if (element == null)
-                    {
-                        this.timelineEvents_p.InsertArrayElementAtIndex(i);
-                        element = this.timelineEvents_p.GetArrayElementAtIndex(i);
-                    }
-                    element.FindPropertyRelative("time").floatValue = time;
-                    element.FindPropertyRelative("frame").intValue = frame;
+                    this.timelineEvents_p.InsertArrayElementAtIndex(i);
+                    element = this.timelineEvents_p.GetArrayElementAtIndex(i);
                 }
+                element.FindPropertyRelative("time").floatValue = time;
+                element.FindPropertyRelative("frame").intValue = frame;
             }
+            if (needApply) this._serializedObject.ApplyModifiedProperties();
         }
 
         private void _ShowRoleSORefs(GameSkillSO so)
