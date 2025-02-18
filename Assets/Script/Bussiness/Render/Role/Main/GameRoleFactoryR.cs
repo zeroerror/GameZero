@@ -43,9 +43,14 @@ namespace GamePlay.Bussiness.Render
                 GameLogger.LogError($"角色工厂[渲染层]: 加载角色预制体失败 {model.prefabUrl}");
                 return null;
             }
+
             var prefabBody = GameObject.Instantiate(rolePrefab);
-            if (!prefabBody.TryGetComponent<Animator>(out var animator)) animator = prefabBody.AddComponent<Animator>();
-            if (!prefabBody.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) spriteRenderer = prefabBody.AddComponent<SpriteRenderer>();
+            if (prefabBody.TryGetComponent<Animator>(out var animator)) GameObject.DestroyImmediate(animator);
+            animator = prefabBody.AddComponent<Animator>();
+
+            if (prefabBody.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) GameObject.DestroyImmediate(spriteRenderer);
+            spriteRenderer = prefabBody.AddComponent<SpriteRenderer>();
+
             prefabBody.transform.SetParent(tmBody.transform);
 
             // 测试代码, 默认设置弓箭挂点图片
@@ -68,13 +73,12 @@ namespace GamePlay.Bussiness.Render
         public AnimationClip LoadRoleAnimationClip(int typeId, string clipName)
         {
             var url = $"Role/{typeId}/{clipName}";
-            var clip = GameResourceService.Load<AnimationClip>(url);
+            var clip = GameResourceService.LoadAnimationClip(url);
             if (!clip)
             {
                 GameLogger.LogError($"角色工厂[渲染层]: 加载动画失败 {url}");
                 return null;
             }
-            clip.events = null;
             return clip;
         }
 

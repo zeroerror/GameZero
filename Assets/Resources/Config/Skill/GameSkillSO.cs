@@ -1,8 +1,6 @@
 #if UNITY_EDITOR
-using System.Runtime.Serialization.Formatters;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Render;
-using GamePlay.Core;
 using UnityEditor;
 #endif
 using UnityEngine;
@@ -16,6 +14,7 @@ namespace GamePlay.Config
         public GameSkillType skillType;
         public AnimationClip animClip;
         public string clipUrl;
+        public string clipName;
         public float animLength;
 
         public GameTimelineEventEM[] timelineEvents;
@@ -61,7 +60,6 @@ namespace GamePlay.Config
             var model = new GameSkillModel(
                 typeId,
                 skillType,
-                clipUrl,
                 animLength,
                 timelineEvents.ToModels(),
                 conditionEM.ToModel(),
@@ -72,7 +70,7 @@ namespace GamePlay.Config
 
         public GameSkillModelR ToModelR()
         {
-            var model = new GameSkillModelR(typeId, skillType, clipUrl, animLength, movementEM.ToModel());
+            var model = new GameSkillModelR(typeId, skillType, clipUrl, clipName, animLength, movementEM.ToModel());
             return model;
         }
     }

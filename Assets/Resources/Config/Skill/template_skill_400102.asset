@@ -17,6 +17,7 @@ MonoBehaviour:
   skillType: 3
   animClip: {fileID: 7400000, guid: 9e32f30abf4fe9d438f3e13a9669c098, type: 2}
   clipUrl: Role/4001/skill_4001
+  clipName: skill_4001
   animLength: 0.56666666
   timelineEvents:
   - time: 0.35

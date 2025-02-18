@@ -44,7 +44,7 @@ namespace GamePlay.Bussiness.Render
         {
             var skillId = (int)args[0];
             role.skillCom.TryGet(skillId, out var skill);
-            this._context.domainApi.roleApi.PlayAnim(role, skill.model.clipUrl);
+            this._context.domainApi.roleApi.PlayAnim(role, skill.model.clipName);
             role.fsmCom.EnterCast(skill);
             if (skill.model.skillType == GameSkillType.MagicAttack) role.attributeBarCom.mpSlider.SetActive(false);
         }

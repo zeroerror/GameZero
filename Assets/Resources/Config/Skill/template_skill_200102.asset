@@ -17,6 +17,7 @@ MonoBehaviour:
   skillType: 3
   animClip: {fileID: 7400000, guid: a168baf3269d82f4b845c18fe2e44af1, type: 2}
   clipUrl: Role/2001/skill_triple_stab
+  clipName: skill_triple_stab
   animLength: 0.6666667
   timelineEvents:
   - time: 0.28333333

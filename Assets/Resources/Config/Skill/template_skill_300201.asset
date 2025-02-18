@@ -17,6 +17,7 @@ MonoBehaviour:
   skillType: 2
   animClip: {fileID: 7400000, guid: 3aa7b725a78fcd9408e4ca8bc1834470, type: 2}
   clipUrl: Role/3002/attack
+  clipName: attack
   animLength: 1
   timelineEvents:
   - time: 0.76666665

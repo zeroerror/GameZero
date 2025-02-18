@@ -7,14 +7,23 @@ namespace GamePlay.Bussiness.Render
         public readonly int typeId;
         public readonly GameSkillType skillType;
         public readonly string clipUrl;
+        public readonly string clipName;
         public readonly float clipLength;
         public readonly GameSkillMovementModel movementModel;
 
-        public GameSkillModelR(int typeId, GameSkillType skllType, string clipUrl, float clipLength, GameSkillMovementModel movementModel)
+        public GameSkillModelR(
+            int typeId,
+            GameSkillType skllType,
+            string clipUrl,
+            string clipName,
+            float clipLength,
+            GameSkillMovementModel movementModel
+        )
         {
             this.typeId = typeId;
             this.skillType = skllType;
             this.clipUrl = clipUrl;
+            this.clipName = clipName;
             this.clipLength = clipLength;
             this.movementModel = movementModel;
         }

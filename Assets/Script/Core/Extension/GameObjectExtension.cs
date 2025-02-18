@@ -165,7 +165,7 @@ namespace GamePlay.Core
             return url;
         }
 
-        public static string GetResRelativeUrl(this UnityEngine.Object obj, bool withExtension = false)
+        public static string GetResRelativeUrl(this Object obj, bool withExtension = false)
         {
             var url = UnityEditor.AssetDatabase.GetAssetPath(obj);
             url = System.Text.RegularExpressions.Regex.Replace(url, @"Assets/Resources/", "");
@@ -174,6 +174,13 @@ namespace GamePlay.Core
                 url = url.Substring(0, url.LastIndexOf('.'));
             }
             return url;
+        }
+
+        public static Object Clone(this Object obj)
+        {
+            var clone = Object.Instantiate(obj);
+            clone.name = obj.name;
+            return clone;
         }
     }
 }

@@ -86,7 +86,7 @@ namespace GamePlay.Bussiness.UI
             }
 
             var clipUrl = $"{prefabUrl}_{style}";
-            clip = GameResourceService.Load<AnimationClip>(clipUrl);
+            clip = GameResourceService.LoadAnimationClip(clipUrl);
             if (clip == null)
             {
                 GameLogger.LogError($"UI跳字: 加载动画失败 {clipUrl}");

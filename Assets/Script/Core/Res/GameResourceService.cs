@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace GamePlay.Core
@@ -30,10 +31,10 @@ namespace GamePlay.Core
             var originObj = Resources.Load<T>(url);
             if (originObj == null)
             {
-                Debug.LogError($"资源加载失败: {url}");
+                GameLogger.LogError($"资源加载失败: {url}");
                 return null;
             }
-            var objInst = Object.Instantiate(originObj);
+            var objInst = typeof(T) == typeof(GameObject) ? originObj : originObj.Clone() as T;
             _resCache[url] = objInst;
             return objInst;
         }
@@ -58,7 +59,8 @@ namespace GamePlay.Core
                  {
                      return;
                  }
-                 var objInst = Object.Instantiate(rr.asset as T);
+                 var objInst = rr.asset.Clone() as T;
+                 Object.DestroyImmediate(objInst);
                  _resCache[url] = objInst;
                  cb?.Invoke(objInst);
              };
@@ -79,7 +81,7 @@ namespace GamePlay.Core
                     return cacheResList as T[];
                 }
                 cacheResList = Resources.LoadAll<T>(dirUrl);
-                cacheResList = cacheResList.Map((obj) => Object.Instantiate(obj));
+                cacheResList = cacheResList.Map((obj) => obj.Clone());
                 cacheDict[type] = cacheResList;
                 return cacheResList as T[];
             }
@@ -87,7 +89,7 @@ namespace GamePlay.Core
             _resListCache[dirUrl] = cacheDict;
 
             var resList = Resources.LoadAll<T>(dirUrl);
-            resList = resList.Map((obj) => Object.Instantiate(obj));
+            resList = resList.Map((obj) => obj.Clone() as T);
             cacheDict[type] = resList;
             return resList;
         }
@@ -106,7 +108,7 @@ namespace GamePlay.Core
                     return cacheResList;
                 }
                 cacheResList = Resources.LoadAll(dirUrl, type);
-                cacheResList = cacheResList.Map((obj) => Object.Instantiate(obj));
+                cacheResList = cacheResList.Map((obj) => obj.Clone());
                 cacheDict[type] = cacheResList;
                 return cacheResList;
             }
@@ -114,9 +116,16 @@ namespace GamePlay.Core
             _resListCache[dirUrl] = cacheDict;
 
             var resList = Resources.LoadAll(dirUrl, type);
-            resList = resList.Map((obj) => Object.Instantiate(obj));
+            resList = resList.Map((obj) => obj.Clone());
             cacheDict[type] = resList;
             return resList;
+        }
+
+        public static AnimationClip LoadAnimationClip(string url)
+        {
+            var clip = Load<AnimationClip>(url);
+            clip.events = null;
+            return clip;
         }
     }
 }

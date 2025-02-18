@@ -15,6 +15,7 @@ namespace GamePlay.Config
         private SerializedProperty skillType_p;
         private SerializedProperty animClip_p;
         private SerializedProperty clipUrl_p;
+        private SerializedProperty clipName_p;
         private SerializedProperty animLength_p;
         private SerializedProperty timelineEvents_p;
         private SerializedProperty conditionEM_p;
@@ -27,6 +28,8 @@ namespace GamePlay.Config
             this.skillType_p = _serializedObject.FindProperty("skillType");
             this.animClip_p = _serializedObject.FindProperty("animClip");
             this.clipUrl_p = _serializedObject.FindProperty("clipUrl");
+            this.clipName_p = _serializedObject.FindProperty("clipName");
+
             this.animLength_p = _serializedObject.FindProperty("animLength");
             this.timelineEvents_p = _serializedObject.FindProperty("timelineEvents");
             this.conditionEM_p = _serializedObject.FindProperty("conditionEM");
@@ -74,6 +77,7 @@ namespace GamePlay.Config
             this.skillType_p.DrawProperty("技能类型");
             this.animClip_p.DrawProperty("动画文件");
             this.clipUrl_p.DrawProperty("动画路径");
+            this.clipName_p.DrawProperty("动画名称");
             this.animLength_p.DrawProperty("动画时长(s)");
         }
 
@@ -86,6 +90,7 @@ namespace GamePlay.Config
             clipUrl = clipUrl.Substring(17);
             clipUrl = clipUrl.Substring(0, clipUrl.Length - 5);
             this.clipUrl_p.stringValue = clipUrl;
+            this.clipName_p.stringValue = clip.name;
             this.animLength_p.floatValue = clip.length;
             // 同步时间轴事件
             var events = AnimationUtility.GetAnimationEvents(clip);

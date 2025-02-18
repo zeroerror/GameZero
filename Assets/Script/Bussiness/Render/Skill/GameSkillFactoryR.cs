@@ -30,7 +30,8 @@ namespace GamePlay.Bussiness.Render
             var isPassive = skillModel.skillType == GameSkillType.Passive;
             if (isPassive) return;
             var url = skillModel.clipUrl;
-            var clip = GameResourceService.Load<AnimationClip>(url);
+            var clip = GameResourceService.LoadAnimationClip(url);
+            clip.events = null;
             var movementType = movementModel.movementType;
             if (movementType != GameSkillMovementType.FixedTimeDash && movementType != GameSkillMovementType.FixedSpeedDash) return;
             clip.SetCurve("Body", typeof(Transform), "m_localPosition", null);
