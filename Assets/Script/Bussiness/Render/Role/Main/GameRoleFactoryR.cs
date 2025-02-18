@@ -68,23 +68,15 @@ namespace GamePlay.Bussiness.Render
         public AnimationClip LoadRoleAnimationClip(int typeId, string clipName)
         {
             var url = $"Role/{typeId}/{clipName}";
-            if (this._clipCache.TryGetValue(url, out var clip))
-            {
-                return clip;
-            }
-            var originClip = GameResourceService.Load<AnimationClip>(url);
-            if (!originClip)
+            var clip = GameResourceService.Load<AnimationClip>(url);
+            if (!clip)
             {
                 GameLogger.LogError($"角色工厂[渲染层]: 加载动画失败 {url}");
                 return null;
             }
-            // 实例化
-            clip = Object.Instantiate(originClip);
-            // 缓存
-            this._clipCache[url] = clip;
+            clip.events = null;
             return clip;
         }
-        private Dictionary<string, AnimationClip> _clipCache = new Dictionary<string, AnimationClip>();
 
         public Slider LoadHPSlider(bool isEnemy)
         {

@@ -19,15 +19,18 @@ namespace GamePlay.Bussiness.Render
                 GameLogger.LogError("GameSkillFactoryR.Load: typeId not found: " + typeId);
                 return null;
             }
-            var clip = GameResourceService.Load<AnimationClip>(model.clipUrl);
-            this._ProcessAnimationTransform(clip, model.movementModel);
+            this._ProcessAnimationTransform(model, model.movementModel);
             var skill = new GameSkillEntityR(model);
             return skill;
         }
 
         /// <summary> 加工动画文件的Transform信息 </summary>
-        private void _ProcessAnimationTransform(AnimationClip clip, GameSkillMovementModel movementModel)
+        private void _ProcessAnimationTransform(GameSkillModelR skillModel, GameSkillMovementModel movementModel)
         {
+            var isPassive = skillModel.skillType == GameSkillType.Passive;
+            if (isPassive) return;
+            var url = skillModel.clipUrl;
+            var clip = GameResourceService.Load<AnimationClip>(url);
             var movementType = movementModel.movementType;
             if (movementType != GameSkillMovementType.FixedTimeDash && movementType != GameSkillMovementType.FixedSpeedDash) return;
             clip.SetCurve("Body", typeof(Transform), "m_localPosition", null);
@@ -38,15 +41,15 @@ namespace GamePlay.Bussiness.Render
             if (count == 0) return;
             for (var i = 0; i < count - 1; i++)
             {
-                var model = dashModels[i];
+                var dashModel = dashModels[i];
                 var nextModel = dashModels[i + 1];
-                var fromFrame = model.frame;
+                var fromFrame = dashModel.frame;
                 var toFrame = nextModel.frame;
                 var betweenFrame = toFrame - fromFrame;
                 for (var frame = fromFrame + 1; frame <= toFrame; frame++)
                 {
                     var time = frame.ToTime();
-                    var y = Mathf.Lerp(model.y, nextModel.y, (float)(frame - fromFrame) / betweenFrame);
+                    var y = Mathf.Lerp(dashModel.y, nextModel.y, (float)(frame - fromFrame) / betweenFrame);
                     curve.AddKey(new Keyframe(time, y));
                 }
             }

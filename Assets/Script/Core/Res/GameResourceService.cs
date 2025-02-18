@@ -27,14 +27,15 @@ namespace GamePlay.Core
             {
                 return cacheObj as T;
             }
-            var obj = Resources.Load<T>(url);
-            if (obj == null)
+            var originObj = Resources.Load<T>(url);
+            if (originObj == null)
             {
                 Debug.LogError($"资源加载失败: {url}");
                 return null;
             }
-            _resCache[url] = obj;
-            return obj;
+            var objInst = Object.Instantiate(originObj);
+            _resCache[url] = objInst;
+            return objInst;
         }
 
         /// <summary>
@@ -42,23 +43,25 @@ namespace GamePlay.Core
         /// <para> url: 资源路径 </para>
         /// <para> cb: 加载完成回调 </para>
         /// </summary>
-        public static void LoadAsync<T>(string url, System.Action cb) where T : Object
+        public static void LoadAsync<T>(string url, System.Action<T> cb) where T : Object
         {
             if (url == null) return;
             if (_resCache.TryGetValue(url, out var cacheObj))
             {
-                cb?.Invoke();
+                cb?.Invoke(cacheObj as T);
                 return;
             }
-            Resources.LoadAsync<T>(url).completed += (op) =>
-            {
-                if (!op.isDone)
-                {
-
-                    return;
-                }
-                cb?.Invoke();
-            };
+            var rr = Resources.LoadAsync<T>(url);
+            rr.completed += (op) =>
+             {
+                 if (!op.isDone)
+                 {
+                     return;
+                 }
+                 var objInst = Object.Instantiate(rr.asset as T);
+                 _resCache[url] = objInst;
+                 cb?.Invoke(objInst);
+             };
         }
 
         /// <summary>
@@ -76,6 +79,7 @@ namespace GamePlay.Core
                     return cacheResList as T[];
                 }
                 cacheResList = Resources.LoadAll<T>(dirUrl);
+                cacheResList = cacheResList.Map((obj) => Object.Instantiate(obj));
                 cacheDict[type] = cacheResList;
                 return cacheResList as T[];
             }
@@ -83,6 +87,7 @@ namespace GamePlay.Core
             _resListCache[dirUrl] = cacheDict;
 
             var resList = Resources.LoadAll<T>(dirUrl);
+            resList = resList.Map((obj) => Object.Instantiate(obj));
             cacheDict[type] = resList;
             return resList;
         }
@@ -101,6 +106,7 @@ namespace GamePlay.Core
                     return cacheResList;
                 }
                 cacheResList = Resources.LoadAll(dirUrl, type);
+                cacheResList = cacheResList.Map((obj) => Object.Instantiate(obj));
                 cacheDict[type] = cacheResList;
                 return cacheResList;
             }
@@ -108,6 +114,7 @@ namespace GamePlay.Core
             _resListCache[dirUrl] = cacheDict;
 
             var resList = Resources.LoadAll(dirUrl, type);
+            resList = resList.Map((obj) => Object.Instantiate(obj));
             cacheDict[type] = resList;
             return resList;
         }
