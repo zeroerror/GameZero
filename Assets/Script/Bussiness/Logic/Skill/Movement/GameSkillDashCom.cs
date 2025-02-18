@@ -14,11 +14,11 @@ namespace GamePlay.Bussiness.Logic
 
         public GameSkillDashCom(GameSkillMovementModel movementModel)
         {
-            var dashSpeedModels = movementModel.dashSpeedModels;
-            if (dashSpeedModels != null && dashSpeedModels.Length > 0)
+            var dashModels = movementModel.dashModels;
+            if (dashModels != null && dashModels.Length > 0)
             {
-                this.dashBeginFrame = dashSpeedModels[0].frame;
-                this.dashEndFrame = dashSpeedModels[dashSpeedModels.Length - 1].frame;
+                this.dashBeginFrame = dashModels[0].frame;
+                this.dashEndFrame = dashModels[dashModels.Length - 1].frame;
             }
             this.pauseTimeline = movementModel.pauseTimeline;
         }

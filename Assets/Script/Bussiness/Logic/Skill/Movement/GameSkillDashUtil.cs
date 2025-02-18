@@ -21,7 +21,7 @@ namespace GamePlay.Bussiness.Logic
         public static void _DoDash_FixedTime(GameSkillEntity skill)
         {
             var movementModel = skill.skillModel.movementModel;
-            var dashSpeedModels = movementModel.dashSpeedModels;
+            var dashModels = movementModel.dashModels;
             var curFrame = skill.timelineCom.frame;
 
             // 记录 开始向目标冲刺的初始位置
@@ -31,10 +31,10 @@ namespace GamePlay.Bussiness.Logic
                 skill.dashCom.dashToTargetBeginPos = skill.transformCom.position;
             }
 
-            for (int i = 0; i < dashSpeedModels.Length - 1; i++)
+            for (int i = 0; i < dashModels.Length - 1; i++)
             {
-                var dash = dashSpeedModels[i];
-                var nextDash = dashSpeedModels[i + 1];
+                var dash = dashModels[i];
+                var nextDash = dashModels[i + 1];
                 var isCurDash = dash.frame <= curFrame && curFrame < nextDash.frame;
                 if (!isCurDash)
                 {

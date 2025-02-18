@@ -8,6 +8,10 @@ namespace GamePlay.Bussiness.Render
         public static readonly string ROLE_ANIM_NAME_MOVE = "walk";
         public static readonly string ROLE_ANIM_NAME_ATTACK = "attack";
         public static readonly string ROLE_ANIM_NAME_DEAD = "dead";
+        /// <summary> 多层级动画名关键字 </summary>
+        public static readonly string[] ROLE_MULTY_LAYER_ANIM_KEYS = { "idle", "move" };
+        /// <summary> 基础动画名关键字 </summary>
+        public static readonly string[] ROLE_BASE_ANIM_KEYS = { "idle", "move", "attack", "dead" };
 
         /// <summary> 血条偏移 </summary>
         public static readonly Vector2 ROLE_ATTRIBUTE_SLIDER_HP_OFFSET = new Vector2(0, 75);

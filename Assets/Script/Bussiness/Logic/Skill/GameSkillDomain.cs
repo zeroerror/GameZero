@@ -108,12 +108,12 @@ namespace GamePlay.Bussiness.Logic
             else
             {
                 // 时间轴事件 - 技能冲刺
-                var dashSpeedModels = skillModel.movementModel.dashSpeedModels;
-                var modelCount = dashSpeedModels?.Length ?? 0;
+                var dashModels = skillModel.movementModel.dashModels;
+                var modelCount = dashModels?.Length ?? 0;
                 for (int i = 0; i < modelCount - 1; i++)
                 {
-                    var dash = dashSpeedModels[i];
-                    var nextDash = dashSpeedModels[i + 1];
+                    var dash = dashModels[i];
+                    var nextDash = dashModels[i + 1];
                     for (int dashFrame = dash.frame; dashFrame < nextDash.frame; dashFrame++)
                     {
                         skill.timelineCom.AddEventByFrame(dashFrame, () =>

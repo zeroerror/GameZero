@@ -3,11 +3,11 @@ namespace GamePlay.Bussiness.Render
 {
     public class GameSkillEntityR : GameEntityBase
     {
-        public GameSkillModelR skillModel { get; private set; }
+        public GameSkillModelR model { get; private set; }
 
         public GameSkillEntityR(GameSkillModelR skillModel) : base(skillModel.typeId, GameEntityType.Skill)
         {
-            this.skillModel = skillModel;
+            this.model = skillModel;
         }
 
         public override void Tick(float dt)

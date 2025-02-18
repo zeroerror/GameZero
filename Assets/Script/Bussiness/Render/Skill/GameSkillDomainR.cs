@@ -59,7 +59,10 @@ namespace GamePlay.Bussiness.Render
             }
 
             var repo = this._skillContext.repo;
-            if (!repo.TryFetch(skillIdArgs.entityId, out var skill)) skill = this._skillContext.factory.Load(typeId);
+            if (!repo.TryFetch(skillIdArgs.entityId, out var skill))
+            {
+                skill = this._skillContext.factory.Load(typeId);
+            }
             if (skill == null)
             {
                 GameLogger.LogError("技能创建失败，技能ID不存在：" + typeId);

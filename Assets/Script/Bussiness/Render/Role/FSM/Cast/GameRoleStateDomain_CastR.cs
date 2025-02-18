@@ -31,10 +31,10 @@ namespace GamePlay.Bussiness.Render
                 return;
             }
             role.skillCom.TryGet(rcArgs.skillId, out var skill);
-            if (skill.skillModel.effectByAttackSpeed)
+            if (skill.model.effectByAttackSpeed)
             {
                 var attackSpeed = role.attributeCom.GetValue(GameAttributeType.AttackSpeed);
-                var timeScale = attackSpeed == 0 ? 1 : attackSpeed * skill.skillModel.clipLength;
+                var timeScale = attackSpeed == 0 ? 1 : attackSpeed * skill.model.clipLength;
                 role.animCom.timeScale = timeScale;
             }
             this._context.domainApi.roleApi.fsmApi.Enter(role, GameRoleStateType.Cast, rcArgs.skillId);
@@ -44,9 +44,9 @@ namespace GamePlay.Bussiness.Render
         {
             var skillId = (int)args[0];
             role.skillCom.TryGet(skillId, out var skill);
-            this._context.domainApi.roleApi.PlayAnim(role, skill.skillModel.clipName);
+            this._context.domainApi.roleApi.PlayAnim(role, skill.model.clipUrl);
             role.fsmCom.EnterCast(skill);
-            if (skill.skillModel.skillType == GameSkillType.MagicAttack) role.attributeBarCom.mpSlider.SetActive(false);
+            if (skill.model.skillType == GameSkillType.MagicAttack) role.attributeBarCom.mpSlider.SetActive(false);
         }
 
         protected override void _Tick(GameRoleEntityR role, float frameTime)
@@ -58,7 +58,7 @@ namespace GamePlay.Bussiness.Render
             base.ExitTo(role, toState);
             role.animCom.timeScale = 1;
             var skill = role.fsmCom.castState.skill;
-            if (skill.skillModel.skillType == GameSkillType.MagicAttack) role.attributeBarCom.mpSlider.SetActive(true);
+            if (skill.model.skillType == GameSkillType.MagicAttack) role.attributeBarCom.mpSlider.SetActive(true);
         }
     }
 }

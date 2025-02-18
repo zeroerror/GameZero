@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GamePlay.Core;
 using UnityEngine;
 using UnityEngine.UI;
@@ -64,22 +65,26 @@ namespace GamePlay.Bussiness.Render
             return bodyCom;
         }
 
-        public AnimationClip LoadAnimationClip(int typeId, string clipName)
+        public AnimationClip LoadRoleAnimationClip(int typeId, string clipName)
         {
-            var originClip = Resources.Load<AnimationClip>($"Role/{typeId}/{clipName}");
+            var url = $"Role/{typeId}/{clipName}";
+            if (this._clipCache.TryGetValue(url, out var clip))
+            {
+                return clip;
+            }
+            var originClip = Resources.Load<AnimationClip>(url);
             if (!originClip)
             {
-                GameLogger.LogError($"角色工厂[渲染层]: 加载动画失败 {typeId} {clipName}");
+                GameLogger.LogError($"角色工厂[渲染层]: 加载动画失败 {url}");
+                return null;
             }
-            var clip = Object.Instantiate(originClip);
-            // 动画事件忽略
-            clip.events = null;
-            // 移除动画Body/Right在X轴的位移
-            var relativePath = "Body";
-            clip.SetCurve(relativePath, typeof(Transform), "m_LocalPosition", null);
-
+            // 实例化
+            clip = Object.Instantiate(originClip);
+            // 缓存
+            this._clipCache[url] = clip;
             return clip;
         }
+        private Dictionary<string, AnimationClip> _clipCache = new Dictionary<string, AnimationClip>();
 
         public Slider LoadHPSlider(bool isEnemy)
         {

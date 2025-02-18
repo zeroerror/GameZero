@@ -28,7 +28,7 @@ namespace GamePlay.Bussiness.Render
 
         public bool TryGet(int typeId, out GameSkillEntityR skill)
         {
-            skill = _skillEntities.Find(s => s.skillModel.typeId == typeId);
+            skill = _skillEntities.Find(s => s.model.typeId == typeId);
             return skill != null;
         }
 

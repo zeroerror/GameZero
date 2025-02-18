@@ -56,14 +56,17 @@ MonoBehaviour:
     speedEMs:
     - time: 0
       frame: 0
-      x: 0
       distanceRatio: 0
+      x: 0
+      y: 1
     - time: 0.2
       frame: 12
-      x: 6.8359365
       distanceRatio: 0.68359363
+      x: 6.8359365
+      y: 4
     - time: 0.4
       frame: 24
-      x: 10
       distanceRatio: 1
+      x: 10
+      y: 1
     dashDistance: 10

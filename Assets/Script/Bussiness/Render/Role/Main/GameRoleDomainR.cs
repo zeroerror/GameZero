@@ -228,7 +228,7 @@ namespace GamePlay.Bussiness.Render
                 return;
             }
 
-            clip = factory.LoadAnimationClip(role.model.typeId, animName);
+            clip = factory.LoadRoleAnimationClip(role.model.typeId, animName);
             animCom.Play(clip, layer);
         }
 
@@ -248,7 +248,7 @@ namespace GamePlay.Bussiness.Render
                 return;
             }
             this._PlayAnim(entity, animName, 1);
-            string[] keys = { "idle", "move" };
+            string[] keys = GameRoleCollectionR.ROLE_MULTY_LAYER_ANIM_KEYS;
             var isKey = keys.Find((key) => animName.Contains(key)) != null;
             if (isKey)
             {

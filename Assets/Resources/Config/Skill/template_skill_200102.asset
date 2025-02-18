@@ -57,3 +57,9 @@ MonoBehaviour:
         fanAngle: 0
       rangeSelectLimitCount: 0
       rangeSelectSortType: 0
+  movementEM:
+    movementType: 0
+    pauseTimeline: 0
+    clip: {fileID: 7400000, guid: a168baf3269d82f4b845c18fe2e44af1, type: 2}
+    speedEMs: []
+    dashDistance: 0

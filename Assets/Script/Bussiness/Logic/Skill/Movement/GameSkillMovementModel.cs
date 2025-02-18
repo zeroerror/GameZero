@@ -9,8 +9,8 @@ namespace GamePlay.Bussiness.Logic
     {
         /// <summary> 位移类型 </summary>
         public readonly GameSkillMovementType movementType;
-        /// <summary> 冲刺速度模型 </summary>
-        public readonly GameSKillDashSpeedModel[] dashSpeedModels;
+        /// <summary> 冲刺模型 </summary>
+        public readonly GameSKillDashModel[] dashModels;
         /// <summary> 冲刺距离 </summary>
         public readonly float dashDistance;
         /// <summary> 冲刺时暂停技能时间轴 </summary>
@@ -18,13 +18,13 @@ namespace GamePlay.Bussiness.Logic
 
         public GameSkillMovementModel(
             GameSkillMovementType movementType,
-            GameSKillDashSpeedModel[] dashSpeedModels,
+            GameSKillDashModel[] dashModels,
             float dashDistance,
             bool pauseTimeline
         )
         {
             this.movementType = movementType;
-            this.dashSpeedModels = dashSpeedModels;
+            this.dashModels = dashModels;
             this.dashDistance = dashDistance;
             this.pauseTimeline = pauseTimeline;
         }
