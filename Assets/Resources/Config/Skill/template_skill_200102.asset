@@ -16,7 +16,7 @@ MonoBehaviour:
   desc: "\u9AB7\u9AC5\u5175 - \u5927\u62DB"
   skillType: 3
   animClip: {fileID: 7400000, guid: a168baf3269d82f4b845c18fe2e44af1, type: 2}
-  animName: skill_triple_stab
+  clipUrl: Role/2001/skill_triple_stab
   animLength: 0.6666667
   timelineEvents:
   - time: 0.28333333

@@ -15,7 +15,7 @@ namespace GamePlay.Config
         public string desc;
         public GameSkillType skillType;
         public AnimationClip animClip;
-        public string animName;
+        public string clipUrl;
         public float animLength;
 
         public GameTimelineEventEM[] timelineEvents;
@@ -30,10 +30,7 @@ namespace GamePlay.Config
                 Debug.LogError("动画片段为空");
                 return;
             }
-            if (animName != clip.name) Debug.Log($"动画名称更新: {animName} => {clip.name}");
             if (animLength != clip.length) Debug.Log($"动画时长更新: {animLength} => {clip.length}");
-            // 同步动画名称和时长
-            animName = clip.name;
             animLength = clip.length;
             // 同步时间轴事件
             var events = AnimationUtility.GetAnimationEvents(clip);
@@ -64,7 +61,7 @@ namespace GamePlay.Config
             var model = new GameSkillModel(
                 typeId,
                 skillType,
-                animName,
+                clipUrl,
                 animLength,
                 timelineEvents.ToModels(),
                 conditionEM.ToModel(),
@@ -75,7 +72,7 @@ namespace GamePlay.Config
 
         public GameSkillModelR ToModelR()
         {
-            var model = new GameSkillModelR(typeId, skillType, animName, animLength);
+            var model = new GameSkillModelR(typeId, skillType, clipUrl, animLength, movementEM.ToModel());
             return model;
         }
     }

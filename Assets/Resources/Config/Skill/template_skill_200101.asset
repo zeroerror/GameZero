@@ -16,7 +16,7 @@ MonoBehaviour:
   desc: "\u9AB7\u9AC5\u5175 - \u666E\u653B"
   skillType: 2
   animClip: {fileID: 7400000, guid: 6789ed79fa8bf784d904b9d58d18e008, type: 2}
-  animName: attack_slash
+  clipUrl: Role/2001/attack_slash
   animLength: 0.41666666
   timelineEvents:
   - time: 0.3
@@ -50,3 +50,9 @@ MonoBehaviour:
         fanAngle: 0
       rangeSelectLimitCount: 0
       rangeSelectSortType: 0
+  movementEM:
+    movementType: 0
+    pauseTimeline: 0
+    clip: {fileID: 7400000, guid: 6789ed79fa8bf784d904b9d58d18e008, type: 2}
+    speedEMs: []
+    dashDistance: 0

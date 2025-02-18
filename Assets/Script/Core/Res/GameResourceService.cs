@@ -22,6 +22,7 @@ namespace GamePlay.Core
         /// </summary>
         public static T Load<T>(string url) where T : Object
         {
+            if (url == null) return null;
             if (_resCache.TryGetValue(url, out var cacheObj))
             {
                 return cacheObj as T;
@@ -43,6 +44,7 @@ namespace GamePlay.Core
         /// </summary>
         public static void LoadAsync<T>(string url, System.Action cb) where T : Object
         {
+            if (url == null) return;
             if (_resCache.TryGetValue(url, out var cacheObj))
             {
                 cb?.Invoke();
@@ -65,6 +67,7 @@ namespace GamePlay.Core
         /// </summary>
         public static T[] LoadAll<T>(string dirUrl) where T : Object
         {
+            if (dirUrl == null) return null;
             var type = typeof(T);
             if (_resListCache.TryGetValue(dirUrl, out var cacheDict))
             {
@@ -90,6 +93,7 @@ namespace GamePlay.Core
         /// </summary>
         public static Object[] LoadAll(string dirUrl, System.Type type)
         {
+            if (dirUrl == null) return null;
             if (_resListCache.TryGetValue(dirUrl, out var cacheDict))
             {
                 if (cacheDict.TryGetValue(type, out var cacheResList))

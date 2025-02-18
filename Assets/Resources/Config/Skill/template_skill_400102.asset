@@ -16,11 +16,11 @@ MonoBehaviour:
   desc: "\u72C2\u66B4\u8001\u9F20 - \u5927\u62DB"
   skillType: 3
   animClip: {fileID: 7400000, guid: 9e32f30abf4fe9d438f3e13a9669c098, type: 2}
-  animName: skill_4001
-  animLength: 0.7
+  clipUrl: Role/4001/skill_4001
+  animLength: 0.56666666
   timelineEvents:
-  - time: 0.51666665
-    frame: 30
+  - time: 0.35
+    frame: 20
     actions:
     - {fileID: 11400000, guid: b354a6c2cd984734c9ca3d9e14f8fd33, type: 2}
   conditionEM:

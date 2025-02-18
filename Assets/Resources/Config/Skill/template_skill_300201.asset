@@ -16,7 +16,7 @@ MonoBehaviour:
   desc: "\u5C71\u7CBE\u653B\u51FB"
   skillType: 2
   animClip: {fileID: 7400000, guid: 3aa7b725a78fcd9408e4ca8bc1834470, type: 2}
-  animName: attack
+  clipUrl: Role/3002/attack
   animLength: 1
   timelineEvents:
   - time: 0.76666665
@@ -53,5 +53,5 @@ MonoBehaviour:
     movementType: 0
     pauseTimeline: 0
     clip: {fileID: 7400000, guid: 3aa7b725a78fcd9408e4ca8bc1834470, type: 2}
-    startTime: 0
     speedEMs: []
+    dashDistance: 0

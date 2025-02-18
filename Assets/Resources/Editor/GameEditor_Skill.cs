@@ -14,7 +14,7 @@ namespace GamePlay.Config
         private SerializedProperty desc_p;
         private SerializedProperty skillType_p;
         private SerializedProperty animClip_p;
-        private SerializedProperty animName_p;
+        private SerializedProperty clipUrl_p;
         private SerializedProperty animLength_p;
         private SerializedProperty timelineEvents_p;
         private SerializedProperty conditionEM_p;
@@ -26,7 +26,7 @@ namespace GamePlay.Config
             this.desc_p = _serializedObject.FindProperty("desc");
             this.skillType_p = _serializedObject.FindProperty("skillType");
             this.animClip_p = _serializedObject.FindProperty("animClip");
-            this.animName_p = _serializedObject.FindProperty("animName");
+            this.clipUrl_p = _serializedObject.FindProperty("clipUrl");
             this.animLength_p = _serializedObject.FindProperty("animLength");
             this.timelineEvents_p = _serializedObject.FindProperty("timelineEvents");
             this.conditionEM_p = _serializedObject.FindProperty("conditionEM");
@@ -72,7 +72,7 @@ namespace GamePlay.Config
             this.desc_p.DrawProperty("描述");
             this.skillType_p.DrawProperty("技能类型");
             this.animClip_p.DrawProperty("动画文件");
-            this.animName_p.DrawProperty("动画名称");
+            this.clipUrl_p.DrawProperty("动画路径");
             this.animLength_p.DrawProperty("动画时长(s)");
         }
 
@@ -83,7 +83,10 @@ namespace GamePlay.Config
             if (clip && GUI.changed)
             {
                 // 同步动画名称和时长
-                this.animName_p.stringValue = clip.name;
+                var clipUrl = AssetDatabase.GetAssetPath(clip);
+                clipUrl = clipUrl.Substring(17);
+                clipUrl = clipUrl.Substring(0, clipUrl.Length - 5);
+                this.clipUrl_p.stringValue = clipUrl;
                 this.animLength_p.floatValue = clip.length;
                 // 同步时间轴事件
                 var events = AnimationUtility.GetAnimationEvents(clip);
