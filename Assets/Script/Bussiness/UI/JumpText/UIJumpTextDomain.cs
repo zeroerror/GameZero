@@ -86,7 +86,7 @@ namespace GamePlay.Bussiness.UI
             }
 
             var clipUrl = $"{prefabUrl}_{style}";
-            clip = Resources.Load<AnimationClip>(clipUrl);
+            clip = GameResourceService.Load<AnimationClip>(clipUrl);
             if (clip == null)
             {
                 GameLogger.LogError($"UI跳字: 加载动画失败 {clipUrl}");
@@ -99,7 +99,7 @@ namespace GamePlay.Bussiness.UI
         {
 
             var url = this._GetDmgPrefabUrl(dmgType);
-            var prefab = Resources.Load<GameObject>(url);
+            var prefab = GameResourceService.Load<GameObject>(url);
             if (!prefab)
             {
                 GameLogger.LogError($"UI跳字: 加载跳字失败 {url}");

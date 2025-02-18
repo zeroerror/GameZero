@@ -34,7 +34,7 @@ namespace GamePlay.Bussiness.UI
                 headUrl = UIPathUtil.GetRoleHead(model.typeId);
             }
             // 头像
-            this._binder.img_head.sprite = Resources.Load<Sprite>(headUrl);
+            this._binder.img_head.sprite = GameResourceService.Load<Sprite>(headUrl);
             // 名称
             this._binder.txt_name.text = name;
         }
@@ -60,7 +60,7 @@ namespace GamePlay.Bussiness.UI
                 }
                 item.gameObject.SetActive(true);
                 // 属性图标
-                item.group_img_icon.sprite = Resources.Load<Sprite>(UIPathUtil.GetAttributeIcon(attr.type));
+                item.group_img_icon.sprite = GameResourceService.Load<Sprite>(UIPathUtil.GetAttributeIcon(attr.type));
                 // 属性值
                 if (attr.type == GameAttributeType.HP || attr.type == GameAttributeType.MP)
                 {
@@ -117,7 +117,7 @@ namespace GamePlay.Bussiness.UI
                     skillItem.cd.gameObject.SetActive(cdElapsed > 0);
                     // 技能图标
                     var url = UIPathUtil.GetSkillIcon(skill.skillModel.typeId);
-                    skillItem.img_icon.sprite = Resources.Load<Sprite>(url);
+                    skillItem.img_icon.sprite = GameResourceService.Load<Sprite>(url);
                 });
                 for (int i = role.skillCom.Count; i < 4; i++)
                 {

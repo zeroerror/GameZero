@@ -2155,7 +2155,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4627867513949661904}
   - component: {fileID: 4900638737026549557}
-  - component: {fileID: 1556919552359014209}
   - component: {fileID: 2341713377796727477}
   m_Layer: 0
   m_Name: role_prefab_2001
@@ -2201,28 +2200,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1556919552359014209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4623758804774898926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d2267be8f6b12498d467ea37f1f331, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attachmentList_left:
-    bow_handle: {fileID: 0}
-    bow_limb_u: {fileID: 0}
-    bow_limb_l: {fileID: 0}
-    bow_shoot_point: {fileID: 0}
-  attachmentList_right:
-    bow_handle: {fileID: 0}
-    bow_limb_u: {fileID: 0}
-    bow_limb_l: {fileID: 0}
-    bow_shoot_point: {fileID: 0}
 --- !u!114 &2341713377796727477
 MonoBehaviour:
   m_ObjectHideFlags: 0

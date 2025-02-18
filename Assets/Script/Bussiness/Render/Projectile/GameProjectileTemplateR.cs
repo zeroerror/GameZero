@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Config;
-using UnityEngine;
+using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Render
 {
@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Render
         {
             _dict = new Dictionary<int, GameProjectileModelR>();
             var path = GameConfigCollection.PROJECTILE_CONFIG_DIR_PATH;
-            var resList = Resources.LoadAll(path, typeof(GameProjectileSO));
+            var resList = GameResourceService.LoadAll(path, typeof(GameProjectileSO));
             _soDict = new Dictionary<int, GameProjectileSO>();
             foreach (var res in resList)
             {

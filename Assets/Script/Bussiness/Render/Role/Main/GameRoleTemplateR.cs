@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Config;
-using UnityEngine;
+using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Render
 {
@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Render
         {
             _dict = new Dictionary<int, GameRoleModelR>();
             var path = GameConfigCollection.ROLE_CONFIG_DIR_PATH;
-            var resList = Resources.LoadAll(path, typeof(GameRoleSO));
+            var resList = GameResourceService.LoadAll(path, typeof(GameRoleSO));
             _soDict = new Dictionary<int, GameRoleSO>();
             foreach (var res in resList)
             {

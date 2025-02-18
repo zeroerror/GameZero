@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Config;
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.Logic
@@ -13,7 +14,7 @@ namespace GamePlay.Bussiness.Logic
         {
             _dict = new Dictionary<int, GameFieldModel>();
             var path = GameConfigCollection.FIELD_CONFIG_DIR_PATH;
-            var resList = Resources.LoadAll(path, typeof(GameFieldSO));
+            var resList = GameResourceService.LoadAll(path, typeof(GameFieldSO));
             _soDict = new Dictionary<int, GameFieldSO>();
             foreach (var res in resList)
             {

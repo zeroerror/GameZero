@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.Bussiness.Core
@@ -19,7 +20,7 @@ namespace GamePlay.Bussiness.Core
         {
             // 读取随机种子tx
             const string url = "random_seeds";
-            TextAsset textAsset = Resources.Load<TextAsset>(url);
+            TextAsset textAsset = GameResourceService.Load<TextAsset>(url);
             if (textAsset == null)
             {
                 Debug.LogError("随机种子文件不存在 " + url);

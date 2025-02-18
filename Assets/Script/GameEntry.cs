@@ -3,6 +3,7 @@ using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Render;
 using GamePlay.Bussiness.UI;
 using GamePlay.Bussiness.Core;
+using GamePlay.Core;
 
 public class GameEntry : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameEntry : MonoBehaviour
     void Start()
     {
         GameRandomService.DefaultInitSeeds();
+        GameResourceService.ClearCache();
         gameApp = new GameApp();
         gameAppR = new GameAppR();
         gameUIApp = new UIApp();

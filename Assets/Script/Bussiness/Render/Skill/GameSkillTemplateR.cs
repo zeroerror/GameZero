@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Config;
-using UnityEngine;
+using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Render
 {
@@ -13,14 +13,14 @@ namespace GamePlay.Bussiness.Render
         {
             _dict = new Dictionary<int, GameSkillModelR>();
             var path = GameConfigCollection.SKILL_CONFIG_DIR_PATH;
-            var soList = Resources.LoadAll(path, typeof(GameSkillSO));
+            var soList = GameResourceService.LoadAll(path, typeof(GameSkillSO));
             _soDict = new Dictionary<int, GameSkillSO>();
             foreach (var so in soList)
             {
                 var skillSo = so as GameSkillSO;
                 if (skillSo == null)
                 {
-                    Debug.LogError("GameSkillTemplateR: LoadAll: invalid GameSkillSO: " + so);
+                    GameLogger.LogError("GameSkillTemplateR: LoadAll: invalid GameSkillSO: " + so);
                     continue;
                 }
                 _soDict.Add(skillSo.typeId, skillSo);
