@@ -22,11 +22,7 @@ namespace GamePlay.Bussiness.Render
         )
         {
             this.typeId = typeId;
-
-            // 动画事件忽略
-            if (animClip) animClip.events = null;
             this.animClip = animClip;
-
             this.prefabUrl = prefabUrl;
             this.prefabScale = prefabScale;
             this.prefabOffset = prefabOffset;

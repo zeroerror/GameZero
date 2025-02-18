@@ -31,15 +31,18 @@ namespace GamePlay.Bussiness.Render
             if (isPassive) return;
             var url = skillModel.clipUrl;
             var clip = GameResourceService.LoadAnimationClip(url);
-            clip.events = null;
             var movementType = movementModel.movementType;
             if (movementType != GameSkillMovementType.FixedTimeDash && movementType != GameSkillMovementType.FixedSpeedDash) return;
-            clip.SetCurve("Body", typeof(Transform), "m_localPosition", null);
-            clip.SetCurve("Right", typeof(Transform), "m_localPosition", null);
-            var curve = new AnimationCurve();
+
+            // Create curves for x, y, and z axes
+            var curveX = new AnimationCurve();
+            var curveY = new AnimationCurve();
+            var curveZ = new AnimationCurve();
+
             var dashModels = movementModel.dashModels;
             var count = dashModels?.Length ?? 0;
             if (count == 0) return;
+
             for (var i = 0; i < count - 1; i++)
             {
                 var dashModel = dashModels[i];
@@ -51,11 +54,15 @@ namespace GamePlay.Bussiness.Render
                 {
                     var time = frame.ToTime();
                     var y = Mathf.Lerp(dashModel.y, nextModel.y, (float)(frame - fromFrame) / betweenFrame);
-                    curve.AddKey(new Keyframe(time, y));
+                    curveX.AddKey(new Keyframe(time, 0));
+                    curveY.AddKey(new Keyframe(time, y));
+                    curveZ.AddKey(new Keyframe(time, 0));
                 }
             }
-            clip.SetCurve("Body", typeof(Transform), "m_localPosition.y", curve);
-            clip.SetCurve("Right", typeof(Transform), "m_localPosition.y", curve);
+
+            clip.SetCurve("Body", typeof(Transform), "m_LocalPosition.x", curveX);
+            clip.SetCurve("Body", typeof(Transform), "m_LocalPosition.y", curveY);
+            clip.SetCurve("Body", typeof(Transform), "m_LocalPosition.z", curveZ);
         }
     }
 }
