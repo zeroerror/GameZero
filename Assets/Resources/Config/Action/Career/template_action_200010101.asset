@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_200010102
+  m_Name: template_action_200010101
   m_EditorClassIdentifier: 
-  typeId: 200010102
-  actionType: 1
+  typeId: 200010101
+  actionType: 6
   dmgActionEM:
-    dmgType: 2
-    value: 150
-    valueFormat: 2
-    refType: 2
+    dmgType: 0
+    value: 0
+    valueFormat: 0
+    refType: 0
     selectorEM:
-      selectAnchorType: 1
-      campType: 1
-      entityType: 1
+      selectAnchorType: 0
+      campType: 0
+      entityType: 0
       onlySelectDead: 0
-      selColliderType: 3
+      selColliderType: 0
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -36,9 +36,9 @@ MonoBehaviour:
         radius: 0
       fanColliderModel:
         offset: {x: 0, y: 0}
-        angle: 90
-        radius: 0.5
-        fanAngle: 45
+        angle: 0
+        radius: 0
+        fanAngle: 0
       rangeSelectLimitCount: 0
       rangeSelectSortType: 0
     preconditionSetEM:
@@ -201,7 +201,7 @@ MonoBehaviour:
         probability: 0
     randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
-    buffSO: {fileID: 11400000, guid: 2f594be319f2bbc41abcc219d528f53c, type: 2}
+    buffSO: {fileID: 11400000, guid: d3332221905da4f40b2577615fdf3832, type: 2}
     layer: 1
     selectorEM:
       selectAnchorType: 3
@@ -231,8 +231,8 @@ MonoBehaviour:
         buffSO: {fileID: 0}
         layer: 0
       probabilityConditionEM:
-        enable: 1
-        probability: 0.3
+        enable: 0
+        probability: 0
     randomValueOffset: {x: 0, y: 0}
   detachBuffActionEM:
     buffSO: {fileID: 0}
@@ -371,10 +371,10 @@ MonoBehaviour:
     randomValueOffset: {x: 0, y: 0}
     duration: 0
   actionEMR:
-    typeId: 200010102
-    desc: "\u9020\u621030%\u7684\u6247\u5F62\u6E85\u5C04\u4F24\u5BB3"
-    actEffectPrefab: {fileID: 2430205674200673227, guid: 37797759b9834924eae8798d76ccdabc, type: 3}
-    actVFXScale: {x: 1, y: 0.5}
+    typeId: 0
+    desc: "\u6302\u8F7Dbuff - \u6BCF\u6B21\u666E\u653B\u4F1A\u9020\u621030%\u7684\u6247\u5F62\u6E85\u5C04\u4F24\u5BB3"
+    actEffectPrefab: {fileID: 0}
+    actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}
     actCamShakeModel:
       angle: 0

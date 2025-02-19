@@ -24,7 +24,7 @@ MonoBehaviour:
       campType: 1
       entityType: 1
       onlySelectDead: 0
-      selColliderType: 1
+      selColliderType: 0
       boxColliderModel:
         offset: {x: 0.864, y: 0.6527}
         angle: 0

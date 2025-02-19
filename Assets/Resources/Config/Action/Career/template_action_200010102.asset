@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5400750590607a4db9162a8549d8c68, type: 3}
-  m_Name: template_action_200010101
+  m_Name: template_action_200010102
   m_EditorClassIdentifier: 
-  typeId: 200010101
-  actionType: 6
+  typeId: 200010102
+  actionType: 1
   dmgActionEM:
-    dmgType: 0
-    value: 0
-    valueFormat: 0
-    refType: 0
+    dmgType: 2
+    value: 80
+    valueFormat: 2
+    refType: 2
     selectorEM:
-      selectAnchorType: 0
-      campType: 0
-      entityType: 0
+      selectAnchorType: 2
+      campType: 1
+      entityType: 1
       onlySelectDead: 0
-      selColliderType: 0
+      selColliderType: 3
       boxColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
@@ -35,10 +35,12 @@ MonoBehaviour:
         angle: 0
         radius: 0
       fanColliderModel:
-        offset: {x: 0, y: 0}
+        offset: {x: 0.5, y: 1}
         angle: 0
-        radius: 0
-        fanAngle: 0
+        radius: 2.5
+        fanAngle: 90
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -73,6 +75,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -107,6 +111,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -147,6 +153,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -181,6 +189,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -191,7 +201,7 @@ MonoBehaviour:
         probability: 0
     randomValueOffset: {x: 0, y: 0}
   attachBuffActionEM:
-    buffSO: {fileID: 11400000, guid: 5dd44e6c2eddbeb4a8d1fb7b046c3c8b, type: 2}
+    buffSO: {fileID: 11400000, guid: 2f594be319f2bbc41abcc219d528f53c, type: 2}
     layer: 1
     selectorEM:
       selectAnchorType: 3
@@ -213,14 +223,16 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
         buffSO: {fileID: 0}
         layer: 0
       probabilityConditionEM:
-        enable: 0
-        probability: 0
+        enable: 1
+        probability: 0.3
     randomValueOffset: {x: 0, y: 0}
   detachBuffActionEM:
     buffSO: {fileID: 0}
@@ -245,6 +257,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -278,6 +292,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -308,6 +324,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -340,6 +358,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -351,11 +371,11 @@ MonoBehaviour:
     randomValueOffset: {x: 0, y: 0}
     duration: 0
   actionEMR:
-    typeId: 0
-    desc: "\u6302\u8F7Dbuff - \u6BCF\u6B21\u666E\u653B\u4F1A\u9020\u621030%\u7684\u6247\u5F62\u6E85\u5C04\u4F24\u5BB3"
-    actEffectPrefab: {fileID: 0}
-    actVFXScale: {x: 1, y: 1}
-    actVFXOffset: {x: 0, y: 0}
+    typeId: 200010102
+    desc: "\u9020\u621030%\u7684\u6247\u5F62\u6E85\u5C04\u4F24\u5BB3"
+    actEffectPrefab: {fileID: 2439547314104909991, guid: 84782b66efcc8e9418539782454ae9da, type: 3}
+    actVFXScale: {x: 2, y: 2}
+    actVFXOffset: {x: 0.5, y: 1}
     actCamShakeModel:
       angle: 0
       amplitude: 0

@@ -72,6 +72,9 @@ namespace GamePlay.Bussiness.Logic
                 case GameCircleColliderModel circleColliderModel:
                     collider = new GameCircleCollider(entity, circleColliderModel, id);
                     break;
+                case GameFanColliderModel fanColliderModel:
+                    collider = new GameFanCollider(entity, fanColliderModel, id);
+                    break;
                 default:
                     GameLogger.LogError($"CreatePhysics: unknown colliderModel {colliderModel}");
                     break;

@@ -63,7 +63,6 @@ namespace GamePlay.Bussiness.Logic
 
         private void _DoAction(GameEntityBase actor, GameActionModelBase actionModel)
         {
-            var entitySelectApi = this._context.domainApi.entitySelectApi;
             switch (actionModel)
             {
                 case GameActionModel_Dmg dmgAction:
@@ -99,6 +98,7 @@ namespace GamePlay.Bussiness.Logic
             }
 
             // 提交RC - 行为执行
+            var entitySelectApi = this._context.domainApi.entitySelectApi;
             var actAnchorPos = entitySelectApi.GetSelectorAnchorPosition(actor, actionModel.selector);
             var rcArgs = new GameActionRCArgs_Do(
                 actionModel.typeId,

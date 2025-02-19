@@ -29,15 +29,17 @@ MonoBehaviour:
       isEnable: 0
       timeInterval: 0
     whenDoActionEM:
-      isEnable: 0
-      targetAction: {fileID: 0}
-      targetActionType: 0
-      actionCount: 0
-      validWindowTime: 0
-    whenRoleStateEnterEM:
       isEnable: 1
+      targetAction: {fileID: 0}
+      targetActionType: 1
+      actionCount: 1
+      validWindowTime: 0
+      isAsActionTarget: 0
+      isNeedCaptureActionParam: 0
+    whenRoleStateEnterEM:
+      isEnable: 0
       campType: 0
-      stateType: 3
+      stateType: 0
       skillType: 2
     whenUnitCountChangeEM:
       isEnable: 0
@@ -61,6 +63,8 @@ MonoBehaviour:
           angle: 0
           radius: 0
           fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
       countCondition: 0
     whenAttributeChangeEM:
       isEnable: 0
@@ -87,6 +91,8 @@ MonoBehaviour:
           angle: 0
           radius: 0
           fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
       valueB: 0
       valueFormatB: 0
       refTypeB: 0
@@ -110,6 +116,8 @@ MonoBehaviour:
           angle: 0
           radius: 0
           fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
       compareType: 0
   conditionSetEM_remove:
     durationEM:
@@ -124,6 +132,8 @@ MonoBehaviour:
       targetActionType: 0
       actionCount: 0
       validWindowTime: 0
+      isAsActionTarget: 0
+      isNeedCaptureActionParam: 0
     whenRoleStateEnterEM:
       isEnable: 0
       campType: 0
@@ -151,6 +161,8 @@ MonoBehaviour:
           angle: 0
           radius: 0
           fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
       countCondition: 0
     whenAttributeChangeEM:
       isEnable: 0
@@ -177,6 +189,8 @@ MonoBehaviour:
           angle: 0
           radius: 0
           fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
       valueB: 0
       valueFormatB: 0
       refTypeB: 0
@@ -200,6 +214,8 @@ MonoBehaviour:
           angle: 0
           radius: 0
           fanAngle: 0
+        rangeSelectLimitCount: 0
+        rangeSelectSortType: 0
       compareType: 0
   layerSelectorEnable: 0
   layerSelectorEM:
@@ -222,6 +238,8 @@ MonoBehaviour:
       angle: 0
       radius: 0
       fanAngle: 0
+    rangeSelectLimitCount: 0
+    rangeSelectSortType: 0
   layerValueRefEnable: 0
   layerValueRefEM:
     value: 0

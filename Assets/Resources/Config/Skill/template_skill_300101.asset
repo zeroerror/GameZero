@@ -42,7 +42,7 @@ MonoBehaviour:
       circleColliderModel:
         offset: {x: 0, y: 0}
         angle: 0
-        radius: 1
+        radius: 2
       fanColliderModel:
         offset: {x: 0, y: 0}
         angle: 0

@@ -148,7 +148,8 @@ namespace GamePlay.Bussiness.Logic
             var logicModel = new GameBoxColliderModel(new GameVec2(0, logicSize.y / 2), 0, logicSize.x, logicSize.y);
             this._context.domainApi.physicsApi.CreatePhysics(role, logicModel, true);
             var colliderRadius = GameRoleCollection.ROLE_COLLIDER_RADIUS;
-            var colliderModel = new GameCircleColliderModel(GameVec2.zero, 0, colliderRadius);
+            // var colliderModel = new GameFanColliderModel(new GameVec2(2, 0), 0, 2.5f, 180);
+            var colliderModel = new GameCircleColliderModel(new GameVec2(0, 0), 0, colliderRadius);
             this._context.domainApi.physicsApi.CreatePhysics(role, role.colliderPhysicsCom, colliderModel, false);
             // 技能组件
             role.model.skillIds?.Foreach((skillId, index) =>

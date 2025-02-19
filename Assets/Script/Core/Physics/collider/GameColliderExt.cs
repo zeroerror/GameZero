@@ -68,45 +68,39 @@ namespace GamePlay.Core
 
         public static void Draw(this GameCircleCollider circle, Color color)
         {
-            var worldCenterPos = circle.worldCenterPos;
+            var anchorPos = circle.worldCenterPos;
             var worldRadius = circle.worldRadius;
-            Draw(worldCenterPos, worldRadius, color);
+            Draw(anchorPos, circle.angle, worldRadius, color);
         }
 
-        public static void Draw(in GameVec2 worldCenterPos, float worldRadius, Color color)
+        public static void Draw(in GameVec2 anchorPos, float angle, float worldRadius, Color color)
         {
             var maxDrawCount = 90;
-            var stepAngle = 360 / maxDrawCount;
-            var lastPos = worldCenterPos + new GameVec2(worldRadius, 0);
-            for (float i = 0; i < 360; i += stepAngle)
+            var stepDegree = 360 / maxDrawCount;
+            var p1 = anchorPos + new GameVec2(worldRadius, 0).Rotate(angle);
+            for (float degree = 0; degree < 360; degree += stepDegree)
             {
-                var radian = i * GameMathF.Deg2Rad;
-                var x = worldCenterPos.x + worldRadius * GameMathF.Cos(radian);
-                var y = worldCenterPos.y + worldRadius * GameMathF.Sin(radian);
-                var pos = new GameVec2(x, y);
-                Debug.DrawLine(lastPos, pos, color);
-                lastPos = pos;
+                var p2 = anchorPos + new GameVec2(worldRadius, 0).Rotate(degree);
+                Debug.DrawLine(p1, p2, color);
+                p1 = p2;
             }
         }
 
         public static void Draw(this GameFanCollider fan, Color color)
         {
-            var worldCenterPos = fan.worldCenterPos;
+            var anchorPos = fan.worldCenterPos;
             var worldP1 = fan.worldP1;// 右上角
             var worldP2 = fan.worldP2;// 右下角
-            Debug.DrawLine(worldCenterPos, worldP1, color);
-            Debug.DrawLine(worldCenterPos, worldP2, color);
+            Debug.DrawLine(anchorPos, worldP1, color);
+            Debug.DrawLine(anchorPos, worldP2, color);
             var maxDrawCount = 90;
-            var stepAngle = fan.fanAngle / maxDrawCount;
-            var lastPos = worldP2;
-            for (float i = -fan.fanAngle / 2; i <= fan.fanAngle / 2; i += stepAngle)
+            var stepDegree = fan.fanAngle / maxDrawCount;
+            var p1 = worldP2;
+            for (float i = -fan.fanAngle / 2; i <= fan.fanAngle / 2; i += stepDegree)
             {
-                var radian = i * GameMathF.Deg2Rad;
-                var x = worldCenterPos.x + fan.worldRadius * GameMathF.Cos(radian);
-                var y = worldCenterPos.y + fan.worldRadius * GameMathF.Sin(radian);
-                var pos = new Vector2(x, y);
-                Debug.DrawLine(lastPos, pos, color);
-                lastPos = pos;
+                var p2 = anchorPos + new GameVec2(fan.worldRadius, 0).Rotate(fan.angle + i);
+                Debug.DrawLine(p1, p2, color);
+                p1 = p2;
             }
         }
     }

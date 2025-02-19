@@ -16,12 +16,14 @@ MonoBehaviour:
   desc: "\u6218\u58EB\u88AB\u52A8"
   skillType: 1
   animClip: {fileID: 0}
-  animName: 
+  clipUrl: 
+  clipName: 
   animLength: 0
   timelineEvents:
   - time: 0
     frame: 0
-    actions: []
+    actions:
+    - {fileID: 11400000, guid: 5a52e4d474390e74e9fd5efeeec3b3dd, type: 2}
   conditionEM:
     targeterType: 0
     cdTime: 0
@@ -46,3 +48,11 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
+  movementEM:
+    movementType: 0
+    pauseTimeline: 0
+    clip: {fileID: 0}
+    speedEMs: []
+    dashDistance: 0

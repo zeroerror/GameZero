@@ -89,9 +89,9 @@ namespace GamePlay.Core
             this._originP2_rotated = GameVectorUtil.RotateOnAxisZ(_originP2, angle);
             this.originCenterPos_rotated = GameVectorUtil.RotateOnAxisZ(this.originCenterPos, angle);
 
-            this.worldP1 = this._originP1_rotated * (scale) + (pos);
-            this.worldP2 = this._originP2_rotated * (scale) + (pos);
-            this.worldCenterPos = this.originCenterPos_rotated * (scale) + (pos);
+            this.worldP1 = this._originP1_rotated * scale + pos;
+            this.worldP2 = this._originP2_rotated * scale + pos;
+            this.worldCenterPos = this.originCenterPos_rotated * scale + pos;
 
             this.localAxisX = GameVectorUtil.RotateOnAxisZ(GameVec2.right, angle);
             this.localAxisY = GameVectorUtil.RotateOnAxisZ(GameVec2.up, angle);
@@ -106,9 +106,9 @@ namespace GamePlay.Core
         {
             this.scale = scale;
             var pos = this.worldPos;
-            this.worldP1 = this._originP1_rotated * (scale) + (pos);
-            this.worldP2 = this._originP2_rotated * (scale) + (pos);
-            this.worldCenterPos = this.originCenterPos_rotated * (scale) + (pos);
+            this.worldP1 = this._originP1_rotated * scale + pos;
+            this.worldP2 = this._originP2_rotated * scale + pos;
+            this.worldCenterPos = this.originCenterPos_rotated * scale + pos;
         }
 
         public override GameVec2 GetProjectionOnAxis(in GameVec2 origin, in GameVec2 axis)

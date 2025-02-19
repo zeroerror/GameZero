@@ -276,6 +276,7 @@ namespace GamePlay.Bussiness.Logic
                 {
                     evModel.actionIds?.Foreach((actionId) =>
                     {
+                        GameLogger.DebugLog($"执行角色{role.idCom.entityId}的被动技能{skillId}行为: {actionId}");
                         this._context.domainApi.actionApi.DoAction(actionId, passiveSkill);
                     });
                 });

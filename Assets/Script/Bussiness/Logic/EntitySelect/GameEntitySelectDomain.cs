@@ -122,7 +122,9 @@ namespace GamePlay.Bussiness.Logic
                     break;
                 case GameEntitySelectAnchorType.ActTarget:
                     if (!targetEntity) return default;
-                    anchorTransformArgs = targetEntity.transformCom.ToArgs();
+                    // 以目标作为锚点时仅参考其坐标
+                    anchorTransformArgs = actorEntity.transformCom.ToArgs();
+                    anchorTransformArgs.position = targetEntity.transformCom.position;
                     break;
                 default:
                     GameLogger.LogError($"选择器锚点类型未知: {selectAnchorType}");
