@@ -170,7 +170,7 @@ namespace GamePlay.Bussiness.Render
             var randomStyle = GameMath.RandomRange(1, 5);//1-4
             var jumpPos = this.WorldToScreenPoint(target.transformCom.position);
             jumpPos.y += 50;
-            jumpTextApi.JumpText_Dmg(jumpPos, dmgRecord.dmgType, dmgRecord.isCrit, randomStyle, GameMath.Floor(dmgRecord.value).ToString(), 0.5f);
+            jumpTextApi.JumpText_Dmg(jumpPos, dmgRecord.dmgType, dmgRecord.isCrit, randomStyle, GameMath.Floor(dmgRecord.value).ToString(), 0.6f);
 
             if (target is GameRoleEntityR targetRole)
             {

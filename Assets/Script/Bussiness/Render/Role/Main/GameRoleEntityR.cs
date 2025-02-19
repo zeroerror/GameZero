@@ -51,7 +51,7 @@ namespace GamePlay.Bussiness.Render
             this.skillCom = new GameSkillComR(this);
             this.buffCom = new GameBuffComR();
 
-            var animator = bodyCom.prefabGO.GetComponentInChildren<Animator>();
+            var animator = bodyCom.animator;
             this.animCom = new GameAnimPlayableCom(animator);
 
             this._posEaseCom = new GameEasing2DCom();

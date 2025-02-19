@@ -45,7 +45,7 @@ namespace GamePlay.Bussiness.Logic
             if (isCrit)
             {
                 var critDmgAddition = actor.attributeCom.GetValue(GameAttributeType.CritDmgAddition);
-                dmgValue = dmgValue * (1 + critDmgAddition);
+                dmgValue = dmgValue * (1.5f + critDmgAddition);
             }
 
             // 增伤

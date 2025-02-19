@@ -115,9 +115,11 @@ namespace GamePlay.Bussiness.UI
             }
             else
             {
-                var txtObj = GameObject.Instantiate(prefab);
-                this._uiContext.uiApi.layerApi.AddToUIRoot(txtObj.transform, UILayerType.Scene);
-                entity = new UIJumpTextEntity(txtObj, prefabName);
+                var txtGO = GameObject.Instantiate(prefab);
+                var rootGO = new GameObject(prefabName, typeof(RectTransform));
+                txtGO.transform.SetParent(rootGO.transform, false);
+                this._uiContext.uiApi.layerApi.AddToUIRoot(rootGO.transform, UILayerType.Scene);
+                entity = new UIJumpTextEntity(rootGO, txtGO, prefabName);
             }
 
             entity.text = txt;

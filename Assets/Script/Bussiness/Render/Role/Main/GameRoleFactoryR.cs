@@ -46,12 +46,6 @@ namespace GamePlay.Bussiness.Render
             }
 
             var prefabBody = GameObject.Instantiate(rolePrefab);
-            if (prefabBody.TryGetComponent<Animator>(out var animator)) GameObject.DestroyImmediate(animator);
-            animator = prefabBody.AddComponent<Animator>();
-
-            if (prefabBody.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) GameObject.DestroyImmediate(spriteRenderer);
-            spriteRenderer = prefabBody.AddComponent<SpriteRenderer>();
-
             prefabBody.transform.SetParent(tmBody.transform);
 
             // 测试代码, 默认设置弓箭挂点图片

@@ -10,17 +10,17 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: 7081162066251722187}
-    m_Position: {x: 404.4893, y: 398.20782, z: 0}
+    m_State: {fileID: -8740825008862345531}
+    m_Position: {x: 340.64642, y: 206.99873, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -6903349210134706938}
-    m_Position: {x: 414.4893, y: 408.20782, z: 0}
+    m_State: {fileID: -4338833945206339883}
+    m_Position: {x: 350.64642, y: 216.99873, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -2062038391574667757}
-    m_Position: {x: 424.4893, y: 418.20782, z: 0}
+    m_State: {fileID: -6341366094208925328}
+    m_Position: {x: 360.64642, y: 226.99873, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -1763384747469236258}
-    m_Position: {x: 434.4893, y: 428.20782, z: 0}
+    m_State: {fileID: -7236855019561225763}
+    m_Position: {x: 370.64642, y: 236.99873, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -30,15 +30,15 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 7081162066251722187}
---- !u!1102 &-6903349210134706938
+  m_DefaultState: {fileID: -8740825008862345531}
+--- !u!1102 &-8740825008862345531
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: jump_text_dmg_normal_2
+  m_Name: jump_text_dmg_normal_crir_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -51,20 +51,20 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c003ac07e70b94440bab4a22d8957a2f, type: 2}
+  m_Motion: {fileID: 7400000, guid: 08a738c91b99f844fa5f60a41688ed84, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-2062038391574667757
+--- !u!1102 &-7236855019561225763
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: jump_text_dmg_normal_3
+  m_Name: jump_text_dmg_normal_crir_4
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -77,20 +77,20 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b69036c168b65144dae2223d65fe7de1, type: 2}
+  m_Motion: {fileID: 7400000, guid: 42d85221d11b452478eb3d3f59a5a29e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-1763384747469236258
+--- !u!1102 &-6341366094208925328
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: jump_text_dmg_normal_4
+  m_Name: jump_text_dmg_normal_crir_3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -103,7 +103,33 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 9672162ad07be32468bdb8fdca841274, type: 2}
+  m_Motion: {fileID: 7400000, guid: 14d74f5cad7b0c442a8d494ff02d42fd, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-4338833945206339883
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: jump_text_dmg_normal_crir_2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 7202673da8f1e9347840705df6d39dde, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -115,7 +141,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New Animator Controller
+  m_Name: New Animator Controller 1
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -131,29 +157,3 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &7081162066251722187
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: jump_text_dmg_normal_1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5b1bace66062b1e4d9ef3d93b3aa67c4, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 

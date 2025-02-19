@@ -1,5 +1,4 @@
 using GamePlay.Core;
-using GamePlay.Infrastructure;
 using TMPro;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace GamePlay.Bussiness.UI
     {
         public void SetAnchorPosition(Vector3 screenPoint)
         {
-            this.rootNode.GetComponentInChildren<RectTransform>().anchoredPosition = screenPoint;
+            this.rootGO.GetComponentInChildren<RectTransform>().anchoredPosition = screenPoint;
         }
 
         public string text
@@ -19,16 +18,18 @@ namespace GamePlay.Bussiness.UI
         }
 
         private TextMeshProUGUI _text;
-        public GameObject rootNode { get; private set; }
+        public GameObject rootGO { get; private set; }
         public string prefabName { get; private set; }
         public GameAnimPlayableCom animCom { get; private set; }
 
-        public UIJumpTextEntity(GameObject rootNode, string prefabName)
+        public UIJumpTextEntity(GameObject rootGO, GameObject bodyGO, string prefabName)
         {
-            this.rootNode = rootNode;
+            this.rootGO = rootGO;
             this.prefabName = prefabName;
-            this._text = this.rootNode.GetComponentInChildren<TextMeshProUGUI>();
-            var animator = this.rootNode.GetComponentInChildren<Animator>();
+            this._text = bodyGO.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (bodyGO.TryGetComponent<Animator>(out var animator)) GameObject.DestroyImmediate(animator);
+            animator = bodyGO.AddComponent<Animator>();
             this.animCom = new GameAnimPlayableCom(animator);
         }
 
@@ -44,12 +45,12 @@ namespace GamePlay.Bussiness.UI
 
         public void SetActive(bool active)
         {
-            this.rootNode.SetActive(active);
+            this.rootGO.SetActive(active);
         }
 
         public void SetScale(float scale)
         {
-            this.rootNode.transform.localScale = Vector3.one * scale;
+            this.rootGO.transform.localScale = Vector3.one * scale;
         }
     }
 }

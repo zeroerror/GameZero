@@ -16,7 +16,8 @@ MonoBehaviour:
   desc: "\u6F5C\u884C\u8005\u88AB\u52A8"
   skillType: 1
   animClip: {fileID: 0}
-  animName: 
+  clipUrl: 
+  clipName: 
   animLength: 0
   timelineEvents:
   - time: 0
@@ -25,6 +26,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4523ba710944d2749857cc12adc28a87, type: 2}
     - {fileID: 11400000, guid: a9369e024dec81f44b9a2f4486599b12, type: 2}
     - {fileID: 11400000, guid: d28f057c178b525458b7cc73ba128e25, type: 2}
+    - {fileID: 11400000, guid: 1234127e4ab03794a8c97e24daeca81c, type: 2}
   conditionEM:
     targeterType: 0
     cdTime: 0
@@ -49,3 +51,11 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
+  movementEM:
+    movementType: 0
+    pauseTimeline: 0
+    clip: {fileID: 0}
+    speedEMs: []
+    dashDistance: 0
