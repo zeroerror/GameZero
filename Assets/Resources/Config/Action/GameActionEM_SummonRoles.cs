@@ -1,6 +1,7 @@
-using GamePlay.Bussiness.Logic;
-using GamePlay.Core;
 using GameVec2 = UnityEngine.Vector2;
+using GamePlay.Bussiness.Logic;
+using GamePlay.Infrastructure;
+
 namespace GamePlay.Config
 {
     [System.Serializable]

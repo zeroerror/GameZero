@@ -1,5 +1,6 @@
 using GamePlay.Core;
 using GamePlay.Bussiness.Logic;
+using GamePlay.Infrastructure;
 namespace GamePlay.Config
 {
     [System.Serializable]

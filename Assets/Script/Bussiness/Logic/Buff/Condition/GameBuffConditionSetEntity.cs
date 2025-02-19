@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GamePlay.Core;
+using GamePlay.Infrastructure;
 using static GamePlay.Bussiness.Logic.GameBuffConditionEntityBase;
 
 namespace GamePlay.Bussiness.Logic

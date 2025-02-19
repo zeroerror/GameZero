@@ -1,5 +1,6 @@
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
+using GamePlay.Infrastructure;
 namespace GamePlay.Bussiness.Render
 {
     public class GameProjectileStateDomain_LockOnPositionR : GameProjectileStateDomainBaseR

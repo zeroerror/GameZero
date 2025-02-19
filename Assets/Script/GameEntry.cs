@@ -2,8 +2,8 @@ using UnityEngine;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Render;
 using GamePlay.Bussiness.UI;
-using GamePlay.Bussiness.Core;
 using GamePlay.Core;
+using GamePlay.Infrastructure;
 
 public class GameEntry : MonoBehaviour
 {

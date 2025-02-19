@@ -1,6 +1,7 @@
 using System;
-using GamePlay.Bussiness.Logic;
 using GameVec2 = UnityEngine.Vector2;
+using GamePlay.Bussiness.Logic;
+using GamePlay.Infrastructure;
 
 namespace GamePlay.Core
 {

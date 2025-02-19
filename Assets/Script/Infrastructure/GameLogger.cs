@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GamePlay.Core
+namespace GamePlay.Infrastructure
 {
     public enum LogLevel
     {

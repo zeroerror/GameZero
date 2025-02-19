@@ -1,4 +1,5 @@
 using GamePlay.Core;
+using GamePlay.Infrastructure;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameProjectileStateDomain_FixedDirection : GameProjectileStateDomainBase

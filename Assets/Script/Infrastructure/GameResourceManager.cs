@@ -1,10 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
-
-namespace GamePlay.Core
+namespace GamePlay.Infrastructure
 {
     public static class GameResourceManager
     {
+        private static U[] Map<T, U>(this T[] list, System.Func<T, U> func)
+        {
+            U[] result = new U[list.Length];
+            for (int i = 0; i < list.Length; i++)
+            {
+                result[i] = func(list[i]);
+            }
+            return result;
+        }
+        private static Object Clone(this Object obj)
+        {
+            var clone = Object.Instantiate(obj);
+            clone.name = obj.name;
+            return clone;
+        }
+
         /// <summary> 资源缓存 </summary>
         private static readonly Dictionary<string, Object> _resCache = new Dictionary<string, Object>();
         /// <summary> 资源列表缓存 key为目录路径 </summary>
@@ -127,4 +142,5 @@ namespace GamePlay.Core
             return clip;
         }
     }
+
 }

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using GamePlay.Core;
+using GamePlay.Infrastructure;
 using UnityEngine;
 
-namespace GamePlay.Bussiness.Core
+namespace GamePlay.Core
 {
     /// <summary>
     /// 随机数服务, 用于游戏中的随机数生成

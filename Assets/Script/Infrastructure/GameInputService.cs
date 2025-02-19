@@ -1,10 +1,16 @@
 using System;
 using System.Collections.Generic;
-using GamePlay.Core;
 using UnityEngine;
 
-namespace GamePlay.Bussiness.Core
+namespace GamePlay.Infrastructure
 {
+    public enum GameInputStateType
+    {
+        KeyDown,
+        KeyUp,
+        KeyHold
+    }
+
     public class GameInputService
     {
         public Dictionary<KeyCode, List<Action>> keyDownActions = new Dictionary<KeyCode, List<Action>>();

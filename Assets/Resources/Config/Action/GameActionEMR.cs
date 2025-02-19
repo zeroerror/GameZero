@@ -1,7 +1,8 @@
-using GamePlay.Bussiness.Render;
-using GamePlay.Core;
 using UnityEngine;
 using GameVec2 = UnityEngine.Vector2;
+using GamePlay.Bussiness.Render;
+using GamePlay.Core;
+using GamePlay.Infrastructure;
 
 namespace GamePlay.Config
 {

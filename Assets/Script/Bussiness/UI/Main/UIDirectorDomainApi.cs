@@ -1,5 +1,5 @@
 using System;
-using GamePlay.Bussiness.Core;
+using GamePlay.Infrastructure;
 using UnityEngine;
 namespace GamePlay.Bussiness.UI
 {
