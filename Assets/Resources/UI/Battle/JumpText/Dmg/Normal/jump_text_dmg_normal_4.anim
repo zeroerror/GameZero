@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: jump_text_dmg_physical_4
+  m_Name: jump_text_dmg_normal_4
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0

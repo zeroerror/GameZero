@@ -95,10 +95,10 @@ namespace GamePlay.Bussiness.UI
             playCom.Play(clip);
         }
 
-        public void JumpText_Dmg(in Vector2 screenPos, GameActionDmgType dmgType, int style, string txt, float scale = 1.0f)
+        public void JumpText_Dmg(in Vector2 screenPos, GameActionDmgType dmgType, bool isCrit, int style, string txt, float scale = 1.0f)
         {
 
-            var url = this._GetDmgPrefabUrl(dmgType);
+            var url = this._GetDmgPrefabUrl(dmgType, isCrit);
             var prefab = GameResourceService.Load<GameObject>(url);
             if (!prefab)
             {
@@ -126,27 +126,27 @@ namespace GamePlay.Bussiness.UI
             this._jumpTextEntityList.Add(entity);
         }
 
-        private string _GetDmgPrefabUrl(GameActionDmgType dmgType)
+        private string _GetDmgPrefabUrl(GameActionDmgType dmgType, bool isCrit)
         {
-            var dirName = "";
+            string dirName;
             switch (dmgType)
             {
                 case GameActionDmgType.Real:
                     dirName = "Real";
                     break;
                 case GameActionDmgType.Normal:
-                    dirName = "Physical";
+                    dirName = "Normal";
                     break;
                 default:
                     GameLogger.LogError($"UI跳字: 未处理的伤害类型 {dmgType}");
-                    break;
+                    return string.Empty;
             }
-            var prefabName = this._GetDmgPrefabName(dmgType);
+            var prefabName = this._GetDmgPrefabName(dmgType, isCrit);
             var url = $"UI/Battle/JumpText/Dmg/{dirName}/{prefabName}";
             return url;
         }
 
-        private string _GetDmgPrefabName(GameActionDmgType dmgType)
+        private string _GetDmgPrefabName(GameActionDmgType dmgType, bool isCrit)
         {
             var suffix = "";
             switch (dmgType)
@@ -155,11 +155,15 @@ namespace GamePlay.Bussiness.UI
                     suffix = "real";
                     break;
                 case GameActionDmgType.Normal:
-                    suffix = "physical";
+                    suffix = "normal";
                     break;
                 default:
                     GameLogger.LogError($"UI跳字: 未处理的伤害类型 {dmgType}");
                     break;
+            }
+            if (isCrit)
+            {
+                suffix += "_crit";
             }
 
             return $"jump_text_dmg_{suffix}";
