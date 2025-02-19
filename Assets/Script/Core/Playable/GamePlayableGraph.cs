@@ -39,8 +39,8 @@ namespace GamePlay.Core
             }
         }
 
-        /// <summary> 当前播放的所有片段, 可能有多个, 比如同时播放上半身和下半身动画 </summary>
-        public List<AnimationClip> playingClips { get; private set; }
+        /// <summary> 当前播放的片段 </summary>
+        public AnimationClip playingClip { get; private set; }
 
         public GamePlayableGraph(Animator animator)
         {
@@ -48,7 +48,7 @@ namespace GamePlay.Core
             this._graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
             this._animator = animator;
             this._clipDict = new Dictionary<string, AnimationClip>();
-            this.playingClips = new List<AnimationClip>(4);
+            this._SetClipOutput(null);
         }
 
         public void Destroy()
@@ -90,28 +90,31 @@ namespace GamePlay.Core
             }
             this.Stop();
 
-            // 设置输出
-            var playableOutput = AnimationPlayableOutput.Create(this._graph, "Animation", this._animator);
-            var clipPlayable = AnimationClipPlayable.Create(this._graph, clip);
-            playableOutput.SetSourcePlayable(clipPlayable);
+            // 设置动画作为playable的输出
+            this._SetClipOutput(clip);
 
-            // 开始播放
             this._graph.Play();
             this._graph.GetRootPlayable(0).SetTime(startTime);
 
-            // 记录到播放列表
-            this.playingClips.Add(clip);
-
             // 记录当前播放信息
+            this.playingClip = clip;
             this._playingName = name;
             this._playingDuration = clip.length;
             this._isLoop = clip.isLooping;
             this._isPlaying = true;
         }
 
+        /// <summary> 设置动画片段的输出 </summary>
+        private void _SetClipOutput(AnimationClip clip)
+        {
+            var clipPlayable = AnimationClipPlayable.Create(this._graph, clip);
+            var playableOutput = AnimationPlayableOutput.Create(this._graph, "Animation", this._animator);
+            playableOutput.SetSourcePlayable(clipPlayable);
+        }
+
         public void Stop()
         {
-            this.playingClips.Clear();
+            this.playingClip = null;
             this._playingName = string.Empty;
             this._playingDuration = -1.0f;
             this._isLoop = false;

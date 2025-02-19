@@ -232,28 +232,21 @@ namespace GamePlay.Bussiness.Render
             animCom.Play(clip, layer);
         }
 
-        private void _StopAnim(GameRoleEntityR entity)
-        {
-            var animCom = entity.animCom;
-            animCom.Stop();
-        }
-
         public void PlayAnim(GameRoleEntityR entity, string animName)
         {
-            this._StopAnim(entity);
             var isMultyAnimationLayer = entity.model.isMultyAnimationLayer;
             if (!isMultyAnimationLayer)
             {
                 this._PlayAnim(entity, animName, 0);
                 return;
             }
-            this._PlayAnim(entity, animName, 1);
+            this._PlayAnim(entity, animName, 0);
             string[] keys = GameRoleCollectionR.ROLE_MULTY_LAYER_ANIM_KEYS;
             var isKey = keys.Find((key) => animName.Contains(key)) != null;
             if (isKey)
             {
                 var upperAnimName = animName + "_l";
-                this._PlayAnim(entity, upperAnimName, 2);
+                this._PlayAnim(entity, upperAnimName, 1);
             }
         }
 

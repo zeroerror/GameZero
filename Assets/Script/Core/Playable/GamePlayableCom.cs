@@ -127,6 +127,5 @@ namespace GamePlay.Core
                 graph.Stop();
             }
         }
-
     }
 }
