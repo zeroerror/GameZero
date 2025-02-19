@@ -10,7 +10,7 @@ namespace GamePlay.Bussiness.Render
     {
         public readonly GameProjectileModelR model;
         public readonly GameObject root;
-        public readonly GameParticlePlayCom psPlayCom;
+        public readonly GameParticlePlayCom particleCom;
         public Transform transform { get { return this.root.transform; } }
         public GameVec2 position { get { return transform.position; } set { transform.position = new GameVec3(value.x, value.y, transform.position.z); } }
         public override GameVec2 GetPosition() => this.position;
@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Render
         private GameEasing2DCom _posEaseCom;
 
         public GameProjectileFSMCom fsmCom { get; private set; }
-        public GamePlayableCom animCom { get; private set; }
+        public GameAnimPlayableCom animCom { get; private set; }
         public GameTimelineCom timelineCom { get; private set; }
 
         public GameProjectileEntityR(
@@ -39,11 +39,11 @@ namespace GamePlay.Bussiness.Render
             this.root.name = $"Projectile_{model.typeId}";
             if (ps != null)
             {
-                this.psPlayCom = new GameParticlePlayCom(ps);
+                this.particleCom = new GameParticlePlayCom(ps);
             }
             else if (animator != null)
             {
-                this.animCom = new GamePlayableCom(animator);
+                this.animCom = new GameAnimPlayableCom(animator);
             }
 
             this.fsmCom = new GameProjectileFSMCom();
@@ -67,7 +67,7 @@ namespace GamePlay.Bussiness.Render
         {
             this.animCom?.Tick(dt);
             this.timelineCom.Tick(dt);
-            this.psPlayCom?.Tick(dt);
+            this.particleCom?.Tick(dt);
             var pos = this._posEaseCom.Tick(this.position, this.transformCom.position, dt);
             this.position = pos;
             var forward = this.transformCom.forward;
@@ -77,9 +77,9 @@ namespace GamePlay.Bussiness.Render
         public void setActive(bool active)
         {
             this.root.SetActive(active);
-            if (active && this.psPlayCom != null)
+            if (active && this.particleCom != null)
             {
-                this.psPlayCom.Play(true);
+                this.particleCom.Play(true);
             }
         }
 
