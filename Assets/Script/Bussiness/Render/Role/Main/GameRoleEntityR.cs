@@ -30,7 +30,7 @@ namespace GamePlay.Bussiness.Render
         public GameVec2 scale { get { return transform.localScale; } set { transform.localScale = value; } }
 
         private GameEasing2DCom _posEaseCom;
-        public GamePlayableCom animCom { get; private set; }
+        public GameAnimPlayableCom animCom { get; private set; }
         public Transform transform { get { return this.bodyCom.tmRoot.transform; } }
         public GameRoleFSMComR fsmCom { get; private set; }
         public GameSkillComR skillCom { get; private set; }
@@ -51,7 +51,7 @@ namespace GamePlay.Bussiness.Render
             this.buffCom = new GameBuffComR();
 
             var animator = bodyCom.prefabGO.GetComponentInChildren<Animator>();
-            this.animCom = new GamePlayableCom(animator);
+            this.animCom = new GameAnimPlayableCom(animator);
 
             this._posEaseCom = new GameEasing2DCom();
             this._posEaseCom.SetEase(0.05f, GameEasingType.Linear);

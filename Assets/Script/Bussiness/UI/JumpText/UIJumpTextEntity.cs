@@ -20,7 +20,7 @@ namespace GamePlay.Bussiness.UI
         private TextMeshProUGUI _text;
         public GameObject rootNode { get; private set; }
         public string prefabName { get; private set; }
-        public GamePlayableCom playCom { get; private set; }
+        public GameAnimPlayableCom animCom { get; private set; }
 
         public UIJumpTextEntity(GameObject rootNode, string prefabName)
         {
@@ -28,17 +28,17 @@ namespace GamePlay.Bussiness.UI
             this.prefabName = prefabName;
             this._text = this.rootNode.GetComponentInChildren<TextMeshProUGUI>();
             var animator = this.rootNode.GetComponentInChildren<Animator>();
-            this.playCom = new GamePlayableCom(animator);
+            this.animCom = new GameAnimPlayableCom(animator);
         }
 
         public void Tick(float dt)
         {
-            this.playCom.Tick(dt);
+            this.animCom.Tick(dt);
         }
 
         public void Destroy()
         {
-            this.playCom.Destroy();
+            this.animCom.Destroy();
         }
 
         public void SetActive(bool active)

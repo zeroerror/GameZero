@@ -5,7 +5,7 @@ using UnityEngine.Playables;
 
 namespace GamePlay.Core
 {
-    public class GamePlayableGraph
+    public class GameAnimPlayableGraph
     {
         private Animator _animator;
         private PlayableGraph _graph;
@@ -42,7 +42,7 @@ namespace GamePlay.Core
         /// <summary> 当前播放的片段 </summary>
         public AnimationClip playingClip { get; private set; }
 
-        public GamePlayableGraph(Animator animator)
+        public GameAnimPlayableGraph(Animator animator)
         {
             this._graph = PlayableGraph.Create();
             this._graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);

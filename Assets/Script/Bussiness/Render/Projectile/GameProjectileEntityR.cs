@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Render
         private GameEasing2DCom _posEaseCom;
 
         public GameProjectileFSMCom fsmCom { get; private set; }
-        public GamePlayableCom animCom { get; private set; }
+        public GameAnimPlayableCom animCom { get; private set; }
         public GameTimelineCom timelineCom { get; private set; }
 
         public GameProjectileEntityR(
@@ -43,7 +43,7 @@ namespace GamePlay.Bussiness.Render
             }
             else if (animator != null)
             {
-                this.animCom = new GamePlayableCom(animator);
+                this.animCom = new GameAnimPlayableCom(animator);
             }
 
             this.fsmCom = new GameProjectileFSMCom();

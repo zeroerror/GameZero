@@ -57,7 +57,7 @@ namespace GamePlay.Bussiness.UI
             {
                 var entity = this._jumpTextEntityList[i];
                 entity.Tick(dt);
-                if (!entity.playCom.isPlaying)
+                if (!entity.animCom.isPlaying)
                 {
                     this._uiContext.cmdBufferService.AddDelayCmd(0, () =>
                     {
@@ -75,13 +75,13 @@ namespace GamePlay.Bussiness.UI
         {
             entity.SetActive(true);
 
-            var playCom = entity.playCom;
-            playCom.Stop();
+            var animCom = entity.animCom;
+            animCom.Stop();
             var prefabName = prefabUrl.Substring(prefabUrl.LastIndexOf('/') + 1);
             var animName = $"{prefabName}_{style}";
-            if (playCom.TryGetClip(animName, out var clip))
+            if (animCom.TryGetClip(animName, out var clip))
             {
-                playCom.Play(clip);
+                animCom.Play(clip);
                 return;
             }
 
@@ -92,7 +92,7 @@ namespace GamePlay.Bussiness.UI
                 GameLogger.LogError($"UI跳字: 加载动画失败 {clipUrl}");
                 return;
             }
-            playCom.Play(clip);
+            animCom.Play(clip);
         }
 
         public void JumpText_Dmg(in Vector2 screenPos, GameActionDmgType dmgType, bool isCrit, int style, string txt, float scale = 1.0f)

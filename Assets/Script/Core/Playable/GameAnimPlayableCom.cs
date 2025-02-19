@@ -6,23 +6,23 @@ namespace GamePlay.Core
     /// <summary>
     /// 基于 Playable 的动画控制组件, 用于平替 Animator
     /// </summary>
-    public class GamePlayableCom
+    public class GameAnimPlayableCom
     {
         public Animator animator { get; private set; }
         public bool isPlaying { get; private set; }
         public float timeScale { get; set; } = 1.0f;
 
         /// <summary> Graph 字典 </summary>
-        private Dictionary<int, GamePlayableGraph> _graphDict;
+        private Dictionary<int, GameAnimPlayableGraph> _graphDict;
 
         /// <summary>
         /// <para>animator: 动画控制器</para>
         /// </summary>
-        public GamePlayableCom(Animator animator)
+        public GameAnimPlayableCom(Animator animator)
         {
             this.animator = animator;
             animator.runtimeAnimatorController = null;// 取消默认的动画控制器
-            this._graphDict = new Dictionary<int, GamePlayableGraph>();
+            this._graphDict = new Dictionary<int, GameAnimPlayableGraph>();
         }
 
         public void Destroy()
@@ -77,11 +77,11 @@ namespace GamePlay.Core
             this.Play(layer, clip.name, startTime);
         }
 
-        private GamePlayableGraph _CreateGraph(int layer)
+        private GameAnimPlayableGraph _CreateGraph(int layer)
         {
             if (!this._graphDict.TryGetValue(layer, out var graph))
             {
-                graph = new GamePlayableGraph(this.animator);
+                graph = new GameAnimPlayableGraph(this.animator);
                 this._graphDict[layer] = graph;
             }
             return graph;
