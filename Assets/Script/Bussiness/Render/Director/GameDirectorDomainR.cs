@@ -16,7 +16,7 @@ namespace GamePlay.Bussiness.Render
         public GameSkillDomainR skillDomain { get; private set; }
         public GameTransformDomainR transformDomain { get; private set; }
         public GameAttributeDomainR attributeDomain { get; private set; }
-        public GameVFXDomainR vfxDomain { get; private set; }
+        public GameVFXDomain vfxDomain { get; private set; }
         public GameActionDomainR actionDomain { get; private set; }
         public GameDrawDomainR drawDomain { get; private set; }
         public GameProjectileDomainR projectileDomain { get; private set; }
@@ -44,7 +44,7 @@ namespace GamePlay.Bussiness.Render
             this.skillDomain = new GameSkillDomainR();
             this.transformDomain = new GameTransformDomainR();
             this.attributeDomain = new GameAttributeDomainR();
-            this.vfxDomain = new GameVFXDomainR();
+            this.vfxDomain = new GameVFXDomain();
             this.actionDomain = new GameActionDomainR();
             this.drawDomain = new GameDrawDomainR();
             this.projectileDomain = new GameProjectileDomainR();

@@ -15,7 +15,7 @@ namespace GamePlay.Bussiness.Render
         public GameRoleContextR roleContext { get; private set; }
         public GameSkillContextR skillContext { get; private set; }
         public GameActionContextR actionContext { get; private set; }
-        public GameVFXContextR vfxContext { get; private set; }
+        public GameVFXContext vfxContext { get; private set; }
         public GameProjectileContextR projectileContext { get; private set; }
         public GameFieldContextR fieldContext { get; private set; }
         public GameBuffContextR buffContext { get; private set; }
@@ -37,7 +37,7 @@ namespace GamePlay.Bussiness.Render
             this.roleContext = new GameRoleContextR();
             this.skillContext = new GameSkillContextR();
             this.actionContext = new GameActionContextR();
-            this.vfxContext = new GameVFXContextR();
+            this.vfxContext = new GameVFXContext();
             this.projectileContext = new GameProjectileContextR();
             this.fieldContext = new GameFieldContextR();
             this.buffContext = new GameBuffContextR();

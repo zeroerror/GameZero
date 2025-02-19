@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.Render
 {
-    public class GameVFXEntityR
+    public class GameVFXEntity
     {
         public readonly string prefabUrl;
 
@@ -24,7 +24,7 @@ namespace GamePlay.Bussiness.Render
 
         private bool _stopDirty = false;
 
-        public GameVFXEntityR(GameObject root, GameObject body, string prefabUrl)
+        public GameVFXEntity(GameObject root, GameObject body, string prefabUrl)
         {
             this.root = root;
             this._body = body;

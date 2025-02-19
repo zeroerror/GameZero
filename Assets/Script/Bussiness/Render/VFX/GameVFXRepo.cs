@@ -3,12 +3,12 @@ using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Render
 {
-    public class GameVFXRepoR
+    public class GameVFXRepo
     {
-        protected Dictionary<string, List<GameVFXEntityR>> _dict { get; } = new Dictionary<string, List<GameVFXEntityR>>();
-        protected Dictionary<string, List<GameVFXEntityR>> _pool { get; } = new Dictionary<string, List<GameVFXEntityR>>();
+        protected Dictionary<string, List<GameVFXEntity>> _dict { get; } = new Dictionary<string, List<GameVFXEntity>>();
+        protected Dictionary<string, List<GameVFXEntity>> _pool { get; } = new Dictionary<string, List<GameVFXEntity>>();
 
-        public GameVFXRepoR()
+        public GameVFXRepo()
         {
         }
 
@@ -17,26 +17,26 @@ namespace GamePlay.Bussiness.Render
             this._dict.Clear();
         }
 
-        public bool TryAdd(GameVFXEntityR entity)
+        public bool TryAdd(GameVFXEntity entity)
         {
             GameLogger.Log($"视觉特效仓库 添加: {entity.entityId} {entity.prefabUrl}");
             if (!this._dict.TryGetValue(entity.prefabUrl, out var list))
             {
-                list = new List<GameVFXEntityR>();
+                list = new List<GameVFXEntity>();
                 this._dict.Add(entity.prefabUrl, list);
             }
             list.Add(entity);
             return this._dict.TryAdd(entity.prefabUrl, list);
         }
 
-        public void TryRemove(GameVFXEntityR entity)
+        public void TryRemove(GameVFXEntity entity)
         {
             if (!this._dict.TryGetValue(entity.prefabUrl, out var list)) return;
             list.Remove(entity);
             if (list.Count == 0) this._dict.Remove(entity.prefabUrl);
         }
 
-        public void Recycle(GameVFXEntityR entity)
+        public void Recycle(GameVFXEntity entity)
         {
             var list = this._dict[entity.prefabUrl];
             if (!list.Remove(entity)) return;
@@ -44,13 +44,13 @@ namespace GamePlay.Bussiness.Render
             entity.Stop();
             if (!this._pool.TryGetValue(entity.prefabUrl, out var pool))
             {
-                pool = new List<GameVFXEntityR>();
+                pool = new List<GameVFXEntity>();
                 this._pool.Add(entity.prefabUrl, pool);
             }
             pool.Add(entity);
         }
 
-        public virtual bool TryFetch(string url, out GameVFXEntityR entity)
+        public virtual bool TryFetch(string url, out GameVFXEntity entity)
         {
             if (!this._pool.TryGetValue(url, out var pool) || pool.Count == 0)
             {
@@ -64,7 +64,7 @@ namespace GamePlay.Bussiness.Render
             return true;
         }
 
-        public GameVFXEntityR FindByEntityId(int entityId)
+        public GameVFXEntity FindByEntityId(int entityId)
         {
             foreach (var list in this._dict.Values)
             {
@@ -76,7 +76,7 @@ namespace GamePlay.Bussiness.Render
             return null;
         }
 
-        public void ForeachEntities(System.Action<GameVFXEntityR> action, bool includePool = false)
+        public void ForeachEntities(System.Action<GameVFXEntity> action, bool includePool = false)
         {
             foreach (var list in this._dict.Values)
             {

@@ -12,7 +12,7 @@ namespace GamePlay.Bussiness.Render
         /// <summary> buff已挂载层数 </summary>
         public int layer { get; private set; }
         /// <summary> buff特效 </summary>
-        public GameVFXEntityR vfxEntity;
+        public GameVFXEntity vfxEntity;
 
         public GameBuffEntityR(GameBuffModelR model) : base(model.typeId, GameEntityType.Buff)
         {

@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace GamePlay.Bussiness.Render
 {
-    public class GameVFXFactoryR
+    public class GameVFXFactory
     {
-        public GameVFXFactoryR()
+        public GameVFXFactory()
         {
         }
 
-        public GameVFXEntityR Load(string prefabUrl)
+        public GameVFXEntity Load(string prefabUrl)
         {
             var prefab = GameResourceService.Load<GameObject>(prefabUrl);
             if (prefab == null)
@@ -21,7 +21,7 @@ namespace GamePlay.Bussiness.Render
             var root = new GameObject();
             body.transform.SetParent(root.transform);
             body.name = "Body";
-            var entity = new GameVFXEntityR(root, body, prefabUrl);
+            var entity = new GameVFXEntity(root, body, prefabUrl);
             return entity;
         }
     }

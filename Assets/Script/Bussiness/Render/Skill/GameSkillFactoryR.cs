@@ -34,7 +34,7 @@ namespace GamePlay.Bussiness.Render
             var movementType = movementModel.movementType;
             if (movementType != GameSkillMovementType.FixedTimeDash && movementType != GameSkillMovementType.FixedSpeedDash) return;
 
-            // Create curves for x, y, and z axes
+            // 分别创建X、Y、Z轴的动画曲线
             var curveX = new AnimationCurve();
             var curveY = new AnimationCurve();
             var curveZ = new AnimationCurve();
@@ -52,11 +52,13 @@ namespace GamePlay.Bussiness.Render
                 {
                     var time = frame.ToTime();
                     var y = Mathf.Lerp(dashModel.y, nextModel.y, (float)(frame - fromFrame) / betweenFrame);
+                    // 仅保留Y轴的位移
                     curveX.AddKey(new Keyframe(time, 0));
                     curveY.AddKey(new Keyframe(time, y));
                     curveZ.AddKey(new Keyframe(time, 0));
                 }
             }
+            // 设置新的动画曲线
             var path = isMultyAnimationLayer ? "Right" : "Body";
             clip.SetCurve(path, typeof(Transform), "m_LocalPosition.x", curveX);
             clip.SetCurve(path, typeof(Transform), "m_LocalPosition.y", curveY);

@@ -1,5 +1,3 @@
-using System.Runtime.Serialization.Formatters;
-
 namespace GamePlay.Bussiness.Logic
 {
     public class GameSkillEntity : GameEntityBase

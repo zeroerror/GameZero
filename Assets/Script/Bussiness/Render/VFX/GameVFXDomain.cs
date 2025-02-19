@@ -2,12 +2,12 @@ using GamePlay.Core;
 
 namespace GamePlay.Bussiness.Render
 {
-    public class GameVFXDomainR : GameVFXDomainApiR
+    public class GameVFXDomain : GameVFXDomainApi
     {
         GameContextR _context;
-        GameVFXContextR _vfxContext => _context.vfxContext;
+        GameVFXContext _vfxContext => _context.vfxContext;
 
-        public GameVFXDomainR()
+        public GameVFXDomain()
         {
         }
 
@@ -35,19 +35,19 @@ namespace GamePlay.Bussiness.Render
         public void Tick(float dt)
         {
             var repo = this._vfxContext.repo;
-            repo.ForeachEntities((GameVFXEntityR vfx) =>
+            repo.ForeachEntities((GameVFXEntity vfx) =>
             {
                 vfx.Tick(dt);
                 if (!vfx.isPlaying) this.Stop(vfx);
             });
         }
 
-        public GameVFXEntityR Play(in GameVFXPlayArgs args)
+        public GameVFXEntity Play(in GameVFXPlayArgs args)
         {
             var repo = this._vfxContext.repo;
             var factory = this._vfxContext.factory;
             var prefabUrl = args.url;
-            if (!repo.TryFetch(prefabUrl, out GameVFXEntityR vfx))
+            if (!repo.TryFetch(prefabUrl, out GameVFXEntity vfx))
             {
                 vfx = factory.Load(prefabUrl);
                 if (vfx == null)
@@ -65,7 +65,7 @@ namespace GamePlay.Bussiness.Render
             return vfx;
         }
 
-        public void Stop(GameVFXEntityR vfxEntity)
+        public void Stop(GameVFXEntity vfxEntity)
         {
             if (vfxEntity == null) return;
             vfxEntity.Stop();

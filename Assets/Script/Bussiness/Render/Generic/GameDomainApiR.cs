@@ -17,8 +17,8 @@ namespace GamePlay.Bussiness.Render
         public GameAttributeDomainApiR attributeApi { get; private set; }
         public void SetAttributeApi(GameAttributeDomainApiR attributeApi) => this.attributeApi = attributeApi;
 
-        public GameVFXDomainApiR vfxApi { get; private set; }
-        public void SetVFXApi(GameVFXDomainApiR vfxApi) => this.vfxApi = vfxApi;
+        public GameVFXDomainApi vfxApi { get; private set; }
+        public void SetVFXApi(GameVFXDomainApi vfxApi) => this.vfxApi = vfxApi;
 
         public GameActionDomainApiR actionApi { get; private set; }
         public void SetActionApi(GameActionDomainApiR actionApi) => this.actionApi = actionApi;
