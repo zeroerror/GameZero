@@ -68,6 +68,7 @@ namespace GamePlay.Config
 
         private void RemoveComponentRecursively(Transform obj)
         {
+            GameObjectUtility.RemoveMonoBehavioursWithMissingScript(obj.gameObject);
             var coms = obj.GetComponents<Component>();
             foreach (var com in coms)
             {
@@ -84,6 +85,7 @@ namespace GamePlay.Config
         /// <summary> 保留的组件类型 </summary>
         private Type[] keepTypes = new Type[]
         {
+            typeof(Transform),
             typeof(SpriteRenderer),
         };
     }
