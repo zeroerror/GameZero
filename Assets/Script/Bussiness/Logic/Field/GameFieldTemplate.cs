@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Logic
         {
             _dict = new Dictionary<int, GameFieldModel>();
             var path = GameConfigCollection.FIELD_CONFIG_DIR_PATH;
-            var resList = GameResourceService.LoadAll(path, typeof(GameFieldSO));
+            var resList = GameResourceManager.LoadAll(path, typeof(GameFieldSO));
             _soDict = new Dictionary<int, GameFieldSO>();
             foreach (var res in resList)
             {

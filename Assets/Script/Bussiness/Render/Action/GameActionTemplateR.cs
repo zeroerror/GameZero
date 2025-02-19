@@ -14,7 +14,7 @@ namespace GamePlay.Bussiness.Render
         {
             _dict = new Dictionary<int, GameActionModelR>();
             var path = GameConfigCollection.ACTION_CONFIG_DIR_PATH;
-            var soList = GameResourceService.LoadAll(path, typeof(GameActionSO));
+            var soList = GameResourceManager.LoadAll(path, typeof(GameActionSO));
             _soDict = new Dictionary<int, GameActionSO>();
             foreach (var so in soList)
             {

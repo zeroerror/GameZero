@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Render
         {
             _dict = new Dictionary<int, GameBuffModelR>();
             var path = GameConfigCollection.BUFF_CONFIG_DIR_PATH;
-            var resList = GameResourceService.LoadAll(path, typeof(GameBuffSO));
+            var resList = GameResourceManager.LoadAll(path, typeof(GameBuffSO));
             _soDict = new Dictionary<int, GameBuffSO>();
             foreach (var res in resList)
             {

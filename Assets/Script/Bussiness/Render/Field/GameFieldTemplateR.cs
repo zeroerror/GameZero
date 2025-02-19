@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Render
         {
             _dict = new Dictionary<int, GameFieldModelR>();
             var path = GameConfigCollection.FIELD_CONFIG_DIR_PATH;
-            var resList = GameResourceService.LoadAll(path, typeof(GameFieldSO));
+            var resList = GameResourceManager.LoadAll(path, typeof(GameFieldSO));
             _soDict = new Dictionary<int, GameFieldSO>();
             foreach (var res in resList)
             {

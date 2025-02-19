@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Logic
         {
             _dict = new Dictionary<int, GameActionOptionModel>();
             var path = GameConfigCollection.ACTION_OPTION_CONFIG_DIR_PATH;
-            var resList = GameResourceService.LoadAll(path, typeof(GameActionOptionSO));
+            var resList = GameResourceManager.LoadAll(path, typeof(GameActionOptionSO));
             _soDict = new Dictionary<int, GameActionOptionSO>();
             foreach (var res in resList)
             {

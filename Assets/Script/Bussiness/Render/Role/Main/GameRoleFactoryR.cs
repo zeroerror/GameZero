@@ -30,14 +30,14 @@ namespace GamePlay.Bussiness.Render
         public GameRoleBodyCom GetBodyCom(GameRoleModelR model)
         {
             // 模板预制体
-            var tmPrefab = GameResourceService.Load<GameObject>("Role/Prefab/role");
+            var tmPrefab = GameResourceManager.Load<GameObject>("Role/Prefab/role");
             var tmRoot = GameObject.Instantiate(tmPrefab);
             tmRoot.transform.localPosition = new Vector3(0, 0, 0);
             var tmBody = tmRoot.transform.Find("body").gameObject;
             var tmFoot = tmRoot.transform.Find("foot").gameObject;
 
             // 角色预制体
-            var rolePrefab = GameResourceService.Load<GameObject>(model.prefabUrl);
+            var rolePrefab = GameResourceManager.Load<GameObject>(model.prefabUrl);
             if (!rolePrefab)
             {
                 GameLogger.LogError($"角色工厂[渲染层]: 加载角色预制体失败 {model.prefabUrl}");
@@ -58,7 +58,7 @@ namespace GamePlay.Bussiness.Render
             if (attachmentCom)
             {
                 // 加载所有弓箭的精灵
-                var bowSprites = GameResourceService.LoadAll<Sprite>("Equipment/Bow/bow_festive");
+                var bowSprites = GameResourceManager.LoadAll<Sprite>("Equipment/Bow/bow_festive");
                 var bowHandleSprite = bowSprites.Find(sprite => sprite.name == "bow_handle_festive");
                 var bowLimbSprite = bowSprites.Find(sprite => sprite.name == "bow_limb_festive");
                 GameLogger.Assert(bowHandleSprite != null, "角色工厂[渲染层]: 加载弓箭挂点图片失败");
@@ -73,7 +73,7 @@ namespace GamePlay.Bussiness.Render
         public AnimationClip LoadRoleAnimationClip(int typeId, string clipName)
         {
             var url = $"Role/{typeId}/{clipName}";
-            var clip = GameResourceService.LoadAnimationClip(url);
+            var clip = GameResourceManager.LoadAnimationClip(url);
             if (!clip)
             {
                 GameLogger.LogError($"角色工厂[渲染层]: 加载动画失败 {url}");
@@ -85,7 +85,7 @@ namespace GamePlay.Bussiness.Render
         public Slider LoadHPSlider(bool isEnemy)
         {
             var url = isEnemy ? "UI/Battle/attribute_bar_enemy" : "UI/Battle/attribute_bar_ally";
-            var prefab = GameResourceService.Load<GameObject>(url);
+            var prefab = GameResourceManager.Load<GameObject>(url);
             if (!prefab)
             {
                 GameLogger.LogError($"角色工厂[渲染层]: 加载属性条失败 {url}");
@@ -100,7 +100,7 @@ namespace GamePlay.Bussiness.Render
         public Slider LoadShieldSlider()
         {
             var url = "UI/Battle/attribute_bar_shield";
-            var prefab = GameResourceService.Load<GameObject>(url);
+            var prefab = GameResourceManager.Load<GameObject>(url);
             if (!prefab)
             {
                 GameLogger.LogError($"角色工厂[渲染层]: 加载属性条失败 {url}");
@@ -115,7 +115,7 @@ namespace GamePlay.Bussiness.Render
         public Slider LoadMPSlider()
         {
             var url = "UI/Battle/attribute_bar_mp";
-            var prefab = GameResourceService.Load<GameObject>(url);
+            var prefab = GameResourceManager.Load<GameObject>(url);
             if (!prefab)
             {
                 GameLogger.LogError($"角色工厂[渲染层]: 加载属性条失败 {url}");
@@ -138,7 +138,7 @@ namespace GamePlay.Bussiness.Render
         /// <summary> 获取分割线材质的实例 </summary>
         public Material CreateSplitLineMaterialInst()
         {
-            var mat = GameResourceService.Load<Material>("UI/Materials/SplitLine/mat_split_line");
+            var mat = GameResourceManager.Load<Material>("UI/Materials/SplitLine/mat_split_line");
             if (!mat)
             {
                 GameLogger.LogError("角色工厂[渲染层]: 加载分割线材质失败");

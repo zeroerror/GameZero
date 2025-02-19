@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Render
         {
             _dict = new Dictionary<int, GameShaderEffectModel>();
             var path = GameConfigCollection.SHADER_EFFECT_CONFIG_DIR_PATH;
-            var resList = GameResourceService.LoadAll(path, typeof(GameShaderEffectSO));
+            var resList = GameResourceManager.LoadAll(path, typeof(GameShaderEffectSO));
             _soDict = new Dictionary<int, GameShaderEffectSO>();
             foreach (var res in resList)
             {

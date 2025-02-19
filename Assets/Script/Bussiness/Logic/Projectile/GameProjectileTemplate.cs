@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Logic
         {
             _dict = new Dictionary<int, GameProjectileModel>();
             var path = GameConfigCollection.PROJECTILE_CONFIG_DIR_PATH;
-            var resList = GameResourceService.LoadAll(path, typeof(GameProjectileSO));
+            var resList = GameResourceManager.LoadAll(path, typeof(GameProjectileSO));
             _soDict = new Dictionary<int, GameProjectileSO>();
             foreach (var res in resList)
             {

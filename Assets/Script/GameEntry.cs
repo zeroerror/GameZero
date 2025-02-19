@@ -14,7 +14,7 @@ public class GameEntry : MonoBehaviour
     void Start()
     {
         GameRandomService.DefaultInitSeeds();
-        GameResourceService.ClearCache();
+        GameResourceManager.ClearCache();
         gameApp = new GameApp();
         gameAppR = new GameAppR();
         gameUIApp = new UIApp();

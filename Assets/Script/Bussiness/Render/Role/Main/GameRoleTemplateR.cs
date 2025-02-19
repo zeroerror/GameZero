@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Render
         {
             _dict = new Dictionary<int, GameRoleModelR>();
             var path = GameConfigCollection.ROLE_CONFIG_DIR_PATH;
-            var resList = GameResourceService.LoadAll(path, typeof(GameRoleSO));
+            var resList = GameResourceManager.LoadAll(path, typeof(GameRoleSO));
             _soDict = new Dictionary<int, GameRoleSO>();
             foreach (var res in resList)
             {

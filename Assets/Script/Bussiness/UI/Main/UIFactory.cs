@@ -7,7 +7,7 @@ namespace GamePlay.Bussiness.UI
     {
         public GameObject LoadUI(string prefabUrl)
         {
-            var prefab = GameResourceService.Load<GameObject>(prefabUrl);
+            var prefab = GameResourceManager.Load<GameObject>(prefabUrl);
             if (!prefab)
             {
                 GameLogger.LogError($"UI工厂: 加载UI预制体失败 {prefabUrl}");

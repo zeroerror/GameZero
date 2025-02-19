@@ -13,7 +13,7 @@ namespace GamePlay.Bussiness.Render
         {
             _dict = new Dictionary<int, GameSkillModelR>();
             var path = GameConfigCollection.SKILL_CONFIG_DIR_PATH;
-            var soList = GameResourceService.LoadAll(path, typeof(GameSkillSO));
+            var soList = GameResourceManager.LoadAll(path, typeof(GameSkillSO));
             _soDict = new Dictionary<int, GameSkillSO>();
             foreach (var so in soList)
             {

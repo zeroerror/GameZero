@@ -32,7 +32,7 @@ namespace GamePlay.Bussiness.Render
                 return null;
             }
             var url = model.materialUrl;
-            var mat = GameResourceService.Load<Material>(url);
+            var mat = GameResourceManager.Load<Material>(url);
             if (mat == null)
             {
                 GameLogger.LogError("GameShaderEffectFactoryR.LoadMaterial: shader not found: " + url);

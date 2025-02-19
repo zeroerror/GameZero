@@ -11,7 +11,7 @@ namespace GamePlay.Bussiness.Render
 
         public GameVFXEntity Load(string prefabUrl)
         {
-            var prefab = GameResourceService.Load<GameObject>(prefabUrl);
+            var prefab = GameResourceManager.Load<GameObject>(prefabUrl);
             if (prefab == null)
             {
                 GameLogger.LogError($"VFX加载失败：{prefabUrl}");

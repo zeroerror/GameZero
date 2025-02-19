@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GamePlay.Core
 {
-    public static class GameResourceService
+    public static class GameResourceManager
     {
         /// <summary> 资源缓存 </summary>
         private static readonly Dictionary<string, Object> _resCache = new Dictionary<string, Object>();

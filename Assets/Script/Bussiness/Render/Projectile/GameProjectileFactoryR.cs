@@ -34,7 +34,7 @@ namespace GamePlay.Bussiness.Render
             }
 
             var prefabUrl = model.prefabUrl;
-            var psGo = prefabUrl != null ? GameObject.Instantiate(GameResourceService.Load<GameObject>(prefabUrl)) : null;
+            var psGo = prefabUrl != null ? GameObject.Instantiate(GameResourceManager.Load<GameObject>(prefabUrl)) : null;
             psGo?.transform.SetParent(go.transform);
             var ps = psGo?.GetComponent<ParticleSystem>();
             if (psGo)
