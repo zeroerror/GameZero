@@ -42,16 +42,30 @@ namespace GamePlay.Bussiness.Logic
                 }
 
                 // 根据开始冲刺的位置和目标位置，计算当前帧的位置
+                // 确定目标位置
+                GameVec2 targetPos;
                 var curDisRatio = dash.distanceRatio;
                 var toDisRatio = nextDash.distanceRatio;
                 var actionTargeterCom = skill.actionTargeterCom;
-                var targetPos = actionTargeterCom.targetEntity?.transformCom.position ?? actionTargeterCom.targetPos;
+                var targetEntity = actionTargeterCom.targetEntity;
+                var dashToTargetBeginPos = skill.dashCom.dashToTargetBeginPos;
+                if (targetEntity != null)
+                {
+                    // 对于实体目标, 需要减少一个碰撞半径的距离
+                    targetPos = targetEntity.logicBottomPos;
+                    var dir = (dashToTargetBeginPos - targetPos).normalized;
+                    targetPos -= GameRoleCollection.ROLE_COLLIDER_RADIUS * dir;
+                }
+                else
+                {
+                    targetPos = actionTargeterCom.targetPos;
+                }
+                // 存在目标位置时，计算当前冲刺到的位置
                 if (!targetPos.Equals(GameVec2.zero))
                 {
                     var dashFrames = nextDash.frame - dash.frame;
                     var frameOffset = curFrame - dash.frame;
                     var timeRatio = (float)frameOffset / dashFrames;
-                    var dashToTargetBeginPos = skill.dashCom.dashToTargetBeginPos;
                     var ratio = curDisRatio + (toDisRatio - curDisRatio) * timeRatio;
                     var curPos = GameMathF.Lerp(dashToTargetBeginPos, targetPos, ratio);
                     skill.transformCom.position = curPos;

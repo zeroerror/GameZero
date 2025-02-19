@@ -6,35 +6,32 @@ namespace GamePlay.Bussiness.Logic
 {
     public class GameTimelineCom
     {
-        // 时长(秒)
+        /// <summary> 时长(秒) </summary>
         public float length { get; private set; }
         public void SetLength(float length)
         {
             this.length = length;
         }
-        // 时长(帧)
+        /// <summary> 时长(帧) </summary>
         public int frameLength => GameMathF.FloorToInt(length * GameTimeCollection.frameRate);
-        // 是否正在播放
+        /// <summary> 是否正在播放 </summary>
         public bool isPlaying { get; private set; }
-        // 0非循环，-1无限循环，>0循环时间
+        /// <summary> 0非循环，-1无限循环，>0循环时间 </summary>
         public float loopDuration { get; private set; }
         /// <summary> 是否为无限循环 </summary>
         public bool isEndlessLoop => this.loopDuration < 0;
         /// <summary> 是否为循环 </summary>
         public bool IsLoop => this.loopDuration != 0;
-
-        // 当前时间
+        /// <summary> 当前时间 </summary>
         public float time { get; private set; }
-        // 当前帧
+        /// <summary> 当前帧 </summary>
         public int frame => this._ConvertToFrame(this.time);
-
-        // 完成回调
+        /// <summary> 完成回调 </summary>
         private Action _complete;
+        /// <summary> 事件列表 </summary>
+        private Dictionary<int, List<Action>> _events;
 
         private float _cacheDt;
-
-        // 事件列表
-        private Dictionary<int, List<Action>> _events;
 
         public GameTimelineCom(float length = 0)
         {
