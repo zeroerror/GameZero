@@ -30,8 +30,7 @@ namespace GamePlay.Config
                     var isTransform = binding.type == typeof(Transform);
                     if (!isTransform) return;
                     var isX = binding.propertyName == "m_LocalPosition.x";
-                    var isY = binding.propertyName == "m_LocalPosition.y";
-                    if (!isX && !isY) return;
+                    if (!isX) return;
                     var keys = curve.keys;
                     for (int i = 0; i < keys.Length; i++)
                     {
@@ -50,8 +49,7 @@ namespace GamePlay.Config
                         }
                         speedEM.time = keys[i].time.ToFixed(2);
                         speedEM.frame = keys[i].time.ToFrame();
-                        if (isX) speedEM.x = keys[i].value;
-                        else if (isY) speedEM.y = keys[i].value;
+                        speedEM.x = keys[i].value;
                     }
                 });
             }
@@ -70,10 +68,9 @@ namespace GamePlay.Config
                     em_p.FindPropertyRelative("time").floatValue = em.time;
                     em_p.FindPropertyRelative("frame").intValue = em.frame;
                     em_p.FindPropertyRelative("x").floatValue = em.x;
-                    em_p.FindPropertyRelative("y").floatValue = em.y;
                     em_p.FindPropertyRelative("distanceRatio").floatValue = em.distanceRatio;
                     GUI.color = i == maxPositiveDisIdx ? Color.red : Color.green;
-                    EditorGUILayout.LabelField($"[{em.time}s/{em.frame}帧]: ({em.x.ToFixed(2)}, {em.y.ToFixed(2)}) 距离比例{em.distanceRatio.ToFixed(2)}");
+                    EditorGUILayout.LabelField($"[{em.time}s/{em.frame}帧]: ({em.x.ToFixed(2)}) 距离比例{em.distanceRatio.ToFixed(2)}");
                 }
                 // 冲刺距离
                 var dashDistance_p = property.FindPropertyRelative("dashDistance");

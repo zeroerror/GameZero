@@ -18,9 +18,9 @@ namespace GamePlay.Infrastructure
             obj = null;
             return false;
         }
-        private static void AddToCache(Object obj)
+        private static void AddToCache<T>(Object obj, string url)
         {
-            var key = obj.name + typeof(Object).Name;
+            var key = url + typeof(T).Name;
             _resCache[key] = obj;
         }
 
@@ -67,7 +67,7 @@ namespace GamePlay.Infrastructure
                 return null;
             }
             var objInst = typeof(T) == typeof(GameObject) ? originObj : originObj.Clone() as T;
-            AddToCache(objInst);
+            AddToCache<T>(objInst, url);
             return objInst;
         }
 
@@ -91,7 +91,7 @@ namespace GamePlay.Infrastructure
             }
             else
             {
-                AddToCache(originObj);
+                AddToCache<T>(originObj, url);
             }
             return true;
         }
@@ -118,7 +118,7 @@ namespace GamePlay.Infrastructure
                  }
                  var objInst = rr.asset.Clone() as T;
                  Object.DestroyImmediate(objInst);
-                 AddToCache(objInst);
+                 AddToCache<T>(objInst, url);
                  cb?.Invoke(objInst);
              };
         }

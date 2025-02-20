@@ -9,14 +9,13 @@ namespace GamePlay.Config
         public int frame;
         public float distanceRatio;
         public float x;
-        public float y;
     }
 
     public static class GameSKillDashEMExt
     {
         public static GameSKillDashModel ToModel(this GameSKillDashEM em)
         {
-            return new GameSKillDashModel(em.frame, em.distanceRatio, em.x, em.y);
+            return new GameSKillDashModel(em.frame, em.distanceRatio, em.x);
         }
 
         public static GameSKillDashModel[] ToModels(this GameSKillDashEM[] ems)

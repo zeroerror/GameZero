@@ -30,40 +30,13 @@ namespace GamePlay.Bussiness.Render
         {
             var isPassive = skillModel.skillType == GameSkillType.Passive;
             if (isPassive) return;
-            var url = skillModel.clipUrl;
-            var clip = GameResourceManager.LoadAnimationClip(url);
             var movementType = movementModel.movementType;
             if (movementType != GameSkillMovementType.FixedTimeDash && movementType != GameSkillMovementType.FixedSpeedDash) return;
-
-            // 分别创建X、Y、Z轴的动画曲线
-            var curveX = new AnimationCurve();
-            var curveY = new AnimationCurve();
-            var curveZ = new AnimationCurve();
-            var dashModels = movementModel.dashModels;
-            var count = dashModels?.Length ?? 0;
-            if (count == 0) return;
-            for (var i = 0; i < count - 1; i++)
-            {
-                var dashModel = dashModels[i];
-                var nextModel = dashModels[i + 1];
-                var fromFrame = dashModel.frame;
-                var toFrame = nextModel.frame;
-                var betweenFrame = toFrame - fromFrame;
-                for (var frame = fromFrame + 1; frame <= toFrame; frame++)
-                {
-                    var time = frame.ToTime();
-                    var y = Mathf.Lerp(dashModel.y, nextModel.y, (float)(frame - fromFrame) / betweenFrame);
-                    // 仅保留Y轴的位移
-                    curveX.AddKey(new Keyframe(time, 0));
-                    curveY.AddKey(new Keyframe(time, y));
-                    curveZ.AddKey(new Keyframe(time, 0));
-                }
-            }
-            // 设置新的动画曲线
+            // 清空除Y轴以外的动画位移
             var path = isMultyAnimationLayer ? "Right" : "Body";
-            clip.SetCurve(path, typeof(Transform), "m_LocalPosition.x", curveX);
-            clip.SetCurve(path, typeof(Transform), "m_LocalPosition.y", curveY);
-            clip.SetCurve(path, typeof(Transform), "m_LocalPosition.z", curveZ);
+            var clip = GameResourceManager.LoadAnimationClip(skillModel.clipUrl);
+            clip.SetCurve(path, typeof(Transform), "m_LocalPosition.x", new AnimationCurve());
+            clip.SetCurve(path, typeof(Transform), "m_LocalPosition.z", new AnimationCurve());
         }
     }
 }

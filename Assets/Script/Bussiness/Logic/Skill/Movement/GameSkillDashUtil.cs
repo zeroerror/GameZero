@@ -52,10 +52,10 @@ namespace GamePlay.Bussiness.Logic
                 var dashToTargetBeginPos = skill.dashCom.dashToTargetBeginPos;
                 if (targetEntity != null)
                 {
-                    // 对于实体目标, 需要减少一个碰撞半径的距离
+                    // 对于实体目标, 尽量减少抵达位置时与目标发生体积碰撞恢复
                     targetPos = targetEntity.logicBottomPos;
                     var dir = (dashToTargetBeginPos - targetPos).normalized;
-                    targetPos -= GameRoleCollection.ROLE_COLLIDER_RADIUS * dir;
+                    targetPos += 2 * GameRoleCollection.ROLE_COLLIDER_RADIUS * dir;
                 }
                 else
                 {
