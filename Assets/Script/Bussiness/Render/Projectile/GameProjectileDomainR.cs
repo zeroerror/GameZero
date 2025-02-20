@@ -44,11 +44,13 @@ namespace GamePlay.Bussiness.Render
         public void BindEvents()
         {
             this._context.BindRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_CREATE, this._OnProjectileCreate);
+            this.fsmDomain.BindEvents();
         }
 
         public void UnbindEvents()
         {
             this._context.UnbindRC(GameProjectileRCCollection.RC_GAME_PROJECTILE_CREATE, this._OnProjectileCreate);
+            this.fsmDomain.UnbindEvents();
         }
 
         private void _OnProjectileCreate(object args)
