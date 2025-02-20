@@ -51,7 +51,7 @@ namespace GamePlay.Core
 
                 graph.Tick(dt);
 
-                if (!graph.isLoop && graph.time >= graph.playingDuration)
+                if (!graph.isLoop && graph.elapsedTime >= graph.playingDuration)
                 {
                     graph.Stop();
                 }
@@ -73,12 +73,12 @@ namespace GamePlay.Core
                 return;
             }
 
-            var graph = this._CreateGraph(layer);
+            var graph = this._GetGraph(layer);
             graph.SetClip(clip.name, clip);
             this.Play(layer, clip.name, startTime);
         }
 
-        private GameAnimPlayableGraph _CreateGraph(int layer)
+        private GameAnimPlayableGraph _GetGraph(int layer)
         {
             if (!this._graphDict.TryGetValue(layer, out var graph))
             {

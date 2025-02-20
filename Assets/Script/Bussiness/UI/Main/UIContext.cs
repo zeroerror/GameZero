@@ -5,7 +5,6 @@ using GamePlay.Infrastructure;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Render;
 using UnityEngine;
-using GamePlay.Infrastructure;
 
 namespace GamePlay.Bussiness.UI
 {

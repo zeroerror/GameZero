@@ -48,6 +48,28 @@
       "}"
     ]
   },
+  "nsi": {
+    "prefix": "nsi",
+    "body": [
+      "namespace GamePlay.Infrastructure",
+      "{",
+      "    public class $1",
+      "    {",
+      "    }",
+      "}"
+    ]
+  },
+  "nsc": {
+    "prefix": "nsc",
+    "body": [
+      "namespace GamePlay.Config",
+      "{",
+      "    public class $1",
+      "    {",
+      "    }",
+      "}"
+    ]
+  },
   "test_mono": {
     "prefix": "test_mono",
     "body": [

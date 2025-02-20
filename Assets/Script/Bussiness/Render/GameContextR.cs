@@ -25,8 +25,10 @@ namespace GamePlay.Bussiness.Render
         public GameEventService eventService { get; private set; }
         public GameEventService delayRCEventService { get; private set; }
         public GameCmdBufferService cmdBufferService { get; private set; }
+        public GameAudioService audioService { get; private set; }
 
         public UIDomainApi uiApi { get; private set; }
+
         public GameContextR()
         {
 
@@ -47,6 +49,7 @@ namespace GamePlay.Bussiness.Render
             this.eventService = new GameEventService();
             this.delayRCEventService = new GameEventService();
             this.cmdBufferService = new GameCmdBufferService();
+            this.audioService = new GameAudioService();
         }
 
         public void Inject(GameObject sceneRoot, GameDomainApi logicApi, UIDomainApi uiApi)

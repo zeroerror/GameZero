@@ -1,7 +1,5 @@
 using GamePlay.Core;
 using GamePlay.Infrastructure;
-using GamePlay.Core;
-using GamePlay.Infrastructure;
 namespace GamePlay.Bussiness.Logic
 {
     public class GameContext
@@ -29,7 +27,6 @@ namespace GamePlay.Bussiness.Logic
         public GameContext()
         {
             this.director = new GameDirectorEntity();
-
             this.eventService = new GameEventService();
             this.rcEventService = new GameEventService();
             this.cmdBufferService = new GameCmdBufferService();

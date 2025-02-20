@@ -6,6 +6,10 @@ using GamePlay.Infrastructure;
 
 namespace GamePlay.Core
 {
+    /// <summary>
+    /// 基于 Playable 的动画控制组件, 用于平替 Animator
+    /// <para> 一个Graph可以缓存多个Clip, 但只存在一个正在播放的Clip </para>
+    /// </summary>
     public class GameAnimPlayableGraph
     {
         private Animator _animator;
@@ -29,7 +33,7 @@ namespace GamePlay.Core
         private bool _isLoop;
 
         /// <summary> 当前播放的时间 </summary>
-        public float time
+        public float elapsedTime
         {
             get
             {
@@ -63,7 +67,7 @@ namespace GamePlay.Core
         public void Tick(float dt)
         {
             this._graph.Evaluate(dt);
-            if (!this._isLoop && this.time >= this.playingDuration)
+            if (!this._isLoop && this.elapsedTime >= this.playingDuration)
             {
                 this.Stop();
             }

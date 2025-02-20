@@ -255,5 +255,24 @@ namespace GamePlay.Core
             }
             return arr;
         }
+
+        public static bool TryPop<T>(this List<T> list, out T res)
+        {
+            if (list.Count == 0)
+            {
+                res = default;
+                return false;
+            }
+            res = list[list.Count - 1];
+            list.RemoveAt(list.Count - 1);
+            return true;
+        }
+
+        public static T Pop<T>(this List<T> list)
+        {
+            var res = list[list.Count - 1];
+            list.RemoveAt(list.Count - 1);
+            return res;
+        }
     }
 }

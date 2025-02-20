@@ -56,13 +56,13 @@ namespace GamePlay.Core
             }
         }
 
-        public void Tick()
+        public void Tick(float dt)
         {
             var count = _cmdBuffers.Count;
             for (int i = 0; i < count; i++)
             {
                 var cmdBuffer = _cmdBuffers[i];
-                cmdBuffer.elapseTime += UnityEngine.Time.deltaTime;
+                cmdBuffer.elapseTime += dt;
                 if (cmdBuffer.isDone())
                 {
                     cmdBuffer.cmd();

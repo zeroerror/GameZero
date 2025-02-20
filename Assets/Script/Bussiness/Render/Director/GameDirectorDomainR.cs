@@ -221,8 +221,10 @@ namespace GamePlay.Bussiness.Render
             // 默认领域逻辑每帧更新
             this._TickDomain(dt);
 
-            // 指令处理
-            this.context.cmdBufferService.Tick();
+            // 定时器
+            this.context.cmdBufferService.Tick(dt);
+            // 音效
+            this.context.audioService.Tick(dt);
         }
 
         public void LateUpdate(float dt)

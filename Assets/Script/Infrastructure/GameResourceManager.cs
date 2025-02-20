@@ -4,6 +4,35 @@ namespace GamePlay.Infrastructure
 {
     public static class GameResourceManager
     {
+
+        /// <summary> 资源缓存 </summary>
+        private static readonly Dictionary<string, Object> _resCache = new Dictionary<string, Object>();
+        private static bool _TryGetCache<T>(string url, out T obj) where T : Object
+        {
+            var key = url + typeof(T).Name;
+            if (_resCache.TryGetValue(key, out var cacheObj))
+            {
+                obj = cacheObj as T;
+                return true;
+            }
+            obj = null;
+            return false;
+        }
+        private static void AddToCache(Object obj)
+        {
+            var key = obj.name + typeof(Object).Name;
+            _resCache[key] = obj;
+        }
+
+        /// <summary> 资源列表缓存 key为目录路径 </summary>
+        private static readonly Dictionary<string, Dictionary<System.Type, Object[]>> _resListCache = new Dictionary<string, Dictionary<System.Type, Object[]>>();
+
+        public static void ClearCache()
+        {
+            _resCache.Clear();
+            _resListCache.Clear();
+        }
+
         private static U[] Map<T, U>(this T[] list, System.Func<T, U> func)
         {
             U[] result = new U[list.Length];
@@ -20,17 +49,6 @@ namespace GamePlay.Infrastructure
             return clone;
         }
 
-        /// <summary> 资源缓存 </summary>
-        private static readonly Dictionary<string, Object> _resCache = new Dictionary<string, Object>();
-        /// <summary> 资源列表缓存 key为目录路径 </summary>
-        private static readonly Dictionary<string, Dictionary<System.Type, Object[]>> _resListCache = new Dictionary<string, Dictionary<System.Type, Object[]>>();
-
-        public static void ClearCache()
-        {
-            _resCache.Clear();
-            _resListCache.Clear();
-        }
-
         /// <summary>
         /// 加载特定资源
         /// <para> url: 资源路径 </para>
@@ -38,7 +56,7 @@ namespace GamePlay.Infrastructure
         public static T Load<T>(string url) where T : Object
         {
             if (url == null) return null;
-            if (_resCache.TryGetValue(url, out var cacheObj))
+            if (_TryGetCache<T>(url, out var cacheObj))
             {
                 return cacheObj as T;
             }
@@ -49,8 +67,33 @@ namespace GamePlay.Infrastructure
                 return null;
             }
             var objInst = typeof(T) == typeof(GameObject) ? originObj : originObj.Clone() as T;
-            _resCache[url] = objInst;
+            AddToCache(objInst);
             return objInst;
+        }
+
+        public static bool IsExist<T>(string url, bool needUnload = true) where T : Object
+        {
+            if (url == null) return false;
+            if (_TryGetCache<T>(url, out var cacheObj))
+            {
+                return cacheObj is T;
+            }
+            var originObj = Resources.Load<T>(url);
+            if (originObj == null)
+            {
+                return false;
+            }
+
+            if (needUnload)
+            {
+                if (originObj is GameObject) Object.DestroyImmediate(originObj);
+                Resources.UnloadAsset(originObj);
+            }
+            else
+            {
+                AddToCache(originObj);
+            }
+            return true;
         }
 
         /// <summary>
@@ -61,7 +104,7 @@ namespace GamePlay.Infrastructure
         public static void LoadAsync<T>(string url, System.Action<T> cb) where T : Object
         {
             if (url == null) return;
-            if (_resCache.TryGetValue(url, out var cacheObj))
+            if (_TryGetCache<T>(url, out var cacheObj))
             {
                 cb?.Invoke(cacheObj as T);
                 return;
@@ -75,7 +118,7 @@ namespace GamePlay.Infrastructure
                  }
                  var objInst = rr.asset.Clone() as T;
                  Object.DestroyImmediate(objInst);
-                 _resCache[url] = objInst;
+                 AddToCache(objInst);
                  cb?.Invoke(objInst);
              };
         }

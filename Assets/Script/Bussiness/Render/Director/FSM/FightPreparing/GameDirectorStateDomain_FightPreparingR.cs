@@ -1,3 +1,4 @@
+using System;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Core;
 using GamePlay.Infrastructure;
@@ -29,6 +30,21 @@ namespace GamePlay.Bussiness.Render
 
         public override void Enter(GameDirectorEntityR director, object args = null)
         {
+            // 体验音效测试代码
+            string[] urls = new string[] { "SFX/audio_clip_gun_shot", "SFX/audio_clip_gun_reload", "SFX/audio_clip_bow_shot", "SFX/audio_clip_bow_hit" };
+            urls?.Foreach((url) =>
+            {
+                this._context.cmdBufferService.AddIntervalCmd(0.5f, () =>
+                {
+                    var randomDelay = GameMathF.RandomRange(0.5f, 2.5f);
+                    this._context.cmdBufferService.AddDelayCmd(randomDelay, () =>
+                    {
+                        var sfx = this._context.audioService.PlaySFX(url, 0);
+                        sfx.volume = 0.1f;
+                    });
+                });
+            });
+
             director.fsmCom.EnterFightPreparing();
             GameLogger.DebugLog("R 导演 - 进入战斗准备状态");
         }

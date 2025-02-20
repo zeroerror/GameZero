@@ -1,13 +1,9 @@
 using System;
-using GamePlay.Core;
 using GamePlay.Infrastructure;
 using GamePlay.Bussiness.Logic;
 using GamePlay.Bussiness.Render;
-using GamePlay.Core;
-using GamePlay.Infrastructure;
 using UnityEngine;
 using UnityEngine.UI;
-using GamePlay.Infrastructure;
 
 namespace GamePlay.Bussiness.UI
 {
@@ -124,7 +120,7 @@ namespace GamePlay.Bussiness.UI
 
         protected void _LateTick(float dt)
         {
-            this.context.cmdBufferService.Tick();
+            this.context.cmdBufferService.Tick(dt);
         }
 
         public int SetInterval(float interval, Action callback)
