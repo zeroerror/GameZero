@@ -38,10 +38,10 @@ namespace GamePlay.Config
                 Debug.LogError("预制体为空");
                 return;
             }
-            if (prefabUrl != prefab.GetPrefabUrl())
+            if (prefabUrl != prefab.GetAssetUrl())
             {
-                Debug.Log($"预制体更新: {prefabUrl} => {prefab.GetPrefabUrl()}");
-                prefabUrl = prefab.GetPrefabUrl();
+                Debug.Log($"预制体更新: {prefabUrl} => {prefab.GetAssetUrl()}");
+                prefabUrl = prefab.GetAssetUrl();
             }
             Debug.Log($"保存角色数据 - {typeId} ✔");
             this?.skills.Foreach(skillSO => skillSO.Save());

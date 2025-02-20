@@ -12,8 +12,13 @@ namespace GamePlay.Config
 
             var desc_p = property.FindPropertyRelative("desc");
             desc_p.DrawProperty_Str("描述");
-            var actEffectPrefab_p = property.FindPropertyRelative("actEffectPrefab");
-            actEffectPrefab_p.DrawProperty("行为特效");
+
+            var actSFX_p = property.FindPropertyRelative("actSFX");
+            actSFX_p.DrawProperty("行为音效");
+            var actSFXVolume_p = property.FindPropertyRelative("actSFXVolume");
+            actSFXVolume_p.DrawProperty("行为音效音量");
+            var actVFX_p = property.FindPropertyRelative("actVFX");
+            actVFX_p.DrawProperty("行为视觉特效");
             var actVFXScale_p = property.FindPropertyRelative("actVFXScale");
             actVFXScale_p.DrawProperty_Vector2("行为特效缩放");
             var actVFXOffset_p = property.FindPropertyRelative("actVFXOffset");
@@ -21,8 +26,12 @@ namespace GamePlay.Config
             var actCamShakeModel_p = property.FindPropertyRelative("actCamShakeModel");
             actCamShakeModel_p.DrawProperty("行为相机震动");
 
-            var hitEffectPrefab_p = property.FindPropertyRelative("hitEffectPrefab");
-            hitEffectPrefab_p.DrawProperty("命中特效");
+            var hitSFX_p = property.FindPropertyRelative("hitSFX");
+            hitSFX_p.DrawProperty("命中音效");
+            var hitSFXVolume_p = property.FindPropertyRelative("hitSFXVolume");
+            hitSFXVolume_p.DrawProperty("命中音效音量");
+            var hitVFX_p = property.FindPropertyRelative("hitVFX");
+            hitVFX_p.DrawProperty("命中视觉特效");
             var hitVFXScale_p = property.FindPropertyRelative("hitVFXScale");
             hitVFXScale_p.DrawProperty_Vector2("命中特效缩放");
             var hitVFXOffset_p = property.FindPropertyRelative("hitVFXOffset");

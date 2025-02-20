@@ -69,21 +69,28 @@ namespace GamePlay.Bussiness.Render
                 GameLogger.LogError("行为执行: 未知的行为Id " + actionId);
                 return;
             }
-            // 特效
-            var actEffectUrl = action.actEffectUrl;
-            if (actEffectUrl != null)
+            // 视觉特效
+            var actVFXUrl = action.actVFXUrl;
+            if (actVFXUrl != null)
             {
                 var vfxOffset = action.actVFXOffset;
                 var vfxPos = actPos + vfxOffset;
                 var args = new GameVFXPlayArgs()
                 {
                     position = vfxPos,
-                    url = actEffectUrl,
+                    url = actVFXUrl,
                     scale = action.actVFXScale,
                     loopDuration = 0,
                     layerType = GameFieldLayerType.VFX
                 };
                 this._context.domainApi.vfxApi.Play(args);
+            }
+            // 音效
+            var actSFXUrl = action.actSFXUrl;
+            if (actSFXUrl != null)
+            {
+                var sfx = this._context.audioService.PlaySFX(actSFXUrl);
+                sfx.SetVolume(action.actSFXVolume);
             }
             // 震屏
             if (action.actCamShakeModel != null)
@@ -103,9 +110,9 @@ namespace GamePlay.Bussiness.Render
                 GameLogger.LogError("行为执行: 未知的行为Id " + actionId);
                 return;
             }
-            // 特效
-            var hitEffectUrl = action.hitEffectUrl;
-            if (hitEffectUrl != null)
+            // 视觉特效
+            var hitVFXUrl = action.hitVFXUrl;
+            if (hitVFXUrl != null)
             {
 
                 var attachNode = target is GameRoleEntityR targetRole ? targetRole.bodyCom.tmRoot : null;
@@ -118,13 +125,20 @@ namespace GamePlay.Bussiness.Render
                     attachNode = attachNode,
                     attachOffset = attachOffset,
                     position = attachPos,
-                    url = hitEffectUrl,
+                    url = hitVFXUrl,
                     angle = transCom.angle,
                     scale = action.hitVFXScale,
                     loopDuration = 0,
                     layerType = GameFieldLayerType.VFX
                 };
                 this._context.domainApi.vfxApi.Play(args);
+            }
+            // 音效
+            var hitSFXUrl = action.hitSFXUrl;
+            if (hitSFXUrl != null)
+            {
+                var sfx = this._context.audioService.PlaySFX(hitSFXUrl);
+                sfx.SetVolume(action.hitSFXVolume);
             }
             // 震屏
             if (action.hitCamShakeModel != null)

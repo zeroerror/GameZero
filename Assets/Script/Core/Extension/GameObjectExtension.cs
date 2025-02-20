@@ -154,7 +154,7 @@ namespace GamePlay.Core
             tf.position = pos;
         }
 
-        public static string GetPrefabUrl(this GameObject prefab)
+        public static string GetAssetUrl(this Object prefab)
         {
             var url = prefab ? UnityEditor.AssetDatabase.GetAssetPath(prefab) : null;
             if (url != null)

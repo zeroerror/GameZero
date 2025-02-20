@@ -295,7 +295,7 @@ MonoBehaviour:
   actionEMR:
     typeId: 999005020
     desc: "\u83B7\u5F9710%\u653B\u51FB\u529B"
-    actEffectPrefab: {fileID: 0}
+    actVFX: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}
     actCamShakeModel:
@@ -303,7 +303,7 @@ MonoBehaviour:
       amplitude: 0
       frequency: 0
       duration: 0
-    hitEffectPrefab: {fileID: 0}
+    hitVFX: {fileID: 0}
     hitVFXScale: {x: 1, y: 1}
     hitVFXOffset: {x: 0, y: 0}
     hitCamShakeModel:

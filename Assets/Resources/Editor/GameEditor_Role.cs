@@ -47,7 +47,7 @@ namespace GamePlay.Config
 
             if (prefab)
             {
-                this.prefabUrl_p.stringValue = prefab.GetPrefabUrl();
+                this.prefabUrl_p.stringValue = prefab.GetAssetUrl();
             }
             else
             {

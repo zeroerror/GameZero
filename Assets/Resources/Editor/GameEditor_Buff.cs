@@ -94,7 +94,7 @@ namespace GamePlay.Config
                 var vfxPrefab = this.vfxPrefab_p.DrawProperty<GameObject>("buff特效");
                 if (vfxPrefab)
                 {
-                    this.vfxPrefabUrl_p.stringValue = vfxPrefab.GetPrefabUrl();
+                    this.vfxPrefabUrl_p.stringValue = vfxPrefab.GetAssetUrl();
 
                     var vfxLayerType = this.vfxLayerType_p.DrawProperty_EnumPopup<GameFieldLayerType>("挂载层级");
                     if (vfxLayerType == GameFieldLayerType.None)

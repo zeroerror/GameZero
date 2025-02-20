@@ -373,7 +373,7 @@ MonoBehaviour:
   actionEMR:
     typeId: 200010102
     desc: "\u9020\u621030%\u7684\u6247\u5F62\u6E85\u5C04\u4F24\u5BB3"
-    actEffectPrefab: {fileID: 2439547314104909991, guid: 84782b66efcc8e9418539782454ae9da, type: 3}
+    actVFX: {fileID: 2439547314104909991, guid: 84782b66efcc8e9418539782454ae9da, type: 3}
     actVFXScale: {x: 2, y: 2}
     actVFXOffset: {x: 0.5, y: 1}
     actCamShakeModel:
@@ -381,7 +381,7 @@ MonoBehaviour:
       amplitude: 0
       frequency: 0
       duration: 0
-    hitEffectPrefab: {fileID: 0}
+    hitVFX: {fileID: 0}
     hitVFXScale: {x: 1, y: 1}
     hitVFXOffset: {x: 0, y: 0}
     hitCamShakeModel:

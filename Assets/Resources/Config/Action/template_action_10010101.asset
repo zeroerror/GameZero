@@ -39,6 +39,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -73,6 +75,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -107,6 +111,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -148,6 +154,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -182,6 +190,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -214,6 +224,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -246,6 +258,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -279,6 +293,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -309,6 +325,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -341,6 +359,8 @@ MonoBehaviour:
         angle: 0
         radius: 0
         fanAngle: 0
+      rangeSelectLimitCount: 0
+      rangeSelectSortType: 0
     preconditionSetEM:
       buffConditionEM:
         enable: 0
@@ -354,7 +374,9 @@ MonoBehaviour:
   actionEMR:
     typeId: 10010101
     desc: "\u53D1\u5C04\u5F13\u7BAD"
-    actEffectPrefab: {fileID: 0}
+    actSFX: {fileID: 8300000, guid: b39939fb5a4f09e49b2f42dfa80f9c61, type: 3}
+    actSFXVolume: 1
+    actVFX: {fileID: 0}
     actVFXScale: {x: 1, y: 1}
     actVFXOffset: {x: 0, y: 0}
     actCamShakeModel:
@@ -362,7 +384,9 @@ MonoBehaviour:
       amplitude: 0
       frequency: 0
       duration: 0
-    hitEffectPrefab: {fileID: 0}
+    hitSFX: {fileID: 0}
+    hitSFXVolume: 0
+    hitVFX: {fileID: 0}
     hitVFXScale: {x: 1, y: 1}
     hitVFXOffset: {x: 0, y: 0}
     hitCamShakeModel:
