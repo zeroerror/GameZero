@@ -52,6 +52,11 @@ namespace GamePlay.Bussiness.Render
             this.audioService = new GameAudioService();
         }
 
+        public void Destroy()
+        {
+            this.audioService.Destroy();
+        }
+
         public void Inject(GameObject sceneRoot, GameDomainApi logicApi, UIDomainApi uiApi)
         {
             this.fieldContext.Inject(sceneRoot);

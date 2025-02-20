@@ -40,6 +40,11 @@ namespace GamePlay.Infrastructure
             this._audioPlayableOutput.SetSourcePlayable(this._clipPlayable);
         }
 
+        public void Destroy()
+        {
+            this._playableGraph.Destroy();
+        }
+
         public void Play(float startTime = 0, bool loop = false)
         {
             this._clipPlayable.SetLooped(loop);

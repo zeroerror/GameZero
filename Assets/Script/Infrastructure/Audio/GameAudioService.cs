@@ -46,6 +46,15 @@ namespace GamePlay.Infrastructure
             }
         }
 
+        public void Destroy()
+        {
+            this._playingSFXs?.Foreach((sfx) =>
+            {
+                sfx.Destroy();
+            });
+            this._playingBGM?.Destroy();
+        }
+
         private void _AddToPool(GameAudioPlayable GameAudioPlayable)
         {
             if (!_poolDict.ContainsKey(GameAudioPlayable.url))

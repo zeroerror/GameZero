@@ -106,6 +106,7 @@ namespace GamePlay.Bussiness.Render
             this.entityCollectDomain.Destroy();
             this.buffDomain.Destroy();
             this.shaderEffectDomain.Destroy();
+            this.context.Destroy();
         }
 
         public void BindEvents()
