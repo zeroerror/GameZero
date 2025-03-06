@@ -19,6 +19,8 @@ namespace GamePlay.Config
         /// <summary> 结束时间 </summary>
         public float endTime;
 
+        /// <summary> 是否启用(float) </summary>
+        public bool isEnable_float;
         /// <summary> 起始值(float) </summary>
         public float fromValue_float;
         /// <summary> 结束值(float) </summary>
@@ -26,10 +28,14 @@ namespace GamePlay.Config
         /// <summary> 曲线(float) </summary>
         public AnimationCurve curve_float;
 
+        /// <summary> 是否启用(Color) </summary>
+        public bool isEnable_color;
         /// <summary> 起始值(Color) </summary>
         public Color fromValue_color;
         /// <summary> 结束值(Color) </summary>
         public Color toValue_color;
+        /// <summary> 曲线(Color) </summary>
+        public AnimationCurve curve_color;
 
         public GameShaderEffectPropTimeLineModel ToModel()
         {
@@ -37,9 +43,17 @@ namespace GamePlay.Config
             model.propName = propName;
             model.startTime = startTime;
             model.endTime = endTime;
+
+            model.isEnable_float = isEnable_float;
             model.fromValue_float = fromValue_float;
             model.toValue_float = toValue_float;
             model.curve_float = curve_float;
+
+            model.isEnable_color = isEnable_color;
+            model.fromValue_color = fromValue_color;
+            model.toValue_color = toValue_color;
+            model.curve_color = curve_color;
+
             return model;
         }
     }

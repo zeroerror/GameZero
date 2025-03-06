@@ -123,11 +123,19 @@ namespace GamePlay.Bussiness.Render
             shieldSlider.SetSize(shieldSliderSize);
             shieldSlider.SetSlitLineMat(this._roleContext.factory.CreateSplitLineMaterialInst());
 
-            // 初始化默认材质
-            role.bodyCom.renderers?.Foreach((renderer) =>
+            if (isEnemy)
             {
-                renderer.material = this._roleContext.factory.GetDefaultMaterial();
-            });
+                // 如果是敌人，则设置敌人描边材质效果
+                this._context.domainApi.shaderEffectApi.PlayShaderEffect(GameShaderEffectType.EnemyBorder, role);
+            }
+            else
+            {
+                // 其他的默认为初始化材质
+                role.bodyCom.renderers?.Foreach((renderer) =>
+                {
+                    renderer.material = this._roleContext.factory.GetDefaultMaterial();
+                });
+            }
             return role;
         }
 

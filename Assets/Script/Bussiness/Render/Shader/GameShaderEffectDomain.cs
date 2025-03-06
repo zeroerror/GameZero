@@ -81,16 +81,22 @@ namespace GamePlay.Bussiness.Render
 
         public void PlayShaderEffect(int shaderEffectId, GameEntityBase entity)
         {
-            Renderer[] renderers;
             if (entity is GameRoleEntityR role)
             {
-                renderers = role.bodyCom.renderers;
-            }
-            else
-            {
-                GameLogger.LogError($"PlayShaderEffect: 不支持的实体类型: {entity.idCom.entityType}");
+                this.PlayShaderEffect(shaderEffectId, role.bodyCom);
                 return;
             }
+            GameLogger.LogError($"PlayShaderEffect: 不支持的实体类型: {entity.idCom.entityType}");
+        }
+
+        public void PlayShaderEffect(GameShaderEffectType effType, GameEntityBase entity)
+        {
+            this.PlayShaderEffect((int)effType, entity);
+        }
+
+        public void PlayShaderEffect(int shaderEffectId, GameRoleBodyCom bodyCom)
+        {
+            Renderer[] renderers = bodyCom.renderers;
             this.PlayShaderEffect(shaderEffectId, renderers);
         }
 

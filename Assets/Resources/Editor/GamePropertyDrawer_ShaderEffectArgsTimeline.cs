@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Codice.Client.BaseCommands;
 using UnityEditor;
 using UnityEngine;
 using static UnityEditor.ShaderUtil;
@@ -48,17 +47,22 @@ namespace GamePlay.Config
             // 根据选中的参数类型，展示不同的输入框
             var propName = propName_p.stringValue;
             var propType = propDict[propName];
+            property.FindPropertyRelative("isEnable_float").boolValue = false;
+            property.FindPropertyRelative("isEnable_color").boolValue = false;
             switch (propType)
             {
                 case ShaderPropertyType.Float:
                 case ShaderPropertyType.Range:
+                    property.FindPropertyRelative("isEnable_float").boolValue = true;
                     property.FindPropertyRelative("fromValue_float").DrawProperty_Float("起始值");
                     property.FindPropertyRelative("toValue_float").DrawProperty_Float("结束值");
                     property.FindPropertyRelative("curve_float").DrawProperty_AnimationCurve("曲线");
                     break;
                 case ShaderPropertyType.Color:
+                    property.FindPropertyRelative("isEnable_color").boolValue = true;
                     property.FindPropertyRelative("fromValue_color").DrawProperty_Color("起始值");
                     property.FindPropertyRelative("toValue_color").DrawProperty_Color("结束值");
+                    property.FindPropertyRelative("curve_color").DrawProperty_AnimationCurve("曲线");
                     break;
                 default:
                     EditorGUILayout.HelpBox($"不支持的参数类型: {propType}", MessageType.Warning);

@@ -65,23 +65,31 @@ namespace GamePlay.Bussiness.Render
             propTimeLines?.Foreach((timeline) =>
             {
                 var time = this.elapsedTime != loopLength ? this.elapsedTime % length : length;// 保证循环结束时，时间点在最后一帧
-                if (time >= timeline.startTime && time <= timeline.endTime)
+                if (time < timeline.startTime || time > timeline.endTime) return;
+                var t = (time - timeline.startTime) / (timeline.endTime - timeline.startTime);
+                if (timeline.isEnable_float)
                 {
-                    var t = (time - timeline.startTime) / (timeline.endTime - timeline.startTime);
                     var curve_float = timeline.curve_float;
-                    if (curve_float != null)
-                    {
-                        var ratio = curve_float.Evaluate(t);
-                        var value = timeline.fromValue_float + ratio * (timeline.toValue_float - timeline.fromValue_float);
+                    var ratio = curve_float.Evaluate(t);
+                    var value = timeline.fromValue_float + ratio * (timeline.toValue_float - timeline.fromValue_float);
 
-                        // 使用 MaterialPropertyBlock 来设置参数，避免内存泄漏
-                        propertyBlock.SetFloat(timeline.propName, value);
-                        renderer.SetPropertyBlock(propertyBlock); // 将属性块应用到渲染器
-                        return;
-                    }
-
-                    GameLogger.LogError($"ShaderEffectEntity.Tick: 未处理的值类型 {timeline.propName}");
+                    // 使用 MaterialPropertyBlock 来设置参数，避免内存泄漏
+                    propertyBlock.SetFloat(timeline.propName, value);
+                    renderer.SetPropertyBlock(propertyBlock); // 将属性块应用到渲染器
+                    return;
                 }
+
+                if (timeline.isEnable_color)
+                {
+                    var curve_color = timeline.curve_color;
+                    var ratio = curve_color.Evaluate(t);
+                    var value = timeline.fromValue_color + ratio * (timeline.toValue_color - timeline.fromValue_color);
+                    propertyBlock.SetColor(timeline.propName, value);
+                    renderer.SetPropertyBlock(propertyBlock);
+                    return;
+                }
+
+                GameLogger.LogError($"ShaderEffectEntity.Tick: 未处理的值类型 {timeline.propName}");
             });
 
             if (this.elapsedTime >= loopLength)

@@ -8,5 +8,7 @@ namespace GamePlay.Bussiness.Render
         PreviewFlash = 2,
         /// <summary> 隐身 </summary>
         Stealth = 3,
+        /// <summary> 敌人描边 </summary>
+        EnemyBorder = 4,
     }
 }

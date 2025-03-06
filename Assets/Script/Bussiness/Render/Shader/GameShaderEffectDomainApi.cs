@@ -27,7 +27,19 @@ namespace GamePlay.Bussiness.Render
         /// </summary>
         public void PlayShaderEffect(int shaderEffectId, GameEntityBase entity);
 
+        /// <summary>
+        /// 在实体上播放Shader特效
+        /// <para>effType: shader类型</para>
+        /// <para>entity: 实体</para>
+        /// </summary>
+        public void PlayShaderEffect(GameShaderEffectType effType, GameEntityBase entity);
 
+        /// <summary>
+        /// 在实体上播放Shader特效
+        /// <para>shaderEffectId: 特效 ID</para>
+        /// <para>bodyCom: 身体组件</para>
+        /// </summary>
+        public void PlayShaderEffect(int shaderEffectId, GameRoleBodyCom bodyCom);
 
         /// <summary>
         /// 停止Renderer的Shader特效
