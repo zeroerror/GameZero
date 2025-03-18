@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 using GamePlay.Infrastructure;
+using Unity.VisualScripting;
 
 namespace GamePlay.Core
 {
@@ -14,7 +15,10 @@ namespace GamePlay.Core
     {
         private Animator _animator;
         private PlayableGraph _graph;
-        private Dictionary<string, AnimationClip> _clipDict;
+        private Dictionary<string, AnimationClip> _clipDict = new();
+
+        private AnimationClipPlayable _currentClipPlayable;
+        private AnimationPlayableOutput _currentPlayableOutput;
 
         /// <summary> 是否正在播放 </summary>
         public bool isPlaying => this._isPlaying;
@@ -52,7 +56,6 @@ namespace GamePlay.Core
             this._graph = PlayableGraph.Create();
             this._graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
             this._animator = animator;
-            this._clipDict = new Dictionary<string, AnimationClip>();
             this._SetClipOutput(null);
         }
 
@@ -70,15 +73,6 @@ namespace GamePlay.Core
             if (!this._isLoop && this.elapsedTime >= this.playingDuration)
             {
                 this.Stop();
-            }
-        }
-
-        /// <summary> 设置动画片段 </summary>
-        public void SetClip(string name, AnimationClip clip)
-        {
-            if (!this._clipDict.ContainsKey(name))
-            {
-                this._clipDict.Add(name, clip);
             }
         }
 
@@ -109,12 +103,27 @@ namespace GamePlay.Core
             this._isPlaying = true;
         }
 
+        /// <summary> 设置动画片段 </summary>
+        public void SetClip(string name, AnimationClip clip)
+        {
+            if (!this._clipDict.ContainsKey(name))
+            {
+                this._clipDict.Add(name, clip);
+            }
+        }
+
         /// <summary> 设置动画片段的输出 </summary>
         private void _SetClipOutput(AnimationClip clip)
         {
-            var clipPlayable = AnimationClipPlayable.Create(this._graph, clip);
-            var playableOutput = AnimationPlayableOutput.Create(this._graph, "Animation", this._animator);
-            playableOutput.SetSourcePlayable(clipPlayable);
+            if (!_currentClipPlayable.IsValid())
+            {
+                _currentClipPlayable = AnimationClipPlayable.Create(this._graph, clip);
+            }
+            if (!_currentPlayableOutput.IsOutputValid())
+            {
+                _currentPlayableOutput = AnimationPlayableOutput.Create(this._graph, "Animation", this._animator);
+            }
+            _currentPlayableOutput.SetSourcePlayable(_currentClipPlayable);
         }
 
         public void Stop()
@@ -124,6 +133,12 @@ namespace GamePlay.Core
             this._playingDuration = -1.0f;
             this._isLoop = false;
             this._isPlaying = false;
+
+            if (_currentClipPlayable.IsValid())
+            {
+                _currentClipPlayable.Destroy();
+                _currentClipPlayable = default;
+            }
         }
 
         public bool IsValid()

@@ -62,8 +62,8 @@ namespace GamePlay.Core
         /// <summary>
         /// 播放动画
         /// <para>clip: 动画片段</para>
-        /// <para>startTime: 开始时间</para>
         /// <para>layer: 层级</para>
+        /// <para>startTime: 开始时间</para>
         /// </summary>
         public void Play(AnimationClip clip, int layer = 0, float startTime = 0f)
         {
@@ -73,12 +73,12 @@ namespace GamePlay.Core
                 return;
             }
 
-            var graph = this._GetGraph(layer);
+            var graph = this._GetOrCreateGraph(layer);
             graph.SetClip(clip.name, clip);
             this.Play(layer, clip.name, startTime);
         }
 
-        private GameAnimPlayableGraph _GetGraph(int layer)
+        private GameAnimPlayableGraph _GetOrCreateGraph(int layer)
         {
             if (!this._graphDict.TryGetValue(layer, out var graph))
             {
@@ -88,7 +88,13 @@ namespace GamePlay.Core
             return graph;
         }
 
-        public void Play(int layer, string name, float startTime = 0f)
+        /// <summary>
+        /// 播放动画
+        /// </summary>
+        /// <para> layer: 层级 </para>
+        /// <para> clipName: 动画片段名称 </para>
+        /// <para> startTime: 开始时间 </para>
+        public void Play(int layer, string clipName, float startTime = 0f)
         {
             if (!this._graphDict.TryGetValue(layer, out var graph))
             {
@@ -100,8 +106,7 @@ namespace GamePlay.Core
                 GameLogger.LogError($"播放动画失败! Graph 无效, layer: {layer}");
                 return;
             }
-
-            graph.Play(name, startTime);
+            graph.Play(clipName, startTime);
             this.isPlaying = true;
         }
 
