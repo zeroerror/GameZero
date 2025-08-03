@@ -339,8 +339,9 @@ namespace GamePlay.Core
             return mtv;
         }
 
-        private GameVec2 _GetResolvingMTV_OBB(in GameVec2 point, bool onlyDetectPenetration = true)
+        private GameVec2 _GetResolvingMTV_OBB(GameVec2 point, bool onlyDetectPenetration = true)
         {
+            point -= worldCenterPos;
             var pjx = point.Dot(localAxisX);
             var pjy = point.Dot(localAxisY);
             var halfW = worldWidth / 2;

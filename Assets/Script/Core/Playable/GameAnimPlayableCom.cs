@@ -5,7 +5,9 @@ using GamePlay.Infrastructure;
 namespace GamePlay.Core
 {
     /// <summary>
-    /// 基于 Playable 的动画控制组件, 用于平替 Animator
+    /// 基于 Playable 的动画控制组件, 用于平替 Animator.
+    /// <para> - 多层级动画播放 </para>
+    /// <para> - 动画混合 </para>
     /// </summary>
     public class GameAnimPlayableCom
     {
@@ -23,6 +25,7 @@ namespace GamePlay.Core
         {
             this.animator = animator;
             animator.runtimeAnimatorController = null;// 取消默认的动画控制器
+            animator.applyRootMotion = false;// 关闭根运动（所有的角色动画位移已经转化为程序位移驱动）
             this._graphDict = new Dictionary<int, GameAnimPlayableGraph>();
         }
 
@@ -48,13 +51,7 @@ namespace GamePlay.Core
                 var graph = kvp.Value;
                 if (!graph.isPlaying) continue;
                 hasPlaying = true;
-
                 graph.Tick(dt);
-
-                if (!graph.isLoop && graph.elapsedTime >= graph.playingDuration)
-                {
-                    graph.Stop();
-                }
             }
             this.isPlaying = hasPlaying;
         }
@@ -62,10 +59,10 @@ namespace GamePlay.Core
         /// <summary>
         /// 播放动画
         /// <para>clip: 动画片段</para>
-        /// <para>startTime: 开始时间</para>
         /// <para>layer: 层级</para>
+        /// <para>startTime: 开始时间</para>
         /// </summary>
-        public void Play(AnimationClip clip, int layer = 0, float startTime = 0f)
+        public void Play(AnimationClip clip, bool isLoop, float startTime, float mixDuration = 0, int layer = 0)
         {
             if (!clip)
             {
@@ -73,12 +70,12 @@ namespace GamePlay.Core
                 return;
             }
 
-            var graph = this._GetGraph(layer);
+            var graph = this._GetOrCreateGraph(layer);
             graph.SetClip(clip.name, clip);
-            this.Play(layer, clip.name, startTime);
+            this.Play(clip.name, isLoop, startTime, mixDuration, layer);
         }
 
-        private GameAnimPlayableGraph _GetGraph(int layer)
+        private GameAnimPlayableGraph _GetOrCreateGraph(int layer)
         {
             if (!this._graphDict.TryGetValue(layer, out var graph))
             {
@@ -88,7 +85,14 @@ namespace GamePlay.Core
             return graph;
         }
 
-        public void Play(int layer, string name, float startTime = 0f)
+        /// <summary>
+        /// 播放动画
+        /// </summary>
+        /// <para> layer: 层级 </para>
+        /// <para> clipName: 动画片段名称 </para>
+        /// <para> isLoop: 是否循环 </para>
+        /// <para> startTime: 开始时间 </para>
+        public void Play(string clipName, bool isLoop, float startTime, float mixDuration = 0, int layer = 0)
         {
             if (!this._graphDict.TryGetValue(layer, out var graph))
             {
@@ -100,8 +104,7 @@ namespace GamePlay.Core
                 GameLogger.LogError($"播放动画失败! Graph 无效, layer: {layer}");
                 return;
             }
-
-            graph.Play(name, startTime);
+            graph.Play(clipName, isLoop, startTime, mixDuration);
             this.isPlaying = true;
         }
 

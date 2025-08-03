@@ -4,7 +4,6 @@ using System.Text;
 using System.IO;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
-using System.Runtime.InteropServices;
 
 [CustomEditor(typeof(UIBinder))]
 public class UIBinderEditor : Editor
@@ -19,7 +18,7 @@ public class UIBinderEditor : Editor
         {
             var root = ((UIBinder)target).transform;
             string prefabName = _filter(root.name);
-            var outputDir = $"{Application.dataPath}/Script/Bussiness/UI/System/Binders/{prefabName}";
+            var outputDir = $"{Application.dataPath}/Scripts/Bussiness/UI/System/Binders/{prefabName}";
             // 清空之前的绑定类
             if (Directory.Exists(outputDir))
             {
@@ -99,7 +98,14 @@ public class UIBinderEditor : Editor
             }
 
             var typeName = this._GetUIComTypeName(child);
-            codeBuilder.AppendLine($"    public {typeName} {publicVarName} => {privateVarName} ?? ({privateVarName} = this.gameObject.transform.Find(\"{varPath}\").GetComponent<{typeName}>());");
+            if (typeName == "GameObject")
+            {
+                codeBuilder.AppendLine($"    public {typeName} {publicVarName} => {privateVarName} ?? ({privateVarName} = this.gameObject.transform.Find(\"{varPath}\").gameObject);");
+            }
+            else
+            {
+                codeBuilder.AppendLine($"    public {typeName} {publicVarName} => {privateVarName} ?? ({privateVarName} = this.gameObject.transform.Find(\"{varPath}\").GetComponent<{typeName}>());");
+            }
             codeBuilder.AppendLine($"    private {typeName} {privateVarName};");
 
             TraverseChildren(child, codeBuilder, outputDirPath, prefabName, traverseDepth);
@@ -156,13 +162,13 @@ public class UIBinderEditor : Editor
     /// <summary> 获取变量路径 </summary>
     private string _GetVarPath(Transform tf, int depth)
     {
-        var path = _filter(tf.name);
+        var path = tf.name;
         if (depth <= 1) return path;
         while (depth > 1)
         {
             depth--;
             tf = tf.parent;
-            path = $"{_filter(tf.name)}/{path}";
+            path = $"{tf.name}/{path}";
         }
         return path;
     }

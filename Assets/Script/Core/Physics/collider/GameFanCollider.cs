@@ -165,11 +165,12 @@ namespace GamePlay.Core
             return !isSameSide;
         }
 
-        public override GameVec2 GetResolvingMTV(in GameVec2 point, bool onlyDetectPenetration = true)
+        public override GameVec2 GetResolvingMTV(GameVec2 point, bool onlyDetectPenetration = true)
         {
-            var cross_1 = point.Sub(this.worldCenterPos).Cross(this.axis1);
-            var cross_2 = point.Sub(this.worldCenterPos).Cross(this.axis2);
-            var toPOffset = point.Sub(this.worldCenterPos);
+            var point = point.Sub(this.worldCenterPos);
+            var cross_1 = point.Cross(this.axis1);
+            var cross_2 = point.Cross(this.axis2);
+            var toPOffset = point;
             var toPDir = toPOffset.normalized;
             // 点在扇形正向范围内
             if (cross_1 > 0 && cross_2 < 0)
